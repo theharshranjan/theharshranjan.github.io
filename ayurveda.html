@@ -7,13 +7,22 @@
   <title>Ayurveda & Yoga Research | Harsh Ranjan (Samarpan)</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Base Styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f9f6f1;
       color: #2c3e50;
       line-height: 1.8;
+      scroll-behavior: smooth; /* Smooth scrolling */
     }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header */
     header {
       background: #6a994e;
       color: white;
@@ -21,8 +30,17 @@
       padding: 2rem 1rem;
       position: relative;
     }
-    header h1 { margin: 0; font-size: 2rem; }
-    header p { margin-top: 0.5rem; font-style: italic; font-size: 1.1rem; }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
 
     .back-btn {
       position: absolute;
@@ -32,17 +50,45 @@
       color: white;
       padding: 0.5rem 1rem;
       border-radius: 6px;
-      text-decoration: none;
       font-size: 0.9rem;
       transition: background 0.3s;
     }
-    .back-btn:hover { background: #2a4731; }
 
+    .back-btn:hover {
+      background: #2a4731;
+    }
+
+    /* Sticky Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.8rem 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    nav a {
+      color: #386641;
+      font-weight: bold;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    nav a:hover {
+      color: #6a994e;
+      transform: scale(1.1);
+    }
+
+    /* Section */
     section {
-      padding: 2rem;
+      padding: 2rem 1rem;
       max-width: 1000px;
       margin: auto;
     }
+
     h2 {
       color: #386641;
       border-left: 6px solid #6a994e;
@@ -50,77 +96,65 @@
       margin-bottom: 1rem;
     }
 
-    /* Education blocks */
+    /* Education Blocks */
     .edu-block {
       display: flex;
-      align-items: center;
-      gap: 20px;
+      align-items: flex-start;
       margin-bottom: 2rem;
       background: #ffffff;
-      border-radius: 10px;
       padding: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .edu-block img {
-      width: 150px;
-      height: auto;
       border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+
+    .edu-block:hover {
+      transform: translateY(-3px);
+    }
+
+    .edu-block img {
+      width: 120px;
+      height: auto;
+      border-radius: 8px;
+      margin-right: 1.5rem;
       object-fit: cover;
     }
-    .edu-details h3 {
-      margin: 0;
-      color: #6a994e;
+
+    .edu-details {
+      flex: 1;
     }
 
-    /* Timeline */
-    .timeline {
-      position: relative;
-      margin: 2rem 0;
-      padding-left: 40px;
-    }
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 20px;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: #6a994e;
-      border-radius: 2px;
-    }
-    .timeline-item {
-      position: relative;
-      margin-bottom: 2rem;
-      background: white;
-      padding: 1rem 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -32px;
-      top: 20px;
-      width: 20px;
-      height: 20px;
-      background: #386641;
-      border: 3px solid white;
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px #6a994e;
-    }
-    .timeline-item h3 {
-      margin: 0;
-      color: #6a994e;
-    }
-
-    .research {
+    /* Research Blocks */
+    article.research {
       background: #fff3e0;
       padding: 1.5rem;
       border-radius: 10px;
       margin-bottom: 2rem;
+      transition: transform 0.3s;
     }
-    .research h3 { color: #d35400; }
 
+    article.research:hover {
+      transform: translateY(-3px);
+    }
+
+    article.research h3 {
+      color: #d35400;
+      margin-top: 0;
+    }
+
+    a.source-link {
+      color: #00796b;
+      font-weight: bold;
+      text-decoration: underline;
+      transition: color 0.3s;
+    }
+
+    a.source-link:hover {
+      color: #e67e22;
+      text-decoration: none;
+    }
+
+    /* Footer */
     footer {
       background: #6a994e;
       color: white;
@@ -128,60 +162,76 @@
       padding: 1rem;
       margin-top: 2rem;
     }
-    a.source-link {
-      color: #00796b;
-      font-weight: bold;
-      text-decoration: underline;
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .edu-block {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .edu-block img {
+        margin-bottom: 1rem;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="index.html" class="back-btn">← Back to Home</a>
+    <a href="index.html" class="back-btn" aria-label="Go back to home page">← Back to Home</a>
     <h1>🌿 Ayurveda & Yoga — Academic Insights</h1>
     <p>Academic grounding, healing philosophy, & modern research</p>
   </header>
 
-  <section>
-    <section>
+  <!-- Sticky Navigation -->
+  <nav>
+    <a href="#academic">Academic</a>
+    <a href="#philosophy">Philosophy</a>
+    <a href="#research">Research</a>
+  </nav>
+
+  <!-- Academic Foundation -->
+  <section id="academic">
     <h2>📚 Academic Foundation</h2>
 
     <div class="edu-block">
-      <img src="jnu.jpg" alt="Jawaharlal Nehru University">
+      <img src="jnu.jpg" alt="Jawaharlal Nehru University, New Delhi campus">
       <div class="edu-details">
         <h3>B.Sc – Ayurveda Biology</h3>
         <p>Graduated from <b>Jawaharlal Nehru University (JNU), New Delhi</b>. 
-        This unique program combined <b>modern life sciences</b> with <b>classical Ayurvedic knowledge</b>.</p>
-        <p><b>Subjects included:</b> Dravyaguna (Ayurvedic Pharmacology), Rasashastra, Kriya Sharira (Physiology), 
-        Swasthavritta (Preventive Health), Yoga & Consciousness Studies, and Research Methodology.</p>
+        This program combined <b>modern life sciences</b> with <b>classical Ayurvedic knowledge</b>.</p>
+        <p><b>Subjects included:</b> Dravyaguna, Rasashastra, Kriya Sharira, Swasthavritta, Yoga & Consciousness Studies, Research Methodology.</p>
       </div>
     </div>
 
     <div class="edu-block">
-      <img src="bsy.jpg" alt="Bihar School of Yoga">
+      <img src="bsy.jpg" alt="Bihar School of Yoga, Munger">
       <div class="edu-details">
         <h3>Bihar School of Yoga, Munger</h3>
-        <p>Studied under the Satyananda Yoga tradition, blending <b>asana, pranayama, yoga nidra, meditation, mantra</b>, and <b>self-discipline</b>.
-        This training emphasized the integration of <b>yogic science</b> with <b>daily living</b>.</p>
+        <p>Studied under Satyananda Yoga tradition — asana, pranayama, yoga nidra, meditation, mantra, self-discipline. Integrated yogic science with daily living.</p>
       </div>
     </div>
 
     <div class="edu-block">
-      <img src="csu.jpg" alt="Sanskrit Studies">
+      <img src="csu.jpg" alt="Central Sanskrit University, Delhi">
       <div class="edu-details">
         <h3>Certificate Course in Sanskrit</h3>
-        <p>Completed from <b>Central Sanskrit University, Delhi</b>. This deepened my ability to read and understand Ayurvedic and Yogic scriptures in their <b>original language</b>.</p>
+        <p>Completed from <b>Central Sanskrit University, Delhi</b>. Enhanced reading of Ayurvedic and Yogic scriptures in original language.</p>
       </div>
     </div>
   </section>
 
-
-  <section>
+  <!-- Philosophy & Approach -->
+  <section id="philosophy">
     <h2>🌱 Philosophy & Approach</h2>
-    <p>
-      Ayurveda and Yoga flow together as one river — Ayurveda nurtures through diet, rituals, and herbs, while Yoga transforms mind, body, and spirit.
-    </p>
+    <p>Ayurveda and Yoga flow together — Ayurveda nurtures through diet, rituals, and herbs, while Yoga transforms mind, body, and spirit.</p>
     <ul>
       <li>Diet & lifestyle planning based on Prakriti</li>
       <li>Herbal wisdom for digestion, immunity, stress relief</li>
@@ -190,28 +240,35 @@
     </ul>
   </section>
 
-  <section>
+  <!-- Selected Research Highlights -->
+  <section id="research">
     <h2>📖 Selected Research Highlights</h2>
 
-    <div class="research">
+    <article class="research">
       <h3>Brahmi (Bacopa monnieri) & Alzheimer’s</h3>
       <p>Preclinical studies suggest neuroprotective and memory-enhancing effects — though human trials remain inconclusive.</p>
       <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" class="source-link">Systematic Review: Alzheimer’s Trials</a></p>
       <p><a href="https://www.mdpi.com/2072-6643/17/11/1939" target="_blank" class="source-link">Neuroprotective Preclinical & Safety Data</a></p>
-    </div>
+    </article>
 
-    <div class="research">
+    <article class="research">
       <h3>Dinacharya for Preventive Health</h3>
       <p>Daily regimens like wake cycles, oil massage, meditation support physical, mental, and spiritual balance.</p>
       <p><a href="https://www.researchgate.net/publication/372376274_Applied_aspects_of_Dincharya_-_The_Daily_Regimen_as_per_Ayurveda_directing_towards_health_maintenance_and_disease_prevention_in_present_era" target="_blank" class="source-link">Applied Aspects of Dinacharya (PDF)</a></p>
       <p><a href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" class="source-link">Daily Routines & Chronic Illness Prevention</a></p>
-    </div>
+    </article>
 
-    <div class="research">
+    <article class="research">
       <h3>Ayurvedic Herbs & Alzheimer’s Targets</h3>
       <p>Many Ayurvedic plants show anti-inflammatory, antioxidant, anti-amyloidogenic, and neuroprotective properties.</p>
       <p><a href="https://alzres.biomedcentral.com/articles/10.1186/alzrt125" target="_blank" class="source-link">Review: Ayurvedic Plants in Alzheimer’s</a></p>
-    </div>
+    </article>
+
+    <article class="research" id="my-paper">
+      <h3>Ayurveda and Its Importance in Daily Life & Health</h3>
+      <p>Ayurveda emphasizes <b>prevention</b> and <b>balance</b> — guiding daily living through diet, sleep, seasonal routines, and mental discipline. Strengthens <b>immunity</b>, supports <b>mental clarity</b>, and reduces risk of chronic diseases.</p>
+      <p><i>📌 My upcoming published research paper will be added here with full citation and access link.</i></p>
+    </article>
   </section>
 
   <footer>
