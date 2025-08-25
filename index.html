@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harsh Ranjan (Samarpan)</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Swiper CSS (Testimonial Slider) -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <!-- Lightbox2 CSS (Gallery Popup) -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #edf1d6;
+      --green-dark: #40513b;
+      --green-main: #609966;
+      --green-light: #9dc08b;
+      --accent-gold: #c5a880;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-cream);
+      color: var(--green-dark);
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      background-image: url('https://www.transparenttextures.com/patterns/white-paper.png');
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 6%;
+      background: var(--bg-cream);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .logo-area { display: flex; align-items: center; gap: 0.6rem; }
+    .logo-area img {
+      width: 38px; height: 38px;
+      border-radius: 50%; object-fit: cover;
+      border: 2px solid var(--green-light);
+    }
+    .logo-area span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 600;
+      color: var(--green-dark);
+    }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav ul li a {
+      text-decoration: none; color: var(--green-dark);
+      font-weight: 500; transition: color 0.3s;
+    }
+    nav ul li a:hover { color: var(--green-main); }
+
+    /* Hero */
+    .hero {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; height: 90vh;
+      background: linear-gradient(to bottom right, var(--green-light), var(--bg-cream));
+      padding: 0 1rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; line-height: 1.3;
+      color: var(--green-dark); max-width: 800px;
+    }
+    .hero p { margin-top: 1rem; font-size: 1.2rem; color: var(--green-main); }
+    .btn {
+      margin-top: 2rem; background: var(--green-dark);
+      color: #fff; padding: 0.8rem 1.8rem;
+      font-size: 1rem; border-radius: 8px;
+      text-decoration: none; transition: background 0.3s;
+    }
+    .btn:hover { background: var(--green-main); }
+
+    section { padding: 5rem 8%; }
+
+    /* About */
+    .about { display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; }
+    .about img {
+      width: 320px; border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .about-text { flex: 1; }
+    .about-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; margin-bottom: 1rem;
+    }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .card {
+      background: var(--green-light); padding: 2rem;
+      border-radius: 16px; text-align: center;
+      transition: transform 0.3s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { font-family: 'Playfair Display', serif; margin: 1rem 0; }
+
+    /* Gallery */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+    .gallery img { width: 100%; border-radius: 12px; transition: transform 0.3s; }
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* Testimonials (Swiper) */
+    .testimonials { background: var(--green-main); color: #fff; padding: 5rem 8%; text-align: center; }
+    .swiper { width: 100%; max-width: 700px; margin: auto; }
+    .swiper-slide { font-style: italic; font-size: 1.1rem; padding: 2rem; }
+
+    /* Footer */
+    footer { background: var(--green-dark); color: var(--bg-cream); text-align: center; padding: 2rem; }
+    footer a { color: var(--accent-gold); text-decoration: none; margin: 0 0.5rem; }
+
+    /* Scroll-to-Top Button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 45px; height: 45px;
+      font-size: 22px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 1000;
+    }
+    #scrollTopBtn.show {
+      opacity: 1; visibility: visible;
+    }
+    #scrollTopBtn:hover {
+      background: var(--green-main);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav data-aos="fade-down">
+    <div class="logo-area">
+      <img src="website_dp.png" alt="Logo">
+      <span>Harsh Ranjan (Samarpan)</span>
+    </div>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="thoughts.html">Thoughts</a></li>
+      <li><a href="trips.html">Trips</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" data-aos="zoom-in">
+    <h1>Embrace Balance<br>Through Ayurveda & Yoga</h1>
+    <p>A path to wellness and spiritual growth</p>
+    <a href="#sessions" class="btn">Book a Session</a>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about" data-aos="fade-up">
+    <img src="your-photo.jpg" alt="Harsh Ranjan">
+    <div class="about-text">
+      <h2>About Me</h2>
+      <p>I’m Harsh Ranjan (Samarpan), a Research Scholar at JNU, and Ayurveda Biology enthusiast, Yoga  Practitioner. My journey blends the timeless wisdom of Ayurveda with modern science to inspire balance and holistic wellness.</p>
+      <a href="#sessions" class=
+"btn">Know More</a>
+    </div>
+  </section>
+
+  <!-- Sessions -->
+  <section id="sessions" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Sessions</h2>
+    <div class="cards">
+      <div class="card" data-aos="flip-left">
+<h3>Ayurveda Guidance</h3>
+        <p>Consultations on diet, lifestyle, and natural remedies rooted in Ayurveda.</p>
+      </div>
+      <div class="card" data-aos="flip-right">
+        <h3>Yoga Classes</h3>
+        <p>Personalized Yoga sessions to build strength, flexibility, and inner calm.</p>
+      </div>
+      <div class="card" data-aos="flip-up">
+        
+        <h3>Meditation</h3>
+        <p>Learn meditation techniques for clarity, mindfulness, and spiritual growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Gallery</h2>
+    <div class="gallery">
+      <a href="gallery1.jpg" data-lightbox="mygallery"><img src="your-image1.jpg" alt=""></a>
+      <a href="gallery2.jpg" data-lightbox="mygallery"><img src="your-image2.jpg" alt=""></a>
+      <a href="gallery3.jpg" data-lightbox="mygallery"><img src="your_image3.jpg" alt=""></a>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; margin-bottom:2rem;">Testimonials</h2>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">“Harsh’s sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!”</div>
+        <div class="swiper-slide">“The perfect blend of Ayurveda & Yoga. His teachings changed my daily routine for the better.”</div>
+        <div class="swiper-slide">“A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully.”</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Contact Me</h2>
+  <form action="https://formspree.io/f/mqadzvad" 
+      method="POST" 
+      style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:1rem;">
+  
+  <input type="text" name="name" placeholder="Your Name" required 
+         style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;">
+  
+  <!-- Use _replyto so you can reply directly from your email inbox -->
+  <input type="email" name="_replyto" placeholder="Your Email" required 
+         style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;">
+  
+  <textarea name="message" rows="5" placeholder="Your Message" required 
+            style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;"></textarea>
+  
+  <!-- Optional: custom subject for notification emails -->
+  <input type="hidden" name="_subject" value="New Contact Form Submission">
+  
+  <!-- Optional: honeypot field for spam protection -->
+  <input type="text" name="_gotcha" style="display:none;">
+  
+  <button type="submit" class="btn">Send Message</button>
+</form>
+
+</form>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Harsh Ranjan (Samarpan)</p>
+    <p>
+      <a href="https://www.instagram.com/theharshranjanofficial" target="_blank">Instagram</a> | 
+      <a href="https://www.linkedin.com/in/harsh-ranjan-657403210" target="_blank">LinkedIn</a> | 
+      <a href="mailto:theharshranjanofficial@gmail.com">Email</a>
+    </p>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scrollTopBtn">↑</button>
+
+  <!-- JS Libraries -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+  
+  <script>
+    // AOS Init
+    AOS.init({ duration: 1000, once: true });
+
+    // Swiper Init
+    new Swiper('.swiper', {
+      loop: true,
+      autoplay: { delay: 3000 },
+      pagination: { el: '.swiper-pagination', clickable: true },
+    });
+
+    // Scroll-to-Top Button
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 200) {
+        scrollBtn.classList.add('show');
+      } else {
+        scrollBtn.classList.remove('show');
+      }
+    });
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
