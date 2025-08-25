@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harsh Ranjan (Samarpan)</title>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- AOS CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
   <!-- Swiper CSS (Testimonial Slider) -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
   <!-- Lightbox2 CSS (Gallery Popup) -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
 
   <style>
     :root {
@@ -27,102 +27,144 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-cream);
       color: var(--green-dark);
       line-height: 1.6;
-      scroll-behavior: smooth;
       background-image: url('https://www.transparenttextures.com/patterns/white-paper.png');
     }
 
     /* Navbar */
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 6%;
-      background: var(--bg-cream);
+    .site-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      background: var(--bg-cream);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
     }
     .logo-area { display: flex; align-items: center; gap: 0.6rem; }
     .logo-area img {
       width: 38px; height: 38px;
       border-radius: 50%; object-fit: cover;
       border: 2px solid var(--green-light);
+.logo a {
+  text-decoration: none; /* removes underline */
+  color: inherit;        /* removes blue link color, uses parent color instead */
+}
+
     }
     .logo-area span {
       font-family: 'Playfair Display', serif;
       font-size: 1.2rem; font-weight: 600;
       color: var(--green-dark);
+      white-space: nowrap;
     }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; }
-    nav ul li a {
+.logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+    /* Primary nav links */
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .nav-links a {
       text-decoration: none; color: var(--green-dark);
-      font-weight: 500; transition: color 0.3s;
+      font-weight: 500; transition: color 0.25s ease;
     }
-    nav ul li a:hover { color: var(--green-main); }
+    .nav-links a:hover { color: var(--green-main); }
+
+    /* Hamburger button */
+    .menu-toggle {
+      appearance: none;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.08);
+      width: 40px; height: 40px; border-radius: 8px;
+      display: none; /* shown on mobile */
+      align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .menu-toggle:focus-visible { outline: 2px solid var(--green-main); outline-offset: 2px; }
+    .menu-icon {
+      position: relative; width: 20px; height: 2px; background: var(--green-dark);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .menu-icon::before, .menu-icon::after {
+      content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--green-dark);
+      transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+    }
+    .menu-icon::before { top: -6px; }
+    .menu-icon::after { top: 6px; }
+    .menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+    .menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+    /* Mobile Menu (dropdown) */
+    .mobile-panel {
+      display: none;
+    }
 
     /* Hero */
     .hero {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      text-align: center; height: 90vh;
+      text-align: center; min-height: 90vh;
       background: linear-gradient(to bottom right, var(--green-light), var(--bg-cream));
       padding: 0 1rem;
     }
     .hero h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem; line-height: 1.3;
+      font-size: clamp(2rem, 4vw + 1rem, 3.2rem); line-height: 1.25;
       color: var(--green-dark); max-width: 800px;
     }
-    .hero p { margin-top: 1rem; font-size: 1.2rem; color: var(--green-main); }
+    .hero p { margin-top: 1rem; font-size: 1.1rem; color: var(--green-main); }
     .btn {
-      margin-top: 2rem; background: var(--green-dark);
-      color: #fff; padding: 0.8rem 1.8rem;
-      font-size: 1rem; border-radius: 8px;
-      text-decoration: none; transition: background 0.3s;
+      margin-top: 1.25rem; background: var(--green-dark);
+      color: #fff; padding: 0.8rem 1.1rem;
+      font-size: 1rem; border-radius: 10px;
+      text-decoration: none; transition: background 0.25s ease, transform 0.1s ease;
       display: inline-block;
     }
     .btn:hover { background: var(--green-main); }
+    .btn:active { transform: translateY(1px); }
 
     section { padding: 5rem 8%; }
 
     /* About */
-    .about { display: flex; gap: 3rem; align-items: center; flex-wrap: wrap; }
-    .about img {
-      width: 320px; border-radius: 16px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .about-text { flex: 1; }
-    .about-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem; margin-bottom: 1rem;
-    }
+    .about { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 2rem; align-items: center; }
+    .about img { width: 100%; max-width: 320px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .about-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; }
 
     /* Cards */
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-    .card {
-      background: var(--green-light); padding: 2rem;
-      border-radius: 16px; text-align: center;
-      transition: transform 0.3s;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .card:hover { transform: translateY(-5px); }
-    .card h3 { font-family: 'Playfair Display', serif; margin: 1rem 0; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+    .card { background: var(--green-light); padding: 1.6rem; border-radius: 16px; text-align: center; transition: transform 0.25s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card:hover { transform: translateY(-4px); }
+    .card h3 { font-family: 'Playfair Display', serif; margin: 0.6rem 0 0.25rem; }
 
     /* Gallery */
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-    .gallery img { width: 100%; border-radius: 12px; transition: transform 0.3s; }
-    .gallery img:hover { transform: scale(1.05); }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
+    .gallery img { width: 100%; border-radius: 12px; transition: transform 0.25s ease; }
+    .gallery img:hover { transform: scale(1.03); }
 
     /* Testimonials (Swiper) */
     .testimonials { background: var(--green-main); color: #fff; padding: 5rem 8%; text-align: center; }
     .swiper { width: 100%; max-width: 700px; margin: auto; }
-    .swiper-slide { font-style: italic; font-size: 1.1rem; padding: 2rem; }
+    .swiper-slide { font-style: italic; font-size: 1.05rem; padding: 2rem; }
 
     /* Footer */
     footer { background: var(--green-dark); color: var(--bg-cream); text-align: center; padding: 2rem; }
@@ -130,82 +172,123 @@
 
     /* Scroll-to-Top Button */
     #scrollTopBtn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--green-dark);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 45px; height: 45px;
-      font-size: 22px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      z-index: 1000;
+      position: fixed; bottom: 30px; right: 30px; background: var(--green-dark);
+      color: #fff; border: none; border-radius: 50%; width: 45px; height: 45px;
+      font-size: 22px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; z-index: 1000;
     }
-    #scrollTopBtn.show {
-      opacity: 1; visibility: visible;
+    #scrollTopBtn.show { opacity: 1; visibility: visible; }
+    #scrollTopBtn:hover { background: var(--green-main); }
+
+    /* Mobile Styles */
+    @media (max-width: 900px) {
+      .about { grid-template-columns: 1fr; }
+
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
+
+      /* slide-down panel */
+      .mobile-panel {
+        display: block; /* exists in DOM */
+        position: absolute; left: 0; right: 0; top: 100%;
+        background: var(--bg-cream);
+        border-bottom: 1px solid rgba(0,0,0,0.06);
+        overflow: hidden;
+        max-height: 0; /* collapsed */
+        transform-origin: top;
+        transition: max-height 0.35s ease;
+      }
+      .mobile-panel.open { max-height: 70vh; }
+
+      .mobile-menu {
+        list-style: none; display: flex; flex-direction: column; gap: 0.6rem;
+        padding: 0.8rem 6% 1rem;
+      }
+      .mobile-menu a {
+        display: block; padding: 0.7rem 0; text-decoration: none; font-weight: 600;
+        color: var(--green-dark); border-radius: 8px;
+      }
+      .mobile-menu a:active { background: rgba(0,0,0,0.04); }
+
+      /* Prevent body scroll when mobile menu is open */
+      body.nav-open { height: 100vh; overflow: hidden; }
     }
-    #scrollTopBtn:hover {
-      background: var(--green-main);
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto; }
+      .card, .gallery img, .btn, .menu-icon, .mobile-panel { transition: none !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav data-aos="fade-down">
-    <div class="logo-area">
-      <img src="website_dp.png" alt="Logo">
-      <span>Harsh Ranjan (Samarpan)</span>
-    </div>
-    <ul>
-      <li><a href="about.html">About</a></li>
-      <li><a href="sessions.html">Sessions</a></li>
-      <li><a href="ayurveda.html">Ayurveda</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="thoughts.html">Thoughts</a></li>
-      <li><a href="trips.html">Trips</a></li>
-      <li><a href="#testimonials">Reviews</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+  <!-- Header / Navbar -->
+  <header class="site-header" data-aos="fade-down">
+    <nav aria-label="Primary">
+      <a class="logo-area" href="#home" aria-label="Home">
+        <img src="website_dp.png" alt="Logo" />
+        <span>Harsh Ranjan (Samarpan)</span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" id="desktopMenu">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html">Ayurveda</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <!-- Hamburger (mobile) -->
+      <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
+        <span class="menu-icon" aria-hidden="true"></span>
+      </button>
+
+      <!-- Mobile dropdown -->
+      <div class="mobile-panel" id="mobilePanel">
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
+          <li><a href="trips.html">Trips</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
   <!-- Hero -->
-  <section class="hero" data-aos="zoom-in">
-    <h1>Embrace Balance<br>Through Ayurveda & Yoga</h1>
+  <section class="hero" id="home" data-aos="zoom-in">
+    <h1>Embrace Balance<br />Through Ayurveda & Yoga</h1>
     <p>A path to wellness and spiritual growth</p>
-    <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" target="_blank" class="btn">Book a Session</a>
+    <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" target="_blank" rel="noopener" class="btn">Book a Session</a>
   </section>
 
-
-
   <!-- About -->
-<section id="about" class="about" data-aos="fade-up">
-  <img src="your-photo.jpg" alt="Harsh Ranjan">
-  <div class="about-text">
-    <h2>About Me</h2>
-    <p>I’m Harsh Ranjan (Samarpan), a Research Scholar at JNU, and Ayurveda Biology enthusiast, Yoga Practitioner. My journey blends the timeless wisdom of Ayurveda with modern science to inspire balance and holistic wellness.</p>
-    <div style="text-align:left;">
-      <!-- Updated: opens about.html instead of #sessions -->
-      <a href="about.html" class="btn">Know More</a>
-    </div>
-  </div>
-</section>
-
+  <section id="about" class="about" data-aos="fade-up">
+    <img src="your-photo.jpg" alt="Harsh Ranjan" />
+    <div class="about-text">
+      <h2>About Me</h2>
+      <p>I’m Harsh Ranjan (Samarpan), a Research Scholar at JNU, and Ayurveda Biology enthusiast, Yoga Practitioner. My journey blends the timeless wisdom of Ayurveda with modern science to inspire balance and holistic wellness.</p>
+      <div style="text-align:left;">
+        <a href="about.html" class="btn">Know More</a>
       </div>
     </div>
   </section>
 
- <!-- Ayurveda Section -->
+  <!-- Ayurveda Section -->
   <section id="ayurveda" data-aos="fade-up">
     <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Ayurveda</h2>
     <div style="max-width:900px; margin:auto; text-align:center;">
       <p>
-        Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit.  
+        Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit.
         Discover natural therapies, daily wellness routines, and timeless wisdom that nurtures inner harmony.
       </p>
       <a href="ayurveda.html" class="btn" style="margin-top:1.5rem;">Explore Ayurveda</a>
@@ -213,53 +296,46 @@
   </section>
 
   <!-- Sessions -->
-<section id="sessions" data-aos="fade-up">
-  <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Sessions</h2>
-  <div class="cards">
-    <div class="card" data-aos="flip-left">
-      <h3>Ayurveda Guidance</h3>
-      <p>Consultations on diet, lifestyle, and natural remedies rooted in Ayurveda.</p>
+  <section id="sessions" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Sessions</h2>
+    <div class="cards">
+      <div class="card" data-aos="flip-left">
+        <h3>Ayurveda Guidance</h3>
+        <p>Consultations on diet, lifestyle, and natural remedies rooted in Ayurveda.</p>
+      </div>
+      <div class="card" data-aos="flip-right">
+        <h3>Yoga Classes</h3>
+        <p>Personalized Yoga sessions to build strength, flexibility, and inner calm.</p>
+      </div>
+      <div class="card" data-aos="flip-up">
+        <h3>Meditation</h3>
+        <p>Learn meditation techniques for clarity, mindfulness, and spiritual growth.</p>
+      </div>
     </div>
-    <div class="card" data-aos="flip-right">
-      <h3>Yoga Classes</h3>
-      <p>Personalized Yoga sessions to build strength, flexibility, and inner calm.</p>
-    </div>
-    <div class="card" data-aos="flip-up">
-      <h3>Meditation</h3>
-      <p>Learn meditation techniques for clarity, mindfulness, and spiritual growth.</p>
-    </div>
-  </div>
 
-  <!-- New Button for full Sessions page -->
-  <div style="text-align:center; margin-top:2rem;">
-    <a href="sessions.html" class="btn">Explore All Sessions</a>
-  </div>
-</section>
+    <div style="text-align:center; margin-top:2rem;">
+      <a href="sessions.html" class="btn">Explore All Sessions</a>
+    </div>
+  </section>
 
   <!-- Gallery -->
   <section id="gallery" data-aos="fade-up">
     <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Gallery</h2>
     <div class="gallery">
-      <a href="gallery1.jpg" data-lightbox="mygallery"><img src="your-image1.jpg" alt=""></a>
-      <a href="gallery2.jpg" data-lightbox="mygallery"><img src="your-image2.jpg" alt=""></a>
-      <a href="gallery3.jpg" data-lightbox="mygallery"><img src="your_image3.jpg" alt=""></a>
+      <a href="gallery1.jpg" data-lightbox="mygallery"><img src="your-image1.jpg" alt="Gallery image 1" /></a>
+      <a href="gallery2.jpg" data-lightbox="mygallery"><img src="your-image2.jpg" alt="Gallery image 2" /></a>
+      <a href="gallery3.jpg" data-lightbox="mygallery"><img src="your_image3.jpg" alt="Gallery image 3" /></a>
     </div>
-  </div>
   </section>
 
-<!-- Upcoming Yatra Section -->
-<section id="trips" style="padding:5rem 8%; text-align:center; background:var(--bg-cream);" data-aos="fade-up">
-  <h2 style="font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--green-dark); margin-bottom:1rem;">
-    Upcoming Trips
-  </h2>
-  <p style="font-size:1.1rem; color:var(--green-main); margin-bottom:2rem;">
-    Upcoming Yatra: <span style="color:var(--accent-gold); font-weight:600;">To Be Announced</span>
-  </p>
-  <a href="trips.html" class="btn">View My Past Journeys</a>
-</section>
-
-
-
+  <!-- Upcoming Yatra Section -->
+  <section id="trips" style="padding:5rem 8%; text-align:center; background:var(--bg-cream);" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--green-dark); margin-bottom:1rem;">Upcoming Trips</h2>
+    <p style="font-size:1.1rem; color:var(--green-main); margin-bottom:2rem;">
+      Upcoming Yatra: <span style="color:var(--accent-gold); font-weight:600;">To Be Announced</span>
+    </p>
+    <a href="trips.html" class="btn">View My Past Journeys</a>
+  </section>
 
   <!-- Testimonials -->
   <section id="testimonials" class="testimonials" data-aos="fade-up">
@@ -275,126 +351,34 @@
   </section>
 
   <!-- Contact -->
-<section id="contact" data-aos="fade-up">
-  <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Contact Me</h2>
+  <section id="contact" data-aos="fade-up">
+    <h2 style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem;">Contact Me</h2>
 
-  <!-- Contact form -->
-  <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" 
-        style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:1rem;">
-    <input type="text" name="name" placeholder="Your Name" required 
-           style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;">
-    <input type="email" name="email" placeholder="Your Email" required 
-           style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;">
-    <textarea name="message" placeholder="Your Message" rows="5" required 
-              style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;"></textarea>
-    <button type="submit" class="btn" id="submitBtn" style="position:relative;">
-      <span id="btnText">Send Message</span>
-      <span id="btnSpinner" 
-            style="display:none; width:18px; height:18px; border:3px solid #fff; border-top:3px solid transparent; border-radius:50%; position:absolute; right:15px; top:50%; transform:translateY(-50%); animation:spin 1s linear infinite;"></span>
-    </button>
-  </form>
+    <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:1rem;">
+      <input type="text" name="name" placeholder="Your Name" required style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;" />
+      <input type="email" name="email" placeholder="Your Email" required style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;" />
+      <textarea name="message" placeholder="Your Message" rows="5" required style="padding:0.8rem; border-radius:6px; border:1px solid #ccc;"></textarea>
+      <button type="submit" class="btn" id="submitBtn" style="position:relative;">
+        <span id="btnText">Send Message</span>
+        <span id="btnSpinner" style="display:none; width:18px; height:18px; border:3px solid #fff; border-top:3px solid transparent; border-radius:50%; position:absolute; right:15px; top:50%; transform:translateY(-50%); animation:spin 1s linear infinite;"></span>
+      </button>
+    </form>
 
-  <!-- Messages -->
-  <p id="thankYouMessage" 
-     style="opacity:0; transition:opacity 1s ease; text-align:center; color:var(--green-main); font-weight:600; margin-top:1rem;">
-    ✅ Thanks! Your message has been sent successfully.
-  </p>
-  <p id="errorMessage" 
-     style="opacity:0; transition:opacity 1s ease; text-align:center; color:red; font-weight:600; margin-top:1rem;">
-    ❌ Oops! Something went wrong. Please try again.
-  </p>
-</section>
+    <p id="thankYouMessage" style="opacity:0; transition:opacity 1s ease; text-align:center; color:var(--green-main); font-weight:600; margin-top:1rem;">✅ Thanks! Your message has been sent successfully.</p>
+    <p id="errorMessage" style="opacity:0; transition:opacity 1s ease; text-align:center; color:red; font-weight:600; margin-top:1rem;">❌ Oops! Something went wrong. Please try again.</p>
+  </section>
 
-<!-- Spinner Animation -->
-<style>
-  @keyframes spin {
-    from { transform:translateY(-50%) rotate(0deg); }
-    to { transform:translateY(-50%) rotate(360deg); }
-  }
-</style>
-
-<!-- Contact Form Script -->
-<script>
-  const form = document.getElementById("contactForm");
-  const thankYou = document.getElementById("thankYouMessage");
-  const errorMsg = document.getElementById("errorMessage");
-  const submitBtn = document.getElementById("submitBtn");
-  const btnText = document.getElementById("btnText");
-  const btnSpinner = document.getElementById("btnSpinner");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // prevent redirect
-    const formData = new FormData(form);
-
-    // Reset messages
-    thankYou.style.opacity = "0";
-    errorMsg.style.opacity = "0";
-
-    // Show loading state
-    submitBtn.disabled = true;
-    btnText.textContent = "Sending...";
-    btnSpinner.style.display = "inline-block";
-
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        form.reset();
-        thankYou.style.opacity = "1"; // fade in success
-        thankYou.scrollIntoView({ behavior: "smooth" });
-
-        // Fade out after 4s
-        setTimeout(() => {
-          thankYou.style.opacity = "0";
-        }, 4000);
-      } else {
-        errorMsg.style.opacity = "1"; // show error
-        errorMsg.scrollIntoView({ behavior: "smooth" });
-
-        setTimeout(() => {
-          errorMsg.style.opacity = "0";
-        }, 4000);
-      }
-    } catch (error) {
-      errorMsg.style.opacity = "1";
-      errorMsg.scrollIntoView({ behavior: "smooth" });
-
-      setTimeout(() => {
-        errorMsg.style.opacity = "0";
-      }, 4000);
-    } finally {
-      // Reset button
-      submitBtn.disabled = false;
-      btnText.textContent = "Send Message";
-      btnSpinner.style.display = "none";
-    }
-  });
-</script>
-
-
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Harsh Ranjan (Samarpan)</p>
-    <p>
-      <a href="https://www.instagram.com/theharshranjanofficial" target="_blank">Instagram</a> | 
-      <a href="https://www.linkedin.com/in/harsh-ranjan-657403210" target="_blank">LinkedIn</a> | 
-      <a href="mailto:theharshranjanofficial@gmail.com">Email</a>
-    </p>
-  </footer>
-
-  <!-- Scroll-to-Top Button -->
-  <button id="scrollTopBtn">↑</button>
+  <!-- Spinner Animation -->
+  <style>
+    @keyframes spin { from { transform:translateY(-50%) rotate(0deg); } to { transform:translateY(-50%) rotate(360deg); } }
+  </style>
 
   <!-- JS Libraries -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-  
+
+  <!-- App Scripts -->
   <script>
     // AOS Init
     AOS.init({ duration: 1000, once: true });
@@ -402,22 +386,118 @@
     // Swiper Init
     new Swiper('.swiper', {
       loop: true,
-      autoplay: { delay: 3000 },
+      autoplay: { delay: 3000, disableOnInteraction: false },
       pagination: { el: '.swiper-pagination', clickable: true },
     });
 
     // Scroll-to-Top Button
     const scrollBtn = document.getElementById('scrollTopBtn');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 200) {
-        scrollBtn.classList.add('show');
-      } else {
-        scrollBtn.classList.remove('show');
+      if (window.scrollY > 200) scrollBtn.classList.add('show'); else scrollBtn.classList.remove('show');
+    });
+    scrollBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Contact Form (Formspree) with nice feedback
+    const form = document.getElementById('contactForm');
+    const thankYou = document.getElementById('thankYouMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnSpinner = document.getElementById('btnSpinner');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      thankYou.style.opacity = '0';
+      errorMsg.style.opacity = '0';
+      submitBtn.disabled = true; btnText.textContent = 'Sending...'; btnSpinner.style.display = 'inline-block';
+      try {
+        const response = await fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } });
+        if (response.ok) {
+          form.reset();
+          thankYou.style.opacity = '1';
+          thankYou.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => { thankYou.style.opacity = '0'; }, 4000);
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      } catch (error) {
+        errorMsg.style.opacity = '1';
+        errorMsg.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => { errorMsg.style.opacity = '0'; }, 4000);
+      } finally {
+        submitBtn.disabled = false; btnText.textContent = 'Send Message'; btnSpinner.style.display = 'none';
       }
     });
-    scrollBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    /* ===============================
+       Mobile Menu (Hamburger) Logic
+       - Tap ☰ opens/closes slide-down
+       - Tap any link auto-closes
+       - Tap outside or press Esc closes
+       - Resizing to desktop cleans up
+       =============================== */
+    const menuToggle = document.getElementById('menuToggle');
+    const mobilePanel = document.getElementById('mobilePanel');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function openMenu() {
+      document.body.classList.add('nav-open');
+      mobilePanel.classList.add('open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      menuToggle.setAttribute('aria-label', 'Close menu');
+    }
+    function closeMenu() {
+      document.body.classList.remove('nav-open');
+      mobilePanel.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeMenu() : openMenu();
+    });
+
+    // Auto-close on link click (including hash links like #testimonials)
+    mobileMenu.addEventListener('click', (e) => {
+      const target = e.target.closest('a');
+      if (!target) return;
+      closeMenu();
+    });
+
+    // Close when clicking outside the panel
+    document.addEventListener('click', (e) => {
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        const isClickInsideNav = e.target.closest('nav');
+        if (!isClickInsideNav && mobilePanel.classList.contains('open')) closeMenu();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobilePanel.classList.contains('open')) closeMenu();
+    });
+
+    // Clean up if resized to desktop while menu is open
+    window.addEventListener('resize', () => {
+      if (!window.matchMedia('(max-width: 900px)').matches) {
+        closeMenu();
+      }
     });
   </script>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Harsh Ranjan (Samarpan)</p>
+    <p>
+      <a href="https://www.instagram.com/theharshranjanofficial" target="_blank" rel="noopener">Instagram</a> |
+      <a href="https://www.linkedin.com/in/harsh-ranjan-657403210" target="_blank" rel="noopener">LinkedIn</a> |
+      <a href="mailto:theharshranjanofficial@gmail.com">Email</a>
+    </p>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 </body>
 </html>
