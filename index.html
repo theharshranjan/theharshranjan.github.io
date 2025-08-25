@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,6 +36,10 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
+
+      position: sticky;   /* keeps navbar stuck at top */
+      top: 0;
+      z-index: 1000;      /* ensures it stays above content */
     }
     nav a {
       color: #2c3e50;
@@ -47,6 +50,7 @@
       padding: 2rem;
       max-width: 1000px;
       margin: auto;
+      /* no border-bottom now */
     }
     h2 {
       color: #386641;
@@ -98,13 +102,42 @@
         height: 80px;
       }
     }
+
+    /* Floating scroll-to-top button */
+    #scrollTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 999;
+      background-color: #6a994e;   /* green theme */
+      border: none;
+      outline: none;
+      width: 55px;
+      height: 55px;
+      border-radius: 12px;         /* square with rounded corners */
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+    }
+    #scrollTopBtn:hover {
+      background-color: #386641;   /* darker green on hover */
+    }
+    /* Arrow inside button */
+    .arrow-up {
+      display: inline-block;
+      transform: rotate(-90deg);  /* rotate ">" upwards */
+      color: #ffffff;             /* white arrow */
+      font-size: 26px;            /* arrow size */
+      font-weight: bold;
+      line-height: 1;
+    }
   </style>
 </head>
-
 <body>
   <header>
-    <center> <img src = "website_dp.png"> </center>
-     <h1>Harsh Ranjan (Samarpan)</h1>
+    <center><img src="website_dp.png"></center>
+    <h1>Harsh Ranjan (Samarpan)</h1>
     <p> Ayurveda Biology | Yoga Practitioner | Spiritual Practitioner </p>
   </header>
 
@@ -121,24 +154,17 @@
 
   <section id="about">
     <h2><i class="fas fa-user icon"></i>About Me</h2>
-    <p>I’m Harsh Ranjan (Samarpan), BSc Student at Jawaharlal Nehru University New Delhi and a Certified Yoga Instructor. With years of experience, I combine Yoga, Ayurveda, and Mantra to bring balance, clarity, and healing.</p>
-  <!-- New Button (styled same as Book a Session) -->
-  <p style="margin-top:1rem;">  
-<a href="about.html" class="button">About</a>
-</section>
+    <p>I’m Harsh Ranjan (Samarpan), BSc Ayurveda Biology Student at Jawaharlal Nehru University New Delhi and a Certified Yoga Instructor. With years of experience, I combine Yoga, Ayurveda, and Mantra to bring balance, clarity, and healing.</p>
+    <p style="margin-top:1rem;">
+      <a href="about.html" class="button">About</a>
+    </p>
+  </section>
 
   <section id="sessions">
-  <h2><i class="fas fa-calendar-check icon"></i>1-to-1 Sessions</h2>
-  <p>
-   <p> Personal guidance in Yoga, Meditation, Ayurveda, and Spiritual Counselling.  
-    Available Mon–Sun, 5:00-8:00 AM IST & 6:00–8:00 PM IST. </p> 
-  </p>
- 
-
-    <a href="sessions.html" class="button">Learn More & Book a Session </a>
-  </p>
-</section>
-
+    <h2><i class="fas fa-calendar-check icon"></i>1-to-1 Sessions</h2>
+    <p>Personal guidance in Yoga, Meditation, Ayurveda, and Spiritual Counselling. Available Mon–Sun, 5:00-8:00 AM IST & 6:00–8:00 PM IST.</p>
+    <a href="sessions.html" class="button">Learn More & Book a Session</a>
+  </section>
 
   <section id="gallery">
     <h2><i class="fas fa-image icon"></i>Spiritual Gallery</h2>
@@ -154,26 +180,21 @@
   </section>
 
   <section id="trips">
-  <h2><i class="fas fa-map icon"></i>Upcoming Trips</h2>
-  <p>🛕 Upcoming Yatra: To Be Announced<br>
-  📿 Follow for updates on spiritual retreats & sacred visits.</p>
-
-  <!-- New Button (styled same as Book a Session) -->
-  <p style="margin-top:1rem;">
-    <a href="trips.html" class="button">View My Past Journeys</a>
-  </p>
-</section>
-
+    <h2><i class="fas fa-map icon"></i>Upcoming Trips</h2>
+    <p>🛕 Upcoming Yatra: To Be Announced<br>
+       📿 Follow for updates on spiritual retreats & sacred visits.</p>
+    <p style="margin-top:1rem;">
+      <a href="trips.html" class="button">View My Past Journeys</a>
+    </p>
+  </section>
 
   <section id="ayurveda">
     <h2><i class="fas fa-leaf icon"></i>Ayurveda Biology</h2>
     <p>🔬 Sharing my academic work & teachings from Ayurveda Biology — where ancient healing meets modern science.</p>
-<!-- New Button (styled same as Book a Session) -->
-  <p style="margin-top:1rem;">  
-<a href="ayurveda.html" class="button">Ayurveda</a>
-  </p>
-
-</section>
+    <p style="margin-top:1rem;">
+      <a href="ayurveda.html" class="button">Ayurveda</a>
+    </p>
+  </section>
 
   <section id="testimonials">
     <h2><i class="fas fa-comment icon"></i>Testimonials</h2>
@@ -184,65 +205,77 @@
       <div class="testimonial">
         <p>“His mantra sessions are powerful and calming. Highly recommended.” – Devika M.</p>
       </div>
-<div class="testimonial">
+      <div class="testimonial">
         <p>“Harsh guidance has transformed my whole journey. Deeply grateful.” – Ananda</p>
       </div>
-<div class="testimonial">
+      <div class="testimonial">
         <p>“Yoga Nidra session transformed me” – Veronica</p>
       </div>
     </div>
   </section>
 
   <section id="contact" style="padding:2rem; background:#f9f6f1;">
-  <h2 style="text-align:center; color:#386641;">
-    <i class="fas fa-envelope icon" style="color:#6a994e;"></i> Get in Touch
-  </h2>
-  <p style="text-align:center; max-width:700px; margin:0 auto; color:#2c3e50;">
-    🌿 I’d love to connect with you! Reach out through any of the platforms below:
-  </p>
+    <h2 style="text-align:center; color:#386641;">
+      <i class="fas fa-envelope icon" style="color:#6a994e;"></i> Get in Touch
+    </h2>
+    <p style="text-align:center; max-width:700px; margin:0 auto; color:#2c3e50;">
+      🌿 I’d love to connect with you! Reach out through any of the platforms below:
+    </p>
 
-  <div style="
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;">
-    
-    <!-- Email -->
-    <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-      <i class="fas fa-envelope" style="font-size:2rem; color:#6a994e;"></i>
-      <h3 style="margin-top:0.5rem; color:#386641;">Email</h3>
-      <p><a href="mailto:justtheself@gmail.com" style="color:#00796b; font-weight:bold;">justtheself@gmail.com</a></p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+      <!-- Email -->
+      <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <i class="fas fa-envelope" style="font-size:2rem; color:#6a994e;"></i>
+        <h3 style="margin-top:0.5rem; color:#386641;">Email</h3>
+        <p><a href="mailto:justtheself@gmail.com" style="color:#00796b; font-weight:bold;">justtheself@gmail.com</a></p>
+      </div>
+
+      <!-- WhatsApp -->
+      <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <i class="fab fa-whatsapp" style="font-size:2rem; color:#25d366;"></i>
+        <h3 style="margin-top:0.5rem; color:#386641;">WhatsApp</h3>
+        <p><a href="https://wa.me/919661486740" target="_blank" style="color:#00796b; font-weight:bold;">Chat with me</a></p>
+      </div>
+
+      <!-- Calendly -->
+      <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <i class="fas fa-calendar-alt" style="font-size:2rem; color:#0077b6;"></i>
+        <h3 style="margin-top:0.5rem; color:#386641;">Schedule</h3>
+        <p><a href="https://calendly.com/justtheself/30min" target="_blank" style="color:#00796b; font-weight:bold;">Book via Calendly</a></p>
+      </div>
+
+      <p>
+        <a href="contact.html" class="button"> Contact </a>
+      </p>
     </div>
-
-    <!-- WhatsApp -->
-    <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-      <i class="fab fa-whatsapp" style="font-size:2rem; color:#25d366;"></i>
-      <h3 style="margin-top:0.5rem; color:#386641;">WhatsApp</h3>
-      <p><a href="https://wa.me/919661486740" target="_blank" style="color:#00796b; font-weight:bold;">Chat with me</a></p>
-    </div>
-
-    <!-- Calendly -->
-    <div style="background:#fff; padding:1.5rem; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-      <i class="fas fa-calendar-alt" style="font-size:2rem; color:#0077b6;"></i>
-      <h3 style="margin-top:0.5rem; color:#386641;">Schedule</h3>
-      <p><a href="https://calendly.com/justtheself/30min" target="_blank" style="color:#00796b; font-weight:bold;">Book via Calendly</a></p>
-    </div>
-
-   
-<p>
-    <a href="contact.html" class="button"> Contact </a>
-  </p>
-    </div>
-  </div>
-</section>
-
+  </section>
 
   <footer>
     <p>© 2025 Harsh Ranjan (Samarpan) | Crafted with devotion</p>
-    <!-- Optional: Instagram Embed -->
     <p>Follow on Instagram: <a href="https://instagram.com/justtheself" style="color:white;">@Samarpan</a></p>
   </footer>
 
-</body>
+  <!-- Floating Scroll-to-Top Button -->
+  <button id="scrollTopBtn" title="Back to Top">
+    <span class="arrow-up">></span>
+  </button>
 
+  <script>
+    // Show button when scrolling down
+    window.onscroll = function() {
+      let btn = document.getElementById("scrollTopBtn");
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        btn.style.display = "block";
+      } else {
+        btn.style.display = "none";
+      }
+    };
+
+    // Smooth scroll to top
+    document.getElementById("scrollTopBtn").onclick = function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
+</body>
 </html>
