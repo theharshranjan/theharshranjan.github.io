@@ -1,8 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Added viewport-fit=cover for iPhone notches -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness</title>
 
@@ -19,26 +18,15 @@
   <meta property="og:image:alt" content="Profile image of Harsh Ranjan (Samarpan)" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Theming -->
   <meta name="theme-color" content="#609966" />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
-  <!-- Preconnects for performance -->
+  <!-- Fonts & libs -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-  <!-- Swiper CSS (Testimonial Slider) -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-  <!-- Lightbox2 CSS (Gallery Popup) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
 
   <style>
@@ -68,47 +56,40 @@
       line-height: 1.6;
       background-image: url('https://www.transparenttextures.com/patterns/white-paper.png');
     }
-
-    /* ✅ Make media responsive and prevent stretching on iPhone/Android/desktop */
-    img, picture, video, canvas, svg {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* For sticky header offset when using anchor links */
+    img, picture, video, canvas, svg { max-width: 100%; height: auto; display: block; }
     main[id], section[id] { scroll-margin-top: 90px; }
 
-    /* Skip link for accessibility */
-    .skip-link {
-      position: absolute; left: 8px; top: -40px; padding: .5rem .75rem; border-radius: .5rem;
-      background: #ffffff; color: var(--green-dark); box-shadow: 0 4px 10px rgba(0,0,0,.1);
-      transition: top .2s ease; z-index: 1001; text-decoration: none; font-weight: 600;
+    /* Skip link */
+    .skip-link{
+      position:absolute; left:8px; top:-40px; padding:.5rem .75rem; border-radius:.5rem;
+      background:#fff; color:var(--green-dark); box-shadow:0 4px 10px rgba(0,0,0,.1);
+      transition:top .2s ease; z-index:1001; text-decoration:none; font-weight:600;
     }
-    .skip-link:focus { top: 8px; outline: 2px solid var(--green-main); }
+    .skip-link:focus{ top:8px; outline:2px solid var(--green-main); }
 
     a { color: inherit; }
     a:focus-visible, button:focus-visible, [role="button"]:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--green-main); outline-offset: 2px; }
 
-    /* Navbar */
+    /* Header / Nav */
     .site-header { position: sticky; top: 0; z-index: 1000; background: var(--bg-cream); border-bottom: 1px solid rgba(0, 0, 0, 0.05); backdrop-filter: saturate(140%) blur(4px); }
     nav { max-width: 1200px; margin: 0 auto; padding: 1rem 6%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    /* Shift logo/title more left on large screens */
+    @media (min-width: 1200px){
+      nav { max-width: 100%; padding-left: 2.5%; padding-right: 6%; margin: 0; }
+    }
     .logo-area { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: inherit; }
-    .logo-area img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green-light); }
-    .logo-area span { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+    .logo-area img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green-light); }
+    .logo-area span { font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: var(--green-dark); letter-spacing: .2px; white-space: nowrap; line-height: 1; }
 
     .nav-right { display: flex; align-items: center; gap: .75rem; }
-
     .nav-links { list-style: none; display: flex; align-items: center; gap: 1.25rem; }
     .nav-links a { text-decoration: none; color: var(--green-dark); font-weight: 600; padding: .2rem .1rem; border-radius: .4rem; }
     .nav-links a:hover { color: var(--green-main); }
     .nav-links a[aria-current="page"], .nav-links a.active { color: var(--green-main); text-decoration: underline; text-underline-offset: .2rem; }
 
-    /* Theme toggle */
     .theme-toggle { appearance: none; background: transparent; border: 1px solid rgba(0,0,0,0.08); width: 40px; height: 40px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; }
     .theme-toggle:hover { border-color: rgba(0,0,0,0.2); }
 
-    /* Hamburger button */
     .menu-toggle { appearance: none; background: transparent; border: 1px solid rgba(0,0,0,0.08); width: 40px; height: 40px; border-radius: 8px; display: none; align-items: center; justify-content: center; cursor: pointer; }
     .menu-icon { position: relative; width: 20px; height: 2px; background: var(--green-dark); transition: transform .3s ease, background .3s ease; }
     .menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--green-dark); transition: transform .3s ease, top .3s ease, opacity .3s ease; }
@@ -118,7 +99,6 @@
     .menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
     .menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
 
-    /* Mobile Menu (dropdown) */
     .mobile-panel { display: none; }
 
     /* Hero */
@@ -133,64 +113,63 @@
 
     /* About */
     .about { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 2rem; align-items: center; }
-    /* ✅ no forced height; real aspect ratio preserved */
     .about img { width: 100%; max-width: 340px; height: auto; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .about-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; color: var(--green-dark); }
 
     /* Cards */
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
-    .card { background: var(--green-light); padding: 1.6rem; border-radius: 16px; text-align: center; transition: transform .25s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .card:hover { transform: translateY(-4px); }
+    .card { background: var(--green-light); padding: 1.6rem; border-radius: 16px; text-align: center; transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
     .card h3 { font-family: 'Playfair Display', serif; margin: .6rem 0 .25rem; color: var(--green-dark); }
 
-    /* Gallery */
+    /* Gallery (home preview only; non-clickable) */
     .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .9rem; }
-    /* ✅ keep tiles fluid, no distortion */
-    .gallery img { width: 100%; height: auto; border-radius: 12px; transition: transform .25s ease; }
+    .gallery img { width: 100%; height: auto; border-radius: 12px; transition: transform .25s ease; pointer-events: none; }
     .gallery img:hover { transform: scale(1.03); }
 
-    /* Testimonials (Swiper) */
+    /* Testimonials slider */
     .testimonials { background: var(--green-main); color: #fff; padding: 5rem 8%; text-align: center; }
     .swiper { width: 100%; max-width: 700px; margin: auto; }
     .swiper-slide { font-style: italic; font-size: 1.05rem; padding: 2rem; }
+
+    /* Yatra slider (Upcoming Trips) */
+    .yatra { background: var(--bg-cream); text-align: center; }
+    .yatra .swiper-slide {
+      font-style: normal; font-size: 1.15rem; padding: 2rem; border-radius: 16px;
+      background: var(--green-light); color: var(--green-dark); box-shadow: 0 4px 12px rgba(0,0,0,.06);
+    }
 
     /* Footer */
     footer { background: var(--green-dark); color: var(--bg-cream); text-align: center; padding: 2rem; }
     footer a { color: var(--accent-gold); text-decoration: none; margin: 0 .5rem; }
 
-    /* Scroll-to-Top Button */
+    /* Scroll-to-Top */
     #scrollTopBtn { position: fixed; bottom: 30px; right: 30px; background: var(--green-dark); color: #fff; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; z-index: 1000; }
     #scrollTopBtn.show { opacity: 1; visibility: visible; }
     #scrollTopBtn:hover { background: var(--green-main); }
 
-    /* Scroll progress bar */
     #scrollProgress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: var(--green-main); z-index: 1200; transition: width .1s linear; }
 
-    /* Mobile Styles */
+    /* Mobile */
     @media (max-width: 900px) {
       .about { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .menu-toggle { display: inline-flex; }
 
-      /* slide-down panel */
-      .mobile-panel { display: block; position: absolute; left: 0; right: 0; top: 100%; background: var(--bg-cream); border-bottom: 1px solid rgba(0,0,0,0.06); overflow: hidden; max-height: 0; transform-origin: top; transition: max-height .35s ease; }
+      .mobile-panel { display: block; position: absolute; left:0; right:0; top:100%; background: var(--bg-cream); border-bottom:1px solid rgba(0,0,0,0.06); overflow: hidden; max-height: 0; transform-origin: top; transition: max-height .35s ease; }
       .mobile-panel.open { max-height: 70vh; }
-
-      .mobile-menu { list-style: none; display: flex; flex-direction: column; gap: .6rem; padding: .8rem 6% 1rem; }
-      .mobile-menu a { display: block; padding: .7rem 0; text-decoration: none; font-weight: 700; color: var(--green-dark); border-radius: 8px; }
+      .mobile-menu { list-style:none; display:flex; flex-direction:column; gap:.6rem; padding:.8rem 6% 1rem; }
+      .mobile-menu a { display:block; padding:.7rem 0; text-decoration:none; font-weight:700; color:var(--green-dark); border-radius:8px; }
       .mobile-menu a:active { background: rgba(0,0,0,0.04); }
 
-      /* Prevent body scroll when mobile menu is open */
       body.nav-open { height: 100vh; overflow: hidden; }
     }
 
-    /* Respect users who prefer reduced motion */
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto; }
       .card, .gallery img, .btn, .menu-icon, .mobile-panel { transition: none !important; }
     }
 
-    /* Optional dark mode: we also support OS preference via media query as a fallback */
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) { --bg-cream: #0f1a12; --text: #e6efe8; }
       body { background-image: none; }
@@ -200,58 +179,45 @@
       footer a { color: #e7caa0; }
     }
 
-    /* Spinner Animation */
     @keyframes spin { from { transform:translateY(-50%) rotate(0deg); } to { transform:translateY(-50%) rotate(360deg); } }
   </style>
 </head>
 <body>
   <a href="#home" class="skip-link">Skip to content</a>
-
-  <!-- Scroll progress bar -->
   <div id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- Header / Navbar -->
+  <!-- Header -->
   <header class="site-header" data-aos="fade-down">
     <nav aria-label="Primary">
       <a class="logo-area" href="#home" aria-label="Home">
-        <!-- ✅ size attributes now match CSS to avoid blur/CLS -->
-        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" fetchpriority="high" decoding="async" />
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="52" height="52" fetchpriority="high" decoding="async" />
         <span>Harsh Ranjan (Samarpan)</span>
       </a>
 
       <div class="nav-right">
-        <!-- Desktop links -->
+        <!-- Trimmed menu -->
         <ul class="nav-links" id="desktopMenu">
           <li><a href="about.html">About</a></li>
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="thoughts.html">Thoughts</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
-          <li><a href="#contact.html">Contact</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
 
-        <!-- Theme toggle -->
         <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
 
-        <!-- Hamburger (mobile) -->
         <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
           <span class="menu-icon" aria-hidden="true"></span>
         </button>
       </div>
 
-      <!-- Mobile dropdown -->
       <div class="mobile-panel" id="mobilePanel">
         <ul class="mobile-menu" id="mobileMenu">
           <li><a href="about.html">About</a></li>
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="thoughts.html">Thoughts</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -266,7 +232,6 @@
 
   <!-- About -->
   <section id="about" class="about" aria-labelledby="about-heading" data-aos="fade-up">
-    <!-- ✅ Removed width/height so the actual photo ratio is respected everywhere -->
     <img src="your-photo.jpg" alt="Photo of Harsh Ranjan" loading="lazy" decoding="async" />
     <div class="about-text">
       <h2 id="about-heading">About Me</h2>
@@ -277,7 +242,7 @@
     </div>
   </section>
 
-  <!-- Ayurveda Section -->
+  <!-- Ayurveda -->
   <section id="ayurveda" aria-labelledby="ayurveda-heading" data-aos="fade-up">
     <h2 id="ayurveda-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Ayurveda</h2>
     <div style="max-width:900px; margin:auto; text-align:center;">
@@ -312,48 +277,61 @@
     </div>
   </section>
 
-  <!-- Gallery -->
+  <!-- Gallery (preview only; non-clickable) -->
   <section id="gallery" aria-labelledby="gallery-heading" data-aos="fade-up">
     <h2 id="gallery-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Gallery</h2>
-    <div class="gallery">
-      <!-- ✅ Removed width/height; keeps natural ratios on all phones -->
-      <a href="gallery1.jpg" data-lightbox="mygallery" data-title="Meditative posture">
-        <img src="your-image1.jpg" alt="Meditative posture" loading="lazy" decoding="async" />
-      </a>
-      <a href="gallery2.jpg" data-lightbox="mygallery" data-title="Ayurvedic herbs">
-        <img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" decoding="async" />
-      </a>
-      <a href="gallery3.jpg" data-lightbox="mygallery" data-title="Yoga practice">
-        <img src="your_image3.jpg" alt="Yoga practice at sunrise" loading="lazy" decoding="async" />
-      </a>
+    <div class="gallery" aria-label="Photo tiles (non-interactive on home)">
+      <figure><img src="your-image1.jpg" alt="Meditative posture" loading="lazy" decoding="async" /></figure>
+      <figure><img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" decoding="async" /></figure>
+      <figure><img src="your_image3.jpg" alt="Yoga practice at sunrise" loading="lazy" decoding="async" /></figure>
     </div>
   </section>
 
-  <!-- Upcoming Yatra Section -->
-  <section id="trips" aria-labelledby="trips-heading" style="padding:5rem 8%; text-align:center; background:var(--bg-cream);" data-aos="fade-up">
+  <!-- Upcoming Trips (slider like testimonials, no dates) -->
+  <section id="trips" class="yatra" aria-labelledby="trips-heading" data-aos="fade-up" style="padding:5rem 8%;">
     <h2 id="trips-heading" style="font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--green-dark); margin-bottom:1rem;">Upcoming Trips</h2>
-    <p style="font-size:1.1rem; color:var(--green-main); margin-bottom:2rem;">
-      Upcoming Yatra: <span style="color:var(--accent-gold); font-weight:600;">To Be Announced</span>
-    </p>
-    <a href="trips.html" class="btn">View My Past Journeys</a>
+
+    <div class="swiper auto-slider yatra-swiper" aria-label="Upcoming Trips slider" style="max-width:700px; margin:auto;">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"> Rishikesh</div>
+        <div class="swiper-slide">Rikhiapeeth</div>
+        <div class="swiper-slide">Trambakeshwar, Nashik</div>
+        <div class="swiper-slide">Bihar School of Yoga</div>
+
+      </div>
+      <div class="swiper-pagination" aria-label="Trips slider pagination"></div>
+    </div>
+
+    <a href="trips.html" class="btn" style="margin-top:2rem;">View My Past Journeys</a>
   </section>
 
   <!-- Testimonials -->
   <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" data-aos="fade-up">
     <h2 id="testimonials-heading" style="font-family:'Playfair Display',serif; margin-bottom:2rem;">Testimonials</h2>
-    <div class="swiper" aria-label="Testimonials slider">
+    <div class="swiper auto-slider testimonials-swiper" aria-label="Testimonials slider">
       <div class="swiper-wrapper">
         <div class="swiper-slide">“Harsh’s sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!”</div>
         <div class="swiper-slide">“The perfect blend of Ayurveda &amp; Yoga. His teachings changed my daily routine for the better.”</div>
         <div class="swiper-slide">“A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully.”</div>
       </div>
-      <div class="swiper-pagination" aria-label="Slider pagination" aria-live="polite"></div>
+      <div class="swiper-pagination" aria-label="Testimonials slider pagination" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" aria-labelledby="contact-heading" data-aos="fade-up">
-    <h2 id="contact-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Contact Me</h2>
+  
+
+    <!-- Top Contact Button -->
+<section id="contact" style="padding:4rem 0; text-align:center; background:var(--bg-cream);">
+  <h2 style="font-family:'Playfair Display',serif; font-size:2rem; color:var(--green-dark); margin-bottom:1rem;">
+    
+  </h2>
+  <a href="contact.html" class="btn" 
+     style="padding:1rem 2rem; background:var(--green-main); color:white; border-radius:12px; text-decoration:none; font-weight:bold; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+    Contact Me
+  </a>
+</section>
+
+    </div>
 
     <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:1rem;" novalidate>
       <div>
@@ -369,7 +347,7 @@
         <textarea id="message" name="message" placeholder="How can I help you?" rows="5" required style="padding:.8rem; width:100%; border-radius:6px; border:1px solid #ccc;"></textarea>
       </div>
 
-      <!-- Optional honeypot to reduce spam -->
+      <!-- Honeypot -->
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true" />
 
       <button type="submit" class="btn" id="submitBtn" style="position:relative; align-self:flex-start;">
@@ -392,17 +370,17 @@
     </p>
   </footer>
 
-  <!-- Scroll-to-Top Button (only one) -->
+  <!-- Scroll-to-Top -->
   <button id="scrollTopBtn" aria-label="Scroll to top" title="Back to top">↑</button>
 
-  <!-- JSON-LD: Person Schema -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Harsh Ranjan (Samarpan)",
     "description": "Ayurveda and Yoga practitioner; Research Scholar at JNU.",
-    "url": "/",
+    "url": "https://YOUR_DOMAIN/",
     "sameAs": [
       "https://www.instagram.com/justtheself/",
       "https://www.youtube.com/@theharshranjan",
@@ -411,52 +389,48 @@
   }
   </script>
 
-  <!-- JS Libraries (deferred for performance) -->
+  <!-- JS Libraries (deferred) -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" defer></script>
 
   <!-- App Scripts -->
   <script defer>
-    // Utility: get & set theme
-    function setTheme(mode) {
+    // ---------- Theme (default to LIGHT; persist if toggled) ----------
+    function setTheme(mode){
       const root = document.documentElement;
-      if (mode === 'dark') {
-        root.setAttribute('data-theme', 'dark');
-      } else if (mode === 'light') {
-        root.setAttribute('data-theme', 'light');
-      } else {
-        root.removeAttribute('data-theme');
-      }
+      if(mode === 'dark'){ root.setAttribute('data-theme','dark'); }
+      else { root.setAttribute('data-theme','light'); } // force light default
       localStorage.setItem('theme', mode);
       const toggle = document.getElementById('themeToggle');
-      if (toggle) {
+      if(toggle){
         const isDark = mode === 'dark';
         toggle.setAttribute('aria-pressed', String(isDark));
         toggle.textContent = isDark ? '☀️' : '🌙';
         toggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+        // Update theme-color for PWA / mobile chrome UI
+        const metaTheme = document.querySelector('meta[name="theme-color"]');
+        if(metaTheme){ metaTheme.setAttribute('content', isDark ? '#0f1a12' : '#609966'); }
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Year in footer
-      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+      // Footer year
+      const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
 
-      // Theme init
+      // Init theme: LIGHT unless user previously chose dark
       const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(saved || (prefersDark ? 'dark' : 'light'));
-      const themeToggle = document.getElementById('themeToggle');
-      themeToggle && themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
+      setTheme(saved === 'dark' ? 'dark' : 'light');
+      document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
         setTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      // AOS Init
-      if (window.AOS) AOS.init({ duration: 1000, once: true });
+      // AOS
+      if(window.AOS) AOS.init({ duration: 900, once: true });
 
-      // Swiper Init
-      if (window.Swiper) {
+      // Swiper
+      if(window.Swiper){
         new Swiper('.swiper', {
           loop: true,
           autoplay: { delay: 3000, disableOnInteraction: false },
@@ -464,13 +438,13 @@
         });
       }
 
-      // Scroll-to-Top Button
+      // Scroll-to-top
       const scrollBtn = document.getElementById('scrollTopBtn');
       const onScrollTopBtn = () => { (window.scrollY > 200) ? scrollBtn.classList.add('show') : scrollBtn.classList.remove('show'); };
       window.addEventListener('scroll', onScrollTopBtn, { passive: true });
-      scrollBtn && scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      scrollBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-      // Scroll progress bar
+      // Scroll progress
       const progress = document.getElementById('scrollProgress');
       const onScrollProgress = () => {
         const doc = document.documentElement;
@@ -479,28 +453,26 @@
         const pct = height > 0 ? (scrollTop / height) * 100 : 0;
         progress.style.width = pct + '%';
       };
-      window.addEventListener('scroll', onScrollProgress, { passive: true });
-      onScrollProgress();
+      window.addEventListener('scroll', onScrollProgress, { passive: true }); onScrollProgress();
 
-      // Scroll spy (highlights active in-page link)
+      // Scroll spy (in-page links only)
       const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]'));
       const sections = Array.from(document.querySelectorAll('main[id], section[id]'));
       const linkMap = new Map(navLinks.map(a => [a.getAttribute('href').slice(1), a]));
-
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           const id = entry.target.getAttribute('id');
           const link = linkMap.get(id);
-          if (!link) return;
-          if (entry.isIntersecting) {
+          if(!link) return;
+          if(entry.isIntersecting){
             navLinks.forEach(a => a.classList.remove('active'));
             link.classList.add('active');
           }
         });
-      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0.01 });
+      }, { rootMargin:'-45% 0px -45% 0px', threshold:0.01 });
       sections.forEach(sec => io.observe(sec));
 
-      // Contact Form (Formspree) with feedback + simple validation
+      // Contact form (Formspree)
       const form = document.getElementById('contactForm');
       const thankYou = document.getElementById('thankYouMessage');
       const errorMsg = document.getElementById('errorMessage');
@@ -508,101 +480,91 @@
       const btnText = document.getElementById('btnText');
       const btnSpinner = document.getElementById('btnSpinner');
 
-      const show = (el) => { el.style.opacity = '1'; };
-      const hide = (el) => { el.style.opacity = '0'; };
+      const show = (el)=>{ el.style.opacity = '1'; };
+      const hide = (el)=>{ el.style.opacity = '0'; };
 
-      form.addEventListener('submit', async (e) => {
+      form.addEventListener('submit', async (e)=>{
         e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
-
+        if(!form.checkValidity()){ form.reportValidity(); return; }
         const formData = new FormData(form);
         hide(thankYou); hide(errorMsg);
         submitBtn.disabled = true; btnText.textContent = 'Sending...'; btnSpinner.style.display = 'inline-block';
-        try {
+        try{
           const response = await fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } });
-          if (response.ok) {
-            form.reset();
-            show(thankYou);
-            thankYou.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            setTimeout(() => hide(thankYou), 4000);
-          } else { throw new Error('Network response was not ok'); }
-        } catch (error) {
+          if(response.ok){
+            form.reset(); show(thankYou);
+            thankYou.scrollIntoView({ behavior:'smooth', block:'nearest' });
+            setTimeout(()=>hide(thankYou), 3500);
+          }else{ throw new Error('Network error'); }
+        }catch(err){
           show(errorMsg);
-          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          setTimeout(() => hide(errorMsg), 4000);
-        } finally {
+          errorMsg.scrollIntoView({ behavior:'smooth', block:'nearest' });
+          setTimeout(()=>hide(errorMsg), 3500);
+        }finally{
           submitBtn.disabled = false; btnText.textContent = 'Send Message'; btnSpinner.style.display = 'none';
         }
       });
 
-      /* ===============================
-         Mobile Menu (Hamburger) Logic with focus trap
-         =============================== */
+      // ----- Mobile menu (stable on iPhone) -----
       const menuToggle = document.getElementById('menuToggle');
       const mobilePanel = document.getElementById('mobilePanel');
       const mobileMenu = document.getElementById('mobileMenu');
       const focusableSel = 'a[href], button:not([disabled])';
       let lastFocused = null;
 
-      function trapFocus(container, e) {
+      function trapFocus(container, e){
         const focusables = container.querySelectorAll(focusableSel);
-        if (!focusables.length) return;
+        if(!focusables.length) return;
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
-        if (e.key === 'Tab') {
-          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if(e.key === 'Tab'){
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
         }
       }
-
-      function openMenu() {
+      function openMenu(){
         lastFocused = document.activeElement;
         document.body.classList.add('nav-open');
-        mobilePanel.classList.add('open');
-        menuToggle.setAttribute('aria-expanded', 'true');
-        menuToggle.setAttribute('aria-label', 'Close menu');
+        mobilePanel.hidden = false; mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded','true');
+        menuToggle.setAttribute('aria-label','Close menu');
         mobilePanel.addEventListener('keydown', focusHandler);
-        const firstLink = mobileMenu.querySelector('a');
-        firstLink && firstLink.focus();
+        const firstLink = mobileMenu.querySelector('a'); firstLink && firstLink.focus();
       }
-      function closeMenu() {
+      function closeMenu(){
         document.body.classList.remove('nav-open');
-        mobilePanel.classList.remove('open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Open menu');
+        mobilePanel.classList.remove('open'); mobilePanel.hidden = true;
+        menuToggle.setAttribute('aria-expanded','false');
+        menuToggle.setAttribute('aria-label','Open menu');
         mobilePanel.removeEventListener('keydown', focusHandler);
         lastFocused && lastFocused.focus();
       }
+      function focusHandler(e){ trapFocus(mobilePanel, e); }
 
-      function focusHandler(e) { trapFocus(mobilePanel, e); }
-
-      menuToggle.addEventListener('click', () => {
+      menuToggle.addEventListener('click', ()=>{
         const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
         isOpen ? closeMenu() : openMenu();
       });
 
       // Auto-close on link click
-      mobileMenu.addEventListener('click', (e) => {
-        const target = e.target.closest('a');
-        if (!target) return;
-        closeMenu();
+      mobileMenu.addEventListener('click',(e)=>{
+        const target = e.target.closest('a'); if(!target) return; closeMenu();
       });
 
       // Click outside closes
-      document.addEventListener('click', (e) => {
-        if (window.matchMedia('(max-width: 900px)').matches) {
-          const isClickInsideNav = e.target.closest('nav');
-          if (!isClickInsideNav && mobilePanel.classList.contains('open')) closeMenu();
+      document.addEventListener('click',(e)=>{
+        if(window.matchMedia('(max-width: 900px)').matches){
+          const insideNav = !!e.target.closest('nav');
+          if(!insideNav && !mobilePanel.hidden) closeMenu();
         }
       });
 
       // Escape closes
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+      document.addEventListener('keydown',(e)=>{ if(e.key === 'Escape' && !mobilePanel.hidden) closeMenu(); });
 
       // Resize cleanup
-      window.addEventListener('resize', () => { if (!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
+      window.addEventListener('resize', ()=>{ if(!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
     });
   </script>
 </body>
 </html>
-
