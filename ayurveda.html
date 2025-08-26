@@ -1,279 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ayurveda & Yoga Research | Harsh Ranjan (Samarpan)</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Base Styles */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f6f1;
-      color: #2c3e50;
-      line-height: 1.8;
-      scroll-behavior: smooth; /* Smooth scrolling */
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ayurveda & Yoga — Academic & Research | Harsh Ranjan (Samarpan)</title>
 
-    a {
-      text-decoration: none;
-      color: inherit;
+  <!-- SEO / Social -->
+  <meta name="description" content="Academic background, integration of Yoga and Ayurveda, and research insights by Harsh Ranjan (Samarpan)." />
+  <link rel="canonical" href="https://theharshranjan.github.io/ayurveda.html" />
+  <meta name="robots" content="index,follow" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theharshranjan.github.io/ayurveda.html" />
+  <meta property="og:title" content="Ayurveda & Yoga — Academic & Research | Harsh Ranjan (Samarpan)" />
+  <meta property="og:description" content="Academic background, integration of Yoga and Ayurveda, and research insights." />
+  <meta property="og:image" content="https://theharshranjan.github.io/img/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ayurveda & Yoga — Academic & Research | Harsh Ranjan (Samarpan)" />
+  <meta name="twitter:description" content="Academic background, integration of Yoga and Ayurveda, and research insights." />
+  <meta name="twitter:image" content="https://theharshranjan.github.io/img/logo.png" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#609966" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Global Styles -->
+  <style>
+    :root{
+      --bg-cream:#edf1d6; --text:#263238;
+      --green-dark:#40513b; --green-main:#609966; --green-light:#9dc08b;
+      --accent-gold:#c5a880; --card:#ffffff; --muted:#5f6b66;
+      --header-h:72px;
     }
+    [data-theme="dark"]{
+      --bg-cream:#0f1a12; --text:#e6efe8;
+      --green-dark:#b5d0b8; --green-main:#87c99a; --green-light:#3a5f46;
+      --accent-gold:#e7caa0; --card:#0f1a12; --muted:#b7c2bd;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg-cream); color:var(--text); line-height:1.7;
+      background-image:url('https://www.transparenttextures.com/patterns/white-paper.png');
+      -webkit-text-size-adjust:100%;
+    }
+    img,svg{max-width:100%;height:auto;display:block}
 
     /* Header */
-    header {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-      position: relative;
+    .site-header{position:sticky;top:0;z-index:1000;background:var(--bg-cream);
+      border-bottom:1px solid rgba(0,0,0,.05); backdrop-filter:saturate(140%) blur(4px)}
+    nav[aria-label="Primary"]{max-width:1200px;margin:0 auto;padding:1rem 6%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit}
+    .logo-area img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light)}
+    .logo-area span{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:var(--green-dark)}
+    .nav-links{list-style:none;display:flex;gap:1rem}
+    .nav-links a{color:var(--green-dark);text-decoration:none;font-weight:600}
+    .nav-links a:hover{color:var(--green-main)}
+    .nav-links a.active{color:var(--green-main);text-decoration:underline;text-underline-offset:.2rem}
+    .theme-toggle,.menu-toggle{
+      appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);
+      width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px
     }
+    .menu-toggle{display:none}
+    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-dark)}
+    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-dark)}
+    .menu-icon::before{top:-6px}.menu-icon::after{top:6px}
+    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
+    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
+    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
+    .mobile-panel{display:none}
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    header p {
-      margin-top: 0.5rem;
-      font-style: italic;
-      font-size: 1.1rem;
-    }
-
-    .back-btn {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
-      background: #386641;
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: background 0.3s;
-    }
-
-    .back-btn:hover {
-      background: #2a4731;
-    }
-
-    /* Sticky Navigation */
-    nav {
-      position: sticky;
-      top: 0;
-      background: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      padding: 0.8rem 0;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 100;
-    }
-
-    nav a {
-      color: #386641;
-      font-weight: bold;
-      transition: color 0.3s, transform 0.3s;
-    }
-
-    nav a:hover {
-      color: #6a994e;
-      transform: scale(1.1);
-    }
-
-    /* Section */
-    section {
-      padding: 2rem 1rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h2 {
-      color: #386641;
-      border-left: 6px solid #6a994e;
-      padding-left: 10px;
-      margin-bottom: 1rem;
-    }
-
-    /* Education Blocks */
-    .edu-block {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 2rem;
-      background: #ffffff;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s;
-    }
-
-    .edu-block:hover {
-      transform: translateY(-3px);
-    }
-
-    .edu-block img {
-      width: 120px;
-      height: auto;
-      border-radius: 8px;
-      margin-right: 1.5rem;
-      object-fit: cover;
-    }
-
-    .edu-details {
-      flex: 1;
-    }
-
-    /* Research Blocks */
-    article.research {
-      background: #fff3e0;
-      padding: 1.5rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-      transition: transform 0.3s;
-    }
-
-    article.research:hover {
-      transform: translateY(-3px);
-    }
-
-    article.research h3 {
-      color: #d35400;
-      margin-top: 0;
-    }
-
-    a.source-link {
-      color: #00796b;
-      font-weight: bold;
-      text-decoration: underline;
-      transition: color 0.3s;
-    }
-
-    a.source-link:hover {
-      color: #e67e22;
-      text-decoration: none;
-    }
-
-    /* Footer */
-    footer {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .edu-block {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .menu-toggle{display:inline-flex}
+      .mobile-panel{
+        display:block;position:fixed;left:0;right:0;top:var(--header-h,72px);
+        height:0; overflow:auto;background:var(--bg-cream);
+        border-bottom:1px solid rgba(0,0,0,.06);transition:height .3s ease;
+        overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
       }
+      .mobile-panel.open{height:calc(100dvh - var(--header-h,72px))}
+      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.6rem;padding:1rem 6% 2rem}
+      .mobile-menu a{display:block;padding:.8rem 0;font-weight:700;color:var(--green-dark);text-decoration:none;border-radius:8px}
+      .mobile-menu a:active{background:rgba(0,0,0,.04)}
+      body.nav-open{overflow:hidden}
+    }
 
-      .edu-block img {
-        margin-bottom: 1rem;
-      }
+    /* Hero */
+    .hero{
+      position:relative;text-align:center;padding:4.5rem 6% 3rem;
+      background: radial-gradient(80rem 35rem at 8% -10%, #ffffff 0%, transparent 60%),
+                  linear-gradient(120deg, var(--green-light), var(--bg-cream) 60%);
+      overflow:hidden;
+    }
+    .hero h1{font-family:"Playfair Display",serif;font-size:clamp(1.9rem,3.8vw,2.7rem);color:var(--green-dark)}
+    .hero p{margin-top:.5rem;color:var(--green-main)}
+    .hero .emblem{
+      position:absolute;right:3%;bottom:-10%;
+      width:min(42vw,340px);opacity:.12;filter:grayscale(10%) contrast(95%);pointer-events:none;
+    }
+    .breadcrumbs{margin-top:1rem;font-size:.95rem}
+    .breadcrumbs a{color:var(--green-dark)}
+    .breadcrumbs a:hover{color:var(--green-main)}
 
-      nav {
-        flex-direction: column;
-        gap: 1rem;
-      }
+    main{max-width:1100px;margin:0 auto;padding:2.2rem 6%}
+    footer{background:var(--green-dark);color:var(--bg-cream);text-align:center;padding:2rem 6%}
+    footer a{color:var(--accent-gold);text-decoration:none;margin:0 .5rem}
+
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme="light"]){--bg-cream:#0f1a12;--text:#e6efe8}
+      body{background-image:none}
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <a href="index.html" class="back-btn" aria-label="Go back to home page">← Back to Home</a>
-    <h1>🌿 Ayurveda & Yoga — Academic Insights</h1>
-    <p>Academic grounding, healing philosophy, & modern research</p>
+  <!-- Header -->
+  <header class="site-header">
+    <nav aria-label="Primary">
+      <a class="logo-area" href="index.html">
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" decoding="async" />
+        <span>Harsh Ranjan (Samarpan)</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html" class="active" aria-current="page">Ayurveda</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div style="display:flex;gap:.6rem;align-items:center;">
+        <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+        <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="mobile-panel" id="mobilePanel">
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
+          <li><a href="trips.html">Trips</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <!-- Sticky Navigation -->
-  <nav>
-    <a href="#academic">Academic</a>
-    <a href="#philosophy">Philosophy</a>
-    <a href="#research">Research</a>
-  </nav>
-
-  <!-- Academic Foundation -->
-  <section id="academic">
-    <h2>📚 Academic Foundation</h2>
-
-    <div class="edu-block">
-      <img src="jnu.jpg" alt="Jawaharlal Nehru University, New Delhi campus">
-      <div class="edu-details">
-        <h3>B.Sc – Ayurveda Biology</h3>
-        <p>Graduated from <b>Jawaharlal Nehru University (JNU), New Delhi</b>. 
-        This program combined <b>modern life sciences</b> with <b>classical Ayurvedic knowledge</b>.</p>
-        <p><b>Subjects included:</b> Dravyaguna, Rasashastra, Kriya Sharira, Swasthavritta, Yoga & Consciousness Studies, Research Methodology.</p>
-      </div>
-    </div>
-
-    <div class="edu-block">
-      <img src="bsy.jpg" alt="Bihar School of Yoga, Munger">
-      <div class="edu-details">
-        <h3>Bihar School of Yoga, Munger</h3>
-        <p>Studied under Satyananda Yoga tradition — asana, pranayama, yoga nidra, meditation, mantra, self-discipline. Integrated yogic science with daily living.</p>
-      </div>
-    </div>
-
-    <div class="edu-block">
-      <img src="csu.jpg" alt="Central Sanskrit University, Delhi">
-      <div class="edu-details">
-        <h3>Certificate Course in Sanskrit</h3>
-        <p>Completed from <b>Central Sanskrit University, Delhi</b>. Enhanced reading of Ayurvedic and Yogic scriptures in original language.</p>
-      </div>
-    </div>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>🌿 Ayurveda & Yoga — Academic & Research</h1>
+    <p>Rooted in tradition, guided by science, integrated with practice</p>
+    <img class="emblem" src="img/logo.png" alt="" aria-hidden="true" />
+    <nav class="breadcrumbs"><a href="index.html">Home</a> · Ayurveda</nav>
   </section>
 
-  <!-- Philosophy & Approach -->
-  <section id="philosophy">
-    <h2>🌱 Philosophy & Approach</h2>
-    <p>Ayurveda and Yoga flow together — Ayurveda nurtures through diet, rituals, and herbs, while Yoga transforms mind, body, and spirit.</p>
-    <ul>
-      <li>Diet & lifestyle planning based on Prakriti</li>
-      <li>Herbal wisdom for digestion, immunity, stress relief</li>
-      <li>Yoga tools — asana, pranayama, nidra, mantra, meditation</li>
-      <li>Research focus — integrating psychology with holistic health</li>
-    </ul>
-  </section>
+  <main>
+    <!-- ============ NEW AYURVEDA SECTION (scoped styles inside) ============ -->
+    <section id="ayurveda" class="ayurveda-new" aria-label="Ayurveda Section">
+      <style>
+        /* ---- Section-scoped styles ---- */
+        .ayurveda-new{
+          position:relative; isolation:isolate;
+          padding: clamp(2rem, 3vw, 3rem) 6% clamp(2.5rem, 5vw, 4rem);
+          background:
+            radial-gradient(80rem 35rem at 10% -10%, #ffffff 0%, transparent 60%),
+            linear-gradient(120deg, var(--green-light), var(--bg-cream) 60%);
+          overflow:hidden;
+        }
+        .ayurveda-new .emblem{
+          position:absolute; right:-6%; bottom:-8%;
+          width:min(55vw, 520px); opacity:.12; filter:grayscale(10%) contrast(95%);
+          pointer-events:none; z-index:-1;
+        }
+        .ay-head{max-width:1050px;margin:0 auto 1.6rem;text-align:center}
+        .ay-kicker{
+          display:inline-block;font-weight:700;letter-spacing:.06em;
+          color:var(--green-main);background:#ffffffb8;padding:.35rem .6rem;border-radius:999px;
+          box-shadow:0 6px 16px rgba(0,0,0,.06);
+        }
+        .ay-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,3.4vw,2.6rem);color:var(--green-dark);margin:.6rem 0}
+        .ay-sub{color:var(--green-main)}
 
-  <!-- Selected Research Highlights -->
-  <section id="research">
-    <h2>📖 Selected Research Highlights</h2>
+        /* Pillars */
+        .pillars{max-width:1100px;margin:1.6rem auto 2rem;display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+        .pillar{
+          background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.06);
+          border-radius:16px;padding:1rem 1.1rem;box-shadow:0 6px 20px rgba(0,0,0,.06);backdrop-filter:saturate(140%) blur(4px)
+        }
+        .pillar h3{margin:.2rem 0 .4rem;color:var(--green-dark)}
+        .chip{display:inline-block;font-size:.8rem;font-weight:700;color:#2c3e50;background:#fff3e0;padding:.25rem .55rem;border-radius:999px;margin:.15rem .25rem .15rem 0}
 
-    <article class="research">
-      <h3>Brahmi (Bacopa monnieri) & Alzheimer’s</h3>
-      <p>Preclinical studies suggest neuroprotective and memory-enhancing effects — though human trials remain inconclusive.</p>
-      <p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" class="source-link">Systematic Review: Alzheimer’s Trials</a></p>
-      <p><a href="https://www.mdpi.com/2072-6643/17/11/1939" target="_blank" class="source-link">Neuroprotective Preclinical & Safety Data</a></p>
-    </article>
+        /* Protocol builder */
+        .builder{max-width:1100px;margin:0 auto 2rem;background:var(--card);border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);padding:1.1rem}
+        .builder h3{margin:0 0 .5rem;color:var(--green-dark)}
+        .tabs{display:flex;gap:.5rem;flex-wrap:wrap}
+        .tab{
+          appearance:none;border:1px solid rgba(0,0,0,.08);background:transparent;
+          padding:.55rem .9rem;border-radius:999px;cursor:pointer;font-weight:700;color:var(--green-dark)
+        }
+        .tab[aria-selected="true"]{background:var(--green-main);color:#fff;border-color:transparent}
+        .panel{display:none;margin-top:1rem}
+        .panel.active{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:.9rem}
+        .card{border:1px solid rgba(0,0,0,.06);border-radius:14px;padding:.8rem;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+        .card h4{margin:.1rem 0 .4rem;color:var(--green-dark);font-size:1rem}
+        .card ul{margin:0;padding-left:1.1rem}
+        .actions{display:flex;gap:.5rem;margin-top:1rem}
+        .btn-min{background:var(--green-dark);color:#fff;border:none;border-radius:10px;padding:.6rem .9rem;font-weight:600;cursor:pointer}
+        .btn-min.alt{background:var(--green-main)}
+        .note{margin-top:.6rem;color:var(--muted);font-size:.9rem}
 
-    <article class="research">
-      <h3>Dinacharya for Preventive Health</h3>
-      <p>Daily regimens like wake cycles, oil massage, meditation support physical, mental, and spiritual balance.</p>
-      <p><a href="https://www.researchgate.net/publication/372376274_Applied_aspects_of_Dincharya_-_The_Daily_Regimen_as_per_Ayurveda_directing_towards_health_maintenance_and_disease_prevention_in_present_era" target="_blank" class="source-link">Applied Aspects of Dinacharya (PDF)</a></p>
-      <p><a href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" class="source-link">Daily Routines & Chronic Illness Prevention</a></p>
-    </article>
+        /* Research */
+        .research{max-width:1100px;margin:0 auto}
+        .research h3{margin:0 0 .6rem;color:var(--green-dark)}
+        .papers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+        .paper{
+          background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:1rem 1.1rem;
+          box-shadow:0 6px 20px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:.35rem
+        }
+        .paper h4{margin:.15rem 0 0;color:#d35400}
+        .meta{font-size:.9rem;color:var(--muted)}
+        .link{color:#00796b;font-weight:700;text-decoration:underline}
+        .link:hover{opacity:.9}
 
-    <article class="research">
-      <h3>Ayurvedic Herbs & Alzheimer’s Targets</h3>
-      <p>Many Ayurvedic plants show anti-inflammatory, antioxidant, anti-amyloidogenic, and neuroprotective properties.</p>
-      <p><a href="https://alzres.biomedcentral.com/articles/10.1186/alzrt125" target="_blank" class="source-link">Review: Ayurvedic Plants in Alzheimer’s</a></p>
-    </article>
+        /* Responsive */
+        @media (max-width:900px){.panel.active{grid-template-columns:1fr}}
+        @media (prefers-color-scheme: dark){
+          .pillars .pillar,.builder,.paper{background:rgba(16,26,18,.6);border-color:rgba(255,255,255,.08)}
+          .card{background:rgba(22,32,25,.9)}
+        }
+      </style>
 
-    <article class="research" id="my-paper">
-      <h3>Ayurveda and Its Importance in Daily Life & Health</h3>
-      <p>Ayurveda emphasizes <b>prevention</b> and <b>balance</b> — guiding daily living through diet, sleep, seasonal routines, and mental discipline. Strengthens <b>immunity</b>, supports <b>mental clarity</b>, and reduces risk of chronic diseases.</p>
-      <p><i>📌 My upcoming published research paper will be added here with full citation and access link.</i></p>
-    </article>
-  </section>
+      <img class="emblem" src="img/logo.png" alt="" aria-hidden="true" />
 
+      <header class="ay-head">
+        <span class="ay-kicker">AYURVEDA × YOGA • JNU Ayurveda Biology</span>
+        <h2 class="ay-title">A systems view of health—rooted in classics, tested by science</h2>
+        <p class="ay-sub">From <b>Prakriti</b> and <b>Agni</b> to breath, posture, and meditation—an integrated approach you can practice every day.</p>
+      </header>
+
+      <!-- Pillars -->
+      <div class="pillars" role="list">
+        <article class="pillar" role="listitem">
+          <h3>1) Foundations</h3>
+          <p>Prakriti, Tridoṣa balance, Agni, Dhātu and Srotas as the explanatory map. Assessment emphasizes digestion, sleep, stress load, and seasonal context.</p>
+          <span class="chip">Prakriti</span><span class="chip">Agni</span><span class="chip">Srotas</span><span class="chip">Ritucharya</span>
+        </article>
+        <article class="pillar" role="listitem">
+          <h3>2) Integration with Yoga</h3>
+          <p>Yoga drives regulation: breath (prāṇāyāma), posture (āsana), relaxation (nidra), mantra & meditation—sequenced by dosha and time-of-day.</p>
+          <span class="chip">Asana → regulate</span><span class="chip">Prāṇāyāma → balance</span><span class="chip">Meditation → clarity</span>
+        </article>
+        <article class="pillar" role="listitem">
+          <h3>3) Evidence-Informed Practice</h3>
+          <p>Classical rationale + modern outcomes. We use available trials and reviews to shape safe, scalable routines while avoiding over-claims.</p>
+          <span class="chip">Safety first</span><span class="chip">Lifestyle before meds</span><span class="chip">Track outcomes</span>
+        </article>
+      </div>
+
+      <!-- Protocol builder -->
+      <section class="builder" aria-labelledby="builder-title">
+        <h3 id="builder-title">Personal routine (demo) — choose your predominant dosha</h3>
+        <div class="tabs" role="tablist" aria-label="Dosha tabs">
+          <button class="tab" role="tab" aria-selected="true" aria-controls="panel-vata" id="tab-vata">Vata</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="panel-pitta" id="tab-pitta">Pitta</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="panel-kapha" id="tab-kapha">Kapha</button>
+        </div>
+
+        <div id="panel-vata" class="panel active" role="tabpanel" aria-labelledby="tab-vata">
+          <div class="card">
+            <h4>Morning</h4>
+            <ul>
+              <li>Warm water; gentle abhyanga (sesame).</li>
+              <li>Asana: slow, grounding (forward bends, hip-openers).</li>
+              <li>Prāṇāyāma: Nāḍi Śodhana 6–10 mins.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Day & Meals</h4>
+            <ul>
+              <li>Regular warm meals; avoid skipping.</li>
+              <li>Spices: ginger, cumin, ajwain.</li>
+              <li>Short sun-walks; reduce overstimulation.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Evening</h4>
+            <ul>
+              <li>Yoga Nidra 15–20 mins.</li>
+              <li>Golden milk or warm herbal tea.</li>
+              <li>Consistent lights-out time.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="panel-pitta" class="panel" role="tabpanel" aria-labelledby="tab-pitta">
+          <div class="card">
+            <h4>Morning</h4>
+            <ul>
+              <li>Cooling splash; abhyanga (coconut in summer).</li>
+              <li>Asana: twists, gentle backbends; avoid over-heat.</li>
+              <li>Prāṇāyāma: Śītalī/Śītkārī 5–8 mins.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Day & Meals</h4>
+            <ul>
+              <li>Favour sweet-bitter-astringent; hydrate well.</li>
+              <li>Spices: coriander, fennel, cardamom.</li>
+              <li>Pause practices: 3×1-minute breath breaks.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Evening</h4>
+            <ul>
+              <li>Metta meditation / journaling to soften intensity.</li>
+              <li>Digital sunset at least 60 min before sleep.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="panel-kapha" class="panel" role="tabpanel" aria-labelledby="tab-kapha">
+          <div class="card">
+            <h4>Morning</h4>
+            <ul>
+              <li>Vigorous āsana / brisk walk to spark Agni.</li>
+              <li>Prāṇāyāma: Kapālabhātī (gentle sets) + Bhastrikā (if trained).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Day & Meals</h4>
+            <ul>
+              <li>Light, warm, spiced meals; avoid heavy late lunch.</li>
+              <li>Spices: black pepper, trikatu, mustard seed.</li>
+              <li>Stand & move each hour.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Evening</h4>
+            <ul>
+              <li>Short restorative session; avoid long naps.</li>
+              <li>Early, light dinner; calming breath before bed.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn-min" id="copyRoutine" type="button">Copy routine</button>
+          <button class="btn-min alt" id="printRoutine" type="button">Print</button>
+        </div>
+        <p class="note">Educational demo only. Personalization and safety review happen during consultation.</p>
+      </section>
+
+      <!-- Research -->
+      <section class="research" aria-labelledby="research-title">
+        <h3 id="research-title">Selected research highlights</h3>
+        <div class="papers">
+          <article class="paper">
+            <h4>Brahmi (Bacopa) & Alzheimer’s</h4>
+            <p class="meta">Systematic review + trials</p>
+            <p>Signals for memory and neuroprotection; human data mixed—dose, extract, and duration matter.</p>
+            <p><a class="link" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" rel="noopener">Read on NCBI (PMC9379783)</a></p>
+          </article>
+
+          <article class="paper">
+            <h4>Bacopa preclinical & safety</h4>
+            <p class="meta">Narrative review (Nutrients)</p>
+            <p>Anti-oxidant, anti-inflammatory pathways with generally good safety in studied ranges.</p>
+            <p><a class="link" href="https://www.mdpi.com/2072-6643/17/11/1939" target="_blank" rel="noopener">MDPI Nutrients 17(11):1939</a></p>
+          </article>
+
+          <article class="paper">
+            <h4>Dinacharya for prevention</h4>
+            <p class="meta">Applied review</p>
+            <p>Daily routine (sleep/wake, abhyanga, meditation) supports metabolic and mental balance.</p>
+            <p><a class="link" href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" rel="noopener">Open PDF (WJPMR)</a></p>
+          </article>
+
+          <article class="paper">
+            <h4>Ayurvedic herbs & neuroprotection</h4>
+            <p class="meta">Review (Alzheimer’s Research & Therapy)</p>
+            <p>Multiple botanicals exhibit anti-amyloidogenic, anti-inflammatory effects in models.</p>
+            <p><a class="link" href="https://alzres.biomedcentral.com/articles/10.1186/alzrt125" target="_blank" rel="noopener">View article</a></p>
+          </article>
+
+          <article class="paper">
+            <h4>Yoga for stress & mood</h4>
+            <p class="meta">Practice summary</p>
+            <p>Breath-led sequences and Yoga Nidra can reduce perceived stress—ideal adjunct with lifestyle.</p>
+            <p><em>Add your preferred RCT/meta-analysis link here.</em></p>
+          </article>
+
+          <article class="paper">
+            <h4>Your forthcoming paper</h4>
+            <p class="meta">Ayurveda in daily life & health</p>
+            <p>Place the citation and repository link once accepted; we’ll feature it prominently here.</p>
+            <p><em>Will update with DOI / PDF.</em></p>
+          </article>
+        </div>
+      </section>
+    </section>
+    <!-- ============ /NEW AYURVEDA SECTION ============ -->
+  </main>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Harsh Ranjan (Samarpan) | Ayurveda & Yoga Insights</p>
+    <p>© <span id="year"></span> Harsh Ranjan (Samarpan)</p>
+    <p>
+      <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> |
+      <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> |
+      <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a>
+    </p>
   </footer>
-</body>
 
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Ayurveda & Yoga — Academic & Research",
+    "url":"https://theharshranjan.github.io/ayurveda.html",
+    "description":"Academic background, integration of Yoga and Ayurveda, and research insights by Harsh Ranjan (Samarpan).",
+    "creator":{
+      "@type":"Person",
+      "name":"Harsh Ranjan (Samarpan)",
+      "sameAs":[
+        "https://www.instagram.com/justtheself/",
+        "https://www.youtube.com/@theharshranjan",
+        "https://www.linkedin.com/in/theharshranjanofficial/"
+      ]
+    }
+  }
+  </script>
+
+  <!-- Single consolidated script -->
+  <script>
+    function setTheme(mode){
+      const root=document.documentElement;
+      if(mode==='dark') root.setAttribute('data-theme','dark');
+      else if(mode==='light') root.setAttribute('data-theme','light');
+      else root.removeAttribute('data-theme');
+      localStorage.setItem('theme',mode);
+      const t=document.getElementById('themeToggle');
+      if(t){const isDark=mode==='dark'; t.setAttribute('aria-pressed',String(isDark)); t.textContent=isDark?'☀️':'🌙';}
+    }
+    function syncHeaderH(){
+      const h=document.querySelector('.site-header')?.offsetHeight||72;
+      document.documentElement.style.setProperty('--header-h',h+'px');
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      // Year
+      const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+      // Theme init
+      const saved=localStorage.getItem('theme'); setTheme(saved||'light');
+      document.getElementById('themeToggle').addEventListener('click',()=>{
+        const cur=document.documentElement.getAttribute('data-theme')||'light';
+        setTheme(cur==='dark'?'light':'dark');
+      });
+      syncHeaderH(); window.addEventListener('resize', syncHeaderH);
+
+      // Mobile menu
+      const menuToggle=document.getElementById('menuToggle');
+      const mobilePanel=document.getElementById('mobilePanel');
+      const mobileMenu=document.getElementById('mobileMenu');
+      const focusable='a[href], button:not([disabled])';
+      let lastFocused=null;
+
+      function trapFocus(container,e){
+        const nodes=container.querySelectorAll(focusable); if(!nodes.length) return;
+        const first=nodes[0], last=nodes[nodes.length-1];
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();}
+          else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}
+        }
+      }
+      function openMenu(){
+        lastFocused=document.activeElement;
+        document.body.classList.add('nav-open');
+        mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded','true');
+        mobilePanel.addEventListener('keydown', focusHandler);
+        mobileMenu.querySelector('a')?.focus();
+      }
+      function closeMenu(){
+        document.body.classList.remove('nav-open');
+        mobilePanel.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded','false');
+        mobilePanel.removeEventListener('keydown', focusHandler);
+        lastFocused && lastFocused.focus();
+      }
+      function focusHandler(e){ trapFocus(mobilePanel,e); }
+
+      menuToggle.addEventListener('click',()=> menuToggle.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu());
+      mobileMenu.addEventListener('click', e=>{ if(e.target.closest('a')) closeMenu(); });
+      document.addEventListener('click', e=>{ if(window.matchMedia('(max-width:900px)').matches){ if(!e.target.closest('nav') && mobilePanel.classList.contains('open')) closeMenu(); }});
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+      window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width:900px)').matches) closeMenu(); });
+
+      // Tabs for Ayurveda section
+      const tabs = Array.from(document.querySelectorAll('.ayurveda-new .tab'));
+      const panels = Array.from(document.querySelectorAll('.ayurveda-new .panel'));
+      function select(id){
+        tabs.forEach(t => t.setAttribute('aria-selected', t.id === 'tab-'+id ? 'true' : 'false'));
+        panels.forEach(p => p.classList.toggle('active', p.id === 'panel-'+id));
+      }
+      tabs.forEach(t => {
+        t.addEventListener('click', () => select(t.id.replace('tab-','')));
+        t.addEventListener('keydown', e => {
+          const i = tabs.indexOf(t);
+          if(e.key==='ArrowRight') tabs[(i+1)%tabs.length].focus();
+          if(e.key==='ArrowLeft')  tabs[(i-1+tabs.length)%tabs.length].focus();
+        });
+      });
+
+      // Copy/Print actions
+      const copyBtn = document.getElementById('copyRoutine');
+      const printBtn = document.getElementById('printRoutine');
+      function activeText(){
+        const active = document.querySelector('.ayurveda-new .panel.active');
+        if(!active) return '';
+        const title = document.querySelector('.ayurveda-new .tab[aria-selected="true"]').textContent.trim();
+        let txt = `Dosha: ${title}\n\n`;
+        active.querySelectorAll('.card').forEach(card=>{
+          const h = card.querySelector('h4')?.textContent?.trim() || '';
+          const items = Array.from(card.querySelectorAll('li')).map(li=>'• '+li.textContent.trim()).join('\n');
+          txt += h + '\n' + items + '\n\n';
+        });
+        txt += 'Note: Educational demo only. Personalization and safety review happen during consultation.';
+        return txt;
+      }
+      copyBtn?.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText(activeText());
+          copyBtn.textContent='Copied ✓'; setTimeout(()=>copyBtn.textContent='Copy routine',1600);
+        }catch{ alert('Copy not available in this browser.'); }
+      });
+      printBtn?.addEventListener('click', ()=> window.print());
+    });
+  </script>
+</body>
 </html>
