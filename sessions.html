@@ -1,244 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>1-to-1 Sessions | Harsh Ranjan (Samarpan)</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Meta -->
+  <meta name="description" content="Personal 1-to-1 guidance in Yoga, Ayurveda & Spiritual growth by Harsh Ranjan (Samarpan). Donation-based, online or in-person."/>
+  <link rel="canonical" href="https://theharshranjan.github.io/sessions.html"/>
+  <meta name="theme-color" content="#6a994e" />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Styles -->
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f6f1;
-      color: #2c3e50;
-      line-height: 1.6;
+    /* ===== Design tokens (match site palette) ===== */
+    :root{
+      --bg:#f9f6f1;              /* page background */
+      --text:#2c3e50;            /* body text (site color) */
+      --green-900:#243c2b;
+      --green-800:#2d5138;
+      --green-700:#386641;       /* deep green */
+      --green-600:#5b8f58;
+      --green-500:#6a994e;       /* primary brand */
+      --green-300:#a7c957;       /* soft accent */
+      --sand:#fffaf3;
+      --card:#ffffff;
+      --ring:rgba(0,0,0,.08);
+      --muted:#5f6b66;
+      --gold:#c5a880;
+
+      --radius:16px;
+      --elev:0 10px 30px rgba(0,0,0,.08);
+      --h:72px;
+    }
+    [data-theme="dark"]{
+      --bg:#0f1a12;
+      --text:#e6efe8;
+      --green-900:#d6e8d9;
+      --green-800:#b5d0b8;
+      --green-700:#9bd0a6;
+      --green-600:#87c99a;
+      --green-500:#87c99a;
+      --green-300:#3a5f46;
+      --sand:#0c1510;
+      --card:#0f1a12;
+      --ring:rgba(255,255,255,.18);
+      --muted:#b7c2bd;
+      --gold:#e7caa0;
     }
 
-    header {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
+    /* ===== Base ===== */
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.75;
+    }
+    img,svg{max-width:100%;height:auto;display:block}
+    a{color:inherit}
+
+    /* ===== Header/Nav (consistent across site) ===== */
+    .site-header{
+      position:sticky; top:0; z-index:1000;
+      background:var(--bg);
+      border-bottom:1px solid var(--ring);
+      backdrop-filter:saturate(140%) blur(5px);
+    }
+    nav[aria-label="Primary"]{
+      max-width:1200px; margin:0 auto; padding:1rem 6%;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    }
+    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+    .logo-area img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--green-300)}
+    .logo-area span{font-weight:800;color:var(--green-700)}
+    .nav-links{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
+    .nav-links a{
+      text-decoration:none; font-weight:700; color:var(--green-700);
+      padding:.35rem .5rem; border-radius:10px;
+      transition:color .25s ease, background .25s ease, transform .2s ease;
+    }
+    .nav-links a:hover{color:var(--green-500); transform:translateY(-1px)}
+    .nav-links a.active{color:var(--green-500); text-decoration:underline; text-underline-offset:.2rem}
+    .controls{display:flex; gap:.6rem; align-items:center}
+    .btn-icon{
+      appearance:none; background:transparent; border:1px solid var(--ring);
+      width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer; font-size:18px;
+    }
+    .menu-toggle{display:none}
+    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-700)}
+    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-700)}
+    .menu-icon::before{top:-6px}.menu-icon::after{top:6px}
+    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
+    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
+    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
+    .mobile-panel{display:none}
+
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .menu-toggle{display:inline-flex}
+      .mobile-panel{
+        display:block; position:fixed; left:0; right:0; top:var(--h,72px);
+        height:0; overflow:auto; background:var(--bg);
+        border-bottom:1px solid var(--ring); transition:height .3s ease;
+      }
+      .mobile-panel.open{height:calc(100dvh - var(--h,72px))}
+      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin:0;padding:1rem 6% 2rem}
+      .mobile-menu a{display:block;padding:.8rem 0;font-weight:800;color:var(--green-700);text-decoration:none;border-radius:8px}
+      .mobile-menu a:active{background:rgba(0,0,0,.04)}
+      body.nav-open{overflow:hidden}
     }
 
-    h1,
-    h2 {
-      color: #386641;
+    /* ===== Hero ===== */
+    .hero{
+      position:relative; overflow:hidden; text-align:center;
+      padding: clamp(3rem,5vw,5rem) 6% clamp(2rem,3.5vw,3rem);
+      background:
+        radial-gradient(80rem 35rem at 8% -10%, #ffffff 0%, transparent 60%),
+        linear-gradient(120deg, var(--green-300), var(--bg) 55%);
+    }
+    .hero h1{
+      margin:0; font-size:clamp(2rem,4vw,2.8rem);
+      color:var(--green-700); letter-spacing:.2px;
+    }
+    .hero p{margin:.7rem auto 0; max-width:800px; color:var(--green-500); font-weight:600}
+    .blob{
+      position:absolute; inset:auto -10% -40% auto; width:min(50vw,540px); opacity:.12;
+      filter:grayscale(10%) contrast(95%); pointer-events:none;
+      transform:rotate(-8deg);
     }
 
-    section {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
+    main{max-width:1100px; margin:0 auto; padding:2rem 6% 3rem}
+
+    /* ===== Section headers ===== */
+    .section-title{
+      color:var(--green-700);
+      border-left:6px solid var(--green-300);
+      padding-left:.75rem; margin:0 0 1.1rem; font-size:1.35rem;
     }
 
-    .sessions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+    /* ===== Cards ===== */
+    .grid{
+      display:grid; gap:1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card{
+      position:relative; background:var(--card); border:1px solid var(--ring); border-radius:var(--radius);
+      padding:1.1rem 1.15rem; box-shadow:var(--elev); overflow:hidden;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .card::after{
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,0), rgba(106,153,78,.06));
+      opacity:0; transition:opacity .25s ease;
+    }
+    .card:hover{transform:translateY(-4px); box-shadow:0 14px 40px rgba(0,0,0,.12); border-color:rgba(0,0,0,.12)}
+    .card:hover::after{opacity:1}
+    .icon-badge{
+      width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
+      background:linear-gradient(145deg, var(--sand), #fff); border:1px solid var(--ring); color:var(--green-500);
+      box-shadow:0 6px 20px rgba(0,0,0,.06); margin-bottom:.6rem; font-size:20px;
+    }
+    .card h3{margin:.15rem 0 .35rem; color:var(--green-700); font-size:1.1rem}
+    .muted{color:var(--muted)}
+
+    .chip{
+      display:inline-block; font-size:.8rem; font-weight:700; color:#2c3e50;
+      background:#fff3e0; border:1px solid rgba(0,0,0,.05);
+      padding:.2rem .55rem; border-radius:999px; margin:.15rem .25rem .15rem 0;
     }
 
-    .session-card {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    .cta-row{display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.65rem}
+    .btn{
+      background:var(--green-500); color:#fff; border:none; border-radius:12px;
+      padding:.65rem 1rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.45rem;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 10px 26px rgba(0,0,0,.12)}
+    .btn.alt{background:var(--green-700)}
+    .btn.ghost{background:transparent; color:var(--green-700); border:1px solid var(--green-700)}
+    .btn:focus-visible{outline:2px solid var(--green-300); outline-offset:2px}
+
+    /* ===== Steps / Flow ===== */
+    .steps{display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .step{background:var(--card); border:1px solid var(--ring); border-radius:var(--radius); padding:1rem; box-shadow:var(--elev); position:relative}
+    .step .num{
+      position:absolute; top:-12px; left:-12px; width:42px; height:42px; border-radius:50%;
+      background:var(--green-500); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; box-shadow:var(--elev)
     }
 
-    .session-card h3 {
-      margin-top: 0;
-      color: #6a994e;
+    /* ===== Testimonials slider ===== */
+    .slider{
+      position:relative; overflow:hidden; border-radius:var(--radius); background:var(--card); border:1px solid var(--ring); box-shadow:var(--elev);
+    }
+    .slides{display:flex; transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+    .t-card{
+      flex:0 0 100%; padding:1.2rem 1.2rem 1.4rem;
+    }
+    .t-quote{font-style:italic; border-left:5px solid var(--green-300); padding-left:.9rem; margin:.3rem 0 .4rem}
+    .t-author{color:var(--green-700); font-weight:800}
+    .slider-nav{
+      position:absolute; inset:auto 0 .35rem 0; display:flex; justify-content:center; gap:.35rem;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;background:var(--ring); border:1px solid var(--green-300); cursor:pointer;
+    }
+    .dot[aria-current="true"]{background:var(--green-500)}
+
+    /* ===== FAQ ===== */
+    .faq{display:grid; gap:.8rem}
+    details{
+      background:var(--card); border:1px solid var(--ring); border-radius:12px; padding:.8rem 1rem;
+      transition:background .25s ease, border-color .25s ease;
+    }
+    details[open]{border-color:rgba(0,0,0,.12)}
+    summary{cursor:pointer; list-style:none; font-weight:800; color:var(--green-700)}
+    summary::-webkit-details-marker{display:none}
+
+    /* ===== Sticky CTA ===== */
+    .floating-cta{
+      position:fixed; right:18px; bottom:18px; z-index:999;
+      display:flex; gap:.5rem; flex-direction:column;
+    }
+    .floating-cta .btn{box-shadow:0 12px 30px rgba(0,0,0,.18)}
+    .floating-cta .btn.secondary{background:#fff; color:var(--green-700); border:1px solid var(--ring)}
+
+    /* ===== Footer ===== */
+    footer{background:var(--green-700); color:var(--bg); text-align:center; padding:1.6rem 6%}
+    footer a{color:var(--gold); text-decoration:none}
+
+    /* ===== Appear on scroll ===== */
+    .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* ===== Modal (QR) ===== */
+    .modal{
+      position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:1001;
+    }
+    .modal.open{display:flex}
+    .modal-dialog{
+      width:min(92vw,440px); background:var(--card); border:1px solid var(--ring); border-radius:18px; box-shadow:var(--elev);
+      padding:1rem 1.2rem 1.2rem; position:relative;
+    }
+    .modal-close{
+      position:absolute; top:10px; right:10px; width:40px;height:40px;border-radius:10px;border:1px solid var(--ring); background:transparent; cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;font-size:18px;
+    }
+    .qr{
+      width:100%; max-width:320px; margin:.4rem auto .6rem; border-radius:14px; border:1px solid var(--ring);
     }
 
-    .button {
-      background: #00796b;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-
-    /* Testimonials */
-    .testimonials {
-      margin-top: 2rem;
-      background: #fff3e0;
-      padding: 1rem;
-      border-radius: 10px;
-    }
-
-    .testimonial {
-      margin-bottom: 1rem;
-      border-left: 5px solid #a7c957;
-      padding-left: 1rem;
-      font-style: italic;
-    }
-
-    /* QR Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 400px;
-      text-align: center;
-    }
-
-    .modal-content img {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    footer {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-
-    .copy-btn {
-      background: #386641;
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      margin-top: 0.5rem;
-      cursor: pointer;
+    /* ===== Prefers reduced motion ===== */
+    @media (prefers-reduced-motion: reduce){
+      .slides{transition:none}
+      .reveal{transition:none}
+      .card,.btn{transition:none}
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>🌸 Sacred 1-to-1 Sessions with Samarpan</h1>
-    <p>Personal guidance in Yoga, Ayurveda & Spiritual Growth</p>
-  </header>
-
-  <section>
-    <h2>✨ Offerings</h2>
-    <div class="sessions-grid">
-      <div class="session-card">
-        <h3>🧘 Yoga & Meditation Guidance</h3>
-        <p>Experience personalized yoga asanas, pranayama, and meditation practices crafted for your lifestyle. Suitable for both beginners and advanced seekers.</p>
-      </div>
-      <div class="session-card">
-        <h3>🌿 Ayurveda & Lifestyle Consultation</h3>
-        <p>Practical guidance rooted in Ayurveda Biology—covering diet, daily routines, and natural remedies to harmonize your body and mind.</p>
-      </div>
-      <div class="session-card">
-        <h3>🕉️ Mantra Sadhana Mentorship</h3>
-        <p>Step-by-step support in mantra japa, discipline in practice, and inner connection through sacred sound vibrations.</p>
-      </div>
-      <div class="session-card">
-        <h3>🌸 Yoga Nidra (Yogic Sleep)</h3>
-        <p>Enter deep relaxation and subconscious healing through the practice of Yoga Nidra—restoring balance and inner clarity.</p>
-      </div>
-      <div class="session-card">
-        <h3>✨ Spiritual Counselling</h3>
-        <p>A compassionate space to reflect, ask, and receive guidance for spiritual and personal growth on your journey within.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>📌 Session Flow & Details</h2>
-    <p>
-      ⏳ <b>Duration:</b> 30–60 minutes (flexible)<br>
-      📡 <b>Format:</b> Online (Zoom/Google Meet) or In-person (on request)<br>
-      🧭 <b>Flow:</b> Short Check-in → Guidance/Practice → Reflections & Q&A
-    </p>
-    <p>
-      🕰️ <b>Availability:</b> Mon–Sun, 6:00–8:00 PM IST<br>
-      💰 <b>Contribution:</b> Donation-based (Pay-as-you-wish)
-    </p>
-    <a href="https://forms.gle/msBaFxwWXCGUDjhF7" class="button" target="_blank">✨ Book Your Sacred Session ✨</a>
-    <button class="button" id="qrBtn">📱 Contribute via Google Pay</button>
-  </section>
-
-  <section class="testimonials">
-    <h2>🌟 Testimonials</h2>
-    <div class="testimonial">“Samarpan’s guidance has touched my soul and helped me bring harmony in life.” – A Sadhak</div>
-    <div class="testimonial">“The mantra sessions are profound and soothing. I felt deep peace within.” – Devika M.</div>
-    <div class="testimonial">“Yoga Nidra with him brought clarity and healing I had never experienced before.” – Veronica</div>
-    <div class="testimonial">“His Ayurveda tips were simple yet powerful, helping me regain balance.” – Ananda</div>
-    <div class="testimonial">“I felt truly listened to, guided with compassion, and inspired to walk my path.” – Aarav K.</div>
-  </section>
-
-  <!-- QR Modal -->
-  <div id="qrModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>📱 Scan & Contribute via Google Pay</h2>
-
-      <!-- Clickable QR -->
-      <a href="upi://pay?pa=theharshranjanofficial@oksbi&pn=Samarpan" target="_blank">
-        <img src="gpay-qr.jpg" alt="Google Pay QR Code">
-
+  <!-- Header -->
+  <header class="site-header">
+    <nav aria-label="Primary">
+      <a class="logo-area" href="index.html">
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" decoding="async"/>
+        <span>Harsh Ranjan (Samarpan)</span>
       </a>
 
-      <p>Or use UPI ID: <strong>theharshranjanofficial@oksbi</strong></p>
-      <button class="copy-btn" onclick="copyUPI()">📋 Copy UPI ID</button>
-      <br>
-      <a href="upi://pay?pa=theharshranjanofficial@oksbi&pn=Samarpan" class="button">💰 Pay via UPI App</a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a class="active" aria-current="page" href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html">Ayurveda</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="controls">
+        <button class="btn-icon" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+        <button class="btn-icon menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel">
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html" aria-current="page">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
+          <li><a href="trips.html">Trips</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>🌸 Sacred 1-to-1 Sessions</h1>
+    <p>Personal guidance in <b>Yoga</b>, <b>Ayurveda</b> & <b>Inner Work</b> — rooted in tradition, delivered with clarity.</p>
+    <img class="blob" src="img/logo.png" alt="" aria-hidden="true" />
+  </section>
+
+  <main>
+    <!-- Offerings -->
+    <section class="reveal" aria-labelledby="offerings">
+      <h2 id="offerings" class="section-title">✨ Offerings</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="icon-badge"><i class="fas fa-person-praying"></i></div>
+          <h3>Yoga & Meditation Guidance</h3>
+          <p class="muted">Personal sequences for mobility, stability, breath & nervous-system balance. Beginners welcome.</p>
+          <div>
+            <span class="chip">Asana</span><span class="chip">Prāṇāyāma</span><span class="chip">Meditation</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge"><i class="fas fa-seedling"></i></div>
+          <h3>Ayurveda & Lifestyle Consultation</h3>
+          <p class="muted">Prakriti-aware routines, food choices, simple remedies & seasonal adjustments for daily life.</p>
+          <div>
+            <span class="chip">Dinacharya</span><span class="chip">Ahara</span><span class="chip">Agni</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge"><i class="fas fa-om"></i></div>
+          <h3>Mantra Sādhanā Mentorship</h3>
+          <p class="muted">Devotional practice structure, japa discipline & inner alignment with your chosen mantra.</p>
+          <div>
+            <span class="chip">Japa</span><span class="chip">Bhāva</span><span class="chip">Śraddhā</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge"><i class="fas fa-moon"></i></div>
+          <h3>Yoga Nidra (Yogic Sleep)</h3>
+          <p class="muted">Systematic relaxation for deep rest, clarity & emotional integration.</p>
+          <div>
+            <span class="chip">Rest</span><span class="chip">Repair</span><span class="chip">Reset</span>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="icon-badge"><i class="fas fa-hands-praying"></i></div>
+          <h3>Spiritual Counselling</h3>
+          <p class="muted">Compassionate space to inquire, reflect, and navigate life transitions with steadiness.</p>
+          <div>
+            <span class="chip">Clarity</span><span class="chip">Grounding</span><span class="chip">Insight</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="cta-row" style="margin-top:1rem">
+        <a class="btn" href="https://forms.gle/msBaFxwWXCGUDjhF7" target="_blank" rel="noopener"><i class="fas fa-wand-magic-sparkles"></i> Book via Form</a>
+        <a class="btn alt" href="https://calendly.com/justtheself/30min" target="_blank" rel="noopener"><i class="fas fa-calendar-check"></i> Calendly</a>
+        <button class="btn ghost" id="openQR" type="button"><i class="fas fa-qrcode"></i> Contribute (UPI)</button>
+      </div>
+    </section>
+
+    <!-- Session Flow -->
+    <section class="reveal" aria-labelledby="flow" style="margin-top:1.6rem">
+      <h2 id="flow" class="section-title">📌 Session Flow & Details</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <h3 style="margin-top:.2rem">Check-in</h3>
+          <p class="muted">Brief history, current state, intention setting.</p>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <h3 style="margin-top:.2rem">Guided Practice</h3>
+          <p class="muted">Yoga/Ayurveda/Mantra focus tailored to your needs.</p>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <h3 style="margin-top:.2rem">Integration</h3>
+          <p class="muted">Take-home routine + notes; Q&A & next steps.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem">
+        <p>⏳ <b>Duration:</b> 30–60 minutes (flexible)<br>
+          📡 <b>Format:</b> Online (Zoom/Google Meet) or In-person (on request)<br>
+          🕰️ <b>Availability:</b> Mon–Sun, 6:00–8:00 PM IST<br>
+          💚 <b>Contribution:</b> Donation-based (Pay-as-you-wish)
+        </p>
+      </div>
+    </section>
+
+    <!-- Testimonials Slider -->
+    <section class="reveal" aria-labelledby="testimonials" style="margin-top:1.6rem">
+      <h2 id="testimonials" class="section-title">🌟 Testimonials</h2>
+      <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Testimonials">
+        <div class="slides" id="slides">
+          <figure class="t-card" aria-roledescription="slide">
+            <blockquote class="t-quote">“Samarpan’s guidance has touched my soul and helped me bring harmony in life.”</blockquote>
+            <figcaption class="t-author">— A Sādhak</figcaption>
+          </figure>
+          <figure class="t-card" aria-roledescription="slide">
+            <blockquote class="t-quote">“The mantra sessions are profound and soothing. I felt deep peace within.”</blockquote>
+            <figcaption class="t-author">— Devika M.</figcaption>
+          </figure>
+          <figure class="t-card" aria-roledescription="slide">
+            <blockquote class="t-quote">“Yoga Nidra brought clarity and healing I had never experienced before.”</blockquote>
+            <figcaption class="t-author">— Veronica</figcaption>
+          </figure>
+          <figure class="t-card" aria-roledescription="slide">
+            <blockquote class="t-quote">“Ayurveda tips were simple yet powerful, helping me regain balance.”</blockquote>
+            <figcaption class="t-author">— Ananda</figcaption>
+          </figure>
+          <figure class="t-card" aria-roledescription="slide">
+            <blockquote class="t-quote">“I felt truly listened to, guided with compassion, and inspired to walk my path.”</blockquote>
+            <figcaption class="t-author">— Aarav K.</figcaption>
+          </figure>
+        </div>
+        <div class="slider-nav" role="tablist" aria-label="Testimonials navigation">
+          <button class="dot" role="tab" aria-controls="slide-1" aria-current="true"></button>
+          <button class="dot" role="tab" aria-controls="slide-2"></button>
+          <button class="dot" role="tab" aria-controls="slide-3"></button>
+          <button class="dot" role="tab" aria-controls="slide-4"></button>
+          <button class="dot" role="tab" aria-controls="slide-5"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="reveal" aria-labelledby="faq" style="margin-top:1.6rem">
+      <h2 id="faq" class="section-title">❓ FAQ</h2>
+      <div class="faq">
+        <details>
+          <summary>Is this medical treatment?</summary>
+          <p class="muted">No. Sessions are educational & lifestyle-oriented. For medical concerns, consult a licensed physician.</p>
+        </details>
+        <details>
+          <summary>Do I need prior experience in Yoga or Ayurveda?</summary>
+          <p class="muted">Not at all. We start from where you are and build gently.</p>
+        </details>
+        <details>
+          <summary>How do donations work?</summary>
+          <p class="muted">Pay-as-you-wish. You may contribute via UPI (QR) after or before the session.</p>
+        </details>
+        <details>
+          <summary>Can I get a written routine?</summary>
+          <p class="muted">Yes. You’ll receive a concise after-session note with your practice outline.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating CTA -->
+  <div class="floating-cta" aria-hidden="false">
+    <a class="btn" href="https://forms.gle/msBaFxwWXCGUDjhF7" target="_blank" rel="noopener"><i class="fas fa-sparkles"></i> Book Session</a>
+    <button class="btn secondary" id="openQR2" type="button"><i class="fas fa-qrcode"></i> Contribute</button>
+  </div>
+
+  <!-- QR Modal (accessible) -->
+  <div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle" aria-describedby="qrDesc">
+    <div class="modal-dialog">
+      <button class="modal-close" id="closeQR" aria-label="Close"><i class="fas fa-xmark"></i></button>
+      <h3 id="qrTitle" style="margin:0;color:var(--green-700)">📱 Scan & Contribute via UPI</h3>
+      <p id="qrDesc" class="muted" style="margin:.25rem 0 .6rem">Support the work through a donation of your choice.</p>
+
+      <a href="upi://pay?pa=theharshranjanofficial@oksbi&pn=Samarpan" target="_blank" rel="noopener">
+        <img class="qr" src="gpay-qr.jpg" alt="Google Pay / UPI QR Code for theharshranjanofficial@oksbi" />
+      </a>
+
+      <p style="text-align:center;margin:.4rem 0 .2rem">UPI ID: <b>theharshranjanofficial@oksbi</b></p>
+      <div class="cta-row" style="justify-content:center">
+        <button class="btn alt" id="copyUPI" type="button"><i class="far fa-copy"></i> Copy UPI</button>
+        <a class="btn" href="upi://pay?pa=theharshranjanofficial@oksbi&pn=Samarpan" target="_blank" rel="noopener"><i class="fas fa-indian-rupee-sign"></i> Pay via UPI App</a>
+      </div>
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Harsh Ranjan (Samarpan) | Crafted with devotion</p>
+    <p>© <span id="year"></span> Harsh Ranjan (Samarpan) • Crafted with devotion</p>
   </footer>
 
+  <!-- Scripts -->
   <script>
-    // Modal QR
-    var modal = document.getElementById("qrModal");
-    var btn = document.getElementById("qrBtn");
-    var span = document.getElementsByClassName("close")[0];
+    /* ===== Utilities ===== */
+    function setTheme(mode){
+      const root=document.documentElement;
+      if(mode==='dark') root.setAttribute('data-theme','dark');
+      else if(mode==='light') root.setAttribute('data-theme','light');
+      else root.removeAttribute('data-theme');
+      localStorage.setItem('theme',mode);
+      const t=document.getElementById('themeToggle');
+      if(t){const isDark=mode==='dark'; t.setAttribute('aria-pressed',String(isDark)); t.textContent=isDark?'☀️':'🌙';}
+    }
+    function syncHeader(){ const h=document.querySelector('.site-header')?.offsetHeight||72; document.documentElement.style.setProperty('--h',h+'px'); }
 
-    btn.onclick = function () {
-      modal.style.display = "block";
-    }
-    span.onclick = function () {
-      modal.style.display = "none";
-    }
-    window.onclick = function (event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
+    document.addEventListener('DOMContentLoaded',()=>{
+      // Year
+      document.getElementById('year').textContent=new Date().getFullYear();
+
+      // Theme
+      setTheme(localStorage.getItem('theme')||'light');
+      document.getElementById('themeToggle').addEventListener('click',()=>{
+        const cur=document.documentElement.getAttribute('data-theme')||'light';
+        setTheme(cur==='dark'?'light':'dark');
+      });
+      syncHeader(); window.addEventListener('resize', syncHeader);
+
+      // Mobile nav (focus trap)
+      const menuToggle=document.getElementById('menuToggle');
+      const mobilePanel=document.getElementById('mobilePanel');
+      const mobileMenu=document.getElementById('mobileMenu');
+      let lastFocused=null;
+      const focusable='a[href], button:not([disabled])';
+
+      function trapFocus(container,e){
+        const nodes=container.querySelectorAll(focusable); if(!nodes.length) return;
+        const first=nodes[0], last=nodes[nodes.length-1];
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();}
+          else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}
+        }
       }
-    }
+      function openMenu(){
+        lastFocused=document.activeElement;
+        document.body.classList.add('nav-open');
+        mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded','true');
+        mobilePanel.addEventListener('keydown', focusHandler);
+        mobileMenu.querySelector('a')?.focus();
+      }
+      function closeMenu(){
+        document.body.classList.remove('nav-open');
+        mobilePanel.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded','false');
+        mobilePanel.removeEventListener('keydown', focusHandler);
+        lastFocused && lastFocused.focus();
+      }
+      function focusHandler(e){ trapFocus(mobilePanel,e); }
+      menuToggle.addEventListener('click',()=> menuToggle.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu());
+      mobileMenu.addEventListener('click', e=>{ if(e.target.closest('a')) closeMenu(); });
+      document.addEventListener('click', e=>{ if(window.matchMedia('(max-width:900px)').matches){ if(!e.target.closest('nav') && mobilePanel.classList.contains('open')) closeMenu(); }});
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+      window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width:900px)').matches) closeMenu(); });
 
-    // Copy UPI function
-    function copyUPI() {
-      navigator.clipboard.writeText("theharshranjanofficial@oksbi");
-      alert("✅ UPI ID copied: theharshranjanofficial@oksbi");
-    }
+      // Appear on scroll
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12});
+      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+      // Slider
+      const slides=document.getElementById('slides');
+      const dots=[...document.querySelectorAll('.dot')];
+      let index=0, timer=null;
+      function go(i){
+        index = (i + dots.length) % dots.length;
+        slides.style.transform=`translateX(-${index*100}%)`;
+        dots.forEach((d,di)=> d.setAttribute('aria-current', di===index ? 'true' : 'false'));
+      }
+      function auto(){ timer = setInterval(()=>go(index+1), 4500); }
+      dots.forEach((d,i)=> d.addEventListener('click',()=>{ clearInterval(timer); go(i); auto(); }));
+      go(0); auto();
+
+      // QR Modal
+      const modal=document.getElementById('qrModal');
+      const openQR=document.getElementById('openQR');
+      const openQR2=document.getElementById('openQR2');
+      const closeQR=document.getElementById('closeQR');
+      let lastFocusQR=null;
+
+      function openModal(){
+        lastFocusQR=document.activeElement;
+        modal.classList.add('open');
+        modal.querySelector('.modal-dialog').focus();
+        document.addEventListener('keydown', escClose);
+      }
+      function closeModal(){
+        modal.classList.remove('open');
+        document.removeEventListener('keydown', escClose);
+        lastFocusQR && lastFocusQR.focus();
+      }
+      function escClose(e){ if(e.key==='Escape') closeModal(); }
+
+      openQR.addEventListener('click', openModal);
+      openQR2.addEventListener('click', openModal);
+      closeQR.addEventListener('click', closeModal);
+      modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+
+      // Copy UPI
+      document.getElementById('copyUPI').addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText('theharshranjanofficial@oksbi');
+          const b=document.getElementById('copyUPI'); const txt=b.innerHTML;
+          b.innerHTML='Copied ✓'; setTimeout(()=> b.innerHTML=txt, 1500);
+        }catch{ alert('Copy not supported in this browser.'); }
+      });
+    });
   </script>
 </body>
-
 </html>
