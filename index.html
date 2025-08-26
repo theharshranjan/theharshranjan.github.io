@@ -2,256 +2,256 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- viewport-fit=cover for iPhone notches -->
+  <!-- Added viewport-fit=cover for iPhone notches -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness</title>
 
   <!-- SEO -->
-  <link rel="canonical" href="https://theharshranjan.github.io/" />
   <meta name="description" content="Harsh Ranjan (Samarpan) — Research Scholar and Ayurveda & Yoga practitioner. Explore Ayurveda insights, sessions, galleries, trips, and contact details." />
   <meta name="keywords" content="Ayurveda, Yoga, Wellness, Meditation, Harsh Ranjan, Samarpan, JNU" />
+  <link rel="canonical" href="/" />
 
   <!-- Social / Open Graph -->
   <meta property="og:title" content="Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness" />
   <meta property="og:description" content="Ayurveda, Yoga, and holistic wellness guidance by Harsh Ranjan (Samarpan)." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://theharshranjan.github.io/" />
-  <meta property="og:image" content="https://theharshranjan.github.io/website_dp.png" />
-  <meta property="og:image:alt" content="Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness" />
+  <meta property="og:image" content="website_dp.png" />
+  <meta property="og:image:alt" content="Profile image of Harsh Ranjan (Samarpan)" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://theharshranjan.github.io/website_dp.png" />
 
   <!-- Theming -->
   <meta name="theme-color" content="#609966" />
 
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#609966">
-  <meta name="msapplication-TileColor" content="#609966">
-  <!-- Fallbacks so favicon shows even if /icons/* are missing -->
-  <link rel="icon" href="logo.png" type="image/png">
-  <link rel="apple-touch-icon" href="website_dp.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <!-- Preconnects -->
+  <!-- Preconnects for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Lib CSS -->
+  <!-- AOS CSS -->
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- Swiper CSS (Testimonial Slider) -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <!-- Lightbox2 CSS (Gallery Popup) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
 
   <style>
-    :root{
-      --bg-cream:#edf1d6; --text:#263238;
-      --green-dark:#40513b; --green-main:#609966; --green-light:#9dc08b;
-      --accent-gold:#c5a880;
-      --header-h:64px;
+    :root {
+      --bg-cream: #edf1d6;
+      --text: #263238;
+      --green-dark: #40513b;
+      --green-main: #609966;
+      --green-light: #9dc08b;
+      --accent-gold: #c5a880;
     }
-    [data-theme="dark"]{
-      --bg-cream:#0f1a12; --text:#e6efe8;
-      --green-dark:#b5d0b8; --green-main:#87c99a; --green-light:#3a5f46;
-      --accent-gold:#e7caa0;
-    }
-
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg-cream); color:var(--text); line-height:1.6;
-      background-image:url('https://www.transparenttextures.com/patterns/white-paper.png');
-    }
-    img,picture,video,canvas,svg{max-width:100%;height:auto;display:block}
-    main[id], section[id]{scroll-margin-top:calc(var(--header-h) + 16px)}
-
-    /* Skip link */
-    .skip-link{position:absolute;left:8px;top:-40px;padding:.5rem .75rem;border-radius:.5rem;background:#fff;color:var(--green-dark);box-shadow:0 4px 10px rgba(0,0,0,.1);transition:top .2s;z-index:1001;text-decoration:none;font-weight:600}
-    .skip-link:focus{top:8px;outline:2px solid var(--green-main)}
-
-    a{color:inherit}
-    :focus-visible{outline:3px solid var(--green-main);outline-offset:2px}
-
-    /* Header / Nav */
-    .site-header{position:sticky;top:0;z-index:1000;background:var(--bg-cream);border-bottom:1px solid rgba(0,0,0,.06);backdrop-filter:saturate(140%) blur(4px);padding-top:env(safe-area-inset-top)}
-    nav{
-      max-width:1200px;margin:0 auto;padding:0.75rem 6%;
-      padding-left:max(6%, env(safe-area-inset-left)); padding-right:max(6%, env(safe-area-inset-right));
-      display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:var(--header-h)
-    }
-    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit;flex:1 1 auto;min-width:0;}
-    .logo-area img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light)}
-    .logo-area span{
-      font-family:'Playfair Display',serif;font-weight:700;color:var(--green-dark);letter-spacing:.2px;line-height:1;
-      max-width:58vw; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      font-size:clamp(1rem, 4.5vw, 1.25rem);
-    }
-    @media (min-width:901px){
-      .logo-area img{width:52px;height:52px}
-      .logo-area span{font-size:1.35rem; max-width:none}
+    [data-theme="dark"] {
+      --bg-cream: #0f1a12;
+      --text: #e6efe8;
+      --green-dark: #b5d0b8;
+      --green-main: #87c99a;
+      --green-light: #3a5f46;
+      --accent-gold: #e7caa0;
     }
 
-    .nav-right{display:flex;align-items:center;gap:.75rem}
-    .nav-links{list-style:none;display:flex;align-items:center;gap:1.25rem}
-    .nav-links a{text-decoration:none;color:var(--green-dark);font-weight:600;padding:.35rem .2rem;border-radius:.4rem}
-    .nav-links a:hover{color:var(--green-main)}
-    .nav-links a[aria-current="page"], .nav-links a.active{color:var(--green-main);text-decoration:underline;text-underline-offset:.2rem}
-
-    .theme-toggle{appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
-    .theme-toggle:hover{border-color:rgba(0,0,0,.2)}
-
-    .menu-toggle{
-      appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);width:44px;height:44px;border-radius:10px;
-      display:none;align-items:center;justify-content:center;cursor:pointer;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text);
+      line-height: 1.6;
+      background-image: url('https://www.transparenttextures.com/patterns/white-paper.png');
     }
-    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, background .3s}
-    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, top .3s, opacity .3s}
-    .menu-icon::before{top:-6px}
-    .menu-icon::after{top:6px}
-    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
-    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
-    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
 
-    /* Mobile panel base */
-    .mobile-panel{display:none}
+    /* ✅ Make media responsive and prevent stretching on iPhone/Android/desktop */
+    img, picture, video, canvas, svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* For sticky header offset when using anchor links */
+    main[id], section[id] { scroll-margin-top: 90px; }
+
+    /* Skip link for accessibility */
+    .skip-link {
+      position: absolute; left: 8px; top: -40px; padding: .5rem .75rem; border-radius: .5rem;
+      background: #ffffff; color: var(--green-dark); box-shadow: 0 4px 10px rgba(0,0,0,.1);
+      transition: top .2s ease; z-index: 1001; text-decoration: none; font-weight: 600;
+    }
+    .skip-link:focus { top: 8px; outline: 2px solid var(--green-main); }
+
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible, [role="button"]:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--green-main); outline-offset: 2px; }
+
+    /* Navbar */
+    .site-header { position: sticky; top: 0; z-index: 1000; background: var(--bg-cream); border-bottom: 1px solid rgba(0, 0, 0, 0.05); backdrop-filter: saturate(140%) blur(4px); }
+    nav { max-width: 1200px; margin: 0 auto; padding: 1rem 6%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo-area { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: inherit; }
+    .logo-area img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--green-light); }
+    .logo-area span { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+
+    .nav-right { display: flex; align-items: center; gap: .75rem; }
+
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 1.25rem; }
+    .nav-links a { text-decoration: none; color: var(--green-dark); font-weight: 600; padding: .2rem .1rem; border-radius: .4rem; }
+    .nav-links a:hover { color: var(--green-main); }
+    .nav-links a[aria-current="page"], .nav-links a.active { color: var(--green-main); text-decoration: underline; text-underline-offset: .2rem; }
+
+    /* Theme toggle */
+    .theme-toggle { appearance: none; background: transparent; border: 1px solid rgba(0,0,0,0.08); width: 40px; height: 40px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; }
+    .theme-toggle:hover { border-color: rgba(0,0,0,0.2); }
+
+    /* Hamburger button */
+    .menu-toggle { appearance: none; background: transparent; border: 1px solid rgba(0,0,0,0.08); width: 40px; height: 40px; border-radius: 8px; display: none; align-items: center; justify-content: center; cursor: pointer; }
+    .menu-icon { position: relative; width: 20px; height: 2px; background: var(--green-dark); transition: transform .3s ease, background .3s ease; }
+    .menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: var(--green-dark); transition: transform .3s ease, top .3s ease, opacity .3s ease; }
+    .menu-icon::before { top: -6px; }
+    .menu-icon::after { top: 6px; }
+    .menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+    .menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+    /* Mobile Menu (dropdown) */
+    .mobile-panel { display: none; }
 
     /* Hero */
-    .hero{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-      min-height:calc(100svh - var(--header-h));
-      background:linear-gradient(to bottom right, var(--green-light), var(--bg-cream));padding:0 1rem
-    }
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw + 1rem,3.2rem);line-height:1.25;color:var(--green-dark);max-width:800px}
-    .hero p{margin-top:1rem;font-size:1.1rem;color:var(--green-main)}
-    .btn{margin-top:1.25rem;background:var(--green-dark);color:#fff;padding:.9rem 1.2rem;font-size:1rem;border-radius:12px;text-decoration:none;transition:transform .12s, box-shadow .25s, background .25s;display:inline-block;box-shadow:0 8px 16px rgba(64,81,59,.2)}
-    .btn:hover{background:var(--green-main);box-shadow:0 10px 18px rgba(64,81,59,.28);transform:translateY(-1px)}
-    .btn:active{transform:translateY(0);box-shadow:0 6px 12px rgba(64,81,59,.18)}
+    .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 88vh; background: linear-gradient(to bottom right, var(--green-light), var(--bg-cream)); padding: 0 1rem; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw + 1rem, 3.2rem); line-height: 1.25; color: var(--green-dark); max-width: 800px; }
+    .hero p { margin-top: 1rem; font-size: 1.1rem; color: var(--green-main); }
+    .btn { margin-top: 1.25rem; background: var(--green-dark); color: #fff; padding: .85rem 1.15rem; font-size: 1rem; border-radius: 10px; text-decoration: none; transition: transform .12s ease, box-shadow .2s ease, background .25s ease; display: inline-block; box-shadow: 0 8px 16px rgba(64,81,59,.2); }
+    .btn:hover { background: var(--green-main); box-shadow: 0 10px 18px rgba(64,81,59,.28); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); box-shadow: 0 6px 12px rgba(64,81,59,.18); }
 
-    section{padding:4.5rem 8%}
+    section { padding: 5rem 8%; }
 
     /* About */
-    .about{display:grid;grid-template-columns:minmax(0, 320px) 1fr;gap:2rem;align-items:center}
-    .about img{width:100%;max-width:340px;height:auto;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.1)}
-    .about-text h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;color:var(--green-dark)}
+    .about { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 2rem; align-items: center; }
+    /* ✅ no forced height; real aspect ratio preserved */
+    .about img { width: 100%; max-width: 340px; height: auto; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .about-text h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 1rem; color: var(--green-dark); }
 
     /* Cards */
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
-    .card{background:var(--green-light);padding:1.6rem;border-radius:16px;text-align:center;transition:transform .25s, box-shadow .25s;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-    .card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
-    .card h3{font-family:'Playfair Display',serif;margin:.6rem 0 .25rem;color:var(--green-dark)}
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+    .card { background: var(--green-light); padding: 1.6rem; border-radius: 16px; text-align: center; transition: transform .25s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .card:hover { transform: translateY(-4px); }
+    .card h3 { font-family: 'Playfair Display', serif; margin: .6rem 0 .25rem; color: var(--green-dark); }
 
-    /* Gallery preview */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem}
-    .gallery img{width:100%;height:auto;border-radius:12px;transition:transform .25s;pointer-events:none}
-    .gallery img:hover{transform:scale(1.03)}
+    /* Gallery */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .9rem; }
+    /* ✅ keep tiles fluid, no distortion */
+    .gallery img { width: 100%; height: auto; border-radius: 12px; transition: transform .25s ease; }
+    .gallery img:hover { transform: scale(1.03); }
 
-    /* Testimonials */
-    .testimonials{background:var(--green-main);color:#fff;padding:4.5rem 8%;text-align:center}
-    .swiper{width:100%;max-width:700px;margin:auto}
-    .swiper-slide{font-style:italic;font-size:1.05rem;padding:2rem}
-
-    /* Trips */
-    .yatra{background:var(--bg-cream);text-align:center}
-    .yatra .swiper-slide{font-style:normal;font-size:1.05rem;padding:1.5rem;border-radius:16px;background:var(--green-light);color:var(--green-dark);box-shadow:0 4px 12px rgba(0,0,0,.06)}
-
-    /* Contact */
-    .contact-wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-    .contact-wrap input,.contact-wrap textarea{padding:.85rem;width:100%;border-radius:10px;border:1px solid #cfd8dc;background:#fff}
-    .contact-wrap label{display:block;font-weight:700;margin-bottom:.25rem;color:var(--green-dark)}
+    /* Testimonials (Swiper) */
+    .testimonials { background: var(--green-main); color: #fff; padding: 5rem 8%; text-align: center; }
+    .swiper { width: 100%; max-width: 700px; margin: auto; }
+    .swiper-slide { font-style: italic; font-size: 1.05rem; padding: 2rem; }
 
     /* Footer */
-    footer{background:var(--green-dark);color:var(--bg-cream);text-align:center;padding:2rem}
-    footer a{color:var(--accent-gold);text-decoration:none;margin:0 .5rem}
+    footer { background: var(--green-dark); color: var(--bg-cream); text-align: center; padding: 2rem; }
+    footer a { color: var(--accent-gold); text-decoration: none; margin: 0 .5rem; }
 
-    /* Scroll-to-Top & progress */
-    #scrollTopBtn{position:fixed;bottom:30px;right:30px;background:var(--green-dark);color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s;z-index:1000}
-    #scrollTopBtn.show{opacity:1;visibility:visible}
-    #scrollTopBtn:hover{background:var(--green-main)}
-    #scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--green-main);z-index:1200;transition:width .1s linear}
+    /* Scroll-to-Top Button */
+    #scrollTopBtn { position: fixed; bottom: 30px; right: 30px; background: var(--green-dark); color: #fff; border: none; border-radius: 50%; width: 45px; height: 45px; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; z-index: 1000; }
+    #scrollTopBtn.show { opacity: 1; visibility: visible; }
+    #scrollTopBtn:hover { background: var(--green-main); }
 
-    /* Mobile */
-    @media (max-width: 900px){
-      .about{grid-template-columns:1fr}
-      .nav-links{display:none}
-      .menu-toggle, .theme-toggle{display:inline-flex; width:48px; height:48px;}
+    /* Scroll progress bar */
+    #scrollProgress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: var(--green-main); z-index: 1200; transition: width .1s linear; }
 
-      .mobile-panel{
-        display:block; position:fixed; inset:calc(var(--header-h) + env(safe-area-inset-top)) 0 0 0;
-        background:var(--bg-cream); border-top:1px solid rgba(0,0,0,.06); overflow:auto; max-height:70vh;
-        transform-origin:top; z-index:1001; padding:1rem 6%;
-        opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .22s ease, transform .22s ease;
-      }
-      .mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
+    /* Mobile Styles */
+    @media (max-width: 900px) {
+      .about { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .menu-toggle { display: inline-flex; }
 
-      /* CRITICAL: when hidden, actually hide */
-      .mobile-panel[hidden]{ display:none !important; }
+      /* slide-down panel */
+      .mobile-panel { display: block; position: absolute; left: 0; right: 0; top: 100%; background: var(--bg-cream); border-bottom: 1px solid rgba(0,0,0,0.06); overflow: hidden; max-height: 0; transform-origin: top; transition: max-height .35s ease; }
+      .mobile-panel.open { max-height: 70vh; }
 
-      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.2rem}
-      .mobile-menu a{display:block;padding:1rem 0;text-decoration:none;font-weight:800;color:var(--green-dark);border-radius:10px}
-      .mobile-menu a:active{background:rgba(0,0,0,.04)}
-      body.nav-open{height:100svh;overflow:hidden;overscroll-behavior:contain;touch-action:none}
+      .mobile-menu { list-style: none; display: flex; flex-direction: column; gap: .6rem; padding: .8rem 6% 1rem; }
+      .mobile-menu a { display: block; padding: .7rem 0; text-decoration: none; font-weight: 700; color: var(--green-dark); border-radius: 8px; }
+      .mobile-menu a:active { background: rgba(0,0,0,0.04); }
+
+      /* Prevent body scroll when mobile menu is open */
+      body.nav-open { height: 100vh; overflow: hidden; }
     }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto}
-      .card, .gallery img, .btn, .menu-icon, .mobile-panel{transition:none !important}
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto; }
+      .card, .gallery img, .btn, .menu-icon, .mobile-panel { transition: none !important; }
     }
 
-    @media (prefers-color-scheme: dark){
-      :root:not([data-theme="light"]){--bg-cream:#0f1a12;--text:#e6efe8}
-      body{background-image:none}
-      .site-header{border-bottom-color:rgba(255,255,255,.08)}
-      .card{box-shadow:none}
-      .gallery img{filter:brightness(.95)}
-      footer a{color:#e7caa0}
+    /* Optional dark mode: we also support OS preference via media query as a fallback */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --bg-cream: #0f1a12; --text: #e6efe8; }
+      body { background-image: none; }
+      .site-header { border-bottom-color: rgba(255,255,255,.08); }
+      .card { box-shadow: none; }
+      .gallery img { filter: brightness(.95); }
+      footer a { color: #e7caa0; }
     }
 
-    @keyframes spin{from{transform:translateY(-50%) rotate(0)} to{transform:translateY(-50%) rotate(360deg)}}
+    /* Spinner Animation */
+    @keyframes spin { from { transform:translateY(-50%) rotate(0deg); } to { transform:translateY(-50%) rotate(360deg); } }
   </style>
 </head>
 <body>
   <a href="#home" class="skip-link">Skip to content</a>
+
+  <!-- Scroll progress bar -->
   <div id="scrollProgress" aria-hidden="true"></div>
 
-  <!-- Header -->
+  <!-- Header / Navbar -->
   <header class="site-header" data-aos="fade-down">
     <nav aria-label="Primary">
       <a class="logo-area" href="#home" aria-label="Home">
-        <img src="logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
+        <!-- ✅ size attributes now match CSS to avoid blur/CLS -->
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" fetchpriority="high" decoding="async" />
         <span>Harsh Ranjan (Samarpan)</span>
       </a>
 
       <div class="nav-right">
+        <!-- Desktop links -->
         <ul class="nav-links" id="desktopMenu">
           <li><a href="about.html">About</a></li>
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact.html">Contact</a></li>
         </ul>
 
+        <!-- Theme toggle -->
         <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
 
-        <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu" title="Menu">
+        <!-- Hamburger (mobile) -->
+        <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
           <span class="menu-icon" aria-hidden="true"></span>
         </button>
       </div>
 
       <!-- Mobile dropdown -->
-      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
+      <div class="mobile-panel" id="mobilePanel">
         <ul class="mobile-menu" id="mobileMenu">
           <li><a href="about.html">About</a></li>
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -266,6 +266,7 @@
 
   <!-- About -->
   <section id="about" class="about" aria-labelledby="about-heading" data-aos="fade-up">
+    <!-- ✅ Removed width/height so the actual photo ratio is respected everywhere -->
     <img src="your-photo.jpg" alt="Photo of Harsh Ranjan" loading="lazy" decoding="async" />
     <div class="about-text">
       <h2 id="about-heading">About Me</h2>
@@ -276,11 +277,14 @@
     </div>
   </section>
 
-  <!-- Ayurveda -->
+  <!-- Ayurveda Section -->
   <section id="ayurveda" aria-labelledby="ayurveda-heading" data-aos="fade-up">
     <h2 id="ayurveda-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Ayurveda</h2>
     <div style="max-width:900px; margin:auto; text-align:center;">
-      <p>Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit. Discover natural therapies, daily wellness routines, and timeless wisdom that nurtures inner harmony.</p>
+      <p>
+        Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit.
+        Discover natural therapies, daily wellness routines, and timeless wisdom that nurtures inner harmony.
+      </p>
       <a href="ayurveda.html" class="btn" style="margin-top:1.5rem;">Explore Ayurveda</a>
     </div>
   </section>
@@ -308,63 +312,64 @@
     </div>
   </section>
 
-  <!-- Gallery (preview only) -->
+  <!-- Gallery -->
   <section id="gallery" aria-labelledby="gallery-heading" data-aos="fade-up">
     <h2 id="gallery-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Gallery</h2>
-    <div class="gallery" aria-label="Photo tiles (non-interactive on home)">
-      <figure><img src="your-image1.jpg" alt="Meditative posture" loading="lazy" decoding="async" /></figure>
-      <figure><img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" decoding="async" /></figure>
-      <figure><img src="your_image3.jpg" alt="Yoga practice at sunrise" loading="lazy" decoding="async" /></figure>
+    <div class="gallery">
+      <!-- ✅ Removed width/height; keeps natural ratios on all phones -->
+      <a href="gallery1.jpg" data-lightbox="mygallery" data-title="Meditative posture">
+        <img src="your-image1.jpg" alt="Meditative posture" loading="lazy" decoding="async" />
+      </a>
+      <a href="gallery2.jpg" data-lightbox="mygallery" data-title="Ayurvedic herbs">
+        <img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" decoding="async" />
+      </a>
+      <a href="gallery3.jpg" data-lightbox="mygallery" data-title="Yoga practice">
+        <img src="your_image3.jpg" alt="Yoga practice at sunrise" loading="lazy" decoding="async" />
+      </a>
     </div>
   </section>
 
-  <!-- Upcoming Trips -->
-  <section id="trips" class="yatra" aria-labelledby="trips-heading" data-aos="fade-up">
+  <!-- Upcoming Yatra Section -->
+  <section id="trips" aria-labelledby="trips-heading" style="padding:5rem 8%; text-align:center; background:var(--bg-cream);" data-aos="fade-up">
     <h2 id="trips-heading" style="font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--green-dark); margin-bottom:1rem;">Upcoming Trips</h2>
-    <div class="swiper yatra-swiper" aria-label="Upcoming Trips slider" style="max-width:700px; margin:auto;">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Rishikesh</div>
-        <div class="swiper-slide">Rikhiapeeth</div>
-        <div class="swiper-slide">Trambakeshwar, Nashik</div>
-        <div class="swiper-slide">Bihar School of Yoga</div>
-      </div>
-      <div class="swiper-pagination" aria-label="Trips slider pagination"></div>
-    </div>
-    <a href="trips.html" class="btn" style="margin-top:2rem;">View My Past Journeys</a>
+    <p style="font-size:1.1rem; color:var(--green-main); margin-bottom:2rem;">
+      Upcoming Yatra: <span style="color:var(--accent-gold); font-weight:600;">To Be Announced</span>
+    </p>
+    <a href="trips.html" class="btn">View My Past Journeys</a>
   </section>
 
   <!-- Testimonials -->
   <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" data-aos="fade-up">
     <h2 id="testimonials-heading" style="font-family:'Playfair Display',serif; margin-bottom:2rem;">Testimonials</h2>
-    <div class="swiper testimonials-swiper" aria-label="Testimonials slider">
+    <div class="swiper" aria-label="Testimonials slider">
       <div class="swiper-wrapper">
         <div class="swiper-slide">“Harsh’s sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!”</div>
         <div class="swiper-slide">“The perfect blend of Ayurveda &amp; Yoga. His teachings changed my daily routine for the better.”</div>
         <div class="swiper-slide">“A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully.”</div>
       </div>
-      <div class="swiper-pagination" aria-label="Testimonials slider pagination" aria-live="polite"></div>
+      <div class="swiper-pagination" aria-label="Slider pagination" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- Contact (kept on home) -->
+  <!-- Contact -->
   <section id="contact" aria-labelledby="contact-heading" data-aos="fade-up">
     <h2 id="contact-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Contact Me</h2>
 
-    <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" class="contact-wrap" novalidate>
+    <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" style="max-width:600px; margin:auto; display:flex; flex-direction:column; gap:1rem;" novalidate>
       <div>
-        <label for="name">Your Name</label>
-        <input id="name" type="text" name="name" placeholder="Your Name" required autocomplete="name" />
+        <label for="name" style="display:block; font-weight:600; margin-bottom:.25rem;">Your Name</label>
+        <input id="name" type="text" name="name" placeholder="Your Name" required autocomplete="name" style="padding:.8rem; width:100%; border-radius:6px; border:1px solid #ccc;" />
       </div>
       <div>
-        <label for="email">Your Email</label>
-        <input id="email" type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+        <label for="email" style="display:block; font-weight:600; margin-bottom:.25rem;">Your Email</label>
+        <input id="email" type="email" name="email" placeholder="you@example.com" required autocomplete="email" style="padding:.8rem; width:100%; border-radius:6px; border:1px solid #ccc;" />
       </div>
       <div>
-        <label for="message">Your Message</label>
-        <textarea id="message" name="message" placeholder="How can I help you?" rows="5" required></textarea>
+        <label for="message" style="display:block; font-weight:600; margin-bottom:.25rem;">Your Message</label>
+        <textarea id="message" name="message" placeholder="How can I help you?" rows="5" required style="padding:.8rem; width:100%; border-radius:6px; border:1px solid #ccc;"></textarea>
       </div>
 
-      <!-- Honeypot -->
+      <!-- Optional honeypot to reduce spam -->
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true" />
 
       <button type="submit" class="btn" id="submitBtn" style="position:relative; align-self:flex-start;">
@@ -387,19 +392,18 @@
     </p>
   </footer>
 
-  <!-- Scroll-to-Top -->
+  <!-- Scroll-to-Top Button (only one) -->
   <button id="scrollTopBtn" aria-label="Scroll to top" title="Back to top">↑</button>
 
-  <!-- JSON-LD -->
+  <!-- JSON-LD: Person Schema -->
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Harsh Ranjan (Samarpan)",
-    "description":"Ayurveda and Yoga practitioner; Research Scholar at JNU.",
-    "url":"https://theharshranjan.github.io/",
-    "image":"https://theharshranjan.github.io/logo.png",
-    "sameAs":[
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Harsh Ranjan (Samarpan)",
+    "description": "Ayurveda and Yoga practitioner; Research Scholar at JNU.",
+    "url": "/",
+    "sameAs": [
       "https://www.instagram.com/justtheself/",
       "https://www.youtube.com/@theharshranjan",
       "https://www.linkedin.com/in/theharshranjanofficial/"
@@ -407,165 +411,196 @@
   }
   </script>
 
-  <!-- JS Libraries (deferred) -->
+  <!-- JS Libraries (deferred for performance) -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" defer></script>
 
   <!-- App Scripts -->
   <script defer>
-    function setTheme(mode){
-      const root=document.documentElement;
-      root.setAttribute('data-theme', mode==='dark'?'dark':'light');
+    // Utility: get & set theme
+    function setTheme(mode) {
+      const root = document.documentElement;
+      if (mode === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+      } else if (mode === 'light') {
+        root.setAttribute('data-theme', 'light');
+      } else {
+        root.removeAttribute('data-theme');
+      }
       localStorage.setItem('theme', mode);
-      const toggle=document.getElementById('themeToggle');
-      if(toggle){
-        const isDark=mode==='dark';
+      const toggle = document.getElementById('themeToggle');
+      if (toggle) {
+        const isDark = mode === 'dark';
         toggle.setAttribute('aria-pressed', String(isDark));
-        toggle.textContent=isDark?'☀️':'🌙';
-        toggle.title=isDark?'Switch to light mode':'Switch to dark mode';
-        const metaTheme=document.querySelector('meta[name="theme-color"]');
-        if(metaTheme) metaTheme.setAttribute('content', isDark ? '#0f1a12' : '#609966');
+        toggle.textContent = isDark ? '☀️' : '🌙';
+        toggle.title = isDark ? 'Switch to light mode' : 'Switch to dark mode';
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Year
-      const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+      // Year in footer
+      const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
 
-      // Theme
-      const saved=localStorage.getItem('theme'); setTheme(saved==='dark'?'dark':'light');
-      document.getElementById('themeToggle')?.addEventListener('click', ()=>{
-        const current=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
-        setTheme(current==='dark'?'light':'dark');
+      // Theme init
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(saved || (prefersDark ? 'dark' : 'light'));
+      const themeToggle = document.getElementById('themeToggle');
+      themeToggle && themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || (prefersDark ? 'dark' : 'light');
+        setTheme(current === 'dark' ? 'light' : 'dark');
       });
 
-      // AOS
-      if(window.AOS) AOS.init({ duration:900, once:true });
+      // AOS Init
+      if (window.AOS) AOS.init({ duration: 1000, once: true });
 
-      // Swipers
-      if(window.Swiper){
-        new Swiper('.testimonials-swiper',{
-          loop:true,
-          autoplay:{delay:3000,disableOnInteraction:false},
-          pagination:{el:'.testimonials .swiper-pagination', clickable:true}
-        });
-        new Swiper('.yatra-swiper',{
-          loop:true,
-          autoplay:{delay:2500,disableOnInteraction:false},
-          pagination:{el:'.yatra .swiper-pagination', clickable:true}
+      // Swiper Init
+      if (window.Swiper) {
+        new Swiper('.swiper', {
+          loop: true,
+          autoplay: { delay: 3000, disableOnInteraction: false },
+          pagination: { el: '.swiper-pagination', clickable: true },
         });
       }
 
-      // Scroll-to-top
-      const scrollBtn=document.getElementById('scrollTopBtn');
-      const onScrollTopBtn=()=>{ (window.scrollY>200) ? scrollBtn.classList.add('show') : scrollBtn.classList.remove('show'); };
-      window.addEventListener('scroll', onScrollTopBtn, { passive:true });
-      scrollBtn?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+      // Scroll-to-Top Button
+      const scrollBtn = document.getElementById('scrollTopBtn');
+      const onScrollTopBtn = () => { (window.scrollY > 200) ? scrollBtn.classList.add('show') : scrollBtn.classList.remove('show'); };
+      window.addEventListener('scroll', onScrollTopBtn, { passive: true });
+      scrollBtn && scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-      // Progress bar
-      const progress=document.getElementById('scrollProgress');
-      const onScrollProgress=()=>{
-        const doc=document.documentElement;
-        const scrollTop=doc.scrollTop||document.body.scrollTop;
-        const height=doc.scrollHeight-doc.clientHeight;
-        const pct=height>0?(scrollTop/height)*100:0;
-        progress.style.width=pct+'%';
+      // Scroll progress bar
+      const progress = document.getElementById('scrollProgress');
+      const onScrollProgress = () => {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop;
+        const height = doc.scrollHeight - doc.clientHeight;
+        const pct = height > 0 ? (scrollTop / height) * 100 : 0;
+        progress.style.width = pct + '%';
       };
-      window.addEventListener('scroll', onScrollProgress, { passive:true }); onScrollProgress();
+      window.addEventListener('scroll', onScrollProgress, { passive: true });
+      onScrollProgress();
 
-      // Scroll spy (in-page only)
-      const navLinks=Array.from(document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]'));
-      const sections=Array.from(document.querySelectorAll('main[id], section[id]'));
-      const linkMap=new Map(navLinks.map(a=>[a.getAttribute('href').slice(1), a]));
-      const clearCurrent=()=>navLinks.forEach(a=>a.removeAttribute('aria-current'));
-      const io=new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          const id=entry.target.getAttribute('id'); const link=linkMap.get(id); if(!link) return;
-          if(entry.isIntersecting){
-            navLinks.forEach(a=>a.classList.remove('active'));
-            clearCurrent();
+      // Scroll spy (highlights active in-page link)
+      const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]'));
+      const sections = Array.from(document.querySelectorAll('main[id], section[id]'));
+      const linkMap = new Map(navLinks.map(a => [a.getAttribute('href').slice(1), a]));
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          const link = linkMap.get(id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            navLinks.forEach(a => a.classList.remove('active'));
             link.classList.add('active');
-            link.setAttribute('aria-current','page');
           }
         });
-      },{ rootMargin:'-45% 0px -45% 0px', threshold:0.01 });
-      sections.forEach(sec=>io.observe(sec));
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0.01 });
+      sections.forEach(sec => io.observe(sec));
 
-      // Contact form
-      const form=document.getElementById('contactForm');
-      const thankYou=document.getElementById('thankYouMessage');
-      const errorMsg=document.getElementById('errorMessage');
-      const submitBtn=document.getElementById('submitBtn');
-      const btnText=document.getElementById('btnText');
-      const btnSpinner=document.getElementById('btnSpinner');
-      const show=el=>el.style.opacity='1';
-      const hide=el=>el.style.opacity='0';
+      // Contact Form (Formspree) with feedback + simple validation
+      const form = document.getElementById('contactForm');
+      const thankYou = document.getElementById('thankYouMessage');
+      const errorMsg = document.getElementById('errorMessage');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const btnSpinner = document.getElementById('btnSpinner');
 
-      form.addEventListener('submit', async (e)=>{
+      const show = (el) => { el.style.opacity = '1'; };
+      const hide = (el) => { el.style.opacity = '0'; };
+
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        if(!form.checkValidity()){ form.reportValidity(); return; }
-        const formData=new FormData(form);
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        const formData = new FormData(form);
         hide(thankYou); hide(errorMsg);
-        submitBtn.disabled=true; btnText.textContent='Sending...'; btnSpinner.style.display='inline-block';
-        try{
-          const response=await fetch(form.action,{method:form.method, body:formData, headers:{'Accept':'application/json'}});
-          if(response.ok){ form.reset(); show(thankYou); thankYou.scrollIntoView({behavior:'smooth', block:'nearest'}); setTimeout(()=>hide(thankYou),3500); }
-          else{ throw new Error('Network error'); }
-        }catch(err){
-          show(errorMsg); errorMsg.scrollIntoView({behavior:'smooth', block:'nearest'}); setTimeout(()=>hide(errorMsg),3500);
-        }finally{
-          submitBtn.disabled=false; btnText.textContent='Send Message'; btnSpinner.style.display='none';
+        submitBtn.disabled = true; btnText.textContent = 'Sending...'; btnSpinner.style.display = 'inline-block';
+        try {
+          const response = await fetch(form.action, { method: form.method, body: formData, headers: { 'Accept': 'application/json' } });
+          if (response.ok) {
+            form.reset();
+            show(thankYou);
+            thankYou.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            setTimeout(() => hide(thankYou), 4000);
+          } else { throw new Error('Network response was not ok'); }
+        } catch (error) {
+          show(errorMsg);
+          errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          setTimeout(() => hide(errorMsg), 4000);
+        } finally {
+          submitBtn.disabled = false; btnText.textContent = 'Send Message'; btnSpinner.style.display = 'none';
         }
       });
 
-      // Mobile menu (smooth + accessible)
-      const menuToggle=document.getElementById('menuToggle');
-      const mobilePanel=document.getElementById('mobilePanel');
-      const mobileMenu=document.getElementById('mobileMenu');
-      const focusableSel='a[href], button:not([disabled])';
-      let lastFocused=null;
+      /* ===============================
+         Mobile Menu (Hamburger) Logic with focus trap
+         =============================== */
+      const menuToggle = document.getElementById('menuToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const focusableSel = 'a[href], button:not([disabled])';
+      let lastFocused = null;
 
-      function trapFocus(e){
-        const focusables=mobilePanel.querySelectorAll(focusableSel);
-        if(!focusables.length) return;
-        const first=focusables[0]; const last=focusables[focusables.length-1];
-        if(e.key==='Tab'){
-          if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-          else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      function trapFocus(container, e) {
+        const focusables = container.querySelectorAll(focusableSel);
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.key === 'Tab') {
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
       }
-      function openMenu(){
-        lastFocused=document.activeElement;
+
+      function openMenu() {
+        lastFocused = document.activeElement;
         document.body.classList.add('nav-open');
-        mobilePanel.hidden=false;
-        requestAnimationFrame(()=>mobilePanel.classList.add('open'));
-        menuToggle.setAttribute('aria-expanded','true');
-        menuToggle.setAttribute('aria-label','Close menu');
-        mobilePanel.addEventListener('keydown', trapFocus);
-        mobileMenu.querySelector('a')?.focus();
+        mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        menuToggle.setAttribute('aria-label', 'Close menu');
+        mobilePanel.addEventListener('keydown', focusHandler);
+        const firstLink = mobileMenu.querySelector('a');
+        firstLink && firstLink.focus();
       }
-      function closeMenu(){
+      function closeMenu() {
         document.body.classList.remove('nav-open');
         mobilePanel.classList.remove('open');
-        mobilePanel.addEventListener('transitionend', ()=> mobilePanel.hidden=true, { once:true });
-        menuToggle.setAttribute('aria-expanded','false');
-        menuToggle.setAttribute('aria-label','Open menu');
-        mobilePanel.removeEventListener('keydown', trapFocus);
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Open menu');
+        mobilePanel.removeEventListener('keydown', focusHandler);
         lastFocused && lastFocused.focus();
       }
-      const toggleMenu=()=> mobilePanel.classList.contains('open') ? closeMenu() : openMenu();
 
-      menuToggle.addEventListener('click', toggleMenu);
-      mobileMenu.addEventListener('click',(e)=>{ if(e.target.closest('a')) closeMenu(); });
-      document.addEventListener('click',(e)=>{
-        if(window.matchMedia('(max-width: 900px)').matches){
-          const insideNav=!!e.target.closest('nav');
-          if(!insideNav && !mobilePanel.hidden) closeMenu();
+      function focusHandler(e) { trapFocus(mobilePanel, e); }
+
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+        isOpen ? closeMenu() : openMenu();
+      });
+
+      // Auto-close on link click
+      mobileMenu.addEventListener('click', (e) => {
+        const target = e.target.closest('a');
+        if (!target) return;
+        closeMenu();
+      });
+
+      // Click outside closes
+      document.addEventListener('click', (e) => {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          const isClickInsideNav = e.target.closest('nav');
+          if (!isClickInsideNav && mobilePanel.classList.contains('open')) closeMenu();
         }
       });
-      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && !mobilePanel.hidden) closeMenu(); });
-      window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
+
+      // Escape closes
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+
+      // Resize cleanup
+      window.addEventListener('resize', () => { if (!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
     });
   </script>
 </body>
