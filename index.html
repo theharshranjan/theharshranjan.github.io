@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- viewport-fit=cover for iPhone notches -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness</title>
 
@@ -16,21 +15,19 @@
   <meta property="og:description" content="Ayurveda, Yoga, and holistic wellness guidance by Harsh Ranjan (Samarpan)." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://theharshranjan.github.io/" />
-  <meta property="og:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+  <meta property="og:image" content="https://theharshranjan.github.io/website_dp.png" />
   <meta property="og:image:alt" content="Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+  <meta name="twitter:image" content="https://theharshranjan.github.io/website_dp.png" />
 
   <!-- Theming -->
   <meta name="theme-color" content="#609966" />
 
-  <!-- Favicons (place files under /icons/) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#609966">
-  <meta name="msapplication-TileColor" content="#609966">
+  <!-- Favicons (using your files at repo root) -->
+  <link rel="icon" href="/logo.png" sizes="any" type="image/png">
+  <link rel="shortcut icon" href="/logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/website_dp.png">
+  <meta name="msapplication-TileImage" content="/logo.png">
 
   <!-- Preconnects -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -178,11 +175,10 @@
         display:block; position:fixed; inset:calc(var(--header-h) + env(safe-area-inset-top)) 0 0 0;
         background:var(--bg-cream); border-top:1px solid rgba(0,0,0,.06); overflow:auto; max-height:70vh;
         transform-origin:top; z-index:1001; padding:1rem 6%;
-        opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+        opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .24s ease, transform .24s ease;
       }
       .mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
 
-      .mobile-panel[hidden]{display:block} /* keep layout but hidden flag controls visibility */
       .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.2rem}
       .mobile-menu a{display:block;padding:1rem 0;text-decoration:none;font-weight:800;color:var(--green-dark);border-radius:10px}
       .mobile-menu a:active{background:rgba(0,0,0,.04)}
@@ -215,8 +211,8 @@
   <header class="site-header" data-aos="fade-down">
     <nav aria-label="Primary">
       <a class="logo-area" href="#home" aria-label="Home">
-        <!-- Replace with your round logo file -->
-        <img src="/assets/logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
+        <!-- Use your root-level logo.png -->
+        <img src="logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
         <span>Harsh Ranjan (Samarpan)</span>
       </a>
 
@@ -226,7 +222,8 @@
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <!-- Contact goes to contact.html as requested -->
+          <li><a href="contact.html">Contact</a></li>
         </ul>
 
         <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
@@ -237,13 +234,14 @@
       </div>
 
       <!-- Mobile dropdown -->
-      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
+      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true">
         <ul class="mobile-menu" id="mobileMenu">
           <li><a href="about.html">About</a></li>
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <!-- Contact goes to contact.html as requested -->
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -338,7 +336,7 @@
     </div>
   </section>
 
-  <!-- Contact (FORM KEPT) -->
+  <!-- Contact (kept the same on homepage; nav "Contact" opens contact.html) -->
   <section id="contact" aria-labelledby="contact-heading" data-aos="fade-up">
     <h2 id="contact-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Contact Me</h2>
 
@@ -390,7 +388,7 @@
     "name":"Harsh Ranjan (Samarpan)",
     "description":"Ayurveda and Yoga practitioner; Research Scholar at JNU.",
     "url":"https://theharshranjan.github.io/",
-    "image":"https://theharshranjan.github.io/assets/logo.png",
+    "image":"https://theharshranjan.github.io/website_dp.png",
     "sameAs":[
       "https://www.instagram.com/justtheself/",
       "https://www.youtube.com/@theharshranjan",
@@ -511,7 +509,7 @@
         }
       });
 
-      // Mobile menu (animation + a11y + iPhone stability)
+      // Mobile menu (animation + a11y)
       const menuToggle=document.getElementById('menuToggle');
       const mobilePanel=document.getElementById('mobilePanel');
       const mobileMenu=document.getElementById('mobileMenu');
@@ -530,8 +528,7 @@
       function openMenu(){
         lastFocused=document.activeElement;
         document.body.classList.add('nav-open');
-        mobilePanel.hidden=false;
-        requestAnimationFrame(()=>mobilePanel.classList.add('open'));
+        mobilePanel.classList.add('open');
         menuToggle.setAttribute('aria-expanded','true');
         menuToggle.setAttribute('aria-label','Close menu');
         mobilePanel.addEventListener('keydown', trapFocus);
@@ -540,7 +537,6 @@
       function closeMenu(){
         document.body.classList.remove('nav-open');
         mobilePanel.classList.remove('open');
-        mobilePanel.addEventListener('transitionend', ()=> mobilePanel.hidden=true, { once:true });
         menuToggle.setAttribute('aria-expanded','false');
         menuToggle.setAttribute('aria-label','Open menu');
         mobilePanel.removeEventListener('keydown', trapFocus);
@@ -551,10 +547,10 @@
       document.addEventListener('click',(e)=>{
         if(window.matchMedia('(max-width: 900px)').matches){
           const insideNav=!!e.target.closest('nav');
-          if(!insideNav && !mobilePanel.hidden) closeMenu();
+          if(!insideNav && mobilePanel.classList.contains('open')) closeMenu();
         }
       });
-      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && !mobilePanel.hidden) closeMenu(); });
+      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
       window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
     });
   </script>
