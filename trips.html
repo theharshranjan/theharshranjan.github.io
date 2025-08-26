@@ -1,121 +1,595 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>My Spiritual Journeys | Samarpan</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Meta -->
+  <meta name="description" content="Recent spiritual yatras by Harsh Ranjan (Samarpan): Rishikesh, Haridwar, Kashi Vishwanath, Deoghar, Ujjain, Omkareshwar, Vindhyachal and more — with how to reach & what to visit."/>
+  <meta name="theme-color" content="#6a994e" />
+  <meta name="color-scheme" content="light dark" />
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f6f1;
-      color: #2c3e50;
-      line-height: 1.6;
+    /* ===== Design tokens (aligned with theharshranjan.github.io palette) ===== */
+    :root{
+      --bg:#f9f6f1;
+      --text:#2c3e50;
+      --green-900:#243c2b;
+      --green-800:#2d5138;
+      --green-700:#386641;
+      --green-600:#5b8f58;
+      --green-500:#6a994e;
+      --green-300:#a7c957;
+      --card:#ffffff;
+      --ring:rgba(0,0,0,.08);
+      --muted:#5f6b66;
+      --gold:#c5a880;
+
+      --radius:16px;
+      --elev:0 10px 28px rgba(0,0,0,.08);
+      --h:72px;
     }
-    header {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
+    [data-theme="dark"]{
+      --bg:#0f1a12;
+      --text:#e6efe8;
+      --green-700:#a5d1a6;
+      --green-500:#87c99a;
+      --green-300:#3a5f46;
+      --card:#0f1a12;
+      --ring:rgba(255,255,255,.18);
+      --muted:#b7c2bd;
+      --gold:#e7caa0;
     }
-    section {
-      padding: 2rem;
-      max-width: 1000px;
-      margin: auto;
+
+    /* ===== Base ===== */
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Inter, Roboto, Arial, sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.75;
     }
-    h2, h3 {
-      color: #386641;
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
+
+    /* ===== Header / Nav ===== */
+    .site-header{
+      position:sticky; top:0; z-index:1000; background:var(--bg);
+      border-bottom:1px solid var(--ring);
+      backdrop-filter:saturate(140%) blur(6px);
     }
-    .trip {
-      background: #fff;
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    nav[aria-label="Primary"]{
+      max-width:1200px; margin:0 auto; padding:1rem 6%;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
     }
-    .trip img {
-      max-width: 300px;
-      border-radius: 8px;
-      display: block;
-      margin-bottom: 1rem;
+    .logo-area{display:flex;align-items:center;gap:.6rem}
+    .logo-area img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--green-300)}
+    .logo-area span{font-weight:800;color:var(--green-700)}
+    .nav-links{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
+    .nav-links a{
+      font-weight:700; color:var(--green-700);
+      padding:.35rem .5rem; border-radius:10px; transition:color .25s ease, transform .2s ease;
     }
-    footer {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
+    .nav-links a:hover{color:var(--green-500); transform:translateY(-1px)}
+    .nav-links a.active{color:var(--green-500); text-decoration:underline; text-underline-offset:.2rem}
+
+    .controls{display:flex;gap:.6rem;align-items:center}
+    .btn-icon{
+      appearance:none;background:transparent;border:1px solid var(--ring);
+      width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;
     }
-    a { color: #2c3e50; text-decoration: none; font-weight: bold; }
+    .menu-toggle{display:none}
+    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-700)}
+    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-700)}
+    .menu-icon::before{top:-6px}.menu-icon::after{top:6px}
+    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
+    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
+    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
+    .mobile-panel{display:none}
+
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .menu-toggle{display:inline-flex}
+      .mobile-panel{
+        display:block; position:fixed; left:0; right:0; top:var(--h,72px);
+        height:0; overflow:auto; background:var(--bg);
+        border-bottom:1px solid var(--ring); transition:height .3s ease;
+      }
+      .mobile-panel.open{height:calc(100dvh - var(--h,72px))}
+      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin:0;padding:1rem 6% 2rem}
+      .mobile-menu a{display:block;padding:.8rem 0;font-weight:800;color:var(--green-700);border-radius:8px}
+      .mobile-menu a:active{background:rgba(0,0,0,.04)}
+      body.nav-open{overflow:hidden}
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      position:relative; overflow:hidden; text-align:center;
+      padding: clamp(3rem,5vw,5rem) 6% clamp(2rem,3.5vw,3rem);
+      background:
+        radial-gradient(70rem 35rem at -10% -10%, #ffffff 0%, transparent 60%),
+        linear-gradient(120deg, var(--green-300), var(--bg) 52%);
+    }
+    .hero h1{
+      margin:0; font-size:clamp(2rem,4.5vw,3rem);
+      color:var(--green-700); letter-spacing:.2px;
+    }
+    .hero p{margin:.7rem auto 0; max-width:860px; color:var(--green-500); font-weight:600}
+    .hero .back{
+      display:inline-flex; gap:.4rem; align-items:center; margin-top:1rem;
+      font-weight:800; color:var(--green-700);
+    }
+
+    /* ===== Main layout ===== */
+    main{max-width:1150px; margin:0 auto; padding:2rem 6% 3rem}
+    .toolbar{
+      display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin:0 0 1rem;
+    }
+    .search{
+      flex:1 1 260px; display:flex; align-items:center; gap:.5rem;
+      background:var(--card); border:1px solid var(--ring); border-radius:12px; padding:.6rem .8rem;
+      box-shadow:var(--elev);
+    }
+    .search input{
+      border:none; outline:none; width:100%; background:transparent; color:var(--text); font-size:1rem;
+    }
+    .filters{display:flex; gap:.5rem; flex-wrap:wrap}
+    .chip{
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.35rem .6rem; border-radius:999px; font-weight:800; font-size:.85rem;
+      background:#fff3e0; color:#2c3e50; border:1px solid rgba(0,0,0,.06); cursor:pointer;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .chip:hover{transform:translateY(-1px)}
+    .chip[aria-pressed="true"]{background:var(--green-500); color:#fff}
+
+    .section-title{
+      color:var(--green-700);
+      border-left:6px solid var(--green-300);
+      padding-left:.75rem; margin:1.2rem 0 .9rem; font-size:1.35rem;
+    }
+
+    /* ===== Trip grid ===== */
+    .grid{
+      display:grid; gap:1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .trip-card{
+      position:relative; overflow:hidden; border-radius:var(--radius);
+      background:var(--card); border:1px solid var(--ring); box-shadow:var(--elev);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease;
+    }
+    .trip-card:hover{transform:translateY(-4px); box-shadow:0 14px 40px rgba(0,0,0,.12); border-color:rgba(0,0,0,.12)}
+    .banner{
+      position:relative; aspect-ratio: 16/10; background:#eaeaea; overflow:hidden;
+    }
+    .banner img{width:100%; height:100%; object-fit:cover; filter:saturate(1.06) contrast(1.02)}
+    .banner::after{
+      content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.35));
+    }
+    .place{
+      position:absolute; left:.9rem; bottom:.7rem; z-index:1; color:#fff; font-weight:900;
+      text-shadow:0 2px 8px rgba(0,0,0,.35); letter-spacing:.3px;
+    }
+    .content{padding:1rem 1rem 1.1rem}
+    .meta{display:flex; flex-wrap:wrap; gap:.4rem .5rem; margin:.35rem 0 .55rem}
+    .tag{
+      display:inline-block; font-size:.78rem; font-weight:800; color:var(--green-700);
+      background:linear-gradient(145deg, #fff, #fffdf8); border:1px solid var(--ring);
+      padding:.15rem .5rem; border-radius:999px;
+    }
+    details{
+      background:rgba(0,0,0,.02); border:1px dashed var(--ring); border-radius:12px; padding:.6rem .75rem;
+    }
+    summary{cursor:pointer; list-style:none; font-weight:800; color:var(--green-700)}
+    summary::-webkit-details-marker{display:none}
+
+    .card-actions{display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.7rem}
+    .btn{
+      background:var(--green-500); color:#fff; border:none; border-radius:12px;
+      padding:.55rem .9rem; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.45rem;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 10px 26px rgba(0,0,0,.12)}
+    .btn.ghost{background:transparent; color:var(--green-700); border:1px solid var(--green-700)}
+    .muted{color:var(--muted)}
+
+    /* ===== Appear on scroll ===== */
+    .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* ===== Lightbox ===== */
+    .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.7); display:none; align-items:center; justify-content:center; z-index:1001}
+    .lightbox.open{display:flex}
+    .lightbox figure{max-width:min(92vw,1080px); margin:0; padding:0}
+    .lightbox img{width:100%; height:auto; border-radius:16px; border:1px solid var(--ring)}
+    .lightbox .caption{color:#fff; text-align:center; margin-top:.6rem}
+
+    /* ===== Footer ===== */
+    footer{background:var(--green-700); color:var(--bg); text-align:center; padding:1.6rem 6%}
+    footer a{color:var(--gold)}
+
+    /* ===== Prefers reduced motion ===== */
+    @media (prefers-reduced-motion: reduce){
+      .reveal{transition:none}
+      .trip-card,.btn{transition:none}
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🕉️ My Spiritual Journeys</h1>
-    <p>Exploring sacred places with devotion and sadhana</p>
-    <p><a href="index.html" style="color:white;">← Back to Home</a></p>
+  <!-- Header -->
+  <header class="site-header">
+    <nav aria-label="Primary">
+      <a class="logo-area" href="index.html">
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" decoding="async"/>
+        <span>Harsh Ranjan (Samarpan)</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html">Ayurveda</a></li>
+        <li><a class="active" aria-current="page" href="trips.html">Trips</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="controls">
+        <button class="btn-icon" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+        <button class="btn-icon menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel">
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="trips.html" aria-current="page">Trips</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <section id="trips">
-    <h2><i class="fas fa-map icon"></i> Recent Yatras</h2>
-
-    <div class="trip">
-      <h3>🕉️ Rishikesh</h3>
-      <img src="Rishikesh_Trip2.jpg" alt="Rishikesh Trip">
-      <p><strong>How to Reach:</strong> Nearest airport is Dehradun (Jolly Grant, 20 km). Connected by trains and buses from Delhi & Haridwar.<br>
-      <strong>What to Visit:</strong> Triveni Ghat Ganga Aarti, Parmarth Niketan, Swarg Ashram, Ram Jhula, Laxman Jhula, and meditation by the Ganga.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🌊 Haridwar</h3>
-      <img src="haridwar.jpg" alt="Haridwar Trip">
-      <p><strong>How to Reach:</strong> Well connected by train from Delhi, Dehradun, and Varanasi.<br>
-      <strong>What to Visit:</strong> Har ki Pauri Ganga Aarti, Mansa Devi Temple, Chandi Devi Temple, Bharat Mata Mandir, and Daksha Mahadev Temple at Kankhal.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🕉️ Sri Kashi Vishwanath, Varanasi</h3>
-      <img src="kashi.jpg" alt="Kashi Vishwanath Trip">
-      <p><strong>How to Reach:</strong> Nearest airport: Lal Bahadur Shastri Airport (Varanasi). Well connected by trains.<br>
-      <strong>What to Visit:</strong> Sri Kashi Vishwanath Jyotirlinga, Ganga Aarti at Dashashwamedh Ghat, Sankat Mochan Hanuman Temple, and Sarnath.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🙏 Baba Baidhyanath, Deoghar</h3>
-      <img src="deoghar.jpg" alt="Baba Baidhyanath Trip">
-      <p><strong>How to Reach:</strong> Nearest railway station: Jasidih Junction (7 km). Patna & Ranchi airports are nearby.<br>
-      <strong>What to Visit:</strong> Baba Baidhyanath Jyotirlinga Temple, Basukinath Temple, Tapovan Caves, and Trikuta Parvat.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🕉️ Mahakaleshwar, Ujjain</h3>
-      <img src="ujjain.jpg" alt="Mahakaleshwar Ujjain Trip">
-      <p><strong>How to Reach:</strong> Ujjain is well connected via Indore Airport (55 km) and train routes.<br>
-      <strong>What to Visit:</strong> Mahakaleshwar Jyotirlinga Bhasma Aarti, Kal Bhairav Temple, Ram Ghat, Sandipani Ashram, and Harsiddhi Shaktipeeth.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🕉️ Omkareshwar</h3>
-      <img src="omkareshwar.jpg" alt="Omkareshwar Trip">
-      <p><strong>How to Reach:</strong> 80 km from Indore, connected by road & train (Omkareshwar Road Station).<br>
-      <strong>What to Visit:</strong> Omkareshwar Jyotirlinga Temple (island shaped like ॐ), Mamleshwar Temple, Parikrama of Mandhata Hill, and serene Narmada ghats.</p>
-    </div>
-
-    <div class="trip">
-      <h3>🌸 Vindhyachal Shaktipeeth</h3>
-      <img src="vindhyachal.jpg" alt="Vindhyachal Shaktipeeth Trip">
-      <p><strong>How to Reach:</strong> 70 km from Varanasi, connected by rail (Vindhyachal Station) and road.<br>
-      <strong>What to Visit:</strong> Vindhyavasini Devi Temple, Ashtabhuja Temple, Kali Khoh, and the sacred Trikona Parikrama.</p>
-    </div>
-
-    <p>📿 Each journey deepens my connection with the divine — blending travel with tapasya, darshan, and inner transformation. Future yatras will be updated here.</p>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>🕉️ My Spiritual Journeys</h1>
+    <p>Exploring sacred places with devotion, darshan & sādhanā — capturing routes, highlights, and serene corners to meditate.</p>
+    <a class="back" href="index.html" aria-label="Back to Home"><i class="fa-solid fa-arrow-left-long"></i> Back to Home</a>
   </section>
- 
 
+  <main>
+    <!-- Toolbar -->
+    <div class="toolbar reveal">
+      <div class="search" role="search">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input id="searchInput" type="search" placeholder="Search places, temples, rivers..." aria-label="Search trips"/>
+      </div>
+      <div class="filters" role="group" aria-label="Filter by type">
+        <button class="chip" data-filter="jyotirlinga" aria-pressed="false"><i class="fa-solid fa-fire-flame-curved"></i> Jyotirlinga</button>
+        <button class="chip" data-filter="shaktipeeth" aria-pressed="false"><i class="fa-solid fa-gopuram"></i> Shaktipeeth</button>
+        <button class="chip" data-filter="ganga" aria-pressed="false"><i class="fa-solid fa-water"></i> Ganga/Narmada</button>
+        <button class="chip" data-filter="ashram" aria-pressed="false"><i class="fa-solid fa-hand-holding-heart"></i> Ashram</button>
+      </div>
+    </div>
+
+    <h2 class="section-title reveal"><i class="fas fa-map"></i> Recent Yatras</h2>
+
+    <!-- Trips Grid -->
+    <section class="grid" id="tripGrid">
+      <!-- Rishikesh -->
+      <article class="trip-card reveal" data-tags="ganga ashram">
+        <div class="banner" data-full="Rishikesh_Trip2.jpg">
+          <img src="Rishikesh_Trip2.jpg" alt="Rishikesh — Ganga ghats and suspension bridge" loading="lazy"/>
+          <div class="place">Rishikesh</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Ganga</span>
+            <span class="tag">Ashram</span>
+            <span class="tag">Meditation</span>
+          </div>
+          <p class="muted">Triveni Ghat Ārati, Parmarth Niketan, Swarg Ashram, Ram & Laxman Jhula; sit by Ma Ganga for japa.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> Dehradun (Jolly Grant) Airport ~20 km; trains & buses from Delhi/Haridwar.</p>
+            <p><b>Visit:</b> Triveni Ghat Ārati, Parmarth Niketan, Swarg Ashram, Ram/Laxman Jhula, Beatles Ashram.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Rishikesh" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Haridwar -->
+      <article class="trip-card reveal" data-tags="ganga">
+        <div class="banner" data-full="haridwar.jpg">
+          <img src="haridwar.jpg" alt="Haridwar — Har ki Pauri Ganga āratī" loading="lazy"/>
+          <div class="place">Haridwar</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Ganga</span>
+            <span class="tag">Ārati</span>
+          </div>
+          <p class="muted">Har ki Pauri āratī, Mansa & Chandi Devi, Bharat Mata Mandir, Daksha Mahadev at Kankhal.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> Well-connected by trains from Delhi, Dehradun, Varanasi.</p>
+            <p><b>Visit:</b> Har ki Pauri āratī, Mansa/Chandi Devi, Bharat Mata Mandir, Daksha Mahadev.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Haridwar" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Kashi -->
+      <article class="trip-card reveal" data-tags="ganga jyotirlinga">
+        <div class="banner" data-full="kashi.jpg">
+          <img src="kashi.jpg" alt="Varanasi — Kashi Vishwanath corridor and ghats" loading="lazy"/>
+          <div class="place">Sri Kashi Vishwanath (Varanasi)</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Jyotirlinga</span>
+            <span class="tag">Ganga</span>
+          </div>
+          <p class="muted">Darshan at Kashi Vishwanath, Dashashwamedh Ghat āratī, Sankat Mochan, Sarnath.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> Lal Bahadur Shastri Airport; numerous trains.</p>
+            <p><b>Visit:</b> Kashi Vishwanath, Dashashwamedh āratī, Sankat Mochan, Sarnath.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Kashi+Vishwanath+Temple" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Deoghar -->
+      <article class="trip-card reveal" data-tags="jyotirlinga">
+        <div class="banner" data-full="deoghar.jpg">
+          <img src="deoghar.jpg" alt="Deoghar — Baba Baidhyanath Jyotirlinga temple" loading="lazy"/>
+          <div class="place">Baba Baidhyanath (Deoghar)</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Jyotirlinga</span>
+            <span class="tag">Pilgrimage</span>
+          </div>
+          <p class="muted">Baidhyanath Jyotirlinga, Basukinath, Tapovan Caves, Trikuta Parvat.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> Jasidih Jn. (7 km); nearest airports: Patna, Ranchi.</p>
+            <p><b>Visit:</b> Baidhyanath Temple, Basukinath, Tapovan, Trikuta.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Baidhyanath+Temple+Deoghar" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Ujjain -->
+      <article class="trip-card reveal" data-tags="jyotirlinga ganga">
+        <div class="banner" data-full="ujjain.jpg">
+          <img src="ujjain.jpg" alt="Ujjain — Mahakaleshwar temple and bhasma aarti" loading="lazy"/>
+          <div class="place">Mahakaleshwar (Ujjain)</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Jyotirlinga</span>
+            <span class="tag">Bhasma Ārati</span>
+          </div>
+          <p class="muted">Mahakaleshwar Bhasma Ārati, Kal Bhairav, Ram Ghat, Harsiddhi Shaktipeeth, Sandipani Ashram.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> Indore Airport (~55 km) + rail.</p>
+            <p><b>Visit:</b> Mahakaleshwar, Kal Bhairav, Ram Ghat, Harsiddhi, Sandipani.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Mahakaleshwar+Temple+Ujjain" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Omkareshwar -->
+      <article class="trip-card reveal" data-tags="jyotirlinga ganga">
+        <div class="banner" data-full="omkareshwar.jpg">
+          <img src="omkareshwar.jpg" alt="Omkareshwar — Mandhata hill island shaped like Om" loading="lazy"/>
+          <div class="place">Omkareshwar</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Jyotirlinga</span>
+            <span class="tag">Narmada</span>
+          </div>
+          <p class="muted">Omkareshwar Temple (ॐ-shaped island), Mamleshwar, Mandhata Parikrama, serene Narmada ghats.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> ~80 km from Indore; rail at Omkareshwar Road.</p>
+            <p><b>Visit:</b> Omkareshwar, Mamleshwar, Parikrama, Narmada ghats.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Omkareshwar" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Vindhyachal -->
+      <article class="trip-card reveal" data-tags="shaktipeeth">
+        <div class="banner" data-full="vindhyachal.jpg">
+          <img src="vindhyachal.jpg" alt="Vindhyachal Shaktipeeth temple complex" loading="lazy"/>
+          <div class="place">Vindhyachal Shaktipeeth</div>
+        </div>
+        <div class="content">
+          <div class="meta">
+            <span class="tag">Śaktipeeth</span>
+            <span class="tag">Parikrama</span>
+          </div>
+          <p class="muted">Vindhyavasini Devi, Ashtabhuja, Kali Khoh — complete the sacred Trikona Parikrama.</p>
+          <details>
+            <summary>How to Reach & What to Visit</summary>
+            <p><b>Reach:</b> ~70 km from Varanasi; rail at Vindhyachal.</p>
+            <p><b>Visit:</b> Vindhyavasini, Ashtabhuja, Kali Khoh, Trikona Parikrama.</p>
+          </details>
+          <div class="card-actions">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Vindhyachal+Temple" target="_blank" rel="noopener"><i class="fa-solid fa-location-dot"></i> Open in Maps</a>
+            <button class="btn ghost view" type="button"><i class="fa-regular fa-image"></i> View Photo</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <p class="muted reveal" style="margin-top:1rem">
+      📿 Each journey deepens connection with the Divine — blending travel with tapasya, darśan, and inner transformation. New yatras will be added here.
+    </p>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <figure>
+      <img id="lightboxImg" src="" alt="Trip photo"/>
+      <figcaption class="caption" id="lightboxCaption"></figcaption>
+    </figure>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 Harsh Ranjan (Samarpan) | Crafted with devotion</p>
-    <p><a href="index.html" style="color:white;">Back to Home</a></p>
+    <p>© <span id="year"></span> Harsh Ranjan (Samarpan) • Crafted with devotion</p>
+    <p><a href="index.html">Back to Home</a></p>
   </footer>
+
+  <script>
+    /* ===== Theme ===== */
+    function setTheme(mode){
+      if(mode==='dark') document.documentElement.setAttribute('data-theme','dark');
+      else if(mode==='light') document.documentElement.setAttribute('data-theme','light');
+      else document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', mode);
+      const t=document.getElementById('themeToggle');
+      if(t){const isDark=mode==='dark'; t.setAttribute('aria-pressed',String(isDark)); t.textContent=isDark?'☀️':'🌙';}
+    }
+
+    /* ===== Header height var ===== */
+    function syncHeader(){
+      const h=document.querySelector('.site-header')?.offsetHeight||72;
+      document.documentElement.style.setProperty('--h',h+'px');
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // Year
+      document.getElementById('year').textContent=new Date().getFullYear();
+
+      // Theme init/toggle
+      setTheme(localStorage.getItem('theme')||'light');
+      document.getElementById('themeToggle').addEventListener('click',()=>{
+        const cur=document.documentElement.getAttribute('data-theme')||'light';
+        setTheme(cur==='dark'?'light':'dark');
+      });
+      syncHeader(); window.addEventListener('resize', syncHeader);
+
+      // Mobile nav
+      const menuToggle=document.getElementById('menuToggle');
+      const mobilePanel=document.getElementById('mobilePanel');
+      const mobileMenu=document.getElementById('mobileMenu');
+      let lastFocused=null;
+      function openMenu(){
+        lastFocused=document.activeElement;
+        document.body.classList.add('nav-open');
+        mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded','true');
+        mobileMenu.querySelector('a')?.focus();
+      }
+      function closeMenu(){
+        document.body.classList.remove('nav-open');
+        mobilePanel.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded','false');
+        lastFocused && lastFocused.focus();
+      }
+      menuToggle.addEventListener('click',()=> menuToggle.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu());
+      mobileMenu.addEventListener('click', e=>{ if(e.target.closest('a')) closeMenu(); });
+      document.addEventListener('click', e=>{ if(window.matchMedia('(max-width:900px)').matches){ if(!e.target.closest('nav') && mobilePanel.classList.contains('open')) closeMenu(); }});
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+
+      // Appear on scroll
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target); }
+        });
+      }, {threshold:.12});
+      document.querySelectorAll('.reveal').forEach(el=> io.observe(el));
+
+      // Search & filters
+      const grid=document.getElementById('tripGrid');
+      const cards=[...grid.querySelectorAll('.trip-card')];
+      const search=document.getElementById('searchInput');
+      const chips=[...document.querySelectorAll('.chip')];
+
+      function applyFilters(){
+        const q=search.value.toLowerCase().trim();
+        const active=chips.filter(c=>c.getAttribute('aria-pressed')==='true').map(c=>c.dataset.filter);
+        cards.forEach(c=>{
+          const text=c.innerText.toLowerCase();
+          const tags=(c.dataset.tags||'').toLowerCase().split(/\s+/);
+          const matchesQuery = q==='' || text.includes(q);
+          const matchesTags = active.length===0 || active.every(tag=>tags.includes(tag));
+          c.style.display = (matchesQuery && matchesTags) ? '' : 'none';
+        });
+      }
+      search.addEventListener('input', applyFilters);
+      chips.forEach(ch=>{
+        ch.addEventListener('click', ()=>{
+          const pressed = ch.getAttribute('aria-pressed')==='true';
+          ch.setAttribute('aria-pressed', String(!pressed));
+          applyFilters();
+        });
+      });
+
+      // Lightbox
+      const lightbox=document.getElementById('lightbox');
+      const lbImg=document.getElementById('lightboxImg');
+      const lbCap=document.getElementById('lightboxCaption');
+      function openLightbox(src, caption){
+        lbImg.src=src; lbCap.textContent=caption||'';
+        lightbox.classList.add('open');
+      }
+      function closeLightbox(){
+        lightbox.classList.remove('open');
+        lbImg.src='';
+      }
+      grid.addEventListener('click', e=>{
+        const btn = e.target.closest('.view');
+        const banner = e.target.closest('.trip-card')?.querySelector('.banner');
+        const place = e.target.closest('.trip-card')?.querySelector('.place')?.textContent?.trim();
+        if(btn && banner){
+          openLightbox(banner.dataset.full || banner.querySelector('img')?.src, place);
+        }
+        const imgClick = e.target.closest('.banner');
+        if(imgClick){
+          openLightbox(imgClick.dataset.full || imgClick.querySelector('img')?.src, imgClick.parentElement.querySelector('.place')?.textContent?.trim());
+        }
+      });
+      lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && lightbox.classList.contains('open')) closeLightbox(); });
+    });
+  </script>
 </body>
 </html>
