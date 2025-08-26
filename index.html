@@ -16,7 +16,6 @@
   <meta property="og:description" content="Ayurveda, Yoga, and holistic wellness guidance by Harsh Ranjan (Samarpan)." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://theharshranjan.github.io/" />
-  <!-- Use your real preview image -->
   <meta property="og:image" content="https://theharshranjan.github.io/website_dp.png" />
   <meta property="og:image:alt" content="Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -25,14 +24,14 @@
   <!-- Theming -->
   <meta name="theme-color" content="#609966" />
 
-  <!-- Favicons (existing ones kept) -->
+  <!-- Favicons -->
   <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#609966">
   <meta name="msapplication-TileColor" content="#609966">
-  <!-- Fallbacks so the tab icon shows even if /icons/* don’t exist -->
+  <!-- Fallbacks so favicon shows even if /icons/* are missing -->
   <link rel="icon" href="logo.png" type="image/png">
   <link rel="apple-touch-icon" href="website_dp.png">
 
@@ -85,8 +84,7 @@
       padding-left:max(6%, env(safe-area-inset-left)); padding-right:max(6%, env(safe-area-inset-right));
       display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:var(--header-h)
     }
-    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit; flex:1 1 auto; min-width:0;}
-    /* Use your real logo file at project root */
+    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit;flex:1 1 auto;min-width:0;}
     .logo-area img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light)}
     .logo-area span{
       font-family:'Playfair Display',serif;font-weight:700;color:var(--green-dark);letter-spacing:.2px;line-height:1;
@@ -189,10 +187,9 @@
         transform-origin:top; z-index:1001; padding:1rem 6%;
         opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .22s ease, transform .22s ease;
       }
-      /* When open, fade/slide and enable interaction */
       .mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
 
-      /* IMPORTANT: when [hidden], actually hide (previous bug) */
+      /* CRITICAL: when hidden, actually hide */
       .mobile-panel[hidden]{ display:none !important; }
 
       .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.2rem}
@@ -227,7 +224,6 @@
   <header class="site-header" data-aos="fade-down">
     <nav aria-label="Primary">
       <a class="logo-area" href="#home" aria-label="Home">
-        <!-- Use your real files -->
         <img src="logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
         <span>Harsh Ranjan (Samarpan)</span>
       </a>
@@ -238,7 +234,6 @@
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <!-- Go to contact.html as requested -->
           <li><a href="contact.html">Contact</a></li>
         </ul>
 
@@ -256,7 +251,6 @@
           <li><a href="sessions.html">Sessions</a></li>
           <li><a href="ayurveda.html">Ayurveda</a></li>
           <li><a href="trips.html">Trips</a></li>
-          <!-- Go to contact.html as requested -->
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
@@ -314,7 +308,7 @@
     </div>
   </section>
 
-  <!-- Gallery (preview only; non-clickable) -->
+  <!-- Gallery (preview only) -->
   <section id="gallery" aria-labelledby="gallery-heading" data-aos="fade-up">
     <h2 id="gallery-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Gallery</h2>
     <div class="gallery" aria-label="Photo tiles (non-interactive on home)">
@@ -352,7 +346,7 @@
     </div>
   </section>
 
-  <!-- Contact (FORM KEPT on home as before) -->
+  <!-- Contact (kept on home) -->
   <section id="contact" aria-labelledby="contact-heading" data-aos="fade-up">
     <h2 id="contact-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Contact Me</h2>
 
@@ -525,7 +519,7 @@
         }
       });
 
-      // Mobile menu (animation + a11y + iPhone stability)
+      // Mobile menu (smooth + accessible)
       const menuToggle=document.getElementById('menuToggle');
       const mobilePanel=document.getElementById('mobilePanel');
       const mobileMenu=document.getElementById('mobileMenu');
@@ -544,10 +538,8 @@
       function openMenu(){
         lastFocused=document.activeElement;
         document.body.classList.add('nav-open');
-        mobilePanel.hidden=false;            // actually show
-        requestAnimationFrame(()=>{          // let layout settle, then animate
-          mobilePanel.classList.add('open');
-        });
+        mobilePanel.hidden=false;
+        requestAnimationFrame(()=>mobilePanel.classList.add('open'));
         menuToggle.setAttribute('aria-expanded','true');
         menuToggle.setAttribute('aria-label','Close menu');
         mobilePanel.addEventListener('keydown', trapFocus);
@@ -556,30 +548,23 @@
       function closeMenu(){
         document.body.classList.remove('nav-open');
         mobilePanel.classList.remove('open');
-        // hide after animation completes
         mobilePanel.addEventListener('transitionend', ()=> mobilePanel.hidden=true, { once:true });
         menuToggle.setAttribute('aria-expanded','false');
         menuToggle.setAttribute('aria-label','Open menu');
         mobilePanel.removeEventListener('keydown', trapFocus);
         lastFocused && lastFocused.focus();
       }
-
       const toggleMenu=()=> mobilePanel.classList.contains('open') ? closeMenu() : openMenu();
 
-      // Click/Touch on the hamburger
       menuToggle.addEventListener('click', toggleMenu);
-      // Close when clicking a link inside
-      mobileMenu.addEventListener('click', (e)=>{ if(e.target.closest('a')) closeMenu(); });
-      // Close if user taps outside nav
-      document.addEventListener('click', (e)=>{
+      mobileMenu.addEventListener('click',(e)=>{ if(e.target.closest('a')) closeMenu(); });
+      document.addEventListener('click',(e)=>{
         if(window.matchMedia('(max-width: 900px)').matches){
           const insideNav=!!e.target.closest('nav');
           if(!insideNav && !mobilePanel.hidden) closeMenu();
         }
       });
-      // Esc to close
       document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && !mobilePanel.hidden) closeMenu(); });
-      // If resized to desktop, ensure menu closed
       window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width: 900px)').matches) closeMenu(); });
     });
   </script>
