@@ -1,184 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Contact | Harsh Ranjan (Samarpan)</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Base Theme (aligned with your site) -->
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f6f1;
-      color: #2c3e50;
-      line-height: 1.6;
+    :root{
+      --bg-cream:#f9f6f1;
+      --text:#2c3e50;              /* same font color as your site */
+      --green-dark:#386641;
+      --green-main:#6a994e;
+      --green-soft:#a7c957;
+      --card:#ffffff;
+      --muted:#5f6b66;
+      --ring:rgba(0,0,0,.08);
+      --header-h:72px;
+    }
+    [data-theme="dark"]{
+      --bg-cream:#0f1a12;
+      --text:#e6efe8;
+      --green-dark:#b5d0b8;
+      --green-main:#87c99a;
+      --green-soft:#3a5f46;
+      --card:#122018;
+      --muted:#b7c2bd;
+      --ring:rgba(255,255,255,.15);
     }
 
-    header {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+      background:var(--bg-cream);
+      color:var(--text);
+      line-height:1.7;
+    }
+    img,svg{max-width:100%;height:auto;display:block}
+
+    /* Header/Nav (consistent with other pages) */
+    .site-header{
+      position:sticky; top:0; z-index:1000;
+      background:var(--bg-cream);
+      border-bottom:1px solid var(--ring);
+      backdrop-filter:saturate(140%) blur(4px);
+    }
+    nav[aria-label="Primary"]{
+      max-width:1200px; margin:0 auto; padding:1rem 6%;
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    }
+    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit}
+    .logo-area img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--green-soft)}
+    .logo-area span{font-weight:800;color:var(--green-dark)}
+    .nav-links{list-style:none;display:flex;gap:1rem;margin:0;padding:0}
+    .nav-links a{
+      color:var(--green-dark); text-decoration:none; font-weight:700;
+      padding:.25rem .4rem; border-radius:8px;
+    }
+    .nav-links a:hover{color:var(--green-main)}
+    .nav-links a.active{color:var(--green-main); text-decoration:underline; text-underline-offset:.2rem}
+
+    .controls{display:flex; gap:.6rem; align-items:center}
+    .btn-icon{
+      appearance:none;background:transparent;border:1px solid var(--ring);
+      width:40px;height:40px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:18px;
+    }
+    .menu-toggle{display:none}
+    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-dark)}
+    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-dark)}
+    .menu-icon::before{top:-6px}.menu-icon::after{top:6px}
+    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
+    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
+    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
+    .mobile-panel{display:none}
+
+    @media (max-width:900px){
+      .nav-links{display:none}
+      .menu-toggle{display:inline-flex}
+      .mobile-panel{
+        display:block; position:fixed; left:0; right:0; top:var(--header-h,72px);
+        height:0; overflow:auto; background:var(--bg-cream);
+        border-bottom:1px solid var(--ring); transition:height .3s ease;
+      }
+      .mobile-panel.open{height:calc(100dvh - var(--header-h,72px))}
+      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.6rem;margin:0;padding:1rem 6% 2rem}
+      .mobile-menu a{display:block;padding:.8rem 0;font-weight:800;color:var(--green-dark);text-decoration:none;border-radius:8px}
+      .mobile-menu a:active{background:rgba(0,0,0,.04)}
+      body.nav-open{overflow:hidden}
     }
 
-    header h1 {
-      margin: 0;
+    /* Hero */
+    .hero{
+      position:relative; text-align:center; padding:4rem 6% 2.5rem;
+      background:
+        radial-gradient(80rem 35rem at 8% -10%, #ffffff 0%, transparent 60%),
+        linear-gradient(120deg, var(--green-soft), var(--bg-cream) 60%);
+      overflow:hidden;
     }
+    .hero h1{font-size:clamp(1.9rem,3.6vw,2.6rem); color:var(--green-dark); margin:0}
+    .hero p{margin:.6rem 0 0; color:var(--green-main); font-weight:600}
+    .emblem{position:absolute;right:3%;bottom:-12%;width:min(42vw,340px);opacity:.12;filter:grayscale(10%) contrast(95%);pointer-events:none}
 
-    nav {
-      background: #a7c957;
-      text-align: center;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
+    main{max-width:1100px;margin:0 auto;padding:2rem 6% 3rem}
 
-    nav a {
-      color: #2c3e50;
-      text-decoration: none;
-      font-weight: bold;
+    /* Cards/Grid */
+    .group{margin:1.2rem 0 0}
+    .group h2{
+      color:var(--green-dark);
+      border-left:6px solid var(--green-soft);
+      padding-left:.6rem; margin:0 0 1rem;
+      font-size:1.35rem;
     }
+    .grid{
+      display:grid; gap:1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    }
+    .card{
+      background:var(--card); border:1px solid var(--ring); border-radius:16px;
+      box-shadow:0 6px 18px rgba(0,0,0,.06); padding:1rem 1.1rem;
+      display:flex; gap:.9rem; align-items:flex-start;
+    }
+    .card i{font-size:1.4rem; color:var(--green-main); flex:0 0 auto; margin-top:.15rem}
+    .card strong{display:block; color:var(--green-dark); margin-bottom:.25rem}
+    .card a{
+      color:var(--text); text-decoration:none; font-weight:600; word-break:break-word;
+      border-bottom:1px dashed transparent;
+    }
+    .card a:hover{color:var(--green-main); border-bottom-color:var(--green-main)}
 
-    section {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
+    .action-row{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.5rem}
+    .btn{
+      background:var(--green-main); color:#fff; border:none; border-radius:10px;
+      padding:.6rem .9rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:.4rem;
     }
+    .btn.alt{background:var(--green-dark)}
+    .btn:focus-visible{outline:2px solid var(--green-soft); outline-offset:2px}
 
-    h2 {
-      color: #386641;
-      margin-bottom: 1rem;
-    }
+    .note{color:var(--muted); font-size:.95rem; margin-top:.6rem}
 
-    .contact-card {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 10px;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .contact-card i {
-      font-size: 1.5rem;
-      color: #6a994e;
-    }
-
-    .contact-card a {
-      color: #2c3e50;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .contact-card a:hover {
-      color: #00796b;
-    }
-
-    .button {
-      display: inline-block;
-      background: #00796b;
-      color: white;
-      padding: 0.6rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      text-decoration: none;
-      margin-top: 1rem;
-    }
-
-    footer {
-      background: #6a994e;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
+    footer{background:var(--green-dark); color:var(--bg-cream); text-align:center; padding:1.6rem 6%}
+    footer a{color:#e7caa0; text-decoration:none}
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Contact Me</h1>
-    <p>Let’s stay connected 🙏</p>
+  <!-- Header -->
+  <header class="site-header">
+    <nav aria-label="Primary">
+      <a class="logo-area" href="index.html">
+        <img src="website_dp.png" alt="Logo of Harsh Ranjan (Samarpan)" width="40" height="40" decoding="async"/>
+        <span>Harsh Ranjan (Samarpan)</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html">Ayurveda</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="thoughts.html">Thoughts</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a class="active" aria-current="page" href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="controls">
+        <button class="btn-icon" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+        <button class="btn-icon menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="mobile-panel" id="mobilePanel">
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="thoughts.html">Thoughts</a></li>
+          <li><a href="trips.html">Trips</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <nav>
-    <a href="index.html">🏠 Home</a>
-    <a href="about.html">About</a>
-    <a href="sessions.html">Sessions</a>
-    <a href="trips.html">Trips</a>
-    <a href="ayurveda.html">Ayurveda</a>
-  </nav>
-
-  <section>
-    <h2>Get in Touch</h2>
-
-    <div class="contact-card">
-      <i class="fas fa-envelope"></i>
-      <div>
-        <strong>Email (Business):</strong><br>
-        <a href="mailto:theharshranjanofficial@gmail.com">theharshranjanofficial@gmail.com</a>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <i class="fab fa-whatsapp"></i>
-      <div>
-        <strong>WhatsApp:</strong><br>
-        <a href="https://wa.me/919661486740" target="_blank">Chat with me on WhatsApp</a>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <i class="fas fa-calendar-check"></i>
-      <div>
-        <strong>Calendly (Book a Session):</strong><br>
-        <a href="https://calendly.com/justtheself/30min" target="_blank">Schedule a Session</a>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <i class="fas fa-file-alt"></i>
-      <div>
-        <strong>Google Form:</strong><br>
-        <a href="https://forms.gle/msBaFxwWXCGUDjhF7"target="_blank">Fill out Google Form</a>
-      </div>
-    </div>
-
-    <h2>Social Media</h2>
-
-    <div class="contact-card">
-      <i class="fab fa-instagram"></i>
-      <div>
-        <a href="https://www.instagram.com/justtheself/" target="_blank">@justtheself (Instagram)</a>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <i class="fab fa-x"></i>
-      <div>
-        <a href="https://x.com/the_harshranjan" target="_blank">@the_harshranjan (X / Twitter)</a>
-      </div>
-    </div>
-
-    <div class="contact-card">
-      <i class="fab fa-linkedin"></i>
-      <div>
-        <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank">LinkedIn Profile</a>
-      </div>
-    </div>
-
-    <center>
-      <a href="index.html" class="button">⬅ Back to Home</a>
-    </center>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Contact</h1>
+    <p>Let’s stay connected 🙏</p>
+    <img class="emblem" src="img/logo.png" alt="" aria-hidden="true"/>
   </section>
 
+  <main>
+    <!-- Direct -->
+    <section class="group" aria-labelledby="direct">
+      <h2 id="direct">Direct</h2>
+      <div class="grid">
+        <article class="card">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          <div>
+            <strong>Email (Business)</strong>
+            <a id="emailLink" href="mailto:theharshranjanofficial@gmail.com">theharshranjanofficial@gmail.com</a>
+            <div class="action-row">
+              <button class="btn alt" id="copyEmail" type="button"><i class="far fa-copy" aria-hidden="true"></i> Copy</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          <div>
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/919661486740" target="_blank" rel="noopener">Chat with me on WhatsApp</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Booking -->
+    <section class="group" aria-labelledby="booking">
+      <h2 id="booking">Booking</h2>
+      <div class="grid">
+        <article class="card">
+          <i class="fas fa-calendar-check" aria-hidden="true"></i>
+          <div>
+            <strong>Calendly (Book a Session)</strong>
+            <a href="https://calendly.com/justtheself/30min" target="_blank" rel="noopener">Schedule a Session</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <i class="fas fa-file-alt" aria-hidden="true"></i>
+          <div>
+            <strong>Pre-Session Form</strong>
+            <a href="https://forms.gle/msBaFxwWXCGUDjhF7" target="_blank" rel="noopener">Fill out Google Form</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Social -->
+    <section class="group" aria-labelledby="social">
+      <h2 id="social">Social</h2>
+      <div class="grid">
+        <article class="card">
+          <i class="fab fa-instagram" aria-hidden="true"></i>
+          <div>
+            <strong>Instagram</strong>
+            <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">@justtheself</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <i class="fab fa-x-twitter" aria-hidden="true"></i>
+          <div>
+            <strong>X / Twitter</strong>
+            <a href="https://x.com/the_harshranjan" target="_blank" rel="noopener">@the_harshranjan</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <i class="fab fa-linkedin" aria-hidden="true"></i>
+          <div>
+            <strong>LinkedIn</strong>
+            <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn Profile</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+          <div>
+            <strong>YouTube</strong>
+            <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">@theharshranjan</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="note">Prefer email for collaboration or press. WhatsApp for quick scheduling questions.</p>
+
+      <div class="action-row" style="margin-top:1rem">
+        <a class="btn" href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Home</a>
+      </div>
+    </section>
+  </main>
+
   <footer>
-    <p>© 2025 Harsh Ranjan (Samarpan) | Crafted with devotion</p>
+    <p>© <span id="year"></span> Harsh Ranjan (Samarpan) • Crafted with devotion</p>
   </footer>
+
+  <!-- Minimal JS: theme toggle + mobile nav + copy email -->
+  <script>
+    function setTheme(mode){
+      const root=document.documentElement;
+      if(mode==='dark') root.setAttribute('data-theme','dark');
+      else if(mode==='light') root.setAttribute('data-theme','light');
+      else root.removeAttribute('data-theme');
+      localStorage.setItem('theme',mode);
+      const t=document.getElementById('themeToggle');
+      if(t){const isDark=mode==='dark'; t.setAttribute('aria-pressed',String(isDark)); t.textContent=isDark?'☀️':'🌙';}
+    }
+    function syncHeaderH(){
+      const h=document.querySelector('.site-header')?.offsetHeight||72;
+      document.documentElement.style.setProperty('--header-h',h+'px');
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      // Year
+      const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+      // Theme init
+      setTheme(localStorage.getItem('theme')||'light');
+      document.getElementById('themeToggle').addEventListener('click',()=>{
+        const cur=document.documentElement.getAttribute('data-theme')||'light';
+        setTheme(cur==='dark'?'light':'dark');
+      });
+      syncHeaderH(); window.addEventListener('resize', syncHeaderH);
+
+      // Mobile nav
+      const menuToggle=document.getElementById('menuToggle');
+      const mobilePanel=document.getElementById('mobilePanel');
+      const mobileMenu=document.getElementById('mobileMenu');
+      const focusable='a[href], button:not([disabled])';
+      let lastFocused=null;
+
+      function trapFocus(container,e){
+        const nodes=container.querySelectorAll(focusable); if(!nodes.length) return;
+        const first=nodes[0], last=nodes[nodes.length-1];
+        if(e.key==='Tab'){
+          if(e.shiftKey && document.activeElement===first){e.preventDefault(); last.focus();}
+          else if(!e.shiftKey && document.activeElement===last){e.preventDefault(); first.focus();}
+        }
+      }
+      function openMenu(){
+        lastFocused=document.activeElement;
+        document.body.classList.add('nav-open');
+        mobilePanel.classList.add('open');
+        menuToggle.setAttribute('aria-expanded','true');
+        mobilePanel.addEventListener('keydown', focusHandler);
+        mobileMenu.querySelector('a')?.focus();
+      }
+      function closeMenu(){
+        document.body.classList.remove('nav-open');
+        mobilePanel.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded','false');
+        mobilePanel.removeEventListener('keydown', focusHandler);
+        lastFocused && lastFocused.focus();
+      }
+      function focusHandler(e){ trapFocus(mobilePanel,e); }
+
+      menuToggle.addEventListener('click',()=> menuToggle.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu());
+      mobileMenu.addEventListener('click', e=>{ if(e.target.closest('a')) closeMenu(); });
+      document.addEventListener('click', e=>{ if(window.matchMedia('(max-width:900px)').matches){ if(!e.target.closest('nav') && mobilePanel.classList.contains('open')) closeMenu(); }});
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape' && mobilePanel.classList.contains('open')) closeMenu(); });
+      window.addEventListener('resize',()=>{ if(!window.matchMedia('(max-width:900px)').matches) closeMenu(); });
+
+      // Copy email
+      document.getElementById('copyEmail')?.addEventListener('click', async ()=>{
+        try{
+          await navigator.clipboard.writeText(document.getElementById('emailLink').textContent.trim());
+          const b=document.getElementById('copyEmail'); const orig=b.innerHTML;
+          b.innerHTML='Copied ✓'; setTimeout(()=> b.innerHTML=orig,1500);
+        }catch{ alert('Copy not supported in this browser.'); }
+      });
+    });
+  </script>
 </body>
 </html>
