@@ -50,6 +50,7 @@
       --green-dark:#40513b; --green-main:#609966; --green-light:#9dc08b;
       --accent-gold:#c5a880;
       --header-h:64px;
+      --panel-top: calc(var(--header-h) + env(safe-area-inset-top));
     }
     [data-theme="dark"]{
       --bg-cream:#0f1a12; --text:#e6efe8;
@@ -68,7 +69,7 @@
     main[id], section[id]{scroll-margin-top:calc(var(--header-h) + 16px)}
 
     /* Skip link */
-    .skip-link{position:absolute;left:8px;top:-40px;padding:.5rem .75rem;border-radius:.5rem;background:#fff;color:var(--green-dark);box-shadow:0 4px 10px rgba(0,0,0,.1);transition:top .2s;z-index:1001;text-decoration:none;font-weight:600}
+    .skip-link{position:absolute;left:8px;top:-40px;padding:.5rem .75rem;border-radius:.5rem;background:#fff;color:var(--green-dark);box-shadow:0 4px 10px rgba(0,0,0,.1);transition:top .2s;z-index:1201;text-decoration:none;font-weight:600}
     .skip-link:focus{top:8px;outline:2px solid var(--green-main)}
 
     a{color:inherit}
@@ -81,7 +82,7 @@
       padding-left:max(6%, env(safe-area-inset-left)); padding-right:max(6%, env(safe-area-inset-right));
       display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:var(--header-h)
     }
-    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit; flex:1 1 auto; min-width:0;}
+    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit; flex:1 1 auto; min-width:0; justify-content:flex-start;} /* left aligned */
     .logo-area img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light)}
     .logo-area span{
       font-family:'Playfair Display',serif;font-weight:700;color:var(--green-dark);letter-spacing:.2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(1rem, 4.5vw, 1.25rem);max-width:100%;
@@ -100,7 +101,12 @@
     .theme-toggle{appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
     .theme-toggle:hover{border-color:rgba(0,0,0,.2)}
 
-    .menu-toggle{appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);width:44px;height:44px;border-radius:10px;display:none;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:1101; /* ensure above panel edge */}
+    .menu-toggle{
+      appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);
+      width:44px;height:44px;border-radius:10px;display:none;align-items:center;justify-content:center;cursor:pointer;
+      position:relative;z-index:1101; /* above panel/backdrop */
+      touch-action:manipulation;
+    }
     .menu-icon{position:relative;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, background .3s}
     .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, top .3s, opacity .3s}
     .menu-icon::before{top:-6px}
@@ -109,7 +115,7 @@
     .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
     .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
 
-    /* Mobile panel base (hidden by default) */
+    /* Mobile panel is hidden on desktop */
     .mobile-panel{display:none}
 
     /* Hero */
@@ -161,7 +167,7 @@
     footer a{color:var(--accent-gold);text-decoration:none;margin:0 .5rem}
 
     /* Scroll-to-Top & progress */
-    #scrollTopBtn{position:fixed;bottom:30px;right:30px;background:var(--green-dark);color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s;z-index:1000}
+    #scrollTopBtn{position:fixed;bottom:30px;right:30px;background:var(--green-dark);color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s;z-index:900}
     #scrollTopBtn.show{opacity:1;visibility:visible}
     #scrollTopBtn:hover{background:var(--green-main)}
     #scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--green-main);z-index:1200;transition:width .1s linear}
@@ -170,32 +176,48 @@
     @media (max-width: 900px){
       .about{grid-template-columns:1fr}
       .nav-links{display:none}
-      .nav-right{gap:.5rem} /* tighter on small screens */
+      .nav-right{gap:.5rem}
       .menu-toggle, .theme-toggle{display:inline-flex; width:48px; height:48px;}
 
-      .logo-area{flex:1 1 auto; min-width:0; justify-content:flex-start;} /* keep left + allow grow */
-      .logo-area span{font-size:1.1rem; max-width:62vw;} /* reserve room for buttons */
+      .logo-area{flex:1 1 auto; min-width:0; justify-content:flex-start;}
+      .logo-area span{font-size:1.1rem; max-width:60vw;}
 
+      /* Backdrop under panel */
+      .mobile-backdrop{
+        display:block; position:fixed; inset:var(--panel-top) 0 0 0;
+        height:calc(100dvh - var(--panel-top));
+        background:rgba(0,0,0,.45);
+        opacity:0; pointer-events:none; transition:opacity .2s ease;
+        z-index:1090;
+      }
+      .mobile-backdrop.active{ opacity:1; pointer-events:auto; }
+
+      /* Sliding panel */
       .mobile-panel{
-        display:block; position:fixed; inset:calc(var(--header-h) + env(safe-area-inset-top)) 0 0 0;
-        background:var(--bg-cream); border-top:1px solid rgba(0,0,0,.06); overflow:auto; max-height:70vh;
-        transform-origin:top; z-index:1100; padding:1rem 6%;
-        opacity:0; transform:translateY(-8px); pointer-events:none; transition:opacity .2s ease, transform .2s ease;
+        display:block; position:fixed; inset:var(--panel-top) 0 0 0;
+        height:calc(100dvh - var(--panel-top));
+        background:var(--bg-cream);
+        border-top:1px solid rgba(0,0,0,.06);
+        overflow:auto; -webkit-overflow-scrolling:touch;
+        transform:translateY(-8px); opacity:0; pointer-events:none;
+        transition:opacity .18s ease, transform .18s ease;
+        z-index:1100; padding:1rem 6%  max(1rem, env(safe-area-inset-bottom));
+        will-change:transform, opacity;
       }
       .mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
 
-      .mobile-panel[hidden]{ display:none !important; } /* definitive hidden state */
+      .mobile-panel[hidden]{ display:none !important; }
 
       .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.2rem}
       .mobile-menu a{display:block;padding:1rem 0;text-decoration:none;font-weight:800;color:var(--green-dark);border-radius:10px}
       .mobile-menu a:active{background:rgba(0,0,0,.04)}
-      body.nav-open{height:100svh;overflow:hidden;overscroll-behavior:contain;touch-action:none}
+      body.nav-open{height:100dvh;overflow:hidden;overscroll-behavior:contain;touch-action:none}
     }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{scroll-behavior:auto}
-      .card, .gallery img, .btn, .menu-icon, .mobile-panel{transition:none !important}
+      .card, .gallery img, .btn, .menu-icon, .mobile-panel, .mobile-backdrop{transition:none !important}
     }
 
     @media (prefers-color-scheme: dark){
@@ -218,7 +240,6 @@
   <header class="site-header" data-aos="fade-down">
     <nav aria-label="Primary">
       <a class="logo-area" href="#home" aria-label="Home">
-        <!-- Replace with your round logo file -->
         <img src="logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
         <span>Harsh Ranjan (Samarpan)</span>
       </a>
@@ -239,7 +260,9 @@
         </button>
       </div>
 
-      <!-- Mobile dropdown -->
+      <!-- Mobile Backdrop + Panel -->
+      <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+
       <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
         <ul class="mobile-menu" id="mobileMenu">
           <li><a href="about.html">About</a></li>
@@ -264,10 +287,9 @@
     <img src="your-photo.jpg" alt="Photo of Harsh Ranjan" loading="lazy" decoding="async" />
     <div class="about-text">
       <h2 id="about-heading">About Me</h2>
-
       <p>
-I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and Sanskrit to blend ancient wisdom with modern living. As the founder of Just The Self Healing System, I guide people in India and worldwide toward holistic health, self-discovery, and conscious living—uniting body, mind, and soul.
-</p>
+        I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and Sanskrit to blend ancient wisdom with modern living. As the founder of Just The Self Healing System, I guide people in India and worldwide toward holistic health, self-discovery, and conscious living—uniting body, mind, and soul.
+      </p>
       <div style="text-align:left;">
         <a href="about.html" class="btn">Know More</a>
       </div>
@@ -517,12 +539,15 @@ I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and
         }
       });
 
-      // Mobile menu (animation + a11y + iPhone stability)
-      const menuToggle=document.getElementById('menuToggle');
-      const mobilePanel=document.getElementById('mobilePanel');
-      const mobileMenu=document.getElementById('mobileMenu');
+      // Mobile menu (robust iPhone fix)
+      const menuToggle = document.getElementById('menuToggle');
+      const mobilePanel = document.getElementById('mobilePanel');
+      const mobileMenu  = document.getElementById('mobileMenu');
+      const backdrop    = document.getElementById('mobileBackdrop');
+
       const focusableSel='a[href], button:not([disabled])';
       let lastFocused=null;
+      let isAnimating=false;
 
       function trapFocus(e){
         const focusables=mobilePanel.querySelectorAll(focusableSel);
@@ -533,51 +558,62 @@ I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and
           else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
         }
       }
+
+      function showBackdrop(){
+        backdrop.removeAttribute('hidden');
+        // force a frame so the transition runs
+        requestAnimationFrame(()=>backdrop.classList.add('active'));
+      }
+      function hideBackdrop(){
+        backdrop.classList.remove('active');
+        const end=()=>backdrop.setAttribute('hidden','');
+        backdrop.addEventListener('transitionend', end, { once:true });
+        setTimeout(end, 250);
+      }
+
       function openMenu(){
+        if(isAnimating) return; isAnimating=true; setTimeout(()=>isAnimating=false, 350);
         lastFocused=document.activeElement;
         document.body.classList.add('nav-open');
-        mobilePanel.removeAttribute('hidden'); // show immediately so transition can run
+        mobilePanel.removeAttribute('hidden');
+        showBackdrop();
         requestAnimationFrame(()=>mobilePanel.classList.add('open'));
         menuToggle.setAttribute('aria-expanded','true');
         menuToggle.setAttribute('aria-label','Close menu');
         mobilePanel.addEventListener('keydown', trapFocus);
-        mobileMenu.querySelector('a')?.focus();
+        mobileMenu.querySelector('a')?.focus({ preventScroll:true });
       }
       function closeMenu(){
+        if(isAnimating) return; isAnimating=true; setTimeout(()=>isAnimating=false, 350);
         document.body.classList.remove('nav-open');
-        // If it's not open, ensure hidden and bail
-        if(!mobilePanel.classList.contains('open')){
-          mobilePanel.setAttribute('hidden','');
-          menuToggle.setAttribute('aria-expanded','false');
-          menuToggle.setAttribute('aria-label','Open menu');
-          mobilePanel.removeEventListener('keydown', trapFocus);
-          lastFocused && lastFocused.focus();
-          return;
-        }
         mobilePanel.classList.remove('open');
-        const handler=()=>{ mobilePanel.setAttribute('hidden',''); };
-        // Transition-end (with fallback in case Safari/iOS drops event)
-        mobilePanel.addEventListener('transitionend', handler, { once:true });
-        setTimeout(handler, 300);
+        hideBackdrop();
+        const end=()=>{ mobilePanel.setAttribute('hidden',''); };
+        mobilePanel.addEventListener('transitionend', end, { once:true });
+        setTimeout(end, 300);
         menuToggle.setAttribute('aria-expanded','false');
         menuToggle.setAttribute('aria-label','Open menu');
         mobilePanel.removeEventListener('keydown', trapFocus);
-        lastFocused && lastFocused.focus();
+        lastFocused && lastFocused.focus({ preventScroll:true });
       }
+
       menuToggle.addEventListener('click', ()=> mobilePanel.classList.contains('open') ? closeMenu() : openMenu());
-      mobileMenu.addEventListener('click',(e)=>{ if(e.target.closest('a')) closeMenu(); });
-      document.addEventListener('click',(e)=>{
-        if(window.matchMedia('(max-width: 900px)').matches){
-          const insideNav=!!e.target.closest('nav');
-          if(!insideNav && !mobilePanel.hidden) closeMenu();
-        }
-      });
-      document.addEventListener('keydown',(e)=>{ if(e.key==='Escape' && !mobilePanel.hidden) closeMenu(); });
-      window.addEventListener('resize',()=>{
-        // If leaving mobile breakpoint, force a clean hidden state immediately
-        if(!window.matchMedia('(max-width: 900px)').matches){
+
+      // Close on overlay tap or link tap
+      backdrop.addEventListener('click', closeMenu);
+      mobileMenu.addEventListener('click', (e)=>{ if(e.target.closest('a')) closeMenu(); });
+
+      // Close on Esc
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !mobilePanel.hasAttribute('hidden')) closeMenu(); });
+
+      // Clean reset when leaving mobile breakpoint
+      const mq = window.matchMedia('(max-width: 900px)');
+      mq.addEventListener?.('change', ()=> {
+        if(!mq.matches){
           mobilePanel.classList.remove('open');
           mobilePanel.setAttribute('hidden','');
+          backdrop.classList.remove('active');
+          backdrop.setAttribute('hidden','');
           document.body.classList.remove('nav-open');
           menuToggle.setAttribute('aria-expanded','false');
           menuToggle.setAttribute('aria-label','Open menu');
