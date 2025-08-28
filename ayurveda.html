@@ -22,67 +22,87 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-  <!--
-    ✅ Shared CSS & JS
-    These two files should be the SAME ones used by about.html (single source of truth).
-    If your filenames differ, update the href/src to match your project.
-  -->
+  <!-- Shared CSS & JS (match About page) -->
   <link rel="stylesheet" href="/assets/site.css" />
   <script defer src="/assets/site.js"></script>
 
   <style>
-    /* ----------------------------------------
-       Page-level styles (minimal). Keep most
-       shared styling in /assets/site.css
-       ---------------------------------------- */
+    /* Page tokens (aligned with About) */
     :root{
-      --bg-cream:#edf1d6;/* soft cream */
+      --bg-cream:#edf1d6;
       --green-100:#e6f2e9;
       --green-200:#cfe6d4;
       --green-300:#b7dabf;
-      --green-main:#609966;/* brand */
+      --green-main:#609966;
       --green-dark:#40513b;
       --text:#263238;
       --muted:#5f6b66;
       --card:#ffffff;
-      --header-h:72px;
+      --header-h:64px;
       --shadow:0 6px 18px rgba(0,0,0,.08)
     }
-    /* Dark mode tokens (applied via [data-theme="dark"]) */
     html[data-theme="dark"]{
       --bg-cream:#0f1412;
       --green-100:#1a2a24;
       --green-200:#20362d;
       --green-300:#294338;
-      --green-main:#78c689; /* slightly brighter for contrast */
-      --green-dark:#cfe6d4; /* headings */
+      --green-main:#78c689;
+      --green-dark:#cfe6d4;
       --text:#e7efe9;
       --muted:#a6b5ad;
       --card:#121a17;
       --shadow:0 6px 18px rgba(0,0,0,.4)
     }
 
-    /* Base */
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg-cream);color:var(--text);line-height:1.65;}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg-cream);color:var(--text);line-height:1.65}
     img{max-width:100%;display:block}
     a{color:var(--green-main);text-decoration:none}
     a:hover{opacity:.9}
 
-    /* Header */
-    .site-header{position:sticky;top:0;z-index:50;background:var(--bg-cream);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid rgba(0,0,0,.06)}
-    nav.container{max-width:1100px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem}
+    /* Header (replicates About: brand left, search + toggles center/right, hamburger at top-right for mobile) */
+    .site-header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.6);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(0,0,0,.06)}
+    html[data-theme="dark"] .site-header{background:rgba(16,20,18,.6);border-bottom-color:rgba(255,255,255,.08)}
+    .nav-wrap{max-width:1100px;margin:auto;display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:.5rem 1rem;height:var(--header-h)}
     .brand{display:flex;align-items:center;gap:.6rem;color:var(--green-dark);font-weight:700}
     .brand img{width:40px;height:40px;border-radius:50%;border:2px solid var(--green-300)}
-    .nav-links{display:flex;gap:.9rem;align-items:center}
-    .nav-links a{color:var(--green-dark);font-weight:600}
-    .nav-links a.active{color:var(--green-main)}
 
-    /* Dark-mode toggle (same placement as About) */
-    .theme-toggle{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgba(0,0,0,.08);padding:.4rem .6rem;border-radius:999px;cursor:pointer;background:var(--card);box-shadow:var(--shadow)}
+    /* Search with logo inside */
+    .searchbar{position:relative;display:flex;align-items:center}
+    .searchbar input{width:100%;min-width:220px;border:1px solid rgba(0,0,0,.08);padding:.6rem .9rem .6rem 2.6rem;border-radius:999px;background:var(--card);box-shadow:var(--shadow);color:var(--text)}
+    .searchbar img{position:absolute;left:.6rem;width:22px;height:22px;border-radius:50%;object-fit:cover}
+
+    /* Right controls */
+    .controls{display:flex;align-items:center;gap:.5rem}
+    .theme-toggle{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(0,0,0,.08);padding:.4rem .6rem;border-radius:999px;background:var(--card);box-shadow:var(--shadow);cursor:pointer}
     .theme-toggle svg{width:18px;height:18px;display:block}
 
-    /* Hero — match About’s soft cream → green */
+    /* Desktop nav (hidden until we open mobile) */
+    .links{display:flex;gap:.9rem;align-items:center}
+    .links a{color:var(--green-dark);font-weight:600}
+    .links a.active{color:var(--green-main)}
+
+    /* Hamburger */
+    .burger{display:none;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:var(--card);box-shadow:var(--shadow)}
+    .burger svg{width:22px;height:22px}
+
+    /* Mobile menu panel */
+    .panel{position:fixed;inset:0 0 auto auto;top:0;right:0;width:min(88vw,320px);height:100dvh;background:var(--card);box-shadow:-16px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .35s ease;z-index:70;display:flex;flex-direction:column}
+    .panel.open{transform:translateX(0)}
+    .panel header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;border-bottom:1px solid rgba(0,0,0,.06)}
+    .panel nav{display:flex;flex-direction:column;padding:1rem}
+    .panel nav a{padding:.7rem 0;border-bottom:1px dashed rgba(0,0,0,.08);color:var(--green-dark);font-weight:600}
+    .panel .close{width:40px;height:40px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:var(--card);display:grid;place-items:center}
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .nav-wrap{grid-template-columns:auto 1fr auto}
+      .links{display:none}
+      .burger{display:grid}
+      .searchbar input{min-width:0}
+    }
+
+    /* Hero */
     .hero{padding:5rem 1rem 3.5rem;background:linear-gradient(135deg,var(--bg-cream),var(--green-200));text-align:center}
     .hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,5vw,2.8rem);color:var(--green-dark);margin:0}
     .hero p{color:var(--green-main);margin:.6rem 0 0;font-size:1.05rem}
@@ -103,8 +123,8 @@
     .tabs{display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
     .tab{padding:.5rem 1rem;border-radius:999px;border:1px solid var(--green-main);background:transparent;color:var(--green-dark);font-weight:600;cursor:pointer}
     .tab[aria-selected="true"]{background:var(--green-main);color:#fff}
-    .panel{display:none}
-    .panel.active{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .panel-tab{display:none}
+    .panel-tab.active{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 
     /* Research grid */
     .research{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -114,65 +134,85 @@
     footer{background:var(--green-dark);color:#fff;text-align:center;padding:1.5rem}
     footer a{color:#c5a880}
 
-    /* Floating Lotus Menu (Back to Top + Quick Links) */
-    .lotus{position:fixed;right:18px;bottom:18px;z-index:60}
+    /* Floating Lotus Menu */
+    .lotus{position:fixed;right:18px;bottom:18px;z-index:80}
     .lotus .core{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--green-main);color:#fff;box-shadow:var(--shadow);cursor:pointer;outline:none;border:none}
     .lotus .core svg{width:26px;height:26px}
     .petal{position:absolute;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--green-dark);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translate(0,0) scale(.6)}
     .petal a{display:grid;place-items:center;width:100%;height:100%;color:inherit}
-
-    /* Petal positions when open (unfolding) */
     .lotus.open .petal{opacity:1;pointer-events:auto}
     .lotus.open .p1{transform:translate(-72px,-6px) scale(1)}
     .lotus.open .p2{transform:translate(-52px,-58px) scale(1)}
     .lotus.open .p3{transform:translate(-6px,-78px) scale(1)}
     .lotus.open .p4{transform:translate(40px,-58px) scale(1)}
     .lotus.open .p5{transform:translate(60px,-10px) scale(1)}
-
-    /* Unfold animation */
     .lotus .petal{transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
     .lotus .p1{transition-delay:.02s}
     .lotus .p2{transition-delay:.06s}
     .lotus .p3{transition-delay:.10s}
     .lotus .p4{transition-delay:.14s}
     .lotus .p5{transition-delay:.18s}
+    @supports(padding:max(0px)){.lotus{right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom))}}
 
-    /* Mobile stability: prevent overlap with footer/safe areas */
-    @supports(padding:max(0px)){
-      .lotus{right: max(18px, env(safe-area-inset-right));
-             bottom:max(18px, env(safe-area-inset-bottom))}
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .lotus .petal,.lotus .core,.tab{transition:none!important}
-      html{scroll-behavior:auto}
-    }
-
-    /* Smooth scrolling */
+    /* Smooth scroll + reduced motion */
     html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){.lotus .petal,.lotus .core,.tab,.panel{transition:none!important}html{scroll-behavior:auto}}
   </style>
 </head>
 
 <body>
+  <!-- Header (matches About: brand left, search + dark toggle, hamburger top-right) -->
   <header class="site-header" role="banner">
-    <nav class="container" aria-label="Primary">
+    <div class="nav-wrap" aria-label="Primary">
       <a class="brand" href="index.html">
         <img src="website_dp.png" alt="Harsh Ranjan logo" />
         <span>Harsh Ranjan</span>
       </a>
-      <div class="nav-links">
-        <a href="about.html">About</a>
-        <a href="sessions.html">Sessions</a>
-        <a href="ayurveda.html" class="active" aria-current="page">Ayurveda</a>
-        <a href="trips.html">Trips</a>
-        <a href="#contact" class="hide-mobile">Contact</a>
+
+      <!-- Center: Search with logo inside -->
+      <form class="searchbar" role="search" aria-label="Site search" action="search.html">
+        <img src="website_dp.png" alt="Logo" />
+        <input type="search" name="q" placeholder="Search…" autocomplete="off" />
+      </form>
+
+      <!-- Right: links (desktop), theme toggle, burger (mobile) -->
+      <div class="controls">
+        <nav class="links" aria-label="Desktop navigation">
+          <a href="about.html">About</a>
+          <a href="sessions.html">Sessions</a>
+          <a href="ayurveda.html" class="active" aria-current="page">Ayurveda</a>
+          <a href="trips.html">Trips</a>
+          <a href="#contact">Contact</a>
+        </nav>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm8-5a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2h-2a1 1 0 1 1-2 0 1 1 0 0 1 1-1ZM4 12a1 1 0 0 1-1 1H1a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1Zm14.95 6.364a1 1 0 0 1-1.414 0l-1.414-1.415a1 1 0 1 1 1.415-1.414l1.414 1.414a1 1 0 0 1 0 1.415ZM7.88 7.88A1 1 0 0 1 6.465 6.465L5.05 5.05A1 1 0 1 1 6.465 3.636L7.88 5.05A1 1 0 0 1 7.88 7.88Zm0 8.24a1 1 0 0 1 0 1.415L6.465 19.95A1 1 0 0 1 5.05 18.536l1.415-1.414A1 1 0 0 1 7.88 16.12Zm9.657-9.657a1 1 0 0 1 0-1.414L19.95 3.636A1 1 0 1 1 21.364 5.05L19.95 6.465a1 1 0 0 1-1.415 0Z"/></svg>
           <span>Mode</span>
         </button>
+        <button class="burger" id="burger" aria-label="Open menu" aria-controls="mobilePanel" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
       </div>
-    </nav>
+    </div>
+
+    <!-- Slide-over mobile panel -->
+    <aside class="panel" id="mobilePanel" aria-hidden="true">
+      <header>
+        <strong style="display:flex;align-items:center;gap:.5rem"><img src="website_dp.png" alt="Logo" style="width:24px;height:24px;border-radius:50%"> Menu</strong>
+        <button class="close" id="panelClose" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </header>
+      <nav aria-label="Mobile navigation">
+        <a href="about.html">About</a>
+        <a href="sessions.html">Sessions</a>
+        <a href="ayurveda.html" aria-current="page">Ayurveda</a>
+        <a href="trips.html">Trips</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div style="margin:auto 1rem 1rem;display:flex;gap:.5rem">
+        <button class="theme-toggle" id="themeToggleM" aria-label="Toggle dark mode">Dark/Light</button>
+      </div>
+    </aside>
   </header>
 
   <section class="hero">
@@ -202,19 +242,19 @@
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-pitta" id="tab-pitta">Pitta</button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-kapha" id="tab-kapha">Kapha</button>
       </div>
-      <div id="panel-vata" class="panel active" role="tabpanel" aria-labelledby="tab-vata">
+      <div id="panel-vata" class="panel-tab active" role="tabpanel" aria-labelledby="tab-vata">
         <div class="card"><h4>Morning</h4><p>Warm water, gentle yoga, <em>Nadi Shodhana</em> pranayama.</p></div>
-        <div class="card"><h4>Meals</h4><p>Warm, nourishing foods with ginger & cumin.</p></div>
+        <div class="card"><h4>Meals</h4><p>Warm, nourishing foods with ginger &amp; cumin.</p></div>
         <div class="card"><h4>Evening</h4><p>Yoga Nidra, warm milk, early sleep.</p></div>
       </div>
-      <div id="panel-pitta" class="panel" role="tabpanel" aria-labelledby="tab-pitta">
+      <div id="panel-pitta" class="panel-tab" role="tabpanel" aria-labelledby="tab-pitta">
         <div class="card"><h4>Morning</h4><p>Cooling splash, twists, <em>Sheetali</em> pranayama.</p></div>
         <div class="card"><h4>Meals</h4><p>Cooling foods: cucumber, coriander, fennel.</p></div>
         <div class="card"><h4>Evening</h4><p>Journaling, meditation, digital detox.</p></div>
       </div>
-      <div id="panel-kapha" class="panel" role="tabpanel" aria-labelledby="tab-kapha">
+      <div id="panel-kapha" class="panel-tab" role="tabpanel" aria-labelledby="tab-kapha">
         <div class="card"><h4>Morning</h4><p>Brisk yoga or walk, <em>Kapalabhati</em> breathing.</p></div>
-        <div class="card"><h4>Meals</h4><p>Light, spiced meals with black pepper & mustard.</p></div>
+        <div class="card"><h4>Meals</h4><p>Light, spiced meals with black pepper &amp; mustard.</p></div>
         <div class="card"><h4>Evening</h4><p>Short meditation, early light dinner.</p></div>
       </div>
     </section>
@@ -224,17 +264,12 @@
       <div class="grid cols-2">
         <div class="card">
           <h3>What it is</h3>
-          <p>
-            <strong>Ayurveda Biology</strong> is an emerging field that bridges classical Ayurvedic wisdom with
-            modern life sciences—molecular biology, pharmacology, physiology, and botany. It deconstructs
-            traditional concepts (like <em>dosha</em>, <em>agni</em>, <em>dhatu</em>) using contemporary scientific methods and frames them within
-            modern biological models to deepen our understanding of health, imbalance, and healing.
-          </p>
+          <p><strong>Ayurveda Biology</strong> bridges classical Ayurvedic wisdom with modern life sciences—molecular biology, pharmacology, physiology, and botany. It examines traditional concepts (like <em>dosha</em>, <em>agni</em>, <em>dhatu</em>) with contemporary methods and frames them within biological models to deepen understanding of health, imbalance, and healing.</p>
         </div>
         <div class="card">
           <h3>Why it matters</h3>
           <ul>
-            <li>Builds evidence around time‑tested practices (e.g., routines, herbs, and diet patterns).</li>
+            <li>Builds evidence around time‑tested practices (routines, herbs, diet patterns).</li>
             <li>Translates Ayurvedic diagnostics into measurable biomarkers and pathways.</li>
             <li>Enables safer, more personalized guidance by integrating both traditions.</li>
           </ul>
@@ -245,9 +280,9 @@
     <section>
       <h2>Research in Ayurveda</h2>
       <div class="research">
-        <div class="card paper"><h4>Brahmi & Memory</h4><p>Studies suggest Brahmi supports cognition and memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" rel="noopener">Read more</a></p></div>
-        <div class="card paper"><h4>Dinacharya & Prevention</h4><p>Daily routine practices improve metabolism and mental balance. <a href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" rel="noopener">Read PDF</a></p></div>
-        <div class="card paper"><h4>Yoga & Stress</h4><p>Breath-led sequences reduce stress and improve sleep quality.</p></div>
+        <div class="card paper"><h4>Brahmi &amp; Memory</h4><p>Studies suggest Brahmi supports cognition and memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" rel="noopener">Read more</a></p></div>
+        <div class="card paper"><h4>Dinacharya &amp; Prevention</h4><p>Daily routine practices improve metabolism and mental balance. <a href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" rel="noopener">Read PDF</a></p></div>
+        <div class="card paper"><h4>Yoga &amp; Stress</h4><p>Breath-led sequences reduce stress and improve sleep quality.</p></div>
       </div>
     </section>
   </main>
@@ -259,16 +294,12 @@
 
   <!-- Floating Lotus Menu -->
   <div class="lotus" id="lotusMenu" aria-label="Quick actions">
-    <!-- Petals (unfold around the core) -->
     <button class="petal p1" aria-label="Back to Home" title="Home" onclick="location.href='index.html'">🏠</button>
     <button class="petal p2" aria-label="Go to Sessions" title="Sessions" onclick="location.href='sessions.html'">🧘</button>
     <button class="petal p3" aria-label="Back to Top" title="Top" id="btnTop">⬆️</button>
     <button class="petal p4" aria-label="Contact" title="Contact" onclick="location.href='index.html#contact'">✉️</button>
     <button class="petal p5" aria-label="Explore Trips" title="Trips" onclick="location.href='trips.html'">⛰️</button>
-
-    <!-- Core (Lotus) -->
     <button class="core" id="lotusCore" aria-expanded="false" aria-controls="lotusMenu">
-      <!-- Simple lotus-like mark -->
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M12 3c1.8 2.2 3 4.7 3 7.2 0 2.5-1.2 4.9-3 6.8-1.8-1.9-3-4.3-3-6.8C9 7.7 10.2 5.2 12 3Z" fill="currentColor" opacity=".9"/>
         <path d="M6 10c2 .6 4.1 2 6 4-2.8.3-5.5-.2-7.7-1.6C4.9 11.4 5.4 10.6 6 10Z" fill="currentColor" opacity=".75"/>
@@ -281,9 +312,7 @@
     // YEAR
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ----------------------------------
-    // Dark mode — mirror About page logic
-    // ----------------------------------
+    // Theme (mirror About logic)
     (function(){
       const root = document.documentElement;
       const key = 'theme-preference';
@@ -291,20 +320,17 @@
       const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const initial = stored || (preferDark ? 'dark' : 'light');
       root.setAttribute('data-theme', initial);
-      const toggle = document.getElementById('themeToggle');
-      if(toggle){
-        toggle.addEventListener('click', ()=>{
-          const current = root.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          root.setAttribute('data-theme', next);
-          localStorage.setItem(key, next);
-        });
+      function toggleTheme(){
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem(key, next);
       }
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+      document.getElementById('themeToggleM').addEventListener('click', toggleTheme);
     })();
 
-    // ---------------------------
-    // Tabs — accessible switching
-    // ---------------------------
+    // Tabs
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       vata: document.getElementById('panel-vata'),
@@ -312,42 +338,33 @@
       kapha: document.getElementById('panel-kapha')
     };
     tabs.forEach(btn=>{
-      btn.addEventListener('click', (e)=>{
+      btn.addEventListener('click', ()=>{
         const id = btn.id.replace('tab-','');
-        // update tabs
         tabs.forEach(b=>b.setAttribute('aria-selected','false'));
         btn.setAttribute('aria-selected','true');
-        // update panels
         Object.values(panels).forEach(p=>p.classList.remove('active'));
         panels[id].classList.add('active');
       });
     });
 
-    // ---------------------------------------
-    // Floating Lotus — unfold and back-to-top
-    // ---------------------------------------
+    // Mobile panel (hamburger)
+    const burger = document.getElementById('burger');
+    const panel = document.getElementById('mobilePanel');
+    const closeBtn = document.getElementById('panelClose');
+    function openPanel(){panel.classList.add('open');panel.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');}
+    function closePanel(){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');}
+    burger.addEventListener('click', openPanel);
+    closeBtn.addEventListener('click', closePanel);
+    panel.addEventListener('click', (e)=>{ if(e.target === panel) closePanel(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
+
+    // Floating Lotus
     const lotus = document.getElementById('lotusMenu');
     const core = document.getElementById('lotusCore');
     const btnTop = document.getElementById('btnTop');
-
-    core.addEventListener('click', ()=>{
-      const open = lotus.classList.toggle('open');
-      core.setAttribute('aria-expanded', String(open));
-    });
-
-    btnTop.addEventListener('click', ()=>{
-      window.scrollTo({top:0, behavior:'smooth'});
-      lotus.classList.remove('open');
-      core.setAttribute('aria-expanded','false');
-    });
-
-    // Auto-hide petals when clicking outside
-    document.addEventListener('click', (e)=>{
-      if(!lotus.contains(e.target)){
-        lotus.classList.remove('open');
-        core.setAttribute('aria-expanded','false');
-      }
-    });
+    core.addEventListener('click', ()=>{ const open = lotus.classList.toggle('open'); core.setAttribute('aria-expanded', String(open)); });
+    btnTop.addEventListener('click', ()=>{ window.scrollTo({top:0, behavior:'smooth'}); lotus.classList.remove('open'); core.setAttribute('aria-expanded','false'); });
+    document.addEventListener('click', (e)=>{ if(!lotus.contains(e.target)){ lotus.classList.remove('open'); core.setAttribute('aria-expanded','false'); }});
   </script>
 </body>
 </html>
