@@ -90,7 +90,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display.swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
     :root {
       --bg: #ffffff;
@@ -1408,12 +1408,14 @@
     });
     
     // Optional: Close menu when a link is clicked
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        body.classList.remove('menu-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          body.classList.remove('menu-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        });
       });
-    });
+    }
     // --- End Mobile Menu Script ---
 
     // Header Scroll Effect
@@ -1455,105 +1457,111 @@
     let currentSlide = 0;
     let slideInterval;
 
-    function goToSlide(n) {
-      currentSlide = n;
-      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-      
-      dots.forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSlide);
-      });
-    }
+    if (slides && dots.length > 0) { // Check if slider elements exist
+      function goToSlide(n) {
+        currentSlide = n;
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentSlide);
+        });
+      }
 
-    function nextSlide() {
-      currentSlide = (currentSlide + 1) % dots.length;
-      goToSlide(currentSlide);
-    }
-
-    function startSlideshow() {
-      slideInterval = setInterval(nextSlide, 5000);
-    }
-
-    function stopSlideshow() {
-      clearInterval(slideInterval);
-    }
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        stopSlideshow();
-        goToSlide(index);
-        startSlideshow();
-      });
-    });
-
-    // Touch/Swipe support for testimonials
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    slides.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-
-    slides.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      handleSwipe();
-    });
-
-    function handleSwipe() {
-      if (touchStartX - touchEndX > 50) {
-        // Swipe left
-        stopSlideshow();
+      function nextSlide() {
         currentSlide = (currentSlide + 1) % dots.length;
         goToSlide(currentSlide);
-        startSlideshow();
       }
-      
-      if (touchEndX - touchStartX > 50) {
-        // Swipe right
-        stopSlideshow();
-        currentSlide = (currentSlide - 1 + dots.length) % dots.length;
-        goToSlide(currentSlide);
-        startSlideshow();
-      }
-    }
 
-    startSlideshow();
+      function startSlideshow() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function stopSlideshow() {
+        clearInterval(slideInterval);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          stopSlideshow();
+          goToSlide(index);
+          startSlideshow();
+        });
+      });
+
+      // Touch/Swipe support for testimonials
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      slides.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      });
+
+      slides.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].clientX;
+        handleSwipe();
+      });
+
+      function handleSwipe() {
+        if (touchStartX - touchEndX > 50) {
+          // Swipe left
+          stopSlideshow();
+          currentSlide = (currentSlide + 1) % dots.length;
+          goToSlide(currentSlide);
+          startSlideshow();
+        }
+        
+        if (touchEndX - touchStartX > 50) {
+          // Swipe right
+          stopSlideshow();
+          currentSlide = (currentSlide - 1 + dots.length) % dots.length;
+          goToSlide(currentSlide);
+          startSlideshow();
+        }
+      }
+
+      startSlideshow();
+    }
 
     // QR Modal
     const qrModal = document.getElementById('qrModal');
     const openQRBtn = document.getElementById('openQRBtn');
     const closeModal = document.getElementById('closeModal');
 
-    openQRBtn.addEventListener('click', () => {
-      qrModal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
+    if (qrModal && openQRBtn && closeModal) { // Check if modal elements exist
+      openQRBtn.addEventListener('click', () => {
+        qrModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
 
-    closeModal.addEventListener('click', () => {
-      qrModal.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-
-    qrModal.addEventListener('click', (e) => {
-      if (e.target === qrModal) {
+      closeModal.addEventListener('click', () => {
         qrModal.classList.remove('open');
         document.body.style.overflow = '';
-      }
-    });
+      });
+
+      qrModal.addEventListener('click', (e) => {
+        if (e.target === qrModal) {
+          qrModal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
+    }
 
     // Copy UPI ID
     const copyUPI = document.getElementById('copyUPI');
-    copyUPI.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText('theharshranjanofficial@oksbi');
-        const originalHTML = copyUPI.innerHTML;
-        copyUPI.innerHTML = '<span><i class="fas fa-check"></i> Copied!</span>';
-        setTimeout(() => {
-          copyUPI.innerHTML = originalHTML;
-        }, 2000);
-      } catch (err) {
-        alert('Failed to copy. Please copy manually: theharshranjanofficial@oksbi');
-      }
-    });
+    if (copyUPI) { // Check if copy button exists
+      copyUPI.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText('theharshranjanofficial@oksbi');
+          const originalHTML = copyUPI.innerHTML;
+          copyUPI.innerHTML = '<span><i class="fas fa-check"></i> Copied!</span>';
+          setTimeout(() => {
+            copyUPI.innerHTML = originalHTML;
+          }, 2000);
+        } catch (err) {
+          alert('Failed to copy. Please copy manually: theharshranjanofficial@oksbi');
+        }
+      });
+    }
 
     // Update year
     document.getElementById('year').textContent = new Date().getFullYear();
