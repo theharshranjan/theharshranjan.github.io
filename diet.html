@@ -1,131 +1,809 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Diet & Nutrition — Harsh Ranjan (Samarpan)</title>
+
   <link rel="canonical" href="https://theharshranjan.github.io/diet.html" />
-  <meta name="description" content="Practical diet & nutrition guidance by Harsh Ranjan (Samarpan). Meal planning, myths debunked, Ayurveda notes and simple, evidence-informed tips (IGNOU DNHE informed)." />
-  <meta name="keywords" content="diet, nutrition, meal plan, IGNOU DNHE, practical nutrition, ayurveda diet, healthy eating India" />
+  <meta name="description" content="Practical diet & nutrition guidance by Harsh Ranjan (Samarpan). Meal planning, myths debunked, Ayurveda notes and simple, evidence-informed tips." />
 
-  <!-- Browser icons (use your prepared files) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
-  <meta name="theme-color" content="#7aa86b" />
-
-  <!-- Open Graph / Social preview -->
-  <meta property="og:title" content="Diet & Nutrition — Harsh Ranjan (Samarpan)" />
-  <meta property="og:description" content="Practical, evidence-informed diet & nutrition guidance blended with Ayurveda and yoga-friendly lifestyle tips." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://theharshranjan.github.io/diet.html" />
-  <meta property="og:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
-
-  <!-- Fonts & AOS (optional) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root{
-      --bg:#fbfcf6; --text:#233028; --accent:#7aa86b; --muted:#6c756f; --surface:#ffffff;
-      --card-border: rgba(0,0,0,.06); --shadow: 0 10px 30px rgba(0,0,0,.06); --radius:16px; --header-h:72px;
-    }
-    [data-theme="dark"]{
-      --bg:#0f2a1e; --text:#e8f4ea; --accent:#a1d6a1; --muted:#bcd9c0; --surface:#123924; --card-border: rgba(255,255,255,.06); --shadow: 0 12px 36px rgba(0,0,0,.45);
+    :root {
+      --sage-50: #f7f9f6;
+      --sage-100: #e8f0e6;
+      --sage-200: #d1e1cd;
+      --sage-300: #a8c9a1;
+      --sage-400: #7fb078;
+      --sage-500: #5a9253;
+      --sage-600: #47753f;
+      --sage-700: #385d32;
+      --sage-800: #2d4a28;
+      --sage-900: #1f3319;
+      
+      --cream-50: #fdfbf7;
+      --cream-100: #f9f5ed;
+      --cream-200: #f1e8d8;
+      --cream-300: #e7d6bc;
+      --cream-400: #d9bd97;
+      
+      --bg: var(--cream-50);
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-tertiary: #737373;
+      --accent: var(--sage-500);
+      --accent-hover: var(--sage-600);
+      --border: rgba(90, 146, 83, 0.1);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08);
+      --gradient-hero: linear-gradient(135deg, var(--sage-50) 0%, var(--cream-100) 100%);
     }
 
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;background:radial-gradient(800px 420px at 10% -10%, #f1f6ea, transparent),var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-    a{color:inherit}
-    img{max-width:100%; display:block}
-    .container{max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { 
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, var(--sage-100) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--cream-200) 0%, transparent 50%);
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+    }
 
     /* Header */
-    .site-header{position:sticky;top:0;padding-top:env(safe-area-inset-top);background: color-mix(in srgb, var(--bg) 96%, transparent);border-bottom:1px solid var(--card-border);z-index:1000;backdrop-filter: blur(6px)}
-    nav.container{display:flex;align-items:center;justify-content:space-between;min-height:var(--header-h);gap:1rem}
-    .logo{display:flex;align-items:center;gap:.8rem;text-decoration:none}
-    .logo img{width:56px;height:56px;border-radius:12px;border:2px solid rgba(0,0,0,.06);object-fit:cover}
-    .site-title{font-family:'Playfair Display',serif;font-weight:700;color:var(--accent);line-height:1}
-    .site-sub{font-size:.78rem;color:var(--muted)}
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(20px) saturate(180%);
+      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-    .nav-links{display:flex;gap:1rem;list-style:none;margin:0;padding:0;align-items:center}
-    .nav-links a{font-weight:700;text-decoration:none;padding:.4rem .5rem;border-radius:10px;color:var(--muted);transition:all .22s ease}
-    .nav-links a:hover{color:var(--text);transform:translateY(-1px)}
-    .nav-links a[aria-current="page"]{color:var(--accent);text-decoration:underline}
+    .site-header.scrolled {
+      box-shadow: var(--shadow-sm);
+    }
 
-    .icon-btn{appearance:none;background:var(--surface);border:1px solid var(--card-border);width:44px;height:44px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-    .menu-toggle{display:none}
-    @media (max-width:1024px){ .nav-links{display:none} .menu-toggle{display:inline-flex} }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80px;
+      gap: 2rem;
+    }
 
-    /* Hero */
-    .hero{padding:56px 0 20px}
-    .hero-card{background:var(--surface);border-radius:24px;padding:28px;border:1px solid var(--card-border);box-shadow:var(--shadow);text-align:center;overflow:hidden;position:relative}
-    .hero-card::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg, rgba(122,168,107,0.06), transparent);pointer-events:none}
-    .hero h1{font-family:'Playfair Display',serif;margin:0;font-size:clamp(1.6rem,3.2vw,2.6rem);color:var(--accent)}
-    .hero p{margin:.6rem auto 0;color:var(--muted);max-width:760px}
-    .btn{display:inline-block;margin-top:1rem;padding:.85rem 1.2rem;background:var(--accent);color:#07220f;border-radius:14px;font-weight:800;text-decoration:none;box-shadow:var(--shadow)}
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
 
-    /* Grid */
-    .grid{display:grid;gap:18px}
-    .grid-2{grid-template-columns:1fr}
-    @media(min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} }
+    .logo-area:hover {
+      transform: translateY(-2px);
+    }
 
-    .card{background:var(--surface);border-radius:var(--radius);padding:18px;border:1px solid var(--card-border);box-shadow:var(--shadow)}
-    .h2{font-family:'Playfair Display',serif;color:var(--accent);margin:0 0 12px;font-size:1.35rem}
-    .h3{font-family:'Playfair Display',serif;color:var(--accent);margin:.4rem 0}
-    .list{margin:.5rem 0 1rem 1.1rem}
+    .logo-area img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
 
-    details{background:var(--surface);padding:1rem;border-radius:12px;border:1px solid var(--card-border)}
-    details + details{margin-top:.7rem}
-    details summary{cursor:pointer;font-weight:700;color:var(--accent)}
+    .logo-area:hover img {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-hover);
+    }
 
-    /* Testimonials carousel (centered, one-by-one) */
-    .testi-wrap{display:flex;justify-content:center;margin-top:12px}
-    .testi-inner{width:100%;max-width:760px;position:relative;padding:22px}
-    .testi-item{position:absolute;inset:0;opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .6s ease;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px}
-    .testi-item.show{opacity:1;transform:translateY(0)}
-    .testi-quote{font-style:italic;color:var(--muted);padding:16px;border-radius:12px;background:linear-gradient(180deg, color-mix(in srgb, var(--surface) 96%, transparent), transparent);border:1px dashed var(--card-border)}
+    .logo-area span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+      color: var(--text-primary);
+    }
 
-    /* Floating CTA */
-    .fab{position:fixed;right:18px;bottom:18px;z-index:1200}
-    .fab a{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1rem;border-radius:999px;background:var(--accent);color:#06150c;font-weight:800;text-decoration:none;box-shadow:var(--shadow)}
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+      align-items: center;
+    }
 
-    footer{background:linear-gradient(180deg,#2d5b3f,#1f432f);color:#eaf6ea;padding:28px 16px;text-align:center;margin-top:30px}
-    footer a{color:#ffebc6;text-decoration:none}
+    .nav-links a {
+      position: relative;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
 
-    .muted{color:var(--muted)}
-    .pill{display:inline-block;padding:.35rem .6rem;border-radius:999px;background:color-mix(in srgb,var(--accent) 14%, transparent);font-weight:700;color:var(--accent)}
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
 
-    /* Mobile panel slide-in (improved) */
-    #mobileBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease;z-index:1001}
-    #mobileBackdrop.open{opacity:1;visibility:visible}
-    #mobilePanel{position:fixed;right:0;top:0;height:100vh;width:320px;max-width:80%;background:var(--surface);box-shadow: -24px 40px 80px rgba(0,0,0,.28);transform:translateX(110%);transition:transform .32s cubic-bezier(.2,.9,.3,1);z-index:1002;padding:24px;border-left:1px solid var(--card-border);overflow:auto}
-    #mobilePanel.open{transform:translateX(0)}
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--accent);
+    }
 
-    /* small tweaks for accessibility */
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .nav-links a:hover::after,
+    .nav-links a[aria-current="page"]::after {
+      width: 100%;
+    }
 
-    /* floating hero animation */
-    @keyframes floaty{0%{transform:translateY(0px)}50%{transform:translateY(-6px)}100%{transform:translateY(0px)}}
-    .hero-card{animation:floaty 8s ease-in-out infinite}
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
 
+    .menu-toggle span {
+      width: 22px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 10vh, 100px);
+      background: var(--gradient-hero);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--sage-200) 0%, transparent 70%);
+      opacity: 0.2;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, 30px) rotate(180deg); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-elevated);
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    /* Features Grid */
+    .features {
+      padding: clamp(60px, 10vh, 100px) 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-4 {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(28px, 4vw, 40px);
+      box-shadow: var(--shadow);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .card li {
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Feature Boxes */
+    .feature-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-box h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .feature-box p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .feature-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-box li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .feature-box li::before {
+      content: '•';
+      position: absolute;
+      left: 8px;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    /* Process Timeline */
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--sage-400), var(--sage-600));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-content h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* FAQ Section */
+    details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    details:hover {
+      box-shadow: var(--shadow);
+    }
+
+    details summary {
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    details summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--accent);
+      transition: transform 0.3s ease;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details p {
+      margin-top: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Testimonials */
+    .testimonial-section {
+      background: var(--gradient-hero);
+      border-radius: 24px;
+      padding: clamp(40px, 6vw, 60px);
+      margin: clamp(60px, 10vh, 100px) 0;
+    }
+    
+    .testimonial-carousel {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      min-height: 220px;
+    }
+    
+    .testimonial {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .testimonial.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .testimonial-content {
+      background: var(--surface);
+      padding: 36px;
+      border-radius: 20px;
+      border: 2px dashed var(--border);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    
+    .testimonial-content p {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.8;
+      margin-bottom: 18px;
+    }
+    
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: var(--gradient-hero);
+      border-radius: 24px;
+      padding: clamp(50px, 8vw, 80px);
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      margin: clamp(60px, 10vh, 100px) 0;
+    }
+
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--surface-elevated);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-tertiary);
+      margin-bottom: 1rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--accent-hover);
+    }
+
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      animation: fadeInUp 1s ease 1s both;
+    }
+
+    .fab a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--accent);
+      color: white;
+      border-radius: 100px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+    }
+
+    .fab a:hover {
+      background: var(--accent-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 56px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Notice */
+    .notice {
+      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 81px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow);
+        z-index: 999;
+      }
+
+      .mobile-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .mobile-menu ul {
+        list-style: none;
+      }
+
+      .mobile-menu a {
+        display: block;
+        padding: 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      .mobile-menu a:hover {
+        background: var(--surface-elevated);
+      }
+
+      .fab {
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .fab a {
+        padding: 14px 20px;
+        font-size: 0.9rem;
+      }
+
+      .timeline-item {
+        grid-template-columns: 50px 1fr;
+        gap: 1.5rem;
+      }
+
+      .timeline-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header" data-aos="fade-down">
-    <nav class="container" aria-label="Primary navigation">
-      <a class="logo" href="index.html" aria-label="Home">
-        <!-- main logo used both in header and browser icons; ensure file exists at root -->
-        <img src="logo.png" alt="Harsh Ranjan logo" width="56" height="56" loading="lazy">
-        <div>
-          <div class="site-title">Harsh Ranjan (Samarpan)</div>
-          <div class="site-sub">Ayurveda • Nutrition • Yoga</div>
-        </div>
+  <header class="site-header">
+    <nav class="container">
+      <a class="logo-area" href="index.html">
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" />
+        <span>Harsh Ranjan</span>
       </a>
-
-      <ul class="nav-links" aria-hidden="false">
+      
+      <ul class="nav-links">
         <li><a href="about.html">About</a></li>
         <li><a href="sessions.html">Sessions</a></li>
         <li><a href="ayurveda.html">Ayurveda</a></li>
@@ -135,340 +813,444 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
-      <div style="display:flex;gap:8px;align-items:center">
-        <button class="icon-btn" id="themeToggle" aria-pressed="false" title="Toggle theme">🌙</button>
-        <button class="icon-btn menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
-          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-            <rect y="1" width="18" height="2" rx="1"></rect>
-            <rect y="6" width="18" height="2" rx="1"></rect>
-            <rect y="11" width="18" height="2" rx="1"></rect>
-          </svg>
-        </button>
-      </div>
-
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </header>
 
-  <!-- Hero -->
-  <main class="hero" id="top" data-aos="zoom-in">
-    <div class="container">
-      <div class="hero-card" role="region" aria-labelledby="hero-title">
-        <h1 id="hero-title">Diet & Nutrition</h1>
-        <p>Practical, evidence-informed nutrition guidance blended with Ayurveda — simple meal plans, myth-busting, and habits you can keep.</p>
-        <a class="btn" id="bookBtnHero" href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener">Book a Nutrition Session</a>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="ayurveda.html">Ayurveda</a></li>
+      <li><a href="psychology.html">Psychology</a></li>
+      <li><a href="trips.html">Trips</a></li>
+      <li><a href="diet.html" aria-current="page">Diet & Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">Evidence-Informed • Ayurveda-Aware</div>
+          <h1>Diet & Nutrition</h1>
+          <p class="hero-subtitle">
+            Practical, sustainable nutrition guidance blended with ancient Ayurvedic wisdom — simple meal plans, myth-busting, and habits you can actually keep.
+          </p>
+          <div class="hero-cta">
+            <a href="https://forms.gle/bsmDx6eiEhuUi24X6" class="btn btn-primary" target="_blank" rel="noopener">
+              Book a Session →
+            </a>
+            <a href="#approach" class="btn btn-secondary">
+              Learn More
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section class="features" id="approach">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">A Holistic Approach to Nutrition</h2>
+          <p class="section-subtitle">Integrating modern nutrition science with practical Ayurvedic principles</p>
+        </div>
+
+        <div class="grid">
+          <div class="card fade-in">
+            <h3>My Approach</h3>
+            <p>I blend modern nutrition science (informed by DNHE) with practical Ayurveda: food as medicine, seasonal & local choices, and small, sustainable habit changes.</p>
+            <ul>
+              <li>Practical plans with no fads</li>
+              <li>Evidence-informed dietary guidance</li>
+              <li>Ayurveda-aware dosha considerations</li>
+              <li>Flexible for all dietary preferences</li>
+            </ul>
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; font-style: italic;">
+              Note: Designed for DNHE graduates and the general public — content follows IGNOU DNHE learning themes.
+            </p>
+          </div>
+
+          <div class="card fade-in">
+            <h3>Services I Offer</h3>
+            <ul>
+              <li>1:1 Nutrition Guidance & Meal Planning (45–60 min)</li>
+              <li>Quick student meal plans (affordable, wholesome)</li>
+              <li>Weight-management & mindful eating coaching</li>
+              <li>Workshops: campus wellness / office lunch habits</li>
+            </ul>
+            <a href="sessions.html" class="btn btn-primary" style="margin-top: 1.5rem">View Sessions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Practical Daily Tips</h2>
+          <p class="section-subtitle">Simple, actionable habits for everyday wellness</p>
+        </div>
+        
+        <div class="grid-4">
+          <div class="feature-box fade-in">
+            <h4>Simple Meal Framework</h4>
+            <p>Balance is key for sustainable nutrition</p>
+            <ul>
+              <li>½ vegetables, ¼ whole grains, ¼ protein</li>
+              <li>Include legumes for protein & fiber</li>
+              <li>Smart snacking: nuts, fruit, yogurt</li>
+            </ul>
+          </div>
+
+          <div class="feature-box fade-in">
+            <h4>Daily Habits</h4>
+            <p>Small changes that make a big difference</p>
+            <ul>
+              <li>Start with water & warm lemon/ginger</li>
+              <li>Eat mindfully without screens</li>
+              <li>Include raw greens or salad daily</li>
+            </ul>
+          </div>
+
+          <div class="feature-box fade-in">
+            <h4>Student & Budget Tips</h4>
+            <p>Healthy eating on a budget</p>
+            <ul>
+              <li>Batch cook: daal, curries, proteins</li>
+              <li>Use seasonal vegetables (cheaper!)</li>
+              <li>Frozen vegetables reduce waste</li>
+            </ul>
+          </div>
+
+          <div class="feature-box fade-in">
+            <h4>Hydration & Beverages</h4>
+            <p>Supporting wellness through smart choices</p>
+            <ul>
+              <li>Prefer plain water over sweetened drinks</li>
+              <li>Tea/coffee OK — minimize added sugar</li>
+              <li>Get electrolytes from food, not drinks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="background: var(--gradient-hero);">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Nutrition Myths Debunked</h2>
+          <p class="section-subtitle">Separating fact from fiction with evidence</p>
+        </div>
+
+        <div class="fade-in">
+          <details>
+            <summary>Carbs make you fat</summary>
+            <p><strong>Fact:</strong> Excess calories cause weight gain, not carbs themselves. Focus on quality: prefer whole grains and avoid refined, sugar-dense carbs.</p>
+          </details>
+
+          <details>
+            <summary>Fat is always bad</summary>
+            <p><strong>Fact:</strong> Healthy fats (nuts, seeds, vegetable oils rich in unsaturated fats) are essential. Limit saturated & trans fats as advised by WHO.</p>
+          </details>
+
+          <details>
+            <summary>Supplements replace food</summary>
+            <p><strong>Fact:</strong> While supplements can help when medically indicated, whole foods provide fiber, phytochemicals, and balanced nutrients. Always follow professional guidance.</p>
+          </details>
+
+          <details>
+            <summary>Detox diets are necessary</summary>
+            <p><strong>Fact:</strong> Your liver and kidneys detoxify daily. Support them with hydration, fiber, and balanced meals — restrictive cleanses aren't necessary.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="card fade-in">
+          <h3>Ayurveda Notes</h3>
+          <p style="margin-bottom: 1.5rem;">Practical Ayurvedic pointers focused on digestion</p>
+          <ul>
+            <li><strong>Eat warm & cooked:</strong> Easier digestion; prefer warm fluids if digestion is weak</li>
+            <li><strong>Digestive spices:</strong> Cumin, coriander, fennel, and ginger aid digestion in small amounts</li>
+            <li><strong>Meal timing:</strong> Finish main meal when the sun is relatively high; avoid heavy late-night meals frequently</li>
+            <li><strong>Dosha-aware tweaks:</strong> (Vata) warm soups; (Pitta) cooling foods and less spice; (Kapha) lighter meals and more greens</li>
+          </ul>
+          <p class="notice" style="margin-top: 1.5rem;">
+            These notes are educational and tailored during sessions — not a substitute for clinical advice.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="testimonial-section fade-in">
+          <div class="section-header">
+            <h2 class="section-title">What Clients Say</h2>
+          </div>
+          
+          <div class="testimonial-carousel">
+            <div class="testimonial active">
+              <div class="testimonial-content">
+                <p>"Harsh's sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!"</p>
+                <div class="testimonial-author">— Wellness Seeker</div>
+              </div>
+            </div>
+            <div class="testimonial">
+              <div class="testimonial-content">
+                <p>"The perfect blend of Ayurveda & modern nutrition. His teachings changed my daily routine for the better."</p>
+                <div class="testimonial-author">— Health Enthusiast</div>
+              </div>
+            </div>
+            <div class="testimonial">
+              <div class="testimonial-content">
+                <p>"Simple, practical advice I could actually follow as a student — meals that fit my budget and my schedule."</p>
+                <div class="testimonial-author">— University Student</div>
+              </div>
+            </div>
+            <div class="testimonial">
+              <div class="testimonial-content">
+                <p>"Supportive follow-ups and real, evidence-informed plans. I lost weight steadily without crash diets."</p>
+                <div class="testimonial-author">— Weight Management Client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">How a Nutrition Session Works</h2>
+          <p class="section-subtitle">A simple, transparent process designed for your success</p>
+        </div>
+
+        <div class="card fade-in">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-number">1</div>
+              <div class="timeline-content">
+                <h4>Book & Share</h4>
+                <p>Fill out the form with your goals, dietary history, and preferences.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-number">2</div>
+              <div class="timeline-content">
+                <h4>First Session</h4>
+                <p>45-60 minute intake where we set simple, achievable goals together.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-number">3</div>
+              <div class="timeline-content">
+                <h4>Custom Plan</h4>
+                <p>Receive a 7-day sample meal plan with practical swaps — no crash diets.</p>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-number">4</div>
+              <div class="timeline-content">
+                <h4>Follow Up</h4>
+                <p>Short check-ins to tweak and make the plan sustainable for you.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; padding: 1.5rem; background: var(--gradient-hero); border-radius: 16px;">
+            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--text-primary); margin-bottom: 0.75rem;">Accessible Pricing</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Sessions operate on a sliding-scale, donation-based model to ensure accessibility. Detailed fee information will be shared via email after booking.</p>
+            <a href="https://forms.gle/bsmDx6eiEhuUi24X6" class="btn btn-primary" target="_blank" rel="noopener">Request Your Slot →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="padding-bottom: 0;">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-subtitle">Everything you need to know about nutrition sessions</p>
+        </div>
+
+        <div class="fade-in">
+          <details>
+            <summary>Are these personalized medical recommendations?</summary>
+            <p>No. This is educational and coaching. For medical conditions (diabetes, CKD, severe allergies, etc.) consult your physician or a registered dietitian and share reports during sessions.</p>
+          </details>
+
+          <details>
+            <summary>Do you follow Indian dietary guidelines?</summary>
+            <p>Yes — core advice aligns with ICMR-NIN Dietary Guidelines for Indians (2024) and WHO healthy diet principles.</p>
+          </details>
+
+          <details>
+            <summary>What about sugar & oil limits?</summary>
+            <p>Recent guidance and national discussions highlight limiting added sugar and using oils moderately. Use these as guidelines while tailoring to your needs.</p>
+          </details>
+
+          <details>
+            <summary>Can you accommodate vegetarian/vegan diets?</summary>
+            <p>Absolutely! Plans are flexible and can accommodate vegetarian, vegan, and non-vegetarian preferences.</p>
+          </details>
+
+          <details>
+            <summary>How many sessions will I need?</summary>
+            <p>This varies by individual and goals. Some clients find value in a single session for specific guidance, while others prefer ongoing support. We can discuss what feels right for you during our first session.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="cta-section fade-in">
+          <h2>Ready to Transform Your Diet?</h2>
+          <p>Share a few details and I'll reply with time slots and a personalized first-step plan.</p>
+          <a href="https://forms.gle/bsmDx6eiEhuUi24X6" class="btn btn-primary" target="_blank" rel="noopener">Book Your Session Now →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="padding-top: 0;">
+      <div class="container">
+        <div class="card fade-in">
+          <h3>References & Further Reading</h3>
+          <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 1rem;">
+            <li style="margin-bottom: 0.75rem;"><a href="https://www.ignou.ac.in/schools/programme/DNHE" target="_blank" rel="noopener" style="color: var(--accent); font-weight: 600; text-decoration: none;">IGNOU — DNHE (Diploma in Nutrition & Health Education)</a></li>
+            <li style="margin-bottom: 0.75rem;"><a href="https://www.nin.res.in/dietaryguidelines/pdfjs/locale/DGI24thJune2024fin.pdf" target="_blank" rel="noopener" style="color: var(--accent); font-weight: 600; text-decoration: none;">ICMR-NIN — Dietary Guidelines for Indians (2024)</a></li>
+            <li><a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener" style="color: var(--accent); font-weight: 600; text-decoration: none;">WHO — Healthy Diet Factsheet</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <div class="container">
-    <!-- About / Approach -->
-    <section class="grid grid-2" data-aos="fade-up" aria-labelledby="approach">
-      <article class="card">
-        <h2 id="approach" class="h2">My Approach</h2>
-        <p>I blend modern nutrition science (informed by DNHE) with practical Ayurveda: food as medicine, seasonal & local choices, and small, sustainable habit changes.</p>
-        <ul class="list">
-          <li><strong>Practical plans:</strong> Simple sample meals and swaps (no fads).</li>
-          <li><strong>Evidence-informed:</strong> Based on national dietary guidance and global health recommendations. <span class="muted">(see References)</span></li>
-          <li><strong>Ayurveda-aware:</strong> Dosha considerations, digestion-first strategy, mindful eating.</li>
-          <li><strong>Flexible:</strong> Vegetarian, non-vegetarian, student & busy professional friendly.</li>
-        </ul>
-        <p style="font-size:.95rem"><em>Note:</em> Designed for DNHE graduates and the general public — content follows IGNOU DNHE learning themes.</p>
-      </article>
-
-      <article class="card" aria-labelledby="services">
-        <h2 id="services" class="h2">Services I Offer</h2>
-        <ul class="list">
-          <li>1:1 Nutrition Guidance & Meal Planning (45–60 min)</li>
-          <li>Quick student meal plans (affordable, wholesome)</li>
-          <li>Weight-management & mindful eating coaching</li>
-          <li>Workshops: campus wellness / office lunch habits</li>
-        </ul>
-        <p><a class="btn" id="viewSessions" href="sessions.html">View Sessions</a></p>
-      </article>
-    </section>
-
-    <!-- Practical Tips -->
-    <section data-aos="fade-up" aria-labelledby="tips">
-      <div class="card">
-        <h2 id="tips" class="h2">Practical Daily Tips</h2>
-        <div class="grid grid-2">
-          <div>
-            <h3 class="h3">Simple Meal Framework</h3>
-            <ul class="list">
-              <li><strong>Plate balance:</strong> ½ vegetables, ¼ whole grains, ¼ protein + a small healthy fat.</li>
-              <li><strong>Include legumes:</strong> Pulses/beans provide affordable, high-quality protein & fibre.</li>
-              <li><strong>Snack smart:</strong> Nuts, fruit, yogurt — avoid sugar-heavy packaged snacks.</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="h3">Daily Habits</h3>
-            <ul class="list">
-              <li>Start the day with water and a small warm drink (lemon or ginger).</li>
-              <li>Eat mindfully — remove screens for main meals (improves digestion & satiety).</li>
-              <li>Include a raw leafy green or salad most days (aim for variety).</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="h3">Student & Budget Tips</h3>
-            <ul class="list">
-              <li>Cook in batches: daal, vegetable curries, and boiled eggs / paneer for the week.</li>
-              <li>Use seasonal vegetables — cheaper and more nutrient-dense.</li>
-              <li>Frozen vegetables are fine and reduce waste.</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="h3">Hydration & Beverages</h3>
-            <ul class="list">
-              <li>Prefer plain water; limit sweetened beverages and packaged juices.</li>
-              <li>Tea/coffee OK — avoid extra sugar. Restore electrolytes with food, not sugary drinks.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Myths & Evidence -->
-    <section data-aos="fade-up" aria-labelledby="myths">
-      <h2 id="myths" class="h2" style="text-align:center;margin-bottom:1rem">Myths & Facts</h2>
-      <div class="grid">
-        <details>
-          <summary>Carbs make you fat</summary>
-          <p>Not true — excess energy (calories) causes weight gain. Focus on quality: prefer whole grains and avoid refined, sugar-dense carbs.</p>
-        </details>
-        <details>
-          <summary>Fat is always bad</summary>
-          <p>Healthy fats (nuts, oil seeds, vegetable oils rich in unsaturated fats) are important — limit saturated & industrial trans fats as advised by WHO.</p>
-        </details>
-        <details>
-          <summary>Supplements replace food</summary>
-          <p>Supplements can help when medically indicated, but whole foods provide fibre, phytochemicals and balanced nutrients. Follow professional guidance before supplementing.</p>
-        </details>
-        <details>
-          <summary>Detox diets are necessary</summary>
-          <p>Your liver and kidneys detoxify every day — gentle dietary supports (hydration, fibre, balanced meals) are safer than restrictive cleanses.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- Ayurveda Notes -->
-    <section data-aos="fade-up" aria-labelledby="ayurveda">
-      <div class="card">
-        <h2 id="ayurveda" class="h2">Ayurveda Notes (digestive focus)</h2>
-        <p style="margin-top:0">Short, practical pointers from Ayurvedic practice — digestion is central.</p>
-        <ul class="list">
-          <li><strong>Eat warm & cooked:</strong> Easier digestion; prefer warm fluids if digestion is weak.</li>
-          <li><strong>Spices:</strong> Cumin, coriander, fennel, and ginger aid digestion in small amounts.</li>
-          <li><strong>Meal timing:</strong> Finish main meal when the sun is relatively high; avoid heavy late-night meals frequently.</li>
-          <li><strong>Dosha-aware tweaks:</strong> (Vata) warm soups; (Pitta) cooling foods and less spice; (Kapha) lighter meals and more greens.</li>
-        </ul>
-        <p class="muted"><small>These notes are educational and tailored during sessions — not a substitute for clinical advice.</small></p>
-      </div>
-    </section>
-
-    <!-- Testimonials (centered carousel) -->
-    <section data-aos="fade-up" aria-labelledby="testimonials">
-      <h2 id="testimonials" class="h2" style="text-align:center">Testimonials</h2>
-      <div class="testi-wrap">
-        <div class="testi-inner card" aria-live="polite">
-          <div class="testi-item testi-1 show">
-            <div class="testi-quote">“Harsh’s sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!”</div>
-          </div>
-          <div class="testi-item testi-2">
-            <div class="testi-quote">“The perfect blend of Ayurveda & Yoga. His teachings changed my daily routine for the better.”</div>
-          </div>
-          <div class="testi-item testi-3">
-            <div class="testi-quote">“A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully.”</div>
-          </div>
-          <div class="testi-item testi-4">
-            <div class="testi-quote">“Simple, practical advice I could actually follow as a student — meals that fit my budget and my schedule.”</div>
-          </div>
-          <div class="testi-item testi-5">
-            <div class="testi-quote">“Supportive follow-ups and real, evidence-informed plans. I lost weight steadily without crash diets.”</div>
-          </div>
-        </div>
-      </div>
-      <p class="muted" style="text-align:center;margin-top:.6rem">(Testimonials are displayed one-by-one automatically — pause on hover.)</p>
-    </section>
-
-    <!-- How sessions work -->
-    <section data-aos="fade-up" aria-labelledby="how">
-      <div class="card">
-        <h2 id="how" class="h2">How a Nutrition Session Works</h2>
-        <ol class="list">
-          <li><strong>Book:</strong> Share goals & diet history.</li>
-          <li><strong>First session:</strong> Intake → 45–60 mins; we set simple goals.</li>
-          <li><strong>Plan:</strong> I give a 7-day sample plan and practical swaps (no crash diets).</li>
-          <li><strong>Follow up:</strong> Short check-ins — tweak and make it sustainable.</li>
-        </ol>
-        <p style="margin-top:.6rem"><a class="btn" id="bookBtnHow" href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener">Request a Nutrition Slot</a></p>
-      </div>
-    </section>
-
-    <!-- FAQs -->
-    <section data-aos="fade-up" aria-labelledby="faq">
-      <h2 id="faq" class="h2" style="text-align:center">FAQs</h2>
-      <div class="grid">
-        <details>
-          <summary>Are these personalised medical recommendations?</summary>
-          <p>No. This is educational and coaching. For medical conditions (diabetes, CKD, severe allergies, etc.) consult your physician or a registered dietitian and share reports during sessions.</p>
-        </details>
-        <details>
-          <summary>Do you follow Indian dietary guidelines?</summary>
-          <p>Yes — core advice aligns with ICMR-NIN Dietary Guidelines for Indians (2024) and WHO healthy diet principles.</p>
-        </details>
-        <details>
-          <summary>What about sugar & oil limits?</summary>
-          <p>Recent guidance and national discussions highlight limiting added sugar and using oils moderately. Use these as guidelines while tailoring to your needs.</p>
-        </details>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section data-aos="fade-up" aria-labelledby="cta">
-      <div class="card" style="text-align:center">
-        <h2 id="cta" class="h2">Ready to Improve Your Diet?</h2>
-        <p>Share a few details and I’ll reply with time slots and a first-step plan.</p>
-        <a class="btn" href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener">Book a Session</a>
-      </div>
-    </section>
-
-    <!-- References -->
-    <section data-aos="fade-up" aria-labelledby="refs">
-      <div class="card">
-        <h2 id="refs" class="h2">References & Further Reading</h2>
-        <ul class="list">
-          <li><a href="https://www.ignou.ac.in/schools/programme/DNHE" target="_blank" rel="noopener">IGNOU — DNHE (Diploma in Nutrition & Health Education)</a></li>
-          <li><a href="https://www.nin.res.in/dietaryguidelines/pdfjs/locale/DGI24thJune2024fin.pdf" target="_blank" rel="noopener">ICMR-NIN — Dietary Guidelines for Indians (2024)</a></li>
-          <li><a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener">WHO — Healthy diet factsheet</a></li>
-        </ul>
-      </div>
-    </section>
-
+  <div class="fab">
+    <a href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener">
+      Book Now
+    </a>
   </div>
 
-  <!-- Floating Book -->
-  <div class="fab" data-aos="fade-up">
-    <a href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener" aria-label="Book nutrition session">☰ Book</a>
-  </div>
-
-  <!-- Footer -->
   <footer>
     <div class="container">
-      <p>© <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+      <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
       <p>
-        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> |
-        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> |
+        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> •
+        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> •
         <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a>
       </p>
     </div>
   </footer>
 
-  <!-- JSON-LD (Service + FAQ minimal) -->
-  <script type="application/ld+json">{ "@context":"https://schema.org","@type":"Service","name":"Diet & Nutrition Guidance","description":"Practical nutrition guidance, meal plans, and Ayurveda-informed diet coaching with Harsh Ranjan (Samarpan).","provider":{"@type":"Person","name":"Harsh Ranjan (Samarpan)","url":"https://theharshranjan.github.io/"},"areaServed":["India","Worldwide (online)"]}</script>
+  <script>
+    // Mobile Menu
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-  <script defer>
-    // Utility: set theme correctly and persist
-    const root = document.documentElement;
-    const themeToggle = () => document.getElementById('themeToggle');
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('active');
+    });
 
-    function applyTheme(name){
-      if(name === 'dark') root.setAttribute('data-theme','dark');
-      else root.removeAttribute('data-theme');
-      localStorage.setItem('theme', name);
-      const t = themeToggle(); if(t){ t.setAttribute('aria-pressed', String(name==='dark')); t.textContent = name==='dark' ? '☀️' : '🌙'; }
+    // Close mobile menu when clicking a link
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Header scroll effect
+    const header = document.querySelector('.site-header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    });
+
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Testimonials carousel
+    const testimonials = document.querySelectorAll('.testimonial');
+    let currentIndex = 0;
+    let carouselInterval;
+
+    function showTestimonial(index) {
+      testimonials.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+      });
     }
 
-    function detectInitialTheme(){
-      const saved = localStorage.getItem('theme');
-      if(saved) return saved;
-      // fallback to OS preference
-      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-      return 'light';
+    function startCarousel() {
+      carouselInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+        showTestimonial(currentIndex);
+      }, 4500);
     }
 
-    document.addEventListener('DOMContentLoaded', ()=>{
-      // year
-      document.getElementById('year').textContent = new Date().getFullYear();
+    function stopCarousel() {
+      clearInterval(carouselInterval);
+    }
 
-      // set initial theme
-      applyTheme(detectInitialTheme());
+    const carousel = document.querySelector('.testimonial-carousel');
+    if (carousel) {
+      carousel.addEventListener('mouseenter', stopCarousel);
+      carousel.addEventListener('mouseleave', startCarousel);
+      startCarousel();
+    }
 
-      // init AOS
-      if(window.AOS) AOS.init({ duration:700, once:true, offset:12 });
-
-      // theme toggle
-      const tbtn = themeToggle();
-      tbtn?.addEventListener('click', ()=>{
-        const current = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       });
-
-      // mobile menu
-      const menuToggle = document.getElementById('menuToggle');
-      const mobilePanel = document.getElementById('mobilePanel');
-      const backdrop = document.getElementById('mobileBackdrop');
-
-      function openMenu(){ mobilePanel.classList.add('open'); backdrop.classList.add('open'); menuToggle.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
-      function closeMenu(){ mobilePanel.classList.remove('open'); backdrop.classList.remove('open'); menuToggle.setAttribute('aria-expanded','false'); document.body.style.overflow='auto'; }
-      menuToggle?.addEventListener('click', ()=>{
-        if(mobilePanel.classList.contains('open')) closeMenu(); else openMenu();
-      });
-      backdrop?.addEventListener('click', closeMenu);
-      document.addEventListener('keydown', e=> { if(e.key==='Escape') closeMenu(); });
-
-      // ensure menu-toggle matches CSS breakpoints if user resizes
-      const onResize = ()=>{ const mt = document.querySelector('.menu-toggle'); if(window.innerWidth > 1024){ mt?.setAttribute('aria-hidden','true'); } else { mt?.removeAttribute('aria-hidden'); } }
-      window.addEventListener('resize', onResize); onResize();
-
-      // Testimonials carousel (auto-advance)
-      const items = Array.from(document.querySelectorAll('.testi-item'));
-      let idx = 0; let carouselTimer = null;
-      function showTestimonial(i){ items.forEach((el, j)=>{ el.classList.toggle('show', j === i); }); }
-      function startCarousel(){ carouselTimer = setInterval(()=>{ idx = (idx + 1) % items.length; showTestimonial(idx); }, 3500); }
-      function stopCarousel(){ if(carouselTimer) clearInterval(carouselTimer); }
-      showTestimonial(0); startCarousel();
-      // pause on hover
-      const testiInner = document.querySelector('.testi-inner');
-      testiInner?.addEventListener('mouseenter', stopCarousel);
-      testiInner?.addEventListener('mouseleave', startCarousel);
-
-      // Accessibility: allow left/right arrow through testimonials
-      testiInner?.addEventListener('keydown', (e)=>{
-        if(e.key === 'ArrowRight'){ idx = (idx + 1) % items.length; showTestimonial(idx); }
-        if(e.key === 'ArrowLeft'){ idx = (idx - 1 + items.length) % items.length; showTestimonial(idx); }
-      });
-
-      // Smooth scroll to top when book buttons are focused (tiny UX nicety)
-      document.querySelectorAll('#bookBtnHero, #bookBtnHow, .fab a').forEach(btn=>{
-        btn.addEventListener('focus', ()=> document.getElementById('top')?.scrollIntoView({behavior:'smooth'}));
-      });
-
     });
   </script>
-
-  <!-- Mobile panel markup (kept at end for accessibility) -->
-  <div id="mobileBackdrop" aria-hidden="true"></div>
-  <div id="mobilePanel" role="dialog" aria-modal="true" aria-label="Mobile menu">
-    <div style="display:flex;justify-content:flex-end"><button class="icon-btn" onclick="document.getElementById('mobilePanel').classList.remove('open');document.getElementById('mobileBackdrop').classList.remove('open');" aria-label="Close menu">✕</button></div>
-    <nav aria-label="Mobile navigation">
-      <ul style="list-style:none;padding:18px;margin:0;display:grid;gap:10px">
-        <li><a href="about.html">About</a></li>
-        <li><a href="sessions.html">Sessions</a></li>
-        <li><a href="ayurveda.html">Ayurveda</a></li>
-        <li><a href="psychology.html">Psychology</a></li>
-        <li><a href="trips.html">Trips</a></li>
-        <li><a href="diet.html" aria-current="page">Diet & Nutrition</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div style="padding:18px;border-top:1px solid var(--card-border);"> 
-        <a class="btn" href="https://forms.gle/bsmDx6eiEhuUi24X6" target="_blank" rel="noopener">Book a Session</a>
-      </div>
-    </nav>
-  </div>
-
 </body>
 </html>
