@@ -1,376 +1,1222 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
   <title>Ayurveda — Harsh Ranjan (Samarpan)</title>
 
-  <!-- SEO -->
-  <meta name="description" content="Learn Ayurveda with Harsh Ranjan (Samarpan). Explore Dinacharya, Ritucharya, Ratricharya, Vata, Pitta, Kapha, diet & lifestyle, and research insights." />
   <link rel="canonical" href="https://theharshranjan.github.io/ayurveda.html" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://theharshranjan.github.io/ayurveda.html" />
-  <meta property="og:title" content="Ayurveda — Harsh Ranjan (Samarpan)" />
-  <meta property="og:description" content="Explore Ayurveda: diet, lifestyle, doshas, Ayurveda Biology, and research with Harsh Ranjan (Samarpan)." />
-  <meta property="og:image" content="https://theharshranjan.github.io/img/logo.png" />
+  <meta name="description" content="Discover the ancient science of Ayurveda with Harsh Ranjan. Learn about doshas, daily routines, seasonal practices, and holistic wellness." />
+  <meta name="theme-color" content="#5a9253" />
 
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
-  <!-- Shared CSS & JS (match About page) -->
-  <link rel="stylesheet" href="/assets/site.css" />
-  <script defer src="/assets/site.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Page tokens (aligned with About) */
-    :root{
-      --bg-cream:#edf1d6;
-      --green-100:#e6f2e9;
-      --green-200:#cfe6d4;
-      --green-300:#b7dabf;
-      --green-main:#609966;
-      --green-dark:#40513b;
-      --text:#263238;
-      --muted:#5f6b66;
-      --card:#ffffff;
-      --header-h:64px;
-      --shadow:0 6px 18px rgba(0,0,0,.08)
-    }
-    html[data-theme="dark"]{
-      --bg-cream:#0f1412;
-      --green-100:#1a2a24;
-      --green-200:#20362d;
-      --green-300:#294338;
-      --green-main:#78c689;
-      --green-dark:#cfe6d4;
-      --text:#e7efe9;
-      --muted:#a6b5ad;
-      --card:#121a17;
-      --shadow:0 6px 18px rgba(0,0,0,.4)
-    }
-
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg-cream);color:var(--text);line-height:1.65}
-    img{max-width:100%;display:block}
-    a{color:var(--green-main);text-decoration:none}
-    a:hover{opacity:.9}
-
-    /* Header (replicates About: brand left, search + toggles center/right, hamburger at top-right for mobile) */
-    .site-header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.6);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid rgba(0,0,0,.06)}
-    html[data-theme="dark"] .site-header{background:rgba(16,20,18,.6);border-bottom-color:rgba(255,255,255,.08)}
-    .nav-wrap{max-width:1100px;margin:auto;display:grid;grid-template-columns:auto 1fr auto;gap:.75rem;align-items:center;padding:.5rem 1rem;height:var(--header-h)}
-    .brand{display:flex;align-items:center;gap:.6rem;color:var(--green-dark);font-weight:700}
-    .brand img{width:40px;height:40px;border-radius:50%;border:2px solid var(--green-300)}
-
-    /* Search with logo inside */
-    .searchbar{position:relative;display:flex;align-items:center}
-    .searchbar input{width:100%;min-width:220px;border:1px solid rgba(0,0,0,.08);padding:.6rem .9rem .6rem 2.6rem;border-radius:999px;background:var(--card);box-shadow:var(--shadow);color:var(--text)}
-    .searchbar img{position:absolute;left:.6rem;width:22px;height:22px;border-radius:50%;object-fit:cover}
-
-    /* Right controls */
-    .controls{display:flex;align-items:center;gap:.5rem}
-    .theme-toggle{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(0,0,0,.08);padding:.4rem .6rem;border-radius:999px;background:var(--card);box-shadow:var(--shadow);cursor:pointer}
-    .theme-toggle svg{width:18px;height:18px;display:block}
-
-    /* Desktop nav (hidden until we open mobile) */
-    .links{display:flex;gap:.9rem;align-items:center}
-    .links a{color:var(--green-dark);font-weight:600}
-    .links a.active{color:var(--green-main)}
-
-    /* Hamburger */
-    .burger{display:none;place-items:center;width:40px;height:40px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:var(--card);box-shadow:var(--shadow)}
-    .burger svg{width:22px;height:22px}
-
-    /* Mobile menu panel */
-    .panel{position:fixed;inset:0 0 auto auto;top:0;right:0;width:min(88vw,320px);height:100dvh;background:var(--card);box-shadow:-16px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .35s ease;z-index:70;display:flex;flex-direction:column}
-    .panel.open{transform:translateX(0)}
-    .panel header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1rem;border-bottom:1px solid rgba(0,0,0,.06)}
-    .panel nav{display:flex;flex-direction:column;padding:1rem}
-    .panel nav a{padding:.7rem 0;border-bottom:1px dashed rgba(0,0,0,.08);color:var(--green-dark);font-weight:600}
-    .panel .close{width:40px;height:40px;border-radius:12px;border:1px solid rgba(0,0,0,.08);background:var(--card);display:grid;place-items:center}
-
-    /* Responsive */
-    @media (max-width: 960px){
-      .nav-wrap{grid-template-columns:auto 1fr auto}
-      .links{display:none}
-      .burger{display:grid}
-      .searchbar input{min-width:0}
+    :root {
+      --sage-50: #f7f9f6;
+      --sage-100: #e8f0e6;
+      --sage-200: #d1e1cd;
+      --sage-300: #a8c9a1;
+      --sage-400: #7fb078;
+      --sage-500: #5a9253;
+      --sage-600: #47753f;
+      --sage-700: #385d32;
+      --sage-800: #2d4a28;
+      
+      --cream-50: #fdfbf7;
+      --cream-100: #f9f5ed;
+      --cream-200: #f1e8d8;
+      
+      --bg: var(--cream-50);
+      --surface: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #4a4a4a;
+      --text-tertiary: #737373;
+      --accent: var(--sage-500);
+      --accent-hover: var(--sage-600);
+      --border: rgba(90, 146, 83, 0.12);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
     }
 
-    /* Hero */
-    .hero{padding:5rem 1rem 3.5rem;background:linear-gradient(135deg,var(--bg-cream),var(--green-200));text-align:center}
-    .hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,5vw,2.8rem);color:var(--green-dark);margin:0}
-    .hero p{color:var(--green-main);margin:.6rem 0 0;font-size:1.05rem}
+    [data-theme="dark"] {
+      --bg: #0a1410;
+      --surface: #142118;
+      --text-primary: #f0f4f0;
+      --text-secondary: #c5d1c5;
+      --text-tertiary: #8f9f8f;
+      --accent: var(--sage-300);
+      --accent-hover: var(--sage-200);
+      --border: rgba(168, 201, 161, 0.15);
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
+      z-index: 1200;
+      transition: width 0.1s linear;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      backdrop-filter: blur(24px) saturate(180%);
+      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .site-header.scrolled {
+      box-shadow: var(--shadow-sm);
+      background: color-mix(in srgb, var(--bg) 95%, transparent);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 60px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 72px;
+      gap: 2rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-area:hover {
+      transform: translateY(-1px);
+    }
+
+    .logo-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sage-400), var(--sage-600));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+
+    .logo-area:hover .logo-img {
+      box-shadow: var(--shadow);
+      transform: scale(1.05);
+    }
+
+    .logo-area span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.3px;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      position: relative;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: var(--text-secondary);
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a[aria-current="page"]::after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .menu-toggle span {
+      width: 20px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 20px 80px;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(168, 201, 161, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(241, 232, 216, 0.2) 0%, transparent 50%),
+        var(--bg);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, var(--sage-100) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -300px;
+      right: -150px;
+      opacity: 0.4;
+      animation: heroFloat 20s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-40px, 40px) rotate(180deg); }
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(135deg, var(--sage-400), var(--sage-600));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sage-500), var(--sage-600));
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--text-primary);
+      color: var(--surface);
+    }
 
     /* Sections */
-    main section{padding:2.25rem 1.25rem;max-width:1100px;margin:auto}
-    h2{font-family:"Playfair Display",serif;color:var(--green-dark);margin:0 0 1rem;text-align:center}
-    .lead{max-width:900px;margin:0 auto;color:var(--muted)}
+    section {
+      padding: clamp(60px, 10vh, 100px) clamp(20px, 4vw, 60px);
+    }
 
-    /* Cards & grids */
-    .grid{display:grid;gap:1rem}
-    @media(min-width:640px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:639px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
-    .card{background:var(--card);border-radius:14px;padding:1rem;box-shadow:var(--shadow)}
-    .card h3,.card h4{color:var(--green-dark);margin:.2rem 0 .4rem}
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-    /* Tabs */
-    .tabs{display:flex;justify-content:center;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
-    .tab{padding:.5rem 1rem;border-radius:999px;border:1px solid var(--green-main);background:transparent;color:var(--green-dark);font-weight:600;cursor:pointer}
-    .tab[aria-selected="true"]{background:var(--green-main);color:#fff}
-    .panel-tab{display:none}
-    .panel-tab.active{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 4rem;
+    }
 
-    /* Research grid */
-    .research{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .paper h4{color:#d35400;margin:.2rem 0}
+    .section-label {
+      display: inline-block;
+      padding: 4px 14px;
+      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .content-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .content-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+    }
+
+    .content-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .content-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .content-card p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .content-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .content-card li {
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .content-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Dosha Cards */
+    .dosha-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .dosha-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .dosha-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow);
+    }
+
+    .dosha-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .dosha-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+
+    .dosha-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .dosha-card p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .dosha-card strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* FAQ Section */
+    details {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    details:hover {
+      box-shadow: var(--shadow-sm);
+    }
+
+    details[open] {
+      box-shadow: var(--shadow-sm);
+    }
+
+    details summary {
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05rem;
+    }
+
+    details summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--accent);
+      transition: transform 0.3s ease;
+      font-weight: 300;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    details p {
+      margin-top: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(90, 146, 83, 0.08), rgba(90, 146, 83, 0.03));
+      border-radius: 24px;
+      padding: clamp(50px, 8vw, 80px);
+      text-align: center;
+      border: 1px solid var(--border);
+      margin: clamp(60px, 10vh, 100px) 0;
+    }
+
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
 
     /* Footer */
-    footer{background:var(--green-dark);color:#fff;text-align:center;padding:1.5rem}
-    footer a{color:#c5a880}
+    footer {
+      background: linear-gradient(135deg, var(--sage-700), var(--sage-800));
+      color: rgba(255, 255, 255, 0.9);
+      padding: 3rem clamp(20px, 4vw, 60px);
+      text-align: center;
+    }
 
-    /* Floating Lotus Menu */
-    .lotus{position:fixed;right:18px;bottom:18px;z-index:80}
-    .lotus .core{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:var(--green-main);color:#fff;box-shadow:var(--shadow);cursor:pointer;outline:none;border:none}
-    .lotus .core svg{width:26px;height:26px}
-    .petal{position:absolute;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--green-dark);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translate(0,0) scale(.6)}
-    .petal a{display:grid;place-items:center;width:100%;height:100%;color:inherit}
-    .lotus.open .petal{opacity:1;pointer-events:auto}
-    .lotus.open .p1{transform:translate(-72px,-6px) scale(1)}
-    .lotus.open .p2{transform:translate(-52px,-58px) scale(1)}
-    .lotus.open .p3{transform:translate(-6px,-78px) scale(1)}
-    .lotus.open .p4{transform:translate(40px,-58px) scale(1)}
-    .lotus.open .p5{transform:translate(60px,-10px) scale(1)}
-    .lotus .petal{transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
-    .lotus .p1{transition-delay:.02s}
-    .lotus .p2{transition-delay:.06s}
-    .lotus .p3{transition-delay:.10s}
-    .lotus .p4{transition-delay:.14s}
-    .lotus .p5{transition-delay:.18s}
-    @supports(padding:max(0px)){.lotus{right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom))}}
+    footer p {
+      margin-bottom: 1rem;
+    }
 
-    /* Smooth scroll + reduced motion */
-    html{scroll-behavior:smooth}
-    @media (prefers-reduced-motion: reduce){.lotus .petal,.lotus .core,.tab,.panel{transition:none!important}html{scroll-behavior:auto}}
+    footer a {
+      color: rgba(255, 255, 255, 0.95);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      margin: 0 0.75rem;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      color: var(--cream-100);
+    }
+
+    /* Scroll to Top */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 900;
+    }
+
+    #scrollTopBtn.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #scrollTopBtn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        position: fixed;
+        top: 73px;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow);
+        z-index: 999;
+      }
+
+      .mobile-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .mobile-menu ul {
+        list-style: none;
+      }
+
+      .mobile-menu a {
+        display: block;
+        padding: 1rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+        font-weight: 500;
+      }
+
+      .mobile-menu a:hover {
+        background: rgba(90, 146, 83, 0.05);
+      }
+
+      .hero {
+        padding: 120px 20px 60px;
+      }
+
+      .content-grid,
+      .dosha-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <!-- Header (matches About: brand left, search + dark toggle, hamburger top-right) -->
-  <header class="site-header" role="banner">
-    <div class="nav-wrap" aria-label="Primary">
-      <a class="brand" href="index.html">
-        <img src="website_dp.png" alt="Harsh Ranjan logo" />
+  <div id="scrollProgress"></div>
+
+  <header class="site-header">
+    <nav class="container">
+      <a class="logo-area" href="index.html">
+        <div class="logo-img">HR</div>
         <span>Harsh Ranjan</span>
       </a>
 
-      <!-- Center: Search with logo inside -->
-      <form class="searchbar" role="search" aria-label="Site search" action="search.html">
-        <img src="website_dp.png" alt="Logo" />
-        <input type="search" name="q" placeholder="Search…" autocomplete="off" />
-      </form>
-
-      <!-- Right: links (desktop), theme toggle, burger (mobile) -->
-      <div class="controls">
-        <nav class="links" aria-label="Desktop navigation">
-          <a href="about.html">About</a>
-          <a href="sessions.html">Sessions</a>
-          <a href="ayurveda.html" class="active" aria-current="page">Ayurveda</a>
-          <li><a href="psychology.html">Psychology</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-          <a href="trips.html">Trips</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm8-5a1 1 0 0 1 1 1h2a1 1 0 1 1 0 2h-2a1 1 0 1 1-2 0 1 1 0 0 1 1-1ZM4 12a1 1 0 0 1-1 1H1a1 1 0 1 1 0-2h2a1 1 0 0 1 1 1Zm14.95 6.364a1 1 0 0 1-1.414 0l-1.414-1.415a1 1 0 1 1 1.415-1.414l1.414 1.414a1 1 0 0 1 0 1.415ZM7.88 7.88A1 1 0 0 1 6.465 6.465L5.05 5.05A1 1 0 1 1 6.465 3.636L7.88 5.05A1 1 0 0 1 7.88 7.88Zm0 8.24a1 1 0 0 1 0 1.415L6.465 19.95A1 1 0 0 1 5.05 18.536l1.415-1.414A1 1 0 0 1 7.88 16.12Zm9.657-9.657a1 1 0 0 1 0-1.414L19.95 3.636A1 1 0 1 1 21.364 5.05L19.95 6.465a1 1 0 0 1-1.415 0Z"/></svg>
-          <span>Mode</span>
-        </button>
-        <button class="burger" id="burger" aria-label="Open menu" aria-controls="mobilePanel" aria-expanded="false">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Slide-over mobile panel -->
-    <aside class="panel" id="mobilePanel" aria-hidden="true">
-      <header>
-        <strong style="display:flex;align-items:center;gap:.5rem"><img src="website_dp.png" alt="Logo" style="width:24px;height:24px;border-radius:50%"> Menu</strong>
-        <button class="close" id="panelClose" aria-label="Close menu">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </header>
-      <nav aria-label="Mobile navigation">
-        <a href="about.html">About</a>
-        <a href="sessions.html">Sessions</a>
-        <a href="ayurveda.html" aria-current="page">Ayurveda</a>
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
         <li><a href="psychology.html">Psychology</a></li>
         <li><a href="diet.html">Diet & Nutrition</a></li>
-        <a href="trips.html">Trips</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div style="margin:auto 1rem 1rem;display:flex;gap:.5rem">
-        <button class="theme-toggle" id="themeToggleM" aria-label="Toggle dark mode">Dark/Light</button>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div style="display: flex; gap: 0.75rem; align-items: center;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </aside>
+    </nav>
   </header>
 
-  <section class="hero">
-    <h1>🌿 Ayurveda for Modern Life</h1>
-    <p>Balancing body, mind, and spirit through timeless wisdom</p>
-  </section>
+  <!-- Mobile Backdrop + Panel -->
+      <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
 
-  <main id="main-content">
-    <section>
-      <h2>About Ayurveda</h2>
-      <p class="lead">Ayurveda is India’s traditional system of holistic medicine. It guides us in aligning our daily routine (<em>Dinacharya</em>), seasonal living (<em>Ritucharya</em>), and nightly rest (<em>Ratricharya</em>) with nature’s rhythms. Its science of Doshas—Vata, Pitta, and Kapha—explains our constitution and helps us choose food, lifestyle, and practices that maintain balance.</p>
-    </section>
+      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
+        <ul class="mobile-menu" id="mobileMenu">
+          <li><a href="about.html">About</a></li>
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
+          <li><a href="psychology.html">Psychology</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="trips.html">Trips</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
 
-    <section>
-      <h2>Daily & Seasonal Routines</h2>
-      <div class="grid cols-3">
-        <div class="card"><h3>Dinacharya</h3><p>Morning rituals like tongue cleaning, oil pulling, <em>abhyanga</em> (self-massage), yoga, and meditation help start the day with clarity and vitality.</p></div>
-        <div class="card"><h3>Ritucharya</h3><p>Adjust diet and lifestyle with seasons—cooling foods in summer, warming herbs in winter—to protect against imbalance.</p></div>
-        <div class="card"><h3>Ratricharya</h3><p>Wind down with a light dinner, calming teas, <em>pranayama</em>, and early sleep to restore mind and body.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Dosha Balance: Vata · Pitta · Kapha</h2>
-      <div class="tabs" role="tablist" aria-label="Dosha tabs">
-        <button class="tab" role="tab" aria-selected="true" aria-controls="panel-vata" id="tab-vata">Vata</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-pitta" id="tab-pitta">Pitta</button>
-        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-kapha" id="tab-kapha">Kapha</button>
-      </div>
-      <div id="panel-vata" class="panel-tab active" role="tabpanel" aria-labelledby="tab-vata">
-        <div class="card"><h4>Morning</h4><p>Warm water, gentle yoga, <em>Nadi Shodhana</em> pranayama.</p></div>
-        <div class="card"><h4>Meals</h4><p>Warm, nourishing foods with ginger &amp; cumin.</p></div>
-        <div class="card"><h4>Evening</h4><p>Yoga Nidra, warm milk, early sleep.</p></div>
-      </div>
-      <div id="panel-pitta" class="panel-tab" role="tabpanel" aria-labelledby="tab-pitta">
-        <div class="card"><h4>Morning</h4><p>Cooling splash, twists, <em>Sheetali</em> pranayama.</p></div>
-        <div class="card"><h4>Meals</h4><p>Cooling foods: cucumber, coriander, fennel.</p></div>
-        <div class="card"><h4>Evening</h4><p>Journaling, meditation, digital detox.</p></div>
-      </div>
-      <div id="panel-kapha" class="panel-tab" role="tabpanel" aria-labelledby="tab-kapha">
-        <div class="card"><h4>Morning</h4><p>Brisk yoga or walk, <em>Kapalabhati</em> breathing.</p></div>
-        <div class="card"><h4>Meals</h4><p>Light, spiced meals with black pepper &amp; mustard.</p></div>
-        <div class="card"><h4>Evening</h4><p>Short meditation, early light dinner.</p></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Ayurveda Biology</h2>
-      <div class="grid cols-2">
-        <div class="card">
-          <h3>What it is</h3>
-          <p><strong>Ayurveda Biology</strong> bridges classical Ayurvedic wisdom with modern life sciences—molecular biology, pharmacology, physiology, and botany. It examines traditional concepts (like <em>dosha</em>, <em>agni</em>, <em>dhatu</em>) with contemporary methods and frames them within biological models to deepen understanding of health, imbalance, and healing.</p>
-        </div>
-        <div class="card">
-          <h3>Why it matters</h3>
-          <ul>
-            <li>Builds evidence around time‑tested practices (routines, herbs, diet patterns).</li>
-            <li>Translates Ayurvedic diagnostics into measurable biomarkers and pathways.</li>
-            <li>Enables safer, more personalized guidance by integrating both traditions.</li>
-          </ul>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">Ancient Science of Life</div>
+        <h1>
+          The Wisdom of <span class="hero-highlight">Ayurveda</span>
+        </h1>
+        <p class="hero-subtitle">
+          Discover the 5,000-year-old holistic healing system that brings balance to body, mind, and spirit through natural wisdom and personalized care
+        </p>
+        <div class="hero-cta">
+          <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="btn btn-primary" target="_blank" rel="noopener">
+            Book an Ayurveda Session
+          </a>
+          <a href="#foundations" class="btn btn-secondary">
+            Learn More
+          </a>
         </div>
       </div>
     </section>
 
+    <section id="foundations">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Foundations</span>
+          <h2 class="section-title">What is Ayurveda?</h2>
+          <p class="section-subtitle">
+            Ayurveda, meaning "Science of Life," is an ancient Indian system of medicine that treats the whole person—body, mind, and consciousness. It emphasizes prevention, balance, and harmony with nature's rhythms.
+          </p>
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card fade-in">
+            <h3>Core Principles</h3>
+            <p>Ayurveda is built on timeless wisdom that views health as a dynamic balance:</p>
+            <ul>
+              <li>Everything in the universe is composed of five elements: Space, Air, Fire, Water, Earth</li>
+              <li>These elements combine to form three doshas (bio-energies): Vata, Pitta, Kapha</li>
+              <li>Health is the balance of doshas, digestive fire (Agni), tissues, and waste elimination</li>
+              <li>Disease arises from imbalance, often due to lifestyle, diet, or mental state</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Holistic Approach</h3>
+            <p>Ayurveda treats the root cause, not just symptoms, through:</p>
+            <ul>
+              <li>Personalized nutrition based on your unique constitution (Prakriti)</li>
+              <li>Daily routines (Dinacharya) aligned with natural cycles</li>
+              <li>Herbal remedies and natural therapies</li>
+              <li>Yoga, meditation, and breathwork practices</li>
+              <li>Seasonal adjustments (Ritucharya) to prevent imbalance</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Modern Relevance</h3>
+            <p>Ancient wisdom meets contemporary life:</p>
+            <ul>
+              <li>Stress management through dosha-balancing practices</li>
+              <li>Digestive health and gut wellness optimization</li>
+              <li>Immunity building with natural herbs and lifestyle</li>
+              <li>Mental clarity and emotional balance techniques</li>
+              <li>Preventive care for long-term vitality</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: linear-gradient(180deg, transparent, rgba(90, 146, 83, 0.03), transparent);">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Constitution</span>
+          <h2 class="section-title">The Three Doshas</h2>
+          <p class="section-subtitle">
+            Understanding your unique constitution is the foundation of Ayurvedic wellness. Each person has a unique blend of the three doshas that determines their physical, mental, and emotional characteristics.
+          </p>
+        </div>
+
+        <div class="dosha-grid">
+          <div class="dosha-card fade-in">
+            <div class="dosha-header">
+              <div class="dosha-icon">💨</div>
+              <h3>Vata</h3>
+            </div>
+            <p><strong>Elements:</strong> Space + Air</p>
+            <p><strong>Qualities:</strong> Light, dry, cold, mobile, rough, subtle</p>
+            <p><strong>Governs:</strong> Movement, circulation, breathing, nervous system, creativity</p>
+            <p><strong>When Balanced:</strong> Creative, enthusiastic, energetic, flexible thinking</p>
+            <p><strong>When Imbalanced:</strong> Anxiety, restlessness, insomnia, digestive issues, dry skin</p>
+            <p><strong>Balance Through:</strong> Warm foods, regular routines, grounding practices, oil massage, rest</p>
+          </div>
+
+          <div class="dosha-card fade-in">
+            <div class="dosha-header">
+              <div class="dosha-icon">🔥</div>
+              <h3>Pitta</h3>
+            </div>
+            <p><strong>Elements:</strong> Fire + Water</p>
+            <p><strong>Qualities:</strong> Hot, sharp, light, oily, liquid, spreading</p>
+            <p><strong>Governs:</strong> Digestion, metabolism, body temperature, intelligence, courage</p>
+            <p><strong>When Balanced:</strong> Sharp intellect, focused, confident, strong digestion</p>
+            <p><strong>When Imbalanced:</strong> Anger, inflammation, acid reflux, skin rashes, perfectionism</p>
+            <p><strong>Balance Through:</strong> Cooling foods, moderate exercise, avoiding excess heat, sweet tastes</p>
+          </div>
+
+          <div class="dosha-card fade-in">
+            <div class="dosha-header">
+              <div class="dosha-icon">🌊</div>
+              <h3>Kapha</h3>
+            </div>
+            <p><strong>Elements:</strong> Water + Earth</p>
+            <p><strong>Qualities:</strong> Heavy, slow, cool, oily, smooth, stable</p>
+            <p><strong>Governs:</strong> Structure, lubrication, immunity, stability, compassion</p>
+            <p><strong>When Balanced:</strong> Calm, loving, patient, strong immunity, steady energy</p>
+            <p><strong>When Imbalanced:</strong> Lethargy, weight gain, congestion, depression, attachment</p>
+            <p><strong>Balance Through:</strong> Light foods, vigorous exercise, stimulation, warming spices</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
-      <h2>Research in Ayurveda</h2>
-      <div class="research">
-        <div class="card paper"><h4>Brahmi &amp; Memory</h4><p>Studies suggest Brahmi supports cognition and memory. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9379783/" target="_blank" rel="noopener">Read more</a></p></div>
-        <div class="card paper"><h4>Dinacharya &amp; Prevention</h4><p>Daily routine practices improve metabolism and mental balance. <a href="https://www.wjpmr.com/download/article/136062025/1751103708.pdf" target="_blank" rel="noopener">Read PDF</a></p></div>
-        <div class="card paper"><h4>Yoga &amp; Stress</h4><p>Breath-led sequences reduce stress and improve sleep quality.</p></div>
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Daily Practices</span>
+          <h2 class="section-title">Dinacharya: Daily Routine</h2>
+          <p class="section-subtitle">
+            Ayurveda emphasizes the importance of daily routines aligned with natural rhythms. These practices help maintain balance and prevent disease.
+          </p>
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card fade-in">
+            <h3>Morning Rituals</h3>
+            <p>Start your day in harmony with nature:</p>
+            <ul>
+              <li>Wake before sunrise (ideally during Brahma Muhurta, 4-6 AM)</li>
+              <li>Scrape tongue to remove toxins (Ama)</li>
+              <li>Oil pulling with sesame or coconut oil</li>
+              <li>Drink warm water to kindle digestive fire</li>
+              <li>Practice meditation and pranayama</li>
+              <li>Self-massage with warm oil (Abhyanga)</li>
+              <li>Gentle yoga or exercise suited to your dosha</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Eating Guidelines</h3>
+            <p>Nourish yourself mindfully:</p>
+            <ul>
+              <li>Eat your largest meal at midday when Agni is strongest</li>
+              <li>Consume food that's fresh, warm, and easily digestible</li>
+              <li>Sit down and eat in a calm, peaceful environment</li>
+              <li>Eat only when truly hungry, respecting previous meal digestion</li>
+              <li>Include all six tastes in your meals when possible</li>
+              <li>Avoid overeating—fill stomach ⅓ food, ⅓ liquid, ⅓ empty</li>
+              <li>Say a prayer of gratitude before meals</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Evening Practices</h3>
+            <p>Wind down and prepare for restorative sleep:</p>
+            <ul>
+              <li>Eat a light, early dinner (before sunset if possible)</li>
+              <li>Take a gentle evening walk to aid digestion</li>
+              <li>Avoid stimulating activities and screens before bed</li>
+              <li>Practice calming meditation or gentle stretching</li>
+              <li>Massage feet with warm oil before sleep</li>
+              <li>Go to bed by 10 PM (during Kapha time for deep rest)</li>
+              <li>Keep a consistent sleep schedule</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: linear-gradient(180deg, transparent, rgba(90, 146, 83, 0.03), transparent);">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Seasonal Wisdom</span>
+          <h2 class="section-title">Ritucharya: Seasonal Routines</h2>
+          <p class="section-subtitle">
+            Ayurveda recognizes six seasons in the Indian calendar. Adjusting your lifestyle and diet with the seasons helps maintain dosha balance and prevent disease.
+          </p>
+        </div>
+
+        <div class="content-grid">
+          <div class="content-card fade-in">
+            <h3>Spring (Vasanta)</h3>
+            <p><strong>Dominant Dosha:</strong> Kapha</p>
+            <p>As warmth melts accumulated Kapha from winter, focus on:</p>
+            <ul>
+              <li>Light, dry, and warm foods</li>
+              <li>Bitter, pungent, and astringent tastes</li>
+              <li>Vigorous exercise and detoxification</li>
+              <li>Avoid heavy, oily, and sweet foods</li>
+              <li>Use warming spices like ginger and black pepper</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Summer (Grishma)</h3>
+            <p><strong>Dominant Dosha:</strong> Pitta</p>
+            <p>Heat aggravates Pitta, so cool down with:</p>
+            <ul>
+              <li>Sweet, cooling, and hydrating foods</li>
+              <li>Fresh fruits, coconut water, cucumber</li>
+              <li>Moderate exercise during cooler hours</li>
+              <li>Avoid spicy, salty, and sour foods</li>
+              <li>Stay hydrated and avoid midday sun</li>
+            </ul>
+          </div>
+
+          <div class="content-card fade-in">
+            <h3>Autumn & Winter</h3>
+            <p><strong>Dominant Dosha:</strong> Vata (Autumn), Kapha (Winter)</p>
+            <p><strong>Autumn:</strong> Warm, grounding, oily foods; regular routines; avoid raw and cold</p>
+            <p><strong>Winter:</strong> Nourishing, warming foods; hearty soups and stews; moderate to vigorous exercise; immunity-building herbs</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Common Questions</span>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="fade-in">
+          <details>
+            <summary>How do I discover my dosha type?</summary>
+            <p>Your dosha (Prakriti) is determined at conception and remains constant throughout life. A qualified Ayurvedic practitioner can assess your constitution through detailed questionnaires, pulse diagnosis (Nadi Pariksha), and observation of physical and mental characteristics. I offer personalized dosha assessments in my consultation sessions.</p>
+          </details>
+
+          <details>
+            <summary>Can Ayurveda help with modern health conditions?</summary>
+            <p>Yes, Ayurveda offers complementary approaches to many modern health challenges including stress, digestive disorders, metabolic imbalances, skin conditions, and chronic inflammation. However, it should complement—not replace—conventional medical care for serious conditions. Always consult with both your physician and Ayurvedic practitioner.</p>
+          </details>
+
+          <details>
+            <summary>Is Ayurveda only about herbal remedies?</summary>
+            <p>No, herbs are just one aspect. Ayurveda is a comprehensive lifestyle system encompassing diet, daily routines, seasonal practices, yoga, meditation, breathing exercises, massage, and mental-emotional wellness. The focus is on prevention and maintaining balance through daily choices.</p>
+          </details>
+
+          <details>
+            <summary>How long does it take to see results from Ayurvedic practices?</summary>
+            <p>Simple dietary and lifestyle changes can bring noticeable improvements within a few weeks. However, Ayurveda views health as a long-term journey. Deep-seated imbalances may take several months to rebalance. Consistency and patience are key to lasting transformation.</p>
+          </details>
+
+          <details>
+            <summary>Can I practice Ayurveda if I'm not vegetarian?</summary>
+            <p>Yes, Ayurveda can be adapted to various dietary preferences. While traditional Ayurveda often emphasizes vegetarian diets, it recognizes individual needs vary. The key is choosing foods appropriate for your constitution and current state of balance, prepared and consumed mindfully.</p>
+          </details>
+
+          <details>
+            <summary>What is Agni and why is it important?</summary>
+            <p>Agni (digestive fire) is the biological force responsible for all transformation in the body—from digesting food to processing thoughts and emotions. Strong, balanced Agni is essential for health, as weak Agni leads to accumulation of toxins (Ama). We support Agni through proper food combinations, meal timing, and lifestyle practices.</p>
+          </details>
+
+          <details>
+            <summary>How does Ayurveda differ from modern medicine?</summary>
+            <p>Modern medicine excels at acute care and life-saving interventions. Ayurveda focuses on prevention, personalization, and treating root causes rather than symptoms. The two can work beautifully together—modern medicine for urgent needs, Ayurveda for long-term wellness and balance.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta-section fade-in">
+          <h2>Begin Your Ayurvedic Journey</h2>
+          <p>Discover your unique constitution and receive personalized guidance for balanced, vibrant living through ancient Ayurvedic wisdom.</p>
+          <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="btn btn-primary" target="_blank" rel="noopener">Book Your Consultation</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer id="contact" role="contentinfo">
-    <p>© <span id="year"></span> Harsh Ranjan (Samarpan)</p>
-    <p><a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> | <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> | <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a></p>
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+      <p>
+        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+    </div>
   </footer>
 
-  <!-- Floating Lotus Menu -->
-  <div class="lotus" id="lotusMenu" aria-label="Quick actions">
-    <button class="petal p1" aria-label="Back to Home" title="Home" onclick="location.href='index.html'">🏠</button>
-    <button class="petal p2" aria-label="Go to Sessions" title="Sessions" onclick="location.href='sessions.html'">🧘</button>
-    <button class="petal p3" aria-label="Back to Top" title="Top" id="btnTop">⬆️</button>
-    <button class="petal p4" aria-label="Contact" title="Contact" onclick="location.href='index.html#contact'">✉️</button>
-    <button class="petal p5" aria-label="Explore Trips" title="Trips" onclick="location.href='trips.html'">⛰️</button>
-    <button class="core" id="lotusCore" aria-expanded="false" aria-controls="lotusMenu">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M12 3c1.8 2.2 3 4.7 3 7.2 0 2.5-1.2 4.9-3 6.8-1.8-1.9-3-4.3-3-6.8C9 7.7 10.2 5.2 12 3Z" fill="currentColor" opacity=".9"/>
-        <path d="M6 10c2 .6 4.1 2 6 4-2.8.3-5.5-.2-7.7-1.6C4.9 11.4 5.4 10.6 6 10Z" fill="currentColor" opacity=".75"/>
-        <path d="M18 10c-.6.6-1.1 1.4-1.3 2.4-2.2 1.4-4.9 1.9-7.7 1.6 1.9-2 4-3.4 6-4 .6-.2 1.2 0 1.8 0Z" fill="currentColor" opacity=".75"/>
-      </svg>
-    </button>
-  </div>
+  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
 
   <script>
-    // YEAR
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.addEventListener('DOMContentLoaded', () => {
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Theme (mirror About logic)
-    (function(){
-      const root = document.documentElement;
-      const key = 'theme-preference';
-      const stored = localStorage.getItem(key);
-      const preferDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initial = stored || (preferDark ? 'dark' : 'light');
-      root.setAttribute('data-theme', initial);
-      function toggleTheme(){
-        const current = root.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem(key, next);
+      // Theme Toggle
+      const themeToggle = document.getElementById('themeToggle');
+      const html = document.documentElement;
+      
+      function setTheme(mode) {
+        html.setAttribute('data-theme', mode);
+        localStorage.setItem('theme', mode);
+        themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
+        themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
       }
-      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-      document.getElementById('themeToggleM').addEventListener('click', toggleTheme);
-    })();
 
-    // Tabs
-    const tabs = document.querySelectorAll('.tab');
-    const panels = {
-      vata: document.getElementById('panel-vata'),
-      pitta: document.getElementById('panel-pitta'),
-      kapha: document.getElementById('panel-kapha')
-    };
-    tabs.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const id = btn.id.replace('tab-','');
-        tabs.forEach(b=>b.setAttribute('aria-selected','false'));
-        btn.setAttribute('aria-selected','true');
-        Object.values(panels).forEach(p=>p.classList.remove('active'));
-        panels[id].classList.add('active');
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark ? 'dark' : 'light');
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      });
+
+      // Mobile Menu
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      menuToggle.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        mobileMenu.classList.toggle('active');
+      });
+
+      mobileMenu.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+          menuToggle.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.remove('active');
+        }
+      });
+
+      // Scroll animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -80px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      // Header scroll effect
+      const header = document.querySelector('.site-header');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }, { passive: true });
+
+      // Scroll to top
+      const scrollBtn = document.getElementById('scrollTopBtn');
+      window.addEventListener('scroll', () => {
+        scrollBtn.classList.toggle('show', window.pageYOffset > 300);
+      }, { passive: true });
+
+      scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // Progress bar
+      const progress = document.getElementById('scrollProgress');
+      window.addEventListener('scroll', () => {
+        const doc = document.documentElement;
+        const scrollTop = doc.scrollTop || document.body.scrollTop;
+        const height = doc.scrollHeight - doc.clientHeight;
+        const pct = height > 0 ? (scrollTop / height) * 100 : 0;
+        progress.style.width = pct + '%';
+      }, { passive: true });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            const headerHeight = 72;
+            const targetPosition = target.offsetTop - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
       });
     });
-
-    // Mobile panel (hamburger)
-    const burger = document.getElementById('burger');
-    const panel = document.getElementById('mobilePanel');
-    const closeBtn = document.getElementById('panelClose');
-    function openPanel(){panel.classList.add('open');panel.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');}
-    function closePanel(){panel.classList.remove('open');panel.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');}
-    burger.addEventListener('click', openPanel);
-    closeBtn.addEventListener('click', closePanel);
-    panel.addEventListener('click', (e)=>{ if(e.target === panel) closePanel(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closePanel(); });
-
-    // Floating Lotus
-    const lotus = document.getElementById('lotusMenu');
-    const core = document.getElementById('lotusCore');
-    const btnTop = document.getElementById('btnTop');
-    core.addEventListener('click', ()=>{ const open = lotus.classList.toggle('open'); core.setAttribute('aria-expanded', String(open)); });
-    btnTop.addEventListener('click', ()=>{ window.scrollTo({top:0, behavior:'smooth'}); lotus.classList.remove('open'); core.setAttribute('aria-expanded','false'); });
-    document.addEventListener('click', (e)=>{ if(!lotus.contains(e.target)){ lotus.classList.remove('open'); core.setAttribute('aria-expanded','false'); }});
   </script>
 </body>
 </html>
-
-
