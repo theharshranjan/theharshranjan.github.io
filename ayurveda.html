@@ -3,11 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
-  <title>Ayurveda — Harsh Ranjan (Samarpan)</title>
+  <meta name="color-scheme" content="light" />
+  <title>Ayurveda — Harsh Ranjan (Samarpan) | Ancient Science of Wellness</title>
 
+  <!-- SEO Meta Tags -->
   <link rel="canonical" href="https://theharshranjan.github.io/ayurveda.html" />
   <meta name="description" content="Discover the ancient science of Ayurveda with Harsh Ranjan. Learn about doshas, daily routines, seasonal practices, and holistic wellness." />
+  <meta name="keywords" content="Ayurveda, doshas, holistic health, traditional medicine, Ayurvedic wellness, natural healing, Vata Pitta Kapha" />
+  <meta name="author" content="Harsh Ranjan (Samarpan)" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theharshranjan.github.io/ayurveda.html" />
+  <meta property="og:title" content="Ayurveda — Harsh Ranjan (Samarpan) | Ancient Science of Wellness" />
+  <meta property="og:description" content="Discover the ancient science of Ayurveda. Learn about doshas, daily routines, seasonal practices, and holistic wellness." />
+  <meta property="og:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://theharshranjan.github.io/ayurveda.html" />
+  <meta property="twitter:title" content="Ayurveda — Harsh Ranjan (Samarpan) | Ancient Science of Wellness" />
+  <meta property="twitter:description" content="Discover the ancient science of Ayurveda. Learn about doshas, daily routines, seasonal practices, and holistic wellness." />
+  <meta property="twitter:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
   <meta name="theme-color" content="#5a9253" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,41 +49,35 @@
       --sage-600: #47753f;
       --sage-700: #385d32;
       --sage-800: #2d4a28;
+      --sage-900: #1f3319;
       
       --cream-50: #fdfbf7;
       --cream-100: #f9f5ed;
       --cream-200: #f1e8d8;
+      --cream-300: #e7d6bc;
+      --cream-400: #d9bd97;
       
       --bg: var(--cream-50);
       --surface: #ffffff;
+      --surface-elevated: #ffffff;
       --text-primary: #1a1a1a;
       --text-secondary: #4a4a4a;
       --text-tertiary: #737373;
       --accent: var(--sage-500);
       --accent-hover: var(--sage-600);
-      --border: rgba(90, 146, 83, 0.12);
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.1);
-    }
-
-    [data-theme="dark"] {
-      --bg: #0a1410;
-      --surface: #142118;
-      --text-primary: #f0f4f0;
-      --text-secondary: #c5d1c5;
-      --text-tertiary: #8f9f8f;
-      --accent: var(--sage-300);
-      --accent-hover: var(--sage-200);
-      --border: rgba(168, 201, 161, 0.15);
-      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-      --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+      --border: rgba(90, 146, 83, 0.1);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08);
+      --gradient-hero: linear-gradient(135deg, var(--sage-50) 0%, var(--cream-100) 100%);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    html { 
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
     
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -68,111 +86,122 @@
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      position: relative;
     }
 
-    #scrollProgress {
+    body::before {
+      content: '';
       position: fixed;
       top: 0;
       left: 0;
-      height: 2px;
-      width: 0%;
-      background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
-      z-index: 1200;
-      transition: width 0.1s linear;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 20%, var(--sage-100) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, var(--cream-200) 0%, transparent 50%);
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
     }
 
-    /* Header */
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+    }
+
+    /* Header - FIXED (not sticky) */
     .site-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      backdrop-filter: blur(24px) saturate(180%);
-      background: color-mix(in srgb, var(--bg) 85%, transparent);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-
-    .site-header.scrolled {
-      box-shadow: var(--shadow-sm);
-      background: color-mix(in srgb, var(--bg) 95%, transparent);
+      width: 100%;
     }
 
     nav {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 clamp(20px, 4vw, 60px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 72px;
+      min-height: 80px;
       gap: 2rem;
+      width: 100%;
     }
 
     .logo-area {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-decoration: none;
       transition: transform 0.3s ease;
+      z-index: 1001;
+      flex-shrink: 0;
     }
 
     .logo-area:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
     }
 
-    .logo-img {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--sage-400), var(--sage-600));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 1.2rem;
-      box-shadow: var(--shadow-sm);
+    .logo-area img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: var(--shadow);
       transition: all 0.3s ease;
     }
 
-    .logo-area:hover .logo-img {
-      box-shadow: var(--shadow);
-      transform: scale(1.05);
+    .logo-area:hover img {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--accent-hover);
     }
 
     .logo-area span {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 600;
-      font-size: 1.3rem;
-      letter-spacing: 0.3px;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .nav-links {
       display: flex;
       list-style: none;
-      gap: 2rem;
+      gap: 2.5rem;
       align-items: center;
+      flex: 1;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .nav-links li {
+      display: block;
     }
 
     .nav-links a {
       position: relative;
       font-weight: 500;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       text-decoration: none;
       color: var(--text-secondary);
       padding: 0.5rem 0;
       transition: color 0.3s ease;
+      white-space: nowrap;
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
       width: 0;
       height: 2px;
       background: var(--accent);
@@ -189,311 +218,276 @@
       width: 100%;
     }
 
-    .theme-toggle {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--surface);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.05);
-      box-shadow: var(--shadow-sm);
-    }
-
     .menu-toggle {
       display: none;
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       background: var(--surface);
       cursor: pointer;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 5px;
+      z-index: 1001;
+      flex-shrink: 0;
     }
 
     .menu-toggle span {
-      width: 20px;
+      width: 22px;
       height: 2px;
       background: var(--text-primary);
       transition: all 0.3s ease;
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    .menu-toggle.active span:nth-child(2) {
       opacity: 0;
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--surface);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding-top: 100px;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 16px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a[aria-current="page"] {
+      background: var(--sage-100);
+      color: var(--accent);
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1002;
+    }
+
+    /* Add padding to main to account for fixed header */
+    main {
+      padding-top: 80px;
     }
 
     /* Hero Section */
     .hero {
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 10vh, 100px);
+      background: var(--gradient-hero);
       position: relative;
       overflow: hidden;
-      padding: 140px 20px 80px;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(168, 201, 161, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(241, 232, 216, 0.2) 0%, transparent 50%),
-        var(--bg);
     }
 
     .hero::before {
       content: '';
       position: absolute;
+      top: -50%;
+      right: -20%;
       width: 600px;
       height: 600px;
-      background: linear-gradient(135deg, var(--sage-100) 0%, transparent 70%);
-      border-radius: 50%;
-      top: -300px;
-      right: -150px;
-      opacity: 0.4;
-      animation: heroFloat 20s ease-in-out infinite;
+      background: radial-gradient(circle, var(--sage-200) 0%, transparent 70%);
+      opacity: 0.2;
+      animation: float 20s ease-in-out infinite;
     }
 
-    @keyframes heroFloat {
+    @keyframes float {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(-40px, 40px) rotate(180deg); }
+      50% { transform: translate(-30px, 30px) rotate(180deg); }
     }
 
     .hero-content {
+      position: relative;
+      z-index: 1;
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
-      position: relative;
-      z-index: 1;
     }
 
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 18px;
+      display: inline-block;
+      padding: 8px 20px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--accent);
       margin-bottom: 2rem;
       box-shadow: var(--shadow-sm);
+      animation: fadeInUp 0.8s ease;
     }
 
-    .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 600;
-      line-height: 1.15;
+      line-height: 1.1;
       color: var(--text-primary);
       margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-highlight {
-      background: linear-gradient(135deg, var(--sage-400), var(--sage-600));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      animation: fadeInUp 0.8s ease 0.2s both;
     }
 
     .hero-subtitle {
-      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.6;
       margin-bottom: 2.5rem;
-      font-weight: 400;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 300;
+      animation: fadeInUp 0.8s ease 0.4s both;
     }
 
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--sage-500), var(--sage-600));
-      color: white;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary:hover {
-      box-shadow: var(--shadow);
-      transform: translateY(-2px);
-    }
-
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--text-primary);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      background: var(--text-primary);
-      color: var(--surface);
-    }
-
-    /* Sections */
-    section {
-      padding: clamp(60px, 10vh, 100px) clamp(20px, 4vw, 60px);
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
+    /* Section */
+    .content-section {
+      padding: clamp(60px, 10vh, 100px) 0;
     }
 
     .section-header {
       text-align: center;
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto 4rem;
-    }
-
-    .section-label {
-      display: inline-block;
-      padding: 4px 14px;
-      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
-      border-radius: 100px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 1rem;
     }
 
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 1rem;
-      letter-spacing: -0.01em;
     }
 
     .section-subtitle {
       font-size: 1.1rem;
       color: var(--text-secondary);
-      font-weight: 400;
-      line-height: 1.7;
+      font-weight: 300;
     }
 
-    /* Content Grid */
-    .content-grid {
+    /* Grid */
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
-    .content-card {
+    /* Card */
+    .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 2.5rem;
+      padding: clamp(28px, 4vw, 40px);
+      box-shadow: var(--shadow);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
 
-    .content-card::before {
+    .card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 3px;
+      width: 100%;
+      height: 4px;
       background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
       transform: scaleX(0);
-      transform-origin: left;
       transition: transform 0.4s ease;
     }
 
-    .content-card:hover {
+    .card:hover {
       transform: translateY(-8px);
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-lg);
     }
 
-    .content-card:hover::before {
+    .card:hover::before {
       transform: scaleX(1);
     }
 
-    .content-card h3 {
+    .card h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: var(--text-primary);
       margin-bottom: 1rem;
     }
 
-    .content-card p {
+    .card p {
       color: var(--text-secondary);
-      line-height: 1.8;
+      line-height: 1.7;
       margin-bottom: 1rem;
     }
 
-    .content-card ul {
+    .card ul {
       list-style: none;
-      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
-    .content-card li {
+    .card li {
       padding-left: 1.5rem;
       position: relative;
-      margin-bottom: 0.75rem;
       color: var(--text-secondary);
-      line-height: 1.6;
+      font-size: 0.95rem;
     }
 
-    .content-card li::before {
+    .card li::before {
       content: '✓';
       position: absolute;
       left: 0;
@@ -502,54 +496,31 @@
     }
 
     /* Dosha Cards */
-    .dosha-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
     .dosha-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 2.5rem;
+      box-shadow: var(--shadow);
       transition: all 0.3s ease;
     }
 
     .dosha-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow);
-    }
-
-    .dosha-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .dosha-icon {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
     }
 
     .dosha-card h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.8rem;
       color: var(--text-primary);
-      margin: 0;
+      margin-bottom: 1rem;
     }
 
     .dosha-card p {
       color: var(--text-secondary);
       line-height: 1.7;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
     .dosha-card strong {
@@ -558,60 +529,78 @@
     }
 
     /* FAQ Section */
-    details {
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 1.5rem;
       margin-bottom: 1rem;
-      cursor: pointer;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
       transition: all 0.3s ease;
     }
 
-    details:hover {
-      box-shadow: var(--shadow-sm);
+    .faq-item:hover {
+      box-shadow: var(--shadow);
     }
 
-    details[open] {
-      box-shadow: var(--shadow-sm);
-    }
-
-    details summary {
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.5rem 2rem;
+      text-align: left;
+      font-family: inherit;
+      font-size: 1.05rem;
       font-weight: 600;
       color: var(--text-primary);
       cursor: pointer;
-      list-style: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1.05rem;
+      transition: color 0.3s ease;
     }
 
-    details summary::after {
-      content: '+';
-      font-size: 1.5rem;
+    .faq-question:hover {
       color: var(--accent);
-      transition: transform 0.3s ease;
-      font-weight: 300;
     }
 
-    details[open] summary::after {
+    .faq-icon {
+      font-size: 1.3rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-icon {
       transform: rotate(45deg);
     }
 
-    details p {
-      margin-top: 1rem;
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+
+    .faq-answer-content {
+      padding: 0 2rem 1.5rem 2rem;
       color: var(--text-secondary);
       line-height: 1.8;
     }
 
     /* CTA Section */
     .cta-section {
-      background: linear-gradient(135deg, rgba(90, 146, 83, 0.08), rgba(90, 146, 83, 0.03));
+      background: var(--gradient-hero);
       border-radius: 24px;
       padding: clamp(50px, 8vw, 80px);
       text-align: center;
-      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
       margin: clamp(60px, 10vh, 100px) 0;
     }
 
@@ -623,132 +612,62 @@
     }
 
     .cta-section p {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--text-secondary);
       margin-bottom: 2rem;
-      font-weight: 400;
+      font-weight: 300;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
     /* Footer */
     footer {
-      background: linear-gradient(135deg, var(--sage-700), var(--sage-800));
-      color: rgba(255, 255, 255, 0.9);
-      padding: 3rem clamp(20px, 4vw, 60px);
+      background: var(--surface-elevated);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0;
       text-align: center;
     }
 
     footer p {
+      color: var(--text-tertiary);
       margin-bottom: 1rem;
     }
 
     footer a {
-      color: rgba(255, 255, 255, 0.95);
+      color: var(--accent);
       text-decoration: none;
       transition: color 0.3s ease;
-      margin: 0 0.75rem;
-      font-weight: 500;
     }
 
     footer a:hover {
-      color: var(--cream-100);
+      color: var(--accent-hover);
     }
 
-    /* Scroll to Top */
-    #scrollTopBtn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: white;
-      border: none;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 900;
-    }
-
-    #scrollTopBtn.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    #scrollTopBtn:hover {
-      background: var(--accent-hover);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    /* Mobile */
-    @media (max-width: 900px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .mobile-menu {
-        position: fixed;
-        top: 73px;
-        left: 0;
-        right: 0;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem;
-        transform: translateY(-100%);
-        opacity: 0;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow);
-        z-index: 999;
-      }
-
-      .mobile-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-      }
-
-      .mobile-menu ul {
-        list-style: none;
-      }
-
-      .mobile-menu a {
-        display: block;
-        padding: 1rem;
-        color: var(--text-primary);
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background 0.3s ease;
-        font-weight: 500;
-      }
-
-      .mobile-menu a:hover {
-        background: rgba(90, 146, 83, 0.05);
-      }
-
-      .hero {
-        padding: 120px 20px 60px;
-      }
-
-      .content-grid,
-      .dosha-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Animations */
+    /* Scroll animations */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
       transition: all 0.8s ease;
     }
 
@@ -757,95 +676,109 @@
       transform: translateY(0);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, ::before, ::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      nav {
+        gap: 1rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div id="scrollProgress"></div>
-
   <header class="site-header">
     <nav class="container">
       <a class="logo-area" href="index.html">
-        <div class="logo-img">HR</div>
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" />
         <span>Harsh Ranjan</span>
       </a>
-
+      
       <ul class="nav-links">
         <li><a href="about.html">About</a></li>
         <li><a href="sessions.html">Sessions</a></li>
         <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
         <li><a href="psychology.html">Psychology</a></li>
-        <li><a href="diet.html">Diet & Nutrition</a></li>
         <li><a href="trips.html">Trips</a></li>
+        <li><a href="diet.html">Diet & Nutrition</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
-      <div style="display: flex; gap: 0.75rem; align-items: center;">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </header>
 
-  <!-- Mobile Backdrop + Panel -->
-      <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
-
-      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
-        <ul class="mobile-menu" id="mobileMenu">
-          <li><a href="about.html">About</a></li>
-          <li><a href="sessions.html">Sessions</a></li>
-          <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
-          <li><a href="psychology.html">Psychology</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-          <li><a href="trips.html">Trips</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="ayurveda.html" aria-current="page">Ayurveda</a></li>
+      <li><a href="psychology.html">Psychology</a></li>
+      <li><a href="trips.html">Trips</a></li>
+      <li><a href="diet.html">Diet & Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
 
   <main>
     <section class="hero">
-      <div class="hero-content">
-        <div class="hero-badge">Ancient Science of Life</div>
-        <h1>
-          The Wisdom of <span class="hero-highlight">Ayurveda</span>
-        </h1>
-        <p class="hero-subtitle">
-          Discover the 5,000-year-old holistic healing system that brings balance to body, mind, and spirit through natural wisdom and personalized care
-        </p>
-        <div class="hero-cta">
-          <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="btn btn-primary" target="_blank" rel="noopener">
-            Book an Ayurveda Session
-          </a>
-          <a href="#foundations" class="btn btn-secondary">
-            Learn More
-          </a>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">Ancient Science of Life</div>
+          <h1>The Wisdom of Ayurveda</h1>
+          <p class="hero-subtitle">
+            Discover the 5,000-year-old holistic healing system that brings balance to body, mind, and spirit through natural wisdom and personalized care
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="foundations">
+    <section class="content-section">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-label">Foundations</span>
           <h2 class="section-title">What is Ayurveda?</h2>
           <p class="section-subtitle">
             Ayurveda, meaning "Science of Life," is an ancient Indian system of medicine that treats the whole person—body, mind, and consciousness. It emphasizes prevention, balance, and harmony with nature's rhythms.
           </p>
         </div>
 
-        <div class="content-grid">
-          <div class="content-card fade-in">
+        <div class="grid">
+          <div class="card fade-in">
             <h3>Core Principles</h3>
             <p>Ayurveda is built on timeless wisdom that views health as a dynamic balance:</p>
             <ul>
@@ -856,7 +789,7 @@
             </ul>
           </div>
 
-          <div class="content-card fade-in">
+          <div class="card fade-in">
             <h3>Holistic Approach</h3>
             <p>Ayurveda treats the root cause, not just symptoms, through:</p>
             <ul>
@@ -868,7 +801,7 @@
             </ul>
           </div>
 
-          <div class="content-card fade-in">
+          <div class="card fade-in">
             <h3>Modern Relevance</h3>
             <p>Ancient wisdom meets contemporary life:</p>
             <ul>
@@ -883,22 +816,18 @@
       </div>
     </section>
 
-    <section style="background: linear-gradient(180deg, transparent, rgba(90, 146, 83, 0.03), transparent);">
+    <section class="content-section">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-label">Constitution</span>
           <h2 class="section-title">The Three Doshas</h2>
           <p class="section-subtitle">
             Understanding your unique constitution is the foundation of Ayurvedic wellness. Each person has a unique blend of the three doshas that determines their physical, mental, and emotional characteristics.
           </p>
         </div>
 
-        <div class="dosha-grid">
+        <div class="grid">
           <div class="dosha-card fade-in">
-            <div class="dosha-header">
-              <div class="dosha-icon">💨</div>
-              <h3>Vata</h3>
-            </div>
+            <h3>💨 Vata</h3>
             <p><strong>Elements:</strong> Space + Air</p>
             <p><strong>Qualities:</strong> Light, dry, cold, mobile, rough, subtle</p>
             <p><strong>Governs:</strong> Movement, circulation, breathing, nervous system, creativity</p>
@@ -908,10 +837,7 @@
           </div>
 
           <div class="dosha-card fade-in">
-            <div class="dosha-header">
-              <div class="dosha-icon">🔥</div>
-              <h3>Pitta</h3>
-            </div>
+            <h3>🔥 Pitta</h3>
             <p><strong>Elements:</strong> Fire + Water</p>
             <p><strong>Qualities:</strong> Hot, sharp, light, oily, liquid, spreading</p>
             <p><strong>Governs:</strong> Digestion, metabolism, body temperature, intelligence, courage</p>
@@ -921,10 +847,7 @@
           </div>
 
           <div class="dosha-card fade-in">
-            <div class="dosha-header">
-              <div class="dosha-icon">🌊</div>
-              <h3>Kapha</h3>
-            </div>
+            <h3>🌊 Kapha</h3>
             <p><strong>Elements:</strong> Water + Earth</p>
             <p><strong>Qualities:</strong> Heavy, slow, cool, oily, smooth, stable</p>
             <p><strong>Governs:</strong> Structure, lubrication, immunity, stability, compassion</p>
@@ -936,22 +859,20 @@
       </div>
     </section>
 
-    <section>
+    <section class="content-section">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-label">Daily Practices</span>
-          <h2 class="section-title">Dinacharya: Daily Routine</h2>
+          <h2 class="section-title">Daily Routines & Seasonal Wisdom</h2>
           <p class="section-subtitle">
-            Ayurveda emphasizes the importance of daily routines aligned with natural rhythms. These practices help maintain balance and prevent disease.
+            Ayurveda emphasizes the importance of aligning with natural rhythms through daily and seasonal practices for lasting balance.
           </p>
         </div>
 
-        <div class="content-grid">
-          <div class="content-card fade-in">
-            <h3>Morning Rituals</h3>
-            <p>Start your day in harmony with nature:</p>
+        <div class="grid">
+          <div class="card fade-in">
+            <h3>Morning Rituals (Dinacharya)</h3>
             <ul>
-              <li>Wake before sunrise (ideally during Brahma Muhurta, 4-6 AM)</li>
+              <li>Wake before sunrise during Brahma Muhurta (4-6 AM)</li>
               <li>Scrape tongue to remove toxins (Ama)</li>
               <li>Oil pulling with sesame or coconut oil</li>
               <li>Drink warm water to kindle digestive fire</li>
@@ -961,9 +882,8 @@
             </ul>
           </div>
 
-          <div class="content-card fade-in">
+          <div class="card fade-in">
             <h3>Eating Guidelines</h3>
-            <p>Nourish yourself mindfully:</p>
             <ul>
               <li>Eat your largest meal at midday when Agni is strongest</li>
               <li>Consume food that's fresh, warm, and easily digestible</li>
@@ -975,122 +895,97 @@
             </ul>
           </div>
 
-          <div class="content-card fade-in">
-            <h3>Evening Practices</h3>
-            <p>Wind down and prepare for restorative sleep:</p>
+          <div class="card fade-in">
+            <h3>Seasonal Practices (Ritucharya)</h3>
             <ul>
-              <li>Eat a light, early dinner (before sunset if possible)</li>
-              <li>Take a gentle evening walk to aid digestion</li>
-              <li>Avoid stimulating activities and screens before bed</li>
-              <li>Practice calming meditation or gentle stretching</li>
-              <li>Massage feet with warm oil before sleep</li>
-              <li>Go to bed by 10 PM (during Kapha time for deep rest)</li>
-              <li>Keep a consistent sleep schedule</li>
+              <li><strong>Spring (Kapha):</strong> Light, dry, warm foods; vigorous exercise</li>
+              <li><strong>Summer (Pitta):</strong> Cooling foods; avoid midday sun; moderate exercise</li>
+              <li><strong>Autumn (Vata):</strong> Warm, grounding, oily foods; regular routines</li>
+              <li><strong>Winter (Kapha):</strong> Nourishing, warming foods; hearty meals; vigorous exercise</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <section style="background: linear-gradient(180deg, transparent, rgba(90, 146, 83, 0.03), transparent);">
+    <section class="content-section">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-label">Seasonal Wisdom</span>
-          <h2 class="section-title">Ritucharya: Seasonal Routines</h2>
-          <p class="section-subtitle">
-            Ayurveda recognizes six seasons in the Indian calendar. Adjusting your lifestyle and diet with the seasons helps maintain dosha balance and prevent disease.
-          </p>
-        </div>
-
-        <div class="content-grid">
-          <div class="content-card fade-in">
-            <h3>Spring (Vasanta)</h3>
-            <p><strong>Dominant Dosha:</strong> Kapha</p>
-            <p>As warmth melts accumulated Kapha from winter, focus on:</p>
-            <ul>
-              <li>Light, dry, and warm foods</li>
-              <li>Bitter, pungent, and astringent tastes</li>
-              <li>Vigorous exercise and detoxification</li>
-              <li>Avoid heavy, oily, and sweet foods</li>
-              <li>Use warming spices like ginger and black pepper</li>
-            </ul>
-          </div>
-
-          <div class="content-card fade-in">
-            <h3>Summer (Grishma)</h3>
-            <p><strong>Dominant Dosha:</strong> Pitta</p>
-            <p>Heat aggravates Pitta, so cool down with:</p>
-            <ul>
-              <li>Sweet, cooling, and hydrating foods</li>
-              <li>Fresh fruits, coconut water, cucumber</li>
-              <li>Moderate exercise during cooler hours</li>
-              <li>Avoid spicy, salty, and sour foods</li>
-              <li>Stay hydrated and avoid midday sun</li>
-            </ul>
-          </div>
-
-          <div class="content-card fade-in">
-            <h3>Autumn & Winter</h3>
-            <p><strong>Dominant Dosha:</strong> Vata (Autumn), Kapha (Winter)</p>
-            <p><strong>Autumn:</strong> Warm, grounding, oily foods; regular routines; avoid raw and cold</p>
-            <p><strong>Winter:</strong> Nourishing, warming foods; hearty soups and stews; moderate to vigorous exercise; immunity-building herbs</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-header fade-in">
-          <span class="section-label">Common Questions</span>
           <h2 class="section-title">Frequently Asked Questions</h2>
         </div>
 
-        <div class="fade-in">
-          <details>
-            <summary>How do I discover my dosha type?</summary>
-            <p>Your dosha (Prakriti) is determined at conception and remains constant throughout life. A qualified Ayurvedic practitioner can assess your constitution through detailed questionnaires, pulse diagnosis (Nadi Pariksha), and observation of physical and mental characteristics. I offer personalized dosha assessments in my consultation sessions.</p>
-          </details>
+        <div class="faq-container">
+          <div class="faq-item fade-in">
+            <button class="faq-question">
+              <span>How do I discover my dosha type?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Your dosha (Prakriti) is determined at conception. A qualified Ayurvedic practitioner can assess your constitution through questionnaires, pulse diagnosis (Nadi Pariksha), and observation. I offer personalized dosha assessments in consultation sessions.
+              </div>
+            </div>
+          </div>
 
-          <details>
-            <summary>Can Ayurveda help with modern health conditions?</summary>
-            <p>Yes, Ayurveda offers complementary approaches to many modern health challenges including stress, digestive disorders, metabolic imbalances, skin conditions, and chronic inflammation. However, it should complement—not replace—conventional medical care for serious conditions. Always consult with both your physician and Ayurvedic practitioner.</p>
-          </details>
+          <div class="faq-item fade-in">
+            <button class="faq-question">
+              <span>Can Ayurveda help with modern health conditions?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Yes, Ayurveda offers complementary approaches to stress, digestive disorders, metabolic imbalances, skin conditions, and chronic inflammation. However, it should complement—not replace—conventional medical care for serious conditions.
+              </div>
+            </div>
+          </div>
 
-          <details>
-            <summary>Is Ayurveda only about herbal remedies?</summary>
-            <p>No, herbs are just one aspect. Ayurveda is a comprehensive lifestyle system encompassing diet, daily routines, seasonal practices, yoga, meditation, breathing exercises, massage, and mental-emotional wellness. The focus is on prevention and maintaining balance through daily choices.</p>
-          </details>
+          <div class="faq-item fade-in">
+            <button class="faq-question">
+              <span>Is Ayurveda only about herbal remedies?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                No, herbs are just one aspect. Ayurveda is a comprehensive lifestyle system encompassing diet, daily routines, seasonal practices, yoga, meditation, and breathing exercises. The focus is on prevention and maintaining balance through daily choices.
+              </div>
+            </div>
+          </div>
 
-          <details>
-            <summary>How long does it take to see results from Ayurvedic practices?</summary>
-            <p>Simple dietary and lifestyle changes can bring noticeable improvements within a few weeks. However, Ayurveda views health as a long-term journey. Deep-seated imbalances may take several months to rebalance. Consistency and patience are key to lasting transformation.</p>
-          </details>
+          <div class="faq-item fade-in">
+            <button class="faq-question">
+              <span>How long does it take to see results?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Simple dietary and lifestyle changes can bring noticeable improvements within a few weeks. However, Ayurveda views health as a long-term journey. Deep-seated imbalances may take several months to rebalance. Consistency and patience are key.
+              </div>
+            </div>
+          </div>
 
-          <details>
-            <summary>Can I practice Ayurveda if I'm not vegetarian?</summary>
-            <p>Yes, Ayurveda can be adapted to various dietary preferences. While traditional Ayurveda often emphasizes vegetarian diets, it recognizes individual needs vary. The key is choosing foods appropriate for your constitution and current state of balance, prepared and consumed mindfully.</p>
-          </details>
-
-          <details>
-            <summary>What is Agni and why is it important?</summary>
-            <p>Agni (digestive fire) is the biological force responsible for all transformation in the body—from digesting food to processing thoughts and emotions. Strong, balanced Agni is essential for health, as weak Agni leads to accumulation of toxins (Ama). We support Agni through proper food combinations, meal timing, and lifestyle practices.</p>
-          </details>
-
-          <details>
-            <summary>How does Ayurveda differ from modern medicine?</summary>
-            <p>Modern medicine excels at acute care and life-saving interventions. Ayurveda focuses on prevention, personalization, and treating root causes rather than symptoms. The two can work beautifully together—modern medicine for urgent needs, Ayurveda for long-term wellness and balance.</p>
-          </details>
+          <div class="faq-item fade-in">
+            <button class="faq-question">
+              <span>What is Agni and why is it important?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-content">
+                Agni (digestive fire) is the biological force responsible for all transformation in the body—from digesting food to processing thoughts and emotions. Strong, balanced Agni is essential for health. We support Agni through proper food combinations, meal timing, and lifestyle practices.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="content-section">
       <div class="container">
         <div class="cta-section fade-in">
           <h2>Begin Your Ayurvedic Journey</h2>
           <p>Discover your unique constitution and receive personalized guidance for balanced, vibrant living through ancient Ayurvedic wisdom.</p>
-          <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="btn btn-primary" target="_blank" rel="noopener">Book Your Consultation</a>
+          <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="cta-button" target="_blank" rel="noopener">
+            Book Your Consultation →
+          </a>
         </div>
       </div>
     </section>
@@ -1098,123 +993,104 @@
 
   <footer>
     <div class="container">
-      <p>© <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+      <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
       <p>
-        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> •
+        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> •
         <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a>
       </p>
     </div>
   </footer>
 
-  <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Year
-      document.getElementById('year').textContent = new Date().getFullYear();
+    // Mobile Menu
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const body = document.body;
 
-      // Theme Toggle
-      const themeToggle = document.getElementById('themeToggle');
-      const html = document.documentElement;
-      
-      function setTheme(mode) {
-        html.setAttribute('data-theme', mode);
-        localStorage.setItem('theme', mode);
-        themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
-        themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    // Open menu
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.add('active');
+      menuToggle.classList.add('active');
+      body.classList.add('menu-open');
+    });
+
+    // Close menu
+    const closeMenu = () => {
+      mobileMenu.classList.remove('active');
+      menuToggle.classList.remove('active');
+      body.classList.remove('menu-open');
+    };
+
+    menuClose.addEventListener('click', closeMenu);
+
+    // Close when clicking on a link
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        closeMenu();
       }
+    });
 
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        setTheme(savedTheme);
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        setTheme(prefersDark ? 'dark' : 'light');
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        if (mobileMenu.classList.contains('active')) {
+          closeMenu();
+        }
       }
+    });
 
-      themeToggle.addEventListener('click', () => {
-        const currentTheme = html.getAttribute('data-theme');
-        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-      });
+    // Close menu with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        closeMenu();
+      }
+    });
 
-      // Mobile Menu
-      const menuToggle = document.getElementById('menuToggle');
-      const mobileMenu = document.getElementById('mobileMenu');
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
-      menuToggle.addEventListener('click', () => {
-        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-        menuToggle.setAttribute('aria-expanded', !isExpanded);
-        mobileMenu.classList.toggle('active');
-      });
-
-      mobileMenu.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A') {
-          menuToggle.setAttribute('aria-expanded', 'false');
-          mobileMenu.classList.remove('active');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
+    }, observerOptions);
 
-      // Scroll animations
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -80px 0px'
-      };
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-      // Header scroll effect
-      const header = document.querySelector('.site-header');
-      window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 50) {
-          header.classList.add('scrolled');
-        } else {
-          header.classList.remove('scrolled');
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        const wasActive = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!wasActive) {
+          item.classList.add('active');
         }
-      }, { passive: true });
-
-      // Scroll to top
-      const scrollBtn = document.getElementById('scrollTopBtn');
-      window.addEventListener('scroll', () => {
-        scrollBtn.classList.toggle('show', window.pageYOffset > 300);
-      }, { passive: true });
-
-      scrollBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
+    });
 
-      // Progress bar
-      const progress = document.getElementById('scrollProgress');
-      window.addEventListener('scroll', () => {
-        const doc = document.documentElement;
-        const scrollTop = doc.scrollTop || document.body.scrollTop;
-        const height = doc.scrollHeight - doc.clientHeight;
-        const pct = height > 0 ? (scrollTop / height) * 100 : 0;
-        progress.style.width = pct + '%';
-      }, { passive: true });
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Smooth scroll for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            const headerHeight = 72;
-            const targetPosition = target.offsetTop - headerHeight;
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
       });
     });
   </script>
