@@ -116,17 +116,14 @@
 
     /* Header */
     .site-header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
-      backdrop-filter: blur(20px) saturate(180%);
-      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .site-header.scrolled {
-      box-shadow: var(--shadow-sm);
+      width: 100%;
     }
 
     nav {
@@ -135,6 +132,7 @@
       justify-content: space-between;
       min-height: 80px;
       gap: 2rem;
+      width: 100%;
     }
 
     .logo-area {
@@ -144,6 +142,7 @@
       text-decoration: none;
       transition: transform 0.3s ease;
       z-index: 1001;
+      flex-shrink: 0;
     }
 
     .logo-area:hover {
@@ -170,6 +169,7 @@
       font-size: 1.4rem;
       letter-spacing: 0.5px;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .nav-links {
@@ -177,6 +177,13 @@
       list-style: none;
       gap: 2.5rem;
       align-items: center;
+      flex: 1;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .nav-links li {
+      display: block;
     }
 
     .nav-links a {
@@ -187,6 +194,7 @@
       color: var(--text-secondary);
       padding: 0.5rem 0;
       transition: color 0.3s ease;
+      white-space: nowrap;
     }
 
     .nav-links a::after {
@@ -223,6 +231,7 @@
       justify-content: center;
       gap: 5px;
       z-index: 1001;
+      flex-shrink: 0;
     }
 
     .menu-toggle span {
@@ -242,6 +251,11 @@
 
     .menu-toggle.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Add padding to body to account for fixed header */
+    main {
+      padding-top: 80px;
     }
 
     /* Hero Section */
@@ -696,6 +710,26 @@
     }
 
     /* Mobile Responsive */
+    @media (max-width: 1200px) {
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .nav-links {
         display: none;
@@ -712,20 +746,6 @@
       .social-link {
         width: 100%;
         justify-content: center;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      nav {
-        gap: 1rem;
-      }
-
-      .nav-links {
-        gap: 1.5rem;
-      }
-
-      .nav-links a {
-        font-size: 0.9rem;
       }
     }
 
@@ -975,22 +995,6 @@
     }, observerOptions);
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Header scroll effect
-    const header = document.querySelector('.site-header');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-      
-      lastScroll = currentScroll;
-    });
 
     // Year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
