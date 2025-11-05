@@ -3,11 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
+  <meta name="color-scheme" content="light" />
   <title>Psychology & Counseling — Harsh Ranjan (Samarpan)</title>
 
+  <!-- SEO Meta Tags -->
   <link rel="canonical" href="https://theharshranjan.github.io/psychology.html" />
   <meta name="description" content="Integrative psychology & counseling with Harsh Ranjan (Samarpan): modern psychology blended with Meditation, Yoga & Ayurveda. Book an online session." />
+  <meta name="keywords" content="psychology counseling, integrative therapy, mental health coaching, meditation, stress management, anxiety relief, online counseling" />
+  <meta name="author" content="Harsh Ranjan (Samarpan)" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://theharshranjan.github.io/psychology.html" />
+  <meta property="og:title" content="Psychology & Counseling — Harsh Ranjan (Samarpan)" />
+  <meta property="og:description" content="Integrative psychology & counseling: modern psychology blended with Meditation, Yoga & Ayurveda. Book an online session." />
+  <meta property="og:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://theharshranjan.github.io/psychology.html" />
+  <meta property="twitter:title" content="Psychology & Counseling — Harsh Ranjan (Samarpan)" />
+  <meta property="twitter:description" content="Integrative psychology & counseling: modern psychology blended with Meditation, Yoga & Ayurveda. Book an online session." />
+  <meta property="twitter:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
+  <meta name="theme-color" content="#5a9253" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,22 +72,6 @@
       --gradient-hero: linear-gradient(135deg, var(--sage-50) 0%, var(--cream-100) 100%);
     }
 
-    [data-theme="dark"] {
-      --bg: #0a1410;
-      --surface: #142118;
-      --surface-elevated: #1a2920;
-      --text-primary: #f0f4f0;
-      --text-secondary: #c5d1c5;
-      --text-tertiary: #8f9f8f;
-      --accent: var(--sage-300);
-      --accent-hover: var(--sage-200);
-      --border: rgba(168, 201, 161, 0.15);
-      --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.3);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
-      --gradient-hero: linear-gradient(135deg, #0f1914 0%, #1a2920 100%);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html { 
@@ -95,11 +104,8 @@
       pointer-events: none;
     }
 
-    [data-theme="dark"] body::before {
-      background: 
-        radial-gradient(circle at 20% 20%, var(--sage-900) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, var(--sage-800) 0%, transparent 50%);
-      opacity: 0.5;
+    body.menu-open {
+      overflow: hidden;
     }
 
     .container {
@@ -108,19 +114,16 @@
       padding: 0 clamp(20px, 5vw, 60px);
     }
 
-    /* Header */
+    /* Header - FIXED (not sticky) */
     .site-header {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
-      backdrop-filter: blur(20px) saturate(180%);
-      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .site-header.scrolled {
-      box-shadow: var(--shadow-sm);
+      width: 100%;
     }
 
     nav {
@@ -129,6 +132,7 @@
       justify-content: space-between;
       min-height: 80px;
       gap: 2rem;
+      width: 100%;
     }
 
     .logo-area {
@@ -137,6 +141,8 @@
       gap: 14px;
       text-decoration: none;
       transition: transform 0.3s ease;
+      z-index: 1001;
+      flex-shrink: 0;
     }
 
     .logo-area:hover {
@@ -163,6 +169,7 @@
       font-size: 1.4rem;
       letter-spacing: 0.5px;
       color: var(--text-primary);
+      white-space: nowrap;
     }
 
     .nav-links {
@@ -170,6 +177,13 @@
       list-style: none;
       gap: 2.5rem;
       align-items: center;
+      flex: 1;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .nav-links li {
+      display: block;
     }
 
     .nav-links a {
@@ -180,6 +194,7 @@
       color: var(--text-secondary);
       padding: 0.5rem 0;
       transition: color 0.3s ease;
+      white-space: nowrap;
     }
 
     .nav-links a::after {
@@ -203,26 +218,6 @@
       width: 100%;
     }
 
-    .theme-toggle {
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--surface);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      transition: all 0.3s ease;
-    }
-
-    .theme-toggle:hover {
-      background: var(--surface-elevated);
-      transform: scale(1.05);
-      box-shadow: var(--shadow);
-    }
-
     .menu-toggle {
       display: none;
       width: 48px;
@@ -235,6 +230,8 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
+      z-index: 1001;
+      flex-shrink: 0;
     }
 
     .menu-toggle span {
@@ -244,16 +241,80 @@
       transition: all 0.3s ease;
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(1) {
+    .menu-toggle.active span:nth-child(1) {
       transform: rotate(45deg) translate(6px, 6px);
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    .menu-toggle.active span:nth-child(2) {
       opacity: 0;
     }
 
-    .menu-toggle[aria-expanded="true"] span:nth-child(3) {
+    .menu-toggle.active span:nth-child(3) {
       transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--surface);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding-top: 100px;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 16px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a[aria-current="page"] {
+      background: var(--sage-100);
+      color: var(--accent);
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1002;
+    }
+
+    /* Add padding to main to account for fixed header */
+    main {
+      padding-top: 80px;
     }
 
     /* Hero Section */
@@ -379,7 +440,7 @@
       transform: translateY(-2px);
     }
 
-    /* Features Grid */
+    /* Section */
     .features {
       padding: clamp(60px, 10vh, 100px) 0;
     }
@@ -404,12 +465,14 @@
       font-weight: 300;
     }
 
+    /* Grid */
     .grid {
       display: grid;
       gap: 2rem;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
+    /* Card */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -455,10 +518,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    [data-theme="dark"] .card-icon {
-      background: linear-gradient(135deg, var(--sage-800), var(--sage-700));
-    }
-
     .card h3 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem;
@@ -493,7 +552,7 @@
       font-weight: 700;
     }
 
-    /* Meditation Section */
+    /* Meditation Cards */
     .meditation-grid {
       display: grid;
       gap: 1.5rem;
@@ -520,7 +579,31 @@
       margin-bottom: 0.75rem;
     }
 
-    /* Process Timeline */
+    .meditation-card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .meditation-card ul {
+      list-style: none;
+    }
+
+    .meditation-card li {
+      padding-left: 1.5rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .meditation-card li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* Timeline */
     .timeline {
       position: relative;
       padding: 2rem 0;
@@ -557,7 +640,12 @@
       margin-bottom: 0.5rem;
     }
 
-    /* FAQ Section */
+    .timeline-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* FAQ */
     details {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -623,6 +711,16 @@
       font-weight: 300;
     }
 
+    /* Notice */
+    .notice {
+      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      color: var(--text-secondary);
+    }
+
     /* Footer */
     footer {
       background: var(--surface-elevated);
@@ -651,7 +749,7 @@
       position: fixed;
       bottom: 30px;
       right: 30px;
-      z-index: 999;
+      z-index: 998;
       animation: fadeInUp 1s ease 1s both;
     }
 
@@ -675,73 +773,6 @@
       box-shadow: 0 20px 56px rgba(0, 0, 0, 0.12);
     }
 
-    /* Notice */
-    .notice {
-      background: linear-gradient(135deg, rgba(90, 146, 83, 0.1), rgba(90, 146, 83, 0.05));
-      border: 1px dashed var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      color: var(--text-secondary);
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .mobile-menu {
-        position: fixed;
-        top: 81px;
-        left: 0;
-        right: 0;
-        background: var(--surface);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem;
-        transform: translateY(-100%);
-        opacity: 0;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow);
-        z-index: 999;
-      }
-
-      .mobile-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-      }
-
-      .mobile-menu ul {
-        list-style: none;
-      }
-
-      .mobile-menu a {
-        display: block;
-        padding: 1rem;
-        color: var(--text-primary);
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background 0.3s ease;
-      }
-
-      .mobile-menu a:hover {
-        background: var(--surface-elevated);
-      }
-
-      .fab {
-        bottom: 20px;
-        right: 20px;
-      }
-
-      .fab a {
-        padding: 14px 20px;
-      }
-    }
-
     /* Scroll animations */
     .fade-in {
       opacity: 0;
@@ -753,6 +784,58 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .nav-links a {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      nav {
+        gap: 1rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .meditation-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .fab {
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .fab a {
+        padding: 14px 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -763,38 +846,37 @@
         <span>Harsh Ranjan</span>
       </a>
       
-          <ul class="nav-links">
+      <ul class="nav-links">
         <li><a href="about.html">About</a></li>
         <li><a href="sessions.html">Sessions</a></li>
         <li><a href="ayurveda.html">Ayurveda</a></li>
         <li><a href="psychology.html" aria-current="page">Psychology</a></li>
+        <li><a href="trips.html">Trips</a></li>
         <li><a href="diet.html">Diet & Nutrition</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <div style="display: flex; gap: 1rem; align-items: center;">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
-        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </header>
 
-  <!-- Mobile Backdrop + Panel -->
-      <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="ayurveda.html">Ayurveda</a></li>
+      <li><a href="psychology.html" aria-current="page">Psychology</a></li>
+      <li><a href="trips.html">Trips</a></li>
+      <li><a href="diet.html">Diet & Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
 
-      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
-        <ul class="mobile-menu" id="mobileMenu">
-          <li><a href="about.html">About</a></li>
-        <li><a href="sessions.html">Sessions</a></li>
-        <li><a href="ayurveda.html">Ayurveda</a></li>
-        <li><a href="psychology.html" aria-current="page">Psychology</a></li>
-        <li><a href="diet.html">Diet & Nutrition</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
   <main>
     <section class="hero">
       <div class="container">
@@ -1035,45 +1117,48 @@
   </footer>
 
   <script>
-    // Theme Toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    
-    function setTheme(mode) {
-      html.setAttribute('data-theme', mode);
-      localStorage.setItem('theme', mode);
-      themeToggle.textContent = mode === 'dark' ? '☀️' : '🌙';
-      themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-    }
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
-    }
-
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = html.getAttribute('data-theme');
-      setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-    });
-
     // Mobile Menu
     const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
     const mobileMenu = document.getElementById('mobileMenu');
+    const body = document.body;
 
+    // Open menu
     menuToggle.addEventListener('click', () => {
-      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !isExpanded);
-      mobileMenu.classList.toggle('active');
+      mobileMenu.classList.add('active');
+      menuToggle.classList.add('active');
+      body.classList.add('menu-open');
     });
 
-    // Close mobile menu when clicking a link
+    // Close menu
+    const closeMenu = () => {
+      mobileMenu.classList.remove('active');
+      menuToggle.classList.remove('active');
+      body.classList.remove('menu-open');
+    };
+
+    menuClose.addEventListener('click', closeMenu);
+
+    // Close when clicking on a link
     mobileMenu.addEventListener('click', (e) => {
       if (e.target.tagName === 'A') {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('active');
+        closeMenu();
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        if (mobileMenu.classList.contains('active')) {
+          closeMenu();
+        }
+      }
+    });
+
+    // Close menu with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        closeMenu();
       }
     });
 
@@ -1087,27 +1172,12 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Header scroll effect
-    const header = document.querySelector('.site-header');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-      
-      lastScroll = currentScroll;
-    });
 
     // Year in footer
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -1128,5 +1198,3 @@
   </script>
 </body>
 </html>
-
-
