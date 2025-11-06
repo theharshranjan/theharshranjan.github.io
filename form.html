@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light" />
   <title>Contact Form - Harsh Ranjan (Samarpan)</title>
 
-  <!-- SEO Meta Tags -->
-  <link rel="canonical" href="https://theharshranjan.github.io/form.html" />
-  <meta name="description" content="Contact form to get in touch with Harsh Ranjan. Send your details and we'll respond soon." />
-  <meta name="keywords" content="harsh ranjan, contact, booking, ayurveda, yoga, wellness" />
-  <meta name="author" content="Harsh Ranjan (Samarpan)" />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#4a7c59" />
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7');
+  </script>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
-
-  <!-- Fonts - Preload critical fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -32,132 +27,104 @@
       --accent-light: #6b9d7a;
       --accent-dark: #2d4a38;
       --gold: #d4af37;
-      --gradient-1: linear-gradient(135deg, #4a7c59 0%, #6b9d7a 100%);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
-      --shadow-lg: 0 8px 40px rgba(0,0,0,0.16);
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-light);
       color: var(--text-light);
       line-height: 1.7;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    body.menu-open {
-      overflow: hidden;
+    body.menu-open { overflow: hidden; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
     }
 
-    /* Skip link */
-    .skip-link {
-      position: absolute;
-      left: -9999px;
-      z-index: 999;
-      padding: 1rem;
-      background: var(--accent);
-      color: white;
-      text-decoration: none;
-    }
-
-    .skip-link:focus {
-      left: 50%;
-      transform: translateX(-50%);
-      top: 1rem;
-    }
-
-    /* Header - FIXED */
-    header {
+    /* HEADER - LIGHT CREAM */
+    .site-header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 1000;
-      background: var(--bg-light);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      background: linear-gradient(135deg, #f9f5ed 0%, #f7f3e8 100%);
+      border-bottom: 1px solid rgba(74, 124, 89, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       width: 100%;
     }
 
     nav {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1.2rem 5%;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      min-height: 80px;
       gap: 2rem;
       width: 100%;
-      min-height: 80px;
     }
 
-    .logo {
+    .logo-area {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 14px;
       text-decoration: none;
-      color: inherit;
-      font-weight: 700;
-      font-size: 1.2rem;
-      font-family: 'Playfair Display', serif;
-      transition: var(--transition);
-      z-index: 1001;
-      flex-shrink: 0;
+      color: var(--text-light);
     }
 
-    .logo img {
-      width: 50px;
-      height: 50px;
+    .logo-area img {
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--accent);
-      transition: var(--transition);
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
+      transition: border-color 0.3s ease;
     }
 
-    .logo:hover img {
-      transform: rotate(360deg);
-      border-color: var(--gold);
+    .logo-area:hover img {
+      border-color: var(--accent-dark);
+      box-shadow: 0 6px 20px rgba(74, 124, 89, 0.25);
+    }
+
+    .logo-area span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+      color: var(--text-light);
+      user-select: none;
     }
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 2.5rem;
       list-style: none;
-      align-items: center;
-      flex: 1;
       justify-content: center;
-      margin: 0;
-    }
-
-    .nav-links li {
-      display: block;
+      flex: 1 1 auto;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: var(--text-light);
       font-weight: 500;
-      position: relative;
-      transition: var(--transition);
+      font-size: 0.95rem;
+      color: var(--text-light);
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
       white-space: nowrap;
+      position: relative;
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: -5px;
+      bottom: 0;
       left: 0;
       width: 0;
       height: 2px;
@@ -165,8 +132,13 @@
       transition: width 0.3s ease;
     }
 
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--accent);
+    }
+
     .nav-links a:hover::after,
-    .nav-links a.active::after {
+    .nav-links a[aria-current="page"]::after {
       width: 100%;
     }
 
@@ -174,9 +146,9 @@
       display: none;
       width: 48px;
       height: 48px;
-      border: 1px solid rgba(0,0,0,0.08);
+      border: 1px solid var(--accent);
       border-radius: 12px;
-      background: var(--bg-light);
+      background: transparent;
       cursor: pointer;
       flex-direction: column;
       align-items: center;
@@ -187,37 +159,25 @@
       transition: all 0.3s ease;
     }
 
-    .menu-toggle:hover {
-      border-color: var(--accent);
-    }
+    .menu-toggle:hover { border-color: var(--accent-dark); }
 
     .menu-toggle span {
       width: 22px;
       height: 2px;
-      background: var(--accent);
+      background: var(--text-light);
       transition: all 0.3s ease;
     }
 
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
+    main { padding-top: 80px; }
 
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Mobile Menu */
     .mobile-menu {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--bg-light);
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: white;
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -227,9 +187,7 @@
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .mobile-menu.active {
-      transform: translateX(0);
-    }
+    .mobile-menu.active { transform: translateX(0); }
 
     .mobile-menu ul {
       list-style: none;
@@ -247,8 +205,8 @@
     }
 
     .mobile-menu a:hover,
-    .mobile-menu a.active {
-      background: rgba(74, 124, 89, 0.1);
+    .mobile-menu a[aria-current="page"] {
+      background: var(--bg-light);
       color: var(--accent);
     }
 
@@ -275,124 +233,55 @@
       transform: rotate(90deg);
     }
 
-    /* Main Content */
-    main {
-      padding-top: 80px;
-      min-height: calc(100vh - 80px);
-    }
-
-    /* Hero Section */
-    .hero {
-      min-height: calc(100vh - 80px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* FORM SECTION - LIGHT CREAM - STARTS DIRECTLY */
+    .form-section {
+      padding: clamp(60px, 10vh, 100px) 0;
+      background: var(--bg-light);
       position: relative;
-      padding: 4rem 5%;
-      background: var(--gradient-1);
-      overflow: hidden;
+      min-height: calc(100vh - 80px);
     }
 
-    .hero::before {
+    .form-section::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
-      animation: scroll 20s linear infinite;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 80%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
 
-    @keyframes scroll {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(60px); }
-    }
-
-    .hero-content {
-      max-width: 900px;
+    .form-header {
       text-align: center;
-      position: relative;
-      z-index: 1;
-      animation: fadeInUp 1s ease;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding-top: 2rem;
     }
 
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .form-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 1rem;
     }
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      color: white;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-    }
-
-    .hero p {
-      font-size: 1.3rem;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 2.5rem;
+    .form-header p {
+      font-size: 1.1rem;
+      color: #4a4a4a;
       font-weight: 300;
     }
 
-    /* Section */
-    section {
-      padding: 6rem 5%;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--accent-dark);
-      margin-bottom: 1rem;
-      position: relative;
-      display: inline-block;
-    }
-
-    .section-header h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 3px;
-      background: var(--gold);
-    }
-
-    .section-header p {
-      font-size: 1.1rem;
-      color: var(--text-light);
-      opacity: 0.8;
-      max-width: 700px;
-      margin: 2rem auto 0;
-    }
-
-    /* Form Container */
     .form-container {
       max-width: 700px;
       margin: 0 auto;
       background: white;
       padding: 3rem;
       border-radius: 20px;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      border: 2px solid #d1e1cd;
     }
 
     .form-group {
@@ -411,15 +300,13 @@
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 1.2rem;
-      border: 2px solid rgba(0,0,0,0.1);
+      padding: 1rem;
+      border: 2px solid #d1e1cd;
       border-radius: 12px;
       font-family: inherit;
       font-size: 1rem;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       background: white;
-      -webkit-appearance: none;
-      appearance: none;
     }
 
     .form-group input:focus,
@@ -435,36 +322,29 @@
       min-height: 150px;
     }
 
-    .form-group.full-row {
+    .form-group.row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
 
-    .form-group.full-row input {
-      width: 100%;
-    }
-
     .submit-btn {
       width: 100%;
       padding: 1.2rem;
-      background: var(--gradient-1);
-      color: white;
+      background: linear-gradient(135deg, #5a9253, #7fb078);
+      color: #1a1a1a;
       border: none;
       border-radius: 12px;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(90, 146, 83, 0.3);
     }
 
-    .submit-btn:hover:not(:disabled) {
+    .submit-btn:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .submit-btn:active:not(:disabled) {
-      transform: translateY(0);
+      box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);
     }
 
     .submit-btn:disabled {
@@ -472,7 +352,6 @@
       cursor: not-allowed;
     }
 
-    /* Form Status Messages */
     #formStatus {
       margin-top: 1.5rem;
       padding: 1rem;
@@ -508,123 +387,136 @@
       border: 1px solid #c0392b;
     }
 
-    #formStatus.loading {
-      display: block;
-      background: rgba(52, 152, 219, 0.1);
-      color: #3498db;
-      border: 1px solid #3498db;
-    }
-
-    /* Spinner */
-    .spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(52, 152, 219, 0.3);
-      border-top-color: #3498db;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      margin-right: 8px;
-      vertical-align: middle;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Footer */
+    /* FOOTER - DARKER CREAM */
     footer {
-      background: var(--accent-dark);
-      color: white;
-      padding: 3rem 5%;
-      text-align: center;
-      margin-top: auto;
+      background: linear-gradient(180deg, #e8e4d9 0%, #ddd7cc 100%);
+      color: var(--text-light);
+      padding: 40px 0 20px;
+      border-top: 1px solid rgba(74, 124, 89, 0.1);
     }
 
     .footer-content {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
     }
 
-    .footer-copyright {
+    .footer-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .footer-section p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
       margin-bottom: 0.5rem;
     }
 
-    .footer-tagline {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      margin-bottom: 1rem;
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateX(3px);
     }
 
     .social-links {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin: 1rem 0;
+      gap: 0.8rem;
+      margin-top: 0.75rem;
     }
 
     .social-links a {
-      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(74, 124, 89, 0.1);
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
       text-decoration: none;
-      font-size: 1.5rem;
-      transition: var(--transition);
     }
 
     .social-links a:hover {
-      color: var(--gold);
-      transform: translateY(-3px);
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
     }
 
-    /* Mobile Responsive */
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem clamp(20px, 5vw, 60px);
+      text-align: center;
+      border-top: 1px solid rgba(74, 124, 89, 0.15);
+    }
+
+    .footer-bottom p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-bottom p:last-child {
+      font-style: italic;
+      color: #999;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+      nav { gap: 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.85rem; }
+    }
+
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .form-container {
-        padding: 1.5rem;
-      }
-
-      .form-group.full-row {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* Scroll animations */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+      .nav-links { display: none; }
+      .menu-toggle { display: flex; }
+      .form-container { padding: 1.5rem; }
+      .form-group.row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <a href="#contact" class="skip-link">Skip to contact form</a>
-
-  <!-- Header -->
-  <header>
-    <nav>
-      <a href="index.html" class="logo">
-        <img src="logo.png" alt="Harsh Ranjan Logo" width="50" height="50" loading="lazy" />
+  <header class="site-header">
+    <nav class="container">
+      <a class="logo-area" href="index.html">
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" loading="lazy" />
         <span>Harsh Ranjan</span>
       </a>
       
-      <ul class="nav-links" id="navLinks">
+      <ul class="nav-links">
         <li><a href="about.html">About</a></li>
         <li><a href="sessions.html">Sessions</a></li>
         <li><a href="ayurveda.html">Ayurveda</a></li>
         <li><a href="psychology.html">Psychology</a></li>
-        <li><a href="diet.html">Diet & Nutrition</a></li>
         <li><a href="trips.html">Trips</a></li>
+        <li><a href="diet.html">Diet & Nutrition</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
@@ -643,155 +535,120 @@
       <li><a href="sessions.html">Sessions</a></li>
       <li><a href="ayurveda.html">Ayurveda</a></li>
       <li><a href="psychology.html">Psychology</a></li>
-      <li><a href="diet.html">Diet & Nutrition</a></li>
       <li><a href="trips.html">Trips</a></li>
+      <li><a href="diet.html">Diet & Nutrition</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 
   <main>
-    <!-- Form Section -->
-    <section id="contact" class="fade-in">
-      <div class="section-header">
-        <h2>Send Your Details</h2>
-        <p>Fill out the form below and we'll respond to you soon</p>
-      </div>
+    <section class="form-section">
+      <div class="container">
+        <div class="form-header">
+          <h2>Send Your Details</h2>
+          <p>Fill out the form below and we'll be in touch with you shortly</p>
+        </div>
 
-      <div class="form-container">
-        <form id="dataForm" novalidate>
-          <!-- Name -->
-          <div class="form-group">
-            <label for="name">Your Name *</label>
-            <input 
-              type="text" 
-              id="name" 
-              name="name" 
-              placeholder="Enter your full name"
-              required 
-              autocomplete="name"
-              maxlength="100"
-            />
-          </div>
+        <div class="form-container">
+          <form id="dataForm" novalidate>
+            <div class="form-group">
+              <label for="name">Your Name *</label>
+              <input type="text" id="name" name="name" placeholder="Enter your full name" required maxlength="100" />
+            </div>
 
-          <!-- Email -->
-          <div class="form-group">
-            <label for="email">Your Email *</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              placeholder="your@email.com"
-              required 
-              autocomplete="email"
-              maxlength="100"
-            />
-          </div>
+            <div class="form-group">
+              <label for="email">Your Email *</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required maxlength="100" />
+            </div>
 
-          <!-- Phone -->
-          <div class="form-group">
-            <label for="phone">Phone Number *</label>
-            <input 
-              type="tel" 
-              id="phone" 
-              name="phone" 
-              placeholder="+91 XXXXX XXXXX"
-              required 
-              autocomplete="tel"
-              maxlength="20"
-            />
-          </div>
+            <div class="form-group row">
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" required maxlength="20" />
+              </div>
+              <div class="form-group">
+                <label for="inquiry">Type of Inquiry *</label>
+                <select id="inquiry" name="inquiry" required>
+                  <option value="">Select an option</option>
+                  <option value="Ayurveda Session">Ayurveda Session</option>
+                  <option value="Yoga Classes">Yoga Classes</option>
+                  <option value="Counseling">Counseling</option>
+                  <option value="Diet & Nutrition">Diet & Nutrition</option>
+                  <option value="Consultation">Consultation</option>
+                  <option value="Workshop">Workshop</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
 
-          <!-- Subject -->
-          <div class="form-group">
-            <label for="subject">Subject *</label>
-            <input 
-              type="text" 
-              id="subject" 
-              name="subject" 
-              placeholder="What is this about?"
-              required
-              maxlength="100"
-            />
-          </div>
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <input type="text" id="subject" name="subject" placeholder="What is this about?" required maxlength="100" />
+            </div>
 
-          <!-- Type of Inquiry -->
-          <div class="form-group">
-            <label for="inquiry">Type of Inquiry *</label>
-            <select id="inquiry" name="inquiry" required>
-              <option value="">Select an option</option>
-              <option value="Ayurveda Session">Ayurveda Session</option>
-              <option value="Yoga Classes">Yoga Classes</option>
-              <option value="Counseling">Counseling</option>
-              <option value="Diet & Nutrition">Diet & Nutrition</option>
-              <option value="Workshop">Workshop</option>
-              <option value="Consultation">Consultation</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+            <div class="form-group">
+              <label for="message">Your Message *</label>
+              <textarea id="message" name="message" placeholder="Tell us more about your needs..." required maxlength="500"></textarea>
+            </div>
 
-          <!-- Message -->
-          <div class="form-group">
-            <label for="message">Your Message *</label>
-            <textarea 
-              id="message" 
-              name="message" 
-              placeholder="Tell me more about your needs..."
-              required
-              maxlength="500"
-            ></textarea>
-          </div>
+            <input type="text" name="_gotcha" style="position: absolute; left: -9999px;" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-          <!-- Honeypot (spam protection) -->
-          <input 
-            type="text" 
-            name="_gotcha" 
-            style="position: absolute; left: -9999px;" 
-            tabindex="-1" 
-            autocomplete="off" 
-            aria-hidden="true"
-          />
+            <button type="submit" class="submit-btn" id="submitBtn">Send Details</button>
 
-          <!-- Submit Button -->
-          <button type="submit" class="submit-btn" id="submitBtn">
-            <span id="btnText">Send Details</span>
-          </button>
-
-          <!-- Status Message -->
-          <div id="formStatus"></div>
-        </form>
+            <div id="formStatus"></div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="footer-content">
-      <div class="footer-copyright">
-        © <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.
+      <div class="footer-section">
+        <h3>Harsh Ranjan (Samarpan)</h3>
+        <p>Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.</p>
       </div>
-      <div class="footer-tagline">
-        Empowering holistic wellness worldwide
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="psychology.html">Psychology</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
       </div>
-      <div class="social-links">
-        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          Instagram
-        </a>
-        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-          YouTube
-        </a>
-        <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          LinkedIn
-        </a>
+
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul class="footer-links">
+          <li><a href="ayurveda.html">Ayurveda Consultations</a></li>
+          <li><a href="form.html">Yoga Therapy</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="sessions.html">Wellness Programs</a></li>
+        </ul>
       </div>
+
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📷</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">𝕏</a>
+          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+      <p>Empowering holistic wellness worldwide</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script defer>
-    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile Menu - Optimized
     const menuToggle = document.getElementById('menuToggle');
     const menuClose = document.getElementById('menuClose');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -843,74 +700,38 @@
       }
     });
 
-    // Intersection Observer for fade-in animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // Form Handling - OPTIMIZED FOR SPEED
+    let isSubmitting = false;
     const dataForm = document.getElementById('dataForm');
     const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-
-    // Debounce function to prevent multiple submissions
-    let isSubmitting = false;
 
     dataForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Prevent duplicate submissions
       if (isSubmitting) return;
-
-      // Check honeypot
-      if (dataForm.querySelector('input[name="_gotcha"]').value) {
-        return;
-      }
-
-      // Validate form
+      if (dataForm.querySelector('input[name="_gotcha"]').value) return;
       if (!dataForm.checkValidity()) {
         dataForm.reportValidity();
         return;
       }
 
       isSubmitting = true;
-
-      // Get form data
       const formData = new FormData(dataForm);
       const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
       formData.append('timestamp', timestamp);
 
-      // Show loading state
       submitBtn.disabled = true;
-      btnText.innerHTML = '<span class="spinner"></span>Sending...';
+      submitBtn.textContent = 'Sending...';
       formStatus.textContent = 'Sending your details...';
       formStatus.className = 'loading';
 
       try {
-        // Parallel requests - Send to both services simultaneously
-        const [emailResponse, sheetResponse] = await Promise.allSettled([
-          // Send to Formspree (Email)
+        await Promise.allSettled([
           fetch('https://formspree.io/f/mqadzvad', {
             method: 'POST',
             body: formData,
-            headers: {
-              'Accept': 'application/json'
-            }
+            headers: { 'Accept': 'application/json' }
           }),
-          // Send to Google Sheet
           fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', {
             method: 'POST',
             body: new URLSearchParams(Object.fromEntries(formData)),
@@ -918,14 +739,12 @@
           })
         ]);
 
-        // Show success message if at least one succeeded
         formStatus.textContent = '✅ Thank you! Your details have been sent successfully. We will contact you soon.';
         formStatus.className = 'success';
         dataForm.reset();
         submitBtn.disabled = false;
-        btnText.textContent = 'Send Details';
+        submitBtn.textContent = 'Send Details';
 
-        // Auto-clear success message after 5 seconds
         setTimeout(() => {
           formStatus.textContent = '';
           formStatus.className = '';
@@ -933,42 +752,12 @@
 
       } catch (error) {
         console.error('Error:', error);
-        formStatus.textContent = '❌ Oops! Something went wrong. Please try again or contact us directly.';
+        formStatus.textContent = '❌ Something went wrong. Please try again or contact us directly.';
         formStatus.className = 'error';
         submitBtn.disabled = false;
-        btnText.textContent = 'Send Details';
+        submitBtn.textContent = 'Send Details';
       } finally {
         isSubmitting = false;
-      }
-    });
-
-    // Active nav link on scroll (Optimized with throttling)
-    let ticking = false;
-    const sections = document.querySelectorAll('section[id]');
-    const navLinksAll = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          let current = '';
-          sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop - 200) {
-              current = section.getAttribute('id');
-            }
-          });
-
-          navLinksAll.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-              link.classList.add('active');
-            }
-          });
-
-          ticking = false;
-        });
-        ticking = true;
       }
     });
   </script>
