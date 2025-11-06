@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light" />
   <title>About — Harsh Ranjan (Samarpan) | Ayurveda • Yoga • Wellness</title>
 
@@ -11,6 +11,8 @@
   <meta name="description" content="About Harsh Ranjan (Samarpan): Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit." />
   <meta name="keywords" content="harsh ranjan, ayurveda, yoga, wellness, integrative health, holistic healing, ayurveda biology, yoga therapy" />
   <meta name="author" content="Harsh Ranjan (Samarpan)" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#4a7c59" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -29,10 +31,9 @@
   <meta property="twitter:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png">
-  <meta name="theme-color" content="#5a9253" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,36 +41,12 @@
 
   <style>
     :root {
-      --sage-50: #f7f9f6;
-      --sage-100: #e8f0e6;
-      --sage-200: #d1e1cd;
-      --sage-300: #a8c9a1;
-      --sage-400: #7fb078;
-      --sage-500: #5a9253;
-      --sage-600: #47753f;
-      --sage-700: #385d32;
-      --sage-800: #2d4a28;
-      --sage-900: #1f3319;
-      
-      --cream-50: #fdfbf7;
-      --cream-100: #f9f5ed;
-      --cream-200: #f1e8d8;
-      --cream-300: #e7d6bc;
-      --cream-400: #d9bd97;
-      
-      --bg: var(--cream-50);
-      --surface: #ffffff;
-      --surface-elevated: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #4a4a4a;
-      --text-tertiary: #737373;
-      --accent: var(--sage-500);
-      --accent-hover: var(--sage-600);
-      --border: rgba(90, 146, 83, 0.1);
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08);
-      --gradient-hero: linear-gradient(135deg, var(--sage-50) 0%, var(--cream-100) 100%);
+      --bg-light: #f8faf6;
+      --text-light: #1a1a1a;
+      --accent: #4a7c59;
+      --accent-light: #6b9d7a;
+      --accent-dark: #2d4a38;
+      --gold: #d4af37;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -81,27 +58,11 @@
     
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
-      color: var(--text-primary);
+      background: var(--bg-light);
+      color: var(--text-light);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 20%, var(--sage-100) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, var(--cream-200) 0%, transparent 50%);
-      opacity: 0.3;
-      z-index: -1;
-      pointer-events: none;
     }
 
     body.menu-open {
@@ -114,16 +75,17 @@
       padding: 0 clamp(20px, 5vw, 60px);
     }
 
-    /* Header - FIXED (not sticky) */
+    /* HEADER - LIGHT CREAM BACKGROUND (from photo 1) */
     .site-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, #f9f5ed 0%, #f7f3e8 100%);
+      border-bottom: 1px solid rgba(74, 124, 89, 0.1);
       width: 100%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
     nav {
@@ -153,14 +115,14 @@
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      border: 2px solid var(--accent);
-      box-shadow: var(--shadow);
+      border: 2px solid #4a7c59;
+      box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
       transition: all 0.3s ease;
     }
 
     .logo-area:hover img {
-      box-shadow: var(--shadow-lg);
-      border-color: var(--accent-hover);
+      border-color: #2d4a38;
+      box-shadow: 0 6px 20px rgba(74, 124, 89, 0.25);
     }
 
     .logo-area span {
@@ -168,7 +130,7 @@
       font-weight: 600;
       font-size: 1.4rem;
       letter-spacing: 0.5px;
-      color: var(--text-primary);
+      color: var(--text-light);
       white-space: nowrap;
     }
 
@@ -191,7 +153,7 @@
       font-weight: 500;
       font-size: 0.95rem;
       text-decoration: none;
-      color: var(--text-secondary);
+      color: var(--text-light);
       padding: 0.5rem 0;
       transition: color 0.3s ease;
       white-space: nowrap;
@@ -204,13 +166,13 @@
       left: 0;
       width: 0;
       height: 2px;
-      background: var(--accent);
+      background: #4a7c59;
       transition: width 0.3s ease;
     }
 
     .nav-links a:hover,
     .nav-links a[aria-current="page"] {
-      color: var(--accent);
+      color: #4a7c59;
     }
 
     .nav-links a:hover::after,
@@ -222,9 +184,9 @@
       display: none;
       width: 48px;
       height: 48px;
-      border: 1px solid var(--border);
+      border: 1px solid #4a7c59;
       border-radius: 12px;
-      background: var(--surface);
+      background: transparent;
       cursor: pointer;
       flex-direction: column;
       align-items: center;
@@ -232,12 +194,17 @@
       gap: 5px;
       z-index: 1001;
       flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      border-color: #2d4a38;
     }
 
     .menu-toggle span {
       width: 22px;
       height: 2px;
-      background: var(--text-primary);
+      background: var(--text-light);
       transition: all 0.3s ease;
     }
 
@@ -253,7 +220,6 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Add padding to main to account for fixed header */
     main {
       padding-top: 80px;
     }
@@ -265,7 +231,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: var(--surface);
+      background: white;
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -287,7 +253,7 @@
     .mobile-menu a {
       display: block;
       padding: 16px 20px;
-      color: var(--text-primary);
+      color: var(--text-light);
       text-decoration: none;
       border-radius: 8px;
       transition: all 0.3s ease;
@@ -296,8 +262,8 @@
 
     .mobile-menu a:hover,
     .mobile-menu a[aria-current="page"] {
-      background: var(--sage-100);
-      color: var(--accent);
+      background: var(--bg-light);
+      color: #4a7c59;
     }
 
     .mobile-menu-close {
@@ -310,19 +276,31 @@
       border: none;
       font-size: 28px;
       cursor: pointer;
-      color: var(--text-primary);
+      color: var(--text-light);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 1002;
+      transition: all 0.3s ease;
     }
 
-    /* Hero Section */
+    .mobile-menu-close:hover {
+      color: #4a7c59;
+      transform: rotate(90deg);
+    }
+
+    /* HERO SECTION - FOREST GREEN (#4a7c59) */
     .hero {
-      padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 10vh, 100px);
-      background: var(--gradient-hero);
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4a7c59 0%, #2d4a38 100%);
       position: relative;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0 60px;
+      margin: 0;
     }
 
     .hero::before {
@@ -330,16 +308,31 @@
       position: absolute;
       top: -50%;
       right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--sage-200) 0%, transparent 70%);
-      opacity: 0.2;
-      animation: float 20s ease-in-out infinite;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      animation: float 30s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -15%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(74, 124, 89, 0.2) 0%, transparent 70%);
+      animation: float-reverse 25s ease-in-out infinite;
     }
 
     @keyframes float {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(-30px, 30px) rotate(180deg); }
+      50% { transform: translate(30px, 30px) rotate(180deg); }
+    }
+
+    @keyframes float-reverse {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -30px) rotate(180deg); }
     }
 
     .hero-content {
@@ -348,23 +341,93 @@
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
+      padding: 0 20px;
+      animation: fadeInUp 1.2s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .hero-badge {
       display: inline-block;
-      padding: 8px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      padding: 10px 24px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 100px;
       font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--accent);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
       margin-bottom: 2rem;
-      box-shadow: var(--shadow-sm);
-      animation: fadeInUp 0.8s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      animation: slideDown 0.8s ease 0.2s both;
+      backdrop-filter: blur(10px);
     }
 
-    @keyframes fadeInUp {
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 1.5rem;
+      animation: slideDown 0.8s ease 0.4s both;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      animation: slideDown 0.8s ease 0.6s both;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button-hero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px 50px;
+      background: linear-gradient(135deg, #00d9d9, #1afdfd);
+      color: #1a1a1a;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 32px rgba(0, 217, 217, 0.4);
+      animation: slideUp 0.8s ease 0.8s both;
+    }
+
+    @keyframes slideUp {
       from {
         opacity: 0;
         transform: translateY(30px);
@@ -375,32 +438,84 @@
       }
     }
 
-    .hero h1 {
+    .cta-button-hero:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 16px 48px rgba(0, 217, 217, 0.6);
+    }
+
+    .cta-button-hero:active {
+      transform: translateY(-3px) scale(1.04);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* MAIN CONTENT - LIGHT CREAM (from photo 1) */
+    .features-section {
+      padding: clamp(60px, 10vh, 100px) 0;
+      background: var(--bg-light);
+      position: relative;
+    }
+
+    /* DIVIDERS - from screenshot 2 */
+    .features-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 80%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d1a554, transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      padding-top: 2rem;
+    }
+
+    .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 600;
-      line-height: 1.1;
-      color: var(--text-primary);
-      margin-bottom: 1.5rem;
-      animation: fadeInUp 0.8s ease 0.2s both;
+      color: var(--text-light);
+      margin-bottom: 1rem;
     }
 
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 2vw, 1.35rem);
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: #4a4a4a;
       font-weight: 300;
-      animation: fadeInUp 0.8s ease 0.4s both;
     }
 
-    /* Profile Section */
     .profile-section {
       display: grid;
       grid-template-columns: 380px 1fr;
       gap: 4rem;
       align-items: start;
-      margin-bottom: 6rem;
       padding: clamp(60px, 10vh, 100px) 0;
     }
 
@@ -411,7 +526,7 @@
     .profile-image {
       width: 100%;
       border-radius: 24px;
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
       position: relative;
       z-index: 1;
     }
@@ -420,7 +535,7 @@
       content: '';
       position: absolute;
       inset: -12px;
-      background: linear-gradient(135deg, var(--sage-200), var(--cream-300));
+      background: linear-gradient(135deg, #d1e1cd, #e7d6bc);
       border-radius: 28px;
       z-index: 0;
       opacity: 0.4;
@@ -429,23 +544,22 @@
     .profile-content h2 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.5rem;
-      color: var(--text-primary);
+      color: var(--text-light);
       margin-bottom: 1rem;
     }
 
     .profile-content p {
       font-size: 1.05rem;
       line-height: 1.8;
-      color: var(--text-secondary);
+      color: #4a4a4a;
       margin-bottom: 1.5rem;
     }
 
     .profile-content strong {
-      color: var(--accent);
+      color: #4a7c59;
       font-weight: 600;
     }
 
-    /* Pills */
     .pill-container {
       display: flex;
       flex-wrap: wrap;
@@ -454,86 +568,60 @@
     }
 
     .pill {
-      background: var(--surface);
-      border: 2px solid var(--border);
+      background: linear-gradient(135deg, #f7f9f6, #e8f0e6);
+      border: 2px solid #a8c9a1;
       border-radius: 999px;
       padding: 0.65rem 1.25rem;
       font-weight: 600;
       font-size: 0.9rem;
-      color: var(--text-primary);
-      box-shadow: var(--shadow-sm);
+      color: #385d32;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       transition: all 0.3s ease;
     }
 
     .pill:hover {
       transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--surface);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      border-color: #4a7c59;
+      background: linear-gradient(135deg, #e8f0e6, #d1e1cd);
+      color: #1f3319;
     }
 
-    /* CTA Button */
     .cta-button {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 16px 32px;
-      background: var(--accent);
+      background: linear-gradient(135deg, #4a7c59, #2d4a38);
       color: white;
       text-decoration: none;
       border-radius: 12px;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
       transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
     }
 
     .cta-button:hover {
-      background: var(--accent-hover);
+      background: linear-gradient(135deg, #2d4a38, #1f3319);
       transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
     }
 
-    /* Section */
-    .features-section {
-      padding: clamp(60px, 10vh, 100px) 0;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 4rem;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
-    }
-
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      font-weight: 300;
-    }
-
-    /* Grid */
     .grid {
       display: grid;
       gap: 2rem;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
-    /* Card */
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: white;
+      border: 2px solid #d1e1cd;
       border-radius: 20px;
       padding: clamp(28px, 4vw, 40px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
@@ -547,14 +635,15 @@
       left: 0;
       width: 100%;
       height: 4px;
-      background: linear-gradient(90deg, var(--sage-400), var(--sage-600));
+      background: linear-gradient(90deg, #4a7c59, #2d4a38);
       transform: scaleX(0);
       transition: transform 0.4s ease;
     }
 
     .card:hover {
       transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+      border-color: #4a7c59;
     }
 
     .card:hover::before {
@@ -565,16 +654,15 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.5rem;
       font-weight: 600;
-      color: var(--text-primary);
+      color: #1f3319;
       margin-bottom: 1rem;
     }
 
     .card p {
-      color: var(--text-secondary);
+      color: #4a4a4a;
       line-height: 1.7;
     }
 
-    /* Timeline */
     .timeline {
       position: relative;
       padding: 2rem 0 2rem 3rem;
@@ -587,24 +675,25 @@
       top: 0;
       bottom: 0;
       width: 3px;
-      background: linear-gradient(180deg, var(--sage-300), var(--sage-500), var(--sage-700));
+      background: linear-gradient(180deg, #a8c9a1, #4a7c59, #2d4a38);
       border-radius: 3px;
     }
 
     .timeline-item {
       position: relative;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: white;
+      border: 2px solid #d1e1cd;
       border-radius: 20px;
       padding: 2rem;
       margin-bottom: 2rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       transition: all 0.3s ease;
     }
 
     .timeline-item:hover {
       transform: translateX(8px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      border-color: #4a7c59;
     }
 
     .timeline-item::before {
@@ -615,22 +704,22 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: var(--accent);
-      border: 4px solid var(--bg);
-      box-shadow: 0 0 0 3px var(--sage-200);
+      background: #4a7c59;
+      border: 4px solid var(--bg-light);
+      box-shadow: 0 0 0 3px #d1e1cd;
     }
 
     .timeline-item h4 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.4rem;
-      color: var(--text-primary);
+      color: #1f3319;
       margin-bottom: 0.5rem;
     }
 
     .timeline-meta {
       display: inline-block;
-      background: var(--sage-100);
-      color: var(--accent);
+      background: linear-gradient(135deg, #e8f0e6, #dfe9db);
+      color: #4a7c59;
       padding: 0.35rem 0.85rem;
       border-radius: 999px;
       font-size: 0.85rem;
@@ -639,29 +728,29 @@
     }
 
     .timeline-item p {
-      color: var(--text-secondary);
+      color: #4a4a4a;
       line-height: 1.7;
     }
 
-    /* Expertise Cards */
     .expertise-card {
-      background: linear-gradient(135deg, var(--surface), var(--sage-50));
-      border: 1px solid var(--border);
+      background: linear-gradient(135deg, white, var(--bg-light));
+      border: 2px solid #d1e1cd;
       border-radius: 20px;
       padding: 2rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       transition: all 0.3s ease;
     }
 
     .expertise-card:hover {
       transform: translateY(-5px);
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      border-color: #4a7c59;
     }
 
     .expertise-card h4 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.3rem;
-      color: var(--text-primary);
+      color: #1f3319;
       margin-bottom: 1rem;
     }
 
@@ -675,7 +764,7 @@
     .expertise-list li {
       padding-left: 1.5rem;
       position: relative;
-      color: var(--text-secondary);
+      color: #4a4a4a;
       font-size: 0.95rem;
     }
 
@@ -683,58 +772,192 @@
       content: '✓';
       position: absolute;
       left: 0;
-      color: var(--accent);
+      color: #4a7c59;
       font-weight: 700;
     }
 
-    /* CTA Section */
+    /* CTA SECTION - FOREST GREEN */
     .cta-section {
-      background: var(--gradient-hero);
+      background: linear-gradient(135deg, #1a4d3e 0%, #2d6b5a 100%);
       border-radius: 24px;
       padding: clamp(50px, 8vw, 80px);
       text-align: center;
-      box-shadow: var(--shadow-lg);
-      margin: clamp(60px, 10vh, 100px) 0;
+      box-shadow: 0 20px 60px rgba(26, 77, 62, 0.3);
+      margin: clamp(60px, 10vh, 100px) auto;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(0, 217, 217, 0.2);
+      max-width: 1000px;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 217, 217, 0.1) 0%, transparent 70%);
+      animation: float-slow 15s ease-in-out infinite;
+    }
+
+    @keyframes float-slow {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, 20px); }
     }
 
     .cta-section h2 {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 4vw, 3rem);
-      color: var(--text-primary);
+      color: white;
       margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
     .cta-section p {
       font-size: 1.1rem;
-      color: var(--text-secondary);
+      color: rgba(255,255,255,0.9);
       margin-bottom: 2rem;
       font-weight: 300;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Footer */
-    footer {
-      background: var(--surface-elevated);
-      border-top: 1px solid var(--border);
-      padding: 3rem 0;
-      text-align: center;
-    }
-
-    footer p {
-      color: var(--text-tertiary);
-      margin-bottom: 1rem;
-    }
-
-    footer a {
-      color: var(--accent);
+    .cta-button-teal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 48px;
+      background: linear-gradient(135deg, #00d9d9, #1afdfd);
+      color: #1a1a1a;
       text-decoration: none;
-      transition: color 0.3s ease;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 24px rgba(0, 217, 217, 0.3);
     }
 
-    footer a:hover {
-      color: var(--accent-hover);
+    .cta-button-teal:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 12px 32px rgba(0, 217, 217, 0.4);
     }
 
-    /* Scroll animations */
+    .cta-meta {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* FOOTER - DARKER VERSION OF PHOTO 1 */
+    footer {
+      background: linear-gradient(180deg, #e8e4d9 0%, #ddd7cc 100%);
+      color: var(--text-light);
+      padding: 40px 0 20px;
+      border-top: 1px solid rgba(74, 124, 89, 0.1);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .footer-section p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: #4a7c59;
+      transform: translateX(3px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 0.75rem;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(74, 124, 89, 0.1);
+      border: 1.5px solid #4a7c59;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a7c59;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .social-links a:hover {
+      background: #4a7c59;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem clamp(20px, 5vw, 60px);
+      text-align: center;
+      border-top: 1px solid rgba(74, 124, 89, 0.15);
+    }
+
+    .footer-bottom p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-bottom p:last-child {
+      font-style: italic;
+      color: #999;
+      font-size: 0.8rem;
+    }
+
     .fade-in {
       opacity: 0;
       transform: translateY(30px);
@@ -746,63 +969,26 @@
       transform: translateY(0);
     }
 
-    /* Responsive */
     @media (max-width: 1200px) {
-      .nav-links {
-        gap: 1.5rem;
-      }
-
-      .nav-links a {
-        font-size: 0.9rem;
-      }
+      .nav-links { gap: 1.5rem; }
+      .nav-links a { font-size: 0.9rem; }
     }
 
     @media (max-width: 1024px) {
-      nav {
-        gap: 1rem;
-      }
-
-      .nav-links {
-        gap: 1rem;
-      }
-
-      .nav-links a {
-        font-size: 0.85rem;
-      }
-
-      .profile-section {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .profile-image-wrapper {
-        max-width: 400px;
-        margin: 0 auto;
-      }
+      nav { gap: 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.85rem; }
+      .profile-section { grid-template-columns: 1fr; gap: 3rem; }
+      .profile-image-wrapper { max-width: 400px; margin: 0 auto; }
     }
 
     @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .profile-section {
-        grid-template-columns: 1fr;
-      }
-
-      .timeline {
-        padding-left: 2rem;
-      }
-
-      .timeline-item::before {
-        left: -38px;
-        width: 20px;
-        height: 20px;
-      }
+      .nav-links { display: none; }
+      .menu-toggle { display: flex; }
+      .profile-section { grid-template-columns: 1fr; }
+      .timeline { padding-left: 2rem; }
+      .timeline-item::before { left: -38px; width: 20px; height: 20px; }
+      .footer-content { grid-template-columns: 1fr; gap: 1.5rem; }
     }
   </style>
 </head>
@@ -810,7 +996,7 @@
   <header class="site-header">
     <nav class="container">
       <a class="logo-area" href="index.html">
-        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" />
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" loading="lazy" />
         <span>Harsh Ranjan</span>
       </a>
       
@@ -824,7 +1010,7 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -832,7 +1018,7 @@
     </nav>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
     <ul>
       <li><a href="about.html" aria-current="page">About</a></li>
@@ -847,14 +1033,20 @@
 
   <main>
     <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">Interdisciplinary Scholar-Practitioner</div>
-          <h1>Bridging Ancient Wisdom with Modern Science</h1>
-          <p class="hero-subtitle">
-            Dedicated to integrating traditional knowledge systems with modern scientific research to promote holistic health
-          </p>
-        </div>
+      <div class="hero-content">
+        <div class="hero-badge">Interdisciplinary Scholar-Practitioner</div>
+        <h1>Bridging Ancient Wisdom with Modern Science</h1>
+        <p class="hero-subtitle">
+          Dedicated to integrating traditional knowledge systems with modern scientific research to promote holistic health
+        </p>
+        <a href="form.html" class="cta-button-hero">Book a session</a>
+      </div>
+      
+      <div class="scroll-indicator">
+        <svg viewBox="0 0 24 24">
+          <polyline points="18 15 12 21 6 15"></polyline>
+          <line x1="12" y1="4" x2="12" y2="21"></line>
+        </svg>
       </div>
     </section>
 
@@ -862,7 +1054,7 @@
       <div class="container">
         <div class="profile-section fade-in">
           <div class="profile-image-wrapper">
-            <img src="your-photo.jpg" alt="Harsh Ranjan" class="profile-image" />
+            <img src="your-photo.jpg" alt="Harsh Ranjan" class="profile-image" loading="lazy" />
           </div>
           
           <div class="profile-content">
@@ -884,9 +1076,7 @@
               <span class="pill">Mind-Body Medicine</span>
             </div>
             
-            <a href="https://forms.gle/wRZeNyZabkpNr2Rf6" class="cta-button" target="_blank" rel="noopener">
-              Begin Your Wellness Journey →
-            </a>
+            <a href="form.html" class="cta-button">Book a session</a>
           </div>
         </div>
       </div>
@@ -1035,78 +1225,114 @@
       </div>
     </section>
 
-    <section class="features-section">
+    <section class="cta-section fade-in">
       <div class="container">
-        <div class="cta-section fade-in">
-          <h2>Ready to Transform Your Wellness?</h2>
-          <p>Join clients worldwide in creating a personalized path toward balance and vitality — rooted in ancient wisdom, validated by modern science, adapted to your life wherever you are.</p>
-                      <a href="form.html" class="cta-button">Contact Now</a>
-          
-          <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">🌍 Serving clients globally • All time zones welcome • Online & In-person options</p>
-        </div>
+        <h2>Ready to Transform Your Wellness?</h2>
+        <p>Join clients worldwide in creating a personalized path toward balance and vitality — rooted in ancient wisdom, validated by modern science, adapted to your life wherever you are.</p>
+        <a href="form.html" class="cta-button-teal">Start Your Journey</a>
+        <p class="cta-meta">🌍 Serving clients globally • All time zones welcome • Online & In-person options</p>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Harsh Ranjan (Samarpan)</h3>
+        <p>Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="psychology.html">Psychology</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul class="footer-links">
+          <li><a href="ayurveda.html">Ayurveda Consultations</a></li>
+          <li><a href="form.html">Yoga Therapy</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="sessions.html">Wellness Programs</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">📷</a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Twitter">𝕏</a>
+          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">💼</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
       <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-      <p style="margin: 0.5rem 0; font-style: italic; opacity: 0.9;">Empowering holistic wellness worldwide</p>
-      <p style="margin: 1rem 0;">
-        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener">Instagram</a> •
-        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener">YouTube</a> •
-        <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener">LinkedIn</a>
-      </p>
+      <p>Empowering holistic wellness worldwide</p>
     </div>
   </footer>
 
-  <script>
-    // Mobile Menu
+  <script defer>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     const menuToggle = document.getElementById('menuToggle');
     const menuClose = document.getElementById('menuClose');
     const mobileMenu = document.getElementById('mobileMenu');
     const body = document.body;
 
-    // Open menu
-    menuToggle.addEventListener('click', () => {
+    const openMenu = () => {
       mobileMenu.classList.add('active');
       menuToggle.classList.add('active');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-expanded', 'true');
       body.classList.add('menu-open');
-    });
+    };
 
-    // Close menu
     const closeMenu = () => {
       mobileMenu.classList.remove('active');
       menuToggle.classList.remove('active');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
       body.classList.remove('menu-open');
     };
 
-    menuClose.addEventListener('click', closeMenu);
+    menuToggle.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
 
-    // Close when clicking on a link
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
+    menuClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
         closeMenu();
       }
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-        if (mobileMenu.classList.contains('active')) {
-          closeMenu();
-        }
-      }
-    });
-
-    // Close menu with Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
         closeMenu();
       }
     });
 
-    // Scroll animations
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -1121,16 +1347,16 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
 
-    // Year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
         if (target) {
           target.scrollIntoView({
             behavior: 'smooth',
@@ -1142,4 +1368,3 @@
   </script>
 </body>
 </html>
-
