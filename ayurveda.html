@@ -6,13 +6,37 @@
   <meta name="color-scheme" content="light" />
   <title>Ayurveda — Harsh Ranjan (Samarpan) | Ancient Science of Wellness</title>
 
+  <!-- Google Analytics - Measurement ID: G-HMM7CJSCW7 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7', {
+      'page_path': window.location.pathname,
+      'page_title': document.title,
+      'anonymize_ip': true
+    });
+  </script>
+
   <!-- SEO Meta Tags -->
   <link rel="canonical" href="https://theharshranjan.github.io/ayurveda.html" />
   <meta name="description" content="Discover the ancient science of Ayurveda with Harsh Ranjan. Learn about doshas, daily routines, seasonal practices, and holistic wellness from 5000-year-old healing tradition." />
   <meta name="keywords" content="Ayurveda, doshas, holistic health, traditional medicine, Ayurvedic wellness, natural healing, Vata Pitta Kapha, Ayurveda consultation" />
   <meta name="author" content="Harsh Ranjan (Samarpan)" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+
+  <!-- Favicon - All Sizes -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#4a7c59" />
+  <meta name="msapplication-TileColor" content="#4a7c59" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -33,23 +57,10 @@
   <meta name="twitter:image" content="https://theharshranjan.github.io/assets/og-ayurveda.jpg" />
   <meta name="twitter:creator" content="@the_harshranjan" />
 
-  <!-- LinkedIn -->
-  <meta property="linkedin:url" content="https://theharshranjan.github.io/ayurveda.html" />
-  <meta property="linkedin:title" content="Ayurveda — Ancient Science of Wellness | Harsh Ranjan" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
-  <meta name="theme-color" content="#4a7c59" />
-  <meta name="msapplication-TileColor" content="#4a7c59" />
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
     :root {
@@ -85,21 +96,26 @@
     /* HEADER */
     .site-header {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       z-index: 1000;
       background: linear-gradient(135deg, #f9f5ed 0%, #f7f3e8 100%);
       border-bottom: 1px solid rgba(74, 124, 89, 0.1);
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
       width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
     }
 
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-height: 80px;
-      gap: 2rem;
       width: 100%;
+      gap: 2rem;
+      padding: 0 clamp(20px, 5vw, 60px);
     }
 
     .logo-area {
@@ -108,7 +124,11 @@
       gap: 14px;
       text-decoration: none;
       color: var(--text-light);
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
     }
+
+    .logo-area:hover { transform: translateY(-2px); }
 
     .logo-area img {
       width: 52px;
@@ -116,7 +136,7 @@
       border-radius: 50%;
       border: 2px solid var(--accent);
       box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
-      transition: border-color 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .logo-area:hover img {
@@ -131,6 +151,7 @@
       letter-spacing: 0.5px;
       color: var(--text-light);
       user-select: none;
+      white-space: nowrap;
     }
 
     .nav-links {
@@ -140,6 +161,7 @@
       list-style: none;
       justify-content: center;
       flex: 1 1 auto;
+      margin: 0;
     }
 
     .nav-links a {
@@ -165,14 +187,10 @@
     }
 
     .nav-links a:hover,
-    .nav-links a[aria-current="page"] {
-      color: var(--accent);
-    }
+    .nav-links a[aria-current="page"] { color: var(--accent); }
 
     .nav-links a:hover::after,
-    .nav-links a[aria-current="page"]::after {
-      width: 100%;
-    }
+    .nav-links a[aria-current="page"]::after { width: 100%; }
 
     .menu-toggle {
       display: none;
@@ -188,7 +206,10 @@
       gap: 5px;
       z-index: 1001;
       flex-shrink: 0;
+      transition: all 0.3s ease;
     }
+
+    .menu-toggle:hover { border-color: var(--accent-dark); }
 
     .menu-toggle span {
       width: 22px;
@@ -201,7 +222,7 @@
     .menu-toggle.active span:nth-child(2) { opacity: 0; }
     .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
 
-    main { padding-top: 90px; }
+    main { padding-top: 80px; }
 
     .mobile-menu {
       position: fixed;
@@ -218,10 +239,7 @@
 
     .mobile-menu.active { transform: translateX(0); }
 
-    .mobile-menu ul {
-      list-style: none;
-      padding: 0 20px;
-    }
+    .mobile-menu ul { list-style: none; padding: 0 20px; }
 
     .mobile-menu a {
       display: block;
@@ -254,6 +272,12 @@
       align-items: center;
       justify-content: center;
       z-index: 1002;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-close:hover {
+      color: var(--accent);
+      transform: rotate(90deg);
     }
 
     /* HERO SECTION */
@@ -266,8 +290,40 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 90px 0 60px;
+      padding: 80px 0 60px;
       margin: 0;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      animation: float 30s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40%;
+      left: -15%;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(74, 124, 89, 0.2) 0%, transparent 70%);
+      animation: float-reverse 25s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, 30px) rotate(180deg); }
+    }
+
+    @keyframes float-reverse {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, -30px) rotate(180deg); }
     }
 
     .hero-content {
@@ -389,9 +445,7 @@
       border-color: #4a7c59;
     }
 
-    .card:hover::before {
-      transform: scaleX(1);
-    }
+    .card:hover::before { transform: scaleX(1); }
 
     .card h3 {
       font-family: 'Cormorant Garamond', serif;
@@ -481,9 +535,7 @@
       transition: all 0.3s ease;
     }
 
-    .faq-item:hover {
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    }
+    .faq-item:hover { box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08); }
 
     .faq-question {
       width: 100%;
@@ -502,9 +554,7 @@
       transition: color 0.3s ease;
     }
 
-    .faq-question:hover {
-      color: var(--accent);
-    }
+    .faq-question:hover { color: var(--accent); }
 
     .faq-icon {
       font-size: 1.5rem;
@@ -513,9 +563,7 @@
       font-weight: 300;
     }
 
-    .faq-item.active .faq-icon {
-      transform: rotate(45deg);
-    }
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
 
     .faq-answer {
       max-height: 0;
@@ -523,9 +571,7 @@
       transition: max-height 0.3s ease-out;
     }
 
-    .faq-item.active .faq-answer {
-      max-height: 500px;
-    }
+    .faq-item.active .faq-answer { max-height: 500px; }
 
     .faq-answer-content {
       padding: 0 2rem 1.5rem 2rem;
@@ -579,7 +625,7 @@
       box-shadow: 0 12px 40px rgba(90, 146, 83, 0.5);
     }
 
-    /* FLOATING BUTTON - APPEARS ON SCROLL */
+    /* FLOATING BUTTON */
     .floating-btn {
       position: fixed;
       bottom: 30px;
@@ -601,6 +647,7 @@
       opacity: 0;
       transform: translateY(100px);
       pointer-events: none;
+      text-decoration: none;
     }
 
     .floating-btn.show {
@@ -650,9 +697,7 @@
       list-style: none;
     }
 
-    .footer-links li {
-      margin-bottom: 0.5rem;
-    }
+    .footer-links li { margin-bottom: 0.5rem; }
 
     .footer-links a {
       color: #666;
@@ -666,32 +711,50 @@
       transform: translateX(3px);
     }
 
+    /* SOCIAL LINKS - HOLLOW CIRCLE DESIGN (Like Screenshot) */
     .social-links {
       display: flex;
       gap: 1rem;
-      margin-top: 0.75rem;
+      margin-top: 1rem;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .social-links a {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: rgba(74, 124, 89, 0.1);
-      border: 1.5px solid var(--accent);
+      background: transparent;
+      border: 2px solid var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent);
       text-decoration: none;
       transition: all 0.3s ease;
-      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--accent);
     }
 
     .social-links a:hover {
-      background: var(--accent);
-      color: white;
-      transform: translateY(-2px);
+      background: rgba(74, 124, 89, 0.1);
+      border-color: var(--accent-dark);
+      transform: translateY(-3px);
+    }
+
+    .social-links a:active {
+      transform: translateY(-1px);
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .social-links a:hover svg {
+      stroke: var(--accent-dark);
     }
 
     .footer-bottom {
@@ -754,7 +817,6 @@
   </div>
 
   <main>
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-content">
         <h1>The Wisdom of Ayurveda</h1>
@@ -762,14 +824,11 @@
       </div>
     </section>
 
-    <!-- WHAT IS AYURVEDA -->
     <section class="content-section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">What is Ayurveda?</h2>
-          <p class="section-subtitle">
-            Ayurveda, meaning "Science of Life," is an ancient Indian system of medicine that treats the whole person—body, mind, and consciousness. It emphasizes prevention, balance, and harmony with nature's rhythms.
-          </p>
+          <p class="section-subtitle">Ayurveda, meaning "Science of Life," is an ancient Indian system of medicine that treats the whole person—body, mind, and consciousness. It emphasizes prevention, balance, and harmony with nature's rhythms.</p>
         </div>
 
         <div class="grid">
@@ -811,14 +870,11 @@
       </div>
     </section>
 
-    <!-- THE THREE DOSHAS -->
     <section class="content-section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">The Three Doshas</h2>
-          <p class="section-subtitle">
-            Understanding your unique constitution is the foundation of Ayurvedic wellness. Each person has a unique blend of the three doshas that determines their physical, mental, and emotional characteristics.
-          </p>
+          <p class="section-subtitle">Understanding your unique constitution is the foundation of Ayurvedic wellness.</p>
         </div>
 
         <div class="grid">
@@ -855,14 +911,11 @@
       </div>
     </section>
 
-    <!-- DAILY ROUTINES & SEASONAL -->
     <section class="content-section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">Daily Routines & Seasonal Wisdom</h2>
-          <p class="section-subtitle">
-            Ayurveda emphasizes aligning with natural rhythms through daily and seasonal practices for lasting balance.
-          </p>
+          <p class="section-subtitle">Ayurveda emphasizes aligning with natural rhythms through daily and seasonal practices for lasting balance.</p>
         </div>
 
         <div class="grid">
@@ -905,7 +958,6 @@
       </div>
     </section>
 
-    <!-- FAQ -->
     <section class="content-section">
       <div class="container">
         <div class="section-header">
@@ -968,7 +1020,7 @@
             </button>
             <div class="faq-answer">
               <div class="faq-answer-content">
-                Agni (digestive fire) is the biological force responsible for all transformation in the body—from digesting food to processing thoughts and emotions. Strong, balanced Agni is essential for health. We support Agni through proper food combinations, meal timing, and lifestyle practices.
+                Agni (digestive fire) is the biological force responsible for all transformation in the body—from digesting food to processing thoughts and emotions. Strong, balanced Agni is essential for health.
               </div>
             </div>
           </div>
@@ -976,7 +1028,6 @@
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="content-section">
       <div class="container">
         <div class="cta-section">
@@ -988,7 +1039,6 @@
     </section>
   </main>
 
-  <!-- FLOATING BUTTON - APPEARS ON SCROLL -->
   <a href="form.html" class="floating-btn" id="floatingBtn">Book Session</a>
 
   <footer>
@@ -1022,17 +1072,28 @@
       <div class="footer-section">
         <h3>Connect</h3>
         <div class="social-links">
-          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
+          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Follow on Instagram">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" />
+              <path d="M16.5 7.5v0" />
+            </svg>
           </a>
-          <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <i class="fab fa-youtube"></i>
+          <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="Subscribe on YouTube">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 8.51c-.26-1.11-1.04-1.98-2.12-2.22C18.08 6 12 6 12 6s-6.08 0-8.44.29c-1.08.24-1.86 1.11-2.12 2.22C1 10.08 1 15 1 15s0 4.92.44 6.49c.26 1.11 1.04 1.98 2.12 2.22C5.92 24 12 24 12 24s6.08 0 8.44-.29c1.08-.24 1.86-1.11 2.12-2.22C23 19.92 23 15 23 15s0-4.92-.44-6.49z" />
+              <path d="M10 18l6-3-6-3v6z" />
+            </svg>
           </a>
-          <a href="https://twitter.com/the_harshranjan" target="_blank" rel="noopener noreferrer" aria-label="X">
-            <i class="fab fa-x-twitter"></i>
+          <a href="https://twitter.com/the_harshranjan" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" title="Follow on X">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.6l-5.165-6.75-5.868 6.75h-3.308l7.73-8.835L2.42 2.25h6.6l4.759 6.236L17.764 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
           </a>
-          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i class="fab fa-linkedin"></i>
+          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="Connect on LinkedIn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+            </svg>
           </a>
         </div>
       </div>
@@ -1047,7 +1108,6 @@
   <script defer>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile Menu - Fixed Version
     const menuToggle = document.getElementById('menuToggle');
     const menuClose = document.getElementById('menuClose');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -1055,76 +1115,43 @@
 
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      toggleMenu();
+      mobileMenu.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      mobileMenu.setAttribute('aria-hidden', mobileMenu.classList.contains('active') ? 'false' : 'true');
+      menuToggle.setAttribute('aria-expanded', menuToggle.classList.contains('active'));
+      body.classList.toggle('menu-open');
     });
 
     menuClose.addEventListener('click', (e) => {
       e.preventDefault();
-      e.stopPropagation();
-      closeMenu();
-    });
-
-    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeMenu();
-      });
-    });
-
-    document.addEventListener('click', (e) => {
-      if (mobileMenu.classList.contains('active')) {
-        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-          closeMenu();
-        }
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-        closeMenu();
-      }
-    });
-
-    function toggleMenu() {
-      if (mobileMenu.classList.contains('active')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    }
-
-    function openMenu() {
-      mobileMenu.classList.add('active');
-      menuToggle.classList.add('active');
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      body.classList.add('menu-open');
-    }
-
-    function closeMenu() {
       mobileMenu.classList.remove('active');
       menuToggle.classList.remove('active');
       mobileMenu.setAttribute('aria-hidden', 'true');
       menuToggle.setAttribute('aria-expanded', 'false');
       body.classList.remove('menu-open');
-    }
+    });
 
-    // Floating Button - Show on scroll
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        body.classList.remove('menu-open');
+      });
+    });
+
     const floatingBtn = document.getElementById('floatingBtn');
     const heroSection = document.querySelector('.hero');
 
     window.addEventListener('scroll', () => {
-      const heroBottom = heroSection.offsetHeight;
-      
-      if (window.scrollY > heroBottom) {
+      if (window.scrollY > heroSection.offsetHeight) {
         floatingBtn.classList.add('show');
       } else {
         floatingBtn.classList.remove('show');
       }
     });
 
-    // FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(button => {
       button.addEventListener('click', () => {
         const item = button.parentElement;
