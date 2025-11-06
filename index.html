@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- viewport-fit=cover for iPhone notches -->
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Harsh Ranjan (Samarpan)</title>
 
@@ -17,689 +16,872 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://theharshranjan.github.io/" />
   <meta property="og:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
-  <meta property="og:image:alt" content="Harsh Ranjan (Samarpan) — Ayurveda • Yoga • Wellness" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://theharshranjan.github.io/assets/og-card.jpg" />
 
-  <!-- Theming -->
-  <meta name="theme-color" content="#609966" />
+  <!-- Theme -->
+  <meta name="theme-color" content="#4a7c59" />
 
-  <!-- Favicons (place files under /icons/) -->
-<!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="favicon-48x48.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
-  <link rel="icon" type="image/png" sizes="256x256" href="favicon-256x256.png">
-  <link rel="icon" type="image/png" sizes="384x384" href="favicon-384x384.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="favicon-180x180.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#609966">
-  <meta name="msapplication-TileColor" content="#609966">
 
-  <!-- Preconnects -->
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Lib CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root{
-      --bg-cream:#edf1d6; --text:#263238;
-      --green-dark:#40513b; --green-main:#609966; --green-light:#9dc08b;
-      --accent-gold:#c5a880;
-      --header-h:64px;
-      --panel-top: calc(var(--header-h) + env(safe-area-inset-top));
-    }
-    [data-theme="dark"]{
-      --bg-cream:#0f1a12; --text:#e6efe8;
-      --green-dark:#b5d0b8; --green-main:#87c99a; --green-light:#3a5f46;
-      --accent-gold:#e7caa0;
+    :root {
+      --bg-light: #f8faf6;
+      --text-light: #1a1a1a;
+      --accent: #4a7c59;
+      --accent-light: #6b9d7a;
+      --accent-dark: #2d4a38;
+      --gold: #d4af37;
     }
 
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg-cream); color:var(--text); line-height:1.6;
-      background-image:url('https://www.transparenttextures.com/patterns/white-paper.png');
-    }
-    img,picture,video,canvas,svg{max-width:100%;height:auto;display:block}
-    main[id], section[id]{scroll-margin-top:calc(var(--header-h) + 16px)}
-
-    /* Skip link */
-    .skip-link{position:absolute;left:8px;top:-40px;padding:.5rem .75rem;border-radius:.5rem;background:#fff;color:var(--green-dark);box-shadow:0 4px 10px rgba(0,0,0,.1);transition:top .2s;z-index:1201;text-decoration:none;font-weight:600}
-    .skip-link:focus{top:8px;outline:2px solid var(--green-main)}
-
-    a{color:inherit}
-    :focus-visible{outline:3px solid var(--green-main);outline-offset:2px}
-
-    /* Header / Nav */
-    .site-header{position:sticky;top:0;z-index:1000;background:var(--bg-cream);border-bottom:1px solid rgba(0,0,0,.06);backdrop-filter:saturate(140%) blur(4px);padding-top:env(safe-area-inset-top)}
-    nav{
-      max-width:1200px;margin:0 auto;padding:0.75rem 6%;
-      padding-left:max(6%, env(safe-area-inset-left)); padding-right:max(6%, env(safe-area-inset-right));
-      display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:var(--header-h)
-    }
-    .logo-area{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit; flex:1 1 auto; min-width:0; justify-content:flex-start;} /* left aligned */
-    .logo-area img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--green-light)}
-    .logo-area span{
-      font-family:'Playfair Display',serif;font-weight:700;color:var(--green-dark);letter-spacing:.2px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(1rem, 4.5vw, 1.25rem);max-width:100%;
-    }
-    @media (min-width:901px){
-      .logo-area img{width:52px;height:52px}
-      .logo-area span{font-size:1.35rem}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    .nav-right{display:flex;align-items:center;gap:.75rem}
-    .nav-links{list-style:none;display:flex;align-items:center;gap:1.25rem}
-    .nav-links a{text-decoration:none;color:var(--green-dark);font-weight:600;padding:.35rem .2rem;border-radius:.4rem}
-    .nav-links a:hover{color:var(--green-main)}
-    .nav-links a[aria-current="page"], .nav-links a.active{color:var(--green-main);text-decoration:underline;text-underline-offset:.2rem}
+    body.menu-open { overflow: hidden; }
 
-    .theme-toggle{appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px}
-    .theme-toggle:hover{border-color:rgba(0,0,0,.2)}
-
-    .menu-toggle{
-      appearance:none;background:transparent;border:1px solid rgba(0,0,0,.08);
-      width:44px;height:44px;border-radius:10px;display:none;align-items:center;justify-content:center;cursor:pointer;
-      position:relative;z-index:1101; /* above panel/backdrop */
-      touch-action:manipulation;
-    }
-    .menu-icon{position:relative;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, background .3s}
-    .menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;width:20px;height:2px;background:var(--green-dark);transition:transform .3s, top .3s, opacity .3s}
-    .menu-icon::before{top:-6px}
-    .menu-icon::after{top:6px}
-    .menu-toggle[aria-expanded="true"] .menu-icon{background:transparent}
-    .menu-toggle[aria-expanded="true"] .menu-icon::before{top:0;transform:rotate(45deg)}
-    .menu-toggle[aria-expanded="true"] .menu-icon::after{top:0;transform:rotate(-45deg)}
-
-    /* Mobile panel is hidden on desktop */
-    .mobile-panel{display:none}
-
-    /* Hero */
-    .hero{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-      min-height:calc(100svh - var(--header-h));
-      background:linear-gradient(to bottom right, var(--green-light), var(--bg-cream));padding:0 1rem
-    }
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw + 1rem,3.2rem);line-height:1.25;color:var(--green-dark);max-width:800px}
-    .hero p{margin-top:1rem;font-size:1.1rem;color:var(--green-main)}
-    .btn{margin-top:1.25rem;background:var(--green-dark);color:#fff;padding:.9rem 1.2rem;font-size:1rem;border-radius:12px;text-decoration:none;transition:transform .12s, box-shadow .25s, background .25s;display:inline-block;box-shadow:0 8px 16px rgba(64,81,59,.2)}
-    .btn:hover{background:var(--green-main);box-shadow:0 10px 18px rgba(64,81,59,.28);transform:translateY(-1px)}
-    .btn:active{transform:translateY(0);box-shadow:0 6px 12px rgba(64,81,59,.18)}
-
-    section{padding:4.5rem 8%}
-
-    /* About */
-    .about{display:grid;grid-template-columns:minmax(0, 320px) 1fr;gap:2rem;align-items:center}
-    .about img{width:100%;max-width:340px;height:auto;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.1)}
-    .about-text h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:1rem;color:var(--green-dark)}
-
-    /* Cards */
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
-    .card{background:var(--green-light);padding:1.6rem;border-radius:16px;text-align:center;transition:transform .25s, box-shadow .25s;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-    .card:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
-    .card h3{font-family:'Playfair Display',serif;margin:.6rem 0 .25rem;color:var(--green-dark)}
-
-    /* Gallery preview */
-    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.9rem}
-    .gallery img{width:100%;height:auto;border-radius:12px;transition:transform .25s;pointer-events:none}
-    .gallery img:hover{transform:scale(1.03)}
-
-    /* Testimonials */
-    .testimonials{background:var(--green-main);color:#fff;padding:4.5rem 8%;text-align:center}
-    .swiper{width:100%;max-width:700px;margin:auto}
-    .swiper-slide{font-style:italic;font-size:1.05rem;padding:2rem}
-
-    /* Trips */
-    .yatra{background:var(--bg-cream);text-align:center}
-    .yatra .swiper-slide{font-style:normal;font-size:1.05rem;padding:1.5rem;border-radius:16px;background:var(--green-light);color:var(--green-dark);box-shadow:0 4px 12px rgba(0,0,0,.06)}
-
-    /* Contact */
-    .contact-wrap{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:1rem}
-    .contact-wrap input,.contact-wrap textarea{padding:.85rem;width:100%;border-radius:10px;border:1px solid #cfd8dc;background:#fff}
-    .contact-wrap label{display:block;font-weight:700;margin-bottom:.25rem;color:var(--green-dark)}
-
-    /* Footer */
-    footer{background:var(--green-dark);color:var(--bg-cream);text-align:center;padding:2rem}
-    footer a{color:var(--accent-gold);text-decoration:none;margin:0 .5rem}
-
-    /* Scroll-to-Top & progress */
-    #scrollTopBtn{position:fixed;bottom:30px;right:30px;background:var(--green-dark);color:#fff;border:none;border-radius:50%;width:45px;height:45px;font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:opacity .3s, visibility .3s;z-index:900}
-    #scrollTopBtn.show{opacity:1;visibility:visible}
-    #scrollTopBtn:hover{background:var(--green-main)}
-    #scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--green-main);z-index:1200;transition:width .1s linear}
-
-    /* Mobile */
-    @media (max-width: 900px){
-      .about{grid-template-columns:1fr}
-      .nav-links{display:none}
-      .nav-right{gap:.5rem}
-      .menu-toggle, .theme-toggle{display:inline-flex; width:48px; height:48px;}
-
-      .logo-area{flex:1 1 auto; min-width:0; justify-content:flex-start;}
-      .logo-area span{font-size:1.1rem; max-width:60vw;}
-
-      /* Backdrop under panel */
-      .mobile-backdrop{
-        display:block; position:fixed; inset:var(--panel-top) 0 0 0;
-        height:calc(100dvh - var(--panel-top));
-        background:rgba(0,0,0,.45);
-        opacity:0; pointer-events:none; transition:opacity .2s ease;
-        z-index:1090;
-      }
-      .mobile-backdrop.active{ opacity:1; pointer-events:auto; }
-
-      /* Sliding panel */
-      .mobile-panel{
-        display:block; position:fixed; inset:var(--panel-top) 0 0 0;
-        height:calc(100dvh - var(--panel-top));
-        background:var(--bg-cream);
-        border-top:1px solid rgba(0,0,0,.06);
-        overflow:auto; -webkit-overflow-scrolling:touch;
-        transform:translateY(-8px); opacity:0; pointer-events:none;
-        transition:opacity .18s ease, transform .18s ease;
-        z-index:1100; padding:1rem 6%  max(1rem, env(safe-area-inset-bottom));
-        will-change:transform, opacity;
-      }
-      .mobile-panel.open{ opacity:1; transform:translateY(0); pointer-events:auto; }
-
-      .mobile-panel[hidden]{ display:none !important; }
-
-      .mobile-menu{list-style:none;display:flex;flex-direction:column;gap:.2rem}
-      .mobile-menu a{display:block;padding:1rem 0;text-decoration:none;font-weight:800;color:var(--green-dark);border-radius:10px}
-      .mobile-menu a:active{background:rgba(0,0,0,.04)}
-      body.nav-open{height:100dvh;overflow:hidden;overscroll-behavior:contain;touch-action:none}
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
     }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{scroll-behavior:auto}
-      .card, .gallery img, .btn, .menu-icon, .mobile-panel, .mobile-backdrop{transition:none !important}
+    /* HEADER - LIGHT CREAM */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: linear-gradient(135deg, #f9f5ed 0%, #f7f3e8 100%);
+      border-bottom: 1px solid rgba(74, 124, 89, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      width: 100%;
     }
 
-    @media (prefers-color-scheme: dark){
-      :root:not([data-theme="light"]){--bg-cream:#0f1a12;--text:#e6efe8}
-      body{background-image:none}
-      .site-header{border-bottom-color:rgba(255,255,255,.08)}
-      .card{box-shadow:none}
-      .gallery img{filter:brightness(.95)}
-      footer a{color:#e7caa0}
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80px;
+      gap: 2rem;
+      width: 100%;
     }
 
-    @keyframes spin{from{transform:translateY(-50%) rotate(0)} to{transform:translateY(-50%) rotate(360deg)}}
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-light);
+    }
+
+    .logo-area img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
+      transition: border-color 0.3s ease;
+    }
+
+    .logo-area:hover img {
+      border-color: var(--accent-dark);
+      box-shadow: 0 6px 20px rgba(74, 124, 89, 0.25);
+    }
+
+    .logo-area span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+      color: var(--text-light);
+      user-select: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+      justify-content: center;
+      flex: 1 1 auto;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      padding: 0.5rem 0;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--accent);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a[aria-current="page"]::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      z-index: 1001;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover { border-color: var(--accent-dark); }
+
+    .menu-toggle span {
+      width: 22px;
+      height: 2px;
+      background: var(--text-light);
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+    main { padding-top: 80px; }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: white;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding-top: 100px;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mobile-menu.active { transform: translateX(0); }
+
+    .mobile-menu ul {
+      list-style: none;
+      padding: 0 20px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 16px 20px;
+      color: var(--text-light);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .mobile-menu a:hover,
+    .mobile-menu a[aria-current="page"] {
+      background: var(--bg-light);
+      color: var(--accent);
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1002;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-close:hover {
+      color: var(--accent);
+      transform: rotate(90deg);
+    }
+
+    /* HERO SECTION - FOREST GREEN */
+    .hero {
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 0 60px;
+      margin: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: white;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-button-hero {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px 50px;
+      background: linear-gradient(135deg, #5a9253, #7fb078);
+      color: #1a1a1a;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);
+    }
+
+    .cta-button-hero:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 16px 48px rgba(90, 146, 83, 0.6);
+    }
+
+    /* CONTENT SECTION - LIGHT CREAM */
+    .content-section {
+      padding: clamp(60px, 10vh, 100px) 0;
+      background: var(--bg-light);
+      position: relative;
+    }
+
+    .content-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 80%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      padding-top: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: #4a4a4a;
+      font-weight: 300;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: white;
+      border: 2px solid #d1e1cd;
+      border-radius: 20px;
+      padding: clamp(28px, 4vw, 40px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #4a7c59, #2d4a38);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+      border-color: #4a7c59;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f3319;
+      margin-bottom: 1rem;
+    }
+
+    .card p {
+      color: #4a4a4a;
+      line-height: 1.7;
+    }
+
+    /* GALLERY */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      transition: transform 0.25s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    /* FOOTER - DARKER CREAM */
+    footer {
+      background: linear-gradient(180deg, #e8e4d9 0%, #ddd7cc 100%);
+      color: var(--text-light);
+      padding: 40px 0 20px;
+      border-top: 1px solid rgba(74, 124, 89, 0.1);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 5vw, 60px);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .footer-section p {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 0.75rem;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(74, 124, 89, 0.1);
+      border: 1.5px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .social-links a:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem clamp(20px, 5vw, 60px);
+      text-align: center;
+      border-top: 1px solid rgba(74, 124, 89, 0.15);
+    }
+
+    .footer-bottom p {
+      color: #666;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-bottom p:last-child {
+      font-style: italic;
+      color: #999;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 1024px) {
+      nav { gap: 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.85rem; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: flex; }
+    }
   </style>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script> 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-HMM7CJSCW7'); 
-</script>
-
 </head>
 <body>
-  <a href="#home" class="skip-link">Skip to content</a>
-  <div id="scrollProgress" aria-hidden="true"></div>
-
-  <!-- Header -->
-  <header class="site-header" data-aos="fade-down">
-    <nav aria-label="Primary">
-      <a class="logo-area" href="#home" aria-label="Home">
-        <img src="logo.png" alt="Logo of Harsh Ranjan (Samarpan)" width="44" height="44" fetchpriority="high" decoding="async" />
+  <header class="site-header">
+    <nav class="container">
+      <a class="logo-area" href="index.html">
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" loading="lazy" />
         <span>Harsh Ranjan</span>
       </a>
+      
+      <ul class="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="sessions.html">Sessions</a></li>
+        <li><a href="ayurveda.html">Ayurveda</a></li>
+        <li><a href="psychology.html">Psychology</a></li>
+        <li><a href="trips.html">Trips</a></li>
+        <li><a href="diet.html">Diet & Nutrition</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
 
-      <div class="nav-right">
-        <ul class="nav-links" id="desktopMenu">
-          <li><a href="about.html">About</a></li>
-          <li><a href="sessions.html">Sessions</a></li>
-          <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="psychology.html">Psychology</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-          <li><a href="trips.html">Trips</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-
-        <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
-
-        <button class="menu-toggle" id="menuToggle" aria-controls="mobilePanel" aria-expanded="false" aria-label="Open menu">
-          <span class="menu-icon" aria-hidden="true"></span>
-        </button>
-      </div>
-
-      <!-- Mobile Backdrop + Panel -->
-      <div class="mobile-backdrop" id="mobileBackdrop" hidden></div>
-
-      <div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" hidden>
-        <ul class="mobile-menu" id="mobileMenu">
-          <li><a href="about.html">About</a></li>
-          <li><a href="sessions.html">Sessions</a></li>
-          <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="psychology.html">Psychology</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-          <li><a href="trips.html">Trips</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
   </header>
 
-<!-- Hero -->
-  <main id="home" class="hero" data-aos="zoom-in">
-    <h1>Embrace Balance<br />Through Ayurveda &amp; Yoga</h1>
-    <p>A path to wellness and spiritual growth</p>
-    <a href="form.html" class="cta-button">Contact Now</a>
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="sessions.html">Sessions</a></li>
+      <li><a href="ayurveda.html">Ayurveda</a></li>
+      <li><a href="psychology.html">Psychology</a></li>
+      <li><a href="trips.html">Trips</a></li>
+      <li><a href="diet.html">Diet & Nutrition</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Embrace Balance<br />Through Ayurveda & Yoga</h1>
+        <p class="hero-subtitle">A path to wellness and spiritual growth</p>
+        <a href="form.html" class="cta-button-hero">Contact Now</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">About Me</h2>
+          <p class="section-subtitle">Exploring Ayurveda with Modern Science</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <p style="margin-bottom: 1.5rem;">
+            I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and Sanskrit to blend ancient wisdom with modern living. As the founder of Just The Self Healing System, I guide people in India and worldwide toward holistic health, self-discovery, and conscious living—uniting body, mind, and soul.
+          </p>
+          <a href="about.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">Know More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ayurveda Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Ayurveda</h2>
+          <p class="section-subtitle">Ancient wisdom for modern wellness</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <p style="margin-bottom: 1.5rem;">
+            Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit. Discover natural therapies, daily wellness routines, and timeless wisdom that nurtures inner harmony.
+          </p>
+          <a href="ayurveda.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">Explore Ayurveda</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Psychology Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Psychology & Counseling</h2>
+          <p class="section-subtitle">Mind-body integration for holistic wellness</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <p style="margin-bottom: 1.5rem;">
+            Psychology and counseling provide tools to understand the mind, reduce stress, and bring clarity. Blending modern therapy with meditation and Ayurveda, we support holistic mental wellbeing.
+          </p>
+          <a href="psychology.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">Explore Psychology</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Diet & Nutrition Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Diet & Nutrition</h2>
+          <p class="section-subtitle">Nourishing your body and mind</p>
+        </div>
+        
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+          <p style="margin-bottom: 1.5rem;">
+            Want to feel lighter, more focused, and nourished? Get simple meal swaps, budget-friendly student plans and Ayurveda-aware tips that actually fit your life.
+          </p>
+          <a href="diet.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">Explore Diet & Nutrition</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sessions Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Sessions</h2>
+          <p class="section-subtitle">Personalized wellness services</p>
+        </div>
+        
+        <div class="grid">
+          <article class="card">
+            <h3>Ayurveda Guidance</h3>
+            <p>Consultations on diet, lifestyle, and natural remedies rooted in Ayurveda.</p>
+          </article>
+          
+          <article class="card">
+            <h3>Counseling Session</h3>
+            <p>A safe and supportive space to share, heal, and grow with personalized guidance</p>
+          </article>
+          
+          <article class="card">
+            <h3>Diet & Nutrition</h3>
+            <p>Personalised, evidence-informed meal planning and sattvik-aware dietary guidance for everyday energy and long-term wellbeing.</p>
+          </article>
+          
+          <article class="card">
+            <h3>Yoga Session</h3>
+            <p>Personalized Yoga sessions to build strength, flexibility, and inner calm.</p>
+          </article>
+          
+          <article class="card">
+            <h3>Meditation</h3>
+            <p>Learn meditation techniques for clarity, mindfulness, and spiritual growth.</p>
+          </article>
+          
+          <article class="card">
+            <h3>Mantra Session</h3>
+            <p>Experience the power of sacred sounds to calm the mind, uplift the spirit, and deepen inner connection</p>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="sessions.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">Explore All Sessions</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Gallery</h2>
+          <p class="section-subtitle">Moments from my wellness journey</p>
+        </div>
+        
+        <div class="gallery">
+          <img src="your-image1.jpg" alt="Meditative posture" loading="lazy" />
+          <img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" />
+          <img src="your-image3.jpg" alt="Yoga practice at sunrise" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Trips Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Upcoming Trips</h2>
+          <p class="section-subtitle">Join me on wellness journeys</p>
+        </div>
+        
+        <div class="grid" style="max-width: 800px; margin: 0 auto;">
+          <article class="card">
+            <h3>Rishikesh</h3>
+            <p>Experience yoga and meditation in the spiritual capital of India</p>
+          </article>
+          
+          <article class="card">
+            <h3>Rikhiapeeth</h3>
+            <p>Immerse in ancient yogic traditions and spiritual practices</p>
+          </article>
+          
+          <article class="card">
+            <h3>Trambakeshwar, Nashik</h3>
+            <p>Sacred pilgrimage combining spirituality with nature</p>
+          </article>
+          
+          <article class="card">
+            <h3>Bihar School of Yoga</h3>
+            <p>Intensive yoga training with traditional methods</p>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="trips.html" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 18px 50px; background: linear-gradient(135deg, #5a9253, #7fb078); color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 32px rgba(90, 146, 83, 0.4);">View My Past Journeys</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Testimonials</h2>
+          <p class="section-subtitle">What clients say about their experience</p>
+        </div>
+        
+        <div class="grid" style="max-width: 900px; margin: 0 auto;">
+          <article class="card">
+            <p><em>"Harsh's sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!"</em></p>
+          </article>
+          
+          <article class="card">
+            <p><em>"The perfect blend of Ayurveda & Yoga. His teachings changed my daily routine for the better."</em></p>
+          </article>
+          
+          <article class="card">
+            <p><em>"A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully."</em></p>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
-  
-  <!-- About -->
-  <section id="about" class="about" aria-labelledby="about-heading" data-aos="fade-up">
-    <img src="your-photo.jpg" alt="Photo of Harsh Ranjan" loading="lazy" decoding="async" />
-    <div class="about-text">
-      <h2 id="about-heading">About Me</h2>
-      <p>
-        I am Harsh Ranjan, exploring Ayurveda with Modern Science, Yoga, Psychology, and Sanskrit to blend ancient wisdom with modern living. As the founder of Just The Self Healing System, I guide people in India and worldwide toward holistic health, self-discovery, and conscious living—uniting body, mind, and soul.
-      </p>
-      <div style="text-align:left;">
-        <a href="about.html" class="btn">Know More</a>
-      </div>
-    </div>
-  </section>
-
-  
-   <!-- Ayurveda -->
-  <section id="ayurveda" aria-labelledby="ayurveda-heading" data-aos="fade-up">
-    <h2 id="ayurveda-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Ayurveda</h2>
-    <div style="max-width:900px; margin:auto; text-align:center;">
-      <p>Ayurveda is the ancient Indian system of holistic healing, emphasizing balance between body, mind, and spirit. Discover natural therapies, daily wellness routines, and timeless wisdom that nurtures inner harmony.</p>
-      <a href="ayurveda.html" class="btn" style="margin-top:1.5rem;">Explore Ayurveda</a>
-    </div>
-  </section>
-
-  <!-- Psychology & Counseling -->
-<section id="psychology" aria-labelledby="psychology-heading" data-aos="fade-up">
-  <h2 id="psychology-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">
-    Psychology & Counseling
-  </h2>
-  <div style="max-width:900px; margin:auto; text-align:center;">
-    <p>
-      Psychology and counseling provide tools to understand the mind, 
-      reduce stress, and bring clarity. Blending modern therapy with 
-      meditation and Ayurveda, we support holistic mental wellbeing.
-    </p>
-    <a href="psychology.html" class="btn" style="margin-top:1.5rem;">Explore Psychology</a>
-  </div>
-</section>
-
-   <!-- Diet & Nutrition -->
-<section id="diet" aria-labelledby="Diet & Nutrition-heading" data-aos="fade-up">
-  <h2 id="Diet & Nutrition-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">
-    Diet & Nutrition
-  </h2>
-  <div style="max-width:900px; margin:auto; text-align:center;">
-    <p>
-   Want to feel lighter, more focused, and nourished? Get simple meal swaps, budget-friendly student plans and Ayurveda-aware tips that actually fit your life.    </p>
-    <a href="diet.html" class="btn" style="margin-top:1.5rem;">Explore Diet & Nutrition</a>
-  </div>
-</section>
-  
-  <!-- Sessions -->
-  <section id="sessions" aria-labelledby="sessions-heading" data-aos="fade-up">
-    <h2 id="sessions-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Sessions</h2>
-    <div class="cards">
-      <article class="card" data-aos="flip-left" aria-label="Ayurveda Guidance">
-        <h3>Ayurveda Guidance</h3>
-        <p>Consultations on diet, lifestyle, and natural remedies rooted in Ayurveda.</p>
-      </article>
-      <article class="card" data-aos="flip-right" aria-label="Yoga Classes">
-        <h3>Counseling Session</h3>
-        <p>A safe and supportive space to share, heal, and grow with personalized guidance</p>
-      </article>
-      <article class="card" data-aos="flip-right" aria-label="Yoga Classes">
-        <h3>Diet & Nutrition</h3>
-        <p>Personalised, evidence-informed meal planning and sattvik-aware dietary guidance for everyday energy and long-term wellbeing.</p>
-      </article>
-      <article class="card" data-aos="flip-right" aria-label="Yoga Classes">
-        <h3>Yoga Session</h3>
-        <p>Personalized Yoga sessions to build strength, flexibility, and inner calm.</p>
-      </article>
-      <article class="card" data-aos="flip-up" aria-label="Meditation">
-        <h3>Meditation</h3>
-        <p>Learn meditation techniques for clarity, mindfulness, and spiritual growth.</p>
-      </article>
-      <article class="card" data-aos="flip-right" aria-label="Mantra Session">
-    <h3>Mantra Session</h3>
-    <p>Experience the power of sacred sounds to calm the mind, uplift the spirit, and deepen inner connection</p>
-</article>
-     </div>
-   
-    <div style="text-align:center; margin-top:2rem;">
-      <a href="sessions.html" class="btn">Explore All Sessions</a>
-    </div>
-  </section>
-
-  <!-- Gallery (preview only; non-clickable) -->
-  <section id="gallery" aria-labelledby="gallery-heading" data-aos="fade-up">
-    <h2 id="gallery-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Gallery</h2>
-    <div class="gallery" aria-label="Photo tiles (non-interactive on home)">
-      <figure><img src="your-image1.jpg" alt="Meditative posture" loading="lazy" decoding="async" /></figure>
-      <figure><img src="your-image2.jpg" alt="Close-up of Ayurvedic herbs" loading="lazy" decoding="async" /></figure>
-      <figure><img src="your_image3.jpg" alt="Yoga practice at sunrise" loading="lazy" decoding="async" /></figure>
-    </div>
-  </section>
-
-  <!-- Upcoming Trips -->
-  <section id="trips" class="yatra" aria-labelledby="trips-heading" data-aos="fade-up">
-    <h2 id="trips-heading" style="font-family:'Playfair Display',serif; font-size:2.2rem; color:var(--green-dark); margin-bottom:1rem;">Upcoming Trips</h2>
-    <div class="swiper yatra-swiper" aria-label="Upcoming Trips slider" style="max-width:700px; margin:auto;">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Rishikesh</div>
-        <div class="swiper-slide">Rikhiapeeth</div>
-        <div class="swiper-slide">Trambakeshwar, Nashik</div>
-        <div class="swiper-slide">Bihar School of Yoga</div>
-      </div>
-      <div class="swiper-pagination" aria-label="Trips slider pagination"></div>
-    </div>
-    <a href="trips.html" class="btn" style="margin-top:2rem;">View My Past Journeys</a>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" data-aos="fade-up">
-    <h2 id="testimonials-heading" style="font-family:'Playfair Display',serif; margin-bottom:2rem;">Testimonials</h2>
-    <div class="swiper testimonials-swiper" aria-label="Testimonials slider">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">“Harsh’s sessions brought me peace, focus, and a healthier lifestyle. Truly transformative!”</div>
-        <div class="swiper-slide">“The perfect blend of Ayurveda &amp; Yoga. His teachings changed my daily routine for the better.”</div>
-        <div class="swiper-slide">“A genuine guide on wellness. Harsh connects spiritual practices with modern living beautifully.”</div>
-      </div>
-      <div class="swiper-pagination" aria-label="Testimonials slider pagination" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- Contact (FORM KEPT) -->
-  <section id="contact" aria-labelledby="contact-heading" data-aos="fade-up">
-    <h2 id="contact-heading" style="font-family:'Playfair Display',serif; text-align:center; margin-bottom:2rem; color: var(--green-dark);">Contact Me</h2>
-
-    <form id="contactForm" action="https://formspree.io/f/mqadzvad" method="POST" class="contact-wrap" novalidate>
-      <div>
-        <label for="name">Your Name</label>
-        <input id="name" type="text" name="name" placeholder="Your Name" required autocomplete="name" />
-      </div>
-      <div>
-        <label for="email">Your Email</label>
-        <input id="email" type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
-      </div>
-      <div>
-        <label for="message">Your Message</label>
-        <textarea id="message" name="message" placeholder="How can I help you?" rows="5" required></textarea>
-      </div>
-
-      <!-- Honeypot -->
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute; left:-9999px; opacity:0;" aria-hidden="true" />
-
-      <button type="submit" class="btn" id="submitBtn" style="position:relative; align-self:flex-start;">
-        <span id="btnText">Send Message</span>
-        <span id="btnSpinner" style="display:none; width:18px; height:18px; border:3px solid #fff; border-top:3px solid transparent; border-radius:50%; position:absolute; right:15px; top:50%; transform:translateY(-50%); animation:spin 1s linear infinite;"></span>
-      </button>
-
-      <p id="thankYouMessage" style="opacity:0; transition:opacity 1s ease; text-align:left; color:var(--green-main); font-weight:700; margin-top:.5rem;" aria-live="polite">✅ Thanks! Your message has been sent successfully.</p>
-      <p id="errorMessage" style="opacity:0; transition:opacity 1s ease; text-align:left; color:#c0392b; font-weight:700; margin-top:.5rem;" aria-live="assertive">❌ Oops! Something went wrong. Please try again.</p>
-    </form>
-  </section>
-
-  <!-- Footer -->
   <footer>
-    <p>© <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-    <p>
-      <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">Instagram</a> |
-      <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube channel">YouTube</a> |
-      <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">LinkedIn</a>
-    </p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Harsh Ranjan (Samarpan)</h3>
+        <p>Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="sessions.html">Sessions</a></li>
+          <li><a href="ayurveda.html">Ayurveda</a></li>
+          <li><a href="psychology.html">Psychology</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul class="footer-links">
+          <li><a href="ayurveda.html">Ayurveda Consultations</a></li>
+          <li><a href="form.html">Yoga Therapy</a></li>
+          <li><a href="diet.html">Diet & Nutrition</a></li>
+          <li><a href="sessions.html">Wellness Programs</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <div class="social-links">
+          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">📷</a>
+          <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">📺</a>
+          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+      <p>Empowering holistic wellness worldwide</p>
+    </div>
   </footer>
 
-  <!-- Scroll-to-Top -->
-  <button id="scrollTopBtn" aria-label="Scroll to top" title="Back to top">↑</button>
-
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Person",
-    "name":"Harsh Ranjan (Samarpan)",
-    "description":"Ayurveda and Yoga practitioner; Research Scholar at JNU.",
-    "url":"https://theharshranjan.github.io/",
-    "image":"https://theharshranjan.github.io/assets/logo.png",
-    "sameAs":[
-      "https://www.instagram.com/justtheself/",
-      "https://www.youtube.com/@theharshranjan",
-      "https://www.linkedin.com/in/theharshranjanofficial/"
-    ]
-  }
-  </script>
-
-  <!-- JS Libraries (deferred) -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" defer></script>
-
-  <!-- App Scripts -->
   <script defer>
-    function setTheme(mode){
-      const root=document.documentElement;
-      root.setAttribute('data-theme', mode==='dark'?'dark':'light');
-      localStorage.setItem('theme', mode);
-      const toggle=document.getElementById('themeToggle');
-      if(toggle){
-        const isDark=mode==='dark';
-        toggle.setAttribute('aria-pressed', String(isDark));
-        toggle.textContent=isDark?'☀️':'🌙';
-        toggle.title=isDark?'Switch to light mode':'Switch to dark mode';
-        const metaTheme=document.querySelector('meta[name="theme-color"]');
-        if(metaTheme) metaTheme.setAttribute('content', isDark ? '#0f1a12' : '#609966');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const menuToggle = document.getElementById('menuToggle');
+    const menuClose = document.getElementById('menuClose');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const body = document.body;
+
+    const openMenu = () => {
+      mobileMenu.classList.add('active');
+      menuToggle.classList.add('active');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      body.classList.add('menu-open');
+    };
+
+    const closeMenu = () => {
+      mobileMenu.classList.remove('active');
+      menuToggle.classList.remove('active');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      body.classList.remove('menu-open');
+    };
+
+    menuToggle.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
       }
-    }
+    });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Year
-      const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+    menuClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
+    });
 
-      // Theme
-      const saved=localStorage.getItem('theme'); setTheme(saved==='dark'?'dark':'light');
-      document.getElementById('themeToggle')?.addEventListener('click', ()=>{
-        const current=document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light';
-        setTheme(current==='dark'?'light':'dark');
-      });
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
 
-      // AOS
-      if(window.AOS) AOS.init({ duration:900, once:true });
-
-      // Swipers
-      if(window.Swiper){
-        new Swiper('.testimonials-swiper',{
-          loop:true,
-          autoplay:{delay:3000,disableOnInteraction:false},
-          pagination:{el:'.testimonials .swiper-pagination', clickable:true}
-        });
-        new Swiper('.yatra-swiper',{
-          loop:true,
-          autoplay:{delay:2500,disableOnInteraction:false},
-          pagination:{el:'.yatra .swiper-pagination', clickable:true}
-        });
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+        closeMenu();
       }
+    });
 
-      // Scroll-to-top
-      const scrollBtn=document.getElementById('scrollTopBtn');
-      const onScrollTopBtn=()=>{ (window.scrollY>200) ? scrollBtn.classList.add('show') : scrollBtn.classList.remove('show'); };
-      window.addEventListener('scroll', onScrollTopBtn, { passive:true });
-      scrollBtn?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-
-      // Progress bar
-      const progress=document.getElementById('scrollProgress');
-      const onScrollProgress=()=>{
-        const doc=document.documentElement;
-        const scrollTop=doc.scrollTop||document.body.scrollTop;
-        const height=doc.scrollHeight-doc.clientHeight;
-        const pct=height>0?(scrollTop/height)*100:0;
-        progress.style.width=pct+'%';
-      };
-      window.addEventListener('scroll', onScrollProgress, { passive:true }); onScrollProgress();
-
-      // Scroll spy (in-page only)
-      const navLinks=Array.from(document.querySelectorAll('.nav-links a[href^="#"], .mobile-menu a[href^="#"]'));
-      const sections=Array.from(document.querySelectorAll('main[id], section[id]'));
-      const linkMap=new Map(navLinks.map(a=>[a.getAttribute('href').slice(1), a]));
-      const clearCurrent=()=>navLinks.forEach(a=>a.removeAttribute('aria-current'));
-      const io=new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          const id=entry.target.getAttribute('id'); const link=linkMap.get(id); if(!link) return;
-          if(entry.isIntersecting){
-            navLinks.forEach(a=>a.classList.remove('active'));
-            clearCurrent();
-            link.classList.add('active');
-            link.setAttribute('aria-current','page');
-          }
-        });
-      },{ rootMargin:'-45% 0px -45% 0px', threshold:0.01 });
-      sections.forEach(sec=>io.observe(sec));
-
-      // Contact form
-      const form=document.getElementById('contactForm');
-      const thankYou=document.getElementById('thankYouMessage');
-      const errorMsg=document.getElementById('errorMessage');
-      const submitBtn=document.getElementById('submitBtn');
-      const btnText=document.getElementById('btnText');
-      const btnSpinner=document.getElementById('btnSpinner');
-      const show=el=>el.style.opacity='1';
-      const hide=el=>el.style.opacity='0';
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        if(!form.checkValidity()){ form.reportValidity(); return; }
-        const formData=new FormData(form);
-        hide(thankYou); hide(errorMsg);
-        submitBtn.disabled=true; btnText.textContent='Sending...'; btnSpinner.style.display='inline-block';
-        try{
-          const response=await fetch(form.action,{method:form.method, body:formData, headers:{'Accept':'application/json'}});
-          if(response.ok){ form.reset(); show(thankYou); thankYou.scrollIntoView({behavior:'smooth', block:'nearest'}); setTimeout(()=>hide(thankYou),3500); }
-          else{ throw new Error('Network error'); }
-        }catch(err){
-          show(errorMsg); errorMsg.scrollIntoView({behavior:'smooth', block:'nearest'}); setTimeout(()=>hide(errorMsg),3500);
-        }finally{
-          submitBtn.disabled=false; btnText.textContent='Send Message'; btnSpinner.style.display='none';
-        }
-      });
-
-      // Mobile menu (robust iPhone fix)
-      const menuToggle = document.getElementById('menuToggle');
-      const mobilePanel = document.getElementById('mobilePanel');
-      const mobileMenu  = document.getElementById('mobileMenu');
-      const backdrop    = document.getElementById('mobileBackdrop');
-
-      const focusableSel='a[href], button:not([disabled])';
-      let lastFocused=null;
-      let isAnimating=false;
-
-      function trapFocus(e){
-        const focusables=mobilePanel.querySelectorAll(focusableSel);
-        if(!focusables.length) return;
-        const first=focusables[0]; const last=focusables[focusables.length-1];
-        if(e.key==='Tab'){
-          if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-          else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
-        }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        closeMenu();
       }
-
-      function showBackdrop(){
-        backdrop.removeAttribute('hidden');
-        // force a frame so the transition runs
-        requestAnimationFrame(()=>backdrop.classList.add('active'));
-      }
-      function hideBackdrop(){
-        backdrop.classList.remove('active');
-        const end=()=>backdrop.setAttribute('hidden','');
-        backdrop.addEventListener('transitionend', end, { once:true });
-        setTimeout(end, 250);
-      }
-
-      function openMenu(){
-        if(isAnimating) return; isAnimating=true; setTimeout(()=>isAnimating=false, 350);
-        lastFocused=document.activeElement;
-        document.body.classList.add('nav-open');
-        mobilePanel.removeAttribute('hidden');
-        showBackdrop();
-        requestAnimationFrame(()=>mobilePanel.classList.add('open'));
-        menuToggle.setAttribute('aria-expanded','true');
-        menuToggle.setAttribute('aria-label','Close menu');
-        mobilePanel.addEventListener('keydown', trapFocus);
-        mobileMenu.querySelector('a')?.focus({ preventScroll:true });
-      }
-      function closeMenu(){
-        if(isAnimating) return; isAnimating=true; setTimeout(()=>isAnimating=false, 350);
-        document.body.classList.remove('nav-open');
-        mobilePanel.classList.remove('open');
-        hideBackdrop();
-        const end=()=>{ mobilePanel.setAttribute('hidden',''); };
-        mobilePanel.addEventListener('transitionend', end, { once:true });
-        setTimeout(end, 300);
-        menuToggle.setAttribute('aria-expanded','false');
-        menuToggle.setAttribute('aria-label','Open menu');
-        mobilePanel.removeEventListener('keydown', trapFocus);
-        lastFocused && lastFocused.focus({ preventScroll:true });
-      }
-
-      menuToggle.addEventListener('click', ()=> mobilePanel.classList.contains('open') ? closeMenu() : openMenu());
-
-      // Close on overlay tap or link tap
-      backdrop.addEventListener('click', closeMenu);
-      mobileMenu.addEventListener('click', (e)=>{ if(e.target.closest('a')) closeMenu(); });
-
-      // Close on Esc
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && !mobilePanel.hasAttribute('hidden')) closeMenu(); });
-
-      // Clean reset when leaving mobile breakpoint
-      const mq = window.matchMedia('(max-width: 900px)');
-      mq.addEventListener?.('change', ()=> {
-        if(!mq.matches){
-          mobilePanel.classList.remove('open');
-          mobilePanel.setAttribute('hidden','');
-          backdrop.classList.remove('active');
-          backdrop.setAttribute('hidden','');
-          document.body.classList.remove('nav-open');
-          menuToggle.setAttribute('aria-expanded','false');
-          menuToggle.setAttribute('aria-label','Open menu');
-          mobilePanel.removeEventListener('keydown', trapFocus);
-        }
-      });
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
