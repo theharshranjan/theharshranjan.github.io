@@ -1079,66 +1079,96 @@
   </footer>
 
   <script defer>
-    document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile Menu
-    const menuToggle = document.getElementById('menuToggle');
-    const menuClose = document.getElementById('menuClose');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const body = document.body;
+  // Mobile Menu - Fixed Version
+  const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const body = document.body;
 
-    const openMenu = () => {
-      mobileMenu.classList.add('active');
-      menuToggle.classList.add('active');
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      body.classList.add('menu-open');
-    };
+  // Prevent event propagation issues
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
 
-    const closeMenu = () => {
-      mobileMenu.classList.remove('active');
-      menuToggle.classList.remove('active');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      body.classList.remove('menu-open');
-    };
+  menuClose.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    closeMenu();
+  });
 
-    menuToggle.addEventListener('click', openMenu);
-    menuClose.addEventListener('click', closeMenu);
-
-    document.querySelectorAll('.mobile-menu a').forEach(link => {
-      link.addEventListener('click', closeMenu);
+  // Close menu when clicking on mobile menu links
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMenu();
     });
+  });
 
-    document.addEventListener('click', (e) => {
-      if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (mobileMenu.classList.contains('active')) {
+      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
         closeMenu();
       }
-    });
+    }
+  });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-        closeMenu();
+  // Close menu with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+      closeMenu();
+    }
+  });
+
+  // Toggle menu function
+  function toggleMenu() {
+    if (mobileMenu.classList.contains('active')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+
+  // Open menu function
+  function openMenu() {
+    mobileMenu.classList.add('active');
+    menuToggle.classList.add('active');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    body.classList.add('menu-open');
+  }
+
+  // Close menu function
+  function closeMenu() {
+    mobileMenu.classList.remove('active');
+    menuToggle.classList.remove('active');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    body.classList.remove('menu-open');
+  }
+
+  // FAQ Accordion
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      const wasActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      if (!wasActive) {
+        item.classList.add('active');
       }
     });
+  });
 
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', () => {
-        const item = button.parentElement;
-        const wasActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-        if (!wasActive) {
-          item.classList.add('active');
-        }
-      });
-    });
+  // Payment Modal (if exists on page)
+  const floatingBtn = document.getElementById('floatingBtn');
+  const paymentModal = document.getElementById('paymentModal');
+  const modalClose = document.getElementById('modalClose');
 
-    // Payment Modal
-    const floatingBtn = document.getElementById('floatingBtn');
-    const paymentModal = document.getElementById('paymentModal');
-    const modalClose = document.getElementById('modalClose');
-
+  if (floatingBtn && paymentModal) {
     floatingBtn.addEventListener('click', () => {
       paymentModal.classList.add('show');
     });
@@ -1158,6 +1188,54 @@
         paymentModal.classList.remove('show');
       }
     });
-  </script>
+  }
+
+  // Testimonials Carousel (if exists on page)
+  const testimonialCarousel = document.getElementById('testimonialCarousel');
+  if (testimonialCarousel) {
+    const testimonialItems = testimonialCarousel.querySelectorAll('.testimonial-item');
+    let currentTestimonial = 0;
+
+    function showTestimonial(index) {
+      testimonialItems.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    function nextTestimonial() {
+      currentTestimonial = (currentTestimonial + 1) % testimonialItems.length;
+      showTestimonial(currentTestimonial);
+    }
+
+    setInterval(nextTestimonial, 8000);
+  }
+
+  // Trips Carousel (if exists on page)
+  const tripsCarousel = document.getElementById('tripsCarousel');
+  if (tripsCarousel) {
+    const tripItems = tripsCarousel.querySelectorAll('.trip-item');
+    let currentTrip = 0;
+
+    function showTrip(index) {
+      tripItems.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    function nextTrip() {
+      currentTrip = (currentTrip + 1) % tripItems.length;
+      showTrip(currentTrip);
+    }
+
+    setInterval(nextTrip, 5000);
+  }
+</script>
+
 </body>
 </html>
