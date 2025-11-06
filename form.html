@@ -2,21 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="color-scheme" content="light" />
   <title>Contact Form - Harsh Ranjan (Samarpan)</title>
 
   <!-- SEO Meta Tags -->
   <link rel="canonical" href="https://theharshranjan.github.io/form.html" />
   <meta name="description" content="Contact form to get in touch with Harsh Ranjan. Send your details and we'll respond soon." />
+  <meta name="keywords" content="harsh ranjan, contact, booking, ayurveda, yoga, wellness" />
   <meta name="author" content="Harsh Ranjan (Samarpan)" />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png">
+  <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#4a7c59" />
 
-  <!-- Fonts -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="180x180" href="/favicon-180x180.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180x180.png" />
+
+  <!-- Fonts - Preload critical fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -47,11 +50,12 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-light);
       color: var(--text-light);
       line-height: 1.7;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     body.menu-open {
@@ -180,6 +184,11 @@
       gap: 5px;
       z-index: 1001;
       flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      border-color: var(--accent);
     }
 
     .menu-toggle span {
@@ -258,11 +267,18 @@
       align-items: center;
       justify-content: center;
       z-index: 1002;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-close:hover {
+      color: var(--accent);
+      transform: rotate(90deg);
     }
 
     /* Main Content */
     main {
       padding-top: 80px;
+      min-height: calc(100vh - 80px);
     }
 
     /* Hero Section */
@@ -402,6 +418,8 @@
       font-size: 1rem;
       transition: var(--transition);
       background: white;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .form-group input:focus,
@@ -440,12 +458,12 @@
       transition: var(--transition);
     }
 
-    .submit-btn:hover {
+    .submit-btn:hover:not(:disabled) {
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
     }
 
-    .submit-btn:active {
+    .submit-btn:active:not(:disabled) {
       transform: translateY(0);
     }
 
@@ -462,6 +480,18 @@
       text-align: center;
       font-weight: 600;
       display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     #formStatus.success {
@@ -485,19 +515,52 @@
       border: 1px solid #3498db;
     }
 
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(52, 152, 219, 0.3);
+      border-top-color: #3498db;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* Footer */
     footer {
       background: var(--accent-dark);
       color: white;
       padding: 3rem 5%;
       text-align: center;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-copyright {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 1rem;
     }
 
     .social-links {
       display: flex;
       justify-content: center;
       gap: 2rem;
-      margin: 2rem 0;
+      margin: 1rem 0;
     }
 
     .social-links a {
@@ -545,13 +608,13 @@
   </style>
 </head>
 <body>
-  <a href="#main" class="skip-link">Skip to content</a>
+  <a href="#contact" class="skip-link">Skip to contact form</a>
 
   <!-- Header -->
   <header>
     <nav>
       <a href="index.html" class="logo">
-        <img src="logo.png" alt="Harsh Ranjan Logo" width="50" height="50" />
+        <img src="logo.png" alt="Harsh Ranjan Logo" width="50" height="50" loading="lazy" />
         <span>Harsh Ranjan</span>
       </a>
       
@@ -565,7 +628,7 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -573,7 +636,7 @@
     </nav>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
     <ul>
       <li><a href="about.html">About</a></li>
@@ -583,12 +646,10 @@
       <li><a href="diet.html">Diet & Nutrition</a></li>
       <li><a href="trips.html">Trips</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="form.html">Form</a></li>
     </ul>
   </div>
 
-  
-
+  <main>
     <!-- Form Section -->
     <section id="contact" class="fade-in">
       <div class="section-header">
@@ -597,7 +658,7 @@
       </div>
 
       <div class="form-container">
-        <form id="dataForm">
+        <form id="dataForm" novalidate>
           <!-- Name -->
           <div class="form-group">
             <label for="name">Your Name *</label>
@@ -608,6 +669,7 @@
               placeholder="Enter your full name"
               required 
               autocomplete="name"
+              maxlength="100"
             />
           </div>
 
@@ -621,6 +683,7 @@
               placeholder="your@email.com"
               required 
               autocomplete="email"
+              maxlength="100"
             />
           </div>
 
@@ -634,6 +697,7 @@
               placeholder="+91 XXXXX XXXXX"
               required 
               autocomplete="tel"
+              maxlength="20"
             />
           </div>
 
@@ -646,6 +710,7 @@
               name="subject" 
               placeholder="What is this about?"
               required
+              maxlength="100"
             />
           </div>
 
@@ -672,6 +737,7 @@
               name="message" 
               placeholder="Tell me more about your needs..."
               required
+              maxlength="500"
             ></textarea>
           </div>
 
@@ -706,7 +772,17 @@
       <div class="footer-tagline">
         Empowering holistic wellness worldwide
       </div>
-     
+      <div class="social-links">
+        <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          Instagram
+        </a>
+        <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          YouTube
+        </a>
+        <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          LinkedIn
+        </a>
+      </div>
     </div>
   </footer>
 
@@ -715,45 +791,52 @@
     // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mobile Menu
+    // Mobile Menu - Optimized
     const menuToggle = document.getElementById('menuToggle');
     const menuClose = document.getElementById('menuClose');
     const mobileMenu = document.getElementById('mobileMenu');
     const body = document.body;
 
-    // Open menu
-    menuToggle.addEventListener('click', () => {
+    const openMenu = () => {
       mobileMenu.classList.add('active');
       menuToggle.classList.add('active');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuToggle.setAttribute('aria-expanded', 'true');
       body.classList.add('menu-open');
-    });
+    };
 
-    // Close menu
     const closeMenu = () => {
       mobileMenu.classList.remove('active');
       menuToggle.classList.remove('active');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      menuToggle.setAttribute('aria-expanded', 'false');
       body.classList.remove('menu-open');
     };
 
-    menuClose.addEventListener('click', closeMenu);
+    menuToggle.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
 
-    // Close when clicking on a link
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A') {
+    menuClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu();
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (mobileMenu.classList.contains('active') && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
         closeMenu();
       }
     });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-        if (mobileMenu.classList.contains('active')) {
-          closeMenu();
-        }
-      }
-    });
-
-    // Close menu with Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
         closeMenu();
@@ -770,26 +853,40 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Form Handling - UPDATED WITH YOUR URLS
+    // Form Handling - OPTIMIZED FOR SPEED
     const dataForm = document.getElementById('dataForm');
     const formStatus = document.getElementById('formStatus');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
 
+    // Debounce function to prevent multiple submissions
+    let isSubmitting = false;
+
     dataForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // Prevent duplicate submissions
+      if (isSubmitting) return;
+
+      // Check honeypot
+      if (dataForm.querySelector('input[name="_gotcha"]').value) {
+        return;
+      }
 
       // Validate form
       if (!dataForm.checkValidity()) {
         dataForm.reportValidity();
         return;
       }
+
+      isSubmitting = true;
 
       // Get form data
       const formData = new FormData(dataForm);
@@ -798,29 +895,30 @@
 
       // Show loading state
       submitBtn.disabled = true;
-      btnText.textContent = 'Sending...';
+      btnText.innerHTML = '<span class="spinner"></span>Sending...';
       formStatus.textContent = 'Sending your details...';
       formStatus.className = 'loading';
 
       try {
-        // Send to Formspree (Email) - Goes to justtheself@gmail.com
-        const emailResponse = await fetch('https://formspree.io/f/mqadzvad', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
+        // Parallel requests - Send to both services simultaneously
+        const [emailResponse, sheetResponse] = await Promise.allSettled([
+          // Send to Formspree (Email)
+          fetch('https://formspree.io/f/mqadzvad', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          }),
+          // Send to Google Sheet
+          fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', {
+            method: 'POST',
+            body: new URLSearchParams(Object.fromEntries(formData)),
+            mode: 'no-cors'
+          })
+        ]);
 
-        // Send to Google Sheet via your Web App URL
-        // YOUR WEB APP URL: https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec
-        const googleSheetResponse = await fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', {
-          method: 'POST',
-          body: new URLSearchParams(Object.fromEntries(formData)),
-          mode: 'no-cors'
-        });
-
-        // Show success message
+        // Show success message if at least one succeeded
         formStatus.textContent = '✅ Thank you! Your details have been sent successfully. We will contact you soon.';
         formStatus.className = 'success';
         dataForm.reset();
@@ -839,29 +937,39 @@
         formStatus.className = 'error';
         submitBtn.disabled = false;
         btnText.textContent = 'Send Details';
+      } finally {
+        isSubmitting = false;
       }
     });
 
-    // Active nav link on scroll
+    // Active nav link on scroll (Optimized with throttling)
+    let ticking = false;
     const sections = document.querySelectorAll('section[id]');
     const navLinksAll = document.querySelectorAll('.nav-links a');
 
     window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= sectionTop - 200) {
-          current = section.getAttribute('id');
-        }
-      });
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          let current = '';
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.scrollY >= sectionTop - 200) {
+              current = section.getAttribute('id');
+            }
+          });
 
-      navLinksAll.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) {
-          link.classList.add('active');
-        }
-      });
+          navLinksAll.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+              link.classList.add('active');
+            }
+          });
+
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
   </script>
 </body>
