@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light" />
   <title>Diet & Nutrition — Harsh Ranjan (Samarpan) | Wellness Nutrition Guidance</title>
 
-  <!-- Google Analytics - Measurement ID: G-HMM7CJSCW7 -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -28,7 +28,7 @@
   <meta name="language" content="English" />
   <meta name="revisit-after" content="7 days" />
 
-  <!-- Favicon - All Sizes -->
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -61,7 +61,7 @@
   <meta property="linkedin:url" content="https://theharshranjan.github.io/diet.html" />
   <meta property="linkedin:title" content="Diet & Nutrition — Harsh Ranjan (Samarpan)" />
 
-  <!-- Font Preconnect for Performance -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -166,6 +166,11 @@
       justify-content: center;
       flex: 1 1 auto;
       margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      list-style: none;
     }
 
     .nav-links a {
@@ -234,6 +239,26 @@
 
     main { padding-top: 80px; }
 
+    /* MOBILE MENU OVERLAY */
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 997;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* MOBILE MENU */
     .mobile-menu {
       position: fixed;
       top: 0;
@@ -264,7 +289,6 @@
 
     .mobile-menu li {
       list-style: none;
-      margin: 0;
     }
 
     .mobile-menu a {
@@ -305,24 +329,6 @@
     .mobile-menu-close:hover {
       color: var(--accent);
       transform: rotate(90deg);
-    }
-
-    .mobile-menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 997;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .mobile-menu-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
     }
 
     /* HERO */
@@ -1206,6 +1212,7 @@
     </div>
   </footer>
 
+  <!-- MAIN SCRIPT - WORKING MENU CODE FOR ALL DEVICES -->
   <script>
     (function() {
       'use strict';
@@ -1217,18 +1224,25 @@
         console.error('Year element not found:', e);
       }
 
-      // Menu Management
+      // Get all elements
       const menuToggle = document.getElementById('menuToggle');
       const menuClose = document.getElementById('menuClose');
       const mobileMenu = document.getElementById('mobileMenu');
       const menuOverlay = document.getElementById('mobileMenuOverlay');
       const body = document.body;
 
-      if (!menuToggle || !menuClose || !mobileMenu) {
-        console.error('Menu elements not found');
+      // Exit if elements missing
+      if (!menuToggle || !menuClose || !mobileMenu || !menuOverlay) {
+        console.error('Menu elements not found. Check IDs:', {
+          menuToggle: !!menuToggle,
+          menuClose: !!menuClose,
+          mobileMenu: !!mobileMenu,
+          menuOverlay: !!menuOverlay
+        });
         return;
       }
 
+      // Toggle menu
       const openMenu = () => {
         try {
           mobileMenu.classList.add('active');
@@ -1255,17 +1269,24 @@
         }
       };
 
-      // Event Listeners
-      menuToggle.addEventListener('click', openMenu);
+      // Event listeners
+      menuToggle.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
       menuClose.addEventListener('click', closeMenu);
       menuOverlay.addEventListener('click', closeMenu);
 
-      // Close menu when link clicked
+      // Close on link click
       document.querySelectorAll('.mobile-menu a').forEach(link => {
         link.addEventListener('click', closeMenu);
       });
 
-      // Close menu on outside click
+      // Close on outside click
       document.addEventListener('click', (e) => {
         if (mobileMenu.classList.contains('active') && 
             !mobileMenu.contains(e.target) && 
@@ -1274,14 +1295,14 @@
         }
       });
 
-      // Close menu on Escape key
+      // Close on Escape
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
           closeMenu();
         }
       });
 
-      // Floating Button - Show on scroll
+      // Floating button - Show on scroll
       const floatingBtn = document.getElementById('floatingBtn');
       const heroSection = document.querySelector('.hero');
 
