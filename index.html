@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO & Social Sharing -->
+    <!-- SEO -->
     <title>Harsh Ranjan | Integrative Health & Wellness</title>
     <meta name="description" content="Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.">
-    
-    <!-- Browser Tab Logo (Favicon) matches Website Logo -->
+
+    <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
 
     <!-- Libraries -->
@@ -35,19 +35,15 @@
         .serif { font-family: 'Cormorant Garamond', serif; }
         .logo-font { font-family: 'Cinzel', serif; }
         
-        /* Animations */
+        /* Reveal Animations */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
 
-        /* Calendar */
+        /* Calendar Styles */
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
         .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
         .calendar-day:hover:not(.disabled) { background: #e5e7eb; }
         .calendar-day.selected { background: var(--color-terra); color: white; }
-
-        /* Chat Widget */
-        .chat-widget { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; opacity: 0; pointer-events: none; transform: scale(0.9) translateY(20px); }
-        .chat-widget.open { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
 
         /* AI Tabs */
         .ai-tab { cursor: pointer; transition: all 0.3s; opacity: 0.6; border-bottom: 2px solid transparent; }
@@ -59,62 +55,70 @@
 
         /* Photo Frame */
         .photo-container { position: relative; padding: 20px; }
-        .photo-frame { position: relative; z-index: 2; border-radius: 4px; overflow: hidden; box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3); }
-        .photo-border { position: absolute; top: 0; left: 40px; right: 0; bottom: -30px; border: 1.5px solid #C88D72; z-index: 1; border-radius: 4px; }
-        
-        /* Mobile Menu Transition */
+        .photo-frame { 
+            position: relative; z-index: 2; 
+            border-radius: 4px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.3); 
+        }
+        .photo-border { 
+            position: absolute; top: 0; left: 40px; right: 0; bottom: -30px; 
+            border: 1.5px solid #C88D72; z-index: 1; 
+            border-radius: 4px;
+        }
+
+        /* Mobile Menu Animation */
         #mobile-menu { transition: transform 0.3s ease-in-out; }
-        #mobile-menu.hidden-menu { transform: translateX(100%); }
-        #mobile-menu.visible-menu { transform: translateX(0); }
+        .hidden-menu { transform: translateX(100%); }
+        .visible-menu { transform: translateX(0); }
     </style>
 </head>
 <body class="antialiased selection:bg-[#C88D72] selection:text-white">
 
     <!-- Navigation -->
-    <!-- Added a subtle gradient background so logo is always visible -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-3 text-white border-b border-white/10 bg-gradient-to-b from-black/60 to-transparent">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/20 backdrop-blur-md">
         <div class="container mx-auto px-6 flex justify-between items-center">
             
-            <!-- LOGO -->
-            <a href="#" class="group flex flex-col items-center justify-center pt-1">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
+            <!-- LOGO (Increased Visibility) -->
+            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
+                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500 drop-shadow-lg">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="2" stroke-opacity="0.8"/>
                 </svg>
                 <div class="flex items-center gap-2 opacity-100">
-                    <span id="logo-text" class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] font-bold group-hover:text-[#C88D72] transition drop-shadow-sm">Samarpan</span>
+                    <span id="logo-text" class="text-[12px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] font-bold group-hover:text-[#C88D72] transition drop-shadow-md">Samarpan</span>
                 </div>
             </a>
             
-            <!-- Desktop Menu (Restored Previous Links) -->
+            <!-- Desktop Menu -->
             <div class="hidden lg:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest nav-links-container">
-                <a href="#about" class="hover:text-[#C88D72] transition drop-shadow-sm">About</a>
-                <a href="#sessions" class="text-[#C88D72] hover:text-white transition drop-shadow-sm">Sessions</a>
-                <a href="#ayurveda" class="hover:text-[#C88D72] transition drop-shadow-sm">Ayurveda</a>
-                <a href="#psychology" class="hover:text-[#C88D72] transition drop-shadow-sm">Psychology</a>
-                <a href="#blog" class="hover:text-[#C88D72] transition drop-shadow-sm">Blog</a>
-                <a href="#nutrition" class="hover:text-[#C88D72] transition drop-shadow-sm">Diet</a>
-                <a href="#contact" class="px-5 py-1.5 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm drop-shadow-sm">Contact</a>
+                <a href="about.html" class="hover:text-[#C88D72] transition drop-shadow-sm">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Ayurveda</a>
+                <a href="psychology.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Psychology</a>
+                <a href="blog.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Diet</a>
+                <a href="contact.html" class="px-6 py-2 border border-white/40 hover:bg-white hover:text-black transition duration-300 rounded-sm drop-shadow-sm">Contact</a>
             </div>
 
             <!-- Mobile Toggle -->
-            <button id="mobile-menu-btn" class="lg:hidden text-white p-2 z-50 relative">
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2 z-50 relative cursor-pointer">
                 <i data-lucide="menu" class="w-8 h-8 drop-shadow-md"></i>
             </button>
         </div>
         
-        <!-- Mobile Menu (Fixed Z-Index and Visibility) -->
-        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 h-screen w-screen">
-            <button id="close-menu-btn" class="absolute top-6 right-6 p-2"><i data-lucide="x" class="w-8 h-8 text-[#C88D72]"></i></button>
-            <a href="#about" class="text-3xl serif mobile-link">About</a>
-            <a href="#sessions" class="text-3xl serif mobile-link text-[#C88D72]">Sessions</a>
-            <a href="#ayurveda" class="text-3xl serif mobile-link">Ayurveda</a>
-            <a href="#psychology" class="text-3xl serif mobile-link">Psychology</a>
-            <a href="#blog" class="text-3xl serif mobile-link">Blog</a>
-            <a href="#nutrition" class="text-3xl serif mobile-link">Diet</a>
-            <a href="#contact" class="text-3xl serif mobile-link">Contact</a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-[60] hidden-menu flex flex-col justify-center items-center space-y-8 h-screen w-screen">
+            <button id="close-menu-btn" class="absolute top-6 right-6 p-2 cursor-pointer"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
+            <a href="about.html" class="text-3xl serif mobile-link">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link text-[#C88D72]">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
+            <a href="nutrition.html" class="text-3xl serif mobile-link">Diet</a>
+            <a href="contact.html" class="text-3xl serif mobile-link">Contact</a>
         </div>
     </nav>
 
@@ -144,7 +148,7 @@
             </p>
             
             <div class="reveal-up flex flex-col sm:flex-row gap-5 justify-center">
-                <a href="#sessions" class="px-10 py-4 bg-[#C88D72] text-white uppercase tracking-widest text-xs font-bold hover:bg-[#A6755E] transition-colors shadow-2xl rounded-sm flex items-center justify-center">
+                <a href="contact.html" class="px-10 py-4 bg-[#C88D72] text-white uppercase tracking-widest text-xs font-bold hover:bg-[#A6755E] transition-colors shadow-2xl rounded-sm flex items-center justify-center">
                     Start Your Journey
                 </a>
                 <a href="#ai-lab" class="px-10 py-4 bg-white text-black uppercase tracking-widest text-xs font-bold hover:bg-gray-200 transition-colors rounded-sm flex items-center justify-center gap-2 shadow-xl">
@@ -158,14 +162,14 @@
         </div>
     </header>
 
-    <!-- About Section -->
+    <!-- About Section (Rectangle Frame) -->
     <section id="about" class="py-32 bg-[#FDFCF8] relative overflow-hidden">
         <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
         
         <div class="container mx-auto px-6 md:px-12 relative z-10">
             <div class="flex flex-col lg:flex-row gap-24 items-center">
                 
-                <!-- Photo Frame (Rectangle with Offset) -->
+                <!-- Photo Frame -->
                 <div class="w-full lg:w-1/2 relative flex justify-center reveal-up photo-container">
                     <div class="photo-border"></div>
                     <div class="photo-frame h-[550px] w-full max-w-md">
@@ -234,99 +238,53 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
+                <!-- All 6 Services -->
                 <div id="ayurveda" class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="leaf" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Ayurveda Consultations</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
-                <!-- Card 2 -->
                 <div id="psychology" class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="brain" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Counseling Sessions</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
-                <!-- Card 3 -->
                 <div id="nutrition" class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="chef-hat" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Nutrition Planning</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
-                <!-- Card 4 -->
                 <div class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1599447421405-0c1a1143683f?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="activity" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Yoga Sessions</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
-                <!-- Card 5 -->
                 <div class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="moon" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Meditation</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
-                <!-- Card 6 -->
                 <div class="group relative rounded-xl overflow-hidden cursor-pointer h-[400px] reveal-up shadow-lg">
                     <img src="https://images.unsplash.com/photo-1602192509153-0b72636bb0d5?w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-100">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent p-8 flex flex-col justify-end">
                         <div class="mb-4 text-white"><i data-lucide="music" class="w-8 h-8"></i></div>
                         <h3 class="text-2xl serif mb-2">Mantra Sessions</h3>
-                        <a href="#contact" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sacred Journeys (Trips) - Visible on Page -->
-    <section id="trips" class="bg-[#FDFCF8] py-24">
-        <div class="container mx-auto px-6 md:px-12">
-            <div class="text-center mb-16 reveal-up">
-                <span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Retreats</span>
-                <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A]">Sacred Journeys</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-[600px] auto-rows-fr">
-                <div class="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
-                    <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition"></div>
-                    <div class="absolute bottom-8 left-8">
-                        <span class="text-[#C88D72] text-[10px] font-bold uppercase tracking-widest bg-black/50 px-2 py-1 rounded mb-2 inline-block">Oct 15 - 25</span>
-                        <h3 class="text-3xl serif text-white">Himalayan Silence</h3>
-                        <p class="text-white/80 text-sm mt-1">Rishikesh, India</p>
-                    </div>
-                </div>
-                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
-                    <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                    <div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Kerala Ayurveda</h3></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                </div>
-                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
-                    <img src="https://images.unsplash.com/photo-1592636504269-a1b734892c57?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                    <div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Ganga Aarti</h3></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                </div>
-                <div class="lg:col-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
-                    <div class="absolute inset-0 bg-[#3A4A3F] flex items-center justify-center border border-white/10 hover:bg-[#2C3A30] transition">
-                        <div class="text-center text-white">
-                            <h3 class="text-2xl serif mb-2">Custom Retreats</h3>
-                            <p class="text-white/70 max-w-xs mx-auto text-sm mb-4">Designed for corporate groups or private healing.</p>
-                            <span class="border-b border-[#C88D72] pb-1 text-xs uppercase tracking-widest text-[#C88D72]">Inquire Now</span>
-                        </div>
+                        <a href="contact.html" class="flex items-center gap-2 text-white text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">Book Now <i data-lucide="move-right" class="w-4 h-4"></i></a>
                     </div>
                 </div>
             </div>
@@ -334,11 +292,14 @@
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="bg-[#1A1A1A] py-24">
+    <section id="gallery" class="bg-[#FAFAF8] py-24">
         <div class="container mx-auto px-6 md:px-12">
             <div class="text-center mb-16 reveal-up">
                 <span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Gallery</span>
-                <h2 class="text-4xl md:text-5xl serif text-white">Moments from the Journey</h2>
+                <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-6">Moments from the Journey</h2>
+                <p class="text-gray-500 text-lg font-light max-w-2xl mx-auto leading-relaxed">
+                    Capturing the essence of tranquility and transformation from our retreats and sessions. Each image reflects a moment of deep connection with nature and self.
+                </p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[600px] md:h-[500px]">
                 <div class="col-span-2 row-span-2 relative overflow-hidden rounded-sm reveal-up">
@@ -363,10 +324,10 @@
         <div class="container mx-auto px-6 md:px-12 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-up">
                 <div class="md:w-1/2">
-                    <div class="flex items-center gap-2 mb-2">
+                    <div class="flex items-center gap-3 mb-2">
                         <h2 class="text-4xl md:text-5xl serif text-[#2C2C2C]"><span class="text-[#C88D72]">Samarpan</span> AI</h2>
                         <!-- LOGO INSTEAD OF EMOJI -->
-                        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]">
+                        <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] drop-shadow-sm">
                             <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                             <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                             <circle cx="50" cy="85" r="4" fill="currentColor"/>
@@ -377,6 +338,7 @@
                         My digital twin. Ask about Doshas, Dreams, or Recipes. Trained on my methodology.
                     </p>
                 </div>
+                
                 <div class="flex gap-8 mt-8 md:mt-0 text-sm uppercase tracking-widest text-[#4A5D4F] border-b border-gray-300 w-full md:w-auto overflow-x-auto">
                     <button class="ai-tab active pb-4 hover:text-[#2C2C2C]" onclick="switchTab('chef')">Nutrition</button>
                     <button class="ai-tab pb-4 hover:text-[#2C2C2C]" onclick="switchTab('body')">Dosha</button>
@@ -384,6 +346,7 @@
                     <button class="ai-tab pb-4 hover:text-[#2C2C2C]" onclick="switchTab('mantra')">Mantra</button>
                 </div>
             </div>
+
             <div class="bg-white rounded-xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col md:flex-row reveal-up">
                 <div id="ai-input-panel" class="md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#3A4A3F]">
                     <div class="mb-auto">
@@ -398,6 +361,7 @@
                         </button>
                     </div>
                 </div>
+
                 <div class="md:w-7/12 p-10 bg-white relative overflow-y-auto max-h-[600px]">
                     <div id="ai-output" class="prose prose-stone prose-sm max-w-none">
                         <div class="flex flex-col items-center justify-center h-full text-gray-300 mt-20">
@@ -420,6 +384,7 @@
                 <span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Journal</span>
                 <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A]">Insights & Research</h2>
             </div>
+
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="group cursor-pointer reveal-up bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition border border-gray-100">
                     <div class="overflow-hidden rounded-lg h-56 mb-6">
@@ -427,7 +392,7 @@
                     </div>
                     <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Neurobiology of Chanting</h3>
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">How Sanskrit mantras affect the vagus nerve.</p>
-                    <a href="#" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
+                    <a href="blog.html" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
                 </div>
                 <div class="group cursor-pointer reveal-up bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition border border-gray-100">
                     <div class="overflow-hidden rounded-lg h-56 mb-6">
@@ -435,7 +400,7 @@
                     </div>
                     <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Circadian Rhythms</h3>
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">Aligning your clock with ancient daily routines.</p>
-                    <a href="#" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
+                    <a href="blog.html" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
                 </div>
                 <div class="group cursor-pointer reveal-up bg-white p-4 rounded-xl shadow-sm hover:shadow-lg transition border border-gray-100">
                     <div class="overflow-hidden rounded-lg h-56 mb-6">
@@ -443,11 +408,11 @@
                     </div>
                     <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Gut-Brain Axis</h3>
                     <p class="text-gray-500 text-sm leading-relaxed mb-6">Understanding 'Agni' through microbiome research.</p>
-                    <a href="#" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
+                    <a href="blog.html" class="inline-block px-4 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Read Article</a>
                 </div>
             </div>
             <div class="text-center mt-12">
-                <a href="#" class="px-8 py-3 border border-[#4A5D4F] text-[#4A5D4F] uppercase tracking-widest text-xs font-bold hover:bg-[#4A5D4F] hover:text-white transition rounded-sm">View All Articles</a>
+                <a href="blog.html" class="px-8 py-3 border border-[#4A5D4F] text-[#4A5D4F] uppercase tracking-widest text-xs font-bold hover:bg-[#4A5D4F] hover:text-white transition rounded-sm">View All Articles</a>
             </div>
         </div>
     </section>
@@ -498,88 +463,40 @@
         </div>
     </section>
 
-    <!-- FULL FOOTER -->
-    <footer class="bg-[#121212] text-white pt-24 pb-12 border-t border-white/5">
-        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
-            <div class="col-span-1 md:col-span-2">
-                <a href="#" class="flex items-center gap-2 mb-4">
-                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]">
-                        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
-                        <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
-                    </svg>
-                    <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
-                </a>
-                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
-                    Bridging ancient wisdom with modern science for holistic well-being.
-                </p>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block mb-4">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                </svg>
+                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+            </a>
+            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
             
-            <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Links</h4>
-                <ul class="space-y-3 text-sm text-gray-300">
-                    <li><a href="#sessions" class="hover:text-[#C88D72]">Sessions</a></li>
-                    <li><a href="#blog" class="hover:text-[#C88D72]">Blog</a></li>
-                    <li><a href="#ai-lab" class="hover:text-[#C88D72]">AI Lab</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Contact</h4>
-                <p class="text-sm text-gray-300 mb-2">justtheself@gmail.com</p>
-                <p class="text-sm text-gray-300">New Delhi, India</p>
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-xs text-gray-600">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-            
-            <div class="flex gap-4">
-                <a href="https://instagram.com/samarpan_wellness" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#C88D72] hover:border-[#C88D72] transition duration-300">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
-                </a>
-                <a href="https://linkedin.com/in/harshranjan" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#C88D72] hover:border-[#C88D72] transition duration-300">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#C88D72] hover:border-[#C88D72] transition duration-300">
-                    <i data-lucide="twitter" class="w-5 h-5"></i>
-                </a>
-                <a href="mailto:justtheself@gmail.com" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#C88D72] hover:border-[#C88D72] transition duration-300">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
-                </a>
+            <!-- Social Media Links -->
+            <div class="flex justify-center gap-4 mt-6">
+                <a href="https://instagram.com/samarpan_wellness" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="https://linkedin.com/in/harshranjan" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="mailto:justtheself@gmail.com" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
             </div>
         </div>
     </footer>
 
-    <!-- Chat Widget (UPDATED: Booking Capability) -->
-    <button onclick="toggleChat()" class="fixed bottom-8 right-8 w-14 h-14 bg-[#1A1A1A] border border-[#C88D72] text-[#C88D72] rounded-full shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition duration-300"><i data-lucide="message-circle" class="w-6 h-6"></i></button>
-    <div id="chat-window" class="chat-widget fixed bottom-28 right-8 w-80 sm:w-96 bg-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-200" style="height: 500px;">
-        <div class="bg-[#1A1A1A] p-4 flex justify-between items-center text-white">
-            <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[#C88D72] flex items-center justify-center text-black font-bold text-xs">HR</div><h4 class="serif text-sm"><span class="text-[#C88D72]">Samarpan</span> AI</h4></div>
-            <button onclick="toggleChat()" class="text-white/50 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-        </div>
-        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-[#FAFAF8] space-y-3"><div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">Namaste. I am Samarpan AI. How can I help you? <br><br><strong>Example:</strong> "I want to book a session."</div></div></div>
-        <div id="chat-input-area" class="p-3 bg-white border-t border-gray-100">
-             <form onsubmit="handleChatSubmit(event)" class="flex gap-2">
-                <input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#C88D72]">
-                <button type="submit" class="w-10 h-10 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center hover:bg-[#C88D72] transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Scripts -->
     <script>
         lucide.createIcons();
         const apiKey = "AIzaSyC2qafCYO2bU2ftTWReco6xroZh9Szaqw0"; 
         const apiModel = "gemini-2.5-flash-preview-09-2025";
         let activeTab = 'chef';
-        let bookingState = { active: false, step: 0, data: {} };
 
         gsap.registerPlugin(ScrollTrigger);
         gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, scrollTrigger: { trigger: elem, start: "top 85%" } });
+            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
         });
 
-        // SCROLL LOGIC FOR LOGO COLOR
+        // Navbar Scroll Logic
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             const logoText = document.getElementById('logo-text');
@@ -594,26 +511,27 @@
             }
         });
 
+        // Mobile Menu Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        
-        // FIXED MOBILE MENU TOGGLE
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden-menu');
-            mobileMenu.classList.add('visible-menu');
-        });
-        
-        closeMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('visible-menu');
-            mobileMenu.classList.add('hidden-menu');
-        });
-        
-        document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
-            mobileMenu.classList.remove('visible-menu');
-            mobileMenu.classList.add('hidden-menu');
-        }));
 
+        if(menuBtn && closeMenuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden-menu');
+                mobileMenu.classList.add('visible-menu');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('visible-menu');
+                mobileMenu.classList.add('hidden-menu');
+            });
+            document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+                mobileMenu.classList.remove('visible-menu');
+                mobileMenu.classList.add('hidden-menu');
+            }));
+        }
+
+        // Booking Handler
         function handleBooking(e) {
             e.preventDefault();
             const name = document.getElementById('name').value;
@@ -623,6 +541,7 @@
             window.location.href = `mailto:justtheself@gmail.com?subject=${subject}&body=${body}`;
         }
 
+        // AI Logic
         function switchTab(tab) {
             activeTab = tab;
             document.querySelectorAll('.ai-tab').forEach(b => b.classList.remove('active'));
@@ -635,7 +554,7 @@
             const output = document.getElementById('ai-output');
             output.innerHTML = `<div class="flex flex-col items-center justify-center h-full text-gray-300 mt-20"><i data-lucide="sparkles" class="w-10 h-10 mb-4 opacity-50"></i><p class="text-sm font-light">Result will appear here</p></div>`;
             lucide.createIcons();
-            if(tab === 'chef') { panel.className = "md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#3A4A3F]"; icon.innerHTML = `<i data-lucide="chef-hat" class="w-12 h-12"></i>`; title.innerText = "The Sattvic Chef"; desc.innerText = "Enter ingredients."; input.placeholder = "Lentils..."; } 
+            if(tab === 'chef') { panel.className = "md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#3A4A3F]"; icon.innerHTML = `<i data-lucide="chef-hat" class="w-12 h-12"></i>`; title.innerText = "The Sattvic Chef"; desc.innerText = "Enter ingredients. Get a balanced recipe."; input.placeholder = "Lentils, spinach, turmeric..."; } 
             else if(tab === 'body') { panel.className = "md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#C88D72]"; icon.innerHTML = `<i data-lucide="activity" class="w-12 h-12"></i>`; title.innerText = "Vikriti Analysis"; desc.innerText = "Describe symptoms."; input.placeholder = "Anxious..."; }
             else if(tab === 'mind') { panel.className = "md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#1A1A1A]"; icon.innerHTML = `<i data-lucide="moon" class="w-12 h-12"></i>`; title.innerText = "Dream Scryer"; desc.innerText = "Describe dreams."; input.placeholder = "Flying..."; }
             else if(tab === 'mantra') { panel.className = "md:w-5/12 p-10 text-white flex flex-col relative transition-colors duration-500 bg-[#5D6D5F]"; icon.innerHTML = `<i data-lucide="music" class="w-12 h-12"></i>`; title.innerText = "Mantra Engine"; desc.innerText = "Describe state."; input.placeholder = "Focus..."; }
@@ -658,80 +577,6 @@
             const res = await callGemini(input, sys);
             document.getElementById('ai-output').innerHTML = marked.parse(res);
             document.getElementById('ai-loader').classList.add('hidden');
-        }
-
-        function toggleChat() { document.getElementById('chat-window').classList.toggle('open'); }
-
-        // BOOKING AGENT LOGIC
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chat-input');
-            const msg = input.value;
-            if(!msg) return;
-            const box = document.getElementById('chat-messages');
-            
-            // 1. Display User Message
-            box.innerHTML += `<div class="flex justify-end"><div class="bg-[#C88D72] text-white p-3 rounded-2xl rounded-tr-none text-sm max-w-[85%] shadow-md">${msg}</div></div>`;
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
-
-            // 2. Simple Booking Flow State Machine
-            if (bookingState.active) {
-                if (bookingState.step === 1) { // User provides name
-                    bookingState.data.name = msg;
-                    bookingState.step = 2;
-                    setTimeout(() => botReply("Great. Which service? (Ayurveda, Psychology, etc.)"), 500);
-                    return;
-                }
-                if (bookingState.step === 2) { // User provides service
-                    bookingState.data.service = msg;
-                    bookingState.step = 3;
-                    setTimeout(() => botReply("Perfect. Preferred date/time?"), 500);
-                    return;
-                }
-                if (bookingState.step === 3) { // User provides time -> GENERATE LINK
-                    bookingState.data.time = msg;
-                    bookingState.active = false; // Reset
-                    
-                    const subject = `Booking: ${bookingState.data.service} - ${bookingState.data.name}`;
-                    const body = `Name: ${bookingState.data.name}%0D%0AService: ${bookingState.data.service}%0D%0ATime: ${bookingState.data.time}`;
-                    const mailLink = `mailto:justtheself@gmail.com?subject=${subject}&body=${body}`;
-                    
-                    setTimeout(() => {
-                        box.innerHTML += `
-                        <div class="flex justify-start">
-                            <div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">
-                                <p class="mb-2">I have prepared your request. Click below to send it.</p>
-                                <a href="${mailLink}" class="inline-block bg-[#4A5D4F] text-white px-4 py-2 rounded text-xs uppercase font-bold">Send Booking Request</a>
-                            </div>
-                        </div>`;
-                        box.scrollTop = box.scrollHeight;
-                    }, 600);
-                    return;
-                }
-            }
-
-            // 3. Detect Booking Intent (Simple keyword check)
-            if (msg.toLowerCase().includes('book') || msg.toLowerCase().includes('schedule') || msg.toLowerCase().includes('appointment')) {
-                bookingState.active = true;
-                bookingState.step = 1;
-                setTimeout(() => botReply("I can help with that. What is your name?"), 500);
-                return;
-            }
-
-            // 4. Default AI Chat
-            const loadId = 'load'+Date.now();
-            box.innerHTML += `<div id="${loadId}" class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-gray-400">Thinking...</div></div>`;
-            box.scrollTop = box.scrollHeight;
-            const res = await callGemini(msg, "You are Harsh Ranjan (Samarpan). Answer concisely about Ayurveda/Yoga.");
-            document.getElementById(loadId).remove();
-            botReply(marked.parse(res));
-        }
-
-        function botReply(html) {
-            const box = document.getElementById('chat-messages');
-            box.innerHTML += `<div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">${html}</div></div>`;
-            box.scrollTop = box.scrollHeight;
         }
         
         // Calendar Mock
