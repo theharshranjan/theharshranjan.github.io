@@ -1,1083 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light" />
-  <title>Psychology & Counseling — Harsh Ranjan (Samarpan)</title>
-
-  <!-- SEO Meta Tags -->
-  <link rel="canonical" href="https://theharshranjan.github.io/psychology.html" />
-  <meta name="description" content="Integrative psychology & counseling with Harsh Ranjan: modern psychology blended with Meditation, Yoga & Ayurveda. Book online sessions." />
-  <meta name="keywords" content="psychology counseling, integrative therapy, mental health, meditation, stress management, anxiety relief" />
-  <meta name="author" content="Harsh Ranjan (Samarpan)" />
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-HMM7CJSCW7');
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <style>
-    :root {
-      --bg-light: #f8faf6;
-      --text-light: #1a1a1a;
-      --accent: #4a7c59;
-      --accent-light: #6b9d7a;
-      --accent-dark: #2d4a38;
-      --gold: #d4af37;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    <!-- SEO -->
+    <title>Psychology & Neurobiology | Harsh Ranjan (Samarpan)</title>
+    <meta name="description" content="Integrative Psychology sessions by Harsh Ranjan. Merging Cognitive Behavioral Therapy (CBT) with Vedantic Self-Inquiry and Neurobiology for a global audience.">
+
+    <!-- =========================================
+         GOOGLE ANALYTICS (GA4)
+    ========================================== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-light);
-      color: var(--text-light);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    body.menu-open { overflow: hidden; }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 clamp(20px, 5vw, 60px);
-    }
-
-    /* HEADER */
-    .site-header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      background: linear-gradient(135deg, #f9f5ed 0%, #f7f3e8 100%);
-      border-bottom: 1px solid rgba(74, 124, 89, 0.1);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      width: 100%;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 80px;
-      gap: 2rem;
-      width: 100%;
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      text-decoration: none;
-      color: var(--text-light);
-    }
-
-    .logo-area img {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-      box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15);
-      transition: border-color 0.3s ease;
-    }
-
-    .logo-area:hover img {
-      border-color: var(--accent-dark);
-      box-shadow: 0 6px 20px rgba(74, 124, 89, 0.25);
-    }
-
-    .logo-area span {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: 1.4rem;
-      letter-spacing: 0.5px;
-      color: var(--text-light);
-      user-select: none;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-      list-style: none;
-      justify-content: center;
-      flex: 1 1 auto;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: var(--text-light);
-      padding: 0.5rem 0;
-      transition: color 0.3s ease;
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-
-    .nav-links a:hover,
-    .nav-links a[aria-current="page"] {
-      color: var(--accent);
-    }
-
-    .nav-links a:hover::after,
-    .nav-links a[aria-current="page"]::after {
-      width: 100%;
-    }
-
-    .menu-toggle {
-      display: none;
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      background: transparent;
-      cursor: pointer;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      z-index: 1001;
-      flex-shrink: 0;
-    }
-
-    .menu-toggle span {
-      width: 22px;
-      height: 2px;
-      background: var(--text-light);
-      transition: all 0.3s ease;
-    }
-
-    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-    .menu-toggle.active span:nth-child(2) { opacity: 0; }
-    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-
-    main { padding-top: 80px; }
-
-    .mobile-menu {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: white;
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      padding-top: 100px;
-      overflow-y: auto;
-      transform: translateX(-100%);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .mobile-menu.active { transform: translateX(0); }
-
-    .mobile-menu ul {
-      list-style: none;
-      padding: 0 20px;
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 16px 20px;
-      color: var(--text-light);
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-
-    .mobile-menu a:hover,
-    .mobile-menu a[aria-current="page"] {
-      background: var(--bg-light);
-      color: var(--accent);
-    }
-
-    .mobile-menu-close {
-      position: absolute;
-      top: 25px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: none;
-      border: none;
-      font-size: 28px;
-      cursor: pointer;
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1002;
-    }
-
-    /* HERO */
-    .hero {
-      width: 100%;
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 0 60px;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      color: white;
-      margin-bottom: 1.5rem;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      letter-spacing: -1px;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: rgba(255,255,255,0.9);
-      line-height: 1.8;
-      margin-bottom: 3rem;
-      font-weight: 300;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .cta-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 40px;
-      background: linear-gradient(135deg, #5a9253, #7fb078);
-      color: #1a1a1a;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 8px 32px rgba(90, 146, 83, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .cta-button:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 40px rgba(90, 146, 83, 0.5);
-    }
-
-    /* CONTENT SECTION */
-    .content-section {
-      padding: clamp(60px, 10vh, 100px) 0;
-      background: var(--bg-light);
-      position: relative;
-    }
-
-    .content-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 80%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto 4rem;
-      padding-top: 2rem;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      color: var(--text-light);
-      margin-bottom: 1rem;
-    }
-
-    .section-subtitle {
-      font-size: 1.1rem;
-      color: #4a4a4a;
-      font-weight: 300;
-    }
-
-    .grid {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-
-    .card {
-      background: white;
-      border: 2px solid #d1e1cd;
-      border-radius: 20px;
-      padding: clamp(28px, 4vw, 40px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, #4a7c59, #2d4a38);
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
-      border-color: #4a7c59;
-    }
-
-    .card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #1f3319;
-      margin-bottom: 1rem;
-    }
-
-    .card p {
-      color: #4a4a4a;
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
-
-    .card ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .card li {
-      padding-left: 1.5rem;
-      position: relative;
-      color: #4a4a4a;
-      font-size: 0.95rem;
-    }
-
-    .card li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    /* MEDITATION CARDS */
-    .meditation-card {
-      background: white;
-      border: 2px solid #d1e1cd;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-      transition: all 0.3s ease;
-    }
-
-    .meditation-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .meditation-card h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      color: #1f3319;
-      margin-bottom: 0.75rem;
-    }
-
-    .meditation-card p {
-      color: #4a4a4a;
-      margin-bottom: 1rem;
-    }
-
-    .meditation-card ul {
-      list-style: none;
-    }
-
-    .meditation-card li {
-      padding-left: 1.5rem;
-      position: relative;
-      margin-bottom: 0.5rem;
-      color: #4a4a4a;
-      font-size: 0.95rem;
-    }
-
-    .meditation-card li::before {
-      content: '◆';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    /* TIMELINE */
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 60px 1fr;
-      gap: 2rem;
-      margin-bottom: 3rem;
-      position: relative;
-    }
-
-    .timeline-number {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, #5a9253, #7fb078);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.5rem;
-      box-shadow: 0 8px 32px rgba(90, 146, 83, 0.4);
-      position: relative;
-      z-index: 1;
-    }
-
-    .timeline-content h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      color: var(--text-light);
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-content p {
-      color: #4a4a4a;
-      line-height: 1.7;
-    }
-
-    /* FAQ */
-    details {
-      background: white;
-      border: 2px solid #d1e1cd;
-      border-radius: 16px;
-      padding: 1.5rem 2rem;
-      margin-bottom: 1.5rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    details:hover {
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    }
-
-    details summary {
-      font-weight: 600;
-      color: var(--text-light);
-      cursor: pointer;
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      user-select: none;
-    }
-
-    details summary::after {
-      content: '+';
-      font-size: 1.5rem;
-      color: var(--accent);
-      transition: transform 0.3s ease;
-      font-weight: 700;
-    }
-
-    details[open] summary::after {
-      transform: rotate(45deg);
-    }
-
-    details p {
-      margin-top: 1.5rem;
-      color: #4a4a4a;
-      line-height: 1.8;
-    }
-
-    /* NOTICE */
-    .notice {
-      background: linear-gradient(135deg, rgba(74, 124, 89, 0.08), rgba(74, 124, 89, 0.04));
-      border: 1px solid #d1e1cd;
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 3rem 0;
-      color: #4a4a4a;
-    }
-
-    /* CTA SECTION */
-    .cta-section {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-      border-radius: 24px;
-      padding: clamp(50px, 8vw, 80px);
-      text-align: center;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
-      margin: clamp(60px, 10vh, 100px) 0;
-    }
-
-    .cta-section h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      color: white;
-      margin-bottom: 1rem;
-    }
-
-    .cta-section p {
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
-
-    /* FLOATING BUTTON */
-    .floating-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 500;
-      background: linear-gradient(135deg, #5a9253, #7fb078);
-      color: #1a1a1a;
-      border: none;
-      border-radius: 50px;
-      padding: 16px 28px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 8px 32px rgba(90, 146, 83, 0.4);
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .floating-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 40px rgba(90, 146, 83, 0.5);
-    }
-
-    /* FOOTER */
-    footer {
-      background: linear-gradient(180deg, #e8e4d9 0%, #ddd7cc 100%);
-      color: var(--text-light);
-      padding: 40px 0 20px;
-      border-top: 1px solid rgba(74, 124, 89, 0.1);
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 clamp(20px, 5vw, 60px);
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .footer-section h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: var(--text-light);
-      font-weight: 600;
-    }
-
-    .footer-section p {
-      color: #666;
-      line-height: 1.6;
-      font-size: 0.9rem;
-    }
-
-    .footer-links {
-      list-style: none;
-    }
-
-    .footer-links li {
-      margin-bottom: 0.5rem;
-    }
-
-    .footer-links a {
-      color: #666;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--accent);
-      transform: translateX(3px);
-    }
-
-    .social-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(74, 124, 89, 0.1);
-      border: 1.5px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-size: 1.1rem;
-    }
-
-    .social-links a:hover {
-      background: var(--accent);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    .footer-bottom {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.5rem clamp(20px, 5vw, 60px);
-      text-align: center;
-      border-top: 1px solid rgba(74, 124, 89, 0.15);
-    }
-
-    .footer-bottom p {
-      color: #666;
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .menu-toggle { display: flex; }
-      .grid { grid-template-columns: 1fr; }
-      .floating-btn { bottom: 20px; right: 20px; padding: 14px 20px; font-size: 0.9rem; }
-      .timeline-item { grid-template-columns: 50px 1fr; gap: 1.5rem; }
-      .timeline-number { width: 50px; height: 50px; font-size: 1.2rem; }
-    }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <nav class="container">
-      <a class="logo-area" href="index.html">
-        <img src="logo.png" alt="Harsh Ranjan Logo" width="52" height="52" loading="lazy" />
-        <span>Harsh Ranjan</span>
-      </a>
-      
-      <ul class="nav-links">
-        <li><a href="about.html">About</a></li>
-        <li><a href="sessions.html">Sessions</a></li>
-        <li><a href="ayurveda.html">Ayurveda</a></li>
-        <li><a href="psychology.html" aria-current="page">Psychology</a></li>
-        <li><a href="trips.html">Trips</a></li>
-        <li><a href="diet.html">Diet & Nutrition</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-  </header>
-
-  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-hidden="true">
-    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">✕</button>
-    <ul>
-      <li><a href="about.html">About</a></li>
-      <li><a href="sessions.html">Sessions</a></li>
-      <li><a href="ayurveda.html">Ayurveda</a></li>
-      <li><a href="psychology.html" aria-current="page">Psychology</a></li>
-      <li><a href="trips.html">Trips</a></li>
-      <li><a href="diet.html">Diet & Nutrition</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </div>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Psychology & Counseling</h1>
-        <p class="hero-subtitle">Modern evidence-based psychology harmoniously blended with meditation, yogic practices, and Ayurvedic wisdom—supporting your journey to resilience, clarity, and balanced living.</p>
-        <a href="form.html" class="cta-button">Contact Now</a>
-      </div>
-    </section>
-
-    <!-- APPROACH -->
-    <section class="content-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">A Holistic Approach to Wellness</h2>
-          <p class="section-subtitle">Integrating ancient wisdom with modern psychology for comprehensive support</p>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>My Approach</h3>
-            <p>I offer integrative, psycho-educational counseling and coaching. Sessions are conversational and practical, drawing on:</p>
-            <ul>
-              <li>Evidence-informed cognitive & behavioral psychology</li>
-              <li>Meditation practices (Yoga Nidra, mindfulness, breathwork)</li>
-              <li>Yogic principles (yamas, niyamas, pranayama)</li>
-              <li>Ayurvedic lifestyle rhythms and self-care</li>
-            </ul>
-            <p style="margin-top: 1.5rem; font-size: 0.9rem; font-style: italic; color: #666;">Note: BA (Hons) Psychology student (IGNOU). I provide wellness-focused guidance and do not diagnose or treat mental disorders.</p>
-          </div>
-
-          <div class="card">
-            <h3>What I Can Help With</h3>
-            <ul>
-              <li>Stress management & anxiety reduction</li>
-              <li>Building sustainable daily routines</li>
-              <li>Enhancing focus, study habits & motivation</li>
-              <li>Sleep hygiene & digital wellness</li>
-              <li>Emotional regulation & self-awareness</li>
-              <li>Meditation & breathwork fundamentals</li>
-              <li>Aligning lifestyle with personal values</li>
-              <li>Navigating life transitions & change</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEDITATION -->
-    <section class="content-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Meditation Integration</h2>
-          <p class="section-subtitle">Simple, practical techniques that fit seamlessly into your daily life</p>
-        </div>
-
-        <div class="grid">
-          <div class="meditation-card">
-            <h4>Yoga Nidra (10–20 mins)</h4>
-            <p>Guided rest for nervous system regulation and improved sleep.</p>
-            <ul>
-              <li>Reduce mental rumination & physical tension</li>
-              <li>Enhance recovery and cognitive function</li>
-            </ul>
-          </div>
-
-          <div class="meditation-card">
-            <h4>Breath-Led Focus (3–5 mins)</h4>
-            <p>Quick anchoring practices for anytime use:</p>
-            <ul>
-              <li>Box Breathing: 4-4-4-4 for calm focus</li>
-              <li>Extended Exhale: 4-6 for relaxation</li>
-              <li>Anulom-Vilom: Alternate nostril for balance</li>
-            </ul>
-          </div>
-
-          <div class="meditation-card">
-            <h4>Mindful Check-Ins (1–2 mins)</h4>
-            <p>Micro-pauses to scan posture, breath, and intention before tasks.</p>
-            <ul>
-              <li>Build present-moment awareness</li>
-              <li>Reduce reactive patterns</li>
-            </ul>
-          </div>
-
-          <div class="meditation-card">
-            <h4>Grounding & Defusion</h4>
-            <p>ACT-style cognitive defusion and 5-4-3-2-1 grounding method.</p>
-            <ul>
-              <li>Create space between thoughts and reactions</li>
-              <li>Cultivate emotional flexibility</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="content-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">How Sessions Work</h2>
-          <p class="section-subtitle">A simple, transparent process designed for your comfort and growth</p>
-        </div>
-
-        <div class="card">
-          <div style="padding: 2rem 0;">
-            <div class="timeline-item">
-              <div class="timeline-number">1</div>
-              <div class="timeline-content">
-                <h4>Book Your Session</h4>
-                <p>Fill out a simple form sharing your goals and preferred availability. I'll respond within 24-48 hours with available time slots.</p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-number">2</div>
-              <div class="timeline-content">
-                <h4>Online Meeting</h4>
-                <p>One-to-one sessions (45–60 minutes) via Google Meet or Zoom. Private, confidential, and tailored to your needs.</p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-number">3</div>
-              <div class="timeline-content">
-                <h4>Collaborative Exploration</h4>
-                <p>We check in, identify focus areas together, explore tools and perspectives, and create actionable next steps.</p>
-              </div>
-            </div>
-
-            <div class="timeline-item">
-              <div class="timeline-number">4</div>
-              <div class="timeline-content">
-                <h4>Integration & Practice</h4>
-                <p>Light home practice between sessions (5–15 minutes) to integrate insights and build sustainable habits.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 2rem;">
-          <div style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%); border-radius: 16px; padding: 2rem; color: white;">
-            <h4 style="font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 0.75rem;">Accessible Pricing</h4>
-            <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Sessions operate on a sliding-scale, donation-based model. Detailed fee information will be shared via email after booking.</p>
-            <a href="form.html" class="cta-button">Request Your Slot</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="content-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-subtitle">Everything you need to know about our counseling sessions</p>
-        </div>
-
-        <div style="max-width: 800px; margin: 0 auto;">
-          <details>
-            <summary>Is this medical or psychiatric treatment?</summary>
-            <p>No. This is educational, wellness-focused counseling. It is not a substitute for licensed medical or psychiatric care. If experiencing severe mental health challenges, consult with a licensed mental health professional.</p>
-          </details>
-
-          <details>
-            <summary>Can I attend sessions from outside India?</summary>
-            <p>Absolutely! Sessions are conducted online and open worldwide. We'll coordinate time zones to find a suitable slot that works for both of us.</p>
-          </details>
-
-          <details>
-            <summary>What techniques and tools might we use?</summary>
-            <p>Our work may include journaling prompts, cognitive reframing, breathwork, mindfulness exercises, habit scaffolding, lifestyle alignment with Ayurvedic principles, and personalized meditation practices.</p>
-          </details>
-
-          <details>
-            <summary>How is my privacy protected?</summary>
-            <p>Your information is handled with strict confidentiality within the limits of the law and the secure platforms used for scheduling and video calls. I respect your privacy and create a safe, judgment-free space.</p>
-          </details>
-
-          <details>
-            <summary>What if I'm experiencing a mental health crisis?</summary>
-            <p>If in immediate danger, contact emergency services right away. In India, dial <strong>112</strong> or call <strong>KIRAN: 1800-599-0019</strong> (24×7 mental health support). Outside India, contact your local emergency services.</p>
-          </details>
-
-          <details>
-            <summary>How many sessions will I need?</summary>
-            <p>This varies by individual and goals. Some clients find value in a single session for specific guidance, while others prefer ongoing support. We can discuss what feels right during our first session.</p>
-          </details>
-
-          <details>
-            <summary>Do you offer sessions in other languages?</summary>
-            <p>Sessions are primarily conducted in English and Hindi. If you need support in another language, please mention this in your booking form and we'll explore possibilities.</p>
-          </details>
-        </div>
-
-        <div class="notice">
-          <strong>⚠️ Important Crisis Resources:</strong> If in immediate danger, dial <strong>112</strong> in India. For 24×7 mental health support, call <strong>KIRAN: 1800-599-0019</strong>. Outside India, contact your local emergency services. This service offers wellness guidance and does not replace professional mental health treatment.
-        </div>
-      </div>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="content-section">
-      <div class="container">
-        <div class="cta-section">
-          <h2>Ready to Begin Your Journey?</h2>
-          <p>Take the first step toward greater clarity, balance, and well-being. Share a few details and I'll respond with available time slots.</p>
-          <a href="form.html" class="cta-button">Book Your First Session</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FLOATING BUTTON -->
-  <a href="form.html" class="floating-btn">Book Session</a>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>Harsh Ranjan (Samarpan)</h3>
-        <p>Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.</p>
-      </div>
-
-      <div class="footer-section">
-        <h3>Quick Links</h3>
-        <ul class="footer-links">
-          <li><a href="about.html">About</a></li>
-          <li><a href="sessions.html">Sessions</a></li>
-          <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="psychology.html">Psychology</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h3>Services</h3>
-        <ul class="footer-links">
-          <li><a href="sessions.html">Yoga Sessions</a></li>
-          <li><a href="ayurveda.html">Ayurveda</a></li>
-          <li><a href="psychology.html">Counseling</a></li>
-          <li><a href="diet.html">Diet & Nutrition</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-section">
-        <h3>Connect</h3>
-        <div class="social-links">
-          <a href="https://www.instagram.com/justtheself/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="https://www.youtube.com/@theharshranjan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-            <i class="fab fa-youtube"></i>
-          </a>
-          <a href="https://twitter.com/the_harshranjan" target="_blank" rel="noopener noreferrer" aria-label="X">
-            <i class="fab fa-x-twitter"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <i class="fab fa-linkedin"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; <span id="year"></span> Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-      <p>Empowering holistic wellness worldwide</p>
-    </div>
-  </footer>
-
-  <script defer>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Mobile Menu - Fixed Version
-    const menuToggle = document.getElementById('menuToggle');
-    const menuClose = document.getElementById('menuClose');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const body = document.body;
-
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleMenu();
-    });
-
-    menuClose.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      closeMenu();
-    });
-
-    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
-    mobileMenuLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeMenu();
-      });
-    });
-
-    document.addEventListener('click', (e) => {
-      if (mobileMenu.classList.contains('active')) {
-        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-          closeMenu();
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Design System -->
+    <style>
+        :root {
+            --color-bg: #FDFCF8;
+            --color-sage: #4A5D4F;
+            --color-terra: #C88D72;
+            --color-gold: #BFA57D;
+            --color-charcoal: #1A1A1A;
         }
-      }
-    });
+        
+        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-charcoal); overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .logo-font { font-family: 'Cinzel', serif; }
+        
+        /* Animations */
+        .reveal-up { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-        closeMenu();
-      }
-    });
+        /* Image Frames */
+        .content-img { 
+            border-radius: 4px; 
+            overflow: hidden; 
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.2);
+            position: relative;
+            height: 100%;
+        }
+        
+        /* Background Texture */
+        .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.03; animation: spin 160s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    function toggleMenu() {
-      if (mobileMenu.classList.contains('active')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    }
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .hidden-menu { transform: translateX(100%); }
+        .visible-menu { transform: translateX(0); }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C88D72] selection:text-white">
 
-    function openMenu() {
-      mobileMenu.classList.add('active');
-      menuToggle.classList.add('active');
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      menuToggle.setAttribute('aria-expanded', 'true');
-      body.classList.add('menu-open');
-    }
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/30 backdrop-blur-md">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
+                </svg>
+                <div class="flex items-center gap-2 opacity-90">
+                    <span id="logo-text" class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
+                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
+                <a href="psychology.html" class="text-[#C88D72] transition border-b-2 border-[#C88D72] pb-1">Psychology</a>
+                <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
+                <a href="form.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+            </div>
 
-    function closeMenu() {
-      mobileMenu.classList.remove('active');
-      menuToggle.classList.remove('active');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      menuToggle.setAttribute('aria-expanded', 'false');
-      body.classList.remove('menu-open');
-    }
-  </script>
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
+            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-8 h-8 text-[#C88D72]"></i></button>
+            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
+            <a href="about.html" class="text-3xl serif mobile-link">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif text-[#C88D72] mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
+            <a href="form.html" class="text-3xl serif mobile-link">Book Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[70vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
+        <!-- Image: High-Quality Digital Brain / Neural Network [Image of Digital Neural Network Brain] -->
+        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=2000&auto=format&fit=crop" alt="The Conscious Mind" class="absolute inset-0 w-full h-full object-cover opacity-80" style="filter: contrast(1.2);">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
+
+        <div class="relative z-10 text-center px-4 mt-10">
+            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-8 block reveal-up">The Architecture of Consciousness</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl serif text-white mb-10 reveal-up drop-shadow-2xl tracking-wide">
+                Psychology & <br> <span class="italic text-[#C88D72]">Neurobiology</span>
+            </h1>
+            <p class="text-white/90 font-light max-w-3xl mx-auto text-xl reveal-up leading-relaxed drop-shadow-md">
+                Rewiring neural pathways through the convergence of modern behavioral science and ancient Vedantic wisdom.
+            </p>
+        </div>
+    </header>
+
+    <!-- The Neural-Vedic Bridge -->
+    <section class="py-24 bg-[#FDFCF8] relative overflow-hidden">
+        <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
+        
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-6">The Neural-Vedic Bridge</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        In the West, we study the brain's structure; in the East, we study the mind's stillness. My practice integrates my <strong>BA Hons in Psychology</strong> and <strong>Neurobiology</strong> (2025) to address mental health at both the structural (synaptic) and subtle (karmic) levels.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                        We use the clinically proven tools of <strong>Cognitive Behavioral Therapy (CBT)</strong> to address thought patterns, while simultaneously using <strong>Mantra and Meditation</strong> to stimulate neuroplasticity—literally reshaping the brain's response to stress and trauma.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-gray-200 pt-8">
+                         <div>
+                            <h4 class="font-bold text-[#1A1A1A] text-xl serif">Neuroplasticity</h4>
+                            <p class="text-sm text-gray-500 mt-1">Rewiring the brain's "default mode network" through repetition.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[#1A1A1A] text-xl serif">Atma Vichara</h4>
+                            <p class="text-sm text-gray-500 mt-1">Vedantic Self-Inquiry to dissolve the root of the ego.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="content-img h-[600px]">
+                        <!-- Image: Abstract connection / Synapse -->
+                        <img src="https://images.unsplash.com/photo-1555372580-8a5326508f45?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 grayscale hover:grayscale-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEEP DIVE 1: Samskaras & Neuroscience -->
+    <section class="py-24 bg-[#1A1A1A] text-white border-b border-white/5">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row-reverse gap-20 items-center">
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="flex items-center gap-3 mb-4 text-[#D4AF37]">
+                        <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest">Deep Psychology</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl serif mb-6">The Science of Samskaras</h2>
+                    <p class="text-white/80 text-lg leading-relaxed mb-6 font-light">
+                        In Yoga philosophy, <strong>Samskaras</strong> are the deep mental grooves or impressions left by past actions. In Neurobiology, we call this <strong>Long-Term Potentiation</strong>—"neurons that fire together, wire together."
+                    </p>
+                    <p class="text-white/80 text-lg leading-relaxed mb-8 font-light">
+                        My therapeutic approach focuses on identifying these maladaptive loops. We don't just "talk" about them; we interrupt the neural signal using <strong>Pranayama</strong> (breathwork) to shift the autonomic nervous system from 'Fight or Flight' to 'Rest and Digest', allowing new, healthier pathways to form.
+                    </p>
+                    <div class="p-6 border border-[#D4AF37]/20 bg-[#D4AF37]/5 rounded-sm">
+                        <p class="text-sm italic text-[#D4AF37] serif">"We are not victims of our biology; we are the architects of our neural pathways."</p>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="content-img h-[500px] border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 opacity-80">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Reach Banner (New) -->
+    <section class="py-24 bg-[#FDFCF8] text-center relative">
+        <div class="container mx-auto px-6">
+             <div class="max-w-4xl mx-auto reveal-up">
+                <div class="flex justify-center mb-6 text-[#4A5D4F]"><i data-lucide="globe-2" class="w-12 h-12"></i></div>
+                <h2 class="text-3xl md:text-5xl serif text-[#1A1A1A] mb-6">Bridging East & West</h2>
+                <p class="text-xl text-gray-600 leading-relaxed font-light mb-8">
+                    The modern world brings unique challenges—whether it is corporate burnout in <strong>New York</strong>, existential seeking in <strong>London</strong>, or finding balance in the fast-paced life of <strong>Singapore</strong>.
+                </p>
+                <p class="text-lg text-gray-600 leading-relaxed font-light mb-10">
+                    My sessions are designed for the global citizen. I bridge the cultural gap, translating ancient Sanskrit concepts into practical, actionable psychological tools that fit into a modern, urban lifestyle.
+                </p>
+                <a href="form.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm shadow-xl">Connect Globally</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEEP DIVE 2: Polyvagal Theory -->
+    <section class="py-24 bg-[#1A1A1A] text-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="flex items-center gap-3 mb-4 text-[#C88D72]">
+                        <i data-lucide="activity" class="w-6 h-6"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest">Somatic Healing</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl serif mb-6">Polyvagal Theory & Prana</h2>
+                    <p class="text-white/80 text-lg leading-relaxed mb-6 font-light">
+                        Trauma is often stored in the body, not just the mind. Through the lens of <strong>Polyvagal Theory</strong>, we understand how the Vagus nerve regulates our sense of safety and social engagement.
+                    </p>
+                    <p class="text-white/80 text-lg leading-relaxed mb-8 font-light">
+                        I utilize specific <strong>Vedic Chanting</strong> frequencies and <strong>Nadi Shodhana</strong> breathwork to stimulate the Vagus nerve. This increases Vagal Tone, instantly lowering cortisol levels and bringing the mind into a state of receptive clarity suitable for deep psychological work.
+                    </p>
+                    <a href="form.html" class="inline-block px-10 py-4 bg-[#FDFCF8] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] hover:text-white transition rounded-sm">Book Psychology Session</a>
+                </div>
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="grid grid-cols-2 gap-4">
+                         <div class="content-img h-[300px] mt-12 bg-gray-800">
+                            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80" class="w-full h-full object-cover opacity-60">
+                        </div>
+                        <div class="content-img h-[300px] bg-gray-800">
+                            <img src="https://images.unsplash.com/photo-1599447421405-0c1a1143683f?w=600&q=80" class="w-full h-full object-cover opacity-60">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Grid -->
+    <section class="py-24 bg-[#FDFCF8]">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-20 reveal-up">
+                <span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Modalities</span>
+                <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-4">Integrative Tools</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="message-square" class="w-10 h-10 text-[#4A5D4F] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Cognitive Restructuring</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Identifying and reframing limiting beliefs using evidence-based psychological frameworks to clear mental fog and build resilience.</p>
+                </div>
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="moon" class="w-10 h-10 text-[#C88D72] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Shadow Work</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Integrating the repressed parts of the psyche using Jungian concepts and Tantric meditation techniques for wholeness.</p>
+                </div>
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="music" class="w-10 h-10 text-[#BFA57D] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Mantra Therapy</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Using specific sound vibrations to interrupt anxious neural loops and establish a new baseline of calm.</p>
+                </div>
+            </div>
+            
+             <div class="text-center mt-20 reveal-up">
+                <a href="form.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm">Book Psychology Session</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block mb-4">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                </svg>
+                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+            </a>
+            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
+        });
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const logoText = document.getElementById('logo-text');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
+                nav.classList.remove('bg-black/30', 'py-4', 'text-white', 'border-white/10');
+                if(logoText) logoText.classList.replace('text-[#FDFCF8]', 'text-[#C88D72]');
+            } else {
+                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
+                nav.classList.add('bg-black/30', 'py-4', 'text-white', 'border-white/10');
+                if(logoText) logoText.classList.replace('text-[#C88D72]', 'text-[#FDFCF8]');
+            }
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if(menuBtn && closeMenuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden-menu');
+                mobileMenu.classList.add('visible-menu');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('visible-menu');
+                mobileMenu.classList.add('hidden-menu');
+            });
+        }
+    </script>
 </body>
 </html>
