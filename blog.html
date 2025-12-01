@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- =========================================
+         SEO & SOCIAL SHARING PREVIEWS
+         (These tags control how your link looks on WhatsApp, LinkedIn, etc.)
+    ========================================== -->
+    <title>The Journal | Harsh Ranjan (Samarpan)</title>
+    <meta name="description" content="Insights on Ayurveda Biology, Neurobiology, and Vedic Wisdom. The official journal of Harsh Ranjan.">
+    <meta name="author" content="Harsh Ranjan">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://harshranjan.com/blog.html">
+    <meta property="og:title" content="The Journal | Harsh Ranjan">
+    <meta property="og:description" content="Bridging ancient Sanskrit wisdom with modern neuroscience. Read the latest insights.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://harshranjan.com/blog.html">
+    <meta property="twitter:title" content="The Journal | Harsh Ranjan">
+    <meta property="twitter:description" content="Bridging ancient Sanskrit wisdom with modern neuroscience.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Design System -->
+    <style>
+        :root {
+            --color-bg: #FDFCF8;
+            --color-sage: #4A5D4F;
+            --color-terra: #C88D72;
+            --color-gold: #BFA57D;
+            --color-charcoal: #1A1A1A;
+        }
+        
+        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-charcoal); overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .logo-font { font-family: 'Cinzel', serif; }
+        
+        /* Animations */
+        .reveal-up { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* Blog Card Hover Effect */
+        .blog-card { transition: transform 0.5s ease, box-shadow 0.5s ease; }
+        .blog-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15); }
+        .blog-img { overflow: hidden; }
+        .blog-img img { transition: transform 0.7s ease; }
+        .blog-card:hover .blog-img img { transform: scale(1.05); }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .hidden-menu { transform: translateX(100%); }
+        .visible-menu { transform: translateX(0); }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C88D72] selection:text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/40 backdrop-blur-md">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
+                </svg>
+                <div class="flex items-center gap-2 opacity-90">
+                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
+                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
+                <a href="psychology.html" class="hover:text-[#C88D72] transition">Psychology</a>
+                <a href="blog.html" class="text-[#C88D72] transition border-b-2 border-[#C88D72] pb-1">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
+                <a href="form.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
+            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
+            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
+            <a href="about.html" class="text-3xl serif mobile-link">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif text-[#C88D72] mobile-link">Blog</a>
+            <a href="form.html" class="text-3xl serif mobile-link">Book Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[60vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
+        <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Journaling and Books" class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
+
+        <div class="relative z-10 text-center px-4 mt-10">
+            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-6 block reveal-up">Insights & Research</span>
+            <h1 class="text-6xl md:text-8xl serif text-white mb-8 reveal-up drop-shadow-2xl">
+                The Journal
+            </h1>
+            <p class="text-white/90 font-light max-w-2xl mx-auto text-xl reveal-up leading-relaxed">
+                Bridging the gap between ancient Sanskrit wisdom and modern scientific inquiry.
+            </p>
+        </div>
+    </header>
+
+    <!-- Filter Bar -->
+    <div class="border-b border-gray-200 sticky top-20 z-30 bg-[#FDFCF8]/95 backdrop-blur-sm">
+        <div class="container mx-auto px-6 overflow-x-auto">
+            <div class="flex justify-center min-w-max gap-8 py-4 text-xs font-bold uppercase tracking-widest text-gray-500">
+                <button class="text-[#1A1A1A] border-b-2 border-[#C88D72] pb-1">All</button>
+                <button class="hover:text-[#C88D72] transition">Neuroscience</button>
+                <button class="hover:text-[#C88D72] transition">Ayurveda</button>
+                <button class="hover:text-[#C88D72] transition">Yoga & Tantra</button>
+                <button class="hover:text-[#C88D72] transition">Nutrition</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Article -->
+    <section class="py-16 bg-[#FDFCF8]">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="reveal-up group cursor-pointer" onclick="window.location.href='#';">
+                <div class="relative h-[500px] rounded-lg overflow-hidden mb-8">
+                    <img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=1600&q=80" class="absolute inset-0 w-full h-full object-cover transition duration-1000 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-10 md:p-16 text-white max-w-3xl">
+                        <div class="flex items-center gap-3 mb-4 text-xs uppercase tracking-widest">
+                            <span class="bg-[#C88D72] px-3 py-1 text-black font-bold">Featured</span>
+                            <span>Neuroscience</span>
+                            <span class="text-white/60">• 8 min read</span>
+                        </div>
+                        <h2 class="text-4xl md:text-6xl serif leading-tight mb-4 group-hover:text-[#C88D72] transition-colors">The Neurobiology of Chanting</h2>
+                        <p class="text-white/80 text-lg font-light mb-6">
+                            How specific Sanskrit frequencies stimulate the Vagus Nerve, regulate the amygdala, and deactivate the brain's Default Mode Network.
+                        </p>
+                        <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest border-b border-white/50 pb-1 w-fit">
+                            Read Full Article <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Grid -->
+    <section class="pb-32 bg-[#FDFCF8]">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10" id="blog-grid">
+                
+                <!-- To Add a New Post, copy from here -->
+                <!-- ARTICLE 1 -->
+                <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#4A5D4F] font-bold">Ayurveda</span>
+                        <span class="text-gray-400">6 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Circadian Rhythms & Dinacharya</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Aligning your molecular clock genes with ancient daily routines for hormonal balance.</p>
+                    
+                    <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('Circadian Rhythms & Dinacharya', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+                <!-- End of Copy Block -->
+
+                <!-- ARTICLE 2 -->
+                <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#BFA57D] font-bold">Nutrition</span>
+                        <span class="text-gray-400">5 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">The Gut-Brain Axis & Agni</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Understanding the connection between your digestive fire and neurotransmitter production.</p>
+                     <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('The Gut-Brain Axis', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTICLE 3 -->
+                <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#C88D72] font-bold">Psychology</span>
+                        <span class="text-gray-400">7 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Epigenetics & Karma</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">How lifestyle choices and thought patterns can shift gene expression over generations.</p>
+                     <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('Epigenetics & Karma', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTICLE 4 -->
+                <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=800&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#4A5D4F] font-bold">Yoga Nidra</span>
+                        <span class="text-gray-400">8 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Soma: The Nectar of Sleep</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">The science of non-sleep deep rest (NSDR) and its ability to repair the nervous system.</p>
+                     <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('Soma: Yoga Nidra', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTICLE 5 -->
+                <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1555372580-8a5326508f45?w=800&q=80" class="w-full h-full object-cover grayscale hover:grayscale-0 transition">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#1A1A1A] font-bold">Tantra</span>
+                        <span class="text-gray-400">10 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">The Psychology of Tantra</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">Demystifying Tantra as a tool for subconscious reprogramming and energy sublimation.</p>
+                     <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('Psychology of Tantra', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTICLE 6 -->
+                 <article class="blog-card reveal-up group cursor-pointer relative">
+                    <div class="blog-img h-64 rounded-md mb-6">
+                        <img src="https://images.unsplash.com/photo-1602192509153-0b72636bb0d5?w=800&q=80" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex items-center justify-between mb-3 text-xs uppercase tracking-widest">
+                        <span class="text-[#C88D72] font-bold">Mantra</span>
+                        <span class="text-gray-400">6 min read</span>
+                    </div>
+                    <h3 class="text-2xl serif text-[#1A1A1A] mb-3 group-hover:text-[#C88D72] transition-colors">Bija Mantras & Frequency</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-6">The physics of sound healing and how specific seed syllables affect chakras.</p>
+                     <div class="flex justify-between items-center border-t border-gray-100 pt-4">
+                        <span class="text-xs font-bold uppercase tracking-widest text-[#1A1A1A] group-hover:text-[#C88D72] transition">Read Article</span>
+                        <button onclick="sharePost('Bija Mantras', 'https://harshranjan.com/blog.html')" class="text-gray-400 hover:text-[#C88D72] transition" title="Share">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Subscription -->
+    <section class="bg-[#1A1A1A] py-24 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-2xl mx-auto reveal-up">
+                <i data-lucide="mail-open" class="w-10 h-10 text-[#C88D72] mx-auto mb-6"></i>
+                <h2 class="text-3xl serif text-white mb-4">Join the Sangha</h2>
+                <p class="text-gray-400 text-sm mb-8 leading-relaxed">
+                    Receive weekly insights on the convergence of biology and spirituality, plus exclusive retreat announcements.
+                </p>
+                <form onsubmit="event.preventDefault(); alert('Thank you for subscribing! Check your inbox.');" class="flex flex-col sm:flex-row gap-0 max-w-md mx-auto">
+                    <input type="email" placeholder="Your Email Address" class="w-full p-4 bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:border-[#C88D72] rounded-t-sm sm:rounded-l-sm sm:rounded-tr-none" required>
+                    <button class="px-8 py-4 bg-[#C88D72] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#A6755E] transition rounded-b-sm sm:rounded-r-sm sm:rounded-bl-none">Subscribe</button>
+                </form>
+                <p class="text-xs text-gray-500 mt-4">No spam. Unsubscribe anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block mb-4">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                </svg>
+                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+            </a>
+            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
+        });
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/90', 'backdrop-blur-md', 'py-3');
+                nav.classList.remove('bg-black/40', 'py-4');
+            } else {
+                nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'py-3');
+                nav.classList.add('bg-black/40', 'py-4');
+            }
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if(menuBtn && closeMenuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden-menu');
+                mobileMenu.classList.add('visible-menu');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('visible-menu');
+                mobileMenu.classList.add('hidden-menu');
+            });
+        }
+
+        // Sharing Logic
+        function sharePost(title, url) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Read this article by Harsh Ranjan: ${title}`,
+                    url: url,
+                })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+            } else {
+                alert("Sharing is not supported on this browser. Copy the link manually.");
+            }
+        }
+    </script>
+</body>
+</html>
