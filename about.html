@@ -8,18 +8,8 @@
     <title>The Scholar's Journey | Harsh Ranjan (Samarpan)</title>
     <meta name="description" content="The spiritual and academic journey of Harsh Ranjan, disciple of Swami Satyasangananda Saraswati and scholar of Ayurveda Biology.">
 
-    <!-- =========================================
-         GOOGLE ANALYTICS
-    ========================================== -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_MEASUREMENT_ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'YOUR_MEASUREMENT_ID');
-    </script>
-    -->
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
 
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,7 +42,7 @@
         .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.03; animation: spin 160s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* RECTANGULAR PHOTO FRAME (User) */
+        /* RECTANGULAR PHOTO FRAME (User's Photo) */
         .photo-container { position: relative; padding: 20px; }
         .photo-frame { 
             position: relative; z-index: 2; 
@@ -66,20 +56,21 @@
             border-radius: 4px; 
         }
 
-        /* GURU FRAME (Golden Halo) */
+        /* GURU FRAME (Golden Rectangle) */
+        .guru-container { position: relative; padding: 20px; }
         .guru-frame {
-            width: 300px; height: 300px; border-radius: 50%;
-            position: relative; overflow: hidden;
-            border: 4px solid var(--color-gold);
-            box-shadow: 0 0 40px rgba(191, 165, 125, 0.4);
+            position: relative; z-index: 2;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(191, 165, 125, 0.3);
+            border: 2px solid var(--color-gold);
         }
-        .guru-halo {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 340px; height: 340px; border-radius: 50%;
-            border: 1px dashed var(--color-gold);
-            animation: spin-slow 60s linear infinite;
+        .guru-border {
+            position: absolute; top: -20px; left: 20px; right: 20px; bottom: 20px;
+            border: 1px solid var(--color-gold); z-index: 1;
+            border-radius: 4px;
+            opacity: 0.6;
         }
-        @keyframes spin-slow { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
         /* Mobile Menu */
         #mobile-menu { transition: transform 0.3s ease-in-out; }
@@ -89,48 +80,47 @@
 </head>
 <body class="antialiased selection:bg-[#C88D72] selection:text-white">
 
-    <!-- Navigation -->
+    <!-- Navigation (Synced with Index) -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-3 text-white border-b border-white/10 bg-black/20 backdrop-blur-md">
         <div class="container mx-auto px-6 flex justify-between items-center">
             
             <!-- Logo -->
             <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-0.5 group-hover:scale-110 transition duration-500">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
-                </svg>
-                <div class="flex items-center gap-2 opacity-90">
-                    <span id="logo-text" class="text-[9px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
-                </div>
+                <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/><path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/></svg>
+                <span id="logo-text" class="text-[12px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] font-bold group-hover:text-[#C88D72] transition drop-shadow-sm">Samarpan</span>
             </a>
             
             <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
-                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
-                <a href="#journey" class="hover:text-[#C88D72] transition text-[#C88D72]">Journey</a>
-                <a href="#guru" class="text-[#D4AF37] hover:text-white transition">Lineage</a>
-                <a href="#credentials" class="hover:text-[#C88D72] transition">Credentials</a>
-                <a href="index.html#contact" class="px-5 py-1.5 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Session</a>
+            <div class="hidden lg:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest nav-links-container">
+                <a href="about.html" class="text-[#C88D72] hover:text-white transition drop-shadow-sm">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Ayurveda</a>
+                <a href="psychology.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Psychology</a>
+                <a href="blog.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition drop-shadow-sm">Diet</a>
+                <a href="contact.html" class="px-5 py-1.5 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm drop-shadow-sm">Contact</a>
             </div>
 
-            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white p-2 z-50 relative cursor-pointer"><i data-lucide="menu" class="w-8 h-8 drop-shadow-md"></i></button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
-            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-8 h-8 text-[#C88D72]"></i></button>
-            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
-            <a href="#journey" class="text-3xl serif text-[#C88D72] mobile-link">Journey</a>
-            <a href="#guru" class="text-3xl serif mobile-link">Lineage</a>
-            <a href="#credentials" class="text-3xl serif mobile-link">Credentials</a>
-            <a href="index.html#contact" class="text-3xl serif mobile-link">Contact</a>
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-[60] hidden-menu flex flex-col justify-center items-center space-y-8 h-screen w-screen">
+            <button id="close-menu-btn" class="absolute top-6 right-6 p-2 cursor-pointer"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
+            <a href="about.html" class="text-3xl serif mobile-link text-[#C88D72]">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
+            <a href="nutrition.html" class="text-3xl serif mobile-link">Diet</a>
+            <a href="contact.html" class="text-3xl serif mobile-link">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="relative w-full h-[70vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
+        <!-- Image: Library or Sacred Study -->
         <img src="https://images.unsplash.com/photo-1515096788709-a3cf4ce0a4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Study of ancient texts" class="absolute inset-0 w-full h-full object-cover opacity-40">
         <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
 
@@ -157,7 +147,8 @@
                 <div class="w-full lg:w-1/2 relative flex justify-center reveal-up photo-container">
                     <div class="photo-border"></div>
                     <div class="photo-frame h-[600px] w-full max-w-md">
-                        <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Harsh Ranjan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                        <!-- UPDATED: Use index.png -->
+                        <img src="index.png" alt="Harsh Ranjan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                     </div>
                 </div>
 
@@ -188,27 +179,21 @@
         </div>
     </section>
 
-    <!-- THE GURU SECTION (Symbolic Image) -->
+    <!-- THE GURU SECTION (Updated with Rectangular Photo) -->
     <section id="guru" class="py-32 bg-[#1A1A1A] text-white relative">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
         
         <div class="container mx-auto px-6 md:px-12 relative z-10">
             <div class="flex flex-col lg:flex-row-reverse gap-20 items-center">
                 
-                <!-- Guru Frame (Symbolic Light) -->
-                <div class="w-full lg:w-1/2 flex justify-center reveal-up">
-                    <div class="relative">
-                        <div class="guru-halo"></div>
-                        <div class="guru-frame">
-                            <!-- SYMBOLIC IMAGE: A Diya/Lamp to represent the Guru's Light (Copyright Safe) -->
-                            <img src="https://images.unsplash.com/photo-1601129792416-9326422d8018?q=80&w=800&auto=format&fit=crop" alt="The Guiding Light" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition duration-700">
-                        </div>
-                        <div class="text-center mt-8">
-                            <p class="text-[#D4AF37] text-xs uppercase tracking-[0.3em] font-bold mb-2">Peethadheeshwari</p>
-                            <h3 class="text-3xl font-decorative text-white">Swami Satyasangananda Saraswati</h3>
-                            <p class="text-gray-400 text-xs mt-2 italic">Rikhiapeeth, India</p>
-                        </div>
+                <!-- Guru Photo Frame (Rectangular with Gold) -->
+                <div class="w-full lg:w-1/2 flex justify-center reveal-up guru-container">
+                    <div class="guru-border"></div>
+                    <div class="guru-frame h-[500px] w-full max-w-md">
+                        <!-- UPDATED: Use guruji.png -->
+                        <img src="guruji.png" alt="Swami Satyasangananda Saraswati" class="w-full h-full object-cover object-top opacity-95 hover:opacity-100 transition duration-700">
                     </div>
+                    <!-- Text below moved inside the flex column for better mobile layout if needed, keeping outside frame -->
                 </div>
 
                 <!-- Text -->
@@ -316,24 +301,69 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/5">
-        <div class="container mx-auto px-6 text-center">
-            <a href="index.html" class="inline-block mb-4 group">
-                 <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2 group-hover:scale-110 transition duration-500">
-                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 20C50 20 65 40 65 55C65 63 58 70 50 70C42 70 35 63 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
-                </svg>
-                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
-            </a>
-            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-2">
+                <a href="#" class="flex items-center gap-2 mb-4">
+                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]">
+                        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                        <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                    </svg>
+                    <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                    Bridging ancient wisdom with modern science for holistic well-being.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Links</h4>
+                <ul class="space-y-3 text-sm text-gray-300">
+                    <li><a href="sessions.html" class="hover:text-[#C88D72]">Sessions</a></li>
+                    <li><a href="blog.html" class="hover:text-[#C88D72]">Blog</a></li>
+                    <li><a href="index.html#ai-lab" class="hover:text-[#C88D72]">AI Lab</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">Contact</h4>
+                <p class="text-sm text-gray-300 mb-2">justtheself@gmail.com</p>
+                <p class="text-sm text-gray-300">New Delhi, India</p>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-xs text-gray-600">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+            
+            <div class="flex gap-4">
+                <a href="https://instagram.com/samarpan_wellness" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="https://linkedin.com/in/harshranjan" target="_blank" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="mailto:justtheself@gmail.com" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+            </div>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1, scrollTrigger: { trigger: elem, start: "top 85%" } });
+        gsap.utils.toArray('.reveal-up').forEach(e => {
+            gsap.fromTo(e, {opacity:0, y:40}, {opacity:1, y:0, duration:1, scrollTrigger:{trigger:e, start:"top 85%"}})
+        });
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const logoText = document.getElementById('logo-text');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
+                nav.classList.remove('bg-black/20', 'py-3', 'text-white', 'border-white/10');
+                if(logoText) logoText.classList.replace('text-[#FDFCF8]', 'text-[#C88D72]');
+            } else {
+                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
+                nav.classList.add('bg-black/20', 'py-3', 'text-white', 'border-white/10');
+                if(logoText) logoText.classList.replace('text-[#C88D72]', 'text-[#FDFCF8]');
+            }
         });
 
         // Mobile Menu Logic
@@ -346,7 +376,6 @@
                 mobileMenu.classList.remove('hidden-menu');
                 mobileMenu.classList.add('visible-menu');
             });
-            
             closeMenuBtn.addEventListener('click', () => {
                 mobileMenu.classList.remove('visible-menu');
                 mobileMenu.classList.add('hidden-menu');
