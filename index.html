@@ -8,7 +8,7 @@
     <title>Harsh Ranjan | Integrative Health & Wellness</title>
     <meta name="description" content="Interdisciplinary scholar-practitioner specializing in Ayurveda Biology, Yoga, Psychology, and Sanskrit.">
 
-    <!-- FAVICON: Custom Logo in Browser Tab -->
+    <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
 
     <!-- Libraries -->
@@ -23,31 +23,20 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Design System -->
     <style>
         :root {
             --color-bg: #FDFCF8;
             --color-sage: #4A5D4F;
-            --color-terra: #C88D72; /* Orange Tone */
+            --color-terra: #C88D72;
             --color-gold: #BFA57D;
             --color-charcoal: #1A1A1A;
         }
-        
         body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-charcoal); overflow-x: hidden; }
         .serif { font-family: 'Cormorant Garamond', serif; }
         .logo-font { font-family: 'Cinzel', serif; }
         
-        /* Reveal Animations */
         .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        /* AI Tabs */
-        .ai-tab { cursor: pointer; transition: all 0.3s; opacity: 0.6; border-bottom: 2px solid transparent; }
-        .ai-tab.active { opacity: 1; border-bottom-color: var(--color-terra); font-weight: 600; color: var(--color-charcoal); }
-
-        /* Mandala Background */
-        .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.03; animation: spin 120s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* Photo Frame */
         .photo-container { position: relative; padding: 20px; }
@@ -97,19 +86,23 @@
             display: block;
         }
 
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .hidden-menu { transform: translateX(100%); } .visible-menu { transform: translateX(0); }
+
+        /* Chat Widget */
+        .chat-widget { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; opacity: 0; pointer-events: none; transform: scale(0.9) translateY(20px); }
+        .chat-widget.open { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
+        
+        /* AI Tabs */
+        .ai-tab { cursor: pointer; transition: all 0.3s; opacity: 0.6; border-bottom: 2px solid transparent; }
+        .ai-tab.active { opacity: 1; border-bottom-color: var(--color-terra); font-weight: 600; color: var(--color-charcoal); }
+
         /* Form Status */
         #formStatus { margin-top: 1rem; font-size: 0.9rem; font-weight: 600; text-align: center; }
         #formStatus.success { color: #4A5D4F; }
         #formStatus.error { color: #ef4444; }
         #formStatus.loading { color: #C88D72; animation: pulse 2s infinite; }
-
-        /* Mobile Menu */
-        #mobile-menu { transition: transform 0.3s ease-in-out; }
-        .hidden-menu { transform: translateX(100%); } .visible-menu { transform: translateX(0); }
-        
-        /* Chat Widget */
-        .chat-widget { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; opacity: 0; pointer-events: none; transform: scale(0.9) translateY(20px); }
-        .chat-widget.open { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
     </style>
 </head>
 <body class="antialiased selection:bg-[#C88D72] selection:text-white">
@@ -146,19 +139,11 @@
 
     <!-- Header -->
     <header class="relative w-full h-screen overflow-hidden flex items-center justify-center">
-        <!-- Video: Serene Nature Yoga (Autoplay/Muted is critical) -->
-        <!-- Using direct video tag for the streamable link won't work directly as source due to CORS/embedding restrictions usually.
-             Streamable links are meant to be viewed on their platform or embedded via iframe.
-             However, for a background video, we need a direct mp4 link.
-             Since I cannot extract the direct MP4 from Streamable dynamically here, I will use a high-quality Pexels video as a reliable fallback
-             that matches the "Cinematic Yoga" description perfectly. If you have the direct .mp4 file link from Streamable, replace the src below. -->
         <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover scale-105" style="filter: brightness(0.85);">
-            <source src="https://videos.pexels.com/video-files/3759657/3759657-uhd_2560_1440_24fps.mp4" type="video/mp4">
+            <source src="https://streamable.com/9phbjt" type="video/mp4">
+            <!-- Fallback if streamable direct link issue: Pexels backup -->
+            <source src="https://videos.pexels.com/video-files/3195867/3195867-uhd_2560_1440_25fps.mp4" type="video/mp4">
         </video>
-        <!-- Note: Streamable links (like https://streamable.com/9phbjt) are web pages, not video files. 
-             To use as a background, you need the direct file ending in .mp4. 
-             The Pexels video above is a placeholder for a similar high-quality yoga cinematic. -->
-        
         <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
         <div class="relative z-10 text-center px-4 max-w-5xl mt-16">
             <div class="reveal-up inline-flex items-center gap-3 px-5 py-2 border border-white/40 rounded-full bg-black/20 backdrop-blur-sm mb-8 shadow-lg">
@@ -172,7 +157,7 @@
                 Dedicated to integrating traditional knowledge systems with modern scientific research to promote holistic health.
             </p>
             <div class="reveal-up flex flex-col sm:flex-row gap-5 justify-center">
-                <a href="#contact" class="px-10 py-4 bg-[#C88D72] text-white uppercase tracking-widest text-xs font-bold hover:bg-[#A6755E] transition-colors shadow-2xl rounded-sm flex items-center justify-center">Start Your Journey</a>
+                <a href="contact.html" class="px-10 py-4 bg-[#C88D72] text-white uppercase tracking-widest text-xs font-bold hover:bg-[#A6755E] transition-colors shadow-2xl rounded-sm flex items-center justify-center">Start Your Journey</a>
                 <a href="#ai-lab" class="px-10 py-4 bg-white text-black uppercase tracking-widest text-xs font-bold hover:bg-gray-200 transition-colors rounded-sm flex items-center justify-center gap-2 shadow-xl">
                      <svg width="16" height="16" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="8"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="8"/><circle cx="50" cy="85" r="8" fill="currentColor"/></svg> Samarpan AI
                 </a>
@@ -181,15 +166,15 @@
         <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/70 animate-bounce"><i data-lucide="chevrons-down" class="w-6 h-6"></i></div>
     </header>
 
-    <!-- About Section -->
+    <!-- About Section (Rectangle Frame + Your Photo) -->
     <section id="about" class="py-32 bg-[#FDFCF8] relative overflow-hidden">
-        <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
         <div class="container mx-auto px-6 md:px-12 relative z-10">
             <div class="flex flex-col lg:flex-row gap-24 items-center">
                 <div class="w-full lg:w-1/2 relative flex justify-center reveal-up photo-container">
                     <div class="photo-border"></div>
                     <div class="photo-frame h-[550px] w-full max-w-md">
-                        <img src="https://images.unsplash.com/photo-1544367563-12123d8965cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Harsh Ranjan" class="w-full h-full object-cover transition duration-1000 hover:scale-105">
+                        <!-- UPDATED: Your Profile Photo -->
+                        <img src="index.png" alt="Harsh Ranjan" class="w-full h-full object-cover transition duration-1000 hover:scale-105">
                     </div>
                     <div class="absolute bottom-8 right-0 bg-white p-6 shadow-2xl border-l-4 border-[#C88D72] z-20">
                         <div class="flex items-center gap-2 mb-1">
@@ -255,51 +240,32 @@
                         <i data-lucide="chevron-down" class="mt-2 animate-bounce"></i>
                     </div>
                     <div class="session-details pt-6 border-t border-white/20 mt-4">
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Sattvic meal planning for gut health and mental clarity based on your Dosha.</p>
-                        <a href="nutrition.html" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Full Page</a>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Sattvic meal planning for gut health and mental clarity.</p>
+                        <div class="flex gap-4 justify-center">
+                            <a href="nutrition.html" class="inline-block px-5 py-2 border border-[#C88D72] text-[#C88D72] text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] hover:text-white transition">Full Page</a>
+                        </div>
                     </div>
                 </div>
                  <!-- Service 4 -->
                 <div class="session-card p-6 rounded-sm flex flex-col justify-center items-center text-center reveal-up" onclick="toggleSession(this)">
-                    <div class="flex flex-col items-center main-view">
-                        <div class="mb-2 text-white"><i data-lucide="activity" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl serif">Yoga Therapy</h3>
-                        <i data-lucide="chevron-down" class="mt-2 animate-bounce"></i>
-                    </div>
-                    <div class="session-details pt-6 border-t border-white/20 mt-4">
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Bihar School of Yoga tradition. Asana, Pranayama, and relaxation.</p>
-                        <a href="yoga-session.html" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Full Page</a>
-                    </div>
+                    <div class="flex flex-col items-center main-view"><div class="mb-2 text-white"><i data-lucide="activity" class="w-8 h-8"></i></div><h3 class="text-2xl serif">Yoga Therapy</h3><i data-lucide="chevron-down" class="mt-2 animate-bounce"></i></div>
+                    <div class="session-details pt-6 border-t border-white/20 mt-4"><p class="text-gray-300 text-sm leading-relaxed mb-6">Bihar School of Yoga tradition. Asana, Pranayama, and relaxation.</p><a href="yoga-session.html" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Full Page</a></div>
                 </div>
                  <!-- Service 5 -->
-                <div class="session-card p-6 rounded-sm flex flex-col justify-center items-center text-center reveal-up" onclick="toggleSession(this)">
-                    <div class="flex flex-col items-center main-view">
-                        <div class="mb-2 text-white"><i data-lucide="moon" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl serif">Meditation</h3>
-                        <i data-lucide="chevron-down" class="mt-2 animate-bounce"></i>
-                    </div>
-                    <div class="session-details pt-6 border-t border-white/20 mt-4">
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Guided techniques for mental silence (Antar Mouna) and spiritual growth.</p>
-                         <a href="#contact" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Book</a>
-                    </div>
+                 <div class="session-card p-6 rounded-sm flex flex-col justify-center items-center text-center reveal-up" onclick="toggleSession(this)">
+                    <div class="flex flex-col items-center main-view"><div class="mb-2 text-white"><i data-lucide="moon" class="w-8 h-8"></i></div><h3 class="text-2xl serif">Meditation</h3><i data-lucide="chevron-down" class="mt-2 animate-bounce"></i></div>
+                    <div class="session-details pt-6 border-t border-white/20 mt-4"><p class="text-gray-300 text-sm leading-relaxed mb-6">Guided techniques for mental silence.</p><a href="contact.html" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Book</a></div>
                 </div>
                  <!-- Service 6 -->
-                <div class="session-card p-6 rounded-sm flex flex-col justify-center items-center text-center reveal-up" onclick="toggleSession(this)">
-                    <div class="flex flex-col items-center main-view">
-                        <div class="mb-2 text-white"><i data-lucide="music" class="w-8 h-8"></i></div>
-                        <h3 class="text-2xl serif">Mantra</h3>
-                        <i data-lucide="chevron-down" class="mt-2 animate-bounce"></i>
-                    </div>
-                    <div class="session-details pt-6 border-t border-white/20 mt-4">
-                        <p class="text-gray-300 text-sm leading-relaxed mb-6">Sacred sound therapy using Bija Mantras to clear energetic blockages.</p>
-                        <a href="#contact" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Book</a>
-                    </div>
+                 <div class="session-card p-6 rounded-sm flex flex-col justify-center items-center text-center reveal-up" onclick="toggleSession(this)">
+                    <div class="flex flex-col items-center main-view"><div class="mb-2 text-white"><i data-lucide="music" class="w-8 h-8"></i></div><h3 class="text-2xl serif">Mantra</h3><i data-lucide="chevron-down" class="mt-2 animate-bounce"></i></div>
+                    <div class="session-details pt-6 border-t border-white/20 mt-4"><p class="text-gray-300 text-sm leading-relaxed mb-6">Sacred sound therapy.</p><a href="contact.html" class="inline-block px-6 py-2 border border-white text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-[#C88D72] transition">Book</a></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sacred Journeys (Trips) -->
+    <!-- Sacred Journeys (Trips) - Restored & Updated Images -->
     <section id="trips" class="bg-[#FDFCF8] py-24">
         <div class="container mx-auto px-6 md:px-12">
             <div class="text-center mb-16 reveal-up">
@@ -307,23 +273,54 @@
                 <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A]">Sacred Journeys</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-[600px] auto-rows-fr">
-                <div class="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up"><img src="https://images.unsplash.com/photo-1518002171953-a080ee817e1f?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105"><div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition"></div><div class="absolute bottom-8 left-8"><span class="text-[#C88D72] text-[10px] font-bold uppercase tracking-widest bg-black/50 px-2 py-1 rounded mb-2 inline-block">Oct 15 - 25</span><h3 class="text-3xl serif text-white">Himalayan Silence</h3><p class="text-white/80 text-sm mt-1">Rishikesh, India</p></div></div>
-                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up"><img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105"><div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Kerala Ayurveda</h3></div><div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div></div>
-                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up"><img src="https://images.unsplash.com/photo-1592636504269-a1b734892c57?w=800&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-105"><div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Ganga Aarti</h3></div><div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div></div>
-                <div class="lg:col-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up"><div class="absolute inset-0 bg-[#3A4A3F] flex items-center justify-center border border-white/10 hover:bg-[#2C3A30] transition"><div class="text-center text-white"><h3 class="text-2xl serif mb-2">Custom Retreats</h3><p class="text-white/70 max-w-xs mx-auto text-sm mb-4">Designed for corporate groups or private healing.</p><a href="#contact" class="border-b border-[#C88D72] pb-1 text-xs uppercase tracking-widest text-[#C88D72]">Inquire Now</a></div></div></div>
+                <div class="lg:col-span-2 lg:row-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
+                    <!-- UPDATED: Himalayan Silence Image -->
+                    <img src="Rishikesh_Trip2.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <span class="text-[#C88D72] text-[10px] font-bold uppercase tracking-widest bg-black/50 px-2 py-1 rounded mb-2 inline-block">Oct 15 - 25</span>
+                        <h3 class="text-3xl serif text-white">Himalayan Silence</h3>
+                        <p class="text-white/80 text-sm mt-1">Rishikesh, India</p>
+                    </div>
+                </div>
+                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
+                    <!-- UPDATED: Kerala Ayurveda Image -->
+                    <img src="your-image1.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Kerala Ayurveda</h3></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+                <div class="group relative rounded-xl overflow-hidden cursor-pointer reveal-up">
+                    <!-- UPDATED: Ganga Aarti Image -->
+                    <img src="Ganga_Arti.jpg" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                    <div class="absolute bottom-4 left-4 text-white z-10"><h3 class="text-lg serif">Ganga Aarti</h3></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                </div>
+                <div class="lg:col-span-2 group relative rounded-xl overflow-hidden cursor-pointer reveal-up"><div class="absolute inset-0 bg-[#3A4A3F] flex items-center justify-center border border-white/10 hover:bg-[#2C3A30] transition"><div class="text-center text-white"><h3 class="text-2xl serif mb-2">Custom Retreats</h3><p class="text-white/70 max-w-xs mx-auto text-sm mb-4">Designed for corporate groups or private healing.</p><a href="contact.html" class="border-b border-[#C88D72] pb-1 text-xs uppercase tracking-widest text-[#C88D72]">Inquire Now</a></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- Gallery Section (Updated Images & Layout) -->
     <section id="gallery" class="bg-[#1A1A1A] py-24">
         <div class="container mx-auto px-6 md:px-12">
             <div class="text-center mb-16 reveal-up"><span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Gallery</span><h2 class="text-4xl md:text-5xl serif text-white">Moments from the Journey</h2></div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[600px] md:h-[500px]">
-                <div class="col-span-2 row-span-2 relative overflow-hidden rounded-sm reveal-up"><img src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&q=80" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100"></div>
-                <div class="relative overflow-hidden rounded-sm reveal-up"><img src="https://images.unsplash.com/photo-1606914509854-139a3d402476?w=600&q=80" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100"></div>
-                <div class="relative overflow-hidden rounded-sm reveal-up"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100"></div>
-                <div class="col-span-2 relative overflow-hidden rounded-sm reveal-up"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100"></div>
+                <!-- 1. Meditation Rishikesh (Main) -->
+                <div class="col-span-2 row-span-2 relative overflow-hidden rounded-sm reveal-up">
+                    <img src="Meditation_Rishikesh.jpg" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100">
+                </div>
+                <!-- 2. your_image3.jpg -->
+                <div class="relative overflow-hidden rounded-sm reveal-up">
+                    <img src="your_image3.jpg" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100">
+                </div>
+                <!-- 3. your-photo.jpg -->
+                <div class="relative overflow-hidden rounded-sm reveal-up">
+                    <img src="your-photo.jpg" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100">
+                </div>
+                <!-- 4. Placeholder/Generic -->
+                <div class="col-span-2 relative overflow-hidden rounded-sm reveal-up">
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80" class="w-full h-full object-cover hover:scale-110 transition duration-700 opacity-80 hover:opacity-100">
+                </div>
             </div>
         </div>
     </section>
@@ -335,10 +332,11 @@
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 reveal-up">
                 <div class="md:w-1/2">
                     <h2 class="text-4xl md:text-5xl serif text-[#2C2C2C] mb-4 flex items-center gap-3">
+                        <!-- CUSTOM LOGO IN AI HEADER -->
                         <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] drop-shadow-sm"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/><path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="85" r="4" fill="currentColor"/><path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/></svg>
                         <span class="text-[#C88D72]">Samarpan</span> AI
                     </h2>
-                    <p class="text-gray-600 leading-relaxed">My digital twin. Ask about Doshas, Dreams, or Recipes. Trained on my methodology.</p>
+                    <p class="text-gray-600 leading-relaxed">My digital twin. Ask about Doshas, Dreams, or Recipes.</p>
                 </div>
                 <div class="flex gap-8 mt-8 md:mt-0 text-sm uppercase tracking-widest text-[#4A5D4F] border-b border-gray-300 w-full md:w-auto overflow-x-auto">
                     <button class="ai-tab active pb-4 hover:text-[#2C2C2C]" onclick="switchTab('chef')">Nutrition</button>
@@ -367,19 +365,21 @@
         </div>
     </section>
 
-    <!-- INTEGRATED CALENDAR & BOOKING -->
+    <!-- INTEGRATED CALENDAR & BOOKING (Side-by-Side) -->
     <section id="contact" class="bg-[#4A5D4F] text-white py-24">
         <div class="container mx-auto px-6 md:px-12">
             <div class="grid lg:grid-cols-2 gap-16">
-                <div class="reveal-up">
+                <!-- Left: Calendly -->
+                <div class="reveal-up h-full">
                     <h2 class="text-4xl md:text-5xl serif mb-6">Secure Your Time</h2>
-                    <p class="text-white/80 font-light text-lg mb-8">Select a date below to initiate a booking request.</p>
-                    <!-- CALENDLY WIDGET -->
-                    <div class="calendly-inline-widget" data-url="https://calendly.com/justtheself/30min" style="min-width:320px;height:630px;"></div>
+                    <div class="calendly-inline-widget rounded-xl shadow-2xl overflow-hidden" data-url="https://calendly.com/justtheself/30min" style="min-width:320px;height:650px;"></div>
                 </div>
-                <!-- CUSTOM FORM -->
-                <div class="bg-white text-[#1A1A1A] rounded-2xl p-8 shadow-2xl reveal-up h-fit self-center">
-                    <h3 class="text-2xl serif mb-6">Confirm Details</h3>
+
+                <!-- Right: Booking Form -->
+                <div class="bg-white text-[#1A1A1A] rounded-2xl p-8 shadow-2xl reveal-up h-fit self-center border-t-4 border-[#C88D72]">
+                    <h3 class="text-2xl serif mb-2">Custom Inquiry</h3>
+                    <p class="text-gray-500 text-sm mb-6">Prefer email? Fill this out.</p>
+                    
                     <form id="bookingForm" onsubmit="handleBooking(event)" class="space-y-4">
                         <input type="text" id="name" placeholder="Your Name" class="w-full bg-[#FAFAF8] border border-gray-200 p-4 text-sm rounded outline-none focus:border-[#C88D72]" required>
                         <input type="email" id="email" placeholder="Email Address" class="w-full bg-[#FAFAF8] border border-gray-200 p-4 text-sm rounded outline-none focus:border-[#C88D72]" required>
@@ -412,7 +412,6 @@
 
                 <!-- Right: Instagram & Newsletter -->
                 <div class="reveal-up space-y-8">
-                    <!-- Insta Card -->
                     <div class="flex flex-col justify-center items-center bg-white p-8 rounded-sm shadow-lg border border-gray-100 text-center">
                         <i data-lucide="instagram" class="w-10 h-10 text-[#C88D72] mb-3"></i>
                         <h3 class="text-xl font-bold mb-1">@justtheself</h3>
@@ -420,7 +419,6 @@
                         <a href="https://instagram.com/justtheself" target="_blank" class="px-8 py-2 border border-[#1A1A1A] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition rounded-sm">Follow Journey</a>
                     </div>
 
-                    <!-- Newsletter -->
                     <div class="bg-[#1A1A1A] p-8 rounded-sm text-white text-center">
                         <h3 class="text-lg serif mb-2">Join the Sangha</h3>
                         <p class="text-gray-400 text-xs mb-4">Weekly insights. No spam.</p>
@@ -443,7 +441,7 @@
         </div>
         <div class="container mx-auto px-6 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
             <p class="text-xs text-gray-600">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-            <div class="flex gap-4"><a href="https://instagram.com/samarpan_wellness" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="https://linkedin.com/in/harshranjan" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a><a href="#" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a></div>
+            <div class="flex gap-4"><a href="#" class="hover:text-[#C88D72]"><i data-lucide="instagram" class="w-5 h-5"></i></a><a href="#" class="hover:text-[#C88D72]"><i data-lucide="linkedin" class="w-5 h-5"></i></a><a href="#" class="hover:text-[#C88D72]"><i data-lucide="twitter" class="w-5 h-5"></i></a></div>
         </div>
     </footer>
 
@@ -451,7 +449,7 @@
     <button onclick="toggleChat()" class="fixed bottom-8 right-8 w-14 h-14 bg-[#1A1A1A] border border-[#C88D72] text-[#C88D72] rounded-full shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition duration-300"><i data-lucide="message-circle" class="w-6 h-6"></i></button>
     <div id="chat-window" class="chat-widget fixed bottom-28 right-8 w-80 sm:w-96 bg-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-200" style="height: 500px;">
         <div class="bg-[#1A1A1A] p-4 flex justify-between items-center text-white"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[#C88D72] flex items-center justify-center text-black font-bold text-xs">HR</div><h4 class="serif text-sm">Samarpan AI</h4></div><button onclick="toggleChat()" class="text-white/50 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-[#FAFAF8] space-y-3"><div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">Namaste. I am Samarpan AI. How can I help you?</div></div></div>
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-[#FAFAF8] space-y-3"><div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">Namaste. I am Samarpan AI. Ask me to "book a session" or about wellness.</div></div></div>
         <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2"><input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#C88D72]"><button type="submit" class="w-10 h-10 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center hover:bg-[#C88D72] transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button></form>
     </div>
 
@@ -464,7 +462,7 @@
 
         gsap.registerPlugin(ScrollTrigger);
         gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
+            gsap.fromTo(elem, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
         });
 
         window.addEventListener('scroll', () => {
@@ -545,7 +543,7 @@
 
              if (bookingState.active) {
                 if (bookingState.step === 1) { 
-                    bookingState.data.name = msg; bookingState.step = 2; setTimeout(() => botReply("Great. Which service?"), 500); return; 
+                    bookingState.data.name = msg; bookingState.step = 2; setTimeout(() => botReply("Great. Which service? (Ayurveda, Psychology, etc.)"), 500); return; 
                 }
                 if (bookingState.step === 2) { 
                     bookingState.data.service = msg; bookingState.step = 3; setTimeout(() => botReply("Preferred date/time?"), 500); return; 
