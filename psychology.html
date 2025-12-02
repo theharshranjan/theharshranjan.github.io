@@ -8,17 +8,6 @@
     <title>Psychology & Neurobiology | Harsh Ranjan (Samarpan)</title>
     <meta name="description" content="Integrative Psychology sessions by Harsh Ranjan. Merging Cognitive Behavioral Therapy (CBT) with Vedantic Self-Inquiry and Neurobiology for a global audience.">
 
-    <!-- =========================================
-         GOOGLE ANALYTICS (GA4)
-    ========================================== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
 
@@ -27,6 +16,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -57,6 +47,8 @@
             position: relative;
             height: 100%;
         }
+        .content-img:hover img { transform: scale(1.05); }
+        .content-img img { transition: transform 1.5s ease; }
         
         /* Background Texture */
         .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.03; animation: spin 160s linear infinite; }
@@ -71,19 +63,19 @@
 <body class="antialiased selection:bg-[#C88D72] selection:text-white">
 
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/30 backdrop-blur-md">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/40 backdrop-blur-md">
         <div class="container mx-auto px-6 flex justify-between items-center">
             
             <!-- Logo -->
             <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
                 <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
                 </svg>
                 <div class="flex items-center gap-2 opacity-90">
-                    <span id="logo-text" class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
+                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
                 </div>
             </a>
             
@@ -96,7 +88,7 @@
                 <a href="psychology.html" class="text-[#C88D72] transition border-b-2 border-[#C88D72] pb-1">Psychology</a>
                 <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
                 <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
-                <a href="form.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+                <a href="contact.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
             </div>
 
             <!-- Mobile Toggle -->
@@ -105,20 +97,20 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
-            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-8 h-8 text-[#C88D72]"></i></button>
+            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
             <a href="index.html" class="text-3xl serif mobile-link">Home</a>
             <a href="about.html" class="text-3xl serif mobile-link">About</a>
             <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
             <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
             <a href="psychology.html" class="text-3xl serif text-[#C88D72] mobile-link">Psychology</a>
             <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
-            <a href="form.html" class="text-3xl serif mobile-link">Book Now</a>
+            <a href="contact.html" class="text-3xl serif mobile-link">Book Now</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="relative w-full h-[70vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
-        <!-- Image: High-Quality Digital Brain / Neural Network [Image of Digital Neural Network Brain] -->
+        <!-- Image: High-Quality Digital Brain / Neural Network -->
         <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=2000&auto=format&fit=crop" alt="The Conscious Mind" class="absolute inset-0 w-full h-full object-cover opacity-80" style="filter: contrast(1.2);">
         <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
 
@@ -142,7 +134,7 @@
                 <div class="w-full lg:w-1/2 reveal-up">
                     <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-6">The Neural-Vedic Bridge</h2>
                     <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                        In the West, we study the brain's structure; in the East, we study the mind's stillness. My practice integrates my <strong>BA Hons in Psychology</strong> and <strong>Neurobiology</strong> (2025) to address mental health at both the structural (synaptic) and subtle (karmic) levels.
+                        The mind (*Manas*) is not separate from the body. My practice integrates my <strong>BA Hons in Psychology</strong> and <strong>Neurobiology</strong> (2025) to address mental health at both the structural (synaptic) and subtle (karmic) levels.
                     </p>
                     <p class="text-gray-600 text-lg leading-relaxed mb-8">
                         We use the clinically proven tools of <strong>Cognitive Behavioral Therapy (CBT)</strong> to address thought patterns, while simultaneously using <strong>Mantra and Meditation</strong> to stimulate neuroplasticity—literally reshaping the brain's response to stress and trauma.
@@ -163,7 +155,7 @@
                 <div class="w-full lg:w-1/2 reveal-up">
                     <div class="content-img h-[600px]">
                         <!-- Image: Abstract connection / Synapse -->
-                        <img src="https://images.unsplash.com/photo-1555372580-8a5326508f45?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 grayscale hover:grayscale-0">
+                        <img src="https://images.unsplash.com/photo-1555372580-8a5326508f45?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 grayscale hover:grayscale-0">
                     </div>
                 </div>
             </div>
@@ -194,26 +186,9 @@
                 
                 <div class="w-full lg:w-1/2 reveal-up">
                     <div class="content-img h-[500px] border border-white/10">
-                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 opacity-80">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition duration-1000 opacity-80">
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Global Reach Banner (New) -->
-    <section class="py-24 bg-[#FDFCF8] text-center relative">
-        <div class="container mx-auto px-6">
-             <div class="max-w-4xl mx-auto reveal-up">
-                <div class="flex justify-center mb-6 text-[#4A5D4F]"><i data-lucide="globe-2" class="w-12 h-12"></i></div>
-                <h2 class="text-3xl md:text-5xl serif text-[#1A1A1A] mb-6">Bridging East & West</h2>
-                <p class="text-xl text-gray-600 leading-relaxed font-light mb-8">
-                    The modern world brings unique challenges—whether it is corporate burnout in <strong>New York</strong>, existential seeking in <strong>London</strong>, or finding balance in the fast-paced life of <strong>Singapore</strong>.
-                </p>
-                <p class="text-lg text-gray-600 leading-relaxed font-light mb-10">
-                    My sessions are designed for the global citizen. I bridge the cultural gap, translating ancient Sanskrit concepts into practical, actionable psychological tools that fit into a modern, urban lifestyle.
-                </p>
-                <a href="form.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm shadow-xl">Connect Globally</a>
             </div>
         </div>
     </section>
@@ -234,7 +209,7 @@
                     <p class="text-white/80 text-lg leading-relaxed mb-8 font-light">
                         I utilize specific <strong>Vedic Chanting</strong> frequencies and <strong>Nadi Shodhana</strong> breathwork to stimulate the Vagus nerve. This increases Vagal Tone, instantly lowering cortisol levels and bringing the mind into a state of receptive clarity suitable for deep psychological work.
                     </p>
-                    <a href="form.html" class="inline-block px-10 py-4 bg-[#FDFCF8] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] hover:text-white transition rounded-sm">Book Psychology Session</a>
+                    <a href="contact.html" class="inline-block px-10 py-4 bg-[#FDFCF8] text-[#1A1A1A] text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] hover:text-white transition rounded-sm">Book Psychology Session</a>
                 </div>
                 
                 <div class="w-full lg:w-1/2 reveal-up">
@@ -247,6 +222,23 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Reach Banner (New) -->
+    <section class="py-24 bg-[#FDFCF8] text-center relative border-t border-gray-200">
+        <div class="container mx-auto px-6">
+             <div class="max-w-4xl mx-auto reveal-up">
+                <div class="flex justify-center mb-6 text-[#4A5D4F]"><i data-lucide="globe-2" class="w-12 h-12"></i></div>
+                <h2 class="text-3xl md:text-5xl serif text-[#1A1A1A] mb-6">Bridging East & West</h2>
+                <p class="text-xl text-gray-600 leading-relaxed font-light mb-8">
+                    The modern world brings unique challenges—whether it is corporate burnout in <strong>New York</strong>, existential seeking in <strong>London</strong>, or finding balance in the fast-paced life of <strong>Singapore</strong>.
+                </p>
+                <p class="text-lg text-gray-600 leading-relaxed font-light mb-10">
+                    My sessions are designed for the global citizen. I bridge the cultural gap, translating ancient Sanskrit concepts into practical, actionable psychological tools that fit into a modern, urban lifestyle.
+                </p>
+                <a href="contact.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm shadow-xl">Connect Globally</a>
             </div>
         </div>
     </section>
@@ -276,10 +268,6 @@
                     <p class="text-gray-600 text-sm leading-relaxed">Using specific sound vibrations to interrupt anxious neural loops and establish a new baseline of calm.</p>
                 </div>
             </div>
-            
-             <div class="text-center mt-20 reveal-up">
-                <a href="form.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm">Book Psychology Session</a>
-            </div>
         </div>
     </section>
 
@@ -294,6 +282,13 @@
                 <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
             </a>
             <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+            
+            <div class="flex justify-center gap-4 mt-6">
+                <a href="https://instagram.com/samarpan_wellness" class="hover:text-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="https://linkedin.com/in/harshranjan" class="hover:text-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="mailto:justtheself@gmail.com" class="hover:text-[#C88D72] transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+            </div>
         </div>
     </footer>
 
@@ -301,39 +296,15 @@
     <script>
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
+        gsap.utils.toArray('.reveal-up').forEach(e => {
+            gsap.fromTo(e, {opacity:0, y:40}, {opacity:1, y:0, duration:1.2, scrollTrigger:{trigger:e, start:"top 85%"}})
         });
-
-        // Navbar Scroll Logic
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            const logoText = document.getElementById('logo-text');
-            if (window.scrollY > 50) {
-                nav.classList.add('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
-                nav.classList.remove('bg-black/30', 'py-4', 'text-white', 'border-white/10');
-                if(logoText) logoText.classList.replace('text-[#FDFCF8]', 'text-[#C88D72]');
-            } else {
-                nav.classList.remove('bg-white/95', 'backdrop-blur-md', 'shadow-sm', 'py-3', 'text-[#1A1A1A]');
-                nav.classList.add('bg-black/30', 'py-4', 'text-white', 'border-white/10');
-                if(logoText) logoText.classList.replace('text-[#C88D72]', 'text-[#FDFCF8]');
-            }
-        });
-
-        // Mobile Menu Logic
         const menuBtn = document.getElementById('mobile-menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if(menuBtn && closeMenuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden-menu');
-                mobileMenu.classList.add('visible-menu');
-            });
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('visible-menu');
-                mobileMenu.classList.add('hidden-menu');
-            });
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(menuBtn){
+            menuBtn.onclick = () => { menu.classList.remove('hidden-menu'); menu.classList.add('visible-menu'); };
+            closeBtn.onclick = () => { menu.classList.remove('visible-menu'); menu.classList.add('hidden-menu'); };
         }
     </script>
 </body>
