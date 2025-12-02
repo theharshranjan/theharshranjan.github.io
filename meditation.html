@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Meditation & Mindfulness | Harsh Ranjan (Samarpan)</title>
+    <meta name="description" content="Advanced meditation coaching by Harsh Ranjan. Specializing in Vigyan Bhairav Tantra, Tatwa Shuddhi, and the neuroscience of mindfulness.">
+
+    <!-- =========================================
+         GOOGLE ANALYTICS (GA4)
+    ========================================== -->
+    <!-- Replace 'G-XXXXXXXXXX' with your actual Tracking ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Design System -->
+    <style>
+        :root {
+            --color-bg: #FDFCF8;
+            --color-sage: #4A5D4F;
+            --color-terra: #C88D72;
+            --color-gold: #BFA57D;
+            --color-charcoal: #1A1A1A;
+        }
+        
+        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-charcoal); overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .logo-font { font-family: 'Cinzel', serif; }
+        
+        /* Animations */
+        .reveal-up { opacity: 0; transform: translateY(60px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* Image Frames */
+        .content-img { 
+            border-radius: 4px; 
+            overflow: hidden; 
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.2);
+            position: relative;
+            height: 100%;
+        }
+        .content-img img { transition: transform 1.5s ease; }
+        .content-img:hover img { transform: scale(1.05); }
+        
+        /* Background Texture */
+        .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.03; animation: spin 160s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .hidden-menu { transform: translateX(100%); }
+        .visible-menu { transform: translateX(0); }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C88D72] selection:text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/30 backdrop-blur-md">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
+                </svg>
+                <div class="flex items-center gap-2 opacity-90">
+                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
+                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
+                <a href="psychology.html" class="hover:text-[#C88D72] transition">Psychology</a>
+                <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
+                <a href="contact.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
+            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
+            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
+            <a href="about.html" class="text-3xl serif mobile-link">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
+            <a href="contact.html" class="text-3xl serif mobile-link">Book Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[70vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
+        <!-- Video: Meditating in Nature -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+            <source src="https://videos.pexels.com/video-files/5502649/5502649-uhd_2560_1440_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
+
+        <div class="relative z-10 text-center px-4 mt-10">
+            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-8 block reveal-up">Dhyana</span>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl serif text-white mb-10 reveal-up drop-shadow-2xl tracking-wide">
+                Meditation & <br> <span class="italic text-[#C88D72]">Mindfulness</span>
+            </h1>
+            <p class="text-white/90 font-light max-w-3xl mx-auto text-xl reveal-up leading-relaxed drop-shadow-md">
+                From the ancient techniques of Vigyan Bhairav Tantra to the neuroscience of the Default Mode Network.
+            </p>
+        </div>
+    </header>
+
+    <!-- The Philosophy -->
+    <section class="py-24 bg-[#FDFCF8] relative overflow-hidden">
+        <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
+        
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-6">Silence is the Language</h2>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        Meditation is not about stopping thoughts; it is about changing your relationship with them. Drawing from my extensive training in **Psychology** and **Neurobiology**, I guide you away from the brain's reactive patterns into a state of "Response Flexibility."
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                        Simultaneously, we use the esoteric maps of **Tatwa Shuddhi** (Elemental Purification) to cleanse the subtle body, creating a stable foundation for higher consciousness.
+                    </p>
+                    
+                    <div class="flex gap-8 border-t border-gray-200 pt-8">
+                         <div>
+                            <h4 class="font-bold text-[#1A1A1A] text-xl serif">Pratyahara</h4>
+                            <p class="text-sm text-gray-500 mt-1">Withdrawal of senses.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[#1A1A1A] text-xl serif">Dharana</h4>
+                            <p class="text-sm text-gray-500 mt-1">One-pointed focus.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[#1A1A1A] text-xl serif">Dhyana</h4>
+                            <p class="text-sm text-gray-500 mt-1">Effortless flow.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="content-img h-[600px]">
+                        <!-- Image: Abstract Peace / Light -->
+                        <img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 grayscale hover:grayscale-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEEP DIVE: The Meditating Brain -->
+    <section class="py-24 bg-[#1A1A1A] text-white border-b border-white/5">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col lg:flex-row-reverse gap-20 items-center">
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="flex items-center gap-3 mb-4 text-[#D4AF37]">
+                        <i data-lucide="activity" class="w-6 h-6"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest">Neurobiology</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl serif mb-6">The Meditating Brain</h2>
+                    <p class="text-white/80 text-lg leading-relaxed mb-6 font-light">
+                        When we worry or ruminate, a network in the brain called the **Default Mode Network (DMN)** is highly active. Meditation acts as a "switch," deactivating the DMN and activating the **Task-Positive Network**.
+                    </p>
+                    <p class="text-white/80 text-lg leading-relaxed mb-8 font-light">
+                        In my sessions, we use techniques specifically designed to shift brain waves from Beta (anxious/alert) to **Alpha** (relaxed) and **Theta** (deep insight), fostering measurable changes in gray matter density over time.
+                    </p>
+                </div>
+                
+                <div class="w-full lg:w-1/2 reveal-up">
+                    <div class="content-img h-[400px] border border-white/10">
+                        <!-- Image: Neural pathways / Light -->
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-1000 opacity-80">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Techniques Grid -->
+    <section class="py-24 bg-[#FDFCF8]">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-20 reveal-up">
+                <span class="text-[#C88D72] uppercase tracking-widest text-xs font-bold block mb-4">Practices</span>
+                <h2 class="text-4xl md:text-5xl serif text-[#1A1A1A] mb-4">Ancient Techniques</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="mic-2" class="w-10 h-10 text-[#4A5D4F] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Antar Mouna</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">"Inner Silence." A systematic practice of observing the senses and thoughts without reaction, leading to Pratyahara (withdrawal).</p>
+                </div>
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="flame" class="w-10 h-10 text-[#C88D72] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Tatwa Shuddhi</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">"Elemental Purification." An advanced Tantric practice using geometric symbols (Yantras) and mantras to purify the 5 elements within.</p>
+                </div>
+                <div class="p-10 border border-[#C88D72]/20 rounded-sm hover:shadow-lg transition duration-300 reveal-up bg-white">
+                    <i data-lucide="infinity" class="w-10 h-10 text-[#BFA57D] mb-6"></i>
+                    <h3 class="text-2xl serif mb-3">Vigyan Bhairav</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Techniques from the *Vigyan Bhairav Tantra*, using breath, attention, and sensory gaps to instantly enter states of higher consciousness.</p>
+                </div>
+            </div>
+            
+             <div class="text-center mt-20 reveal-up">
+                <a href="contact.html" class="inline-block px-12 py-4 bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm">Join Meditation Circle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block mb-4">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                </svg>
+                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+            </a>
+            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal-up').forEach(e => {
+            gsap.fromTo(e, {opacity:0, y:40}, {opacity:1, y:0, duration:1, scrollTrigger:{trigger:e, start:"top 85%"}})
+        });
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-black/90', 'backdrop-blur-md', 'py-3');
+                nav.classList.remove('bg-black/30', 'py-4');
+            } else {
+                nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'py-3');
+                nav.classList.add('bg-black/30', 'py-4');
+            }
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(menuBtn){
+            menuBtn.onclick = () => { menu.classList.remove('hidden-menu'); menu.classList.add('visible-menu'); };
+            closeBtn.onclick = () => { menu.classList.remove('visible-menu'); menu.classList.add('hidden-menu'); };
+        }
+    </script>
+</body>
+</html>
