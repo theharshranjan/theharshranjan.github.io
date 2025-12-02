@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>Mantra Sadhana & Sound Healing | Harsh Ranjan</title>
+    <meta name="description" content="Experience the transformative power of Vedic Mantras. Gayatri, Mahamrityunjaya, and Durga Sapta Shloki chanting sessions with Harsh Ranjan.">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Martel:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Design System -->
+    <style>
+        :root {
+            --color-bg: #FDFCF8;
+            --color-sage: #4A5D4F;
+            --color-terra: #C88D72;
+            --color-gold: #D4AF37; /* Gold for Mantra accents */
+            --color-deep: #2C1810; /* Deep Earth/Wood */
+        }
+        
+        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-deep); overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .logo-font { font-family: 'Cinzel', serif; }
+        .sanskrit { font-family: 'Martel', serif; }
+        
+        /* Animations */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-up.active { opacity: 1; transform: translateY(0); }
+
+        /* Mantra Card */
+        .mantra-card {
+            background: white;
+            border: 1px solid rgba(191, 165, 125, 0.2);
+            border-radius: 4px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px -10px rgba(44, 24, 16, 0.05);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .mantra-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.15); /* Golden glow */
+            border-color: var(--color-gold);
+        }
+        .mantra-card::before {
+            content: ''; position: absolute; top: 0; left: 0; w-full; h-1; 
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+            opacity: 0; transition: opacity 0.5s;
+        }
+        .mantra-card:hover::before { opacity: 1; }
+
+        /* Custom Audio Player Styling */
+        .audio-player {
+            background: #F9F5F0;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .play-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--color-deep);
+            color: var(--color-gold);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .play-btn:hover { transform: scale(1.1); background: var(--color-terra); }
+        .track-info { font-size: 0.75rem; color: #666; flex-grow: 1; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+        /* Mandala Background */
+        .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.04; animation: spin 160s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        .hidden-menu { transform: translateX(100%); }
+        .visible-menu { transform: translateX(0); }
+    </style>
+</head>
+<body class="antialiased selection:bg-[#C88D72] selection:text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/40 backdrop-blur-md">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
+                </svg>
+                <div class="flex items-center gap-2 opacity-90">
+                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
+                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
+                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
+                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
+                <a href="psychology.html" class="hover:text-[#C88D72] transition">Psychology</a>
+                <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
+                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
+                <a href="contact.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
+            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
+            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
+            <a href="about.html" class="text-3xl serif mobile-link">About</a>
+            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
+            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
+            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
+            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
+            <a href="contact.html" class="text-3xl serif text-[#C88D72] mobile-link">Book Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[60vh] overflow-hidden flex items-center justify-center bg-[#2C1810]">
+        <!-- Image: Fire Ceremony / Chanting -->
+        <img src="https://images.unsplash.com/photo-1604882737321-e6937ad4f640?q=80&w=1600&auto=format&fit=crop" alt="Sacred Fire Havan" class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
+
+        <div class="relative z-10 text-center px-4 mt-10">
+            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-6 block reveal-up">Shabda Brahman</span>
+            <h1 class="text-6xl md:text-8xl serif text-white mb-8 reveal-up drop-shadow-2xl">
+                Mantra Sadhana
+            </h1>
+            <p class="text-white/90 font-light max-w-2xl mx-auto text-xl reveal-up leading-relaxed">
+                Harnessing the vibrational technology of Sanskrit to clear energetic blockages and awaken consciousness.
+            </p>
+        </div>
+    </header>
+
+    <!-- Intro: The Science of Sound -->
+    <section class="py-24 bg-[#FDFCF8] relative overflow-hidden">
+        <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
+        
+        <div class="container mx-auto px-6 md:px-12 relative z-10 text-center">
+            <div class="max-w-3xl mx-auto reveal-up">
+                <!-- Custom Logo as Icon -->
+                <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                    <svg width="64" height="64" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]">
+                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2.5"/>
+                        <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2.5"/>
+                        <circle cx="50" cy="85" r="4" fill="currentColor"/>
+                        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+                    </svg>
+                </div>
+                
+                <h2 class="text-4xl serif text-[#2C1810] mb-6">Vibration is Reality</h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                    Mantra is not mere prayer; it is a precise arrangement of sound syllables (<em>Bijus</em>) that interact with the subtle energy centers (<em>Chakras</em>) of the body. 
+                    <br><br>
+                    My sessions integrate the correct pronunciation (<em>Ucharana</em>), rhythm (<em>Chhandas</em>), and intention (<em>Sankalpa</em>) required to unlock the potency of these ancient formulas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MANTRA GRID -->
+    <section class="py-12 bg-[#FDFCF8] pb-32">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid lg:grid-cols-3 gap-12">
+
+                <!-- 1. Gayatri Mantra -->
+                <div class="mantra-card reveal-up">
+                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">Gayatri Mantra</h3>
+                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Illumination of Intellect</p>
+                    
+                    <div class="text-center mb-6">
+                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
+                            ॐ भूर्भुवः स्वः <br>
+                            तत्सवितुर्वरेण्यं <br>
+                            भर्गो देवस्य धीमहि <br>
+                            धियो यो नः प्रचोदयात् ॥
+                        </p>
+                    </div>
+                    
+                    <p class="text-sm text-gray-500 italic text-center mb-4">
+                        "Om Bhur Bhuva Swaha, Tat Savitur Varenyam, Bhargo Devasya Dheemahi, Dhiyo Yo Nah Prachodayat"
+                    </p>
+
+                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
+                        <strong>Benefit:</strong> Awakens the <em>Ajna Chakra</em> (Wisdom center). Recommended for students, professionals, and seekers of clarity.
+                    </div>
+                    
+                    <!-- Audio Player -->
+                    <div class="audio-player">
+                        <button class="play-btn" onclick="playAudio('audio-gayatri')"><i data-lucide="play" class="w-4 h-4"></i></button>
+                        <span class="track-info">Listen to Chant</span>
+                        <audio id="audio-gayatri" src="gayatri.mp3"></audio>
+                    </div>
+                </div>
+
+                <!-- 2. Mahamrityunjaya Mantra -->
+                <div class="mantra-card reveal-up" style="transition-delay: 0.1s">
+                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">Mahamrityunjaya</h3>
+                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Healing & Protection</p>
+                    
+                    <div class="text-center mb-6">
+                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
+                            ॐ त्र्यम्बकं यजामहे <br>
+                            सुगन्धिं पुष्टिवर्धनम् । <br>
+                            उर्वारुकमिव बन्धनान् <br>
+                            मृत्योर्मुक्षीय मामृतात् ॥
+                        </p>
+                    </div>
+                    
+                    <p class="text-sm text-gray-500 italic text-center mb-4">
+                        "Om Tryambakam Yajamahe, Sugandhim Pushti Vardhanam, Urvarukamiva Bandhanan, Mrityor Mukshiya Maamritat"
+                    </p>
+
+                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
+                        <strong>Benefit:</strong> The great death-conquering mantra. Used for physical healing, overcoming fear, and vitality (<em>Ojas</em>).
+                    </div>
+                    
+                    <div class="audio-player">
+                        <button class="play-btn" onclick="playAudio('audio-maha')"><i data-lucide="play" class="w-4 h-4"></i></button>
+                        <span class="track-info">Listen to Chant</span>
+                        <audio id="audio-maha" src="mahamrityunjaya.mp3"></audio>
+                    </div>
+                </div>
+
+                <!-- 3. Durga 32 Names -->
+                <div class="mantra-card reveal-up" style="transition-delay: 0.2s">
+                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">32 Names of Durga</h3>
+                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Removing Obstacles</p>
+                    
+                    <div class="text-center mb-6">
+                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
+                            दुर्गा दुर्गार्तिशमनी <br>
+                            दुर्गापद्विनिवारिणी । <br>
+                            दुर्गमच्छेदिनी दुर्ग- <br>
+                            साधिनी दुर्गनाशिनी ॥
+                        </p>
+                    </div>
+                    
+                    <p class="text-sm text-gray-500 italic text-center mb-4">
+                        "Durga, Durgartishamani, Durgapadminivarini..."
+                    </p>
+
+                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
+                        <strong>Benefit:</strong> A powerful Tantric mala used to remove external obstacles, distress, and confusion from life's path.
+                    </div>
+
+                    <div class="audio-player">
+                        <button class="play-btn" onclick="playAudio('audio-durga')"><i data-lucide="play" class="w-4 h-4"></i></button>
+                        <span class="track-info">Listen to Chant</span>
+                        <audio id="audio-durga" src="durga.mp3"></audio>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center mt-20 reveal-up">
+                <h3 class="text-2xl serif text-[#1A1A1A] mb-6">Initiate Your Sadhana</h3>
+                <p class="text-gray-600 mb-8 max-w-lg mx-auto">Receive personalized mantra initiation and learn the correct pronunciation and rhythm for maximum efficacy.</p>
+                <a href="form.html?service=Mantra Session" class="inline-block px-12 py-4 bg-[#2C1810] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm shadow-xl">
+                    Book Mantra Session
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block mb-4">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
+                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+                </svg>
+                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
+            </a>
+            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+            
+            <div class="flex justify-center gap-4 mt-6">
+                <a href="https://instagram.com/samarpan_wellness" class="hover:text-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="https://linkedin.com/in/harshranjan" class="hover:text-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="mailto:justtheself@gmail.com" class="hover:text-[#C88D72] transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+        gsap.utils.toArray('.reveal-up').forEach(e => {
+            gsap.fromTo(e, {opacity:0, y:40}, {opacity:1, y:0, duration:1.2, scrollTrigger:{trigger:e, start:"top 85%"}})
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        if(menuBtn && closeBtn && menu) {
+            menuBtn.onclick = () => { menu.classList.remove('hidden-menu'); menu.classList.add('visible-menu'); };
+            closeBtn.onclick = () => { menu.classList.remove('visible-menu'); menu.classList.add('hidden-menu'); };
+        }
+
+        // Audio Player Logic with Fallback
+        function playAudio(id) {
+            const audio = document.getElementById(id);
+            const btn = audio.previousElementSibling.previousElementSibling; // Get the button
+            
+            if (audio.paused) {
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>';
+                    })
+                    .catch(error => {
+                        alert("Audio file not found. Please ensure 'gayatri.mp3', 'mahamrityunjaya.mp3', or 'durga.mp3' are in the folder.");
+                    });
+                }
+            } else {
+                audio.pause();
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+            }
+            
+            // Reset icon on end
+            audio.onended = function() {
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+            };
+        }
+    </script>
+</body>
+</html>
