@@ -9,9 +9,7 @@
     <meta name="description" content="Articles on Ayurveda Biology, Neurobiology, Psychology and Yoga by Harsh Ranjan.">
     <meta name="author" content="Harsh Ranjan">
 
-    <!-- GOOGLE ANALYTICS (Tracking Code) -->
-    <!-- This script tracks page visits automatically. 
-         Specific article reads are tracked via the 'openModal' function in the script below. -->
+    <!-- GOOGLE ANALYTICS -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -57,7 +55,7 @@
     <style>
         body { background-color: #FDFCF8; color: #1A1A1A; }
         
-        /* --- EDITORIAL TYPOGRAPHY --- */
+        /* Editorial Typography */
         .article-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1A1A1A; font-weight: 600; }
         .article-content p { margin-bottom: 1.5rem; line-height: 1.9; color: #333; font-size: 1.1rem; }
         .article-content ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
@@ -65,7 +63,6 @@
         .article-content li::before { content: "•"; color: #C88D72; position: absolute; left: 0; font-weight: bold; }
         .article-content strong { color: #C88D72; font-weight: 600; }
         
-        /* Blockquote Styling */
         .article-content blockquote {
             border-left: 4px solid #C88D72;
             padding-left: 1.5rem;
@@ -77,7 +74,6 @@
             background: #FDFCF8;
         }
 
-        /* Drop Cap (First Letter) */
         .article-content > p:first-of-type::first-letter {
             float: left;
             font-family: 'Cinzel', serif;
@@ -88,24 +84,19 @@
             color: #C88D72;
         }
         
-        /* Modal Animation */
+        /* Modal & UI Animations */
         #readModal { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s; }
         #readModal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         #readModal:not(.hidden) { opacity: 1; visibility: visible; pointer-events: auto; }
         
-        /* Scroll Progress Bar */
         #scroll-progress { width: 0%; height: 4px; background: #C88D72; position: fixed; top: 0; left: 0; z-index: 60; transition: width 0.1s; }
-
-        /* Mobile Menu */
         #mobile-menu { transition: transform 0.3s ease-in-out; }
 
-        /* Custom Scrollbar */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #C88D72; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #A6755E; }
 
-        /* Toast Notification */
         #toast {
             visibility: hidden;
             opacity: 0;
@@ -168,6 +159,17 @@
             Bridging ancient wisdom with modern science. Insights on Ayurveda Biology, Psychology, and the Neurobiology of Consciousness.
         </p>
     </header>
+
+    <!-- FILTER BUTTONS -->
+    <section class="py-8 px-6 sticky top-[80px] z-30 bg-paper/95 backdrop-blur-sm border-b border-gray-100 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-x-6 gap-y-4">
+            <button onclick="filterPosts('all')" class="filter-btn active px-6 py-2 text-xs uppercase tracking-widest border border-clay bg-clay text-white transition rounded-full hover:bg-claydark">All</button>
+            <button onclick="filterPosts('Ayurveda')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Ayurveda</button>
+            <button onclick="filterPosts('Psychology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Psychology</button>
+            <button onclick="filterPosts('Neurobiology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Neurobiology</button>
+            <button onclick="filterPosts('Yoga')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Yoga</button>
+        </div>
+    </section>
 
     <!-- BLOG GRID -->
     <section class="py-12 px-6 min-h-screen bg-[#FAFAF8]">
@@ -240,6 +242,7 @@
     <!-- FOOTER -->
     <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            
             <!-- Col 1: Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
@@ -251,6 +254,7 @@
                 <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
+
             <!-- Col 2: Links -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
@@ -261,6 +265,7 @@
                     <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
+
             <!-- Col 3: Contact -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
@@ -280,6 +285,7 @@
                     <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" class="hover:text-clay transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                 </div>
             </div>
+
         </div>
         <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
@@ -302,7 +308,7 @@
                 category: "Neurobiology",
                 date: "Nov 15, 2025",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1554244933-d877debbd96c?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1554244933-d877debbd96c?q=80",
                 excerpt: "How sound vibrations restructure neural pathways and influence the Default Mode Network (DMN) for anxiety reduction.",
                 content: `
                     <p>In our modern understanding of the brain, the Default Mode Network (DMN) is often associated with the 'wandering mind'—the source of anxiety, self-referential thoughts, and rumination. Ancient traditions, particularly within Tantra, have long used sound (Mantra) as a tool to silence this chatter.</p>
@@ -319,7 +325,7 @@
                 category: "Neurobiology",
                 date: "Jan 03, 2026",
                 readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=2071&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80",
                 excerpt: "From 'Neurons that fire together, wire together' to the practical application of mental reframing.",
                 content: `
                     <p>The human brain is not static; it is plastic. This concept, known as neuroplasticity, is the scientific basis for all transformation. Every thought you think strengthens a specific neural pathway.</p>
@@ -334,7 +340,7 @@
                 category: "Neurobiology",
                 date: "Feb 12, 2026",
                 readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80",
                 excerpt: "Bridging Stephen Porges' Polyvagal Theory with ancient Pranayama techniques for trauma recovery.",
                 content: `
                     <p>The Polyvagal Theory explains how our autonomic nervous system reacts to safety, danger, and life threats. It identifies the 'Ventral Vagal' state as the state of social engagement and safety.</p>
@@ -347,7 +353,7 @@
                 category: "Neurobiology",
                 date: "Mar 01, 2026",
                 readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?q=80",
                 excerpt: "Understanding the brainwave state of high-level meditators and moments of 'Aha!'.",
                 content: `
                     <p>Gamma waves are the fastest brainwaves, associated with high-level information processing, insight, and peak focus. Studies on long-term meditators (like Tibetan monks) show a permanently elevated baseline of Gamma waves.</p>
@@ -362,7 +368,7 @@
                 category: "Ayurveda",
                 date: "Oct 28, 2025",
                 readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80",
                 excerpt: "Your biological constitution determines how you interact with the world. Are you Vata, Pitta, or Kapha?",
                 content: `
                     <p>Ayurveda is not just about herbs; it is about understanding the fundamental biology of your being. In Ayurveda Biology, we look at the genetic and phenotypic expression of the three Doshas: Vata, Pitta, and Kapha.</p>
@@ -380,7 +386,7 @@
                 category: "Ayurveda",
                 date: "Aug 05, 2025",
                 readTime: "4 Min Read",
-                image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80",
                 excerpt: "Bridging the gap between modern public health policies and personalized Ayurvedic nutrition.",
                 content: `
                     <p>Modern public health nutrition focuses on macronutrients and calories. While valid, it often misses the nuance of 'Agni' (digestive fire). Two people can eat the same salad; one digests it, the other gets bloated.</p>
@@ -393,7 +399,7 @@
                 category: "Ayurveda",
                 date: "Sep 05, 2025",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80",
                 excerpt: "How the ancient Ayurvedic daily routine aligns perfectly with Nobel Prize-winning science on biological clocks.",
                 content: `
                     <p>The 2017 Nobel Prize in Physiology was awarded for discoveries of molecular mechanisms controlling the circadian rhythm. Ayurveda has based its entire preventative protocol (Dinacharya) on this for millennia.</p>
@@ -406,7 +412,7 @@
                 category: "Ayurveda",
                 date: "Apr 15, 2026",
                 readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80",
                 excerpt: "Exploring the microbiome (Pakvashaya) as the primary location of Vata dosha and mental health.",
                 content: `
                     <p>Modern science calls the gut the 'Second Brain', producing 90% of the body's serotonin. Ayurveda stated thousands of years ago that the colon (Pakvashaya) is the main seat of Vata dosha.</p>
@@ -419,7 +425,7 @@
                 category: "Ayurveda",
                 date: "May 20, 2026",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80",
                 excerpt: "What is Ojas? Understanding the refined essence of digestion and its link to resilience.",
                 content: `
                     <p>Ojas is described as the final essence of tissue nutrition. It is responsible for immunity, strength, and vitality. In modern terms, we can correlate Ojas with a balanced endocrine system and high T-cell count.</p>
@@ -434,7 +440,7 @@
                 category: "Psychology",
                 date: "Dec 15, 2025",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80",
                 excerpt: "Why talk therapy isn't always enough. Understanding how trauma is stored in the nervous system.",
                 content: `
                     <p>Psychology often focuses on the 'top-down' approach—using the mind to understand the body. However, trauma is often stored in the 'bottom-up' systems: the limbic system and the brainstem.</p>
@@ -448,7 +454,7 @@
                 category: "Psychology",
                 date: "Oct 12, 2025",
                 readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80",
                 excerpt: "Integrating the 'Shadow Self' for complete psychological wholeness.",
                 content: `
                     <p>Carl Jung famously said, "Until you make the unconscious conscious, it will direct your life and you will call it fate." This aligns perfectly with the yogic concept of 'Samskaras' (imprints).</p>
@@ -461,7 +467,7 @@
                 category: "Psychology",
                 date: "Jun 10, 2026",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1474418397713-7ede21d49118?q=80&w=2053&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1474418397713-7ede21d49118?q=80",
                 excerpt: "Comparing modern ACT therapy techniques with the ancient Vedantic practice of Witness Consciousness.",
                 content: `
                     <p>Acceptance and Commitment Therapy (ACT) uses a technique called 'Cognitive Defusion'—stepping back from thoughts and realizing "I am having the thought that I am a failure," rather than "I am a failure."</p>
@@ -474,7 +480,7 @@
                 category: "Psychology",
                 date: "Jul 22, 2026",
                 readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1516934024742-b461fba47600?q=80&w=1887&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1516934024742-b461fba47600?q=80",
                 excerpt: "Mapping Anxious and Avoidant attachment styles to the energetic imbalances of the Muladhara.",
                 content: `
                     <p>Our attachment style is formed in early childhood, determining how we relate to others. Energetically, this safety (or lack thereof) is stored in the Muladhara (Root Chakra).</p>
@@ -489,7 +495,7 @@
                 category: "Yoga",
                 date: "July 20, 2025",
                 readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80",
                 excerpt: "Exploring the Vigyan Bhairav Tantra. Techniques for every personality type.",
                 content: `
                     <p>The Vigyan Bhairav Tantra is not a philosophical text; it is a manual of 112 techniques to access expanded states of consciousness. It is incredibly psychological in nature.</p>
@@ -508,7 +514,7 @@
                 category: "Yoga",
                 date: "Aug 10, 2025",
                 readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2070&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80",
                 excerpt: "Why non-sleep deep rest (NSDR) is critical for cognitive recovery and hormonal balance.",
                 content: `
                     <p>In a world of constant stimulation, our nervous systems rarely hit 'off'. Sleep is often fragmented. Yoga Nidra, or 'Yogic Sleep', is a state of conscious relaxation that straddles the boundary between waking and sleeping.</p>
@@ -521,7 +527,7 @@
                 category: "Yoga",
                 date: "Sep 10, 2025",
                 readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=2525&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80",
                 excerpt: "A deep dive into the Tantric practice of purifying the five elements within the body.",
                 content: `
                     <p>Tatwa Shuddhi is a profound practice from the Tantric tradition designed to purify the subtle elements (Earth, Water, Fire, Air, Space) that constitute our psychophysical existence.</p>
@@ -535,7 +541,7 @@
                 category: "Yoga",
                 date: "Aug 20, 2026",
                 readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2069&auto=format&fit=crop",
+                image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80",
                 excerpt: "Yoga is not just stretching; it is changing your biology at the cellular level through physical force.",
                 content: `
                     <p>Mechanotransduction is the process by which cells convert mechanical stimulus (stretching, compression) into chemical activity. When we hold a yoga pose, we are literally squeezing and stretching the cells of the fascia and organs.</p>
@@ -558,10 +564,14 @@
             posts.forEach((post, index) => {
                 const card = document.createElement('div');
                 card.className = "blog-card bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition duration-500 group border border-gray-100 flex flex-col h-full opacity-0"; 
-                // CLEAN CARD: No Category Label
+                
+                // Optimized Image Loading: Uses lower resolution (width 600) for thumbnails
+                const thumbnailUrl = post.image + "&w=600"; 
+                const fallbackUrl = "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=600";
+
                 card.innerHTML = `
                     <div class="h-56 overflow-hidden relative cursor-pointer" onclick="openModal(${post.id})">
-                        <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=2074'">
+                        <img src="${thumbnailUrl}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.onerror=null; this.src='${fallbackUrl}'">
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <div class="flex justify-between items-center text-[10px] text-gray-400 mb-4 font-sans uppercase tracking-widest">
@@ -595,9 +605,17 @@
             lucide.createIcons();
         }
 
-        // 2. Filter Logic (Internal Only if needed later, currently unused UI)
+        // 2. Filter Logic
         function filterPosts(category) {
-            // Do the filtering
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-clay', 'text-white');
+                btn.classList.add('text-charcoal', 'border-clay/30');
+                if (btn.innerText === category || (category === 'all' && btn.innerText === 'ALL')) {
+                    btn.classList.remove('text-charcoal', 'border-clay/30');
+                    btn.classList.add('bg-clay', 'text-white');
+                }
+            });
+
             const filtered = category === 'all' 
                 ? blogPosts 
                 : blogPosts.filter(post => post.category === category);
@@ -606,60 +624,62 @@
         }
 
         // 3. Modal Logic
-        function openModal(id) {
-            const post = blogPosts.find(p => p.id === id);
+        function openModal(idOrSlug) {
+            // Support finding by ID (int) or Slug (string for future flexibility)
+            const post = blogPosts.find(p => p.id === idOrSlug || p.title.toLowerCase().replace(/ /g,'-') === idOrSlug);
             if (!post) return;
 
-            currentPostId = id;
+            currentPostId = post.id;
             
-            // TRACKING: Send event to Google Analytics
+            // Send Event to Analytics
             if (typeof gtag === 'function') {
                 gtag('event', 'read_article', {
                     'event_category': 'engagement',
                     'event_label': post.title,
-                    'value': id
+                    'value': post.id
                 });
             }
 
-            // Populate Modal (NO CATEGORY)
+            // Populate Modal
+            document.getElementById('modal-category').innerText = post.category;
             document.getElementById('modal-title').innerText = post.title;
             document.getElementById('modal-date').innerText = post.date;
             document.getElementById('modal-readtime').innerText = post.readTime;
-            document.getElementById('modal-image').src = post.image;
+            
+            // Use High-Res Image for Modal
+            const highResUrl = post.image + "&w=1200&q=90";
+            document.getElementById('modal-image').src = highResUrl;
             document.getElementById('modal-body').innerHTML = post.content;
 
             // Show Modal
             document.getElementById('readModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden'; 
 
-            // Update URL logic
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + id;
+            // Update URL
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + post.id;
             window.history.pushState({path:newUrl},'',newUrl);
         }
 
         function closeModal() {
             document.getElementById('readModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-            
-            // Reset Progress Bar
             document.getElementById('scroll-progress').style.width = '0%';
-
-            // Reset URL
+            
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.pushState({path:newUrl},'',newUrl);
             currentPostId = null;
         }
 
-        // 4. Scroll Progress Logic
+        // 4. Scroll Progress
         function updateProgress() {
-            const modalContainer = document.querySelector('#readModal > div'); // The scrollable div
+            const modalContainer = document.querySelector('#readModal > div'); 
             const scrollTop = modalContainer.scrollTop;
             const scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
             const scrolled = (scrollTop / scrollHeight) * 100;
             document.getElementById('scroll-progress').style.width = scrolled + "%";
         }
 
-        // 5. Share Logic
+        // 5. Share Logic (Robust)
         async function shareCurrentPost() {
             if (!currentPostId) return;
             const post = blogPosts.find(p => p.id === currentPostId);
@@ -683,23 +703,25 @@
         function copyLink(id) {
             const url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + id;
             
-            const textArea = document.createElement("textarea");
-            textArea.value = url;
-            textArea.style.position = "fixed"; 
-            textArea.style.opacity = "0";
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) showToast("Link Copied to Clipboard");
-                else showToast("Failed to copy link");
-            } catch (err) {
-                showToast("Failed to copy link");
+            // Clipboard API Fallback
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => showToast("Link Copied!"));
+            } else {
+                // Fallback for older browsers/iframes
+                const textArea = document.createElement("textarea");
+                textArea.value = url;
+                textArea.style.position = "fixed"; 
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast("Link Copied!");
+                } catch (err) {
+                    showToast("Failed to copy");
+                }
+                document.body.removeChild(textArea);
             }
-            
-            document.body.removeChild(textArea);
         }
 
         function showToast(message) {
@@ -724,15 +746,17 @@
 
         // 6. Initialize
         window.onload = () => {
-            // Initial Render
             renderPosts(blogPosts);
             
-            // Check for URL params
+            // Check for URL params (ID)
             const urlParams = new URLSearchParams(window.location.search);
             const id = parseInt(urlParams.get('id'));
             if (id) {
                 openModal(id);
             }
+
+            // Stagger animation
+            gsap.from(".filter-btn", {y: -20, opacity: 0, duration: 0.5, stagger: 0.05, delay: 0.2});
         };
 
     </script>
