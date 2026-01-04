@@ -10,6 +10,8 @@
     <meta name="author" content="Harsh Ranjan">
 
     <!-- GOOGLE ANALYTICS (Tracking Code) -->
+    <!-- This script tracks page visits automatically. 
+         Specific article reads are tracked via the 'openModal' function in the script below. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -167,17 +169,6 @@
         </p>
     </header>
 
-    <!-- FILTER BUTTONS -->
-    <section class="py-8 px-6 sticky top-[80px] z-30 bg-paper/95 backdrop-blur-sm border-b border-gray-100 shadow-sm transition-all">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-x-6 gap-y-4">
-            <button onclick="filterPosts('all')" class="filter-btn active px-6 py-2 text-xs uppercase tracking-widest border border-clay bg-clay text-white transition rounded-full hover:bg-claydark">All</button>
-            <button onclick="filterPosts('Ayurveda')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Ayurveda</button>
-            <button onclick="filterPosts('Psychology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Psychology</button>
-            <button onclick="filterPosts('Neurobiology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Neurobiology</button>
-            <button onclick="filterPosts('Yoga')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Yoga</button>
-        </div>
-    </section>
-
     <!-- BLOG GRID -->
     <section class="py-12 px-6 min-h-screen bg-[#FAFAF8]">
         <div id="blog-container" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -246,10 +237,9 @@
         <span id="toast-msg">Link Copied!</span>
     </div>
 
-    <!-- FOOTER (MATCHING INDEX.HTML) -->
+    <!-- FOOTER -->
     <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            
             <!-- Col 1: Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
@@ -261,7 +251,6 @@
                 <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
-
             <!-- Col 2: Links -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
@@ -272,7 +261,6 @@
                     <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
-
             <!-- Col 3: Contact -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
@@ -292,7 +280,6 @@
                     <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" class="hover:text-clay transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
                 </div>
             </div>
-
         </div>
         <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
@@ -308,6 +295,7 @@
         // ==========================================
         
         const blogPosts = [
+            // --- NEUROBIOLOGY ---
             {
                 id: 1,
                 title: "The Neurobiology of Mantra",
@@ -315,46 +303,14 @@
                 date: "Nov 15, 2025",
                 readTime: "6 Min Read",
                 image: "https://images.unsplash.com/photo-1554244933-d877debbd96c?q=80&w=2070&auto=format&fit=crop",
-                excerpt: "How sound vibrations restructure neural pathways and influence the Default Mode Network.",
+                excerpt: "How sound vibrations restructure neural pathways and influence the Default Mode Network (DMN) for anxiety reduction.",
                 content: `
                     <p>In our modern understanding of the brain, the Default Mode Network (DMN) is often associated with the 'wandering mind'—the source of anxiety, self-referential thoughts, and rumination. Ancient traditions, particularly within Tantra, have long used sound (Mantra) as a tool to silence this chatter.</p>
-                    
                     <blockquote>"When we chant, we are not just making noise; we are creating a specific frequency that entrains the brainwaves."</blockquote>
-
                     <h3>Sound as Medicine</h3>
                     <p>Recent neurobiological studies suggest that rhythmic chanting (Japa) significantly reduces activity in the amygdala, the brain's fear center. This isn't magic; it's physics. The frequency disrupts the stress loops.</p>
-                    
                     <h3>The Vagus Nerve Connection</h3>
                     <p>The vibration created by vocalizing specific seeds sounds (Beej Mantras) like 'Om', 'Lam', or 'Ram' stimulates the Vagus nerve. This stimulation activates the parasympathetic nervous system, instantly shifting the body from 'fight or flight' to 'rest and digest'.</p>
-                    
-                    <ul>
-                        <li><strong>Beta Waves:</strong> Active thought (Normal waking state).</li>
-                        <li><strong>Alpha Waves:</strong> Relaxed alertness (Induced by Mantra).</li>
-                        <li><strong>Theta Waves:</strong> Deep meditation/Sleep (The goal of Yoga Nidra).</li>
-                    </ul>
-
-                    <p>This is where Ayurveda Biology meets Psychology. By regulating the biological nervous system through sound, we create the psychological space necessary for deep healing.</p>
-                `
-            },
-            {
-                id: 2,
-                title: "Understanding Your Prakriti",
-                category: "Ayurveda",
-                date: "Oct 28, 2025",
-                readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80&w=2070&auto=format&fit=crop",
-                excerpt: "Your biological constitution determines how you interact with the world. Are you Vata, Pitta, or Kapha?",
-                content: `
-                    <p>Ayurveda is not just about herbs; it is about understanding the fundamental biology of your being. In Ayurveda Biology, we look at the genetic and phenotypic expression of the three Doshas: Vata, Pitta, and Kapha.</p>
-                    
-                    <h3>The Three Forces</h3>
-                    <ul>
-                        <li><strong>Vata (Air/Ether):</strong> The force of movement. Governs the nervous system, creativity, and elimination.</li>
-                        <li><strong>Pitta (Fire/Water):</strong> The force of transformation. Governs metabolism, intelligence, and digestion.</li>
-                        <li><strong>Kapha (Earth/Water):</strong> The force of stability. Governs structure, memory, and lubrication.</li>
-                    </ul>
-                    
-                    <p>Knowing your unique ratio (Prakriti) allows us to tailor nutrition and psychology protocols. A Vata mind needs grounding foods and routine, while a Kapha mind needs stimulation and lighter foods. One size does not fit all in medicine or spirituality.</p>
                 `
             },
             {
@@ -373,6 +329,106 @@
                 `
             },
             {
+                id: 10,
+                title: "Polyvagal Theory & Prana",
+                category: "Neurobiology",
+                date: "Feb 12, 2026",
+                readTime: "8 Min Read",
+                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "Bridging Stephen Porges' Polyvagal Theory with ancient Pranayama techniques for trauma recovery.",
+                content: `
+                    <p>The Polyvagal Theory explains how our autonomic nervous system reacts to safety, danger, and life threats. It identifies the 'Ventral Vagal' state as the state of social engagement and safety.</p>
+                    <p>Pranayama, specifically exercises that lengthen the exhalation (like 4-7-8 breathing or Ujjayi), directly engages the ventral vagal complex. By slowing the breath, we send a bottom-up signal to the brainstem that says, 'I am safe.' This effectively hacks the nervous system to bypass the cognitive brain's anxiety loops.</p>
+                `
+            },
+            {
+                id: 11,
+                title: "Gamma Waves: The Signature of Insight",
+                category: "Neurobiology",
+                date: "Mar 01, 2026",
+                readTime: "5 Min Read",
+                image: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "Understanding the brainwave state of high-level meditators and moments of 'Aha!'.",
+                content: `
+                    <p>Gamma waves are the fastest brainwaves, associated with high-level information processing, insight, and peak focus. Studies on long-term meditators (like Tibetan monks) show a permanently elevated baseline of Gamma waves.</p>
+                    <p>This suggests that 'enlightenment' or 'awakening' might have a specific biological signature: a brain that is hyper-connected and synchronized. Through consistent meditation practice, we can train our brains to access this state of flow more frequently.</p>
+                `
+            },
+
+            // --- AYURVEDA ---
+            {
+                id: 2,
+                title: "Understanding Your Prakriti",
+                category: "Ayurveda",
+                date: "Oct 28, 2025",
+                readTime: "5 Min Read",
+                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "Your biological constitution determines how you interact with the world. Are you Vata, Pitta, or Kapha?",
+                content: `
+                    <p>Ayurveda is not just about herbs; it is about understanding the fundamental biology of your being. In Ayurveda Biology, we look at the genetic and phenotypic expression of the three Doshas: Vata, Pitta, and Kapha.</p>
+                    <ul>
+                        <li><strong>Vata (Air/Ether):</strong> The force of movement. Governs the nervous system, creativity, and elimination.</li>
+                        <li><strong>Pitta (Fire/Water):</strong> The force of transformation. Governs metabolism, intelligence, and digestion.</li>
+                        <li><strong>Kapha (Earth/Water):</strong> The force of stability. Governs structure, memory, and lubrication.</li>
+                    </ul>
+                    <p>Knowing your unique ratio (Prakriti) allows us to tailor nutrition and psychology protocols. A Vata mind needs grounding foods and routine, while a Kapha mind needs stimulation.</p>
+                `
+            },
+            {
+                id: 4,
+                title: "Public Health Nutrition & Ayurveda",
+                category: "Ayurveda",
+                date: "Aug 05, 2025",
+                readTime: "4 Min Read",
+                image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop",
+                excerpt: "Bridging the gap between modern public health policies and personalized Ayurvedic nutrition.",
+                content: `
+                    <p>Modern public health nutrition focuses on macronutrients and calories. While valid, it often misses the nuance of 'Agni' (digestive fire). Two people can eat the same salad; one digests it, the other gets bloated.</p>
+                    <p>Integrating Ayurvedic principles into public health means teaching people not just *what* to eat, but *how* to eat according to their metabolic capacity. This simple shift could revolutionize preventative healthcare.</p>
+                `
+            },
+            {
+                id: 7,
+                title: "Dinacharya: Circadian Rhythms & Gene Expression",
+                category: "Ayurveda",
+                date: "Sep 05, 2025",
+                readTime: "6 Min Read",
+                image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "How the ancient Ayurvedic daily routine aligns perfectly with Nobel Prize-winning science on biological clocks.",
+                content: `
+                    <p>The 2017 Nobel Prize in Physiology was awarded for discoveries of molecular mechanisms controlling the circadian rhythm. Ayurveda has based its entire preventative protocol (Dinacharya) on this for millennia.</p>
+                    <p>Every cell in your body has a clock. When we eat late at night, we disrupt the peripheral clocks in the liver, causing metabolic chaos (or 'Ama' in Ayurveda). Waking up before sunrise (Brahma Muhurta) exposes the eyes to specific light spectrums that regulate cortisol and melatonin production for the rest of the day.</p>
+                `
+            },
+            {
+                id: 12,
+                title: "The Gut-Brain Axis: The Seat of Vata",
+                category: "Ayurveda",
+                date: "Apr 15, 2026",
+                readTime: "7 Min Read",
+                image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "Exploring the microbiome (Pakvashaya) as the primary location of Vata dosha and mental health.",
+                content: `
+                    <p>Modern science calls the gut the 'Second Brain', producing 90% of the body's serotonin. Ayurveda stated thousands of years ago that the colon (Pakvashaya) is the main seat of Vata dosha.</p>
+                    <p>When Vata is aggravated in the colon (gas, bloating, constipation), it directly affects the mind, causing anxiety, fear, and rapid thoughts. Treating the gut through Basti (enema therapy) and carminative spices is often the most effective way to treat clinical anxiety.</p>
+                `
+            },
+            {
+                id: 13,
+                title: "Ojas: The Biological Correlate of Immunity",
+                category: "Ayurveda",
+                date: "May 20, 2026",
+                readTime: "6 Min Read",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop",
+                excerpt: "What is Ojas? Understanding the refined essence of digestion and its link to resilience.",
+                content: `
+                    <p>Ojas is described as the final essence of tissue nutrition. It is responsible for immunity, strength, and vitality. In modern terms, we can correlate Ojas with a balanced endocrine system and high T-cell count.</p>
+                    <p>Stress dries up Ojas. Poor digestion blocks the formation of Ojas. To build Ojas, we need 'Sattvic' foods (ghee, dates, almonds) and, more importantly, a 'Sattvic' lifestyle free from unnecessary sensory overload.</p>
+                `
+            },
+
+            // --- PSYCHOLOGY ---
+            {
                 id: 4,
                 title: "Trauma and the Body: A Somatic Approach",
                 category: "Psychology",
@@ -383,9 +439,50 @@
                 content: `
                     <p>Psychology often focuses on the 'top-down' approach—using the mind to understand the body. However, trauma is often stored in the 'bottom-up' systems: the limbic system and the brainstem.</p>
                     <blockquote>"The body keeps the score." - Bessell van der Kolk</blockquote>
-                    <p>Talk therapy interacts with the prefrontal cortex (logic), but trauma lives in the body (sensation). To truly heal, we must incorporate somatic practices. This is where Yoga and Pranayama become therapeutic tools, not just exercise. They allow us to access the nervous system directly and discharge stored kinetic energy.</p>
+                    <p>Talk therapy interacts with the prefrontal cortex (logic), but trauma lives in the body (sensation). To truly heal, we must incorporate somatic practices like Yoga and Pranayama to discharge stored kinetic energy.</p>
                 `
             },
+            {
+                id: 8,
+                title: "Jungian Shadows & The Subconscious",
+                category: "Psychology",
+                date: "Oct 12, 2025",
+                readTime: "7 Min Read",
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
+                excerpt: "Integrating the 'Shadow Self' for complete psychological wholeness.",
+                content: `
+                    <p>Carl Jung famously said, "Until you make the unconscious conscious, it will direct your life and you will call it fate." This aligns perfectly with the yogic concept of 'Samskaras' (imprints).</p>
+                    <p>The 'Shadow' consists of the parts of ourselves we reject—anger, jealousy, desire. By suppressing them, we give them power. In our psychology sessions, we do not aim to destroy the shadow, but to integrate it.</p>
+                `
+            },
+            {
+                id: 14,
+                title: "Cognitive Defusion vs. Sakshi Bhav",
+                category: "Psychology",
+                date: "Jun 10, 2026",
+                readTime: "6 Min Read",
+                image: "https://images.unsplash.com/photo-1474418397713-7ede21d49118?q=80&w=2053&auto=format&fit=crop",
+                excerpt: "Comparing modern ACT therapy techniques with the ancient Vedantic practice of Witness Consciousness.",
+                content: `
+                    <p>Acceptance and Commitment Therapy (ACT) uses a technique called 'Cognitive Defusion'—stepping back from thoughts and realizing "I am having the thought that I am a failure," rather than "I am a failure."</p>
+                    <p>This is identical to the ancient practice of Sakshi Bhav or Witness Consciousness. By creating distance between the Observer (Atman) and the Observed (Vrittis/Thoughts), suffering is reduced. Psychology provides the framework; spirituality provides the depth.</p>
+                `
+            },
+            {
+                id: 15,
+                title: "Attachment Styles & The Root Chakra",
+                category: "Psychology",
+                date: "Jul 22, 2026",
+                readTime: "7 Min Read",
+                image: "https://images.unsplash.com/photo-1516934024742-b461fba47600?q=80&w=1887&auto=format&fit=crop",
+                excerpt: "Mapping Anxious and Avoidant attachment styles to the energetic imbalances of the Muladhara.",
+                content: `
+                    <p>Our attachment style is formed in early childhood, determining how we relate to others. Energetically, this safety (or lack thereof) is stored in the Muladhara (Root Chakra).</p>
+                    <p>An Anxious Attachment style often correlates with an ungrounded, deficient Root Chakra (fear of abandonment). An Avoidant style often correlates with a rigid, excessive Root Chakra (fear of engulfment). Healing involves not just analyzing the past, but grounding the energy body in the present.</p>
+                `
+            },
+
+            // --- YOGA ---
             {
                 id: 5,
                 title: "The 112 Gateways of Consciousness",
@@ -403,7 +500,6 @@
                         <li><strong>For the Emotional:</strong> Techniques transforming intense love or anger into awareness.</li>
                         <li><strong>For the Physical:</strong> Techniques utilizing breath retention and sensation.</li>
                     </ul>
-                    <p>You do not need to force a meditation style that doesn't fit you; you simply need to find the technique that resonates with your biology.</p>
                 `
             },
             {
@@ -416,37 +512,7 @@
                 excerpt: "Why non-sleep deep rest (NSDR) is critical for cognitive recovery and hormonal balance.",
                 content: `
                     <p>In a world of constant stimulation, our nervous systems rarely hit 'off'. Sleep is often fragmented. Yoga Nidra, or 'Yogic Sleep', is a state of conscious relaxation that straddles the boundary between waking and sleeping.</p>
-                    <p>Biologically, this practice drops the brain into Theta wave dominance. In this state, the glymphatic system (the brain's waste clearance system) becomes highly active, flushing out toxins associated with neurodegeneration. It is also where memory consolidation occurs.</p>
-                    <p>20 minutes of Yoga Nidra is often said to be equivalent to 2 hours of sleep in terms of restorative power for the nervous system.</p>
-                `
-            },
-            {
-                id: 7,
-                title: "Dinacharya: Circadian Rhythms & Gene Expression",
-                category: "Ayurveda",
-                date: "Sep 05, 2025",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=2070&auto=format&fit=crop",
-                excerpt: "How the ancient Ayurvedic daily routine aligns perfectly with Nobel Prize-winning science on biological clocks.",
-                content: `
-                    <p>The 2017 Nobel Prize in Physiology was awarded for discoveries of molecular mechanisms controlling the circadian rhythm. Ayurveda has based its entire preventative protocol (Dinacharya) on this for millennia.</p>
-                    <h3>Aligning with the Master Clock</h3>
-                    <p>Every cell in your body has a clock. When we eat late at night, we disrupt the peripheral clocks in the liver, causing metabolic chaos (or 'Ama' in Ayurveda). Waking up before sunrise (Brahma Muhurta) exposes the eyes to specific light spectrums that regulate cortisol and melatonin production for the rest of the day.</p>
-                    <p>Living in alignment with Dinacharya is not old-fashioned; it is bio-hacking in its purest form.</p>
-                `
-            },
-            {
-                id: 8,
-                title: "Jungian Shadows & The Subconscious",
-                category: "Psychology",
-                date: "Oct 12, 2025",
-                readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop",
-                excerpt: "Integrating the 'Shadow Self' for complete psychological wholeness.",
-                content: `
-                    <p>Carl Jung famously said, "Until you make the unconscious conscious, it will direct your life and you will call it fate." This aligns perfectly with the yogic concept of 'Samskaras' (imprints).</p>
-                    <p>The 'Shadow' consists of the parts of ourselves we reject—anger, jealousy, desire. By suppressing them, we give them power. In our psychology sessions, we do not aim to destroy the shadow, but to integrate it.</p>
-                    <p>Wholeness requires accepting the totality of the psyche. Only then can true transformation occur.</p>
+                    <p>Biologically, this practice drops the brain into Theta wave dominance. In this state, the glymphatic system (the brain's waste clearance system) becomes highly active, flushing out toxins associated with neurodegeneration.</p>
                 `
             },
             {
@@ -461,7 +527,19 @@
                     <p>Tatwa Shuddhi is a profound practice from the Tantric tradition designed to purify the subtle elements (Earth, Water, Fire, Air, Space) that constitute our psychophysical existence.</p>
                     <h3>The Psychological Impact</h3>
                     <p>While often viewed as a ritual, biologically and psychologically, this practice is a method of 'sensory withdrawal' (Pratyahara) and cognitive reframing. By visualizing the dissolution of the heavy earth element into water, water into fire, and so on, we train the mind to let go of physical attachment.</p>
-                    <p>This reduces the rigidity of the ego and allows for a more fluid experience of reality, essential for overcoming deep-seated trauma or stagnation.</p>
+                `
+            },
+            {
+                id: 16,
+                title: "Mechanotransduction: How Asana Changes Cells",
+                category: "Yoga",
+                date: "Aug 20, 2026",
+                readTime: "6 Min Read",
+                image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2069&auto=format&fit=crop",
+                excerpt: "Yoga is not just stretching; it is changing your biology at the cellular level through physical force.",
+                content: `
+                    <p>Mechanotransduction is the process by which cells convert mechanical stimulus (stretching, compression) into chemical activity. When we hold a yoga pose, we are literally squeezing and stretching the cells of the fascia and organs.</p>
+                    <p>This physical pressure signals the cells to change their function—reducing inflammation, improving hydration, and altering gene expression. Yoga is not just working on the muscles; it is working on the very matrix of the body.</p>
                 `
             }
         ];
@@ -480,11 +558,10 @@
             posts.forEach((post, index) => {
                 const card = document.createElement('div');
                 card.className = "blog-card bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition duration-500 group border border-gray-100 flex flex-col h-full opacity-0"; 
-                // RESTORED: Category Label on Image with ORIGINAL STYLE
+                // CLEAN CARD: No Category Label
                 card.innerHTML = `
                     <div class="h-56 overflow-hidden relative cursor-pointer" onclick="openModal(${post.id})">
                         <img src="${post.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=2074'">
-                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur text-charcoal px-3 py-1 text-[10px] uppercase tracking-widest font-bold rounded-sm border border-gray-200">${post.category}</span>
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
                         <div class="flex justify-between items-center text-[10px] text-gray-400 mb-4 font-sans uppercase tracking-widest">
@@ -518,18 +595,8 @@
             lucide.createIcons();
         }
 
-        // 2. Filter Logic
+        // 2. Filter Logic (Internal Only if needed later, currently unused UI)
         function filterPosts(category) {
-            // Update buttons styling
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-clay', 'text-white');
-                btn.classList.add('text-charcoal', 'border-clay/30');
-                if (btn.innerText === category || (category === 'all' && btn.innerText === 'ALL')) {
-                    btn.classList.remove('text-charcoal', 'border-clay/30');
-                    btn.classList.add('bg-clay', 'text-white');
-                }
-            });
-
             // Do the filtering
             const filtered = category === 'all' 
                 ? blogPosts 
@@ -554,8 +621,7 @@
                 });
             }
 
-            // Populate Modal
-            document.getElementById('modal-category').innerText = post.category;
+            // Populate Modal (NO CATEGORY)
             document.getElementById('modal-title').innerText = post.title;
             document.getElementById('modal-date').innerText = post.date;
             document.getElementById('modal-readtime').innerText = post.readTime;
@@ -667,9 +733,6 @@
             if (id) {
                 openModal(id);
             }
-
-            // Stagger animation on load
-            gsap.from(".filter-btn", {y: -20, opacity: 0, duration: 0.5, stagger: 0.05, delay: 0.2});
         };
 
     </script>
