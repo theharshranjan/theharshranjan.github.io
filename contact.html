@@ -3,318 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Samarpan</title>
     
-    <!-- SEO -->
-    <title>Connect | Harsh Ranjan (Samarpan)</title>
-    <meta name="description" content="Contact Harsh Ranjan for Ayurveda consultations, Psychology sessions, and workshops. Based in New Delhi, serving globally.">
+    <meta name="description" content="Contact Harsh Ranjan for Ayurveda Biology, Psychology, and Yoga sessions.">
+    <meta name="author" content="Harsh Ranjan">
+
+    <!-- GOOGLE ANALYTICS -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HMM7CJSCW7');
+    </script>
 
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
 
-    <!-- Libraries -->
+    <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
 
-    <!-- Design System -->
+    <!-- CONFIG -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FDFCF8',
+                        clay: '#C88D72',
+                        claydark: '#A6755E',
+                        sage: '#4A5D4F',
+                        charcoal: '#1A1A1A',
+                        offblack: '#121212'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                        display: ['Cinzel', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --color-bg: #FDFCF8;
-            --color-sage: #4A5D4F;
-            --color-terra: #C88D72;
-            --color-gold: #BFA57D;
-            --color-charcoal: #1A1A1A;
-        }
-        
-        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-charcoal); overflow-x: hidden; }
-        .serif { font-family: 'Cormorant Garamond', serif; }
-        .logo-font { font-family: 'Cinzel', serif; }
-        
-        /* Animations */
-        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-up.active { opacity: 1; transform: translateY(0); }
-
-        /* Mobile Menu */
+        body { background-color: #FDFCF8; color: #1A1A1A; }
         #mobile-menu { transition: transform 0.3s ease-in-out; }
-        .hidden-menu { transform: translateX(100%); }
-        .visible-menu { transform: translateX(0); }
-
-        /* Chat Widget */
-        .chat-widget { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: bottom right; opacity: 0; pointer-events: none; transform: scale(0.9) translateY(20px); }
-        .chat-widget.open { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
-
-        /* Status Messages */
-        #formStatus {
-            margin-top: 1rem; padding: 1rem; border-radius: 4px; text-align: center; font-size: 0.9rem; display: none;
+        
+        /* Form Inputs */
+        .form-input {
+            width: 100%;
+            background-color: transparent;
+            border-bottom: 1px solid #E5E5E5;
+            padding: 1rem 0;
+            font-size: 0.95rem;
+            transition: all 0.3s;
         }
-        #formStatus.success { display: block; background: rgba(74, 124, 89, 0.1); color: #4A5D4F; border: 1px solid #4A5D4F; }
-        #formStatus.error { display: block; background: rgba(192, 57, 43, 0.1); color: #c0392b; border: 1px solid #c0392b; }
-        #formStatus.loading { display: block; color: #666; font-style: italic; }
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: #C88D72;
+        }
+        .form-input::placeholder { color: #A0A0A0; }
+        
+        /* FAQ Accordion Transition */
+        details > summary { list-style: none; cursor: pointer; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-[#C88D72] selection:text-white">
+<body class="antialiased selection:bg-clay selection:text-white flex flex-col min-h-screen">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/40 backdrop-blur-md">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            
-            <!-- Logo -->
-            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 bg-paper/95 backdrop-blur-md border-b border-clay/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="group flex flex-col items-center justify-center">
+                <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <div class="flex items-center gap-2 opacity-90">
-                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
-                </div>
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-clay group-hover:text-charcoal transition drop-shadow-sm">
+                    Samarpan
+                </span>
             </a>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
-                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
-                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
-                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
-                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
-                <a href="psychology.html" class="hover:text-[#C88D72] transition">Psychology</a>
-                <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
-                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
-                <a href="contact.html" class="px-8 py-3 border border-white/30 bg-white text-black transition duration-300 rounded-sm">Contact</a>
+
+            <div class="hidden lg:flex space-x-10 items-center">
+                <a href="about.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">About</a>
+                <a href="sessions.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Sessions</a>
+                <a href="ayurveda.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Ayurveda</a>
+                <a href="blog.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Blog</a>
+                <a href="#" class="px-6 py-2 bg-clay text-white font-display text-xs tracking-widest shadow-lg rounded-sm cursor-default border border-transparent">Contact</a>
             </div>
 
-            <!-- Mobile Toggle -->
-            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
+            <button class="lg:hidden text-clay z-50" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
         </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
-            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
-            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
-            <a href="about.html" class="text-3xl serif mobile-link">About</a>
-            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
-            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
-            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
-            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
-            <a href="contact.html" class="text-3xl serif text-[#C88D72] mobile-link">Contact</a>
+        
+        <div id="mobile-menu" class="hidden fixed inset-0 bg-paper z-40 flex-col items-center justify-center space-y-8">
+            <button class="absolute top-6 right-6 text-clay" onclick="toggleMobileMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="about.html" class="font-serif text-2xl text-charcoal">About</a>
+            <a href="sessions.html" class="font-serif text-2xl text-charcoal">Sessions</a>
+            <a href="ayurveda.html" class="font-serif text-2xl text-charcoal">Ayurveda</a>
+            <a href="blog.html" class="font-serif text-2xl text-charcoal">Blog</a>
+            <a href="#" class="font-serif text-2xl text-clay">Contact</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative w-full h-[60vh] overflow-hidden flex items-center justify-center bg-[#1A1A1A]">
-        <!-- Image: Connection/Writing -->
-        <img src="https://images.unsplash.com/photo-1516383748770-c3f0b6043b0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Connect" class="absolute inset-0 w-full h-full object-cover opacity-60">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
+    <!-- MAIN CONTACT SECTION -->
+    <section class="flex-grow pt-32 pb-20 px-6 relative">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] -z-10"></div>
 
-        <div class="relative z-10 text-center px-4 mt-10">
-            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-6 block reveal-up">Start the Dialogue</span>
-            <h1 class="text-6xl md:text-8xl serif text-white mb-8 reveal-up drop-shadow-2xl">
-                Connect
-            </h1>
-            <p class="text-white/90 font-light max-w-2xl mx-auto text-xl reveal-up leading-relaxed">
-                Whether for healing, collaboration, or inquiry, the path begins with a single step.
-            </p>
-        </div>
-    </header>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+            
+            <!-- LEFT COLUMN: Info & Context -->
+            <div class="lg:col-span-5 flex flex-col justify-center space-y-12 gsap-reveal">
+                <div>
+                    <span class="text-clay font-display text-xs tracking-[0.3em] uppercase mb-4 block">Get in Touch</span>
+                    <h1 class="text-5xl md:text-6xl font-serif text-charcoal mb-6 leading-tight">Let's start your journey.</h1>
+                    <p class="text-lg text-charcoal/60 font-serif leading-relaxed">
+                        Whether you need a biological consultation, psychological clarity, or guidance in Sadhana, I am here to facilitate your wholeness.
+                    </p>
+                </div>
 
-    <!-- Main Contact Section -->
-    <section class="py-24 bg-[#FDFCF8]">
-        <div class="container mx-auto px-6 md:px-12">
-            <div class="grid lg:grid-cols-2 gap-20">
+                <!-- Info Cards -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-clay/30 transition duration-500 group">
+                        <div class="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center text-clay group-hover:bg-clay group-hover:text-white transition">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Email</p>
+                            <a href="mailto:justtheself@gmail.com" class="font-serif text-xl text-charcoal hover:text-clay transition">justtheself@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-6 p-6 bg-white rounded-lg shadow-sm border border-gray-100 hover:border-clay/30 transition duration-500 group">
+                        <div class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center text-sage group-hover:bg-sage group-hover:text-white transition">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Location</p>
+                            <p class="font-serif text-xl text-charcoal">New Delhi, India</p>
+                            <p class="text-xs text-gray-400 mt-1">(Online Sessions Available Globally)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Socials -->
+                <div class="flex gap-4 pt-4">
+                    <a href="https://instagram.com/justtheself" target="_blank" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-charcoal hover:text-white transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="https://linkedin.com/in/theharshranjanofficial" target="_blank" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-charcoal hover:text-white transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+                    <a href="https://youtube.com/c/justtheself" target="_blank" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-charcoal hover:text-white transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Form -->
+            <div class="lg:col-span-7 bg-white p-8 md:p-12 rounded-2xl shadow-2xl border-t-8 border-clay relative gsap-reveal">
+                <h2 class="text-2xl font-serif text-charcoal mb-8">Send a Message</h2>
                 
-                <!-- Contact Info & Socials -->
-                <div class="reveal-up space-y-12">
-                    <div>
-                        <h2 class="text-4xl serif text-[#1A1A1A] mb-6">Get in Touch</h2>
-                        <p class="text-gray-600 text-lg leading-relaxed">
-                            I invite you to reach out with questions about the practice, retreat schedules, or to simply share your journey. Every message is read with care.
-                        </p>
-                    </div>
-
-                    <div class="space-y-6">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-[#C88D72]/10 rounded-full flex items-center justify-center text-[#C88D72]">
-                                <i data-lucide="mail" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm uppercase tracking-widest">Email</h4>
-                                <a href="mailto:justtheself@gmail.com" class="text-xl serif text-[#1A1A1A] hover:text-[#C88D72] transition">justtheself@gmail.com</a>
-                            </div>
+                <form id="bookingForm" onsubmit="handleBooking(event)" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-charcoal/40 mb-2">Your Name</label>
+                            <input type="text" name="name" class="form-input" placeholder="Harsh Ranjan" required>
                         </div>
-                        
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-[#4A5D4F]/10 rounded-full flex items-center justify-center text-[#4A5D4F]">
-                                <i data-lucide="map-pin" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm uppercase tracking-widest">Base</h4>
-                                <p class="text-xl serif text-[#1A1A1A]">New Delhi, India</p>
-                                <p class="text-sm text-gray-500">Available Globally Online</p>
-                            </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-charcoal/40 mb-2">Email Address</label>
+                            <input type="email" name="email" class="form-input" placeholder="hello@example.com" required>
                         </div>
                     </div>
 
                     <div>
-                        <h4 class="font-bold text-sm uppercase tracking-widest mb-6 text-[#1A1A1A]">Follow the Journey</h4>
-                        <div class="flex gap-4">
-                            <a href="https://instagram.com/samarpan_wellness" target="_blank" class="w-14 h-14 border border-gray-200 rounded-sm flex items-center justify-center text-gray-500 hover:bg-[#C88D72] hover:text-white hover:border-[#C88D72] transition duration-300">
-                                <i data-lucide="instagram" class="w-6 h-6"></i>
-                            </a>
-                            <a href="https://linkedin.com/in/harshranjan" target="_blank" class="w-14 h-14 border border-gray-200 rounded-sm flex items-center justify-center text-gray-500 hover:bg-[#4A5D4F] hover:text-white hover:border-[#4A5D4F] transition duration-300">
-                                <i data-lucide="linkedin" class="w-6 h-6"></i>
-                            </a>
-                            <a href="#" target="_blank" class="w-14 h-14 border border-gray-200 rounded-sm flex items-center justify-center text-gray-500 hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A] transition duration-300">
-                                <i data-lucide="twitter" class="w-6 h-6"></i>
-                            </a>
-                        </div>
+                        <label class="block text-xs uppercase tracking-widest text-charcoal/40 mb-2">Area of Interest</label>
+                        <select name="service" class="form-input text-gray-600 bg-transparent">
+                            <option>Ayurveda Consultation</option>
+                            <option>Psychology Session</option>
+                            <option>Yoga Therapy</option>
+                            <option>Custom Retreat</option>
+                            <option>General Inquiry</option>
+                        </select>
                     </div>
-                </div>
 
-                <!-- Functional Form -->
-                <div class="bg-white p-10 rounded-sm shadow-2xl border-t-4 border-[#C88D72] reveal-up">
-                    <h3 class="text-2xl serif mb-8">Send a Message</h3>
-                    
-                    <!-- Form Logic Implemented Below -->
-                    <form id="dataForm" novalidate class="space-y-6">
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Name *</label>
-                                <input type="text" id="name" name="name" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition" required maxlength="100">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Email *</label>
-                                <input type="email" id="email" name="email" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition" required maxlength="100">
-                            </div>
-                        </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-widest text-charcoal/40 mb-2">How can I help?</label>
+                        <textarea name="message" class="form-input h-32 resize-none" placeholder="Tell me a bit about what you are looking for..." required></textarea>
+                    </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Phone *</label>
-                                <input type="tel" id="phone" name="phone" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition" required maxlength="20">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Inquiry Type *</label>
-                                <select id="inquiry" name="inquiry" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition" required>
-                                    <option value="">Select Option</option>
-                                    <option value="Ayurveda Session">Ayurveda Session</option>
-                                    <option value="Psychology Session">Psychology Session</option>
-                                    <option value="Yoga Therapy">Yoga Therapy</option>
-                                    <option value="Diet & Nutrition">Diet & Nutrition</option>
-                                    <option value="Retreat">Retreat</option>
-                                    <option value="Collaboration">Collaboration</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Subject *</label>
-                            <input type="text" id="subject" name="subject" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition" required maxlength="100">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wide mb-2 text-gray-400">Message *</label>
-                            <textarea id="message" name="message" rows="5" class="w-full p-4 bg-[#FAFAF8] border border-gray-200 text-[#1A1A1A] outline-none focus:border-[#C88D72] transition resize-none" required maxlength="500"></textarea>
-                        </div>
-
-                        <!-- Hidden Spam Trap -->
-                        <input type="text" name="_gotcha" style="position: absolute; left: -9999px;" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-                        <button type="submit" id="submitBtn" class="w-full py-4 bg-[#1A1A1A] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#C88D72] transition duration-300 rounded-sm shadow-lg">
-                            Send Message
+                    <div class="flex items-center justify-between pt-4">
+                        <button type="submit" class="px-10 py-4 bg-charcoal text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-clay transition duration-300 rounded shadow-lg flex items-center gap-3 group">
+                            <span>Send Request</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
                         </button>
-                        
-                        <div id="formStatus"></div>
-                    </form>
-                </div>
+                        <p class="text-[10px] text-gray-400 hidden md:block">Typically responds within 24 hours.</p>
+                    </div>
+                </form>
+                <div id="formStatus"></div>
+            </div>
 
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="py-20 bg-white px-6 border-t border-gray-100">
+        <div class="max-w-3xl mx-auto">
+            <h3 class="text-center font-serif text-3xl text-charcoal mb-12">Common Questions</h3>
+            
+            <div class="space-y-4">
+                <details class="group bg-[#FAFAF8] p-6 rounded-lg cursor-pointer open:bg-white open:shadow-lg transition-all duration-300">
+                    <summary class="flex justify-between items-center font-serif text-lg text-charcoal">
+                        <span>Are consultations done online?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-clay group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="text-charcoal/60 mt-4 text-sm leading-relaxed">Yes, all initial consultations (Ayurveda & Psychology) are conducted via Zoom or Google Meet. Physical retreats are arranged separately.</p>
+                </details>
+
+                <details class="group bg-[#FAFAF8] p-6 rounded-lg cursor-pointer open:bg-white open:shadow-lg transition-all duration-300">
+                    <summary class="flex justify-between items-center font-serif text-lg text-charcoal">
+                        <span>How long is a typical session?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-clay group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="text-charcoal/60 mt-4 text-sm leading-relaxed">Standard sessions last 60 minutes. The initial comprehensive Ayurveda assessment may take up to 90 minutes.</p>
+                </details>
+
+                <details class="group bg-[#FAFAF8] p-6 rounded-lg cursor-pointer open:bg-white open:shadow-lg transition-all duration-300">
+                    <summary class="flex justify-between items-center font-serif text-lg text-charcoal">
+                        <span>Do I need prior Yoga experience?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-clay group-open:rotate-180 transition"></i>
+                    </summary>
+                    <p class="text-charcoal/60 mt-4 text-sm leading-relaxed">No. The approach is adapted to your biological capacity. We focus on internal alignment and breath, not gymnastics.</p>
+                </details>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
-        <div class="container mx-auto px-6 text-center">
-            <a href="index.html" class="inline-block mb-4">
-                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
-                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
+    <!-- FOOTER -->
+    <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+            <!-- Brand -->
+            <div class="col-span-1 md:col-span-2">
+                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <circle cx="50" cy="85" r="4" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
                 </svg>
-                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
-            </a>
-            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
+                <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
+            </div>
+            <!-- Links -->
+            <div>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
+                    <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
+                    <li><a href="blog.html" class="hover:text-white transition duration-300">Blog</a></li>
+                    <li><a href="#" class="text-white font-bold transition duration-300">Contact</a></li>
+                </ul>
+            </div>
+            <!-- Contact -->
+            <div>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com
+                        </a>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
+            &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
         </div>
     </footer>
 
-    <!-- Chat Widget -->
-    <button onclick="toggleChat()" class="fixed bottom-8 right-8 w-14 h-14 bg-[#1A1A1A] border border-[#C88D72] text-[#C88D72] rounded-full shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition duration-300"><i data-lucide="message-circle" class="w-6 h-6"></i></button>
-    <div id="chat-window" class="chat-widget fixed bottom-28 right-8 w-80 sm:w-96 bg-white rounded-xl shadow-2xl z-50 flex flex-col overflow-hidden border border-gray-200" style="height: 500px;">
-        <div class="bg-[#1A1A1A] p-4 flex justify-between items-center text-white">
-            <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[#C88D72] flex items-center justify-center text-black font-bold text-xs">HR</div><h4 class="serif text-sm">Samarpan AI</h4></div>
-            <button onclick="toggleChat()" class="text-white/50 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-        </div>
-        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-[#FAFAF8] space-y-3"><div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">Namaste. I am Samarpan AI. How can I help you?</div></div></div>
-        <form onsubmit="handleChatSubmit(event)" class="p-3 bg-white border-t border-gray-100 flex gap-2"><input type="text" id="chat-input" placeholder="Ask me anything..." class="flex-1 bg-gray-50 border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#C88D72]"><button type="submit" class="w-10 h-10 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center hover:bg-[#C88D72] transition-colors"><i data-lucide="send" class="w-4 h-4"></i></button></form>
-    </div>
-
+    <!-- LOGIC -->
     <script>
         lucide.createIcons();
-        const apiKey = "AIzaSyC2qafCYO2bU2ftTWReco6xroZh9Szaqw0"; 
-        const apiModel = "gemini-2.5-flash-preview-09-2025";
-
+        
+        // Scroll Reveal
         gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.reveal-up').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.2, scrollTrigger: { trigger: elem, start: "top 85%" } });
+        document.querySelectorAll('.gsap-reveal').forEach(element => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0 },
+                { y: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 85%" } }
+            );
         });
 
-        // Mobile Menu Logic
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        if(menuBtn && closeMenuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden-menu');
-                mobileMenu.classList.add('visible-menu');
-            });
-            closeMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('visible-menu');
-                mobileMenu.classList.add('hidden-menu');
-            });
+        function toggleMobileMenu() { 
+            const menu = document.getElementById('mobile-menu');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+            } else {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
         }
 
-        // --- ROBUST FORM SUBMISSION LOGIC ---
-        const dataForm = document.getElementById('dataForm');
-        const formStatus = document.getElementById('formStatus');
-        const submitBtn = document.getElementById('submitBtn');
-        let isSubmitting = false;
-
-        dataForm.addEventListener('submit', async (e) => {
+        async function handleBooking(e) {
             e.preventDefault();
-
-            if (isSubmitting) return;
-            if (dataForm.querySelector('input[name="_gotcha"]').value) return; // Spam trap
-            if (!dataForm.checkValidity()) {
-                dataForm.reportValidity();
-                return;
-            }
-
-            isSubmitting = true;
-            const formData = new FormData(dataForm);
-            const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-            formData.append('timestamp', timestamp);
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            formStatus.textContent = 'Sending your details...';
-            formStatus.className = 'loading';
+            const btn = e.target.querySelector('button');
+            const originalContent = btn.innerHTML;
+            const statusDiv = document.getElementById('formStatus');
+            const formData = new FormData(e.target);
+            
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-pulse">Sending...</span>`;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             try {
-                // Simultaneous submission to Formspree and Google Script
+                // REDUNDANT SENDING (Email + Sheet)
                 await Promise.allSettled([
                     fetch('https://formspree.io/f/mqadzvad', {
                         method: 'POST',
@@ -327,56 +342,21 @@
                         mode: 'no-cors'
                     })
                 ]);
-
-                formStatus.textContent = '✅ Thank you! Your details have been sent successfully. We will contact you soon.';
-                formStatus.className = 'success';
-                dataForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
-
-                setTimeout(() => {
-                    formStatus.textContent = '';
-                    formStatus.className = '';
-                }, 5000);
-
+                
+                statusDiv.innerHTML = `
+                    <div class="mt-6 p-4 bg-sage/10 text-sage border border-sage rounded flex items-center justify-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="text-sm font-bold">Message Sent! We will contact you soon.</span>
+                    </div>`;
+                lucide.createIcons(); // Refresh icons for the success message
+                document.getElementById('bookingForm').reset();
             } catch (error) {
-                console.error('Error:', error);
-                formStatus.textContent = '❌ Something went wrong. Please try again or contact us directly.';
-                formStatus.className = 'error';
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Message';
+                statusDiv.innerHTML = `<div class="mt-6 text-red-500 text-sm text-center bg-red-50 p-3 rounded">Error sending message. Please email us directly.</div>`;
             } finally {
-                isSubmitting = false;
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
             }
-        });
-
-        // Chat Logic
-        function toggleChat() { document.getElementById('chat-window').classList.toggle('open'); }
-
-        async function callGemini(prompt, sys) {
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${apiModel}:generateContent?key=${apiKey}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], systemInstruction: { parts: [{ text: sys }] } }) });
-                const data = await response.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Error.";
-            } catch(e) { return "Connection error."; }
-        }
-
-        async function handleChatSubmit(e) {
-            e.preventDefault();
-            const input = document.getElementById('chat-input');
-            const msg = input.value;
-            if(!msg) return;
-            const box = document.getElementById('chat-messages');
-            box.innerHTML += `<div class="flex justify-end"><div class="bg-[#C88D72] text-white p-3 rounded-2xl rounded-tr-none text-sm max-w-[85%] shadow-md">${msg}</div></div>`;
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
-            const loadId = 'load'+Date.now();
-            box.innerHTML += `<div id="${loadId}" class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-xs text-gray-400">Thinking...</div></div>`;
-            box.scrollTop = box.scrollHeight;
-            const res = await callGemini(msg, "You are Harsh Ranjan.");
-            document.getElementById(loadId).remove();
-            box.innerHTML += `<div class="flex justify-start"><div class="bg-white border border-gray-100 p-3 rounded-2xl rounded-tl-none shadow-sm text-sm text-gray-700 max-w-[85%]">${marked.parse(res)}</div></div>`;
-            box.scrollTop = box.scrollHeight;
         }
     </script>
 </body>
