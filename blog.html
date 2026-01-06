@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Sangha | Samarpan Blog</title>
+    <title>The Journal | Samarpan Wellness</title>
     
     <!-- --- SEO & META TAGS --- -->
-    <meta name="description" content="Articles on Ayurveda Biology, Neurobiology, Psychology and Yoga by Harsh Ranjan.">
+    <meta name="description" content="Read insights on Ayurveda Biology, Neurobiology, and Spiritual Psychology. The Samarpan blog bridges ancient wisdom with modern science.">
+    <meta name="keywords" content="Ayurveda Blog, Neurobiology of Mantra, Gut Health, Mental Health, Harsh Ranjan, Samarpan">
     <meta name="author" content="Harsh Ranjan">
-
-    <!-- GOOGLE ANALYTICS -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HMM7CJSCW7');
-    </script>
+    <meta name="robots" content="index, follow">
 
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
@@ -25,18 +18,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    <!-- CONFIG -->
+    <!-- TAILWIND CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         paper: '#FDFCF8',
-                        clay: '#C88D72',
+                        clay: '#C88D72', 
                         claydark: '#A6755E',
                         sage: '#4A5D4F',
                         charcoal: '#1A1A1A',
@@ -46,81 +40,78 @@
                         sans: ['Manrope', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
                         display: ['Cinzel', 'serif'],
-                    }
+                    },
+                    typography: {
+                        DEFAULT: {
+                            css: {
+                                color: '#333',
+                                h2: { fontFamily: 'Cormorant Garamond, serif', marginTop: '2em' },
+                                h3: { fontFamily: 'Cormorant Garamond, serif', marginTop: '1.5em' },
+                                p: { fontFamily: 'Manrope, sans-serif', lineHeight: '1.8' },
+                            },
+                        },
+                    },
                 }
             }
         }
     </script>
 
     <style>
-        body { background-color: #FDFCF8; color: #1A1A1A; }
+        body { background-color: #FDFCF8; color: #1A1A1A; overflow-x: hidden; }
         
-        /* Editorial Typography */
-        .article-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #1A1A1A; font-weight: 600; }
-        .article-content p { margin-bottom: 1.5rem; line-height: 1.9; color: #333; font-size: 1.1rem; }
-        .article-content ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
-        .article-content li { margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative; }
-        .article-content li::before { content: "•"; color: #C88D72; position: absolute; left: 0; font-weight: bold; }
-        .article-content strong { color: #C88D72; font-weight: 600; }
-        
-        .article-content blockquote {
-            border-left: 4px solid #C88D72;
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-            font-size: 1.4rem;
-            color: #555;
-            background: #FDFCF8;
+        #loader { 
+            position: fixed; inset: 0; background-color: #FDFCF8; z-index: 9999; 
+            display: flex; justify-content: center; align-items: center; flex-direction: column; 
         }
 
-        .article-content > p:first-of-type::first-letter {
-            float: left;
-            font-family: 'Cinzel', serif;
-            font-size: 3.5rem;
-            line-height: 0.8;
-            padding-right: 0.5rem;
-            padding-top: 0.3rem;
-            color: #C88D72;
-        }
-        
-        /* Modal & UI Animations */
-        #readModal { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s; }
-        #readModal.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #readModal:not(.hidden) { opacity: 1; visibility: visible; pointer-events: auto; }
-        
-        #scroll-progress { width: 0%; height: 4px; background: #C88D72; position: fixed; top: 0; left: 0; z-index: 60; transition: width 0.1s; }
-        #mobile-menu { transition: transform 0.3s ease-in-out; }
+        /* Mobile Menu */
+        #mobile-menu { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+        #mobile-menu.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #mobile-menu.flex { opacity: 1; visibility: visible; pointer-events: auto; }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #C88D72; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #A6755E; }
+        .blog-card { transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease; }
+        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        
+        .category-pill { transition: all 0.3s ease; }
+        .category-pill:hover { background-color: #C88D72; color: white; border-color: #C88D72; }
+        .category-pill.active { background-color: #1A1A1A; color: white; border-color: #1A1A1A; }
 
-        #toast {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.5s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            transform: translateY(20px);
-        }
-        #toast.show { visibility: visible; opacity: 1; transform: translateY(0); }
+        /* Article Content Styling */
+        #article-content h2 { font-size: 1.8rem; font-weight: 600; color: #1A1A1A; margin-top: 2rem; margin-bottom: 1rem; }
+        #article-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #4b5563; }
+        #article-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #4b5563; }
+        #article-content li { margin-bottom: 0.5rem; }
+        #article-content blockquote { border-left: 4px solid #C88D72; padding-left: 1rem; font-style: italic; color: #1A1A1A; margin: 2rem 0; }
     </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="relative flex flex-col items-center">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" class="text-clay mb-6 animate-pulse">
+                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
+                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+                <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+            </svg>
+            <h1 class="font-display text-2xl tracking-[0.4em] text-clay">SAMARPAN</h1>
+        </div>
+    </div>
+
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 bg-paper/95 backdrop-blur-md border-b border-clay/10 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
             
             <!-- LOGO -->
-            <a href="index.html" class="group flex flex-col items-center justify-center">
+            <a href="index.html" class="group flex flex-col items-center justify-center relative z-50">
                 <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-clay group-hover:text-charcoal transition drop-shadow-sm">
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper group-hover:text-clay transition drop-shadow-sm">
                     Samarpan
                 </span>
             </a>
@@ -130,120 +121,180 @@
                 <a href="about.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">About</a>
                 <a href="sessions.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Sessions</a>
                 <a href="ayurveda.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Ayurveda</a>
-                <a href="#" class="font-sans text-xs uppercase tracking-[0.2em] text-clay font-bold transition duration-300">Blog</a>
-                <a href="contact.html" class="px-6 py-2 bg-clay text-white hover:bg-claydark transition duration-300 font-display text-xs tracking-widest shadow-lg border border-transparent">Contact</a>
+                <a href="blog.html" class="font-sans text-xs uppercase tracking-[0.2em] text-clay font-bold transition duration-300">Blog</a>
+                <a href="index.html#contact" class="px-6 py-2 bg-clay text-white hover:bg-claydark transition duration-300 font-display text-xs tracking-widest shadow-lg border border-transparent">Contact</a>
             </div>
 
             <!-- MOBILE MENU BTN -->
-            <button class="lg:hidden text-clay z-50" onclick="toggleMobileMenu()">
+            <button class="lg:hidden text-clay z-50 relative p-2" onclick="toggleMobileMenu()">
                 <i data-lucide="menu" class="w-8 h-8"></i>
             </button>
         </div>
-        
-        <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="hidden fixed inset-0 bg-paper z-40 flex-col items-center justify-center space-y-8">
-            <button class="absolute top-6 right-6 text-clay" onclick="toggleMobileMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
-            <a href="about.html" class="font-serif text-2xl text-charcoal">About</a>
-            <a href="sessions.html" class="font-serif text-2xl text-charcoal">Sessions</a>
-            <a href="ayurveda.html" class="font-serif text-2xl text-charcoal">Ayurveda</a>
-            <a href="#" class="font-serif text-2xl text-clay">Blog</a>
-            <a href="contact.html" class="px-8 py-3 bg-clay text-white font-serif text-lg font-bold w-full text-center">Contact</a>
+
+        <!-- MOBILE MENU (FIXED OVERLAY) -->
+        <div id="mobile-menu" class="hidden fixed inset-0 w-full h-screen bg-paper flex-col items-center justify-center space-y-8 text-charcoal z-[100]">
+            <button class="absolute top-6 right-6 text-clay p-2 hover:rotate-90 transition duration-300" onclick="toggleMobileMenu()">
+                <i data-lucide="x" class="w-10 h-10"></i>
+            </button>
+            <a href="about.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">About</a>
+            <a href="sessions.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Sessions</a>
+            <a href="ayurveda.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Ayurveda</a>
+            <a href="blog.html" class="font-serif text-3xl text-clay transition" onclick="toggleMobileMenu()">Blog</a>
+            <a href="index.html#contact" class="px-10 py-4 bg-clay text-white font-serif text-xl font-bold rounded-sm shadow-lg hover:bg-claydark transition" onclick="toggleMobileMenu()">Contact</a>
         </div>
     </nav>
 
-    <!-- HEADER -->
-    <header class="pt-40 pb-16 px-6 bg-[#FAFAF8] text-center border-b border-clay/10">
-        <p class="font-display text-xs tracking-[0.4em] text-clay mb-4 animate-float">Digital Sangha</p>
-        <h1 class="text-5xl md:text-7xl font-serif text-charcoal mb-6">The Knowledge Stream</h1>
-        <p class="font-sans text-charcoal/60 max-w-xl mx-auto text-lg">
-            Bridging ancient wisdom with modern science. Insights on Ayurveda Biology, Psychology, and the Neurobiology of Consciousness.
-        </p>
-    </header>
-
-    <!-- FILTER BUTTONS -->
-    <section class="py-8 px-6 sticky top-[80px] z-30 bg-paper/95 backdrop-blur-sm border-b border-gray-100 shadow-sm transition-all">
-        <div class="max-w-7xl mx-auto flex flex-wrap justify-center gap-x-6 gap-y-4">
-            <button onclick="filterPosts('all')" class="filter-btn active px-6 py-2 text-xs uppercase tracking-widest border border-clay bg-clay text-white transition rounded-full hover:bg-claydark">All</button>
-            <button onclick="filterPosts('Ayurveda')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Ayurveda</button>
-            <button onclick="filterPosts('Psychology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Psychology</button>
-            <button onclick="filterPosts('Neurobiology')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Neurobiology</button>
-            <button onclick="filterPosts('Yoga')" class="filter-btn px-6 py-2 text-xs uppercase tracking-widest border border-clay/30 text-charcoal transition rounded-full hover:border-clay hover:text-clay">Yoga</button>
-        </div>
-    </section>
-
-    <!-- BLOG GRID -->
-    <section class="py-12 px-6 min-h-screen bg-[#FAFAF8]">
-        <div id="blog-container" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Posts injected by JS -->
-        </div>
-    </section>
-
-    <!-- READING MODAL -->
-    <div id="readModal" class="fixed inset-0 z-[100] hidden">
-        <!-- Progress Bar -->
-        <div id="scroll-progress"></div>
-
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-charcoal/95 backdrop-blur-sm" onclick="closeModal()"></div>
+    <!-- === MAIN BLOG LIST VIEW === -->
+    <div id="main-blog-view">
         
-        <!-- Content Container -->
-        <div class="absolute inset-0 md:inset-10 bg-paper md:rounded-lg overflow-y-auto custom-scrollbar shadow-2xl" onscroll="updateProgress()">
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="sticky top-4 right-4 float-right z-50 bg-white rounded-full p-2 text-charcoal shadow-lg hover:text-clay transition border border-gray-200 group">
-                <i data-lucide="x" class="w-6 h-6 group-hover:rotate-90 transition duration-300"></i>
-            </button>
+        <!-- HERO SECTION (Cinematic Parallax) -->
+        <header id="journal-hero" class="relative h-[60vh] md:h-[70vh] w-full overflow-hidden flex items-center justify-center bg-charcoal">
+            <div class="absolute inset-0 z-0">
+                 <!-- New Hero Image: Journal/Writing/Nature -->
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed opacity-60 transform scale-105"></div>
+                
+                <!-- Cinematic Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-black/20"></div>
+                
+                <!-- Texture -->
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+            </div>
+            
+            <div class="relative z-10 text-center text-paper px-6 max-w-4xl pt-24">
+                <p class="gsap-hero opacity-0 font-display text-xs md:text-sm tracking-[0.4em] mb-4 text-clay font-bold drop-shadow-md">Digital Sangha</p>
+                <h1 class="gsap-hero opacity-0 text-4xl md:text-6xl lg:text-7xl font-serif font-light mb-8 leading-tight drop-shadow-xl">
+                    The Journal
+                </h1>
+                <p class="gsap-hero opacity-0 text-lg md:text-xl font-sans font-light text-gray-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+                    Exploring the intersection of biology, consciousness, and ancient text.
+                </p>
+            </div>
+        </header>
 
-            <!-- Article Content -->
-            <div class="max-w-3xl mx-auto px-6 py-16 md:py-24">
-                <div class="text-center mb-12">
-                    <span id="modal-category" class="text-clay font-display text-xs tracking-[0.3em] uppercase block mb-4 border-b border-clay/20 inline-block pb-1">Category</span>
-                    <h2 id="modal-title" class="text-3xl md:text-5xl font-serif text-charcoal mb-6 leading-[1.1]">Article Title</h2>
-                    <div class="flex items-center justify-center gap-4 text-xs text-gray-400 font-sans uppercase tracking-widest">
-                        <span id="modal-date">Date</span> • <span id="modal-readtime">Read Time</span>
-                    </div>
-                </div>
+        <!-- CATEGORY FILTER -->
+        <section class="border-b border-gray-100 bg-white sticky top-0 z-40 transition-all duration-300" id="filter-bar">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex overflow-x-auto gap-4 scrollbar-hide">
+                <button onclick="filterPosts('All')" class="category-pill active px-6 py-2 border border-gray-200 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">All Posts</button>
+                <button onclick="filterPosts('Ayurveda Biology')" class="category-pill px-6 py-2 border border-gray-200 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Ayurveda Biology</button>
+                <button onclick="filterPosts('Neuro-Psychology')" class="category-pill px-6 py-2 border border-gray-200 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Neuro-Psychology</button>
+                <button onclick="filterPosts('Tantra & Spirit')" class="category-pill px-6 py-2 border border-gray-200 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Tantra & Spirit</button>
+                <button onclick="filterPosts('Nutrition')" class="category-pill px-6 py-2 border border-gray-200 rounded-full text-xs font-bold uppercase tracking-widest whitespace-nowrap">Nutrition</button>
+            </div>
+        </section>
 
-                <div class="w-full h-64 md:h-[450px] overflow-hidden rounded-sm mb-12 shadow-md bg-gray-100">
-                    <img id="modal-image" src="" class="w-full h-full object-cover">
-                </div>
-
-                <div id="modal-body" class="article-content font-serif text-lg md:text-xl text-charcoal/80 leading-relaxed px-2 md:px-0">
-                    <!-- Text injected here -->
-                </div>
-
-                <!-- Author & Share -->
-                <div class="mt-20 pt-10 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div class="flex items-center gap-4">
-                        <div class="w-14 h-14 rounded-full bg-clay text-white flex items-center justify-center font-serif text-2xl font-bold shadow-md">
-                            H
-                        </div>
-                        <div>
-                            <p class="font-serif font-bold text-lg text-charcoal">Harsh Ranjan</p>
-                            <p class="text-[10px] text-gray-500 uppercase tracking-widest">Ayurveda Biologist & Psychologist</p>
-                        </div>
+        <!-- FEATURED ARTICLE -->
+        <section id="featured-section" class="py-16 md:py-24 px-6 bg-[#FAFAF8]">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <!-- Image -->
+                    <div class="h-[400px] md:h-[500px] overflow-hidden rounded-lg shadow-xl relative group cursor-pointer" onclick="openBlog(100)">
+                        <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=1470&auto=format&fit=crop" 
+                             class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition"></div>
                     </div>
                     
-                    <div class="flex gap-3">
-                        <button onclick="shareCurrentPost()" class="flex items-center gap-2 px-8 py-3 bg-charcoal text-white rounded-full hover:bg-clay transition font-bold text-xs uppercase tracking-widest shadow-lg">
-                            <i data-lucide="share-2" class="w-4 h-4"></i> Share
-                        </button>
+                    <!-- Content -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 text-xs font-bold uppercase tracking-widest">
+                            <span class="text-clay">Featured Insight</span>
+                            <span class="text-gray-300">|</span>
+                            <span class="text-gray-500">8 Min Read</span>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-serif text-charcoal leading-tight cursor-pointer hover:text-clay transition" onclick="openBlog(100)">
+                            The Neurobiology of Mantra: Beyond Faith
+                        </h2>
+                        <p class="text-charcoal/70 leading-relaxed text-lg font-light">
+                            How ancient Sanskrit vibrations (Spanda) actively restructure neural pathways, regulate the Vagus nerve, and reduce cortical thickness in the brain's stress centers. A look at the science behind the sound.
+                        </p>
+                        <div class="pt-4 flex gap-4">
+                            <button onclick="openBlog(100)" class="inline-flex items-center gap-3 px-8 py-4 bg-charcoal text-white font-bold text-xs uppercase tracking-widest hover:bg-clay transition rounded-sm shadow-lg">
+                                Read Full Article <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            <button onclick="sharePost(100)" class="inline-flex items-center gap-2 px-6 py-4 border border-gray-300 text-charcoal font-bold text-xs uppercase tracking-widest hover:border-clay hover:text-clay transition rounded-sm">
+                                <i data-lucide="share-2" class="w-4 h-4"></i> Share
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- BLOG GRID (Dynamic) -->
+        <section id="grid-section" class="py-24 px-6 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <!-- Container for dynamic posts -->
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Posts will be injected here by JS -->
+                </div>
+                
+                <div class="mt-20 text-center">
+                    <button class="px-8 py-4 border border-charcoal/20 text-charcoal font-bold text-xs uppercase tracking-widest hover:bg-charcoal hover:text-white transition rounded-sm">
+                        Load More Articles
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section id="newsletter-section" class="py-24 bg-[#FAFAF8] text-center px-6 relative overflow-hidden border-t border-gray-100">
+             <div class="relative z-10 max-w-2xl mx-auto">
+                 <i data-lucide="mail" class="w-12 h-12 text-clay mx-auto mb-6"></i>
+                 <h2 class="text-3xl md:text-4xl font-serif mb-4 text-charcoal">Join 2,000+ Seekers</h2>
+                 <p class="text-charcoal/60 mb-8 leading-relaxed">Receive weekly wisdom on biology, consciousness, and healing directly to your inbox.</p>
+                 
+                 <form class="flex flex-col sm:flex-row gap-4">
+                     <input type="email" placeholder="Your best email address" class="flex-grow bg-white border border-gray-200 text-charcoal placeholder-gray-400 px-6 py-4 rounded-sm focus:outline-none focus:border-clay transition" required>
+                     <button class="px-8 py-4 bg-clay text-white font-bold uppercase tracking-widest text-xs hover:bg-charcoal transition rounded-sm">Subscribe</button>
+                 </form>
+             </div>
+        </section>
     </div>
 
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-charcoal text-white px-6 py-3 rounded-full shadow-2xl z-[150] flex items-center gap-3 text-xs uppercase tracking-widest border border-clay/50">
-        <i data-lucide="check-circle" class="w-4 h-4 text-clay"></i>
-        <span id="toast-msg">Link Copied!</span>
+    <!-- === ARTICLE READER VIEW (Hidden by default) === -->
+    <div id="blog-reader" class="hidden w-full bg-white min-h-screen">
+        <!-- Reader Nav -->
+        <div class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur z-50 border-b border-gray-100 py-4 px-6 flex justify-between items-center">
+            <button onclick="closeReader()" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-clay transition">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Journal
+            </button>
+            <div class="font-display font-bold text-clay tracking-widest">SAMARPAN</div>
+            <button id="reader-share-btn" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-charcoal hover:text-clay transition">
+                Share <i data-lucide="share-2" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        <!-- Article Content -->
+        <article class="pt-24 pb-32">
+            <!-- Header Image -->
+            <div class="h-[50vh] md:h-[60vh] w-full overflow-hidden relative">
+                <img id="reader-image" src="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/30"></div>
+                <div class="absolute bottom-0 left-0 w-full p-6 md:p-12 text-white bg-gradient-to-t from-black/80 to-transparent">
+                    <div class="max-w-3xl mx-auto">
+                        <div id="reader-meta" class="flex gap-4 text-xs font-bold uppercase tracking-widest mb-4 opacity-90"></div>
+                        <h1 id="reader-title" class="text-3xl md:text-5xl lg:text-6xl font-serif leading-tight"></h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="max-w-3xl mx-auto px-6 py-12">
+                <div id="article-content" class="font-sans text-lg leading-relaxed text-gray-700">
+                    <!-- Content injected here -->
+                </div>
+                
+                <div class="mt-16 pt-8 border-t border-gray-100 flex justify-between items-center">
+                    <div class="text-sm text-gray-500 italic">Written by Harsh Ranjan</div>
+                    <button onclick="sharePost(currentOpenId)" class="px-6 py-3 bg-clay text-white font-bold text-xs uppercase rounded hover:bg-claydark transition">Share Article</button>
+                </div>
+            </div>
+        </article>
     </div>
 
     <!-- FOOTER -->
     <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            
-            <!-- Col 1: Brand -->
+            <!-- Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
@@ -254,488 +305,336 @@
                 <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
-
-            <!-- Col 2: Links -->
+            <!-- Links -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
                 <ul class="space-y-3 text-sm">
                     <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
                     <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
-                    <li><a href="#" class="hover:text-white transition duration-300">Blog</a></li>
-                    <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
+                    <li><a href="blog.html" class="text-white font-bold transition duration-300">Blog</a></li>
+                    <li><a href="index.html#contact" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
-
-            <!-- Col 3: Contact -->
+            <!-- Contact -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
                 <ul class="space-y-3 text-sm">
-                    <li>
-                        <a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2">
-                            <i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com
-                        </a>
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India
-                    </li>
+                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
+                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
                 </ul>
-                <div class="flex gap-4 mt-6">
-                    <a href="https://youtu.be/1v1fOuvBlE8?si=3Tzq9I4JKfVuNo0o" target="_blank" class="hover:text-clay transition"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-                    <a href="https://www.instagram.com/justtheself/" target="_blank" class="hover:text-clay transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="https://www.linkedin.com/in/theharshranjanofficial/" target="_blank" class="hover:text-clay transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                </div>
             </div>
-
         </div>
         <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
         </div>
     </footer>
 
-    <!-- LOGIC -->
+    <!-- SCRIPTS -->
     <script>
         lucide.createIcons();
+        let currentOpenId = null;
 
-        // ==========================================
-        // --- BLOG DATA ---
-        // ==========================================
-        
+        // ---------------------------------------------------------
+        // --- BLOG DATA (ADD CONTENT HERE) ---
+        // ---------------------------------------------------------
         const blogPosts = [
-            // --- NEUROBIOLOGY ---
+            {
+                id: 100, // Featured Post
+                title: "The Neurobiology of Mantra: Beyond Faith",
+                category: "Tantra & Spirit",
+                readTime: "8 Min Read",
+                image: "https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=1470&auto=format&fit=crop",
+                summary: "How ancient Sanskrit vibrations actively restructure neural pathways, regulate the Vagus nerve, and reduce cortical thickness in the brain's stress centers.",
+                colorClass: "text-clay",
+                content: `
+                    <p>For centuries, mantras have been dismissed by the scientific community as mere religious rituals. However, emerging research in <strong>neurotheology</strong> and <strong>psychoacoustics</strong> is beginning to map the profound effects of specific sound frequencies on the human nervous system.</p>
+                    
+                    <h2>The Science of Spanda (Vibration)</h2>
+                    <p>In Kashmir Shaivism, the universe is described as <em>Spanda</em>—divine vibration. Modern physics confirms that at a subatomic level, matter is energy in vibration. When we chant Sanskrit mantras, we are not just making sounds; we are creating specific vibrational patterns in the body.</p>
+                    
+                    <h2>Vagus Nerve Stimulation</h2>
+                    <p>The Vagus nerve is the main component of the parasympathetic nervous system, responsible for the "rest and digest" response. Chanting mantras like "OM" creates a vibration in the vocal cords and the back of the throat that directly stimulates the auricular branch of the Vagus nerve.</p>
+                    <blockquote>"This stimulation sends a signal to the brain to lower heart rate, reduce blood pressure, and decrease cortisol levels immediately."</blockquote>
+                    
+                    <h2>Cortical Thickness & Memory</h2>
+                    <p>A study involving the "Sanskrit Effect" showed that traditional pundits who memorized Vedas had significantly increased grey matter density and cortical thickness in the hippocampus, the area responsible for memory and spatial navigation. The complex recitation rules (rules of pitch, duration, and rhythm) act as a rigorous cognitive workout.</p>
+                    
+                    <h2>Conclusion</h2>
+                    <p>Mantra is not magic; it is technology. It is a tool to manually override the autonomic nervous system's stress response and access deeper states of consciousness (Turiya).</p>
+                `
+            },
             {
                 id: 1,
-                title: "The Neurobiology of Mantra",
-                category: "Neurobiology",
-                date: "Nov 15, 2025",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1554244933-d877debbd96c?q=80",
-                excerpt: "How sound vibrations restructure neural pathways and influence the Default Mode Network (DMN) for anxiety reduction.",
+                title: "Agni & The Gut-Brain Axis",
+                category: "Ayurveda Biology",
+                readTime: "5 Min Read",
+                image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800&auto=format&fit=crop",
+                summary: "Understanding how your metabolic fire directly influences neurotransmitter production (Serotonin) and mental clarity.",
+                colorClass: "text-clay",
                 content: `
-                    <p>In our modern understanding of the brain, the Default Mode Network (DMN) is often associated with the 'wandering mind'—the source of anxiety, self-referential thoughts, and rumination. Ancient traditions, particularly within Tantra, have long used sound (Mantra) as a tool to silence this chatter.</p>
-                    <blockquote>"When we chant, we are not just making noise; we are creating a specific frequency that entrains the brainwaves."</blockquote>
-                    <h3>Sound as Medicine</h3>
-                    <p>Recent neurobiological studies suggest that rhythmic chanting (Japa) significantly reduces activity in the amygdala, the brain's fear center. This isn't magic; it's physics. The frequency disrupts the stress loops.</p>
-                    <h3>The Vagus Nerve Connection</h3>
-                    <p>The vibration created by vocalizing specific seeds sounds (Beej Mantras) like 'Om', 'Lam', or 'Ram' stimulates the Vagus nerve. This stimulation activates the parasympathetic nervous system, instantly shifting the body from 'fight or flight' to 'rest and digest'.</p>
+                    <p>We often treat the mind and body as separate entities. However, Ayurveda has always stated that <em>Agni</em> (digestive fire) is the gatekeeper of health. Modern science now corroborates this via the Gut-Brain Axis.</p>
+                    <h2>The Serotonin Connection</h2>
+                    <p>Did you know that 95% of your body's serotonin—the happiness hormone—is produced in the gut, not the brain? If your Agni is weak (Mandagni), you accumulate metabolic waste (Ama), which blocks the absorption of precursors needed for neurotransmitter synthesis.</p>
+                    <p>This is why a simple bout of indigestion can lead to brain fog, irritability, and anxiety.</p>
+                    <h2>Healing Agni</h2>
+                    <ul>
+                        <li><strong>CCF Tea:</strong> Cumin, Coriander, and Fennel tea helps regulate enzymatic secretion without overheating the system.</li>
+                        <li><strong>Mindful Eating:</strong> Eating while stressed shuts down digestion via the sympathetic nervous system. Sit down, breathe, and eat.</li>
+                    </ul>
+                `
+            },
+            {
+                id: 2,
+                title: "Trauma is Physiological",
+                category: "Neuro-Psychology",
+                readTime: "7 Min Read",
+                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80&w=800&auto=format&fit=crop",
+                summary: "Why talk therapy isn't enough. Exploring somatic release techniques to unlock trauma stored in the fascia and nervous system.",
+                colorClass: "text-sage",
+                content: `
+                    <p>Trauma is not just a story about the past; it is the residue of that past settling in your body. It is stuck energy in the nervous system.</p>
+                    <h2>The Freeze Response</h2>
+                    <p>When animals face a threat they cannot escape, they freeze (play dead). Once the threat passes, they physically shake to discharge that excess energy. Humans, conditioned by society, suppress this shaking mechanism. As a result, the "fight or flight" energy gets trapped in our fascia.</p>
+                    <h2>Somatic Release</h2>
+                    <p>Talk therapy engages the prefrontal cortex (logic). But trauma lives in the amygdala and the body. To heal, we must use <strong>bottom-up processing</strong>: using the body to signal safety to the brain.</p>
+                    <p>Practices like Yoga Nidra, specific Pranayama, and TRE (Trauma Release Exercises) allow the nervous system to complete the stress cycle and return to homeostasis.</p>
                 `
             },
             {
                 id: 3,
-                title: "Neuroplasticity: Rewiring the Anxious Brain",
-                category: "Neurobiology",
-                date: "Jan 03, 2026",
-                readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80",
-                excerpt: "From 'Neurons that fire together, wire together' to the practical application of mental reframing.",
+                title: "Decoding Vigyan Bhairav",
+                category: "Tantra & Spirit",
+                readTime: "6 Min Read",
+                image: "https://images.unsplash.com/photo-1605628283626-4444636b0467?q=80&w=800&auto=format&fit=crop",
+                summary: "Translating ancient consciousness-expansion techniques into practical tools for modern anxiety and focus.",
+                colorClass: "text-charcoal",
                 content: `
-                    <p>The human brain is not static; it is plastic. This concept, known as neuroplasticity, is the scientific basis for all transformation. Every thought you think strengthens a specific neural pathway.</p>
-                    <p>Chronic anxiety is essentially a well-worn highway in the brain. The amygdala becomes hyper-sensitive, perceiving threats where there are none.</p>
-                    <h3>The Role of Mindfulness</h3>
-                    <p>Mindfulness practices, similar to those found in Vigyan Bhairav Tantra, act as a roadblock on this highway. By observing the thought without reacting, we deny the pathway the energy it needs to strengthen. Over time, the anxious pathway degrades (synaptic pruning), and new pathways of calm are forged.</p>
-                `
-            },
-            {
-                id: 10,
-                title: "Polyvagal Theory & Prana",
-                category: "Neurobiology",
-                date: "Feb 12, 2026",
-                readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80",
-                excerpt: "Bridging Stephen Porges' Polyvagal Theory with ancient Pranayama techniques for trauma recovery.",
-                content: `
-                    <p>The Polyvagal Theory explains how our autonomic nervous system reacts to safety, danger, and life threats. It identifies the 'Ventral Vagal' state as the state of social engagement and safety.</p>
-                    <p>Pranayama, specifically exercises that lengthen the exhalation (like 4-7-8 breathing or Ujjayi), directly engages the ventral vagal complex. By slowing the breath, we send a bottom-up signal to the brainstem that says, 'I am safe.' This effectively hacks the nervous system to bypass the cognitive brain's anxiety loops.</p>
-                `
-            },
-            {
-                id: 11,
-                title: "Gamma Waves: The Signature of Insight",
-                category: "Neurobiology",
-                date: "Mar 01, 2026",
-                readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?q=80",
-                excerpt: "Understanding the brainwave state of high-level meditators and moments of 'Aha!'.",
-                content: `
-                    <p>Gamma waves are the fastest brainwaves, associated with high-level information processing, insight, and peak focus. Studies on long-term meditators (like Tibetan monks) show a permanently elevated baseline of Gamma waves.</p>
-                    <p>This suggests that 'enlightenment' or 'awakening' might have a specific biological signature: a brain that is hyper-connected and synchronized. Through consistent meditation practice, we can train our brains to access this state of flow more frequently.</p>
-                `
-            },
-
-            // --- AYURVEDA ---
-            {
-                id: 2,
-                title: "Understanding Your Prakriti",
-                category: "Ayurveda",
-                date: "Oct 28, 2025",
-                readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80",
-                excerpt: "Your biological constitution determines how you interact with the world. Are you Vata, Pitta, or Kapha?",
-                content: `
-                    <p>Ayurveda is not just about herbs; it is about understanding the fundamental biology of your being. In Ayurveda Biology, we look at the genetic and phenotypic expression of the three Doshas: Vata, Pitta, and Kapha.</p>
-                    <ul>
-                        <li><strong>Vata (Air/Ether):</strong> The force of movement. Governs the nervous system, creativity, and elimination.</li>
-                        <li><strong>Pitta (Fire/Water):</strong> The force of transformation. Governs metabolism, intelligence, and digestion.</li>
-                        <li><strong>Kapha (Earth/Water):</strong> The force of stability. Governs structure, memory, and lubrication.</li>
-                    </ul>
-                    <p>Knowing your unique ratio (Prakriti) allows us to tailor nutrition and psychology protocols. A Vata mind needs grounding foods and routine, while a Kapha mind needs stimulation.</p>
+                    <p>The <em>Vigyan Bhairav Tantra</em> is a classical text containing 112 techniques (Dharanas) for centering awareness. Unlike Vedic rituals which can be complex, Tantric techniques are incredibly practical and experiential.</p>
+                    <h2>Technique 1: The Gap Between Breaths</h2>
+                    <p><em>"Radiant one, this experience may dawn between two breaths. After breath comes in (down) and just before turning up (out)—the beneficence."</em></p>
+                    <p>The text invites us to focus not on the breath itself, but on the pause—the suspension—between inhalation and exhalation. In that split second, the mind stops. There is no thought, only pure existence.</p>
+                    <h2>Application for Anxiety</h2>
+                    <p>When anxious, our breathing becomes shallow and rapid. By gently bringing attention to the turning point of the breath, we naturally slow down the rhythm and anchor the mind in the present moment, bypassing the anxious narrative loop.</p>
                 `
             },
             {
                 id: 4,
-                title: "Public Health Nutrition & Ayurveda",
-                category: "Ayurveda",
-                date: "Aug 05, 2025",
+                title: "Sattvic Diet in a Modern World",
+                category: "Nutrition",
                 readTime: "4 Min Read",
-                image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80",
-                excerpt: "Bridging the gap between modern public health policies and personalized Ayurvedic nutrition.",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop",
+                summary: "Applying the principles of Sattva (purity/clarity) to a public health nutrition context. Eating for mental peace.",
+                colorClass: "text-claydark",
                 content: `
-                    <p>Modern public health nutrition focuses on macronutrients and calories. While valid, it often misses the nuance of 'Agni' (digestive fire). Two people can eat the same salad; one digests it, the other gets bloated.</p>
-                    <p>Integrating Ayurvedic principles into public health means teaching people not just *what* to eat, but *how* to eat according to their metabolic capacity. This simple shift could revolutionize preventative healthcare.</p>
+                    <p>In the West, we categorize food by calories, carbs, and proteins. In Ayurveda, we categorize food by its effect on the mind (Gunas): Sattva (clarity), Rajas (agitation), and Tamas (dullness).</p>
+                    <h2>The Problem with Processed Food</h2>
+                    <p>Processed, canned, and old foods are considered <em>Tamasic</em>. They require immense energy to digest and leave the mind feeling heavy and lethargic. Excessive caffeine and spicy foods are <em>Rajasic</em>, creating restlessness and aggression.</p>
+                    <h2>Eating for Peace</h2>
+                    <p>A <em>Sattvic</em> diet consists of fresh, seasonal, whole foods. It is not just about what you eat, but how fresh it is. Food cooked within 3 hours has the highest 'Prana' (life force). Incorporating more fresh fruits, soaked nuts, and lightly cooked vegetables can dramatically shift your mental state from chaotic to calm.</p>
                 `
             },
-            {
-                id: 7,
-                title: "Dinacharya: Circadian Rhythms & Gene Expression",
-                category: "Ayurveda",
-                date: "Sep 05, 2025",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80",
-                excerpt: "How the ancient Ayurvedic daily routine aligns perfectly with Nobel Prize-winning science on biological clocks.",
-                content: `
-                    <p>The 2017 Nobel Prize in Physiology was awarded for discoveries of molecular mechanisms controlling the circadian rhythm. Ayurveda has based its entire preventative protocol (Dinacharya) on this for millennia.</p>
-                    <p>Every cell in your body has a clock. When we eat late at night, we disrupt the peripheral clocks in the liver, causing metabolic chaos (or 'Ama' in Ayurveda). Waking up before sunrise (Brahma Muhurta) exposes the eyes to specific light spectrums that regulate cortisol and melatonin production for the rest of the day.</p>
-                `
-            },
-            {
-                id: 12,
-                title: "The Gut-Brain Axis: The Seat of Vata",
-                category: "Ayurveda",
-                date: "Apr 15, 2026",
-                readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80",
-                excerpt: "Exploring the microbiome (Pakvashaya) as the primary location of Vata dosha and mental health.",
-                content: `
-                    <p>Modern science calls the gut the 'Second Brain', producing 90% of the body's serotonin. Ayurveda stated thousands of years ago that the colon (Pakvashaya) is the main seat of Vata dosha.</p>
-                    <p>When Vata is aggravated in the colon (gas, bloating, constipation), it directly affects the mind, causing anxiety, fear, and rapid thoughts. Treating the gut through Basti (enema therapy) and carminative spices is often the most effective way to treat clinical anxiety.</p>
-                `
-            },
-            {
-                id: 13,
-                title: "Ojas: The Biological Correlate of Immunity",
-                category: "Ayurveda",
-                date: "May 20, 2026",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80",
-                excerpt: "What is Ojas? Understanding the refined essence of digestion and its link to resilience.",
-                content: `
-                    <p>Ojas is described as the final essence of tissue nutrition. It is responsible for immunity, strength, and vitality. In modern terms, we can correlate Ojas with a balanced endocrine system and high T-cell count.</p>
-                    <p>Stress dries up Ojas. Poor digestion blocks the formation of Ojas. To build Ojas, we need 'Sattvic' foods (ghee, dates, almonds) and, more importantly, a 'Sattvic' lifestyle free from unnecessary sensory overload.</p>
-                `
-            },
-
-            // --- PSYCHOLOGY ---
-            {
-                id: 4,
-                title: "Trauma and the Body: A Somatic Approach",
-                category: "Psychology",
-                date: "Dec 15, 2025",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80",
-                excerpt: "Why talk therapy isn't always enough. Understanding how trauma is stored in the nervous system.",
-                content: `
-                    <p>Psychology often focuses on the 'top-down' approach—using the mind to understand the body. However, trauma is often stored in the 'bottom-up' systems: the limbic system and the brainstem.</p>
-                    <blockquote>"The body keeps the score." - Bessell van der Kolk</blockquote>
-                    <p>Talk therapy interacts with the prefrontal cortex (logic), but trauma lives in the body (sensation). To truly heal, we must incorporate somatic practices like Yoga and Pranayama to discharge stored kinetic energy.</p>
-                `
-            },
-            {
-                id: 8,
-                title: "Jungian Shadows & The Subconscious",
-                category: "Psychology",
-                date: "Oct 12, 2025",
-                readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80",
-                excerpt: "Integrating the 'Shadow Self' for complete psychological wholeness.",
-                content: `
-                    <p>Carl Jung famously said, "Until you make the unconscious conscious, it will direct your life and you will call it fate." This aligns perfectly with the yogic concept of 'Samskaras' (imprints).</p>
-                    <p>The 'Shadow' consists of the parts of ourselves we reject—anger, jealousy, desire. By suppressing them, we give them power. In our psychology sessions, we do not aim to destroy the shadow, but to integrate it.</p>
-                `
-            },
-            {
-                id: 14,
-                title: "Cognitive Defusion vs. Sakshi Bhav",
-                category: "Psychology",
-                date: "Jun 10, 2026",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1474418397713-7ede21d49118?q=80",
-                excerpt: "Comparing modern ACT therapy techniques with the ancient Vedantic practice of Witness Consciousness.",
-                content: `
-                    <p>Acceptance and Commitment Therapy (ACT) uses a technique called 'Cognitive Defusion'—stepping back from thoughts and realizing "I am having the thought that I am a failure," rather than "I am a failure."</p>
-                    <p>This is identical to the ancient practice of Sakshi Bhav or Witness Consciousness. By creating distance between the Observer (Atman) and the Observed (Vrittis/Thoughts), suffering is reduced. Psychology provides the framework; spirituality provides the depth.</p>
-                `
-            },
-            {
-                id: 15,
-                title: "Attachment Styles & The Root Chakra",
-                category: "Psychology",
-                date: "Jul 22, 2026",
-                readTime: "7 Min Read",
-                image: "https://images.unsplash.com/photo-1516934024742-b461fba47600?q=80",
-                excerpt: "Mapping Anxious and Avoidant attachment styles to the energetic imbalances of the Muladhara.",
-                content: `
-                    <p>Our attachment style is formed in early childhood, determining how we relate to others. Energetically, this safety (or lack thereof) is stored in the Muladhara (Root Chakra).</p>
-                    <p>An Anxious Attachment style often correlates with an ungrounded, deficient Root Chakra (fear of abandonment). An Avoidant style often correlates with a rigid, excessive Root Chakra (fear of engulfment). Healing involves not just analyzing the past, but grounding the energy body in the present.</p>
-                `
-            },
-
-            // --- YOGA ---
             {
                 id: 5,
-                title: "The 112 Gateways of Consciousness",
-                category: "Yoga",
-                date: "July 20, 2025",
+                title: "Understanding Prakriti",
+                category: "Ayurveda Biology",
                 readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80",
-                excerpt: "Exploring the Vigyan Bhairav Tantra. Techniques for every personality type.",
+                image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=800&auto=format&fit=crop",
+                summary: "A deep dive into Vata, Pitta, and Kapha phenotypes and how genetics play a role in your Ayurvedic constitution.",
+                colorClass: "text-clay",
                 content: `
-                    <p>The Vigyan Bhairav Tantra is not a philosophical text; it is a manual of 112 techniques to access expanded states of consciousness. It is incredibly psychological in nature.</p>
-                    <h3>Finding Your Technique</h3>
-                    <p>Some techniques use breath (Prana), others use intense emotion, and some use the void of silence. The beauty of this text is that it offers a gateway for every psychological disposition.</p>
-                    <ul>
-                        <li><strong>For the Intellectual:</strong> Techniques focusing on the gap between thoughts.</li>
-                        <li><strong>For the Emotional:</strong> Techniques transforming intense love or anger into awareness.</li>
-                        <li><strong>For the Physical:</strong> Techniques utilizing breath retention and sensation.</li>
-                    </ul>
+                    <p>Your <em>Prakriti</em> is your genetic blueprint. It is determined at the moment of conception and remains constant throughout your life. It dictates your physical structure, your metabolic tendencies, and your emotional predisposition.</p>
+                    <h2>Genetics & Doshas</h2>
+                    <p>Recent studies in Ayurveda Biology have found correlations between specific gene polymorphisms and the three Doshas. For example, individuals with a high Pitta constitution often have higher metabolic rates and specific variations in genes related to enzymatic activity.</p>
+                    <h2>Why One Size Fits None</h2>
+                    <p>This explains why a raw vegan diet makes a Vata person bloated and anxious, while it makes a Kapha person feel light and energetic. Understanding your Prakriti is the first step to personalized medicine. It moves us away from "this food is healthy" to "is this food healthy <em>for me</em>?"</p>
                 `
             },
             {
                 id: 6,
-                title: "Yoga Nidra: The Neuroscience of Rest",
-                category: "Yoga",
-                date: "Aug 10, 2025",
+                title: "Polyvagal Theory & Pranayama",
+                category: "Neuro-Psychology",
                 readTime: "5 Min Read",
-                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80",
-                excerpt: "Why non-sleep deep rest (NSDR) is critical for cognitive recovery and hormonal balance.",
+                image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop",
+                summary: "How specific breathwork patterns trigger the 'Rest and Digest' parasympathetic response for immediate anxiety relief.",
+                colorClass: "text-sage",
                 content: `
-                    <p>In a world of constant stimulation, our nervous systems rarely hit 'off'. Sleep is often fragmented. Yoga Nidra, or 'Yogic Sleep', is a state of conscious relaxation that straddles the boundary between waking and sleeping.</p>
-                    <p>Biologically, this practice drops the brain into Theta wave dominance. In this state, the glymphatic system (the brain's waste clearance system) becomes highly active, flushing out toxins associated with neurodegeneration.</p>
-                `
-            },
-            {
-                id: 9,
-                title: "Tatwa Shuddhi: Elemental Purification",
-                category: "Yoga",
-                date: "Sep 10, 2025",
-                readTime: "8 Min Read",
-                image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80",
-                excerpt: "A deep dive into the Tantric practice of purifying the five elements within the body.",
-                content: `
-                    <p>Tatwa Shuddhi is a profound practice from the Tantric tradition designed to purify the subtle elements (Earth, Water, Fire, Air, Space) that constitute our psychophysical existence.</p>
-                    <h3>The Psychological Impact</h3>
-                    <p>While often viewed as a ritual, biologically and psychologically, this practice is a method of 'sensory withdrawal' (Pratyahara) and cognitive reframing. By visualizing the dissolution of the heavy earth element into water, water into fire, and so on, we train the mind to let go of physical attachment.</p>
-                `
-            },
-            {
-                id: 16,
-                title: "Mechanotransduction: How Asana Changes Cells",
-                category: "Yoga",
-                date: "Aug 20, 2026",
-                readTime: "6 Min Read",
-                image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80",
-                excerpt: "Yoga is not just stretching; it is changing your biology at the cellular level through physical force.",
-                content: `
-                    <p>Mechanotransduction is the process by which cells convert mechanical stimulus (stretching, compression) into chemical activity. When we hold a yoga pose, we are literally squeezing and stretching the cells of the fascia and organs.</p>
-                    <p>This physical pressure signals the cells to change their function—reducing inflammation, improving hydration, and altering gene expression. Yoga is not just working on the muscles; it is working on the very matrix of the body.</p>
+                    <p>Stephen Porges' Polyvagal Theory explains how our autonomic nervous system searches for cues of safety or danger. When we feel safe, the <strong>Ventral Vagal</strong> system is active, allowing for social engagement and relaxation.</p>
+                    <h2>The Breath Hack</h2>
+                    <p>The breath is the only autonomic function we can consciously control. By manipulating the breath, we can hack the nervous system.</p>
+                    <p>Specifically, extending the exhalation activates the Vagus nerve. A breathing ratio of 4:8 (inhale for 4, exhale for 8) tells the brain: "I am safe enough to exhale slowly." This simple biological switch is the mechanism behind the calming effect of Pranayama practices like <em>Chandra Bhedana</em> (Left Nostril Breathing).</p>
                 `
             }
         ];
 
-        // ==========================================
-        // --- RENDERING LOGIC ---
-        // ==========================================
+        // ---------------------------------------------------------
+        // --- DYNAMIC RENDERING ---
+        // ---------------------------------------------------------
+        const grid = document.getElementById('blog-grid');
 
-        const container = document.getElementById('blog-container');
-        let currentPostId = null;
-
-        // 1. Render Posts
-        function renderPosts(posts) {
-            container.innerHTML = ''; // Clear existing
+        function renderPosts(filter = "All") {
+            grid.innerHTML = ''; // Clear existing
             
-            posts.forEach((post, index) => {
-                const card = document.createElement('div');
-                card.className = "blog-card bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition duration-500 group border border-gray-100 flex flex-col h-full opacity-0"; 
-                
-                // Optimized Image Loading: Uses lower resolution (width 600) for thumbnails
-                const thumbnailUrl = post.image + "&w=600"; 
-                const fallbackUrl = "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&q=80&w=600";
+            const filteredPosts = filter === "All" 
+                ? blogPosts 
+                : blogPosts.filter(post => post.category === filter);
 
+            // Filter out the featured post (ID 100) from the grid to avoid duplication if needed, 
+            // but user might want it in "All". Let's keep it but maybe style differently?
+            // For now, simple render.
+            const displayPosts = filteredPosts.filter(p => p.id !== 100);
+
+            displayPosts.forEach(post => {
+                const card = document.createElement('article');
+                card.className = "blog-card flex flex-col group cursor-pointer relative bg-white rounded-b-lg";
+                card.id = `post-${post.id}`;
+                
                 card.innerHTML = `
-                    <div class="h-56 overflow-hidden relative cursor-pointer" onclick="openModal(${post.id})">
-                        <img src="${thumbnailUrl}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.onerror=null; this.src='${fallbackUrl}'">
+                    <div class="h-64 overflow-hidden rounded mb-6 relative">
+                        <img src="${post.image}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${post.colorClass}">
+                            ${post.category}
+                        </div>
                     </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex justify-between items-center text-[10px] text-gray-400 mb-4 font-sans uppercase tracking-widest">
-                            <span>${post.date}</span>
-                            <span>${post.readTime}</span>
+                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-clay transition leading-tight">
+                        ${post.title}
+                    </h3>
+                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">
+                        ${post.summary}
+                    </p>
+                    <div class="flex items-center justify-between mt-auto border-t border-gray-100 pt-4">
+                        <div class="flex items-center text-xs font-bold uppercase tracking-widest text-sage group-hover:text-charcoal transition" onclick="openBlog(${post.id})">
+                            Read More <i data-lucide="arrow-up-right" class="w-3 h-3 ml-2"></i>
                         </div>
-                        <h3 class="text-2xl font-serif text-charcoal mb-3 leading-tight group-hover:text-clay transition cursor-pointer" onclick="openModal(${post.id})">${post.title}</h3>
-                        <p class="text-sm text-gray-500 mb-6 flex-grow leading-relaxed line-clamp-3">${post.excerpt}</p>
-                        
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-100 mt-auto">
-                            <button onclick="openModal(${post.id})" class="text-[10px] font-bold uppercase tracking-widest text-clay hover:text-charcoal transition flex items-center gap-1 group/btn">
-                                Read Article <i data-lucide="arrow-right" class="w-3 h-3 group-hover/btn:translate-x-1 transition"></i>
-                            </button>
-                            <button onclick="copyLink(${post.id})" class="text-gray-300 hover:text-sage transition p-2 hover:bg-gray-50 rounded-full" title="Copy Link">
-                                <i data-lucide="share-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
+                        <button onclick="sharePost(${post.id})" class="text-gray-400 hover:text-clay transition" title="Share Article">
+                            <i data-lucide="share-2" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 `;
-                container.appendChild(card);
-            });
-            
-            // Animate Cards In
-            gsap.to(".blog-card", {
-                y: 0,
-                opacity: 1,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: "power2.out"
+                grid.appendChild(card);
             });
             lucide.createIcons();
         }
 
-        // 2. Filter Logic
-        function filterPosts(category) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-clay', 'text-white');
-                btn.classList.add('text-charcoal', 'border-clay/30');
-                if (btn.innerText === category || (category === 'all' && btn.innerText === 'ALL')) {
-                    btn.classList.remove('text-charcoal', 'border-clay/30');
-                    btn.classList.add('bg-clay', 'text-white');
-                }
-            });
-
-            const filtered = category === 'all' 
-                ? blogPosts 
-                : blogPosts.filter(post => post.category === category);
-            
-            renderPosts(filtered);
-        }
-
-        // 3. Modal Logic
-        function openModal(idOrSlug) {
-            // Support finding by ID (int) or Slug (string for future flexibility)
-            const post = blogPosts.find(p => p.id === idOrSlug || p.title.toLowerCase().replace(/ /g,'-') === idOrSlug);
+        // ---------------------------------------------------------
+        // --- READER LOGIC ---
+        // ---------------------------------------------------------
+        
+        function openBlog(id) {
+            const post = blogPosts.find(p => p.id === id);
             if (!post) return;
 
-            currentPostId = post.id;
+            currentOpenId = id;
+
+            // Populate Reader
+            document.getElementById('reader-image').src = post.image;
+            document.getElementById('reader-title').innerText = post.title;
+            document.getElementById('reader-meta').innerHTML = `<span class="${post.colorClass}">${post.category}</span> <span>|</span> <span>${post.readTime}</span>`;
+            document.getElementById('article-content').innerHTML = post.content;
             
-            // Send Event to Analytics
-            if (typeof gtag === 'function') {
-                gtag('event', 'read_article', {
-                    'event_category': 'engagement',
-                    'event_label': post.title,
-                    'value': post.id
-                });
+            // Set Share Button Action in Reader Nav
+            document.getElementById('reader-share-btn').onclick = () => sharePost(id);
+
+            // UI Switch
+            document.getElementById('main-blog-view').classList.add('hidden');
+            document.getElementById('blog-reader').classList.remove('hidden');
+            
+            // Scroll top
+            window.scrollTo(0, 0);
+
+            // Update URL without reload
+            const url = new URL(window.location);
+            url.searchParams.set('post', id);
+            window.history.pushState({}, '', url);
+        }
+
+        function closeReader() {
+            document.getElementById('blog-reader').classList.add('hidden');
+            document.getElementById('main-blog-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+            
+            // Clear URL param
+            const url = new URL(window.location);
+            url.searchParams.delete('post');
+            window.history.pushState({}, '', url);
+        }
+
+        // ---------------------------------------------------------
+        // --- INIT & UTILS ---
+        // ---------------------------------------------------------
+
+        window.addEventListener('load', () => {
+            renderPosts();
+            checkDeepLink();
+            
+            const loader = document.getElementById('loader');
+            const tl = gsap.timeline();
+            tl.to(loader, { opacity: 0, duration: 0.8, delay: 0.5, ease: "power2.inOut" })
+              .set(loader, { display: "none" })
+              .to(".gsap-hero", { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" });
+        });
+
+        function checkDeepLink() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = parseInt(urlParams.get('post'));
+            if (postId) {
+                openBlog(postId);
             }
-
-            // Populate Modal
-            document.getElementById('modal-category').innerText = post.category;
-            document.getElementById('modal-title').innerText = post.title;
-            document.getElementById('modal-date').innerText = post.date;
-            document.getElementById('modal-readtime').innerText = post.readTime;
-            
-            // Use High-Res Image for Modal
-            const highResUrl = post.image + "&w=1200&q=90";
-            document.getElementById('modal-image').src = highResUrl;
-            document.getElementById('modal-body').innerHTML = post.content;
-
-            // Show Modal
-            document.getElementById('readModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; 
-
-            // Update URL
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + post.id;
-            window.history.pushState({path:newUrl},'',newUrl);
         }
 
-        function closeModal() {
-            document.getElementById('readModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-            document.getElementById('scroll-progress').style.width = '0%';
-            
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.pushState({path:newUrl},'',newUrl);
-            currentPostId = null;
-        }
-
-        // 4. Scroll Progress
-        function updateProgress() {
-            const modalContainer = document.querySelector('#readModal > div'); 
-            const scrollTop = modalContainer.scrollTop;
-            const scrollHeight = modalContainer.scrollHeight - modalContainer.clientHeight;
-            const scrolled = (scrollTop / scrollHeight) * 100;
-            document.getElementById('scroll-progress').style.width = scrolled + "%";
-        }
-
-        // 5. Share Logic (Robust)
-        async function shareCurrentPost() {
-            if (!currentPostId) return;
-            const post = blogPosts.find(p => p.id === currentPostId);
-            const url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + currentPostId;
+        async function sharePost(id) {
+            let post = blogPosts.find(p => p.id === id);
+            const url = `${window.location.origin}${window.location.pathname}?post=${id}`;
+            const shareData = {
+                title: `Samarpan: ${post.title}`,
+                text: post.summary,
+                url: url
+            };
 
             if (navigator.share) {
                 try {
-                    await navigator.share({
-                        title: post.title,
-                        text: post.excerpt,
-                        url: url
-                    });
-                } catch (err) {
-                    console.log('Error sharing:', err);
-                }
+                    await navigator.share(shareData);
+                } catch (err) { console.log('Share canceled'); }
             } else {
-                copyLink(currentPostId);
+                navigator.clipboard.writeText(url);
+                alert("Link copied to clipboard!");
             }
         }
 
-        function copyLink(id) {
-            const url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?id=' + id;
+        function filterPosts(category) {
+            document.querySelectorAll('.category-pill').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === category || (category === 'All' && btn.innerText === 'All Posts')) {
+                    btn.classList.add('active');
+                }
+            });
+            renderPosts(category);
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const navLogoText = document.getElementById('nav-logo-text');
+            const filterBar = document.getElementById('filter-bar');
             
-            // Clipboard API Fallback
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(url).then(() => showToast("Link Copied!"));
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
+                navbar.classList.remove('bg-transparent', 'text-paper');
+                navLogoText.classList.add('text-clay');
+                navLogoText.classList.remove('text-paper');
+                if(filterBar) filterBar.style.top = '70px';
             } else {
-                // Fallback for older browsers/iframes
-                const textArea = document.createElement("textarea");
-                textArea.value = url;
-                textArea.style.position = "fixed"; 
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast("Link Copied!");
-                } catch (err) {
-                    showToast("Failed to copy");
-                }
-                document.body.removeChild(textArea);
+                navbar.classList.remove('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
+                navbar.classList.add('bg-transparent', 'text-paper');
+                navLogoText.classList.remove('text-clay');
+                navLogoText.classList.add('text-paper');
+                if(filterBar) filterBar.style.top = '0px'; 
             }
-        }
+        });
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        function toggleMobileMenu() {
+        function toggleMobileMenu() { 
             const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('hidden')) {
+            document.body.classList.toggle('overflow-hidden'); 
+            if(menu.classList.contains('hidden')) {
                 menu.classList.remove('hidden');
                 menu.classList.add('flex');
             } else {
@@ -743,22 +642,6 @@
                 menu.classList.remove('flex');
             }
         }
-
-        // 6. Initialize
-        window.onload = () => {
-            renderPosts(blogPosts);
-            
-            // Check for URL params (ID)
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = parseInt(urlParams.get('id'));
-            if (id) {
-                openModal(id);
-            }
-
-            // Stagger animation
-            gsap.from(".filter-btn", {y: -20, opacity: 0, duration: 0.5, stagger: 0.05, delay: 0.2});
-        };
-
     </script>
 </body>
 </html>
