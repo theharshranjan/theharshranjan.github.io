@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Harsh Ranjan | Samarpan Wellness</title>
+    <title>About Harsh Ranjan | Samarpan</title>
     
-    <!-- --- SEO & META TAGS --- -->
-    <meta name="description" content="Meet Harsh Ranjan, the founder of Samarpan. Bridging Ayurveda Biology, Psychology, and Neurobiology for holistic healing.">
-    <meta name="keywords" content="Harsh Ranjan, Ayurveda Biology, Psychology, Sanskrit, Neurobiology, Wellness Coach, Patna, Bihar, Tattwa Shuddhi">
-    <meta name="author" content="Harsh Ranjan">
-    <meta name="robots" content="index, follow">
-
+    <!-- SEO -->
+    <meta name="description" content="Meet Harsh Ranjan, founder of Samarpan. Bridging Ayurveda Biology, Psychology, and Neurobiology for holistic healing.">
+    
     <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
     <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,28 +18,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 
-    <!-- TAILWIND CONFIG -->
+    <!-- CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        paper: '#FDFCF8',
-                        clay: '#C88D72', 
-                        claydark: '#A6755E',
-                        sage: '#4A5D4F',
-                        charcoal: '#1A1A1A',
-                        offblack: '#121212'
+                        clay: '#D95D39',        /* Saffron - Primary Brand Color */
+                        'brand-black': '#1C1C1C',
+                        'brand-gray': '#666666',
+                        'brand-gold': '#C5A059',
+                        'brand-cream': '#FDFBF7',
+                        paper: '#FDFBF7',
+                        sage: '#4A5D4F'
                     },
                     fontFamily: {
-                        sans: ['Manrope', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
-                        display: ['Cinzel', 'serif'],
+                        display: ['Marcellus', 'serif'],
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.25em',
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
+                        'pan': 'pan 30s infinite alternate linear',
+                    },
+                    keyframes: {
+                        'pan': {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.1)' },
+                        }
                     }
                 }
             }
@@ -50,104 +59,122 @@
     </script>
 
     <style>
-        body { background-color: #FDFCF8; color: #1A1A1A; overflow-x: hidden; }
+        body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
+        /* Loader */
         #loader { 
-            position: fixed; inset: 0; background-color: #FDFCF8; z-index: 9999; 
+            position: fixed; inset: 0; background-color: #FDFBF7; z-index: 9999; 
             display: flex; justify-content: center; align-items: center; flex-direction: column; 
         }
 
-        /* Mobile Menu */
-        #mobile-menu { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
-        #mobile-menu.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #mobile-menu.flex { opacity: 1; visibility: visible; pointer-events: auto; }
-
-        .timeline-line { 
-            position: absolute; left: 50%; transform: translateX(-50%); 
-            width: 1px; height: 100%; background: #E5E5E5; z-index: 0; 
+        /* Timeline Styles */
+        .timeline-line {
+            position: absolute; left: 50%; transform: translateX(-50%); top: 0; bottom: 0; width: 1px; background: #E5E7EB;
         }
-        
         @media (max-width: 768px) {
             .timeline-line { left: 24px; }
         }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FDFBF7; }
+        ::-webkit-scrollbar-thumb { background: #D95D39; }
     </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
     <!-- LOADER -->
     <div id="loader">
-        <div class="relative flex flex-col items-center">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" class="text-clay mb-6 animate-pulse">
-                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+        <div class="flex flex-col items-center">
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" class="text-clay mb-6 animate-pulse">
+                <circle cx="50" cy="50" r="45" />
+                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" />
                 <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+                <path d="M20 50H80" stroke-opacity="0.6"/>
             </svg>
-            <h1 class="font-display text-2xl tracking-[0.4em] text-clay">SAMARPAN</h1>
+            <span class="font-display tracking-[0.4em] text-clay text-lg">SAMARPAN</span>
         </div>
     </div>
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper group hover:bg-white hover:text-brand-black hover:border-black/5 border-b border-white/10">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
             
-            <!-- LOGO -->
-            <a href="index.html" class="group flex flex-col items-center justify-center relative z-50">
-                <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
+            <!-- Left Menu -->
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+                <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link text-clay font-bold">About</a>
+                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Journals</a>
+                <a href="index.html#programmes" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Sessions</a>
+                <a href="ayurveda.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Ayurveda</a>
+            </div>
+
+            <!-- Centered Logo -->
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md nav-logo-svg">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper group-hover:text-clay transition drop-shadow-sm">
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">
                     Samarpan
                 </span>
             </a>
 
-            <!-- DESKTOP LINKS -->
-            <div class="hidden lg:flex space-x-10 items-center">
-                <a href="about.html" class="font-sans text-xs uppercase tracking-[0.2em] text-clay font-bold transition duration-300">About</a>
-                <a href="sessions.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Sessions</a>
-                <a href="ayurveda.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Ayurveda</a>
-                <a href="blog.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Blog</a>
-                <a href="contact.html" class="px-6 py-2 bg-clay text-white hover:bg-claydark transition duration-300 font-display text-xs tracking-widest shadow-lg border border-transparent">START YOUR HEALING JOURNEY</a>
+            <!-- Right Menu -->
+            <div class="hidden lg:flex flex-1 justify-end items-center">
+                <a href="index.html#contact" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md">
+                    Start Your Healing Journey
+                </a>
             </div>
 
-            <!-- MOBILE MENU BTN -->
-            <button class="lg:hidden text-clay z-50 relative p-2" onclick="toggleMobileMenu()">
-                <i data-lucide="menu" class="w-8 h-8"></i>
+            <!-- Mobile Menu Btn -->
+            <button class="lg:hidden text-current z-50 p-2 nav-toggle" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
-        <!-- MOBILE MENU (FIXED OVERLAY) -->
-        <div id="mobile-menu" class="hidden fixed inset-0 w-full h-screen bg-paper flex-col items-center justify-center space-y-8 text-charcoal z-[100]">
-            <button class="absolute top-6 right-6 text-clay p-2 hover:rotate-90 transition duration-300" onclick="toggleMobileMenu()">
-                <i data-lucide="x" class="w-10 h-10"></i>
-            </button>
-            <a href="about.html" class="font-serif text-3xl text-clay transition" onclick="toggleMobileMenu()">About</a>
-            <a href="sessions.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Sessions</a>
-            <a href="ayurveda.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Ayurveda</a>
-            <a href="blog.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Blog</a>
-            <a href="contact.html" class="px-10 py-4 bg-clay text-white font-serif text-xl font-bold rounded-sm shadow-lg hover:bg-claydark transition" onclick="toggleMobileMenu()">START JOURNEY</a>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
+            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl text-clay font-bold">About</a>
+            <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Journals</a>
+            <a href="index.html#programmes" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Sessions</a>
+            <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Ayurveda</a>
+            <a href="index.html#retreats" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Yatras</a>
+            <a href="index.html#contact" onclick="toggleMenu()" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Start Your Journey</a>
         </div>
     </nav>
 
     <!-- HERO SECTION (Cinematic Parallax) -->
-    <header class="relative h-[85vh] w-full overflow-hidden flex items-center justify-center bg-charcoal">
+    <header class="relative h-[85vh] w-full overflow-hidden flex items-center justify-center bg-brand-black">
         <div class="absolute inset-0 z-0">
-             <!-- Parallax Background: Deep Forest/Light Beam -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1444491741275-3747c53c99b4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed opacity-70 transform scale-105"></div>
+             <!-- Parallax Background Image -->
+            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center bg-fixed opacity-70 transform scale-105 animate-pan"></div>
             
             <!-- Cinematic Gradient -->
-            <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/30 to-black/20"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-charcoal/50 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/30 to-black/20"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-black/50 via-transparent to-transparent"></div>
             
             <!-- Texture -->
             <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
         </div>
         
         <div class="relative z-10 text-center px-6 max-w-4xl pt-20">
-            <p class="gsap-hero opacity-0 font-display text-xs md:text-sm tracking-[0.4em] mb-4 text-clay font-bold drop-shadow-md">The Founder</p>
+            <p class="gsap-hero opacity-0 font-display text-[10px] md:text-xs tracking-[0.4em] mb-4 text-clay font-bold drop-shadow-md uppercase">The Founder</p>
             <h1 class="gsap-hero opacity-0 text-5xl md:text-7xl lg:text-8xl font-serif font-light mb-8 leading-tight drop-shadow-2xl text-white">
                 Harsh Ranjan
             </h1>
@@ -159,28 +186,29 @@
 
     <!-- THE STORY (BIO) -->
     <section class="py-24 px-6 bg-paper relative">
-        <div class="max-w-6xl mx-auto">
+        <div class="max-w-[1400px] mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                
                 <!-- Image Container -->
                 <div class="relative group sticky top-24">
                     <div class="absolute inset-0 bg-clay/10 transform translate-x-4 translate-y-4 rounded-sm transition duration-500 group-hover:translate-x-2 group-hover:translate-y-2"></div>
                     <div class="aspect-[3/4] bg-gray-200 rounded-sm overflow-hidden shadow-2xl relative z-10">
-                        <img src="https://ui-avatars.com/api/?name=Harsh+Ranjan&background=1A1A1A&color=fff&size=800" alt="Harsh Ranjan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
+                        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1000&auto=format&fit=crop" alt="Harsh Ranjan" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-700">
                     </div>
                 </div>
                 
                 <!-- Text Content -->
-                <div>
-                    <span class="text-clay font-display text-xs tracking-[0.3em] uppercase block mb-6">Our Philosophy</span>
-                    <h2 class="text-4xl md:text-5xl font-serif text-charcoal mb-8 leading-tight">Where Ancient Wisdom Meets Modern Science</h2>
+                <div class="fade-in-section pt-8">
+                    <span class="text-clay font-sans text-[10px] uppercase tracking-[0.3em] block mb-6">Our Philosophy</span>
+                    <h2 class="text-3xl md:text-4xl font-serif text-brand-black mb-8 leading-tight">Where Ancient Wisdom Meets Modern Science</h2>
                     
-                    <div class="space-y-6 text-charcoal/70 font-sans leading-relaxed text-lg">
-                        <p class="font-medium text-charcoal text-xl italic">
+                    <div class="space-y-6 text-brand-gray font-light font-sans leading-loose text-sm md:text-base">
+                        <p class="font-medium text-brand-black text-lg italic border-l-2 border-clay pl-4">
                             My work begins with a single observation: The most powerful healing happens when ancient knowledge and cutting-edge science speak the same language.
                         </p>
                         
                         <p>
-                            For the past 5 years, I've walked two parallel paths. On one side, I studied <strong>Ayurveda Biology at Jawaharlal Nehru University (JNU)</strong>, diving deep into how genetic and metabolic systems determine your unique constitution (Prakriti). Simultaneously, I explored how the brain and nervous system respond to specific practices—through Psychology, Neurobiology, and advanced yoga training.
+                            For the past 5 years, I've walked two parallel paths. On one side, I studied <strong>Ayurveda Biology (BSc)</strong>, diving deep into how genetic and metabolic systems determine your unique constitution (Prakriti). Simultaneously, I explored how the brain and nervous system respond to specific practices—through Psychology, Neurobiology, and advanced yoga training.
                         </p>
                         
                         <p>
@@ -191,17 +219,17 @@
                             This interdisciplinary foundation—Ayurveda Biology + Neuroscience + Classical Sanskrit + Lived Spiritual Practice—shaped how I work with clients today.
                         </p>
                         
-                        <div class="bg-stone-50 border-l-4 border-clay p-6 my-8">
-                            <h3 class="font-serif text-xl text-charcoal mb-2">What This Means For You</h3>
-                            <p class="text-base">
+                        <div class="bg-white border border-gray-100 p-8 my-8 shadow-sm">
+                            <h3 class="font-serif text-lg text-brand-black mb-2">The Samarpan Approach</h3>
+                            <p class="text-sm">
                                 I don't ask you to choose between ancient wisdom and scientific credibility. Every recommendation is grounded in both—drawing from centuries-old clinical observations and peer-reviewed neurobiology research.
                             </p>
                         </div>
                     </div>
                     
                     <div class="mt-12 pt-8 border-t border-gray-200">
-                        <p class="font-serif text-xl italic text-charcoal mb-6">Ready to experience healing that bridges both worlds?</p>
-                        <a href="contact.html" class="inline-block px-10 py-4 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-claydark transition rounded-sm shadow-lg">
+                        <p class="font-serif text-xl italic text-brand-black mb-6">Ready to experience healing that bridges both worlds?</p>
+                        <a href="index.html#contact" class="inline-block px-10 py-4 bg-clay text-white font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-brand-black transition rounded-sm shadow-lg">
                             Book Your Free Consultation
                         </a>
                     </div>
@@ -213,71 +241,73 @@
     <!-- CREDENTIALS TIMELINE -->
     <section class="py-24 bg-[#FAFAF8] px-6 relative overflow-hidden">
         <div class="max-w-5xl mx-auto relative z-10">
-            <div class="text-center mb-20">
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase">Academic Journey</span>
-                <h2 class="text-3xl md:text-4xl font-serif text-charcoal mt-4">Qualifications & Training</h2>
+            <div class="text-center mb-20 fade-in-section">
+                <span class="text-clay font-display text-[10px] tracking-[0.3em] uppercase">Academic Journey</span>
+                <h2 class="text-3xl md:text-4xl font-serif text-brand-black mt-4">Qualifications & Training</h2>
             </div>
 
             <div class="relative py-10">
-                <div class="timeline-line"></div>
+                <!-- Center Line -->
+                <div class="timeline-line hidden md:block"></div>
+                <div class="absolute left-6 top-0 bottom-0 w-px bg-gray-200 md:hidden"></div>
 
                 <!-- Item 1: Ayurveda -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group fade-in-section">
                     <div class="w-full md:w-5/12 text-left md:text-right md:pr-12 pl-12 md:pl-0 mb-4 md:mb-0 relative">
-                        <h3 class="font-serif text-2xl text-charcoal group-hover:text-clay transition">BSc Ayurveda Biology</h3>
-                        <p class="text-sage text-sm mt-1 uppercase tracking-widest">Foundational Medicine</p>
+                        <h3 class="font-serif text-2xl text-brand-black group-hover:text-clay transition">BSc Ayurveda Biology</h3>
+                        <p class="text-sage text-xs mt-1 uppercase tracking-widest font-bold">Foundational Medicine</p>
                     </div>
-                    <div class="absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-125 transition"></div>
+                    <div class="absolute left-[20px] md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-150 transition"></div>
                     <div class="w-full md:w-5/12 md:pl-12 pl-12">
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Completed in 2024. A rigorous scientific study of Ayurvedic principles, genetics (Prakriti), and metabolic function (Agni).</p>
+                        <p class="text-brand-gray/80 text-sm leading-relaxed">Completed in 2024. A rigorous scientific study of Ayurvedic principles, genetics (Prakriti), and metabolic function (Agni).</p>
                     </div>
                 </div>
 
                 <!-- Item 2: Sanskrit -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group fade-in-section">
                     <div class="w-full md:w-5/12 text-left md:text-right md:pr-12 pl-12 md:pl-0 mb-4 md:mb-0 relative order-1 md:order-1">
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Accessing original Vedic texts without translation distortion. Certificate (2024) & Diploma (2025).</p>
+                        <p class="text-brand-gray/80 text-sm leading-relaxed">Accessing original Vedic texts without translation distortion. Certificate (2024) & Diploma (2025).</p>
                     </div>
-                    <div class="absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-sage rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-125 transition order-2"></div>
+                    <div class="absolute left-[20px] md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 bg-sage rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-150 transition order-2"></div>
                     <div class="w-full md:w-5/12 md:pl-12 pl-12 order-3 md:order-3">
-                        <h3 class="font-serif text-2xl text-charcoal group-hover:text-sage transition">Sanskrit Studies</h3>
-                        <p class="text-sage text-sm mt-1 uppercase tracking-widest">Linguistic Mastery</p>
+                        <h3 class="font-serif text-2xl text-brand-black group-hover:text-sage transition">Sanskrit Studies</h3>
+                        <p class="text-sage text-xs mt-1 uppercase tracking-widest font-bold">Linguistic Mastery</p>
                     </div>
                 </div>
 
                 <!-- Item 3: Psychology -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group fade-in-section">
                     <div class="w-full md:w-5/12 text-left md:text-right md:pr-12 pl-12 md:pl-0 mb-4 md:mb-0 relative">
-                        <h3 class="font-serif text-2xl text-charcoal group-hover:text-clay transition">BA Hons Psychology</h3>
-                        <p class="text-sage text-sm mt-1 uppercase tracking-widest">Cognitive Science</p>
+                        <h3 class="font-serif text-2xl text-brand-black group-hover:text-clay transition">BA Hons Psychology</h3>
+                        <p class="text-sage text-xs mt-1 uppercase tracking-widest font-bold">Cognitive Science</p>
                     </div>
-                    <div class="absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-125 transition"></div>
+                    <div class="absolute left-[20px] md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-150 transition"></div>
                     <div class="w-full md:w-5/12 md:pl-12 pl-12">
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Completed in 2025. Focused on integrating modern therapeutic frameworks with Eastern understanding of the mind.</p>
+                        <p class="text-brand-gray/80 text-sm leading-relaxed">Completed in 2025. Focused on integrating modern therapeutic frameworks with Eastern understanding of the mind.</p>
                     </div>
                 </div>
 
                 <!-- Item 4: Neurobiology & Nutrition -->
-                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-20 relative group fade-in-section">
                     <div class="w-full md:w-5/12 text-left md:text-right md:pr-12 pl-12 md:pl-0 mb-4 md:mb-0 relative order-1 md:order-1">
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Specialized certifications in 2025. Understanding the brain-gut connection and public health nutrition.</p>
+                        <p class="text-brand-gray/80 text-sm leading-relaxed">Specialized certifications in 2025. Understanding the brain-gut connection and public health nutrition.</p>
                     </div>
-                    <div class="absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-charcoal rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-125 transition order-2"></div>
+                    <div class="absolute left-[20px] md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 bg-brand-black rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-150 transition order-2"></div>
                     <div class="w-full md:w-5/12 md:pl-12 pl-12 order-3 md:order-3">
-                        <h3 class="font-serif text-2xl text-charcoal group-hover:text-charcoal transition">Neurobiology & Nutrition</h3>
-                        <p class="text-sage text-sm mt-1 uppercase tracking-widest">Specialized Training</p>
+                        <h3 class="font-serif text-2xl text-brand-black group-hover:text-brand-black transition">Neurobiology & Nutrition</h3>
+                        <p class="text-sage text-xs mt-1 uppercase tracking-widest font-bold">Specialized Training</p>
                     </div>
                 </div>
 
-                 <!-- Item 5: Advanced Yogic Sciences -->
-                 <div class="flex flex-col md:flex-row justify-between items-center mb-0 relative group">
+                <!-- Item 5: Yoga -->
+                <div class="flex flex-col md:flex-row justify-between items-center mb-0 relative group fade-in-section">
                     <div class="w-full md:w-5/12 text-left md:text-right md:pr-12 pl-12 md:pl-0 mb-4 md:mb-0 relative">
-                        <h3 class="font-serif text-2xl text-charcoal group-hover:text-clay transition">Advanced Studies in Yogic Sciences</h3>
-                        <p class="text-sage text-sm mt-1 uppercase tracking-widest">Bihar School of Yoga</p>
+                        <h3 class="font-serif text-2xl text-brand-black group-hover:text-clay transition">Yogic Sciences</h3>
+                        <p class="text-sage text-xs mt-1 uppercase tracking-widest font-bold">Advanced Practice</p>
                     </div>
-                    <div class="absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-125 transition"></div>
+                    <div class="absolute left-[20px] md:left-1/2 transform md:-translate-x-1/2 w-3 h-3 bg-clay rounded-full border-4 border-[#FAFAF8] z-10 shadow-lg group-hover:scale-150 transition"></div>
                     <div class="w-full md:w-5/12 md:pl-12 pl-12">
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Certificate (2024). Deep immersion in Tattwa Shuddhi (Elemental Purification) and Vigyan Bhairav Tantra at the source.</p>
+                        <p class="text-brand-gray/80 text-sm leading-relaxed">Certificate (2024). Deep immersion in Tattwa Shuddhi (Elemental Purification) and Vigyan Bhairav Tantra.</p>
                     </div>
                 </div>
             </div>
@@ -287,28 +317,28 @@
     <!-- ADDITIONAL CERTIFICATIONS -->
     <section class="py-24 bg-white px-6">
         <div class="max-w-6xl mx-auto">
-            <h3 class="text-2xl font-serif text-charcoal mb-12 text-center">Specialized Sadhana</h3>
+            <h3 class="text-2xl font-serif text-brand-black mb-12 text-center fade-in-section">Specialized Sadhana</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center">
+                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center fade-in-section">
                     <div class="w-16 h-16 bg-clay/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-clay transition duration-500">
                         <i data-lucide="flame" class="w-8 h-8 text-clay group-hover:text-white transition"></i>
                     </div>
-                    <h4 class="font-serif text-xl text-charcoal mb-3">Tattwa Shuddhi</h4>
-                    <p class="text-charcoal/60 text-sm">Advanced Tantric practice for the purification of the five elements within the body.</p>
+                    <h4 class="font-serif text-xl text-brand-black mb-3">Tattwa Shuddhi</h4>
+                    <p class="text-brand-gray/80 text-sm">Advanced Tantric practice for the purification of the five elements within the body.</p>
                 </div>
-                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center">
+                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center fade-in-section">
                     <div class="w-16 h-16 bg-sage/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-sage transition duration-500">
                         <i data-lucide="moon" class="w-8 h-8 text-sage group-hover:text-white transition"></i>
                     </div>
-                    <h4 class="font-serif text-xl text-charcoal mb-3">Vigyan Bhairav Tantra</h4>
-                    <p class="text-charcoal/60 text-sm">Mastery of 112 meditative techniques for consciousness expansion and centering.</p>
+                    <h4 class="font-serif text-xl text-brand-black mb-3">Vigyan Bhairav Tantra</h4>
+                    <p class="text-brand-gray/80 text-sm">Mastery of 112 meditative techniques for consciousness expansion and centering.</p>
                 </div>
-                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center">
-                    <div class="w-16 h-16 bg-charcoal/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-charcoal transition duration-500">
-                        <i data-lucide="activity" class="w-8 h-8 text-charcoal group-hover:text-white transition"></i>
+                <div class="p-8 border border-gray-100 rounded-sm hover:shadow-xl transition duration-500 group text-center fade-in-section">
+                    <div class="w-16 h-16 bg-brand-black/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-black transition duration-500">
+                        <i data-lucide="activity" class="w-8 h-8 text-brand-black group-hover:text-white transition"></i>
                     </div>
-                    <h4 class="font-serif text-xl text-charcoal mb-3">Public Health Nutrition</h4>
-                    <p class="text-charcoal/60 text-sm">Applying nutritional science to community health and disease prevention.</p>
+                    <h4 class="font-serif text-xl text-brand-black mb-3">Public Health Nutrition</h4>
+                    <p class="text-brand-gray/80 text-sm">Applying nutritional science to community health and disease prevention.</p>
                 </div>
             </div>
         </div>
@@ -322,34 +352,35 @@
             <p class="text-white/80 mb-12 text-lg font-light leading-relaxed">
                 Ready to explore your health through the lens of biology, psychology, and spirit? Let's begin the conversation.
             </p>
-            <a href="contact.html" class="inline-block px-12 py-5 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-charcoal transition rounded-sm shadow-2xl">
+            <a href="index.html#contact" class="inline-block px-12 py-5 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-brand-black transition rounded-sm shadow-2xl">
                 Book a Consultation
             </a>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
+    <!-- FOOTER (MATCHING INDEX) -->
+    <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <!-- Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="4" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
                 </svg>
-                <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
             <!-- Links -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
+                    <li><a href="index.html#programmes" class="hover:text-white transition duration-300">Sessions</a></li>
                     <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
-                    <li><a href="blog.html" class="hover:text-white transition duration-300">Blog</a></li>
-                    <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
+                    <li><a href="journal.html" class="hover:text-white transition duration-300">Journals</a></li>
+                    <li><a href="index.html#contact" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
             <!-- Contact -->
@@ -357,11 +388,12 @@
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
                 <ul class="space-y-3 text-sm">
                     <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
                     <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
         </div>
     </footer>
@@ -370,43 +402,93 @@
     <script>
         lucide.createIcons();
 
-        // Optimized Loader
+        // 1. Preloader Animation
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            const tl = gsap.timeline();
-            tl.to(loader, { opacity: 0, duration: 0.8, delay: 0.5, ease: "power2.inOut" })
-              .set(loader, { display: "none" })
-              .to(".gsap-hero", { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" });
+            const heroText = document.querySelectorAll('.gsap-hero');
+            
+            setTimeout(() => {
+                if(loader) loader.style.opacity = '0';
+                setTimeout(() => {
+                    if(loader) loader.style.display = 'none';
+                    // GSAP Hero Animation
+                    gsap.to(".gsap-hero", { opacity: 1, y: 0, duration: 1.5, stagger: 0.2, ease: "power3.out" });
+                }, 700);
+            }, 1000);
         });
 
-        // Navbar Scroll Logic
+        // 2. Navbar Scroll Logic
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             const navLogoText = document.getElementById('nav-logo-text');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const logoSvg = document.querySelector('.nav-logo-svg');
+            
             if (window.scrollY > 50) {
-                navbar.classList.add('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.remove('bg-transparent', 'text-paper');
-                navLogoText.classList.add('text-clay');
-                navLogoText.classList.remove('text-paper');
+                // Scrolled State
+                if(navbar) {
+                    navbar.classList.add('bg-white', 'text-brand-black', 'shadow-sm');
+                    navbar.classList.remove('bg-transparent', 'text-paper');
+                }
+                if(navLogoText) {
+                    navLogoText.classList.add('text-clay');
+                    navLogoText.classList.remove('text-paper');
+                }
+                if(logoSvg) {
+                    logoSvg.classList.remove('text-paper');
+                    logoSvg.classList.add('text-clay');
+                }
+                navLinks.forEach(link => {
+                    link.classList.add('text-brand-black');
+                    link.classList.remove('text-clay');
+                });
             } else {
-                navbar.classList.remove('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.add('bg-transparent', 'text-paper');
-                navLogoText.classList.remove('text-clay');
-                navLogoText.classList.add('text-paper');
+                // Top State
+                if(navbar) {
+                    navbar.classList.remove('bg-white', 'text-brand-black', 'shadow-sm');
+                    navbar.classList.add('bg-transparent', 'text-paper');
+                }
+                if(navLogoText) {
+                    navLogoText.classList.remove('text-clay');
+                    navLogoText.classList.add('text-paper');
+                }
+                if(logoSvg) {
+                    logoSvg.classList.remove('text-clay');
+                    logoSvg.classList.add('text-paper');
+                }
+                navLinks.forEach(link => {
+                    link.classList.remove('text-brand-black');
+                    link.classList.add('text-clay'); 
+                });
             }
+            
+            // Fade In Sections on Scroll
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.85) {
+                    gsap.to(section, { opacity: 1, y: 0, duration: 1 });
+                }
+            });
         });
 
-        // Mobile Menu Fixed Overlay
-        function toggleMobileMenu() { 
+        // 3. Mobile Menu Toggle
+        function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
+            if (menu) {
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else {
+                    menu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             }
         }
+
+        // Init GSAP Fade In
+        gsap.utils.toArray('.fade-in-section').forEach(section => {
+            gsap.set(section, { opacity: 0, y: 50 });
+        });
     </script>
 </body>
 </html>
