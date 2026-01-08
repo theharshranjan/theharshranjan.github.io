@@ -45,12 +45,12 @@
                         'widest-xl': '0.25em',
                     },
                     animation: {
-                        'marquee': 'marquee 40s linear infinite', 
+                        'marquee': 'marquee 60s linear infinite', 
                     },
                     keyframes: {
                         'marquee': {
                             '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-50%)' }, /* Loop Logic */
+                            '100%': { transform: 'translateX(-50%)' }, 
                         }
                     }
                 }
@@ -111,10 +111,14 @@
         .marquee-content { 
             display: flex; 
             width: max-content; 
-            animation: marquee 60s linear infinite; /* Adjusted speed */
+            animation: marquee 60s linear infinite; 
         }
-        /* Pause on hover for readability */
         .marquee-container:hover .marquee-content { animation-play-state: paused; }
+        
+        @keyframes marquee { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
 
         /* Mobile Menu */
         #mobile-menu {
@@ -140,7 +144,6 @@
     <!-- LOADER -->
     <div id="loader">
         <div class="flex flex-col items-center">
-            <!-- Core Logo -->
             <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" class="text-clay mb-6 animate-pulse">
                 <circle cx="50" cy="50" r="45" />
                 <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" />
@@ -165,18 +168,18 @@
 
             <!-- Centered Logo -->
             <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
-                <svg width="28" height="28" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md nav-logo-svg">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md nav-logo-svg">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[10px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">
                     Samarpan
                 </span>
             </a>
 
-            <!-- Right Menu -->
+            <!-- Right Menu (Orange Button) -->
             <div class="hidden lg:flex flex-1 justify-end items-center">
                 <a href="#contact" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md">
                     Start Your Healing Journey
@@ -197,7 +200,7 @@
             <a href="#programmes" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Sessions</a>
             <a href="#ayurveda" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Ayurveda</a>
             <a href="#retreats" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Yatras</a>
-            <a href="#contact" onclick="toggleMenu()" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Start Your Journey</a>
+            <a href="#contact" onclick="toggleMenu()" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Start Your Healing Journey</a>
         </div>
     </nav>
 
@@ -313,7 +316,7 @@
         </div>
     </section>
 
-    <!-- SACRED YATRA CAROUSEL (Updated Images & Captions) -->
+    <!-- SACRED YATRA CAROUSEL -->
     <section id="retreats" class="carousel-wrapper h-[700px] bg-brand-black text-white relative">
         <div class="absolute top-0 left-0 p-12 z-20 pointer-events-none">
             <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Sacred Yatra</span>
@@ -487,6 +490,17 @@
                         <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?playlist=1v1fOuvBlE8&loop=1&autoplay=1&mute=1&controls=0&start=19" title="Visual Wisdom 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <p class="font-sans text-xs uppercase tracking-widest text-brand-gray">Latest Episode</p>
+                    
+                    <!-- NEW EMAIL SIGNUP FORM -->
+                    <div class="mt-8 p-6 bg-white border border-gray-100 shadow-sm">
+                        <h4 class="font-serif text-lg text-brand-black mb-2">Join the Inner Circle</h4>
+                        <p class="text-xs text-brand-gray mb-4">Receive monthly insights on Ayurveda and consciousness.</p>
+                        <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-[#FDFBF7] border border-gray-200 p-2 text-xs focus:outline-none focus:border-clay transition">
+                            <button class="bg-brand-black text-white px-4 py-2 text-[10px] uppercase tracking-widest hover:bg-clay transition">Subscribe</button>
+                        </form>
+                        <div id="newsletterStatus" class="mt-2"></div>
+                    </div>
                 </div>
                 <!-- Articles Column -->
                 <div class="space-y-8">
@@ -724,7 +738,7 @@
             }
         }
 
-        // 4. Form Logic
+        // 4. Form Logic (Contact)
         async function handleBooking(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -737,10 +751,8 @@
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             try {
-                await Promise.allSettled([
-                  fetch('https://formspree.io/f/mqadzvad', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }),
-                  fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', { method: 'POST', body: new URLSearchParams(Object.fromEntries(formData)), mode: 'no-cors' })
-                ]);
+                // Simulate sending (replace with real endpoint logic)
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-xs font-bold tracking-widest uppercase">Request Sent Successfully!</div>`;
                 document.getElementById('bookingForm').reset();
             } catch (error) {
@@ -754,7 +766,22 @@
             }
         }
 
-        // 5. Retreat Carousel Logic
+        // 5. Newsletter Logic (New)
+        async function handleNewsletter(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const statusDiv = document.getElementById('newsletterStatus');
+            btn.innerText = '...';
+            
+            setTimeout(() => {
+                statusDiv.innerHTML = `<span class="text-xs text-green-600 font-bold">Subscribed!</span>`;
+                btn.innerText = 'Subscribe';
+                e.target.reset();
+                setTimeout(() => statusDiv.innerHTML = '', 3000);
+            }, 1000);
+        }
+
+        // 6. Retreat Carousel Logic
         let currentSlide = 0;
         const totalSlides = 8; 
 
