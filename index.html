@@ -3,25 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarpan | Holistic Wellness Coaching</title>
+    <title>Samarpan | Holistic Wellbeing</title>
     
-    <!-- --- SEO & META TAGS --- -->
-    <meta name="description" content="Holistic Wellness Coaching combining Ayurveda, Yoga, and Psychology. Book a consultation with Harsh Ranjan to start your healing journey.">
-    <meta name="keywords" content="Ayurveda Biology, Psychology, Yoga, Neurobiology, Wellness Coaching, Harsh Ranjan, Samarpan, Mental Health, Retreats">
-    <meta name="author" content="Harsh Ranjan">
-    <meta name="robots" content="index, follow">
-
-    <!-- GOOGLE ANALYTICS -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HMM7CJSCW7');
-    </script>
-
+    <!-- SEO -->
+    <meta name="description" content="Holistic Wellness Coaching combining Ayurveda, Yoga, and Psychology. Founded by Harsh Ranjan.">
+    
     <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
     <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,28 +18,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 
-    <!-- TAILWIND CONFIG -->
+    <!-- CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        paper: '#FDFCF8',
-                        clay: '#C88D72', 
-                        claydark: '#A6755E',
-                        sage: '#4A5D4F',
-                        charcoal: '#1A1A1A',
-                        offblack: '#121212'
+                        clay: '#D95D39',        /* Saffron - Primary Brand Color */
+                        'brand-black': '#1C1C1C',
+                        'brand-gray': '#666666',
+                        'brand-gold': '#C5A059',
+                        'brand-cream': '#FDFBF7',
+                        paper: '#FDFBF7',
+                        sage: '#4A5D4F'
                     },
                     fontFamily: {
-                        sans: ['Manrope', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
-                        display: ['Cinzel', 'serif'],
+                        display: ['Marcellus', 'serif'],
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.25em',
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
+                        'marquee': 'marquee 40s linear infinite', 
+                    },
+                    keyframes: {
+                        'marquee': {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' }, /* Loop Logic */
+                        }
                     }
                 }
             }
@@ -59,604 +59,470 @@
     </script>
 
     <style>
-        body { background-color: #FDFCF8; color: #1A1A1A; overflow-x: hidden; }
+        body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
+        /* Loader */
         #loader { 
-            position: fixed; inset: 0; background-color: #FDFCF8; z-index: 9999; 
+            position: fixed; inset: 0; background-color: #FDFBF7; z-index: 9999; 
             display: flex; justify-content: center; align-items: center; flex-direction: column; 
         }
 
-        .offering-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .offering-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1); }
-        
-        .icon-circle { transition: all 0.5s ease; }
-        .offering-card:hover .icon-circle { transform: scale(1.1); color: #C88D72; }
-
-        /* Custom Scrollbar */
-        .custom-scrollbar::-webkit-scrollbar { height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #E5E5E5; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #C88D72; border-radius: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #A6755E; }
-
-        /* Marquee */
-        .marquee-container { overflow: hidden; position: relative; width: 100%; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-        .marquee-content { display: flex; width: max-content; animation: marquee 80s linear infinite; }
-        .marquee-content:hover { animation-play-state: paused; }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* Mobile Menu - Fixed Overlay */
-        #mobile-menu { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
-        #mobile-menu.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #mobile-menu.flex { opacity: 1; visibility: visible; pointer-events: auto; }
-
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-        details > summary { list-style: none; cursor: pointer; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-        @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
-
-        /* --- ADVANCED CAROUSEL STYLES --- */
-        .carousel-wrapper { position: relative; margin-bottom: 0px; overflow: hidden; }
-        .carousel-container { display: flex; position: relative; width: 100%; height: 600px; overflow: hidden; }
-        .carousel-track { display: flex; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); width: 100%; height: 100%; }
-        .retreat-card { 
-            min-width: 100%; height: 100%; position: relative; 
-            background-size: cover; background-position: center; 
+        /* Hero Animation */
+        .animate-pan { animation: pan 30s infinite alternate linear; }
+        @keyframes pan {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
-        .retreat-overlay { 
-            position: absolute; inset: 0; 
-            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.8) 100%);
-            display: flex; flex-direction: column; justify-content: flex-end; 
-            padding: 4rem 2rem; color: white;
-        }
-        .retreat-title { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; line-height: 1; margin-bottom: 1rem; }
-        .retreat-nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.3s; border: 1px solid rgba(255,255,255,0.2);
-            z-index: 20; color: white;
-        }
-        .retreat-nav-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-50%) scale(1.1); }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
 
-        @media (max-width: 768px) {
-            .retreat-title { font-size: 2.5rem; }
-            .retreat-overlay { padding: 2rem; }
-            .carousel-container { height: 500px; }
+        /* Image Hover Cards */
+        .program-card { overflow: hidden; position: relative; cursor: pointer; }
+        .program-card img { transition: transform 0.8s ease; width: 100%; height: 100%; object-fit: cover; }
+        .program-card:hover img { transform: scale(1.05); }
+        .program-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.2); 
+            transition: background 0.3s;
         }
+        .program-card:hover .program-overlay { background: rgba(0,0,0,0.4); }
+
+        /* Carousel Styles */
+        .carousel-container { overflow: hidden; position: relative; width: 100%; height: 100%; }
+        .carousel-track { display: flex; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .retreat-card {
+            min-width: 100%; height: 100%;
+            position: relative; flex-shrink: 0;
+        }
+        .retreat-card img {
+            width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;
+        }
+        .retreat-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+            display: flex; flex-col; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: white; padding: 2rem;
+        }
+
+        /* Marquee / Testimonials */
+        .marquee-container { 
+            overflow: hidden; 
+            position: relative; 
+            width: 100%; 
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+        .marquee-content { 
+            display: flex; 
+            width: max-content; 
+            animation: marquee 60s linear infinite; /* Adjusted speed */
+        }
+        /* Pause on hover for readability */
+        .marquee-container:hover .marquee-content { animation-play-state: paused; }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FDFBF7; }
+        ::-webkit-scrollbar-thumb { background: #D95D39; }
     </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
     <!-- LOADER -->
     <div id="loader">
-        <div class="relative flex flex-col items-center">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" class="text-clay mb-6 animate-pulse">
-                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
+        <div class="flex flex-col items-center">
+            <!-- Core Logo -->
+            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" class="text-clay mb-6 animate-pulse">
+                <circle cx="50" cy="50" r="45" />
+                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" />
                 <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+                <path d="M20 50H80" stroke-opacity="0.6"/>
             </svg>
-            <h1 class="font-display text-2xl tracking-[0.4em] text-clay">SAMARPAN</h1>
+            <span class="font-display tracking-[0.4em] text-clay text-lg">SAMARPAN</span>
         </div>
     </div>
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper group hover:bg-white hover:text-brand-black hover:border-black/5 border-b border-white/10">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
             
-            <!-- LOGO -->
-            <a href="index.html" class="group flex flex-col items-center justify-center relative z-50">
-                <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
+            <!-- Left Menu -->
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+                <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">About</a>
+                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Journals</a>
+                <a href="#programmes" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Sessions</a>
+                <a href="#ayurveda" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Ayurveda</a>
+            </div>
+
+            <!-- Centered Logo -->
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
+                <svg width="28" height="28" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md nav-logo-svg">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper group-hover:text-clay transition drop-shadow-sm">
+                <span id="nav-logo-text" class="text-[10px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">
                     Samarpan
                 </span>
             </a>
 
-            <!-- DESKTOP LINKS -->
-            <div class="hidden lg:flex space-x-10 items-center">
-                <a href="about.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">About</a>
-                <a href="sessions.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Sessions</a>
-                <a href="ayurveda.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Ayurveda</a>
-                <a href="blog.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Blog</a>
-                <a href="#contact" class="px-6 py-2 bg-clay text-white hover:bg-claydark transition duration-300 font-display text-xs tracking-widest shadow-lg border border-transparent">START YOUR HEALING JOURNEY</a>
+            <!-- Right Menu -->
+            <div class="hidden lg:flex flex-1 justify-end items-center">
+                <a href="#contact" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md">
+                    Start Your Healing Journey
+                </a>
             </div>
 
-            <!-- MOBILE MENU BTN -->
-            <button class="lg:hidden text-clay z-50 relative p-2" onclick="toggleMobileMenu()">
-                <i data-lucide="menu" class="w-8 h-8"></i>
+            <!-- Mobile Menu Btn -->
+            <button class="lg:hidden text-current z-50 p-2 nav-toggle" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
-        <!-- MOBILE MENU (FIXED OVERLAY) -->
-        <div id="mobile-menu" class="hidden fixed inset-0 w-full h-screen bg-paper flex-col items-center justify-center space-y-8 text-charcoal z-[100]">
-            <button class="absolute top-6 right-6 text-clay p-2 hover:rotate-90 transition duration-300" onclick="toggleMobileMenu()">
-                <i data-lucide="x" class="w-10 h-10"></i>
-            </button>
-            <a href="about.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">About</a>
-            <a href="sessions.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Sessions</a>
-            <a href="ayurveda.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Ayurveda</a>
-            <a href="blog.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Blog</a>
-            <a href="#contact" class="px-10 py-4 bg-clay text-white font-serif text-xl font-bold rounded-sm shadow-lg hover:bg-claydark transition" onclick="toggleMobileMenu()">START JOURNEY</a>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
+            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">About</a>
+            <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Journals</a>
+            <a href="#programmes" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Sessions</a>
+            <a href="#ayurveda" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Ayurveda</a>
+            <a href="#retreats" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Yatras</a>
+            <a href="#contact" onclick="toggleMenu()" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Start Your Journey</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="relative h-screen w-full overflow-hidden flex items-center justify-center">
-        <!-- BACKGROUND IMAGE -->
+    <header class="relative h-screen w-full overflow-hidden flex items-end justify-center pb-32">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=2064&auto=format&fit=crop&fmt=webp" 
-                 alt="Samarpan Yoga Retreat" 
+            <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=2064&auto=format&fit=crop" 
+                 alt="Himalayan Wellness" 
                  loading="eager"
-                 class="w-full h-full object-cover filter brightness-[0.5]">
+                 class="w-full h-full object-cover animate-pan">
         </div>
-        
-        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/30"></div>
+        <div class="absolute inset-0 bg-black/20 z-0"></div>
 
-        <div class="relative z-10 text-center text-paper px-4 max-w-5xl pt-20">
-            <p class="gsap-hero opacity-0 font-display text-sm md:text-base tracking-[0.4em] mb-6 text-clay font-bold">Science Meets Spirituality</p>
-            
-            <!-- Updated Header Title -->
-            <h1 class="gsap-hero opacity-0 text-3xl md:text-5xl lg:text-7xl font-serif font-semibold mb-6 leading-tight drop-shadow-2xl md:whitespace-nowrap">
-                Discover Your Unique Healing Path
-            </h1>
-
-            <p class="gsap-hero opacity-0 text-lg md:text-xl font-sans font-light max-w-2xl mx-auto text-gray-200 mb-10 leading-relaxed drop-shadow-md">
-                Heal your body, clarify your mind, and awaken your consciousness with a unique integration of ancient wisdom of Ayurveda Yoga.
+        <div class="relative z-10 text-center text-white px-4 mb-10">
+            <p class="gsap-hero opacity-0 font-serif italic text-lg md:text-xl tracking-wide mb-4 text-white/90">
+                Ayurveda &middot; Yoga &middot; Psychology
             </p>
-            
-            <div class="gsap-hero opacity-0 flex flex-col md:flex-row gap-4 justify-center">
-                <a href="#contact" class="px-8 py-4 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-clay transition rounded-sm shadow-2xl min-h-[48px] flex items-center">
-                    Start Your Healing Journey
+            <h2 class="gsap-hero opacity-0 text-5xl md:text-7xl font-display font-light mb-8 tracking-wide drop-shadow-lg leading-tight">
+                Holistic <br/> Wellbeing
+            </h2>
+            <div class="gsap-hero opacity-0">
+                 <a href="#programmes" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-brand-black transition duration-300">
+                    Explore Programmes
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- STATS BAR -->
-    <div class="bg-charcoal text-white py-12 border-b border-white/10 relative z-20 -mt-2">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
-            <div>
-                <p class="text-3xl font-display font-bold text-clay">1000+</p>
-                <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">Hours of Consultation</p>
-            </div>
-            <div>
-                <p class="text-3xl font-display font-bold text-sage">500+</p>
-                <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">Lives Transformed</p>
-            </div>
-            <div>
-                <p class="text-3xl font-display font-bold text-clay">3</p>
-                <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">Integrated Sciences</p>
-            </div>
-            <div>
-                <p class="text-3xl font-display font-bold text-sage">100%</p>
-                <p class="text-[10px] uppercase tracking-widest text-gray-400 mt-2">Personalized Care</p>
+    <!-- PHILOSOPHY / FOUNDATION -->
+    <section id="ayurveda" class="py-24 md:py-32 bg-[#FDFBF7] text-center px-6">
+        <div class="max-w-3xl mx-auto fade-in-section">
+            <div class="w-px h-16 bg-brand-gold mx-auto mb-8"></div>
+            <h2 class="font-display text-3xl md:text-4xl text-brand-black mb-6">A Sanctuary for the Self</h2>
+            <p class="font-serif text-xl md:text-2xl text-brand-gold italic mb-8">
+                "Ayurveda heals the body, Yoga transforms the being, <br>and Psychology awakens consciousness."
+            </p>
+            <p class="font-sans text-brand-gray font-light leading-loose text-sm md:text-base">
+                Samarpan is not just a service; it is a sacred offering. Founded on the conviction that true healing is multidimensional, we bridge the gap between 5,000-year-old Vedic wisdom and modern neurobiology. Whether you seek to balance your Agni (metabolic fire), rewire anxious neural pathways, or find stillness through Tantra, your journey begins here.
+            </p>
+            <div class="mt-12 flex justify-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
+                <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+                <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- THE FOUNDATION (Cinematic) -->
-    <section id="foundation" class="py-40 relative overflow-hidden bg-charcoal">
-        <!-- Cinematic Background with Parallax -->
-        <div class="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1520032525096-7bd04a94b561?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-20 bg-fixed"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-transparent to-charcoal z-0"></div>
+    <!-- WELLNESS PROGRAMMES -->
+    <section id="programmes" class="py-24 bg-white">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-4">Personalised Care</span>
+                <h2 class="font-display text-3xl md:text-4xl text-brand-black">Wellness Programmes</h2>
+                <div class="w-12 h-px bg-clay mx-auto mt-6"></div>
+            </div>
 
-        <div class="max-w-7xl mx-auto relative z-10 px-6">
-            <div class="text-center mb-20 gsap-reveal">
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase block mb-8">The Methodology</span>
-                
-                <div class="space-y-12 max-w-4xl mx-auto">
-                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-white leading-tight font-extralight tracking-wide drop-shadow-lg">
-                        Ayurveda heals your body. <br>
-                        Yoga transforms your being. <br>
-                        <span class="text-clay italic">Psychology awakens your consciousness.</span>
-                    </h2>
-                    
-                    <div class="flex items-center justify-center gap-4 text-white/50 text-sm md:text-base font-sans tracking-widest">
-                        <span class="h-px w-12 bg-clay"></span>
-                        <span class="uppercase">Together: Complete Wholeness</span>
-                        <span class="h-px w-12 bg-clay"></span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1">
+                <!-- 1. Consultations -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='ayurveda.html'">
+                    <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Ayurveda">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Ayurvedic Consultations</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Nadi Pariksha • Diet</p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-24">
-                <!-- Pillar 1 -->
-                <div class="group p-10 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition duration-700 text-center transform hover:-translate-y-2">
-                    <div class="mb-8 inline-block p-4 rounded-full border border-clay/30"><i data-lucide="leaf" class="w-8 h-8 text-clay"></i></div>
-                    <h3 class="text-2xl font-serif text-white mb-4 tracking-wide">Ayurveda</h3>
-                    <p class="font-sans text-white/60 leading-relaxed text-sm mb-4">Heal your body with natural (Prakriti) and metabolic fire (Agni).</p>
-                    <p class="font-sans text-white/80 leading-relaxed text-xs italic">"Discover your body's unique blueprint. Personalized Ayurvedic wisdom to unlock lasting energy, clarity, and resilience—grounded in 5,000 years of healing science."</p>
+                <!-- 2. Psychology -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='psychology.html'">
+                    <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Psychology">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Therapeutic Psychology</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Trauma & Anxiety Relief</p>
+                    </div>
                 </div>
-                <!-- Pillar 2 -->
-                <div class="group p-10 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition duration-700 text-center transform hover:-translate-y-2 md:mt-12">
-                    <div class="mb-8 inline-block p-4 rounded-full border border-sage/30"><i data-lucide="brain-circuit" class="w-8 h-8 text-sage"></i></div>
-                    <h3 class="text-2xl font-serif text-white mb-4 tracking-wide">Psychology</h3>
-                    <p class="font-sans text-white/60 leading-relaxed text-sm">"That voice telling you 'you're not good enough'? We'll show you where it comes from—and give you practical power to rewrite the story in 8-12 weeks."</p>
+                <!-- 3. Nutrition -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='diet.html'">
+                    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Nutrition">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Nutrition Planning</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Satvic & Metabolic Diet</p>
+                    </div>
                 </div>
-                <!-- Pillar 3 -->
-                <div class="group p-10 bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition duration-700 text-center transform hover:-translate-y-2">
-                    <div class="mb-8 inline-block p-4 rounded-full border border-white/30"><i data-lucide="activity" class="w-8 h-8 text-white"></i></div>
-                    <h3 class="text-2xl font-serif text-white mb-4 tracking-wide">Yoga & Meditation</h3>
-                    <p class="font-sans text-white/60 leading-relaxed text-sm">"Quiet the mind. Calm your nervous system. Feel home in your body. Guided yoga and meditation designed to release stress at its source—in less than 10 minutes a day."</p>
+                <!-- 4. Yoga -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='yoga.html'">
+                    <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Yoga">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Yoga Practice</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Hatha & Nidra</p>
+                    </div>
+                </div>
+                <!-- 5. Meditation -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='meditation.html'">
+                    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Meditation">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Meditation Guidance</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Mindfulness & Clarity</p>
+                    </div>
+                </div>
+                <!-- 6. Mantra -->
+                <div class="program-card group h-[500px]" onclick="window.location.href='mantra.html'">
+                    <img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1000&auto=format&fit=crop" loading="lazy" alt="Mantra">
+                    <div class="program-overlay"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center text-white p-6">
+                        <h3 class="font-serif text-2xl mb-2 tracking-wide transform translate-y-4 group-hover:translate-y-0 transition duration-500">Mantra Therapy</h3>
+                        <p class="font-sans text-[10px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-500 delay-75">Sound & Vibration</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- OFFERINGS (Detailed Cards) -->
-    <section id="sessions" class="py-32 bg-[#F9F7F4] px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20 gsap-reveal">
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase block mb-4">Select a Path to Explore Deeper</span>
-                <h2 class="text-4xl md:text-5xl font-serif text-charcoal mb-4">
-                    Discover Your <span class="text-clay italic">Wellness Path</span>
-                </h2>
-                <p class="text-charcoal/60 max-w-2xl mx-auto">Choose from our six integrated services, each designed to transform your health. Whether you start with one or combine multiple approaches, your journey begins with understanding your unique needs.</p>
-            </div>
-
-            <!-- Service Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- 1. Ayurvedic Consultations -->
-                <a href="ayurveda.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-clay transition">Ayurvedic Consultations</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Discover your unique body blueprint. Personalized Ayurvedic wisdom to unlock sustained energy, better digestion, and natural balance.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Personalized constitution analysis</li>
-                        <li>• Specific dietary recommendations</li>
-                        <li>• Lifestyle practices aligned with body</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ 2-4 Weeks</span>
-                        <span class="font-bold text-clay uppercase tracking-widest">Schedule</span>
-                    </div>
-                </a>
-
-                <!-- 2. Therapeutic Psychology -->
-                <a href="sessions.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-sage transition">Therapeutic Psychology</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Break free from anxiety and self-doubt. Science-backed tools to shift limiting beliefs and build emotional resilience.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Cognitive reframing techniques</li>
-                        <li>• Evidence-based anxiety tools</li>
-                        <li>• Personalized mental clarity</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ 8-12 Weeks</span>
-                        <span class="font-bold text-sage uppercase tracking-widest">Start Journey</span>
-                    </div>
-                </a>
-
-                <!-- 3. Nutrition Planning -->
-                <a href="ayurveda.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-clay transition">Nutrition Planning</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Eat for YOUR body, not trends. Personalized meal plans combining Ayurvedic principles with modern nutrition science.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Customized meal plans</li>
-                        <li>• Foods matching metabolism</li>
-                        <li>• Sustainable eating patterns</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ 1-4 Weeks</span>
-                        <span class="font-bold text-clay uppercase tracking-widest">Book Session</span>
-                    </div>
-                </a>
-
-                <!-- 4. Yoga Practice -->
-                <a href="sessions.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-black transition">Yoga Practice</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Release tension and find peace. 45-minute guided Hatha yoga sessions designed to calm your nervous system.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Traditional Hatha flow</li>
-                        <li>• Customized for your body</li>
-                        <li>• All levels welcome</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ 4-8 Weeks</span>
-                        <span class="font-bold text-charcoal uppercase tracking-widest">Book Class</span>
-                    </div>
-                </a>
-
-                <!-- 5. Meditation Guidance -->
-                <a href="sessions.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-clay transition">Meditation Guidance</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Quiet your mind in minutes. Authentic meditation practices designed for busy people to build focus and inner calm.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Live guided sessions</li>
-                        <li>• Beginner to advanced</li>
-                        <li>• Real-time guidance</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ Immediate Peace</span>
-                        <span class="font-bold text-clay uppercase tracking-widest">Try Session</span>
-                    </div>
-                </a>
-
-                <!-- 6. Mantra Therapy -->
-                <a href="sessions.html" class="offering-card bg-white p-8 rounded-sm shadow-sm hover:shadow-2xl border border-gray-100 group relative flex flex-col h-full">
-                    <h3 class="text-2xl font-serif text-charcoal mb-3 group-hover:text-sage transition">Mantra Therapy</h3>
-                    <p class="text-charcoal/60 text-sm leading-relaxed mb-4 flex-grow">Heal with sacred sound. Combine ancient Sanskrit mantras with modern neuroscience to calm anxiety.</p>
-                    <ul class="text-xs text-charcoal/50 mb-6 space-y-2">
-                        <li>• Authentic Sanskrit mantras</li>
-                        <li>• Neuroscience-backed</li>
-                        <li>• Shift emotional state</li>
-                    </ul>
-                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center text-xs">
-                        <span class="text-sage">⏱️ 1-2 Sessions</span>
-                        <span class="font-bold text-sage uppercase tracking-widest">Explore Mantra</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Stats & Packages -->
-            <div class="mt-20 border-t border-gray-200 pt-12">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center mb-16">
-                    <div><div class="text-3xl font-serif text-clay">1000+</div><div class="text-[10px] uppercase tracking-widest text-gray-400">Clients Transformed</div></div>
-                    <div><div class="text-3xl font-serif text-sage">8</div><div class="text-[10px] uppercase tracking-widest text-gray-400">Countries Served</div></div>
-                    <div><div class="text-3xl font-serif text-clay">90%</div><div class="text-[10px] uppercase tracking-widest text-gray-400">See Results in 4 Weeks</div></div>
-                    <div><div class="text-3xl font-serif text-sage">5★</div><div class="text-[10px] uppercase tracking-widest text-gray-400">Satisfaction Rating</div></div>
-                </div>
-
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-serif text-charcoal">Choose Your Path</h3>
-                    <p class="text-sm text-gray-500">Pre-designed packages for your wellness goals</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="border border-gray-200 p-6 rounded text-center">
-                        <div class="text-clay font-bold text-lg mb-2">Wellness Foundation</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest mb-4">4 Weeks</div>
-                        <p class="text-sm text-gray-600 mb-6">Perfect for first-time clients. Includes Ayurvedic consultation, nutrition plan, and 2 yoga sessions.</p>
-                        <a href="#contact" class="block w-full py-3 bg-gray-100 text-charcoal text-xs font-bold uppercase hover:bg-clay hover:text-white transition rounded">Start Foundation</a>
-                    </div>
-                    <div class="border-2 border-clay p-6 rounded text-center relative bg-clay/5">
-                        <div class="text-charcoal font-bold text-lg mb-2">Anxiety & Stress Reset</div>
-                        <div class="text-xs text-clay uppercase tracking-widest mb-4">6 Weeks</div>
-                        <p class="text-sm text-gray-600 mb-6">Transform your mental health. Includes psychology sessions, daily meditation, and mantra therapy.</p>
-                        <a href="#contact" class="block w-full py-3 bg-clay text-white text-xs font-bold uppercase hover:bg-claydark transition rounded">Begin Reset</a>
-                    </div>
-                    <div class="border border-gray-200 p-6 rounded text-center">
-                        <div class="text-sage font-bold text-lg mb-2">Complete Integration</div>
-                        <div class="text-xs text-gray-400 uppercase tracking-widest mb-4">12 Weeks</div>
-                        <p class="text-sm text-gray-600 mb-6">Our most transformative package. All 6 services customized for you. Full integration for lasting change.</p>
-                        <a href="#contact" class="block w-full py-3 bg-gray-100 text-charcoal text-xs font-bold uppercase hover:bg-sage hover:text-white transition rounded">Schedule Full</a>
-                    </div>
-                </div>
-                
-                <div class="mt-16 text-center bg-charcoal text-white p-8 rounded">
-                    <h3 class="text-xl font-serif mb-2">Ready to Transform Your Health?</h3>
-                    <p class="text-sm text-white/60 mb-6">Start with a free 15-minute assessment to understand your unique needs.</p>
-                    <a href="#contact" class="inline-block px-8 py-3 bg-clay text-white font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-clay transition rounded">Book Free Assessment</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section id="testimonials" class="py-32 bg-[#FAFAF8] overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 mb-16 text-center">
-            <span class="text-clay font-display text-xs tracking-[0.25em] uppercase">Results</span>
-            <h2 class="text-3xl font-serif text-charcoal mt-2">Client Experiences</h2>
+    <!-- SACRED YATRA CAROUSEL (Updated Images & Captions) -->
+    <section id="retreats" class="carousel-wrapper h-[700px] bg-brand-black text-white relative">
+        <div class="absolute top-0 left-0 p-12 z-20 pointer-events-none">
+            <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Sacred Yatra</span>
+            <h2 class="font-serif text-4xl md:text-5xl">Pilgrimages to Source</h2>
         </div>
         
-        <div class="marquee-container">
-            <div class="marquee-content">
-                <div class="flex gap-8 px-4">
-                    <div class="testimonial-card w-[350px] bg-white p-8 rounded-lg shadow-sm border-t-4 border-clay flex-shrink-0">
-                        <div class="flex text-yellow-500 mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-4">"From constant anxiety to <strong>90% symptom reduction</strong> in just 8 weeks. The combination of Ayurveda diet and somatic therapy was the key I was missing."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden"><img src="https://ui-avatars.com/api/?name=Sarah+T&background=C88D72&color=fff" class="w-full h-full object-cover"></div>
-                            <div><p class="text-xs font-bold text-charcoal">Sarah T.</p><p class="text-[10px] text-gray-400">London</p></div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card w-[350px] bg-white p-8 rounded-lg shadow-sm border-t-4 border-sage flex-shrink-0">
-                        <div class="flex text-yellow-500 mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-4">"Harsh's scientific explanation of *Agni* changed how I eat forever. I've lost 15lbs and my brain fog is completely gone."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden"><img src="https://ui-avatars.com/api/?name=David+R&background=4A5D4F&color=fff" class="w-full h-full object-cover"></div>
-                            <div><p class="text-xs font-bold text-charcoal">David R.</p><p class="text-[10px] text-gray-400">New York</p></div>
-                        </div>
-                    </div>
-                     <div class="testimonial-card w-[350px] bg-white p-8 rounded-lg shadow-sm border-t-4 border-clay flex-shrink-0">
-                        <div class="flex text-yellow-500 mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-4">"I finally understand my own biology. The specific Yoga Nidra practices for my Pitta imbalance have saved my sleep."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden"><img src="https://ui-avatars.com/api/?name=Priya+M&background=1A1A1A&color=fff" class="w-full h-full object-cover"></div>
-                            <div><p class="text-xs font-bold text-charcoal">Priya M.</p><p class="text-[10px] text-gray-400">Bangalore</p></div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card w-[350px] bg-white p-8 rounded-lg shadow-sm border-t-4 border-sage flex-shrink-0">
-                        <div class="flex text-yellow-500 mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
-                        <p class="text-charcoal/70 text-sm leading-relaxed mb-4">"The blend of neurobiology and spirituality is genius. I feel grounded for the first time in years. Highly recommended."</p>
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden"><img src="https://ui-avatars.com/api/?name=Elena+K&background=C88D72&color=fff" class="w-full h-full object-cover"></div>
-                            <div><p class="text-xs font-bold text-charcoal">Elena K.</p><p class="text-[10px] text-gray-400">Berlin</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SACRED TRAVEL (YATRA CAROUSEL) -->
-    <section id="yatra" class="carousel-wrapper">
-        <div class="carousel-container">
+        <div class="carousel-container h-full">
             <div class="carousel-track" id="carouselTrack">
-                <!-- Retreat 1: Rishikesh -->
-                <div class="retreat-card" style="background-image: url('https://images.unsplash.com/photo-1598555230959-195971556d1d?q=80&w=2070&auto=format&fit=crop');">
+                <!-- Slide 1: Rishikesh -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1598555230959-195971556d1d?q=80&w=1920&fit=crop" loading="lazy" alt="Rishikesh">
                     <div class="retreat-overlay">
-                        <div class="retreat-location">Uttarakhand</div>
-                        <h2 class="retreat-title">Rishikesh</h2>
-                        <p class="retreat-tagline">The Yoga Capital: Where the Ganga Washes Away the Old Self</p>
-                        <div class="retreat-details">
-                            <div class="text-white/90 mr-4">🗓️ 7 Days</div>
-                            <div class="text-white/90 mr-4">👥 12 Participants</div>
-                            <div class="text-white/90">🏨 Deluxe Rooms</div>
-                        </div>
-                        <button class="retreat-cta mt-6" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire Now</button>
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Uttarakhand</span>
+                        <h3 class="font-serif text-5xl mb-4">Rishikesh</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"Where the Ganga washes away the old self."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
                     </div>
                 </div>
-                <!-- Retreat 2: Varanasi -->
-                <div class="retreat-card" style="background-image: url('https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=2070&auto=format&fit=crop');">
+                <!-- Slide 2: Varanasi -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1920&fit=crop" loading="lazy" alt="Varanasi">
                     <div class="retreat-overlay">
-                        <div class="retreat-location">Uttar Pradesh</div>
-                        <h2 class="retreat-title">Varanasi (Kashi)</h2>
-                        <p class="retreat-tagline">The City of Light: Confronting Mortality to Find Immortality</p>
-                        <div class="retreat-details">
-                            <div class="text-white/90 mr-4">🗓️ 5 Days</div>
-                            <div class="text-white/90 mr-4">👥 10 Participants</div>
-                            <div class="text-white/90">🧘 All Levels</div>
-                        </div>
-                        <button class="retreat-cta mt-6" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire Now</button>
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Uttar Pradesh</span>
+                        <h3 class="font-serif text-5xl mb-4">Varanasi (Kashi)</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"The City of Light: Confronting mortality to find immortality."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
                     </div>
                 </div>
-                <!-- Retreat 3: Trymbakeshwar -->
-                <div class="retreat-card" style="background-image: url('https://images.unsplash.com/photo-1605628283626-4444636b0467?q=80&w=2070&auto=format&fit=crop');">
+                <!-- Slide 3: Trymbakeshwar -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1605628283626-4444636b0467?q=80&w=1920&fit=crop" loading="lazy" alt="Trymbakeshwar">
                     <div class="retreat-overlay">
-                        <div class="retreat-location">Maharashtra</div>
-                        <h2 class="retreat-title">Trymbakeshwar</h2>
-                        <p class="retreat-tagline">Jyotirlinga: The Sacred Source of the Godavari River</p>
-                        <div class="retreat-details">
-                            <div class="text-white/90 mr-4">🗓️ 6 Days</div>
-                            <div class="text-white/90 mr-4">👥 15 Participants</div>
-                            <div class="text-white/90">🙏 Devotion</div>
-                        </div>
-                        <button class="retreat-cta mt-6" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire Now</button>
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Maharashtra</span>
+                        <h3 class="font-serif text-5xl mb-4">Trymbakeshwar</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"Jyotirlinga: The Sacred Source of the Godavari River."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
                     </div>
                 </div>
-                <!-- Retreat 4: Kerala -->
-                <div class="retreat-card" style="background-image: url('https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=2070&auto=format&fit=crop');">
+                <!-- Slide 4: Kedarnath (High Quality) -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1626084650694-5cb39c279c66?q=80&w=1920&fit=crop" loading="lazy" alt="Kedarnath">
                     <div class="retreat-overlay">
-                        <div class="retreat-location">Kerala</div>
-                        <h2 class="retreat-title">Kerala Ayurvedic Wellness</h2>
-                        <p class="retreat-tagline">Traditional Therapies & Rejuvenation: Healing in God's Own Country</p>
-                        <div class="retreat-details">
-                            <div class="text-white/90 mr-4">🗓️ 14 Days</div>
-                            <div class="text-white/90 mr-4">👥 12 Participants</div>
-                            <div class="text-white/90">💆 Spa Focus</div>
-                        </div>
-                        <button class="retreat-cta mt-6" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire Now</button>
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Himalayas</span>
+                        <h3 class="font-serif text-5xl mb-4">Kedarnath</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
+                    </div>
+                </div>
+                <!-- Slide 5: Bodh Gaya (High Quality) -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1596562095034-7756f7093229?q=80&w=1920&fit=crop" loading="lazy" alt="Bodh Gaya">
+                    <div class="retreat-overlay">
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Bihar</span>
+                        <h3 class="font-serif text-5xl mb-4">Bodh Gaya</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"Where silence speaks: The land of Enlightenment and the Bodhi Tree."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
+                    </div>
+                </div>
+                <!-- Slide 6: Arunachala (High Quality) -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1617637372225-b467b660a927?q=80&w=1920&fit=crop" loading="lazy" alt="Arunachala">
+                    <div class="retreat-overlay">
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Tamil Nadu</span>
+                        <h3 class="font-serif text-5xl mb-4">Arunachala</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"The Fire Hill: Dissolving the Ego in the Wisdom of Ramana Maharshi."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
+                    </div>
+                </div>
+                <!-- Slide 7: Amritsar (High Quality) -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1920&fit=crop" loading="lazy" alt="Amritsar">
+                    <div class="retreat-overlay">
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Punjab</span>
+                        <h3 class="font-serif text-5xl mb-4">Amritsar</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"Golden Temple: Service, Devotion, and Community."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
+                    </div>
+                </div>
+                <!-- Slide 8: Ladakh (High Quality) -->
+                <div class="retreat-card">
+                    <img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1920&fit=crop" loading="lazy" alt="Ladakh">
+                    <div class="retreat-overlay">
+                        <span class="font-sans text-[10px] uppercase tracking-widest mb-2">Ladakh</span>
+                        <h3 class="font-serif text-5xl mb-4">Hemis</h3>
+                        <p class="font-sans font-light text-sm max-w-md mb-6 italic">"High altitude monasteries and Buddhist chanting in the clouds."</p>
+                        <button class="border border-white px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button>
                     </div>
                 </div>
             </div>
-            <!-- CAROUSEL CONTROLS -->
-            <div class="carousel-nav">
-                <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">❮</button>
-                <button class="carousel-btn next-btn" onclick="moveSlide(1)">❯</button>
+        </div>
+        
+        <!-- Controls -->
+        <div class="absolute bottom-12 right-12 flex gap-4 z-20">
+            <button class="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition" onclick="moveSlide(-1)">❮</button>
+            <button class="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition" onclick="moveSlide(1)">❯</button>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS (Fixed Marquee with Seamless Loop) -->
+    <section class="py-24 bg-white overflow-hidden border-y border-gray-100">
+        <div class="text-center mb-12">
+            <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold">Results</span>
+            <h2 class="font-serif text-3xl text-brand-black mt-2">Client Experiences</h2>
+        </div>
+        
+        <!-- Marquee Container -->
+        <div class="marquee-container">
+            <!-- Marquee Content - Doubled for loop -->
+            <div class="marquee-content gap-8 px-6">
+                
+                <!-- Set 1 -->
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-clay flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"From constant anxiety to 90% symptom reduction in just 8 weeks. The combination of Ayurveda diet and somatic therapy was the key."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Sarah T., London</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-sage flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"Harsh's scientific explanation of Agni changed how I eat forever. I've lost 15lbs and my brain fog is completely gone."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- David R., New York</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-clay flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"The Yoga Nidra practices for my Pitta imbalance saved my sleep. Truly transformative."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Priya M., Bangalore</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-sage flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"The blend of neurobiology and spirituality is genius. I feel grounded for the first time in years."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Elena K., Berlin</p>
+                </div>
+
+                <!-- Duplicate Set for Seamless Loop -->
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-clay flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"From constant anxiety to 90% symptom reduction in just 8 weeks. The combination of Ayurveda diet and somatic therapy was the key."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Sarah T., London</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-sage flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"Harsh's scientific explanation of Agni changed how I eat forever. I've lost 15lbs and my brain fog is completely gone."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- David R., New York</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-clay flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"The Yoga Nidra practices for my Pitta imbalance saved my sleep. Truly transformative."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Priya M., Bangalore</p>
+                </div>
+                <div class="w-[350px] bg-[#FDFBF7] p-8 rounded-lg shadow-sm border-l-2 border-sage flex-shrink-0">
+                    <div class="flex text-brand-gold mb-3 text-xs"><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i><i data-lucide="star" class="w-3 h-3 fill-current"></i></div>
+                    <p class="text-brand-black text-sm leading-relaxed mb-4 italic">"The blend of neurobiology and spirituality is genius. I feel grounded for the first time in years."</p>
+                    <p class="font-sans text-[10px] uppercase tracking-widest text-brand-gray">- Elena K., Berlin</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- DIGITAL SANGHA (Blog Preview) -->
-    <section id="blog" class="py-24 bg-white px-6">
+    <!-- BLOG & VIDEO PREVIEW -->
+    <section id="journal" class="py-24 bg-[#FDFBF7] px-6">
         <div class="max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
+            <div class="text-center mb-16">
+                <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold">The Journal</span>
+                <h2 class="font-serif text-3xl text-brand-black mt-2">Wisdom Stream</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Video Column -->
                 <div>
-                    <h2 class="text-3xl font-serif text-charcoal">The Knowledge Stream</h2>
-                    <p class="text-gray-500 mt-2">Latest insights on Ayurveda, Yoga and consciousness.</p>
+                    <h3 class="font-serif text-xl mb-6">Visual Series</h3>
+                    <div class="video-container rounded shadow-2xl mb-4">
+                        <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?playlist=1v1fOuvBlE8&loop=1&autoplay=1&mute=1&controls=0&start=19" title="Visual Wisdom 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="font-sans text-xs uppercase tracking-widest text-brand-gray">Latest Episode</p>
                 </div>
-                <a href="blog.html" class="hidden md:block text-clay font-bold text-sm uppercase tracking-widest hover:text-charcoal transition">Read All →</a>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Blog Card 1 -->
-                <a href="blog.html?post=5" class="group block">
-                    <div class="h-56 overflow-hidden rounded mb-4">
-                        <img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=800&auto=format&fit=crop" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="flex gap-3 text-[10px] uppercase tracking-widest text-gray-400 mb-2">
-                        <span class="text-clay font-bold">Ayurveda</span>
-                        <span>•</span>
-                        <span>8 Min Read</span>
-                    </div>
-                    <h4 class="text-xl font-serif text-charcoal group-hover:text-clay transition leading-tight mb-2">Understanding Your Prakriti</h4>
-                    <p class="text-sm text-gray-500 line-clamp-2">How your biological constitution shapes your reality and health.</p>
-                </a>
-                 <!-- Blog Card 2 -->
-                 <a href="blog.html?post=100" class="group block">
-                    <div class="h-56 overflow-hidden rounded mb-4">
-                        <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=800&auto=format&fit=crop" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="flex gap-3 text-[10px] uppercase tracking-widest text-gray-400 mb-2">
-                        <span class="text-clay font-bold">Tantra & Spirit</span>
-                        <span>•</span>
-                        <span>8 Min Read</span>
-                    </div>
-                    <h4 class="text-xl font-serif text-charcoal group-hover:text-clay transition leading-tight mb-2">The Neurobiology of Mantra</h4>
-                    <p class="text-sm text-gray-500 line-clamp-2">How sound vibrations restructure neural pathways and reduce anxiety.</p>
-                </a>
-                 <!-- Blog Card 3 -->
-                 <a href="blog.html?post=2" class="group block">
-                    <div class="h-56 overflow-hidden rounded mb-4">
-                        <img src="https://images.unsplash.com/photo-1507120410856-1f35574c3b45?q=80&w=800&auto=format&fit=crop" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="flex gap-3 text-[10px] uppercase tracking-widest text-gray-400 mb-2">
-                        <span class="text-clay font-bold">Psychology</span>
-                        <span>•</span>
-                        <span>7 Min Read</span>
-                    </div>
-                    <h4 class="text-xl font-serif text-charcoal group-hover:text-clay transition leading-tight mb-2">Trauma & The Body</h4>
-                    <p class="text-sm text-gray-500 line-clamp-2">Why talk therapy isn't enough and how somatic practices heal.</p>
-                </a>
-            </div>
-            
-            <div class="mt-12 text-center">
-                 <a href="blog.html" class="inline-flex items-center gap-3 px-8 py-4 border border-clay text-clay font-bold text-xs uppercase tracking-widest hover:bg-clay hover:text-white transition rounded-sm">
-                    Explore More Articles <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                 </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- VIDEO SERIES -->
-    <section class="py-24 bg-charcoal text-white relative">
-        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')]"></div>
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <h2 class="text-3xl font-serif mb-12 text-clay text-center">Visual Wisdom Series</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Video 1 -->
-                <div class="video-container rounded-lg border border-white/10 shadow-2xl">
-                    <iframe src="https://www.youtube.com/embed/WexGE4ak4Ko?playlist=WexGE4ak4Ko&loop=1&autoplay=1&mute=1" title="Visual Wisdom 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-                <!-- Video 2 -->
-                <div class="video-container rounded-lg border border-white/10 shadow-2xl">
-                    <iframe src="https://www.youtube.com/embed/Sha9Ympf7Bw?playlist=Sha9Ympf7Bw&loop=1&autoplay=1&mute=1" title="Visual Wisdom 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <!-- Socials Link -->
-            <div class="mt-16 flex justify-center">
-                <div class="flex items-center gap-6 p-6 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition cursor-pointer" onclick="window.open('https://instagram.com/justtheself', '_blank')">
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-500 to-purple-600 flex items-center justify-center">
-                        <i data-lucide="instagram" class="w-6 h-6 text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-serif text-lg">Follow the Journey</h4>
-                        <span class="text-xs font-bold uppercase text-clay hover:text-white transition">@justtheself →</span>
+                <!-- Articles Column -->
+                <div class="space-y-8">
+                    <h3 class="font-serif text-xl mb-6">Recent Articles</h3>
+                    <a href="ayurveda.html" class="block group border-b border-gray-200 pb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold">Ayurveda</span>
+                        <h4 class="font-serif text-lg text-brand-black mt-2 group-hover:text-brand-gold transition">Understanding Your Prakriti</h4>
+                        <p class="font-sans text-sm font-light text-brand-gray mt-2 line-clamp-2">How your biological constitution shapes your reality and health.</p>
+                    </a>
+                    <a href="mantra.html" class="block group border-b border-gray-200 pb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold">Tantra & Spirit</span>
+                        <h4 class="font-serif text-lg text-brand-black mt-2 group-hover:text-brand-gold transition">The Neurobiology of Mantra</h4>
+                        <p class="font-sans text-sm font-light text-brand-gray mt-2 line-clamp-2">How sound vibrations restructure neural pathways and reduce anxiety.</p>
+                    </a>
+                    <a href="psychology.html" class="block group border-b border-gray-200 pb-6">
+                        <span class="text-[10px] uppercase tracking-widest text-brand-gold">Psychology</span>
+                        <h4 class="font-serif text-lg text-brand-black mt-2 group-hover:text-brand-gold transition">Trauma & The Body</h4>
+                        <p class="font-sans text-sm font-light text-brand-gray mt-2 line-clamp-2">Why talk therapy isn't enough and how somatic practices heal.</p>
+                    </a>
+                    
+                    <!-- Added Journal Button -->
+                    <div class="pt-4">
+                        <a href="journal.html" class="inline-block px-8 py-3 border border-brand-gold text-brand-gold font-sans text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-white transition duration-300">
+                            View Latest Journals
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- BOOKING & CONTACT (SPLIT LAYOUT) -->
+    <!-- CONTACT / ENQUIRY (SPLIT LAYOUT) -->
     <section id="contact" class="py-32 bg-[#F9F7F4]">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-serif text-charcoal">Begin Your Journey</h2>
+                <h2 class="text-4xl font-serif text-brand-black">Begin Your Journey</h2>
                 <p class="text-sage mt-2">Book a session or send an inquiry.</p>
             </div>
             <div class="flex flex-col lg:flex-row gap-8 lg:gap-16 justify-center items-start">
@@ -679,7 +545,7 @@
                         <div class="mt-6 pt-6 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-500">
                             <div class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i> Instant booking confirmation</div>
                             <div class="flex items-center gap-2"><i data-lucide="video" class="w-4 h-4 text-blue-500"></i> Google Meet link sent to email</div>
-                            <div class="flex items-center gap-2"><i data-lucide="bell" class="w-4 h-4 text-yellow-500"></i> 24-hour reminder SMS</div>
+                            <div class="flex items-center gap-2"><i data-lucide="bell" class="w-4 h-4 text-brand-gold"></i> 24-hour reminder SMS</div>
                             <div class="flex items-center gap-2"><i data-lucide="rotate-ccw" class="w-4 h-4 text-gray-400"></i> Cancel free up to 24 hours before</div>
                         </div>
                     </div>
@@ -722,7 +588,7 @@
                             <option>Other Inquiry</option>
                         </select>
                         <textarea name="message" placeholder="Message" class="w-full bg-[#FAFAF8] border border-gray-200 p-3 text-sm rounded-sm focus:outline-none focus:border-clay transition h-32 resize-none" required></textarea>
-                        <button class="w-full py-4 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-claydark transition rounded shadow-lg mt-2">Submit Request</button>
+                        <button class="w-full py-4 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] hover:bg-clay/90 transition rounded shadow-lg mt-2">Submit Request</button>
                     </form>
                     <div id="formStatus"></div>
                 </div>
@@ -731,17 +597,18 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
+    <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <!-- Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="4" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
                 </svg>
-                <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
             <!-- Links -->
@@ -750,8 +617,8 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
                     <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
-                    <li><a href="blog.html" class="hover:text-white transition duration-300">Blog</a></li>
-                    <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
+                    <li><a href="journal.html" class="hover:text-white transition duration-300">Journals</a></li>
+                    <li><a href="#contact" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
             <!-- Contact -->
@@ -759,11 +626,12 @@
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
                 <ul class="space-y-3 text-sm">
                     <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
                     <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
         </div>
     </footer>
@@ -773,46 +641,90 @@
     <script>
         lucide.createIcons();
 
-        // Optimized Loader
+        // 1. Preloader Animation
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            const tl = gsap.timeline();
-            tl.to(loader, { opacity: 0, duration: 0.8, delay: 0.5, ease: "power2.inOut" })
-              .set(loader, { display: "none" })
-              .to(".gsap-hero", { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" });
+            const heroText = document.querySelectorAll('.gsap-hero');
+            
+            setTimeout(() => {
+                if(loader) loader.style.opacity = '0';
+                setTimeout(() => {
+                    if(loader) loader.style.display = 'none';
+                    // GSAP Hero Animation
+                    gsap.to(".gsap-hero", { opacity: 1, y: 0, duration: 1.5, stagger: 0.2, ease: "power3.out" });
+                }, 700);
+            }, 1000);
         });
 
-        // Navbar Scroll Logic
+        // 2. Navbar Scroll Logic
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             const navLogoText = document.getElementById('nav-logo-text');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const logoSvg = document.querySelector('.nav-logo-svg');
+            
             if (window.scrollY > 50) {
-                navbar.classList.add('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.remove('bg-transparent', 'text-paper');
-                navLogoText.classList.add('text-clay');
-                navLogoText.classList.remove('text-paper');
+                // Scrolled State
+                if(navbar) {
+                    navbar.classList.add('bg-white', 'text-brand-black', 'shadow-sm');
+                    navbar.classList.remove('bg-transparent', 'text-paper');
+                }
+                if(navLogoText) {
+                    navLogoText.classList.add('text-clay');
+                    navLogoText.classList.remove('text-paper');
+                }
+                if(logoSvg) {
+                    logoSvg.classList.remove('text-paper');
+                    logoSvg.classList.add('text-clay');
+                }
+                navLinks.forEach(link => {
+                    link.classList.add('text-brand-black');
+                    link.classList.remove('text-paper');
+                });
             } else {
-                navbar.classList.remove('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.add('bg-transparent', 'text-paper');
-                navLogoText.classList.remove('text-clay');
-                navLogoText.classList.add('text-paper');
+                // Top State
+                if(navbar) {
+                    navbar.classList.remove('bg-white', 'text-brand-black', 'shadow-sm');
+                    navbar.classList.add('bg-transparent', 'text-paper');
+                }
+                if(navLogoText) {
+                    navLogoText.classList.remove('text-clay');
+                    navLogoText.classList.add('text-paper');
+                }
+                if(logoSvg) {
+                    logoSvg.classList.remove('text-clay');
+                    logoSvg.classList.add('text-paper');
+                }
+                navLinks.forEach(link => {
+                    link.classList.remove('text-brand-black');
+                    link.classList.add('text-paper');
+                });
             }
+            
+            // Fade In Sections on Scroll
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.85) {
+                    gsap.to(section, { opacity: 1, y: 0, duration: 1 });
+                }
+            });
         });
 
-        // Mobile Menu Fixed Overlay
-        function toggleMobileMenu() { 
+        // 3. Mobile Menu Toggle
+        function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
-            document.body.classList.toggle('overflow-hidden'); // Lock scroll
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
+            if (menu) {
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else {
+                    menu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             }
         }
 
-        // Form Logic
+        // 4. Form Logic
         async function handleBooking(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -829,44 +741,37 @@
                   fetch('https://formspree.io/f/mqadzvad', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }),
                   fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', { method: 'POST', body: new URLSearchParams(Object.fromEntries(formData)), mode: 'no-cors' })
                 ]);
-                statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-sm font-bold">Request Sent Successfully!</div>`;
+                statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-xs font-bold tracking-widest uppercase">Request Sent Successfully!</div>`;
                 document.getElementById('bookingForm').reset();
             } catch (error) {
-                statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-sm text-center">Error sending request.</div>`;
+                statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-xs text-center">Error sending request.</div>`;
             } finally {
-                btn.disabled = false;
-                btn.innerText = originalText;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                }, 3000);
             }
         }
 
-        // Carousel Logic for Yatra
+        // 5. Retreat Carousel Logic
         let currentSlide = 0;
-        const totalSlides = 4; // Rishikesh, Varanasi, Trymbakeshwar, Kerala
+        const totalSlides = 8; 
 
         function moveSlide(direction) {
             currentSlide += direction;
             if (currentSlide >= totalSlides) currentSlide = 0;
             if (currentSlide < 0) currentSlide = totalSlides - 1;
-            updateCarousel();
-        }
-
-        function updateCarousel() {
             const track = document.getElementById('carouselTrack');
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            if(track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
-        
-        // Auto slide
         setInterval(() => moveSlide(1), 8000);
 
-        // Scroll Reveal
-        gsap.registerPlugin(ScrollTrigger);
-        document.querySelectorAll('.gsap-reveal').forEach(element => {
-            gsap.fromTo(element, 
-                { y: 50, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: element, start: "top 85%" } }
-            );
+        // Init GSAP Fade In
+        gsap.utils.toArray('.fade-in-section').forEach(section => {
+            gsap.set(section, { opacity: 0, y: 50 });
         });
+
     </script>
 </body>
 </html>
