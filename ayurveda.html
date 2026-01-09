@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayurveda Biology & Healing | Samarpan</title>
+    <title>Ayurveda | The Science of Life</title>
     
-    <!-- --- SEO & META TAGS --- -->
-    <meta name="description" content="Discover Ayurveda Biology at Samarpan. Evidence-based holistic healing focusing on Agni, Prakriti, and epigenetic health.">
-    <meta name="keywords" content="Ayurveda Biology, Doshas, Prakriti, Agni, Gut Health, Harsh Ranjan, Samarpan, Sanskrit, Holistic Medicine">
-    <meta name="author" content="Harsh Ranjan">
-    <meta name="robots" content="index, follow">
+    <!-- SEO -->
+    <meta name="description" content="Explore the ancient wisdom of Ayurveda. Understanding Tridosha, Agni, and holistic healing at Samarpan.">
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HMM7CJSCW7');
+    </script>
+    
     <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
     <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,25 +27,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
     <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 
-    <!-- TAILWIND CONFIG -->
+    <!-- CONFIG -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        paper: '#FDFCF8',
-                        clay: '#C88D72', 
-                        claydark: '#A6755E',
-                        sage: '#4A5D4F',
-                        charcoal: '#1A1A1A',
-                        offblack: '#121212'
+                        clay: '#D95D39',
+                        'brand-black': '#1C1C1C',
+                        'brand-gray': '#666666',
+                        'brand-gold': '#C5A059',
+                        'brand-cream': '#FDFBF7',
+                        paper: '#FDFBF7',
+                        sage: '#4A5D4F'
                     },
                     fontFamily: {
-                        sans: ['Manrope', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
-                        display: ['Cinzel', 'serif'],
+                        display: ['Marcellus', 'serif'],
                     }
                 }
             }
@@ -47,277 +56,310 @@
     </script>
 
     <style>
-        body { background-color: #FDFCF8; color: #1A1A1A; overflow-x: hidden; }
+        body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
-        #loader { 
-            position: fixed; inset: 0; background-color: #FDFCF8; z-index: 9999; 
-            display: flex; justify-content: center; align-items: center; flex-direction: column; 
+        /* Typography specifics */
+        .sanskrit { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        #mobile-menu.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
-        /* Mobile Menu */
-        #mobile-menu { transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
-        #mobile-menu.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #mobile-menu.flex { opacity: 1; visibility: visible; pointer-events: auto; }
-
-        .dosha-card { transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .dosha-card:hover { transform: translateY(-10px); }
+        /* Decorative borders */
+        .border-ornament {
+            border: 1px solid #C5A059;
+            position: relative;
+        }
+        .border-ornament::before, .border-ornament::after {
+            content: ''; position: absolute; width: 8px; height: 8px;
+            background: #FDFBF7; border: 1px solid #C5A059;
+            transform: rotate(45deg);
+        }
+        .border-ornament::before { top: -5px; left: 50%; margin-left: -4px; }
+        .border-ornament::after { bottom: -5px; left: 50%; margin-left: -4px; }
     </style>
 </head>
-<body class="antialiased selection:bg-clay selection:text-white">
-
-    <!-- LOADER -->
-    <div id="loader">
-        <div class="relative flex flex-col items-center">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" class="text-clay mb-6 animate-pulse">
-                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
-                <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
-            </svg>
-            <h1 class="font-display text-2xl tracking-[0.4em] text-clay">SAMARPAN</h1>
-        </div>
-    </div>
+<body class="antialiased selection:bg-clay selection:text-white flex flex-col min-h-screen">
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center relative">
+    <nav id="navbar" class="fixed w-full z-50 bg-white text-brand-black shadow-sm border-b border-black/5 transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
             
-            <!-- LOGO -->
-            <a href="index.html" class="group flex flex-col items-center justify-center relative z-50">
-                <svg width="36" height="36" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500 drop-shadow-md">
+            <!-- Left Menu -->
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+                <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors hover:text-clay">About</a>
+                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors hover:text-clay">Journals</a>
+                <a href="index.html#programmes" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors hover:text-clay">Sessions</a>
+                <a href="ayurveda.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors text-clay font-bold">Ayurveda</a>
+            </div>
+
+            <!-- Centered Logo -->
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50 group">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper group-hover:text-clay transition drop-shadow-sm">
+                <span class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-brand-black group-hover:text-clay transition-colors duration-500">
                     Samarpan
                 </span>
             </a>
 
-            <!-- DESKTOP LINKS -->
-            <div class="hidden lg:flex space-x-10 items-center">
-                <a href="about.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">About</a>
-                <a href="sessions.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Sessions</a>
-                <a href="ayurveda.html" class="font-sans text-xs uppercase tracking-[0.2em] text-clay font-bold transition duration-300">Ayurveda</a>
-                <a href="blog.html" class="font-sans text-xs uppercase tracking-[0.2em] hover:text-clay transition duration-300">Blog</a>
-                <a href="index.html#contact" class="px-6 py-2 bg-clay text-white hover:bg-claydark transition duration-300 font-display text-xs tracking-widest shadow-lg border border-transparent">Contact</a>
+            <!-- Right Menu -->
+            <div class="hidden lg:flex flex-1 justify-end items-center">
+                <a href="contact.html" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md">
+                    Book Consultation
+                </a>
             </div>
 
-            <!-- MOBILE MENU BTN -->
-            <button class="lg:hidden text-clay z-50 relative p-2" onclick="toggleMobileMenu()">
-                <i data-lucide="menu" class="w-8 h-8"></i>
+            <!-- Mobile Menu Btn -->
+            <button class="lg:hidden text-current z-50 p-2" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
 
-        <!-- MOBILE MENU (FIXED OVERLAY) -->
-        <div id="mobile-menu" class="hidden fixed inset-0 w-full h-screen bg-paper flex-col items-center justify-center space-y-8 text-charcoal z-[100]">
-            <button class="absolute top-6 right-6 text-clay p-2 hover:rotate-90 transition duration-300" onclick="toggleMobileMenu()">
-                <i data-lucide="x" class="w-10 h-10"></i>
-            </button>
-            <a href="about.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">About</a>
-            <a href="sessions.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Sessions</a>
-            <a href="ayurveda.html" class="font-serif text-3xl text-clay transition" onclick="toggleMobileMenu()">Ayurveda</a>
-            <a href="blog.html" class="font-serif text-3xl hover:text-clay transition" onclick="toggleMobileMenu()">Blog</a>
-            <a href="index.html#contact" class="px-10 py-4 bg-clay text-white font-serif text-xl font-bold rounded-sm shadow-lg hover:bg-claydark transition" onclick="toggleMobileMenu()">Contact</a>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
+            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
+            <a href="about.html" class="font-display text-2xl hover:text-clay">About</a>
+            <a href="journal.html" class="font-display text-2xl hover:text-clay">Journals</a>
+            <a href="index.html#programmes" class="font-display text-2xl hover:text-clay">Sessions</a>
+            <a href="contact.html" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Book Now</a>
         </div>
     </nav>
 
-    <!-- HERO SECTION (Cinematic Parallax) -->
-    <header class="relative h-[80vh] w-full overflow-hidden flex items-center justify-center bg-charcoal">
-        <div class="absolute inset-0 z-0">
-             <!-- Parallax Background Image: Cinematic Herbs/Spices -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629196914375-f7e48f477b6d?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed opacity-70 transform scale-105"></div>
-            
-            <!-- Gradient Overlay for cinematic depth -->
-            <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/40 to-black/20"></div>
-            
-            <!-- Grain Texture -->
-            <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+    <!-- HERO SECTION -->
+    <header class="relative pt-32 pb-24 md:pt-48 md:pb-32 bg-[#F9F7F4] overflow-hidden">
+        <!-- Sanskrit background element - SAFFRON COLOR -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.08] pointer-events-none select-none whitespace-nowrap">
+            <span class="font-serif text-[10rem] md:text-[20rem] text-clay">आयुर्वेद</span>
         </div>
         
-        <div class="relative z-10 text-center text-paper px-6 max-w-4xl pt-24">
-            <div class="gsap-hero opacity-0 inline-block px-4 py-1 mb-6 border border-clay/50 rounded-full bg-charcoal/50 backdrop-blur-md">
-                <p class="font-display text-[10px] uppercase tracking-[0.3em] text-clay font-bold">Ayurveda Biology</p>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10 fade-in-section">
+            <p class="font-sans text-[10px] uppercase tracking-[0.3em] text-clay mb-6">Apaurusheya Vidya</p>
+            <h1 class="font-display text-5xl md:text-7xl text-brand-black mb-8 leading-tight">The Science <br/> of Life</h1>
+            
+            <div class="max-w-2xl mx-auto mb-8 relative">
+                <span class="text-4xl text-brand-gold absolute -top-4 -left-4 font-serif">“</span>
+                <p class="font-serif text-xl md:text-2xl text-brand-gray italic leading-relaxed px-4">
+                    Ayurveda is not merely a system of medicine; it is the art of living in harmony with the laws of nature. It teaches us that we are a microcosm of the universe.
+                </p>
+                <span class="text-4xl text-brand-gold absolute -bottom-8 -right-4 font-serif">”</span>
             </div>
-            <h1 class="gsap-hero opacity-0 text-5xl md:text-7xl lg:text-8xl font-serif font-light mb-8 leading-none drop-shadow-2xl">
-                The Science <br> <span class="italic text-clay/90">of Life</span>
-            </h1>
-            <p class="gsap-hero opacity-0 text-lg md:text-xl font-sans font-light text-gray-200 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-                Moving beyond folklore. A rigorous, evidence-based approach to understanding your genetic constitution (Prakriti) and metabolic fire (Agni).
-            </p>
         </div>
     </header>
 
-    <!-- INTRODUCTION -->
-    <section class="py-24 px-6 bg-[#FAFAF8] relative">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-serif text-charcoal mb-8">What is Ayurveda Biology?</h2>
-            <div class="prose prose-lg mx-auto text-charcoal/70 leading-relaxed font-sans">
-                <p>
-                    Traditional Ayurveda is often misunderstood as just "herbal medicine" or "massage." 
-                    <strong>Ayurveda Biology</strong> is the scientific integration of these ancient principles with modern systems biology.
-                </p>
-                <p>
-                    By studying the molecular basis of <em>Tridosha</em> (Vata, Pitta, Kapha), we can understand how your unique phenotype influences your gut health, neural pathways, and susceptibility to disease. This is personalized medicine in its purest form.
+    <!-- DEFINITION / PHILOSOPHY -->
+    <section class="py-24 px-6 bg-white relative">
+        <div class="max-w-[1000px] mx-auto">
+            <!-- Shloka Card -->
+            <div class="border-ornament p-10 md:p-16 text-center bg-[#FDFBF7] shadow-sm fade-in-section">
+                <span class="block text-clay text-xs font-bold uppercase tracking-widest mb-4">Charaka Samhita, Sutrasthana 1.41</span>
+                
+                <blockquote class="mb-8">
+                    <p class="sanskrit text-2xl md:text-3xl text-brand-black mb-4 leading-normal">
+                        हिताहितं सुखं दुःखं आयुस्तस्य हिताहितम् ।<br/>
+                        मानं च तच्च यत्रोक्तं आयुर्वेदः स उच्यते ॥
+                    </p>
+                    <p class="font-sans text-sm text-brand-gray uppercase tracking-widest italic">
+                        (Hitāhitaṃ sukhaṃ duḥkhaṃ āyustasya hitāhitam |<br/>
+                        Mānaṃ ca tacca yatroktaṃ āyurvedaḥ sa ucyate ||)
+                    </p>
+                </blockquote>
+                
+                <p class="text-brand-gray leading-relaxed max-w-2xl mx-auto">
+                    "Ayurveda is that which deals with good, bad, happy, and unhappy life, its promoters and non-promoters, measure and nature."
                 </p>
             </div>
-            
-            <!-- Sanskrit Quote -->
-            <div class="mt-16 p-8 border-t border-b border-clay/20 bg-white/50 relative">
-                <p class="font-serif text-2xl text-clay italic mb-4">
-                    "Samadosha samagnischa samadhatu malakriyah<br>
-                    Prasanna atma indriya manah swastha iti abhidhiyate"
-                </p>
-                <p class="text-xs font-bold uppercase tracking-widest text-charcoal/50">Sushruta Samhita, Sutrasthana 15.41</p>
-                <p class="text-sm mt-4 text-charcoal/70 max-w-lg mx-auto">
-                    "Health is a state of balance in doshas (bio-energies), agni (digestion), dhatus (tissues), and malas (waste), along with a blissful state of soul, senses, and mind."
-                </p>
+
+            <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center fade-in-section">
+                <div>
+                    <h2 class="font-display text-3xl text-brand-black mb-6">The Goal: Swasthya</h2>
+                    <p class="text-brand-gray mb-6 leading-relaxed">
+                        Health in Ayurveda is not just the absence of disease. It is a state of spiritual, mental, and physiological radiance. As defined by Sushruta:
+                    </p>
+                    <div class="pl-4 border-l-2 border-brand-gold mb-6">
+                        <p class="sanskrit text-lg text-brand-black mb-2">समदोषः समाग्निश्च समधातुमलक्रियः ।<br/>प्रसन्नात्मेन्द्रियमनाः स्वस्थ इत्यभिधीयते ॥</p>
+                        <p class="text-xs text-brand-gray">"One whose Doshas (humors), Agni (digestive fire), Dhatus (tissues), and Malas (wastes) are balanced, and whose Soul, Senses, and Mind are pleasant, is considered Healthy."</p>
+                    </div>
+                </div>
+                <div class="relative h-[400px]">
+                    <img src="https://images.unsplash.com/photo-1606904825846-647eb07f5be2?q=80&w=1000&auto=format&fit=crop" alt="Ayurvedic Herbs" class="w-full h-full object-cover rounded-sm shadow-xl grayscale hover:grayscale-0 transition duration-700">
+                    <div class="absolute inset-0 border border-brand-gold translate-x-4 translate-y-4 -z-10"></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- THE DOSHAS (Interactive Grid) -->
-    <section class="py-24 px-6 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase">The Bio-Energies</span>
-                <h2 class="text-4xl font-serif mt-2 text-charcoal">Understanding Your Prakriti</h2>
+    <!-- TRIDOSHA THEORY -->
+    <section class="py-24 px-6 bg-[#F9F7F4]">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="text-center mb-16 fade-in-section">
+                <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Prakriti Analysis</span>
+                <h2 class="font-display text-3xl md:text-4xl text-brand-black">The Tridosha Theory</h2>
+                <div class="w-12 h-px bg-clay mx-auto mt-6 mb-6"></div>
+                <p class="max-w-2xl mx-auto text-brand-gray text-sm">Everything in the universe is composed of the five elements (Pancha Mahabhuta). In the human body, these combine to form three bio-energies.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- VATA -->
-                <div class="dosha-card bg-[#F9F7F4] p-10 rounded-lg border-t-4 border-sage group">
-                    <div class="mb-6 flex items-center justify-between">
-                        <h3 class="text-3xl font-serif text-charcoal">Vata</h3>
-                        <i data-lucide="wind" class="w-8 h-8 text-sage opacity-50 group-hover:opacity-100 transition"></i>
+                <div class="bg-white p-8 rounded shadow-sm border-t-4 border-[#A6C4DD] hover:-translate-y-2 transition duration-500 fade-in-section">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="font-display text-2xl text-brand-black">Vata</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-brand-gray">Air + Ether</span>
                     </div>
-                    <p class="text-xs font-bold uppercase tracking-widest text-sage mb-4">Air + Ether</p>
-                    <p class="text-charcoal/70 mb-6 text-sm leading-relaxed">
-                        The energy of movement. Governs the nervous system, breathing, and creativity. When imbalanced, causes anxiety, bloating, and dryness.
+                    <p class="sanskrit text-lg text-brand-black mb-4">तत्र रूक्षो लघुः शीतः खरः सूक्ष्मश्चलोऽनिलः ।</p>
+                    <p class="text-sm text-brand-gray mb-6 leading-relaxed">
+                        The energy of movement. Governs breathing, pulsation, muscle movement, and nerve impulses.
                     </p>
-                    <div class="bg-white p-4 rounded text-xs text-charcoal/60">
-                        <strong>Signs of Balance:</strong> Creativity, flexibility, quick learning.<br>
-                        <strong>Signs of Imbalance:</strong> Fear, insomnia, constipation.
-                    </div>
+                    <ul class="text-xs text-brand-gray space-y-2 border-t border-gray-100 pt-4">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#A6C4DD] rounded-full"></div> <strong>Nature:</strong> Dry, Light, Cold, Mobile</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#A6C4DD] rounded-full"></div> <strong>Site:</strong> Colon, Thighs, Bones</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-[#A6C4DD] rounded-full"></div> <strong>Imbalance:</strong> Anxiety, Insomnia, Pain</li>
+                    </ul>
                 </div>
 
                 <!-- PITTA -->
-                <div class="dosha-card bg-[#F9F7F4] p-10 rounded-lg border-t-4 border-clay group transform md:-translate-y-4 shadow-xl">
-                    <div class="mb-6 flex items-center justify-between">
-                        <h3 class="text-3xl font-serif text-charcoal">Pitta</h3>
-                        <i data-lucide="flame" class="w-8 h-8 text-clay opacity-50 group-hover:opacity-100 transition"></i>
+                <div class="bg-white p-8 rounded shadow-sm border-t-4 border-clay hover:-translate-y-2 transition duration-500 fade-in-section">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="font-display text-2xl text-brand-black">Pitta</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-brand-gray">Fire + Water</span>
                     </div>
-                    <p class="text-xs font-bold uppercase tracking-widest text-clay mb-4">Fire + Water</p>
-                    <p class="text-charcoal/70 mb-6 text-sm leading-relaxed">
-                        The energy of transformation. Governs metabolism, digestion (Agni), and intelligence. When imbalanced, causes anger, inflammation, and acidity.
+                    <p class="sanskrit text-lg text-brand-black mb-4">पित्तं सस्नेह तीक्ष्णोष्णं लघु विस्रं सरं द्रवम् ।</p>
+                    <p class="text-sm text-brand-gray mb-6 leading-relaxed">
+                        The energy of transformation. Governs digestion, metabolism, temperature, and intelligence.
                     </p>
-                    <div class="bg-white p-4 rounded text-xs text-charcoal/60">
-                        <strong>Signs of Balance:</strong> Intelligence, strong digestion, leadership.<br>
-                        <strong>Signs of Imbalance:</strong> Anger, ulcers, skin rashes.
-                    </div>
+                    <ul class="text-xs text-brand-gray space-y-2 border-t border-gray-100 pt-4">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-clay rounded-full"></div> <strong>Nature:</strong> Hot, Sharp, Light, Oily</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-clay rounded-full"></div> <strong>Site:</strong> Small Intestine, Blood, Eyes</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-clay rounded-full"></div> <strong>Imbalance:</strong> Inflammation, Anger, Acidity</li>
+                    </ul>
                 </div>
 
                 <!-- KAPHA -->
-                <div class="dosha-card bg-[#F9F7F4] p-10 rounded-lg border-t-4 border-charcoal group">
-                    <div class="mb-6 flex items-center justify-between">
-                        <h3 class="text-3xl font-serif text-charcoal">Kapha</h3>
-                        <i data-lucide="droplets" class="w-8 h-8 text-charcoal opacity-50 group-hover:opacity-100 transition"></i>
+                <div class="bg-white p-8 rounded shadow-sm border-t-4 border-sage hover:-translate-y-2 transition duration-500 fade-in-section">
+                    <div class="flex justify-between items-start mb-6">
+                        <h3 class="font-display text-2xl text-brand-black">Kapha</h3>
+                        <span class="text-xs font-bold uppercase tracking-widest text-brand-gray">Earth + Water</span>
                     </div>
-                    <p class="text-xs font-bold uppercase tracking-widest text-charcoal mb-4">Earth + Water</p>
-                    <p class="text-charcoal/70 mb-6 text-sm leading-relaxed">
-                        The energy of structure. Governs stability, lubrication, and immunity (Ojas). When imbalanced, causes lethargy, weight gain, and depression.
+                    <p class="sanskrit text-lg text-brand-black mb-4">स्निग्धः शीतो गुरुर्मन्दः श्लक्ष्णो मृत्स्नः स्थिरः कफः ।</p>
+                    <p class="text-sm text-brand-gray mb-6 leading-relaxed">
+                        The energy of lubrication and structure. Governs stability, immunity, growth, and lubrication.
                     </p>
-                    <div class="bg-white p-4 rounded text-xs text-charcoal/60">
-                        <strong>Signs of Balance:</strong> Calmness, strength, endurance.<br>
-                        <strong>Signs of Imbalance:</strong> Greed, attachment, congestion.
+                    <ul class="text-xs text-brand-gray space-y-2 border-t border-gray-100 pt-4">
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-sage rounded-full"></div> <strong>Nature:</strong> Heavy, Cold, Stable, Unctuous</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-sage rounded-full"></div> <strong>Site:</strong> Chest, Stomach, Joints</li>
+                        <li class="flex items-center gap-2"><div class="w-1 h-1 bg-sage rounded-full"></div> <strong>Imbalance:</strong> Lethargy, Congestion, Weight</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MANAS & DIAGNOSIS -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Nadi Pariksha -->
+                <div class="fade-in-section">
+                    <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Diagnosis</span>
+                    <h3 class="font-display text-3xl text-brand-black mb-6">Rogi Pariksha</h3>
+                    <p class="text-brand-gray mb-6 text-sm leading-relaxed">
+                        At Samarpan, we use the ancient art of <strong>Nadi Pariksha</strong> (Pulse Diagnosis) combined with <em>Trividha Pariksha</em> (Observation, Touch, Questioning).
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center text-clay font-serif italic">1</div>
+                            <div>
+                                <h4 class="font-serif text-lg text-brand-black">Darshana (Observation)</h4>
+                                <p class="text-xs text-brand-gray">Analysis of tongue, eyes, skin texture, and body shape.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center text-clay font-serif italic">2</div>
+                            <div>
+                                <h4 class="font-serif text-lg text-brand-black">Sparshana (Touch)</h4>
+                                <p class="text-xs text-brand-gray">Nadi (Pulse) reading to detect deep-seated imbalances in the channels.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center text-clay font-serif italic">3</div>
+                            <div>
+                                <h4 class="font-serif text-lg text-brand-black">Prashna (Questioning)</h4>
+                                <p class="text-xs text-brand-gray">Detailed history taking regarding diet, sleep, and emotional patterns.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- AGNI & NUTRITION -->
-    <section class="py-24 px-6 bg-sage text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-        
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div>
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase">The Key to Health</span>
-                <h2 class="text-4xl md:text-5xl font-serif mt-4 mb-6">Agni: The Metabolic Fire</h2>
-                <p class="text-white/70 leading-relaxed mb-6 font-light">
-                    In Ayurveda Biology, "you are not what you eat; you are what you digest." 
-                    <strong>Agni</strong> is the enzymatic capability of your gut.
-                </p>
-                <p class="text-white/70 leading-relaxed mb-8 font-light">
-                    My Public Health Nutrition background allows me to bridge Ayurvedic dietetics (Ahara) with modern macronutrient science. We don't just count calories; we optimize enzymatic efficiency to prevent the formation of <em>Ama</em> (metabolic toxins).
-                </p>
-                <a href="sessions.html" class="inline-flex items-center gap-2 text-clay font-bold text-xs uppercase tracking-widest hover:text-white transition">
-                    Get a Diet Plan <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-white/10 p-6 rounded backdrop-blur-sm border border-white/5">
-                    <i data-lucide="clock" class="w-8 h-8 text-clay mb-3"></i>
-                    <h4 class="font-serif text-xl">Dinacharya</h4>
-                    <p class="text-xs text-white/60 mt-2">Circadian rhythm alignment for hormonal balance.</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded backdrop-blur-sm border border-white/5 mt-8">
-                    <i data-lucide="utensils" class="w-8 h-8 text-clay mb-3"></i>
-                    <h4 class="font-serif text-xl">Sattvic Diet</h4>
-                    <p class="text-xs text-white/60 mt-2">Foods that promote clarity (Sattva) over inertia (Tamas).</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded backdrop-blur-sm border border-white/5">
-                    <i data-lucide="sun" class="w-8 h-8 text-clay mb-3"></i>
-                    <h4 class="font-serif text-xl">Ritucharya</h4>
-                    <p class="text-xs text-white/60 mt-2">Seasonal cleansing protocols to boost immunity.</p>
-                </div>
-                <div class="bg-white/10 p-6 rounded backdrop-blur-sm border border-white/5 mt-8">
-                    <i data-lucide="flower" class="w-8 h-8 text-clay mb-3"></i>
-                    <h4 class="font-serif text-xl">Rasayana</h4>
-                    <p class="text-xs text-white/60 mt-2">Rejuvenation therapies for longevity and cellular health.</p>
+                <!-- Psychology Integration -->
+                <div class="bg-brand-cream p-10 border border-gray-100 rounded-sm relative overflow-hidden fade-in-section">
+                    <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-clay/5 rounded-full blur-3xl"></div>
+                    
+                    <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Psychology & Ayurveda</span>
+                    <h3 class="font-display text-3xl text-brand-black mb-6">Satvavajaya Chikitsa</h3>
+                    <p class="sanskrit text-xl text-brand-black/80 mb-4">
+                        "धीधैर्यात्मादि विज्ञानं मनोदोषौषधं परम् ।"
+                    </p>
+                    <p class="text-brand-gray text-sm leading-relaxed mb-6">
+                        <em>(Intelligence, patience, and self-knowledge are the supreme medicines for the mind.)</em>
+                    </p>
+                    <p class="text-brand-gray text-sm leading-relaxed mb-8">
+                        Founded by Harsh Ranjan (Psychology Hons. & Ayurveda Bio), Samarpan uniquely integrates modern psychotherapy with Ayurvedic psychology (*Manas Shastra*). We address the root cause of mental unrest by balancing the *Manasika Doshas* (Rajas and Tamas) through diet, herbs (*Medhya Rasayanas*), and counseling.
+                    </p>
+                    <a href="contact.html" class="inline-block border-b border-brand-black pb-1 text-xs font-bold uppercase tracking-widest hover:text-clay hover:border-clay transition">Schedule an Assessment</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SANSKRIT ROOTS -->
-    <section class="py-24 px-6 bg-[#FAFAF8]">
-        <div class="max-w-4xl mx-auto text-center">
-            <i data-lucide="scroll-text" class="w-12 h-12 text-charcoal mx-auto mb-6 opacity-80"></i>
-            <h2 class="text-3xl font-serif text-charcoal mb-6">The Power of Original Texts</h2>
-            <p class="text-charcoal/70 leading-relaxed mb-8 font-sans">
-                Many modern interpretations of Ayurveda rely on poor translations. My <strong>Certificate and Diploma in Sanskrit</strong> allow me to access the original wisdom of the <em>Charaka Samhita</em> and <em>Ashtanga Hridayam</em> directly.
+    <!-- NEW CALL TO ACTION SECTION -->
+    <section class="py-20 bg-clay text-white text-center">
+        <div class="max-w-4xl mx-auto px-6 fade-in-section">
+            <h2 class="font-display text-3xl md:text-4xl mb-6">Begin Your Ayurvedic Journey</h2>
+            <p class="font-sans text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Discover your Prakriti, balance your Doshas, and reclaim your natural state of health through ancient wisdom and personalized care.
             </p>
-            <p class="text-charcoal/70 leading-relaxed font-sans">
-                This linguistic precision ensures that the protocols I design for you are authentic, potent, and true to the source, untainted by "New Age" dilutions.
-            </p>
+            <a href="contact.html" class="inline-block bg-white text-clay px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-brand-black hover:text-white transition duration-500 shadow-lg">
+                Book a Session
+            </a>
         </div>
     </section>
 
-    <!-- FOOTER (Same as Index) -->
-    <footer class="bg-offblack text-white/60 py-16 px-6 border-t border-white/10">
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10 mt-auto">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             <!-- Brand -->
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="4" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
                 </svg>
-                <h4 class="font-display text-lg tracking-widest text-paper mb-4">SAMARPAN</h4>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
                 <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
             <!-- Links -->
             <div>
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
                 <ul class="space-y-3 text-sm">
-                    <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
-                    <li><a href="ayurveda.html" class="text-white font-bold transition duration-300">Ayurveda</a></li>
-                    <li><a href="blog.html" class="hover:text-white transition duration-300">Blog</a></li>
-                    <li><a href="index.html#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                    <li><a href="index.html#programmes" class="hover:text-white transition duration-300">Sessions</a></li>
+                    <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
+                    <li><a href="journal.html" class="hover:text-white transition duration-300">Journals</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
                 </ul>
             </div>
             <!-- Contact -->
@@ -325,11 +367,12 @@
                 <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
                 <ul class="space-y-3 text-sm">
                     <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
                     <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center md:text-left text-xs text-white/30 font-sans">
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/30 font-sans">
             &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
         </div>
     </footer>
@@ -338,44 +381,37 @@
     <script>
         lucide.createIcons();
 
-        // Optimized Loader
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            const tl = gsap.timeline();
-            tl.to(loader, { opacity: 0, duration: 0.8, delay: 0.5, ease: "power2.inOut" })
-              .set(loader, { display: "none" })
-              .to(".gsap-hero", { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" });
-        });
-
-        // Navbar Scroll Logic
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            const navLogoText = document.getElementById('nav-logo-text');
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.remove('bg-transparent', 'text-paper');
-                navLogoText.classList.add('text-clay');
-                navLogoText.classList.remove('text-paper');
-            } else {
-                navbar.classList.remove('bg-paper/95', 'text-charcoal', 'backdrop-blur-md', 'shadow-sm');
-                navbar.classList.add('bg-transparent', 'text-paper');
-                navLogoText.classList.remove('text-clay');
-                navLogoText.classList.add('text-paper');
-            }
-        });
-
-        // Mobile Menu Fixed Overlay
-        function toggleMobileMenu() { 
+        // Mobile Menu Toggle
+        function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
-            document.body.classList.toggle('overflow-hidden'); // Lock scroll
-            if(menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
-            } else {
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
+            if (menu) {
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else {
+                    menu.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
             }
         }
+
+        // GSAP Animations
+        window.addEventListener('load', () => {
+             gsap.utils.toArray('.fade-in-section').forEach(section => {
+                gsap.fromTo(section, 
+                    { opacity: 0, y: 30 },
+                    { 
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 1, 
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 85%",
+                        }
+                    }
+                );
+            });
+        });
     </script>
 </body>
 </html>
