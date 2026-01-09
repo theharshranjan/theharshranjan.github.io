@@ -7,6 +7,16 @@
     
     <!-- SEO -->
     <meta name="description" content="Holistic Wellness Coaching combining Ayurveda, Yoga, and Psychology. Founded by Harsh Ranjan.">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-HMM7CJSCW7');
+    </script>
     
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
@@ -465,7 +475,7 @@
                 <div>
                     <h3 class="font-serif text-xl mb-6">Visual Series</h3>
                     <div class="video-container rounded shadow-2xl mb-4">
-                        <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?playlist=1v1fOuvBlE8&loop=1&autoplay=1&mute=1&controls=0&start=19" title="Visual Wisdom 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?playlist=1v1fOuvBlE8&loop=1&autoplay=1&mute=1&controls=0&start=19" title="Visual Wisdom 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full aspect-video"></iframe>
                     </div>
                     <p class="font-sans text-xs uppercase tracking-widest text-brand-gray">Latest Episode</p>
                     
@@ -474,7 +484,9 @@
                         <h4 class="font-serif text-lg text-brand-black mb-2">Join the Inner Circle</h4>
                         <p class="text-xs text-brand-gray mb-4">Receive monthly insights on Ayurveda and consciousness.</p>
                         <form onsubmit="handleNewsletter(event)" class="flex gap-2">
-                            <input type="email" placeholder="Your email" class="flex-1 bg-[#FDFBF7] border border-gray-200 p-2 text-xs focus:outline-none focus:border-clay transition">
+                            <!-- ADDED HIDDEN SUBJECT FIELD FOR FORMSPREE -->
+                            <input type="hidden" name="_subject" value="Newsletter Subscription">
+                            <input type="email" name="email" placeholder="Your email" class="flex-1 bg-[#FDFBF7] border border-gray-200 p-2 text-xs focus:outline-none focus:border-clay transition" required>
                             <button class="bg-brand-black text-white px-4 py-2 text-[10px] uppercase tracking-widest hover:bg-clay transition">Subscribe</button>
                         </form>
                         <div id="newsletterStatus" class="mt-2"></div>
@@ -716,7 +728,7 @@
             }
         }
 
-        // 4. Form Logic (Contact)
+        // 4. Form Logic (Contact - Updated to Formspree)
         async function handleBooking(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
@@ -729,10 +741,25 @@
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
             try {
-                // Simulate sending (replace with real endpoint logic)
-                await new Promise(resolve => setTimeout(resolve, 1500));
-                statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-xs font-bold tracking-widest uppercase">Request Sent Successfully!</div>`;
-                document.getElementById('bookingForm').reset();
+                const response = await fetch("https://formspree.io/f/mqadzvad", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-xs font-bold tracking-widest uppercase">Request Sent Successfully!</div>`;
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    const data = await response.json();
+                    if (Object.hasOwn(data, 'errors')) {
+                        statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-xs text-center">${data["errors"].map(error => error["message"]).join(", ")}</div>`;
+                    } else {
+                        statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-xs text-center">Error sending request.</div>`;
+                    }
+                }
             } catch (error) {
                 statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-xs text-center">Error sending request.</div>`;
             } finally {
@@ -744,19 +771,40 @@
             }
         }
 
-        // 5. Newsletter Logic (New)
+        // 5. Newsletter Logic (Updated to Formspree)
         async function handleNewsletter(e) {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             const statusDiv = document.getElementById('newsletterStatus');
+            const form = e.target;
+            const formData = new FormData(form);
+            
             btn.innerText = '...';
             
-            setTimeout(() => {
-                statusDiv.innerHTML = `<span class="text-xs text-green-600 font-bold">Subscribed!</span>`;
+            try {
+                const response = await fetch("https://formspree.io/f/mqadzvad", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    statusDiv.innerHTML = `<span class="text-xs text-green-600 font-bold">Subscribed!</span>`;
+                    btn.innerText = 'Subscribe';
+                    form.reset();
+                    setTimeout(() => statusDiv.innerHTML = '', 3000);
+                } else {
+                    statusDiv.innerHTML = `<span class="text-xs text-red-600 font-bold">Error! Try again.</span>`;
+                    btn.innerText = 'Subscribe';
+                }
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                statusDiv.innerHTML = `<span class="text-xs text-red-600 font-bold">Error! Try again.</span>`;
                 btn.innerText = 'Subscribe';
-                e.target.reset();
-                setTimeout(() => statusDiv.innerHTML = '', 3000);
-            }, 1000);
+            }
         }
 
         // 6. Retreat Carousel Logic
