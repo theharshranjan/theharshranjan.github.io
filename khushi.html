@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khushi | My Certainty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@200;300;400&family=Great+Vibes&family=Rozha+One&display=swap" rel="stylesheet">
+    <style>
+        /* --- DESIGN PHILOSOPHY: PAPER & INK --- */
+        :root {
+            --paper: #F9F7F2;
+            --ink: #2C2420;
+            --gold: #C5A059;
+            --rose: #D48E98;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* Typography */
+        h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; }
+        .script { font-family: 'Great Vibes', cursive; }
+        .sans { font-family: 'Montserrat', sans-serif; }
+        .hindi { font-family: 'Rozha One', serif; }
+
+        /* --- THE SCRAPBOOK EFFECT --- */
+        .photo-frame {
+            position: relative;
+            background: white;
+            padding: 12px 12px 40px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: rotate(-2deg);
+            transition: transform 0.5s ease;
+        }
+        .photo-frame:hover { transform: rotate(0deg) scale(1.02); z-index: 10; }
+        .photo-frame img { width: 100%; height: auto; display: block; filter: sepia(10%); }
+        
+        /* Tape Effect */
+        .tape {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-left: 1px dashed rgba(0,0,0,0.1);
+            border-right: 1px dashed rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            opacity: 0.7;
+        }
+
+        /* Parallax Sections */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .overlay {
+            background: rgba(0,0,0,0.4);
+            position: absolute; inset: 0;
+        }
+
+        /* Text Styling */
+        .highlight {
+            background: linear-gradient(120deg, rgba(212, 142, 152, 0.2) 0%, rgba(212, 142, 152, 0.2) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.4em;
+            background-position: 0 88%;
+            padding: 0 2px;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- MUSIC PLAYER STYLES --- */
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            border: 1px solid var(--gold);
+            animation: spin 4s linear infinite;
+            animation-play-state: paused;
+        }
+        #music-control.playing {
+            animation-play-state: running;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: #F9F7F2;
+            z-index: 9999;
+            display: flex;
+            flex-col;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+    </style>
+</head>
+<body class="selection:bg-rose-200 selection:text-rose-900 overflow-hidden" id="main-body">
+
+    <!-- 0. INTRO OVERLAY (To force music play) -->
+    <div id="intro-overlay" class="flex flex-col items-center justify-center h-screen w-screen text-center p-6">
+        <p class="sans text-xs tracking-[0.4em] uppercase text-gray-500 mb-6">A Story For Khushi</p>
+        <h1 class="text-6xl md:text-8xl script text-rose-400 mb-8">For You</h1>
+        <p class="text-gray-600 mb-10 italic">Please turn up your volume.</p>
+        <button onclick="startExperience()" class="px-10 py-4 border border-gold text-gold hover:bg-gold hover:text-white transition-all duration-500 rounded-full uppercase tracking-widest text-sm shadow-lg">
+            Open Journal
+        </button>
+    </div>
+
+    <!-- AUDIO PLAYER (Hidden) -->
+    <!-- REPLACE 'song.mp3' WITH HER FAVORITE SONG FILE -->
+    <audio id="bg-music" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- FLOATING MUSIC CONTROL -->
+    <button id="music-control" onclick="toggleMusic()" class="hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C5A059" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+    </button>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <div id="content-container" class="opacity-0 transition-opacity duration-1000">
+        
+        <!-- 1. INTRO HERO -->
+        <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20 relative overflow-hidden">
+            <div class="fade-in visible max-w-3xl z-10">
+                <p class="sans text-xs tracking-[0.4em] uppercase text-gray-500 mb-6">Written at 2:32 AM • For You</p>
+                
+                <h1 class="text-6xl md:text-8xl mb-4 text-gray-800">
+                    Happy Birthday<br/>
+                    <span class="script text-rose-400 block mt-4 text-7xl md:text-9xl">Khushi</span>
+                </h1>
+                
+                <div class="w-24 h-1 bg-gold mx-auto my-10"></div>
+
+                <p class="text-xl md:text-2xl text-gray-600 italic font-light leading-relaxed">
+                    "I don't quite know what I'm searching for in these words — only that I need to write them. Because you've always been there."
+                </p>
+            </div>
+            
+            <div class="absolute bottom-10 animate-bounce text-gray-400 text-sm sans tracking-widest">
+                SCROLL TO READ
+            </div>
+        </section>
+
+        <!-- 2. THE BEGINNING (2014) -->
+        <section class="py-24 px-6 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1 fade-in">
+                <div class="photo-frame rotate-2">
+                    <div class="tape"></div>
+                    <!-- PLACEHOLDER: Replace with photo -->
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop" alt="School Days">
+                    <p class="text-center sans text-xs uppercase tracking-widest text-gray-400 mt-4">2014 • The School Bus</p>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 fade-in">
+                <h2 class="text-4xl text-gray-800 mb-6">Where It All Began</h2>
+                <div class="text-lg text-gray-600 space-y-4">
+                    <p>
+                        Do you remember? Same school, same bus, same class. Just different sections.
+                    </p>
+                    <p>
+                        You were my <span class="highlight">first crush</span>, back when I didn't even understand what that word meant. I didn't know what love was — I only knew that looking at you felt special.
+                    </p>
+                    <p class="italic">
+                        "I could never look directly; we only ever met for fractions of a second, stolen glances that meant the world to me."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. THE REALIZATION (2015) -->
+        <section class="py-24 px-6 bg-white">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <span class="sans text-gold text-sm tracking-widest font-bold uppercase">New Year's 2015</span>
+                <h2 class="text-5xl mt-4 mb-8">The Tracksuit Moment</h2>
+                <p class="text-xl text-gray-700 leading-relaxed italic">
+                    "I rode my cycle toward your street. You were walking from the other direction. In that moment, I thought, 'She should be my best friend.' I already liked you then, though you never knew."
+                </p>
+                
+                <div class="grid grid-cols-2 gap-4 mt-12 max-w-lg mx-auto">
+                    <div class="photo-frame -rotate-3">
+                        <img src="https://images.unsplash.com/photo-1527502479222-094186c34888?q=80&w=600&auto=format&fit=crop" alt="Holi Colors">
+                        <p class="text-center sans text-[10px] mt-2 text-gray-400">Holi Colors</p>
+                    </div>
+                    <div class="photo-frame rotate-3 mt-8">
+                        <img src="https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=600&auto=format&fit=crop" alt="Memories">
+                        <p class="text-center sans text-[10px] mt-2 text-gray-400">Sweetness</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ALBUM LINK SECTION -->
+        <section class="py-16 bg-[#FDF6F6] text-center">
+            <div class="fade-in max-w-2xl mx-auto px-6">
+                <h2 class="text-3xl text-gray-800 mb-6">Our Memories</h2>
+                <p class="text-lg text-gray-600 mb-8">I've collected our moments here. A glimpse into the 12 years of us.</p>
+                
+                <a href="https://photos.app.goo.gl/GMGQJZG5uypxW18C6" target="_blank" class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-rose-300 text-rose-500 rounded-full hover:bg-rose-50 transition-colors shadow-sm sans tracking-widest uppercase text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Open Our Album
+                </a>
+            </div>
+        </section>
+
+        <!-- 5. THE CONNECTION -->
+        <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1534531173927-aeb928d54385?q=80&w=2000&auto=format&fit=crop');">
+            <div class="overlay"></div>
+            <div class="relative z-10 text-center text-white px-6 fade-in">
+                <h2 class="text-5xl mb-4">Instagram & Trust</h2>
+                <p class="text-xl max-w-2xl mx-auto font-light">
+                    "Harsh, I trust you. Please don't share my number."<br>
+                    <span class="text-gold italic mt-2 block">- Winter 2021</span>
+                </p>
+            </div>
+        </div>
+
+        <section class="py-24 px-6 max-w-4xl mx-auto">
+            <div class="fade-in space-y-8 text-lg text-gray-700">
+                <p>
+                    I kept that promise, Khushi. I always will.
+                </p>
+                <p>
+                    While you were in Kota, I watched you care for someone who didn't care back. As your friend, it broke my heart, but I stayed silent because I didn't want to lose you.
+                </p>
+                <p>
+                    During that time, I called other girls "sister" because my heart was already occupied. Even when we lost touch, you were the standard I measured everyone against.
+                </p>
+                <div class="border-l-4 border-rose pl-6 py-2 my-8 italic text-xl text-gray-800">
+                    "You've always mattered differently."
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. THE TRUTH (APRIL 1st) -->
+        <section class="py-24 px-6 bg-white">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <span class="sans text-rose-400 text-sm tracking-widest font-bold uppercase">April 1st, 2024</span>
+                    <h2 class="text-4xl text-gray-800 mt-2 mb-6">The Truth Behind the Joke</h2>
+                    <p class="text-lg text-gray-700 mb-4">
+                        That message wasn't a prank. Every word was true.
+                    </p>
+                    <p class="text-lg text-gray-700">
+                        My hands were trembling as I typed it. I framed it as a joke because I was terrified of your answer. I loved you too much to risk losing the friendship we had built. But I need you to know: <span class="highlight">It was the most serious thing I've ever done.</span>
+                    </p>
+                </div>
+                <div class="fade-in flex justify-center">
+                    <div class="photo-frame rotate-2 bg-white p-8 max-w-sm">
+                        <p class="script text-3xl text-gray-800 text-center mb-4">"I genuinely proposed to you."</p>
+                        <div class="h-px w-20 bg-gray-300 mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. THE 2026 REALIZATION -->
+        <section class="py-24 px-6 max-w-4xl mx-auto text-center">
+            <div class="fade-in">
+                <h2 class="text-5xl mb-8">Why I'm Sure</h2>
+                <p class="text-xl text-gray-700 leading-relaxed">
+                    I made a mistake once, Khushi. I settled for "convenient" with someone else, and it lasted 25 days. It taught me something crucial:
+                </p>
+                <p class="text-2xl font-serif text-gray-900 italic my-8">
+                    "Success means nothing if there's no one real to share it with. I don't need the whole world. I just need you."
+                </p>
+                <p class="text-lg text-gray-600">
+                    If it's not you, then I'm not getting married. I'm not settling. I've already decided.
+                </p>
+            </div>
+        </section>
+
+        <!-- 8. THE HINDI POETRY -->
+        <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=2000&auto=format&fit=crop');">
+            <div class="overlay" style="background: rgba(0,0,0,0.6);"></div>
+            <div class="relative z-10 max-w-2xl mx-auto text-center px-6 fade-in">
+                <div class="text-gold text-2xl md:text-4xl hindi leading-loose">
+                    "मुझे प्रेम हुआ — ये भाग्य है...<br>
+                    लेकिन तुमसे हुआ — ये सौभाग्य है।"
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. THE PROMISE (2035) -->
+        <section class="py-24 px-6 max-w-4xl mx-auto">
+            <div class="border-2 border-gray-200 p-8 md:p-12 rounded-lg bg-white relative fade-in">
+                <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-white px-6 py-2 border-2 border-gray-200 uppercase sans text-xs tracking-widest font-bold text-rose-400">
+                    The 2035 Pact
+                </div>
+
+                <h2 class="text-center text-4xl mb-8">My Promise to You</h2>
+                
+                <div class="space-y-6 text-lg text-gray-700">
+                    <p>
+                        I'm not asking you to marry me tomorrow. I'm not asking you to give up your dreams. We have time. Whether it's 2035 or 2040, I respect that we need to build our lives.
+                    </p>
+                    <p>
+                        But I want your entire life. I want to wake up next to you and think, "This is who I choose."
+                    </p>
+                    <p>
+                        <strong>I promise:</strong> I will never pressure you. I will never make you feel guilty. But I will never stop loving you.
+                    </p>
+                </div>
+
+                <div class="mt-12 text-center">
+                    <p class="hindi text-xl text-gray-800 mb-6">
+                        "मुझे टाइम पास नहीं चाहिए, मुझे पूरी ज़िंदगी चाहिए।"
+                    </p>
+                    <p class="text-sm text-gray-400 sans uppercase tracking-widest">Yours, Always.</p>
+                    <p class="script text-5xl text-rose-400 mt-4">Harsh</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. FINAL INTERACTION -->
+        <section class="min-h-[50vh] flex flex-col justify-center items-center text-center px-6 py-20 bg-[#FDF6F6]">
+            <div class="fade-in max-w-2xl">
+                <h2 class="text-4xl mb-6">For Your Birthday...</h2>
+                <p class="text-lg text-gray-600 mb-10">
+                    My only wish is your happiness. And maybe, just maybe, a promise of "us" in the future.
+                </p>
+                
+                <button onclick="acceptLove()" id="love-btn" class="px-10 py-4 bg-gray-900 text-white rounded-full hover:bg-rose-500 transition-colors duration-500 shadow-xl sans text-sm uppercase tracking-widest">
+                    Accept Birthday Wish ❤️
+                </button>
+                
+                <div id="final-message" class="hidden mt-8 transition-all duration-1000">
+                    <p class="text-3xl text-rose-500 italic font-serif">You are my certainty in an uncertain world.</p>
+                    <p class="mt-4 text-gray-400 text-sm">Now, go enjoy your cake. I'm waiting.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-12 text-center text-gray-400 text-xs sans tracking-[0.2em] uppercase">
+            12 Years • Harsh & Khushi • Forever
+        </footer>
+    </div>
+
+    <script>
+        // --- MUSIC LOGIC ---
+        function startExperience() {
+            const overlay = document.getElementById('intro-overlay');
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-control');
+            const body = document.getElementById('main-body');
+            const content = document.getElementById('content-container');
+
+            // Try to play music
+            music.volume = 0.5;
+            music.play().then(() => {
+                btn.classList.add('playing');
+            }).catch(e => {
+                console.log("Auto-play prevented, waiting for interaction");
+            });
+
+            // Fade out overlay
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                body.classList.remove('overflow-hidden');
+                btn.classList.remove('hidden');
+                content.classList.remove('opacity-0');
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-control');
+            
+            if (music.paused) {
+                music.play();
+                btn.classList.add('playing');
+            } else {
+                music.pause();
+                btn.classList.remove('playing');
+            }
+        }
+
+        // --- SCROLL REVEAL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // --- INTERACTION ---
+        function acceptLove() {
+            const btn = document.getElementById('love-btn');
+            const msg = document.getElementById('final-message');
+            
+            btn.style.opacity = '0';
+            setTimeout(() => {
+                btn.style.display = 'none';
+                msg.classList.remove('hidden');
+                
+                // Burst of hearts
+                for(let i=0; i<30; i++) {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '✨';
+                    heart.style.position = 'fixed';
+                    heart.style.left = '50%';
+                    heart.style.top = '80%';
+                    heart.style.transform = `translate(-50%, -50%)`;
+                    heart.style.fontSize = '24px';
+                    heart.style.transition = 'all 1s ease-out';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        const x = (Math.random() - 0.5) * window.innerWidth * 0.5;
+                        const y = (Math.random() - 1) * window.innerHeight * 0.5;
+                        heart.style.transform = `translate(${x}px, ${y}px)`;
+                        heart.style.opacity = '0';
+                    }, 50);
+                    
+                    setTimeout(() => heart.remove(), 1000);
+                }
+            }, 500);
+        }
+
+        // --- INIT ---
+        window.onload = () => {
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        };
+    </script>
+</body>
+</html>
