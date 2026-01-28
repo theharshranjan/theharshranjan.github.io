@@ -217,8 +217,14 @@
 </head>
 <body>
 
-    <!-- Audio (Hidden) -->
+    <!-- 
+      =========== MUSIC SETUP ===========
+      1. Rename your song file to: music.mp3
+      2. Put it in the same folder as this HTML file.
+      3. If 'music.mp3' is found, it plays. If not, it uses the fallback online link.
+    -->
     <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=emotional-piano-110599.mp3" type="audio/mpeg">
     </audio>
 
@@ -348,7 +354,7 @@
                         <div class="relative py-4">
                             <h4 class="font-heading text-white text-3xl mb-8 italic">"Dekha wahan pe aaj tera chehra hai"</h4>
                             
-                            <!-- This will look for 'khushuu.jpg' in the same folder. If not found, uses a placeholder -->
+                            <!-- This will look for 'khushuu.jpg'. If not found, uses a placeholder -->
                             <div class="photo-frame">
                                 <div class="corner-accent corner-tl"></div>
                                 <div class="corner-accent corner-tr"></div>
@@ -457,7 +463,7 @@
                 isMusicPlaying = true;
                 musicBtn.classList.remove('paused');
             }).catch(() => {
-                console.log("Auto-play blocked");
+                console.log("Auto-play blocked, wait for user interaction");
             });
         }
 
