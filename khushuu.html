@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Khushi • 29th Jan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,20 @@
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        body {
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             background-color: var(--deep-blue);
             font-family: 'Lato', sans-serif;
             color: #e2e8f0;
-            overflow-x: hidden;
-            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         /* --- Typography --- */
@@ -55,7 +63,7 @@
             height: 100%;
             z-index: -1;
             background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            overflow: hidden;
+            pointer-events: none;
         }
         .star {
             position: absolute;
@@ -84,7 +92,7 @@
         .photo-frame {
             position: relative;
             width: 100%;
-            max-width: 350px;
+            max-width: 320px; /* Constrained for mobile */
             margin: 0 auto;
             aspect-ratio: 3/4;
             padding: 10px;
@@ -120,7 +128,19 @@
         .corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
         .corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 
-        /* --- Buttons --- */
+        /* --- Opening Sequence (FIXED) --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #050a18;
+            z-index: 500; /* Highest Z-index */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        }
+
         .btn-enter {
             background: transparent;
             border: 1px solid rgba(212, 175, 55, 0.3);
@@ -134,27 +154,42 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            z-index: 10;
         }
+        
+        .btn-enter::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
         .btn-enter:hover {
             border-color: var(--gold);
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
             color: white;
         }
+        
+        .btn-enter:hover::before { left: 100%; }
 
-        /* Magical Trigger Button */
+        /* --- Magical Trigger Button --- */
         .btn-magic {
             background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa771c 100%);
             color: #050a18;
             border: none;
-            padding: 1.2rem 4rem;
+            padding: 1.2rem 3rem;
             font-family: 'Cinzel', serif;
             font-weight: bold;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.1em;
             border-radius: 50px;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
             animation: magicPulse 2s infinite;
             position: relative;
             z-index: 10;
+            cursor: pointer;
+            white-space: nowrap;
         }
         .btn-magic:hover {
             transform: scale(1.05);
@@ -162,61 +197,74 @@
         }
         @keyframes magicPulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
         }
 
-        /* --- Music Button (Z-Index Fixed) --- */
+        /* --- Enhanced Music Toggle --- */
         .music-toggle {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            z-index: 300; /* Increased to be above modal */
-            width: 50px;
-            height: 50px;
+            z-index: 600; /* Above EVERYTHING including modals */
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
-            opacity: 0;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            opacity: 0; /* Hidden initially */
         }
-        .music-toggle:hover { background: rgba(212, 175, 55, 0.3); border-color: var(--gold); transform: scale(1.1); }
-        .music-bar {
-            width: 3px;
-            background: var(--gold);
-            margin: 0 2px;
-            animation: equalize 1s infinite;
-        }
-        .paused .music-bar { animation-play-state: paused; height: 5px !important; }
         
-        @keyframes equalize {
-            0% { height: 5px; }
-            50% { height: 15px; }
-            100% { height: 5px; }
+        .music-toggle:hover { 
+            background: rgba(212, 175, 55, 0.2); 
+            border-color: var(--gold); 
+            transform: scale(1.1); 
         }
-        .music-bar:nth-child(1) { animation-delay: 0.1s; }
-        .music-bar:nth-child(2) { animation-delay: 0.3s; }
-        .music-bar:nth-child(3) { animation-delay: 0.5s; }
+
+        /* SVG Icon styling */
+        .music-icon-svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: var(--gold-light);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.3s;
+        }
+        
+        /* Playing animation state */
+        .music-toggle.playing .music-icon-svg {
+            stroke: var(--gold);
+            animation: pulseIcon 2s infinite;
+        }
+
+        @keyframes pulseIcon {
+            0% { filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+            50% { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
+            100% { filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+        }
 
         /* --- Proposal Modal Styles --- */
         #proposal-modal {
             position: fixed;
             inset: 0;
-            background: rgba(5, 10, 24, 0.95); /* Deeper blue background */
-            backdrop-filter: blur(15px);
-            z-index: 200;
+            background: rgba(5, 10, 24, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 400; /* Above content, below music button */
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.8s ease-in-out;
+            transition: all 0.6s ease;
         }
         #proposal-modal.active {
             opacity: 1;
@@ -225,94 +273,91 @@
         
         /* Modal Card */
         .proposal-card {
-            background: linear-gradient(180deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-            padding: 3rem;
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            padding: 2.5rem;
             border-radius: 2rem;
             border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(212, 175, 55, 0.05);
             text-align: center;
             max-width: 90%;
-            width: 500px;
-            transform: scale(0.9);
+            width: 450px;
+            transform: scale(0.95);
             transition: transform 0.5s;
         }
         #proposal-modal.active .proposal-card { transform: scale(1); }
 
         .btn-choice {
-            padding: 15px 40px;
+            min-width: 100px;
+            padding: 14px 30px;
             border-radius: 50px;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            margin: 10px;
+            margin: 0.5rem;
         }
         .btn-yes {
             background: linear-gradient(45deg, #d4af37, #f3e5ab);
-            color: #000;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            color: #050a18;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
             border: none;
         }
-        .btn-yes:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 10px 40px rgba(212, 175, 55, 0.8); }
+        .btn-yes:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6); }
         .btn-no {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid #ff4444;
+            background: transparent;
+            border: 1px solid rgba(255, 107, 107, 0.5);
             color: #ff6b6b;
         }
-        .btn-no:hover { background: rgba(255,68,68,0.1); }
+        .btn-no:hover { background: rgba(255, 107, 107, 0.1); }
 
         /* --- Celebration Effects --- */
         #celebration-screen {
             position: fixed;
             inset: 0;
             background: radial-gradient(circle at center, #1a1500 0%, #000000 100%);
-            z-index: 250;
-            display: none; /* Flex when active */
-            flex-col: column;
+            z-index: 450; /* Above modal */
+            display: none;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             overflow: hidden;
         }
 
-        /* Balloons */
         .balloon {
             position: absolute;
-            bottom: -100px;
-            width: 50px;
-            height: 65px;
+            bottom: -120px;
+            width: 40px;
+            height: 50px;
             background: var(--color);
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            border-radius: 50%;
             box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
             animation: floatUp var(--speed) linear forwards;
-            z-index: 251;
+            z-index: 451;
         }
-        .balloon::before {
+        .balloon::after {
             content: '';
             position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 100px;
-            background: rgba(255,255,255,0.3);
+            bottom: -8px; left: 50%; transform: translateX(-50%);
+            border-left: 5px solid transparent; border-right: 5px solid transparent;
+            border-bottom: 8px solid var(--color);
         }
+
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-120vh) rotate(var(--rotation)); opacity: 0; }
         }
 
-        /* Confetti */
         .confetti {
             position: absolute;
-            top: -10px;
-            width: 10px;
-            height: 20px;
+            top: -20px;
+            width: 8px;
+            height: 16px;
             background: var(--color);
             animation: fallDown var(--speed) linear forwards;
-            z-index: 252;
+            z-index: 452;
         }
         @keyframes fallDown {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
@@ -334,11 +379,6 @@
 </head>
 <body>
 
-    <!-- 
-      =========== MUSIC SETUP ===========
-      Ensure 'music.mp3' and 'music1.mp3' are in the same folder.
-    -->
-    
     <!-- AUDIO 1: The Letter -->
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
@@ -347,7 +387,7 @@
 
     <!-- AUDIO 2: The Proposal -->
     <audio id="proposal-music" loop>
-        <source src="music1.mp3" type="audio/mpeg">
+        <source src="Lyrical  Nain Na Jodeen  Badhaai Ho  Ayushmann Khurrana Sanya MalhotraRochak Kohli Neha Kakkar - T-Series.mp3" type="audio/mpeg">
         <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_1d45d6141a.mp3?filename=cinematic-atmosphere-score-2-123447.mp3" type="audio/mpeg">
     </audio>
 
@@ -356,63 +396,64 @@
 
     <!-- Intro Overlay -->
     <div id="intro-overlay">
-        <p class="text-gold opacity-60 font-cinematic tracking-[0.4em] text-xs mb-6 uppercase">A Message From The Universe</p>
-        <h1 class="text-6xl md:text-8xl font-signature text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Khushi</h1>
+        <p class="text-gold opacity-60 font-cinematic tracking-[0.4em] text-xs mb-6 uppercase text-center">A Message From The Universe</p>
+        <h1 class="text-5xl md:text-8xl font-signature text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] text-center px-4">Khushi</h1>
         <button onclick="startJourney()" class="btn-enter">Read Letter</button>
         <p class="text-gray-500 text-[10px] mt-8 font-cinematic tracking-widest uppercase opacity-0 transition-opacity duration-1000" id="audio-hint">Audio Recommended</p>
     </div>
 
-    <!-- Proposal Modal (Enhanced) -->
+    <!-- Proposal Modal -->
     <div id="proposal-modal">
         <div class="proposal-card">
             <p class="text-gold-light font-cinematic text-xs tracking-[0.3em] uppercase mb-6">The Final Question</p>
-            <h2 id="modal-title" class="text-3xl md:text-5xl font-heading text-white mb-10 leading-tight drop-shadow-lg">
+            <h2 class="text-3xl md:text-4xl font-heading text-white mb-10 leading-snug drop-shadow-lg">
                 Will you accept<br><span class="text-gold italic">my proposal?</span>
             </h2>
             
-            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mt-8 h-32 relative">
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-4 min-h-[100px] relative">
                 <!-- Yes Button -->
                 <button id="btn-yes" class="btn-choice btn-yes text-lg" onclick="handleYes()">Yes</button>
                 <!-- No Button -->
                 <button id="btn-no" class="btn-choice btn-no text-sm" onclick="handleNo()">No</button>
             </div>
             
-            <p class="text-gray-500 text-xs mt-8 italic">Listen to the music...</p>
+            <p class="text-gray-500 text-xs mt-10 italic">Listen to the music...</p>
         </div>
     </div>
 
-    <!-- Celebration Screen (Balloons & Confetti) -->
+    <!-- Celebration Screen -->
     <div id="celebration-screen">
-        <h1 class="text-6xl md:text-8xl font-signature text-gold mb-6 drop-shadow-[0_0_20px_var(--gold)] scale-0 animate-popIn forwards" style="animation-delay: 0.5s; animation-duration: 1s; animation-fill-mode: forwards;">She Said Yes!</h1>
-        <p class="text-white font-heading text-2xl opacity-0 animate-fadeIn forwards" style="animation-delay: 1.5s; animation-duration: 2s; animation-fill-mode: forwards;">The universe knew it all along.</p>
+        <h1 class="text-5xl md:text-8xl font-signature text-gold mb-6 drop-shadow-[0_0_20px_var(--gold)] scale-0 animate-popIn" style="animation: popIn 1s forwards 0.5s;">She Said Yes!</h1>
+        <p class="text-white font-heading text-xl md:text-2xl opacity-0 animate-fadeIn" style="animation: fadeIn 2s forwards 1.5s; padding: 0 20px;">The universe knew it all along.</p>
     </div>
 
-    <!-- Music Toggle (Always Visible) -->
-    <div class="music-toggle paused" id="music-btn" onclick="toggleMusic()">
-        <div class="music-bar"></div>
-        <div class="music-bar"></div>
-        <div class="music-bar"></div>
+    <!-- Music Toggle -->
+    <div class="music-toggle" id="music-btn" onclick="toggleMusic()">
+        <!-- SVG Music Icon -->
+        <svg class="music-icon-svg" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-2v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-2" />
+        </svg>
     </div>
 
     <!-- Main Content -->
     <main id="main-content" class="relative z-10 min-h-screen pb-20 opacity-0 transition-opacity duration-1000">
         
         <!-- Header Section -->
-        <header class="h-screen flex flex-col items-center justify-center text-center px-6 relative">
+        <header class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--deep-blue)] pointer-events-none"></div>
             
-            <p class="text-gold-light font-cinematic tracking-widest text-sm mb-4 reveal-on-scroll">29th January 2026 • 12:21 AM</p>
-            <h1 class="text-5xl md:text-7xl font-heading text-white mb-8 leading-tight reveal-on-scroll">
+            <p class="text-gold-light font-cinematic tracking-widest text-xs md:text-sm mb-4 reveal-on-scroll">29th January 2026 • 12:21 AM</p>
+            <h1 class="text-4xl md:text-7xl font-heading text-white mb-8 leading-tight reveal-on-scroll">
                 Tonight, the universe<br>
                 <span class="italic font-light text-gold">spoke to me.</span>
             </h1>
-            <div class="w-[1px] h-24 bg-gradient-to-b from-gold to-transparent reveal-on-scroll"></div>
+            <div class="w-[1px] h-16 md:h-24 bg-gradient-to-b from-gold to-transparent reveal-on-scroll"></div>
         </header>
 
         <!-- The Letter Body -->
         <div class="max-w-3xl mx-auto px-6 md:px-12 space-y-24">
 
-            <!-- Section 1: The Event -->
+            <!-- Section 1 -->
             <section class="reveal-on-scroll text-lg md:text-xl leading-relaxed font-light text-gray-300 space-y-6">
                 <p><span class="text-gold font-heading text-3xl float-left mr-2 mt-[-6px]">K</span>hushi, something happened tonight that I need to tell you about.</p>
                 <p>
@@ -423,22 +464,22 @@
                 </p>
             </section>
 
-            <!-- Section 2: The Quote -->
+            <!-- Section 2: Quote -->
             <section class="reveal-on-scroll relative py-12">
                 <div class="absolute inset-0 border-y border-gold opacity-20"></div>
                 <div class="text-center space-y-4">
-                    <p class="text-gold font-heading text-2xl md:text-3xl italic leading-relaxed">
+                    <p class="text-gold font-heading text-2xl md:text-3xl italic leading-relaxed px-4">
                         "कहते हैं अगर किसी चीज़ को दिल से चाहो...<br>तो पूरी कायनात उसे तुमसे मिलाने की कोशिश में लग जाती है।"
                     </p>
-                    <p class="font-cinematic text-xs tracking-[0.2em] text-gray-500 uppercase mt-4">
+                    <p class="font-cinematic text-[10px] md:text-xs tracking-[0.2em] text-gray-500 uppercase mt-4">
                         If you want something with all your heart, the entire universe conspires to bring it to you.
                     </p>
                 </div>
             </section>
 
-            <!-- Section 3: The Truth -->
-            <section class="reveal-on-scroll glass-panel rounded-2xl p-8 md:p-12 space-y-6">
-                <h2 class="font-cinematic text-gold text-center text-xl tracking-widest mb-8 border-b border-white/10 pb-4">The Truth</h2>
+            <!-- Section 3: Truth -->
+            <section class="reveal-on-scroll glass-panel rounded-2xl p-6 md:p-12 space-y-6">
+                <h2 class="font-cinematic text-gold text-center text-lg md:text-xl tracking-widest mb-8 border-b border-white/10 pb-4">The Truth</h2>
                 <p class="text-lg leading-relaxed text-gray-200">
                     I need you to listen carefully. I know you don't love me the way I love you. I know you might never say yes. I've made peace with that. But there's something you need to understand:
                 </p>
@@ -448,25 +489,19 @@
                 <p class="text-lg leading-relaxed text-gray-200">
                     I love you. And I always will. It started as a crush—I can't even remember when. But somewhere along these ten years, it became something deeper. It became the foundation of who I am.
                 </p>
-                <p class="text-lg leading-relaxed text-gray-200">
-                    I made a choice a long time ago: <span class="text-gold">If it's not you, then it's no one.</span> That choice came from my heart, not from pressure. It just came.
-                </p>
             </section>
 
-            <!-- Section 4: The Promise -->
+            <!-- Section 4: Promise -->
             <section class="reveal-on-scroll space-y-8">
                 <div class="flex items-center gap-4">
                     <div class="h-[1px] flex-1 bg-white/20"></div>
-                    <h3 class="font-cinematic text-lg tracking-widest text-gold-light">Building A Future</h3>
+                    <h3 class="font-cinematic text-sm md:text-lg tracking-widest text-gold-light">Building A Future</h3>
                     <div class="h-[1px] flex-1 bg-white/20"></div>
                 </div>
 
                 <div class="text-lg leading-relaxed text-gray-300 space-y-6">
                     <p>
                         I'm not asking you to feel something you don't feel. I'm asking for something simpler: <strong class="text-white">let me stay in your life.</strong> And I'm going to show you—not with words, but with actions.
-                    </p>
-                    <p>
-                        This month I was supposed to go to Jammu. Next month I had plans to travel south. I've cancelled everything. Because I realized: <em>I can't ask you to build a future with me if I haven't built one for myself first.</em>
                     </p>
                     <p>
                         So now I'm focused. On my studies. On <span class="text-gold">Samarpan Wellness</span>. On becoming someone who can stand before your father one day and ask for your hand with dignity.
@@ -476,24 +511,24 @@
 
             <!-- Section 5: The Proposal -->
             <section class="reveal-on-scroll text-center py-8">
-                <p class="text-gray-400 font-cinematic text-sm tracking-widest mb-4">25th January 2021</p>
-                <p class="font-heading italic text-2xl text-white mb-6">"If this wasn't in my life, I would propose to you."</p>
+                <p class="text-gray-400 font-cinematic text-xs md:text-sm tracking-widest mb-4">25th January 2021</p>
+                <p class="font-heading italic text-xl md:text-2xl text-white mb-6 px-4">"If this wasn't in my life, I would propose to you."</p>
                 <p class="text-lg text-gray-300">
                     Khushi, I'm here now. I'm proposing—not with a ring today, but with my life. With my commitment. With my work. With every single day that I choose you.
                 </p>
             </section>
 
-            <!-- Section 6: Lyrics Card & PHOTO INTEGRATION -->
+            <!-- Section 6: Photo & Lyrics -->
             <section class="reveal-on-scroll">
                 <div class="glass-panel p-1 rounded-3xl relative overflow-hidden group">
                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-blue-900/40 to-transparent blur-3xl -z-10"></div>
-                    <div class="bg-[#050a18]/80 p-8 md:p-12 rounded-[22px] text-center space-y-12">
+                    <div class="bg-[#050a18]/80 p-6 md:p-12 rounded-[22px] text-center space-y-12">
                         <div>
-                            <h4 class="font-heading text-gold text-2xl mb-2">"Mere dil mein jagah Khuda ki khaali thi..."</h4>
-                            <p class="font-sans text-sm text-gray-400">My heart was searching for something sacred.</p>
+                            <h4 class="font-heading text-gold text-xl md:text-2xl mb-2">"Mere dil mein jagah Khuda ki khaali thi..."</h4>
+                            <p class="font-sans text-xs md:text-sm text-gray-400">My heart was searching for something sacred.</p>
                         </div>
                         <div class="relative py-4">
-                            <h4 class="font-heading text-white text-3xl mb-8 italic">"Dekha wahan pe aaj tera chehra hai"</h4>
+                            <h4 class="font-heading text-white text-2xl md:text-3xl mb-8 italic">"Dekha wahan pe aaj tera chehra hai"</h4>
                             <div class="photo-frame">
                                 <div class="corner-accent corner-tl"></div>
                                 <div class="corner-accent corner-tr"></div>
@@ -504,8 +539,8 @@
                             <p class="font-cinematic text-[10px] tracking-[0.3em] text-gold mt-6 uppercase">And I see your face there</p>
                         </div>
                         <div class="pt-8 border-t border-white/5">
-                            <h4 class="font-heading text-gold text-2xl mb-2">"Tu saaz hai, main ragini..."</h4>
-                            <p class="font-sans text-sm text-gray-400">We're incomplete alone. But together, we make music.</p>
+                            <h4 class="font-heading text-gold text-xl md:text-2xl mb-2">"Tu saaz hai, main ragini..."</h4>
+                            <p class="font-sans text-xs md:text-sm text-gray-400">We're incomplete alone. But together, we make music.</p>
                         </div>
                     </div>
                 </div>
@@ -513,9 +548,9 @@
 
             <!-- Section 7: Final Question -->
             <section class="reveal-on-scroll text-center py-16 space-y-8">
-                <p class="text-gray-400 tracking-widest uppercase text-sm font-cinematic">My Only Question</p>
-                <h2 class="text-4xl md:text-6xl font-heading gradient-text py-2">Will you let me love you?</h2>
-                <p class="text-gray-300 text-lg font-light max-w-lg mx-auto">
+                <p class="text-gray-400 tracking-widest uppercase text-xs md:text-sm font-cinematic">My Only Question</p>
+                <h2 class="text-3xl md:text-6xl font-heading gradient-text py-2">Will you let me love you?</h2>
+                <p class="text-gray-300 text-base md:text-lg font-light max-w-lg mx-auto px-4">
                     Not today, not tomorrow—but one day? <br>
                     I can wait forever. I can work. I can build a life. <br>
                     <span class="text-white font-medium mt-4 block">I just need you to let me stay.</span>
@@ -525,10 +560,10 @@
             <!-- Signature -->
             <section class="reveal-on-scroll text-center pb-20 border-b border-white/10 mb-20">
                 <p class="text-gray-500 font-cinematic text-xs tracking-[0.3em] uppercase mb-4">Forever Yours</p>
-                <p class="font-signature text-6xl md:text-8xl text-gold">Harsh</p>
+                <p class="font-signature text-5xl md:text-8xl text-gold">Harsh</p>
             </section>
 
-            <!-- THE INTERACTIVE PROPOSAL TRIGGER (ENHANCED) -->
+            <!-- THE TRIGGER BUTTON -->
             <section class="reveal-on-scroll text-center pb-32">
                 <button onclick="openProposal()" class="btn-magic">
                     One Last Question...
@@ -539,7 +574,6 @@
     </main>
 
     <style>
-        /* Additional Animation for Celebration */
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -547,7 +581,7 @@
     <script>
         // --- Starfield Generation ---
         const starfield = document.getElementById('starfield');
-        const starCount = 150;
+        const starCount = 100; // Optimized for mobile
         for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
@@ -561,7 +595,7 @@
             starfield.appendChild(star);
         }
 
-        // --- Interaction Logic ---
+        // --- Logic ---
         const introOverlay = document.getElementById('intro-overlay');
         const mainContent = document.getElementById('main-content');
         const audioHint = document.getElementById('audio-hint');
@@ -574,25 +608,32 @@
         setTimeout(() => { audioHint.style.opacity = '0.7'; }, 1000);
 
         function startJourney() {
+            // Fade Out Intro
             introOverlay.style.opacity = '0';
             introOverlay.style.visibility = 'hidden';
+            
+            // Fade In Content
             mainContent.style.opacity = '1';
+            
+            // Show Music Button
             musicBtn.style.opacity = '1';
-            letterMusic.volume = 0.4;
-            proposalMusic.volume = 0.5;
+            
+            // Start Music
+            letterMusic.volume = 0.5;
+            proposalMusic.volume = 0.6;
             letterMusic.play().then(() => {
                 isMusicPlaying = true;
-                musicBtn.classList.remove('paused');
+                musicBtn.classList.add('playing');
             }).catch(() => console.log("Auto-play blocked"));
         }
 
         function toggleMusic() {
             if (isMusicPlaying) {
                 currentAudio.pause();
-                musicBtn.classList.add('paused');
+                musicBtn.classList.remove('playing');
             } else {
                 currentAudio.play();
-                musicBtn.classList.remove('paused');
+                musicBtn.classList.add('playing');
             }
             isMusicPlaying = !isMusicPlaying;
         }
@@ -614,11 +655,12 @@
         const btnYes = document.getElementById('btn-yes');
         const celebrationScreen = document.getElementById('celebration-screen');
         let noClickCount = 0;
-        const noTexts = ["Are you sure?", "Really sure?", "Think again...", "Don't do this!", "Last chance...", ""];
+        const noTexts = ["Are you sure?", "Really?", "Think again...", "Don't!", "Please...", ""];
 
         function openProposal() {
             proposalModal.classList.add('active');
-            // Switch Music
+            
+            // Switch Music Fade
             let fadeOut = setInterval(() => {
                 if (letterMusic.volume > 0.1) {
                     letterMusic.volume -= 0.1;
@@ -627,7 +669,10 @@
                     letterMusic.pause();
                     letterMusic.currentTime = 0;
                     currentAudio = proposalMusic;
-                    if(isMusicPlaying) proposalMusic.play();
+                    if(isMusicPlaying) {
+                        proposalMusic.play();
+                        musicBtn.classList.add('playing');
+                    }
                 }
             }, 100);
         }
@@ -635,11 +680,16 @@
         function handleNo() {
             if (noClickCount < 5) {
                 btnNo.innerText = noTexts[noClickCount];
-                let currentSize = 18 + (noClickCount * 5);
-                let currentPadding = 15 + (noClickCount * 4);
-                btnYes.style.fontSize = currentSize + 'px';
-                btnYes.style.padding = `${currentPadding}px ${currentPadding * 2.5}px`;
-                btnNo.style.transform = `translate(${Math.random()*40 - 20}px, ${Math.random()*40 - 20}px)`;
+                // Increase Yes Button size dynamically
+                let currentScale = 1 + (noClickCount * 0.15);
+                btnYes.style.transform = `scale(${currentScale})`;
+                btnYes.style.margin = '10px';
+                
+                // Move No button
+                const x = (Math.random() - 0.5) * 100;
+                const y = (Math.random() - 0.5) * 100;
+                btnNo.style.transform = `translate(${x}px, ${y}px)`;
+                
                 noClickCount++;
             } else {
                 btnNo.style.display = 'none';
@@ -650,21 +700,16 @@
             proposalModal.classList.remove('active');
             celebrationScreen.style.display = 'flex';
             
-            // 1. Confetti
             for(let i=0; i<80; i++) setTimeout(createConfetti, i * 20);
-            
-            // 2. Balloons
-            for(let i=0; i<15; i++) setTimeout(createBalloon, i * 200);
-            
-            // 3. Sparkles
+            for(let i=0; i<20; i++) setTimeout(createBalloon, i * 150);
             for(let i=0; i<40; i++) setTimeout(createSparkle, i * 50);
         }
 
         function createBalloon() {
-            const colors = ['#d4af37', '#f3e5ab', '#ff6b6b', '#a55eea', '#ffffff'];
+            const colors = ['#d4af37', '#f3e5ab', '#ff6b6b', '#5f27cd', '#ffffff'];
             const balloon = document.createElement('div');
             balloon.classList.add('balloon');
-            balloon.style.left = Math.random() * 90 + 5 + '%';
+            balloon.style.left = Math.random() * 80 + 10 + '%';
             balloon.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
             balloon.style.setProperty('--speed', Math.random() * 4 + 4 + 's');
             balloon.style.setProperty('--rotation', Math.random() * 20 - 10 + 'deg');
@@ -690,12 +735,13 @@
             sparkle.style.height = '4px';
             sparkle.style.background = 'gold';
             sparkle.style.borderRadius = '50%';
-            sparkle.style.zIndex = '300';
+            sparkle.style.zIndex = '500';
             celebrationScreen.appendChild(sparkle);
             
             const angle = Math.random() * Math.PI * 2;
-            const tx = Math.cos(angle) * 300 * Math.random();
-            const ty = Math.sin(angle) * 300 * Math.random();
+            const dist = 100 + Math.random() * 200;
+            const tx = Math.cos(angle) * dist;
+            const ty = Math.sin(angle) * dist;
             
             sparkle.animate([
                 { transform: 'translate(0,0) scale(1)', opacity: 1 },
