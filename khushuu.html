@@ -213,19 +213,70 @@
         .music-bar:nth-child(2) { animation-delay: 0.3s; }
         .music-bar:nth-child(3) { animation-delay: 0.5s; }
 
+        /* --- Proposal Modal Styles --- */
+        #proposal-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s;
+        }
+        #proposal-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .btn-choice {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .btn-yes {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 15px var(--gold);
+            border: none;
+        }
+        .btn-yes:hover { transform: scale(1.1); box-shadow: 0 0 25px var(--gold); }
+        .btn-no {
+            background: transparent;
+            border: 1px solid #ff4444;
+            color: #ff4444;
+        }
+        .btn-no:hover { background: rgba(255,68,68,0.1); }
+
     </style>
 </head>
 <body>
 
     <!-- 
       =========== MUSIC SETUP ===========
-      1. Rename your song file to: music.mp3
-      2. Put it in the same folder as this HTML file.
-      3. If 'music.mp3' is found, it plays. If not, it uses the fallback online link.
+      1. music.mp3 = Plays during the letter.
+      2. music1.mp3 = Plays during the proposal (One Last Question).
+      
+      Ensure both files are in the same folder.
     -->
+    
+    <!-- AUDIO 1: The Letter -->
     <audio id="bg-music" loop>
         <source src="music.mp3" type="audio/mpeg">
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=emotional-piano-110599.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- AUDIO 2: The Proposal -->
+    <audio id="proposal-music" loop>
+        <source src="music1.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_1d45d6141a.mp3?filename=cinematic-atmosphere-score-2-123447.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Starfield Background -->
@@ -237,6 +288,23 @@
         <h1 class="text-6xl md:text-8xl font-signature text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Khushi</h1>
         <button onclick="startJourney()" class="btn-enter">Read Letter</button>
         <p class="text-gray-500 text-[10px] mt-8 font-cinematic tracking-widest uppercase opacity-0 transition-opacity duration-1000" id="audio-hint">Audio Recommended</p>
+    </div>
+
+    <!-- Proposal Modal -->
+    <div id="proposal-modal">
+        <div class="text-center p-8 max-w-lg w-full">
+            <h2 id="modal-title" class="text-3xl md:text-5xl font-heading text-white mb-8 leading-tight">Will you accept my proposal?</h2>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-12 h-32">
+                <button id="btn-yes" class="btn-choice btn-yes text-lg" onclick="handleYes()">Yes</button>
+                <button id="btn-no" class="btn-choice btn-no text-sm" onclick="handleNo()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Screen (Hidden) -->
+    <div id="celebration-screen" class="fixed inset-0 bg-black z-[250] hidden flex-col items-center justify-center text-center p-4">
+        <h1 class="text-5xl md:text-7xl font-signature text-gold mb-6 drop-shadow-[0_0_20px_var(--gold)]">She Said Yes!</h1>
+        <p class="text-white font-heading text-xl">The universe knew it all along.</p>
     </div>
 
     <!-- Music Toggle -->
@@ -391,9 +459,14 @@
             </section>
 
             <!-- Signature -->
-            <section class="reveal-on-scroll text-center pb-20">
+            <section class="reveal-on-scroll text-center pb-20 border-b border-white/10 mb-20">
                 <p class="text-gray-500 font-cinematic text-xs tracking-[0.3em] uppercase mb-4">Forever Yours</p>
                 <p class="font-signature text-6xl md:text-8xl text-gold">Harsh</p>
+            </section>
+
+            <!-- THE INTERACTIVE PROPOSAL TRIGGER -->
+            <section class="reveal-on-scroll text-center pb-32">
+                <button onclick="openProposal()" class="btn-enter animate-pulse">One Last Question...</button>
             </section>
 
         </div>
@@ -407,18 +480,10 @@
         for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-            
-            // Random positioning
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            
-            // Random size (small to medium)
             const size = Math.random() * 2 + 1;
-            
-            // Random opacity for max brightness
             const opacity = Math.random() * 0.7 + 0.3;
-            
-            // Random animation duration and delay
             const duration = Math.random() * 3 + 2 + 's';
             const delay = Math.random() * 5 + 's';
 
@@ -429,7 +494,6 @@
             star.style.setProperty('--opacity', opacity);
             star.style.setProperty('--duration', duration);
             star.style.setProperty('--delay', delay);
-
             starfield.appendChild(star);
         }
 
@@ -438,64 +502,144 @@
         const mainContent = document.getElementById('main-content');
         const audioHint = document.getElementById('audio-hint');
         const musicBtn = document.getElementById('music-btn');
-        const bgMusic = document.getElementById('bg-music');
+        
+        // Music Elements
+        const letterMusic = document.getElementById('bg-music');
+        const proposalMusic = document.getElementById('proposal-music');
+        
+        // State tracking
+        let currentAudio = letterMusic; // Start with letter music
         let isMusicPlaying = false;
 
-        // Show audio hint after a moment
-        setTimeout(() => {
-            audioHint.style.opacity = '0.7';
-        }, 1000);
+        setTimeout(() => { audioHint.style.opacity = '0.7'; }, 1000);
 
         function startJourney() {
-            // Fade out intro
             introOverlay.style.opacity = '0';
             introOverlay.style.visibility = 'hidden';
-            
-            // Fade in content
             mainContent.style.opacity = '1';
-            
-            // Show music control
             musicBtn.style.opacity = '1';
             
-            // Start Music
-            bgMusic.volume = 0.4;
-            bgMusic.play().then(() => {
+            letterMusic.volume = 0.4;
+            proposalMusic.volume = 0.5;
+
+            letterMusic.play().then(() => {
                 isMusicPlaying = true;
                 musicBtn.classList.remove('paused');
             }).catch(() => {
-                console.log("Auto-play blocked, wait for user interaction");
+                console.log("Auto-play blocked");
             });
         }
 
         function toggleMusic() {
             if (isMusicPlaying) {
-                bgMusic.pause();
+                currentAudio.pause();
                 musicBtn.classList.add('paused');
             } else {
-                bgMusic.play();
+                currentAudio.play();
                 musicBtn.classList.remove('paused');
             }
             isMusicPlaying = !isMusicPlaying;
         }
 
-        // --- Scroll Reveal Logic ---
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
+        // --- Scroll Reveal ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once
+                    observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
-        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+        // --- Proposal Logic ---
+        const proposalModal = document.getElementById('proposal-modal');
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const celebrationScreen = document.getElementById('celebration-screen');
+        
+        let noClickCount = 0;
+        const noTexts = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again...",
+            "Don't do this!",
+            "Last chance...",
+            "" // Disappears
+        ];
+
+        function openProposal() {
+            proposalModal.classList.add('active');
+            
+            // --- MUSIC SWITCH LOGIC ---
+            // Fade out current music (Letter music)
+            let fadeOut = setInterval(() => {
+                if (letterMusic.volume > 0.1) {
+                    letterMusic.volume -= 0.1;
+                } else {
+                    clearInterval(fadeOut);
+                    letterMusic.pause();
+                    letterMusic.currentTime = 0;
+                    
+                    // Start Proposal Music
+                    currentAudio = proposalMusic; // Switch active track reference
+                    if(isMusicPlaying) {
+                        proposalMusic.play();
+                    }
+                }
+            }, 100);
+        }
+
+        function handleNo() {
+            if (noClickCount < 5) {
+                btnNo.innerText = noTexts[noClickCount];
+                let currentSize = 18 + (noClickCount * 5);
+                let currentPadding = 12 + (noClickCount * 4);
+                btnYes.style.fontSize = currentSize + 'px';
+                btnYes.style.padding = `${currentPadding}px ${currentPadding * 2.5}px`;
+                btnNo.style.transform = `translate(${Math.random()*20 - 10}px, ${Math.random()*20 - 10}px)`;
+                noClickCount++;
+            } else {
+                btnNo.style.display = 'none';
+            }
+        }
+
+        function handleYes() {
+            proposalModal.classList.remove('active');
+            celebrationScreen.style.display = 'flex';
+            for(let i=0; i<50; i++) {
+                createParticle();
+            }
+        }
+
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.width = '5px';
+            particle.style.height = '5px';
+            particle.style.background = 'gold';
+            particle.style.borderRadius = '50%';
+            particle.style.zIndex = '300';
+            celebrationScreen.appendChild(particle);
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = 2 + Math.random() * 5;
+            const tx = Math.cos(angle) * 200 * (Math.random() + 0.5);
+            const ty = Math.sin(angle) * 200 * (Math.random() + 0.5);
+
+            particle.animate([
+                { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0, .9, .57, 1)',
+                fill: 'forwards'
+            });
+        }
+
     </script>
 </body>
 </html>
