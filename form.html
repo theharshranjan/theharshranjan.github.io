@@ -3,313 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Intake Form | Samarpan Wellness</title>
+    <title>Consultation Portal | Samarpan</title>
     
-    <!-- --- SEO & META TAGS --- -->
-    <meta name="description" content="Comprehensive health history form for Ayurveda and Psychology consultations at Samarpan Wellness.">
-    <meta name="robots" content="noindex, nofollow"> <!-- Kept private for clients -->
-
-    <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
-
     <!-- LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FIREBASE INTEGRATION -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-    <!-- TAILWIND CONFIG -->
+        // VERIFIED FIREBASE CONFIG: thesamrpan
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+            authDomain: "thesamrpan.firebaseapp.com",
+            projectId: "thesamrpan",
+            storageBucket: "thesamrpan.firebasestorage.app",
+            messagingSenderId: "510287005957",
+            appId: "1:510287005957:web:978533c6dbca0f4969cf6c",
+            measurementId: "G-ML1QLKGR3K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const appId = "samarpan-official"; 
+
+        const initAuth = async () => {
+            try { await signInAnonymously(auth); } catch (err) { console.error(err); }
+        };
+        initAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) { loadLedger(); }
+        });
+
+        window.handleSubmit = async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerText = "Securing Data...";
+
+            const formData = new FormData(form);
+            const entry = Object.fromEntries(formData.entries());
+            entry.type = 'FULL_INTAKE_RECORD';
+            entry.timestamp = serverTimestamp();
+
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), entry);
+                document.getElementById('success-modal').style.display = 'flex';
+                form.reset();
+            } catch (err) { 
+                alert("Submission failed. Check your connection."); 
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Submit Intake History";
+            }
+        };
+
+        function loadLedger() {
+            const list = document.getElementById('ledger-entries');
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), (snap) => {
+                if (snap.empty) {
+                    list.innerHTML = '<p class="text-stone-300 italic py-6 text-center font-sans text-xs">Cloud ledger is currently empty.</p>';
+                    return;
+                }
+                list.innerHTML = '';
+                const items = snap.docs.map(d => d.data()).sort((a,b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                items.forEach(data => {
+                    const dateStr = data.timestamp ? new Date(data.timestamp.seconds * 1000).toLocaleDateString() : 'Just now';
+                    const div = document.createElement('div');
+                    div.className = "py-3 border-b border-stone-100 flex justify-between items-center text-[10px]";
+                    div.innerHTML = `
+                        <div class="text-left font-sans">
+                            <span class="font-bold text-clay uppercase block text-[7px] tracking-widest">${dateStr}</span>
+                            <span class="font-serif text-brand-black font-bold">${data.name || 'Anonymous'}</span>
+                        </div>
+                        <div class="text-right font-sans">
+                            <span class="text-stone-400 block">${data.location || 'Global'}</span>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
+            });
+        }
+    </script>
+
+    <!-- UI CONFIG -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700;900&family=Marcellus&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        paper: '#FDFCF8',
-                        clay: '#C88D72', 
-                        claydark: '#A6755E',
-                        sage: '#4A5D4F',
-                        charcoal: '#1A1A1A',
-                        offblack: '#121212'
-                    },
-                    fontFamily: {
-                        sans: ['Manrope', 'sans-serif'],
-                        serif: ['Cormorant Garamond', 'serif'],
-                        display: ['Cinzel', 'serif'],
-                    }
+                    colors: { clay: '#D95D39', 'brand-black': '#1A1A1A', paper: '#FDFCF8' },
+                    fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif'], cinzel: ['Cinzel', 'serif'] }
                 }
             }
         }
     </script>
 
     <style>
-        body { background-color: #FDFCF8; color: #1A1A1A; }
-        
-        /* Form Inputs */
-        .intake-input {
+        body { background-color: #FDFCF8; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+        input, select, textarea {
+            background: transparent !important;
+            border-bottom: 1.5px solid #EEE !important;
+            padding: 1rem 0 !important;
             width: 100%;
-            background-color: white;
-            border: 1px solid #E5E5E5;
-            padding: 0.75rem 1rem;
-            font-family: 'Manrope', sans-serif;
-            font-size: 0.9rem;
-            color: #1A1A1A;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            font-size: 1rem;
+            transition: border-color 0.4s;
+            border-radius: 0 !important;
+            border-top: none; border-left: none; border-right: none;
         }
-        .intake-input:focus {
-            outline: none;
-            border-color: #C88D72;
-            box-shadow: 0 0 0 3px rgba(200, 141, 114, 0.1);
-        }
-        
-        .section-title {
-            position: relative;
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #E5E5E5;
-        }
-        
-        /* Checkbox Customization */
-        .custom-checkbox input:checked + div {
-            background-color: #C88D72;
-            border-color: #C88D72;
-        }
-        .custom-checkbox input:checked + div svg {
-            display: block;
-        }
+        input:focus, select:focus, textarea:focus { outline: none !important; border-color: #D95D39 !important; }
+        label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 800; color: #1A1A1A; display: block; margin-bottom: 0.25rem; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
-    <!-- NAVBAR -->
-    <nav class="fixed w-full z-50 bg-paper/95 backdrop-blur border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 group">
-                <svg width="24" height="24" viewBox="0 0 100 100" fill="none" class="text-clay">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="6"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="6"/>
+    <!-- COMPACT LOGO HEADER -->
+    <nav id="navbar" class="fixed w-full z-50 bg-white border-b border-stone-100 h-20 flex items-center shadow-sm">
+        <div class="max-w-[1400px] mx-auto px-6 w-full flex justify-center items-center">
+            <a href="index.html" class="flex flex-col items-center justify-center group">
+                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-clay mb-0.5 group-hover:scale-110 transition duration-500">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2.5"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2.5"/>
+                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span class="font-display font-bold text-sm tracking-widest text-charcoal group-hover:text-clay transition">SAMARPAN</span>
+                <div class="text-center">
+                    <span class="text-[11px] uppercase tracking-[0.2em] font-display font-bold text-brand-black block leading-none">Samarpan</span>
+                    <span class="text-[6px] uppercase tracking-[0.3em] font-sans font-bold text-clay mt-0.5 block">By Harsh Ranjan</span>
+                </div>
             </a>
-            <a href="contact.html" class="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-charcoal transition">Cancel & Exit</a>
         </div>
     </nav>
 
-    <div class="pt-32 pb-24 px-6 min-h-screen bg-[#FAFAF8]">
+    <!-- CONTENT SPACER -->
+    <div class="pt-32"></div>
+
+    <header class="text-center px-6 mb-12">
         <div class="max-w-4xl mx-auto">
+            <span class="text-clay font-sans text-[9px] tracking-[0.5em] uppercase block mb-3 font-bold">Confidential Intake</span>
+            <h1 class="text-2xl md:text-4xl font-serif text-brand-black mb-4">Discovery <span class="italic text-clay">Portal</span></h1>
+            <p class="text-stone-400 font-serif italic text-base max-w-xl mx-auto leading-relaxed">"Mapping the constitutional history to begin the path of recovery."</p>
+        </div>
+    </header>
+
+    <!-- INTAKE FORM -->
+    <main class="py-4 px-6 max-w-4xl mx-auto">
+        <form onsubmit="handleSubmit(event)" class="bg-white p-6 md:p-16 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-stone-100 space-y-12 rounded-sm">
             
-            <!-- Header -->
-            <div class="text-center mb-16">
-                <span class="text-clay font-display text-xs tracking-[0.3em] uppercase block mb-4">Confidential</span>
-                <h1 class="text-3xl md:text-5xl font-serif text-charcoal mb-4">New Client Intake</h1>
-                <p class="text-charcoal/60 max-w-xl mx-auto text-sm leading-relaxed">
-                    Please answer honestly. This form integrates Ayurvedic biology and psychological parameters to help us design your personalized wellness protocol.
-                </p>
-            </div>
-
-            <!-- Form Container -->
-            <form id="intakeForm" onsubmit="handleSubmit(event)" class="bg-white p-8 md:p-16 rounded-xl shadow-xl border border-gray-100">
-                
-                <!-- SECTION 1: PERSONAL DETAILS -->
-                <div class="mb-12">
-                    <h2 class="text-2xl font-serif text-charcoal section-title">01. Personal Details</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Full Name</label>
-                            <input type="text" name="name" class="intake-input" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Date of Birth</label>
-                            <input type="date" name="dob" class="intake-input" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Email</label>
-                            <input type="email" name="email" class="intake-input" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Phone</label>
-                            <input type="tel" name="phone" class="intake-input">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Current Location (City, Country)</label>
-                            <input type="text" name="location" class="intake-input" placeholder="Used for climate/seasonal analysis">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 2: BIOLOGY (AGNI & KOSHTA) -->
-                <div class="mb-12">
-                    <h2 class="text-2xl font-serif text-charcoal section-title">02. Biological Assessment</h2>
-                    
-                    <div class="space-y-8">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Appetite & Digestion (Agni)</label>
-                            <select name="digestion" class="intake-input text-gray-600">
-                                <option value="" disabled selected>Select the best description...</option>
-                                <option value="Variable">Variable (Sometimes hungry, sometimes not, gas/bloating common)</option>
-                                <option value="Intense">Intense (Hangry, acid reflux, digest food very quickly)</option>
-                                <option value="Slow">Slow (Heavy after meals, slow metabolism, lethargic)</option>
-                                <option value="Balanced">Balanced (Regular hunger, good digestion, no discomfort)</option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Elimination Patterns</label>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-3 p-4 border border-gray-100 rounded hover:bg-gray-50">
-                                    <input type="radio" name="elimination" value="Constipated" class="hidden">
-                                    <div class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-700">Dry / Constipated</span>
-                                </label>
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-3 p-4 border border-gray-100 rounded hover:bg-gray-50">
-                                    <input type="radio" name="elimination" value="Loose" class="hidden">
-                                    <div class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-700">Soft / Loose</span>
-                                </label>
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-3 p-4 border border-gray-100 rounded hover:bg-gray-50">
-                                    <input type="radio" name="elimination" value="Regular" class="hidden">
-                                    <div class="w-5 h-5 border border-gray-300 rounded-full flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-700">Regular / Daily</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Sleep Quality</label>
-                            <textarea name="sleep" class="intake-input h-24 resize-none" placeholder="Do you fall asleep easily? Do you wake up at night? Do you dream vividly?"></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 3: PSYCHOLOGY -->
-                <div class="mb-12">
-                    <h2 class="text-2xl font-serif text-charcoal section-title">03. Mental & Emotional Health</h2>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Dominant Emotional State (Last 3 Months)</label>
-                            <div class="grid grid-cols-2 gap-3">
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-2">
-                                    <input type="checkbox" name="emotions" value="Anxiety" class="hidden">
-                                    <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-600">Anxiety / Worry</span>
-                                </label>
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-2">
-                                    <input type="checkbox" name="emotions" value="Anger" class="hidden">
-                                    <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-600">Anger / Irritation</span>
-                                </label>
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-2">
-                                    <input type="checkbox" name="emotions" value="Lethargy" class="hidden">
-                                    <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-600">Lethargy / Sadness</span>
-                                </label>
-                                <label class="custom-checkbox cursor-pointer flex items-center gap-2">
-                                    <input type="checkbox" name="emotions" value="Overwhelm" class="hidden">
-                                    <div class="w-4 h-4 border border-gray-300 rounded flex items-center justify-center"><i data-lucide="check" class="w-3 h-3 text-white hidden"></i></div>
-                                    <span class="text-sm text-gray-600">Overwhelm</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Current Stress Level (1-10)</label>
-                            <input type="range" name="stress" min="1" max="10" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-clay">
-                            <div class="flex justify-between text-xs text-gray-400 mt-1">
-                                <span>Zen (1)</span>
-                                <span>Moderate (5)</span>
-                                <span>Burnout (10)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SECTION 4: GOALS -->
-                <div class="mb-12">
-                    <h2 class="text-2xl font-serif text-charcoal section-title">04. Goals & History</h2>
+            <section>
+                <h2 class="text-xl font-serif mb-8 border-b pb-3 border-stone-50 uppercase tracking-widest text-brand-black font-bold">01. Identity & Location</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Primary Health Goals</label>
-                        <textarea name="goals" class="intake-input h-32 resize-none" placeholder="What are the top 3 things you want to achieve or heal? (e.g., Heal gut issues, reduce anxiety, spiritual growth)"></textarea>
+                        <label>Legal Full Name</label>
+                        <input type="text" name="name" placeholder="E.g. Harsh Ranjan" required>
                     </div>
-                    <div class="mt-6">
-                        <label class="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Diagnosed Medical Conditions / Medications</label>
-                        <textarea name="history" class="intake-input h-24 resize-none" placeholder="Please list any diagnosed conditions or supplements/medications you are currently taking."></textarea>
+                    <div>
+                        <label>Secure Email Address</label>
+                        <input type="email" name="email" placeholder="contact@email.com" required>
                     </div>
                 </div>
 
-                <!-- SUBMIT -->
-                <div class="text-center pt-8 border-t border-gray-100">
-                    <button type="submit" class="w-full md:w-auto px-12 py-4 bg-clay text-white font-bold text-xs uppercase tracking-[0.2em] rounded shadow-lg hover:bg-claydark transition transform hover:-translate-y-1">
-                        Submit Confidential Form
-                    </button>
-                    <p class="text-xs text-gray-400 mt-4">
-                        By submitting, you agree to our privacy policy. Your data is encrypted and viewed only by Harsh Ranjan.
-                    </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+                    <div>
+                        <label>Current Location (City, Country)</label>
+                        <input type="text" name="location" placeholder="E.g. New Delhi, India" required>
+                    </div>
+                    <div>
+                        <label>WhatsApp / International No.</label>
+                        <input type="tel" name="phone" placeholder="+91 / +1 ..." required>
+                    </div>
                 </div>
-            </form>
-            
-            <div id="successMessage" class="hidden text-center py-20">
-                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="check" class="w-10 h-10 text-green-600"></i>
+
+                <div class="mt-10">
+                    <label>Healing Path</label>
+                    <select name="session" required>
+                        <option value="" disabled selected>Select Path</option>
+                        <option value="Ayurvedic Consultations">Ayurvedic Consultations</option>
+                        <option value="Therapeutic Psychology">Therapeutic Psychology</option>
+                        <option value="Mantra Chanting Session">Mantra Chanting Session</option>
+                        <option value="Nutrition Planning">Nutrition Planning</option>
+                        <option value="Meditation Guidance">Meditation Guidance</option>
+                        <option value="Yoga Practice">Yoga Practice</option>
+                        <option value="Yoga Nidra">Yoga Nidra</option>
+                    </select>
                 </div>
-                <h3 class="text-3xl font-serif text-charcoal mb-4">Received.</h3>
-                <p class="text-charcoal/60 mb-8">Thank you for sharing your story. I will review your details before our session.</p>
-                <a href="index.html" class="text-clay font-bold uppercase text-xs tracking-widest border-b border-clay pb-1">Return Home</a>
+            </section>
+
+            <section>
+                <div class="space-y-10">
+                    <div>
+                        <label>Personal Narrative & Focus</label>
+                        <textarea name="message" rows="4" placeholder="Briefly share the roadblocks you seek to resolve or expand upon..." required></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <button type="submit" class="w-full py-5 bg-clay text-white font-black text-[11px] uppercase tracking-[0.4em] hover:bg-brand-black transition duration-500 rounded-sm shadow-xl shadow-clay/20">
+                Submit Intake History
+            </button>
+        </form>
+
+        <div class="mt-20 pt-12 border-t border-stone-100 text-center">
+            <h3 class="text-[12px] uppercase tracking-[0.4em] font-bold text-brand-black mb-8 font-sans">GLOBAL DIRECT INQUIRY</h3>
+            <div class="flex flex-col items-center">
+                <span class="text-[9px] uppercase tracking-widest text-stone-400 mb-1 font-bold italic font-sans">Official Verification Email</span>
+                <a href="mailto:justtheself@gmail.com" class="font-serif text-2xl text-brand-black hover:text-clay transition duration-500 underline decoration-clay underline-offset-8">justtheself@gmail.com</a>
             </div>
+        </div>
+    </main>
 
+    <!-- MINIMAL LEDGER -->
+    <section class="bg-[#FAFAF9] py-16 px-6 border-t border-stone-100 mt-20">
+        <div class="max-w-xl mx-auto">
+            <div class="flex items-center justify-between mb-8 opacity-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 rounded-full bg-clay animate-pulse"></div>
+                    <h3 class="font-serif text-sm text-stone-500 tracking-widest uppercase font-bold">The Ledger</h3>
+                </div>
+                <i data-lucide="lock" class="w-3 h-3 text-stone-300"></i>
+            </div>
+            <div id="ledger-entries" class="bg-white p-4 border border-stone-50 shadow-sm min-h-[80px] rounded-sm">
+                <p class="text-stone-300 italic text-[10px] text-center py-4">Synchronizing Archive...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUCCESS MODAL -->
+    <div id="success-modal" class="fixed inset-0 bg-brand-black/95 z-[100] flex items-center justify-center p-6 text-center" style="display:none;">
+        <div class="max-w-md bg-white p-10 shadow-2xl border border-clay/10 rounded-sm">
+            <i data-lucide="shield-check" class="w-12 h-12 text-clay mx-auto mb-6 animate-pulse"></i>
+            <h2 class="text-2xl font-serif text-brand-black mb-4 italic text-clay font-bold uppercase">Thank You</h2>
+            <p class="text-stone-500 text-xs mb-10 leading-relaxed font-sans font-medium">
+                Your history is now stored in our vault. Our Team will personally review your narrative and reach out via email within 24 hours.
+            </p>
+            <button onclick="document.getElementById('success-modal').style.display='none'" class="px-10 py-3.5 bg-brand-black text-white font-sans font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-clay transition duration-500 rounded-sm">
+                Hari Om
+            </button>
         </div>
     </div>
 
-    <!-- SCRIPTS -->
-    <script>
-        lucide.createIcons();
+    <!-- MINIMIZED FOOTER -->
+    <footer class="bg-brand-black text-white/50 py-12 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div>
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-3 mx-auto md:mx-0">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2.5"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2.5"/>
+                </svg>
+                <h4 class="font-display text-base tracking-[0.2em] text-white uppercase">SAMARPAN</h4>
+                <p class="font-sans text-[7px] uppercase tracking-[0.4em] text-clay font-bold mb-3">By Harsh Ranjan</p>
+                <p class="text-[10px] leading-relaxed font-light">Integrating Ayurveda, Psychology, and Neurobiology.</p>
+            </div>
+            <div>
+                <h5 class="text-clay font-sans text-[9px] tracking-widest uppercase mb-4 font-bold">Explore</h5>
+                <ul class="space-y-2 text-[11px] font-light">
+                    <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                    <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
+                    <li><a href="form.html" class="hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-clay font-sans text-[9px] tracking-widest uppercase mb-4 font-bold">Connect</h5>
+                <ul class="space-y-2 text-[11px] font-light">
+                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white">justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white">@justtheself</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-10 pt-6 border-t border-white/5 text-center text-[8px] text-white/20 font-sans tracking-[0.3em] uppercase font-bold">
+            &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
+        </div>
+    </footer>
 
-        async function handleSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerText;
-            const formData = new FormData(e.target);
-            
-            // Add a timestamp for the Google Sheet
-            formData.append('submissionDate', new Date().toLocaleString());
-            
-            btn.disabled = true;
-            btn.innerText = 'Processing...';
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-
-            try {
-                // Submit to BOTH Formspree (Email) and Google Apps Script (Spreadsheet)
-                // Using Promise.allSettled ensures that if one fails, we still try the other.
-                await Promise.allSettled([
-                    fetch('https://formspree.io/f/mqadzvad', { 
-                        method: 'POST', 
-                        body: formData, 
-                        headers: { 'Accept': 'application/json' } 
-                    }),
-                    fetch('https://script.google.com/macros/s/AKfycbwwlld65VcydrSnZUu5T5s9mPVt_Y78UyVMds9JkspBgvrdfvfC2WI7aADJMvGdVJh5/exec', { 
-                        method: 'POST', 
-                        body: new URLSearchParams(Object.fromEntries(formData)), 
-                        mode: 'no-cors' 
-                    })
-                ]);
-                
-                // Show Success State
-                document.getElementById('intakeForm').classList.add('hidden');
-                document.getElementById('successMessage').classList.remove('hidden');
-                
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            } catch (error) {
-                console.error(error);
-                alert("There was an error submitting the form. Please try again or contact us directly.");
-                btn.disabled = false;
-                btn.innerText = originalText;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-            }
-        }
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
