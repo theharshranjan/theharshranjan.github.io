@@ -69,7 +69,7 @@
             </div>
 
             <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-1 transition duration-500">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-1">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
@@ -171,23 +171,23 @@
                 <div class="p-6">
                     <i data-lucide="video" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
                     <h4 class="font-display text-sm uppercase tracking-wider mb-2">Virtual Sessions</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Available globally via Zoom or Google Meet.</p>
+                    <p class="text-xs text-brand-gray leading-relaxed">Available globally via Zoom or Meet.</p>
                 </div>
                 <div class="p-6">
                     <i data-lucide="map-pin" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
                     <h4 class="font-display text-sm uppercase tracking-wider mb-2">In-Person</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Consultations available in New Delhi, India.</p>
+                    <p class="text-xs text-brand-gray leading-relaxed">Consultations in New Delhi, India.</p>
                 </div>
                 <div class="p-6">
                     <i data-lucide="clock" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
                     <h4 class="font-display text-sm uppercase tracking-wider mb-2">Wait Time</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Response within 24-48 hours of request.</p>
+                    <p class="text-xs text-brand-gray leading-relaxed">Response within 24-48 hours.</p>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MOBILE MENU OVERLAY -->
+    <!-- MOBILE MENU -->
     <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
         <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
         <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
@@ -200,9 +200,10 @@
         <p class="text-[10px] uppercase tracking-widest text-brand-gray">&copy; 2026 Harsh Ranjan | Samarpan</p>
     </footer>
 
-    <!-- FIREBASE MODULE -->
+    <!-- FIREBASE INTEGRATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
@@ -216,10 +217,14 @@
             measurementId: "G-ML1QLKGR3K"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'samarpan-site';
+        
+        // Use environment appId or fallback
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'thesamrpan';
 
         const form = document.getElementById('bookingForm');
         const status = document.getElementById('formStatus');
@@ -229,13 +234,18 @@
             e.preventDefault();
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>Processing...</span>';
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span>Sending...</span>';
             
             try {
-                // Ensure auth before write
+                // RULE 3: Auth before any Firestore operation
                 await signInAnonymously(auth);
                 
+                if (!auth.currentUser) throw new Error("Auth failed");
+
+                // RULE 1: Strict paths mandatory
                 const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'booking_requests');
+                
                 await addDoc(colRef, {
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
@@ -245,20 +255,27 @@
                     time: document.getElementById('time').value,
                     message: document.getElementById('message').value,
                     timestamp: serverTimestamp(),
-                    source: 'booking_page'
+                    metadata: {
+                        userAgent: navigator.userAgent,
+                        page: window.location.pathname
+                    }
                 });
 
                 status.classList.remove('hidden');
-                status.innerHTML = `<p class="text-green-600 font-bold text-xs uppercase tracking-widest">Hari Om! Your request has been sent. Harsh will contact you shortly.</p>`;
+                status.innerHTML = `<p class="text-green-600 font-bold text-xs uppercase tracking-widest p-4 bg-green-50 border border-green-100 rounded">Hari Om! Your request has been sent. Harsh will contact you shortly.</p>`;
                 form.reset();
                 gsap.from(status, { opacity: 0, y: 10, duration: 0.5 });
+                
+                // Hide success message after 10 seconds
+                setTimeout(() => { status.classList.add('hidden'); }, 10000);
+
             } catch (err) {
-                console.error(err);
+                console.error("Firebase Error:", err);
                 status.classList.remove('hidden');
-                status.innerHTML = `<p class="text-red-600 text-xs font-bold uppercase">Error. Please email directly at justtheself@gmail.com</p>`;
+                status.innerHTML = `<p class="text-red-600 font-bold text-xs uppercase p-4 bg-red-50 border border-red-100 rounded">Submission Error. Please email directly at justtheself@gmail.com</p>`;
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Request Session</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                submitBtn.innerHTML = originalBtnContent;
                 lucide.createIcons();
             }
         });
@@ -267,7 +284,7 @@
     <script>
         lucide.createIcons();
 
-        // Animations
+        // Animations on load
         window.addEventListener('DOMContentLoaded', () => {
             gsap.from("#header-gsap", { opacity: 0, y: 30, duration: 1.2, ease: "power3.out" });
             gsap.from("#bookingForm", { opacity: 0, scale: 0.98, duration: 1, delay: 0.3, ease: "power2.out" });
@@ -277,9 +294,12 @@
             document.getElementById('mobile-menu').classList.toggle('active'); 
         }
 
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').setAttribute('min', today);
+        // Prevent selecting past dates
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+        }
     </script>
 </body>
 </html>
