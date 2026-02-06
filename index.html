@@ -75,6 +75,7 @@
         #loader { 
             position: fixed; inset: 0; background-color: #FDFBF7; z-index: 9999; 
             display: flex; justify-content: center; align-items: center; flex-direction: column; 
+            transition: opacity 0.4s ease-out;
         }
 
         /* Hero Animation */
@@ -599,9 +600,8 @@
                     
                     <!-- Article 1 -->
                     <a href="journal.html" class="block bg-white p-6 rounded shadow-sm border border-transparent hover:border-brand-gold/30 hover:shadow-md transition duration-300 group">
-                        <div class="flex justify-between items-center mb-2">
+                        <div class="mb-2">
                             <span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Ayurveda</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover:text-clay transition"></i>
                         </div>
                         <h4 class="font-serif text-lg text-brand-black group-hover:text-clay transition">Understanding Your Prakriti</h4>
                         <p class="font-sans text-xs text-brand-gray mt-2 leading-relaxed">How your biological constitution shapes your reality and health.</p>
@@ -609,9 +609,8 @@
 
                     <!-- Article 2 -->
                     <a href="journal.html" class="block bg-white p-6 rounded shadow-sm border border-transparent hover:border-brand-gold/30 hover:shadow-md transition duration-300 group">
-                        <div class="flex justify-between items-center mb-2">
+                        <div class="mb-2">
                             <span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Tantra & Spirit</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover:text-clay transition"></i>
                         </div>
                         <h4 class="font-serif text-lg text-brand-black group-hover:text-clay transition">The Neurobiology of Mantra</h4>
                         <p class="font-sans text-xs text-brand-gray mt-2 leading-relaxed">How sound vibrations restructure neural pathways and reduce anxiety.</p>
@@ -619,9 +618,8 @@
 
                     <!-- Article 3 -->
                     <a href="journal.html" class="block bg-white p-6 rounded shadow-sm border border-transparent hover:border-brand-gold/30 hover:shadow-md transition duration-300 group">
-                        <div class="flex justify-between items-center mb-2">
+                        <div class="mb-2">
                             <span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold">Psychology</span>
-                            <i data-lucide="arrow-up-right" class="w-4 h-4 text-gray-300 group-hover:text-clay transition"></i>
                         </div>
                         <h4 class="font-serif text-lg text-brand-black group-hover:text-clay transition">Trauma & The Body</h4>
                         <p class="font-sans text-xs text-brand-gray mt-2 leading-relaxed">Why talk therapy isn't enough and how somatic practices heal.</p>
@@ -693,7 +691,10 @@
                         <select name="service" class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition text-gray-600">
                             <option>Ayurveda Consultation</option>
                             <option>Psychology Session</option>
-                            <option>Yoga Therapy</option>
+                            <option>Yoga Session</option>
+                            <option>Mantra Chanting Session</option>
+                            <option>Ajapa Japa Session</option>
+                            <option>Meditation</option>
                             <option>Other Inquiry</option>
                         </select>
                         <textarea name="message" placeholder="Message" class="w-full bg-[#FAFAF8] border border-gray-200 p-3 text-sm rounded-sm focus:outline-none focus:border-clay transition h-32 resize-none" required></textarea>
@@ -751,6 +752,7 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
                     <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
+                    <li><a href="https://www.youtube.com/@theharshranjan" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="youtube" class="w-4 h-4"></i> @theharshranjan</a></li>
                     <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
                 </ul>
             </div>
@@ -827,19 +829,19 @@
     <script>
         lucide.createIcons();
 
-        // 1. Preloader Animation
+        // 1. Preloader Animation (Fast Load)
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
-            const heroText = document.querySelectorAll('.gsap-hero');
             
-            setTimeout(() => {
-                if(loader) loader.style.opacity = '0';
+            // Immediate transition as soon as load fires
+            if(loader) {
+                loader.style.opacity = '0';
                 setTimeout(() => {
-                    if(loader) loader.style.display = 'none';
-                    // GSAP Hero Animation
+                    loader.style.display = 'none';
+                    // GSAP Hero Animation triggers immediately after loader fades
                     gsap.to(".gsap-hero", { opacity: 1, y: 0, duration: 1.5, stagger: 0.2, ease: "power3.out" });
-                }, 700);
-            }, 1000);
+                }, 300); // Only 300ms fade out duration
+            }
         });
 
         // 2. Navbar Scroll Logic
