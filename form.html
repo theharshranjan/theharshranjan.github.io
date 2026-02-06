@@ -1,22 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Start Your Journey | Samarpan</title>
+    <title>Schedule a Session | Samarpan</title>
     
     <!-- SEO -->
-    <meta name="description" content="Begin your holistic wellness journey with Harsh Ranjan. Intake form for Ayurveda, Psychology, and Yoga sessions.">
+    <meta name="description" content="Book a holistic wellness consultation combining Ayurveda Biology, Psychology, and Neurobiology with Harsh Ranjan.">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HMM7CJSCW7');
-    </script>
-    
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
@@ -41,8 +32,7 @@
                         'brand-gray': '#666666',
                         'brand-gold': '#C5A059',
                         'brand-cream': '#FDFBF7',
-                        paper: '#FDFBF7',
-                        sage: '#4A5D4F'
+                        paper: '#FDFBF7'
                     },
                     fontFamily: {
                         sans: ['Lato', 'sans-serif'],
@@ -56,130 +46,166 @@
 
     <style>
         body { background-color: #FDFBF7; color: #1C1C1C; -webkit-font-smoothing: antialiased; }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #FDFBF7; }
-        ::-webkit-scrollbar-thumb { background: #D95D39; }
+        .input-field { 
+            width: 100%; background-color: white; border: 1px solid #e5e7eb; 
+            padding: 0.75rem 1rem; font-size: 0.875rem; border-radius: 0.125rem;
+            transition: border-color 0.3s ease; outline: none;
+        }
+        .input-field:focus { border-color: #D95D39; }
+        label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; color: #666; font-weight: 700; }
         
-        .fade-in-up { opacity: 0; transform: translateY(20px); }
+        #mobile-menu { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+        #mobile-menu.active { opacity: 1; visibility: visible; pointer-events: auto; }
     </style>
 </head>
-<body class="selection:bg-clay selection:text-white min-h-screen flex flex-col justify-between">
+<body class="antialiased">
 
-    <!-- NAVIGATION (Minimal) -->
-    <nav class="absolute top-0 w-full p-6 z-50">
-        <div class="max-w-[1400px] mx-auto flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-3 group">
-                <!-- Logo: Saffron Color -->
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay drop-shadow-sm">
+    <!-- NAVBAR -->
+    <nav id="navbar" class="w-full z-50 bg-white text-brand-black border-b border-black/5">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+                <a href="index.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Home</a>
+                <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">About</a>
+            </div>
+
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
+                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-1 transition duration-500">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span class="font-sans text-[10px] uppercase tracking-[0.2em] font-bold text-brand-black group-hover:text-clay transition duration-500">Back to Home</span>
+                <span class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-clay">Samarpan</span>
             </a>
+
+            <div class="hidden lg:flex flex-1 justify-end items-center">
+                <a href="mailto:justtheself@gmail.com" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Support</a>
+            </div>
+
+            <button class="lg:hidden text-current z-50 p-2" onclick="toggleMenu()">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
         </div>
     </nav>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-grow flex items-center justify-center py-24 px-6 relative">
-        <!-- Background Elements -->
-        <div class="fixed top-0 left-0 w-full h-1/2 bg-gradient-to-b from-brand-gold/5 to-transparent -z-10"></div>
-        <div class="fixed bottom-0 right-0 w-96 h-96 bg-sage/5 rounded-full blur-3xl -z-10"></div>
-
-        <div class="max-w-2xl w-full bg-white p-8 md:p-12 rounded-xl shadow-2xl border-t-4 border-clay fade-in-up">
+    <main class="py-16 md:py-24 px-6">
+        <div class="max-w-4xl mx-auto">
             
-            <div class="text-center mb-10">
-                <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Intake Form</span>
-                <h1 class="font-display text-4xl text-brand-black mb-4">Begin Your Transformation</h1>
-                <p class="font-serif text-brand-gray text-lg italic">
-                    "The journey of a thousand miles begins with a single step of intention."
+            <div class="text-center mb-12" id="header-gsap">
+                <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-4">Reservation</span>
+                <h1 class="font-display text-4xl md:text-5xl text-brand-black mb-6">Schedule Your Session</h1>
+                <div class="w-12 h-px bg-clay mx-auto"></div>
+                <p class="mt-8 font-serif text-lg text-brand-gray italic max-w-2xl mx-auto leading-relaxed">
+                    Bridge the gap between ancient wisdom and neurobiology. Choose your pathway to healing and integration.
                 </p>
             </div>
 
-            <!-- Form Connected to Firebase -->
-            <form id="detailedForm" onsubmit="handleSessionRequest(event)" class="space-y-6">
-                
-                <!-- Personal Details -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-1">
-                        <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Full Name</label>
-                        <input type="text" name="name" id="name" required class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition placeholder-gray-300" placeholder="e.g. Aditi Sharma">
+            <div class="bg-white rounded-sm shadow-2xl shadow-black/5 p-8 md:p-12 border border-black/5">
+                <form id="bookingForm" class="space-y-8">
+                    <!-- Personal Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="input-field" placeholder="E.g. Arnav Sharma" required>
+                        </div>
+                        <div>
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="input-field" placeholder="E.g. arnav@example.com" required>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Email Address</label>
-                        <input type="email" name="email" id="email" required class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition placeholder-gray-300" placeholder="e.g. aditi@example.com">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="input-field" placeholder="+91 00000 00000" required>
+                        </div>
+                        <div>
+                            <label for="service">Select Service</label>
+                            <select id="service" class="input-field" required>
+                                <option value="" disabled selected>Select a session type</option>
+                                <option value="Ayurveda Consultation">Nadi Pariksha & Ayurveda Biology Consult</option>
+                                <option value="Psychology Session">Therapeutic Psychology (BA Hons perspective)</option>
+                                <option value="Yoga & Neurobiology">Yoga Therapy & Neurobiological Integration</option>
+                                <option value="Mantra & Sound">Sanskrit Mantra & Sound Vibration Therapy</option>
+                                <option value="Public Health Nutrition">Public Health Nutrition Planning</option>
+                                <option value="Custom Spiritual Journey">Custom Tatwa Suddhi / Tantra Session</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-1">
-                        <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Mobile Number</label>
-                        <input type="tel" name="phone" id="phone" required class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition placeholder-gray-300" placeholder="+91 98765 43210">
+                    <!-- Date/Time -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" class="input-field" required>
+                        </div>
+                        <div>
+                            <label for="time">Preferred Time Zone / Slot</label>
+                            <input type="text" id="time" class="input-field" placeholder="E.g. Morning (10 AM - 12 PM IST)" required>
+                        </div>
                     </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Location</label>
-                        <input type="text" name="location" id="location" class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition placeholder-gray-300" placeholder="City, Country (for Timezone)">
+
+                    <!-- Message -->
+                    <div>
+                        <label for="message">Describe your current health or spiritual goals</label>
+                        <textarea id="message" rows="4" class="input-field resize-none" placeholder="Share briefly about what brings you to Samarpan..."></textarea>
                     </div>
-                </div>
 
-                <!-- Service Selection -->
-                <div class="space-y-1 pt-2">
-                    <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Interested In</label>
-                    <div class="relative">
-                        <select name="service" id="service" required class="w-full bg-[#FAFAF8] border-b border-gray-200 p-3 text-sm focus:outline-none focus:border-clay transition text-brand-black appearance-none cursor-pointer">
-                            <option value="" disabled selected>Select a Session Type...</option>
-                            <option value="Ayurveda Consultation">Ayurveda Consultation (Biology & Diet)</option>
-                            <option value="Psychology Session">Therapeutic Psychology Session</option>
-                            <option value="Yoga Session">Yoga Session (Hatha/Nidra)</option>
-                            <option value="Mantra Chanting">Mantra Chanting Session</option>
-                            <option value="Ajapa Japa">Ajapa Japa Session</option>
-                            <option value="Meditation">Meditation Guidance</option>
-                            <option value="Holistic Package">Holistic Package (Combined)</option>
-                            <option value="Other">Other Inquiry</option>
-                        </select>
-                        <i data-lucide="chevron-down" class="absolute right-3 top-3 w-4 h-4 text-brand-gray pointer-events-none"></i>
+                    <!-- Submit -->
+                    <div class="pt-4">
+                        <button type="submit" id="submitBtn" class="w-full py-4 bg-brand-black text-white font-bold text-xs uppercase tracking-[0.25em] hover:bg-clay transition-all duration-500 shadow-lg flex justify-center items-center gap-2">
+                            <span>Request Session</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </div>
-                </div>
+                </form>
 
-                <!-- Detailed Input -->
-                <div class="space-y-1 pt-2">
-                    <label class="text-[10px] uppercase tracking-widest text-brand-gray font-bold">Current Challenges / Intention</label>
-                    <textarea name="message" id="message" required rows="4" class="w-full bg-[#FAFAF8] border border-gray-200 p-4 text-sm rounded-sm focus:outline-none focus:border-clay transition resize-none placeholder-gray-300" placeholder="Please briefly describe your health concerns, mental state, or spiritual goals..."></textarea>
+                <div id="formStatus" class="mt-6 text-center hidden">
+                    <!-- Status injected via JS -->
                 </div>
+            </div>
 
-                <!-- Submit -->
-                <div class="pt-4">
-                    <button type="submit" class="w-full py-4 bg-brand-black text-white font-sans text-xs font-bold uppercase tracking-[0.25em] hover:bg-clay hover:shadow-lg transition duration-500 rounded-sm">
-                        Submit Request
-                    </button>
+            <!-- Footer Info -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="p-6">
+                    <i data-lucide="video" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
+                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">Virtual Sessions</h4>
+                    <p class="text-xs text-brand-gray leading-relaxed">Available globally via Zoom or Google Meet.</p>
                 </div>
-
-                <div id="formStatus" class="text-center min-h-[20px]"></div>
-                
-                <p class="text-[10px] text-center text-brand-gray/50 mt-4">
-                    Your information is held in strict confidence. <br>We typically respond within 24 hours.
-                </p>
-            </form>
+                <div class="p-6">
+                    <i data-lucide="map-pin" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
+                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">In-Person</h4>
+                    <p class="text-xs text-brand-gray leading-relaxed">Consultations available in New Delhi, India.</p>
+                </div>
+                <div class="p-6">
+                    <i data-lucide="clock" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
+                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">Wait Time</h4>
+                    <p class="text-xs text-brand-gray leading-relaxed">Response within 24-48 hours of request.</p>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- FOOTER (Simple) -->
-    <footer class="py-8 text-center text-brand-gray/40 text-[10px] uppercase tracking-widest border-t border-brand-gray/10">
-        &copy; 2026 Samarpan • Global
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
+        <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
+        <a href="about.html" class="font-display text-2xl hover:text-clay">About</a>
+        <a href="journal.html" class="font-display text-2xl hover:text-clay">Journals</a>
+        <a href="index.html#contact" class="font-display text-2xl hover:text-clay">Contact</a>
+    </div>
+
+    <footer class="py-12 border-t border-black/5 bg-white text-center">
+        <p class="text-[10px] uppercase tracking-widest text-brand-gray">&copy; 2026 Harsh Ranjan | Samarpan</p>
     </footer>
 
     <!-- FIREBASE MODULE -->
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-        // Additional imports required for the form logic to work
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
             authDomain: "thesamrpan.firebaseapp.com",
@@ -190,75 +216,70 @@
             measurementId: "G-ML1QLKGR3K"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        
-        // Initialize Firestore (Required for form submission)
         const db = getFirestore(app);
         const auth = getAuth(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'samarpan-site';
 
-        // Make handleSessionRequest available globally
-        window.handleSessionRequest = async function(e) {
+        const form = document.getElementById('bookingForm');
+        const status = document.getElementById('formStatus');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerText;
-            const statusDiv = document.getElementById('formStatus');
             
-            // Get values directly
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const location = document.getElementById('location').value;
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value;
-
-            btn.disabled = true;
-            btn.innerText = 'Transmitting...';
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Processing...</span>';
+            
             try {
-                // REQUIRED: Sign in anonymously to pass standard Firebase security rules
-                if (!auth.currentUser) await signInAnonymously(auth);
-
-                // Add a new document with a generated id to "session_requests" collection
-                const docRef = await addDoc(collection(db, "session_requests"), {
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    location: location,
-                    service: service,
-                    message: message,
+                // Ensure auth before write
+                await signInAnonymously(auth);
+                
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'booking_requests');
+                await addDoc(colRef, {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    service: document.getElementById('service').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    message: document.getElementById('message').value,
                     timestamp: serverTimestamp(),
-                    source: "intake_form_page"
+                    source: 'booking_page'
                 });
 
-                console.log("Document written with ID: ", docRef.id);
-                
-                statusDiv.innerHTML = `<div class="mt-4 p-4 bg-sage/10 text-sage border border-sage rounded text-xs font-bold tracking-widest uppercase animate-pulse">Hari Om! Request Sent Successfully</div>`;
-                document.getElementById('detailedForm').reset();
-
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                statusDiv.innerHTML = `<div class="mt-4 text-red-600 text-xs">There was an issue sending your request. Please try again.</div>`;
+                status.classList.remove('hidden');
+                status.innerHTML = `<p class="text-green-600 font-bold text-xs uppercase tracking-widest">Hari Om! Your request has been sent. Harsh will contact you shortly.</p>`;
+                form.reset();
+                gsap.from(status, { opacity: 0, y: 10, duration: 0.5 });
+            } catch (err) {
+                console.error(err);
+                status.classList.remove('hidden');
+                status.innerHTML = `<p class="text-red-600 text-xs font-bold uppercase">Error. Please email directly at justtheself@gmail.com</p>`;
             } finally {
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerText = originalText;
-                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
-                }, 4000);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Request Session</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                lucide.createIcons();
             }
-        }
+        });
     </script>
 
-    <!-- General Script -->
     <script>
         lucide.createIcons();
 
-        // GSAP Entry Animation
-        window.addEventListener('load', () => {
-            gsap.to(".fade-in-up", { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
+        // Animations
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.from("#header-gsap", { opacity: 0, y: 30, duration: 1.2, ease: "power3.out" });
+            gsap.from("#bookingForm", { opacity: 0, scale: 0.98, duration: 1, delay: 0.3, ease: "power2.out" });
         });
+
+        function toggleMenu() { 
+            document.getElementById('mobile-menu').classList.toggle('active'); 
+        }
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
     </script>
 </body>
 </html>
