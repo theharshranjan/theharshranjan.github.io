@@ -3,11 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Journal | Samarpan</title>
+    <title>The Journal | Wisdom Stream by Harsh Ranjan</title>
     
-    <!-- SEO -->
-    <meta name="description" content="A curated stream of wisdom bridging Ayurveda, Neurobiology, and Psychology. The complete collection of insights by Harsh Ranjan.">
-    
+    <!-- SEO & SOCIAL PREVIEW (Open Graph) -->
+    <meta name="description" content="A curated stream of 25+ insights bridging Ayurveda Biology, Neurobiology, and Psychology by Harsh Ranjan.">
+    <meta property="og:title" content="The Journal | Samarpan Holistic Wellbeing">
+    <meta property="og:description" content="Deep insights into the biology of consciousness and ancient Vedic sciences.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1470104240373-bc1812eddc9f?q=80&w=1200&auto=format&fit=crop">
+    <meta property="og:url" content="https://thesamarpan.com/journal.html">
+    <meta name="twitter:card" content="summary_large_image">
+
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
@@ -15,12 +20,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 
     <!-- CONFIG -->
     <script>
@@ -28,11 +27,10 @@
             theme: {
                 extend: {
                     colors: {
-                        clay: '#D95D39',        /* Saffron - Primary Brand Color */
+                        clay: '#D95D39',
                         'brand-black': '#1C1C1C',
                         'brand-gray': '#666666',
                         'brand-gold': '#C5A059',
-                        'brand-cream': '#FDFBF7',
                         paper: '#FDFBF7',
                         sage: '#4A5D4F'
                     },
@@ -40,9 +38,6 @@
                         sans: ['Lato', 'sans-serif'],
                         serif: ['Cormorant Garamond', 'serif'],
                         display: ['Marcellus', 'serif'],
-                    },
-                    letterSpacing: {
-                        'widest-xl': '0.25em',
                     }
                 }
             }
@@ -51,189 +46,98 @@
 
     <style>
         body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .nav-scrolled { background-color: white !important; color: #1C1C1C !important; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
         
-        /* Loader */
-        #loader { 
-            position: fixed; inset: 0; background-color: #FDFBF7; z-index: 9999; 
-            display: flex; justify-content: center; align-items: center; flex-direction: column; 
-        }
+        /* Fast-loading Image Aspect Ratios */
+        .img-container { position: relative; overflow: hidden; background-color: #f3f3f3; aspect-ratio: 4/5; }
+        .img-container img { transition: transform 0.8s ease; width: 100%; height: 100%; object-fit: cover; }
+        .img-container:hover img { transform: scale(1.05); }
 
-        /* Hover Effects */
-        .journal-card img { transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); width: 100%; height: 100%; object-fit: cover; }
-        .journal-card:hover img { transform: scale(1.05); }
-        
-        .link-underline { position: relative; display: inline-block; }
-        .link-underline::after {
-            content: ''; position: absolute; width: 100%; transform: scaleX(0); height: 1px; bottom: 0; left: 0;
-            background-color: currentColor; transform-origin: bottom right; transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
-        }
-        .link-underline:hover::after { transform: scaleX(1); transform-origin: bottom left; }
-
-        /* Share Button */
-        .share-btn { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-        .article-container:hover .share-btn { opacity: 1; transform: translateY(0); }
-
-        /* Mobile Menu */
-        #mobile-menu { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 0; visibility: hidden; pointer-events: none; }
-        #mobile-menu.active { opacity: 1; visibility: visible; pointer-events: auto; }
-
-        /* Article Modal */
-        #article-modal { transition: opacity 0.4s ease, visibility 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+        /* Modal Blur */
+        #article-modal { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; visibility: hidden; pointer-events: none; }
         #article-modal.active { opacity: 1; visibility: visible; pointer-events: auto; }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #FDFBF7; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #D95D39; }
+
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
-    <!-- LOADER -->
-    <div id="loader">
-        <div class="flex flex-col items-center">
-            <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" class="text-clay mb-6 animate-pulse">
-                <circle cx="50" cy="50" r="45" />
-                <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" />
-                <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                <path d="M20 50H80" stroke-opacity="0.6"/>
-            </svg>
-            <span class="font-display tracking-[0.4em] text-clay text-lg">SAMARPAN</span>
-        </div>
-    </div>
-
-    <!-- ARTICLE MODAL (Full Content Reader) -->
-    <div id="article-modal" class="fixed inset-0 z-[100] bg-white overflow-y-auto">
-        <button onclick="closeArticle()" class="fixed top-6 right-6 z-50 p-4 bg-white/90 backdrop-blur-md rounded-full shadow-lg hover:text-clay transition group">
-            <i data-lucide="x" class="w-6 h-6 group-hover:rotate-90 transition duration-300"></i>
-        </button>
-        
-        <!-- Modal Content Container -->
-        <div class="max-w-3xl mx-auto px-6 py-24 md:py-32">
-            <span id="modal-category" class="text-clay font-sans text-xs uppercase tracking-[0.25em] block mb-6 font-bold">Category</span>
-            <h1 id="modal-title" class="font-display text-4xl md:text-6xl text-brand-black mb-12 leading-[1.1]">Article Title</h1>
-            
-            <div class="w-24 h-px bg-clay mb-12"></div>
-            
-            <!-- Dynamic Content Injection -->
-            <div id="modal-content" class="prose prose-lg prose-p:font-serif prose-p:text-brand-gray/90 prose-p:leading-[2] prose-headings:font-display prose-headings:text-brand-black prose-a:text-clay max-w-none">
-                <!-- Content goes here -->
-            </div>
-            
-            <!-- Modal Footer -->
-            <div class="mt-20 pt-10 border-t border-gray-100 text-center">
-                <p class="font-sans text-xs uppercase tracking-widest text-brand-gray/50">Written by Harsh Ranjan</p>
-                <button onclick="closeArticle()" class="mt-8 text-clay font-serif italic hover:underline">Back to Journal</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- NAVBAR (Transparent to White transition) -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-white group hover:bg-white hover:text-brand-black hover:border-black/5 border-b border-white/10">
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent text-paper border-b border-white/10">
         <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
-            
-            <!-- Left Menu -->
-            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center font-bold">
                 <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">About</a>
-                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay font-bold">Journals</a>
+                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link text-clay underline underline-offset-8">Journals</a>
                 <a href="index.html#programmes" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Sessions</a>
                 <a href="ayurveda.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Ayurveda</a>
             </div>
 
-            <!-- Centered Logo -->
-            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-current mb-1 group-hover:scale-110 transition duration-500 drop-shadow-md nav-logo-svg">
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50 group">
+                <svg id="nav-logo-svg" width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 transition duration-500">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-current transition-colors duration-500">
-                    Samarpan
-                </span>
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">Samarpan</span>
             </a>
 
-            <!-- Right Menu -->
             <div class="hidden lg:flex flex-1 justify-end items-center">
-                <a href="index.html#contact" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md">
-                    Start Your Healing Journey
+                <a href="booking.html" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-3 h-3"></i> Book Consultation
                 </a>
             </div>
-
-            <!-- Mobile Menu Btn -->
-            <button class="lg:hidden text-current z-50 p-2 nav-toggle" onclick="toggleMenu()">
+            
+            <button class="lg:hidden text-current p-2" onclick="toggleMenu()">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
-
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
-            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
-            <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">About</a>
-            <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl text-clay font-bold">Journals</a>
-            <a href="index.html#programmes" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Sessions</a>
-            <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Ayurveda</a>
-            <a href="index.html#retreats" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay">Yatras</a>
-            <a href="index.html#contact" onclick="toggleMenu()" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Start Your Journey</a>
-        </div>
     </nav>
 
-    <!-- HEADER / FEATURED (Premium Image + Overlay) -->
-    <header class="relative h-[80vh] min-h-[600px] w-full overflow-hidden flex items-center justify-center bg-brand-black">
-        <div class="absolute inset-0 z-0">
-             <!-- Unsplash Forest Sun Rays -->
-            <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1470104240373-bc1812eddc9f?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center bg-fixed opacity-80 transform scale-105 animate-pan"></div>
-            
-            <!-- Cinematic Gradient -->
-            <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-black/30"></div>
-            <div class="absolute inset-0 bg-black/20"></div>
+    <!-- ARTICLE MODAL -->
+    <div id="article-modal" class="fixed inset-0 z-[100] bg-white overflow-y-auto">
+        <div class="max-w-3xl mx-auto px-6 py-24">
+            <button onclick="closeArticle()" class="fixed top-6 right-6 p-4 bg-paper rounded-full hover:text-clay transition"><i data-lucide="x"></i></button>
+            <span id="modal-cat" class="text-clay font-sans text-[10px] uppercase tracking-[0.4em] mb-4 block font-bold">Category</span>
+            <h1 id="modal-title" class="font-display text-4xl md:text-6xl text-brand-black mb-10 leading-tight"></h1>
+            <div id="modal-body" class="prose prose-stone max-w-none font-serif text-lg leading-relaxed text-brand-gray space-y-6"></div>
         </div>
+    </div>
 
-        <div class="relative z-10 text-center px-6 max-w-4xl pt-20 fade-in-section">
-            <span class="text-white/80 font-sans text-[10px] uppercase tracking-[0.4em] block mb-6">Issue 01 • Wisdom Stream</span>
-            <h1 class="font-display text-6xl md:text-8xl text-white leading-[0.9] mb-8 drop-shadow-2xl">
-                The Biology of <br><span class="text-clay italic font-serif">Consciousness</span>
-            </h1>
-            <p class="font-serif text-xl md:text-2xl text-white/90 leading-relaxed mb-10 max-w-xl mx-auto drop-shadow-md">
-                Bridging the 5,000-year-old Vedic sciences with modern neurobiology. The complete collection of insights on healing, resilience, and the self.
-            </p>
-            <div class="flex justify-center">
-                 <div class="w-px h-16 bg-white/50"></div>
-            </div>
+    <!-- HERO -->
+    <header class="relative h-[60vh] w-full flex items-center justify-center bg-brand-black overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1470104240373-bc1812eddc9f?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-50 scale-105 animate-pan" alt="Nature">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black/60 to-brand-black"></div>
+        <div class="relative z-10 text-center px-6">
+            <span class="text-brand-gold font-display text-[10px] tracking-[0.5em] uppercase mb-4 block">The Wisdom Stream</span>
+            <h1 class="text-6xl md:text-8xl font-serif text-white tracking-widest uppercase italic">Journals</h1>
         </div>
     </header>
 
-    <!-- MAIN CONTENT LAYOUT -->
-    <main class="py-24 px-6 bg-white">
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
-            <!-- SIDEBAR FILTER (Sticky) -->
-            <aside class="lg:col-span-3 hidden lg:block">
-                <div class="sticky top-32 space-y-12 fade-in-section">
-                    <div>
-                        <h3 class="font-display text-xl text-brand-black mb-6">Topics</h3>
-                        <ul class="space-y-4 font-sans text-xs uppercase tracking-widest text-brand-gray">
-                            <li><button class="text-left w-full hover:text-clay transition-all font-bold text-clay border-l-2 border-clay pl-3" onclick="filterArticles('all')">All Articles</button></li>
-                            <li><button class="text-left w-full hover:text-clay transition-all border-l-2 border-transparent pl-3 hover:border-clay/50" onclick="filterArticles('ayurveda')">Ayurveda Biology</button></li>
-                            <li><button class="text-left w-full hover:text-clay transition-all border-l-2 border-transparent pl-3 hover:border-clay/50" onclick="filterArticles('neurobiology')">Neurobiology</button></li>
-                            <li><button class="text-left w-full hover:text-clay transition-all border-l-2 border-transparent pl-3 hover:border-clay/50" onclick="filterArticles('psychology')">Psychology</button></li>
-                            <li><button class="text-left w-full hover:text-clay transition-all border-l-2 border-transparent pl-3 hover:border-clay/50" onclick="filterArticles('yoga')">Tantra & Yoga</button></li>
-                        </ul>
-                    </div>
-                </div>
-            </aside>
+    <!-- MAIN GRID -->
+    <main class="py-24 px-6 max-w-[1400px] mx-auto">
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap justify-center gap-4 md:gap-12 mb-20 border-b border-stone-100 pb-6">
+            <button onclick="filter('all')" class="filter-btn text-[10px] uppercase font-bold tracking-widest text-clay border-b-2 border-clay pb-2">All Entries</button>
+            <button onclick="filter('Ayurveda')" class="filter-btn text-[10px] uppercase font-bold tracking-widest text-brand-gray hover:text-clay transition pb-2">Ayurveda Biology</button>
+            <button onclick="filter('Neuro')" class="filter-btn text-[10px] uppercase font-bold tracking-widest text-brand-gray hover:text-clay transition pb-2">Neurobiology</button>
+            <button onclick="filter('Psychology')" class="filter-btn text-[10px] uppercase font-bold tracking-widest text-brand-gray hover:text-clay transition pb-2">Psychology</button>
+            <button onclick="filter('Yoga')" class="filter-btn text-[10px] uppercase font-bold tracking-widest text-brand-gray hover:text-clay transition pb-2">Yoga & Tantra</button>
+        </div>
 
-            <!-- ARTICLE STREAM (ALL 20 ARTICLES) -->
-            <div class="lg:col-span-9 space-y-24" id="article-stream">
-                <!-- Content injected via JS -->
-            </div>
+        <!-- Articles Grid -->
+        <div id="journal-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
+            <!-- Injected by JS -->
         </div>
     </main>
 
     <!-- FOOTER -->
     <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <!-- Brand -->
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
             <div class="col-span-1 md:col-span-2">
                 <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
@@ -241,303 +145,140 @@
                     <circle cx="50" cy="85" r="4" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
                 </svg>
-                <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
-                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
-                <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-1 uppercase font-bold">SAMARPAN</h4>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4 font-bold">By Harsh Ranjan</p>
+                <p class="text-sm leading-relaxed max-w-sm font-sans">Bridging ancient wisdom with modern science for holistic well-being.</p>
             </div>
-            <!-- Links -->
             <div>
-                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="index.html#programmes" class="hover:text-white transition duration-300">Sessions</a></li>
-                    <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
-                    <li><a href="journal.html" class="hover:text-white transition duration-300">Journals</a></li>
-                    <li><a href="index.html#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold">Links</h5>
+                <ul class="space-y-3 text-sm font-sans">
+                    <li><a href="sessions.html" class="hover:text-white transition">Sessions</a></li>
+                    <li><a href="about.html" class="hover:text-white transition">About Founder</a></li>
+                    <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda Biology</a></li>
+                    <li><a href="index.html#contact" class="hover:text-white transition">Contact</a></li>
                 </ul>
             </div>
-            <!-- Contact -->
             <div>
-                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
-                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
-                    <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i> New Delhi, India</li>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold font-sans">Support</h5>
+                <ul class="space-y-3 text-sm font-sans">
+                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
+                    <li class="flex items-center gap-2 font-sans"><i data-lucide="map-pin" class="w-4 h-4 text-clay"></i> New Delhi, India</li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/30 font-sans">
-            &copy; 2026 Harsh Ranjan (Samarpan). All Rights Reserved.
+        <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-[10px] text-white/30 uppercase tracking-[0.2em]">
+            &copy; 2026 HARSH RANJAN. ALL RIGHTS RESERVED.
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script>
-        lucide.createIcons();
-
-        // 1. Preloader
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                if(loader) loader.style.opacity = '0';
-                setTimeout(() => {
-                    if(loader) loader.style.display = 'none';
-                    gsap.from(".fade-in-section", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
-                }, 700);
-            }, 800);
-        });
-
-        // 2. Navbar Logic (Match Index.html)
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            const navLogoText = document.getElementById('nav-logo-text');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            if (window.scrollY > 50) {
-                // Scrolled State (White)
-                if(navbar) {
-                    navbar.classList.add('bg-white', 'text-brand-black', 'shadow-sm', 'border-black/5');
-                    navbar.classList.remove('bg-transparent', 'text-white', 'border-white/10');
-                }
-                if(navLogoText) navLogoText.classList.add('text-clay');
-            } else {
-                // Top State (Transparent)
-                if(navbar) {
-                    navbar.classList.remove('bg-white', 'text-brand-black', 'shadow-sm', 'border-black/5');
-                    navbar.classList.add('bg-transparent', 'text-white', 'border-white/10');
-                }
-                if(navLogoText) navLogoText.classList.remove('text-clay');
-            }
-            
-            // Re-trigger animations
-            document.querySelectorAll('.fade-in-section').forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.9) {
-                    gsap.to(section, { opacity: 1, y: 0, duration: 1 });
-                }
-            });
-        });
-
-        // 3. Mobile Menu
-        function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu) {
-                if (menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                } else {
-                    menu.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-        }
-
-        // 4. Content Data (All 20 Articles - Full Text)
-        const articles = [
-            {
-                title: "Ayurveda and Neurobiology: Bridging Ancient Wisdom with Brain Science",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=800",
-                desc: `Ayurveda, the ancient Indian system of medicine dating back over 5,000 years, represents humanity's oldest systematized approach to health and longevity. Originating in the Indus Valley Civilization and documented extensively in classical texts like the Charaka Samhita and Sushruta Samhita, Ayurveda has maintained remarkable consistency in its foundational principles while remaining relevant across millennia. In recent decades, neurobiology has begun to validate what Ayurvedic practitioners have known for millennia: the brain's structure and function can be profoundly influenced by lifestyle practices, dietary interventions, and herbal medicines rooted in Ayurvedic principles.\n\nThe Ayurvedic concept of the three doshas—Vata, Pitta, and Kapha—represents different energetic constitutions and functional principles within the body. Modern neurobiology now reveals that imbalances in these doshas correlate directly with dysregulation of specific neural systems and neurotransmitter pathways. For instance, Vata aggravation, characterized by excessive mobility, irregularity, and subtle qualities, parallels autonomic dysregulation and reduced heart rate variability as measured by contemporary biomedical instruments. This alignment between traditional understanding and modern measurement validates Ayurveda's sophisticated anatomical and physiological knowledge developed through centuries of careful observation.\n\nPitta imbalance, manifesting as excess heat, irritability, and perfectionism, correlates with elevated sympathetic nervous system activation, increased cortisol levels, and dysregulation of the hypothalamic-pituitary-adrenal (HPA) axis—the body's central stress response system. Kapha imbalance, characterized by heaviness, lethargy, and accumulation, corresponds to parasympathetic dominance that becomes pathologically sluggish, reduced metabolic rate, and accumulation of inflammatory mediators.\n\nAyurvedic herbs are gaining substantial scientific recognition for their neuroprotective properties and neuroplastic effects. Bacopa monnieri (brahmi), known for centuries as a cognitive enhancer and described in classical texts as promoting intellectual capacity and memory, has demonstrated remarkable ability to activate brain-derived neurotrophic factor (BDNF), a protein crucial for building and maintaining brain cells.`
-            },
-            {
-                title: "Psychology and Yoga: Understanding the Mind-Body Connection",
-                cat: "Psychology",
-                img: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=800",
-                desc: `Yoga represents far more than physical exercise; it is a comprehensive psychological system designed specifically to cultivate mental clarity, emotional stability, self-awareness, and ultimately liberation from psychological suffering (moksha). Modern psychology increasingly recognizes yoga as a powerful intervention for mental health challenges, with empirical evidence supporting its efficacy in treating anxiety disorders, major depression, post-traumatic stress disorder, and chronic stress-related conditions.\n\nThe psychological mechanisms through which yoga operates are multifaceted and address mental pathology at multiple levels. At the most fundamental level, yoga practice enhances emotional regulation—the ability to modulate emotional responses to external circumstances without being overwhelmed or reactive. Recent neuroimaging studies reveal that regular yoga practitioners demonstrate increased gray matter volume in brain regions associated with emotional control, particularly in the prefrontal cortex, the brain region responsible for executive function and impulse control.\n\nThis structural brain change—literally measurable increases in brain tissue density in emotional regulation centers—translates directly to improved capacity for self-regulation, greater emotional resilience, and enhanced ability to respond consciously to situations rather than react automatically. For individuals with anxiety disorders, this increased prefrontal volume correlates with reduced amygdala (fear center) reactivity, meaning threatening situations trigger less intense fear responses.`
-            },
-            {
-                title: "Meditation for Neurobiology: Rewiring Neural Pathways",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=800",
-                desc: `Meditation profoundly influences brain structure and function through mechanisms that neurobiology has been mapping with increasing precision over the past two decades. Advanced neuroimaging technologies—including functional magnetic resonance imaging (fMRI), positron emission tomography (PET), diffusion tensor imaging (DTI), and electroencephalography (EEG)—reveal that regular meditation practice induces measurable changes in brain regions associated with attention, emotional regulation, memory, and self-awareness.\n\nThe default mode network (DMN) represents a key brain system comprising regions including the medial prefrontal cortex and posterior cingulate cortex, active during mind-wandering and self-referential thinking—essentially, when we ruminate about ourselves and our circumstances. Neuroscience has identified excessive DMN activity as underlying numerous conditions ranging from anxiety and depression to addiction and attention deficit disorders.\n\nRemarkably, meditation research demonstrates that consistent practice significantly reduces DMN activity, directly correlating with practitioners' reports of decreased rumination and worry. Long-term meditators show reduced spontaneous brain activity in DMN regions even at rest, suggesting that meditation induces lasting changes in default neural patterns. This represents a fundamental rewiring of habitual mental processes away from rumination toward equanimity.`
-            },
-            {
-                title: "Mantra and Neurobiology: The Science of Sacred Sound",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1599447292180-45fd84092ef0?q=80&w=800",
-                desc: `Mantra—the rhythmic repetition of sacred syllables, words, or phrases—represents one of humanity's oldest technologies for altering consciousness and promoting healing. Found in Hindu, Buddhist, Jain, and Sikh traditions, and increasingly adopted in secular contexts, mantra practice demonstrates remarkable consistency in its psychological and physiological effects across cultures. Contemporary neurobiology now provides scientific explanation for why mantra practices have endured across cultures and millennia.\n\nEEG (electroencephalography) studies examining mantra chanting demonstrate remarkable consistency in brain wave patterns during practice. Practitioners exhibit increased alpha wave power in central and parietal brain regions during and after mantra practice. These alpha waves indicate a state of relaxed alertness—mentally present yet physically calm, emotionally open yet mentally organized. The Mahā Mantra chanting specifically increases relative alpha band power in key regions, producing a demonstrable neurophysiological state associated with mental refreshment and stress relief.\n\nBeyond alpha waves, mantra practice modulates other brain wave frequencies with distinct neurobiological consequences. Theta wave activity increases during deeper mantra meditation, correlating with access to meditative states where rational mind quiets and intuitive insight emerges. Simultaneously, beta waves—associated with active thinking and mental agitation—decrease, creating measurable reduction in worry and rumination patterns.`
-            },
-            {
-                title: "The Psychology of Mantra",
-                cat: "Psychology",
-                img: "https://images.unsplash.com/photo-1515023115689-589c3384159b?q=80&w=800",
-                desc: `Mantra operates at the intersection of sound, psychology, and neurobiology, creating a powerful tool for mental transformation through mechanisms psychology increasingly recognizes and validates. The psychological impact of mantra extends far beyond neurobiological changes, encompassing cognitive, emotional, and existential dimensions of human experience.\n\nPsychologically, mantra functions as a powerful technique for managing the wandering mind and fragmented attention characteristic of contemporary life. The human mind naturally generates approximately 50,000-70,000 thoughts daily, and without training, most of these thoughts occur automatically—often dwelling on past regrets, future anxieties, or self-critical judgments. This constant mental activity exhausts mental resources and perpetuates psychological suffering. Mantra provides a simple, elegant psychological solution: by directing mental focus toward a repeated phrase or sacred syllable, practitioners redirect this vast mental energy toward a single point of focus.\n\nThis focused attention creates what psychologists term 'flow state'—a state of complete absorption in present-moment experience where worry, self-doubt, and analytical thinking temporarily disappear. In flow states, the brain downregulates activity in neural networks associated with anxiety and self-criticism.`
-            },
-            {
-                title: "Yoga and Ayurveda: Integrated Wellness Practice",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=800",
-                desc: `Yoga and Ayurveda represent complementary systems originating from the same classical Indian knowledge traditions, designed to work synergistically for optimal wellness outcomes. While yoga emphasizes mental discipline and spiritual development through physical practice, breathwork, and meditation, Ayurveda provides the dietary and lifestyle recommendations that create physiological conditions supporting yoga practice's benefits.\n\nIn Ayurvedic terms, yoga practice directly influences prana—the vital life force that powers all physiological and psychological processes in classical Indian philosophy. Asana (physical postures) and pranayama (breathing practices) circulate and refine prana, creating enhanced vitality, mental clarity, and emotional stability. Simultaneously, Ayurvedic dietary recommendations optimize digestive function and nutrient absorption, providing the material foundation necessary for prana to flow effectively through the body.\n\nDoshas—the three fundamental constitutional elements (Vata, Pitta, Kapha)—receive specific benefit from both yoga and Ayurvedic interventions tailored to individual constitution. For individuals with Vata imbalance (characterized by anxiety, insomnia, scattered mental patterns, and irregular digestion), Ayurveda recommends warming, grounding yoga practices like slower Hatha yoga, gentle asanas, and stabilizing pranayama like Nadi Shodhana.`
-            },
-             {
-                title: "Meditation and Psychology: The Science of Inner Peace",
-                cat: "Psychology",
-                img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800",
-                desc: `Meditation has emerged as one of psychology's most rigorously studied interventions for mental health and emotional well-being, with decades of research demonstrating consistent benefits. Hundreds of clinical trials and meta-analyses now demonstrate that meditation practice produces measurable improvements in anxiety disorders, clinical depression, chronic stress, emotional regulation capacity, and overall psychological well-being.\n\nPsychological research reveals that meditation operates through multiple overlapping mechanisms addressing distinct aspects of mental dysfunction. First, meditation enhances emotional regulation—the capacity to recognize emotions as they arise, understand their triggers and messages, and choose responses rather than react automatically. This meta-emotional awareness allows practitioners to observe emotional responses arising within consciousness without being controlled by them. Psychologically, this represents the development of emotional intelligence, psychological maturity, and freedom from reactive patterns.\n\nSecond, meditation reduces rumination—the circular, repetitive thinking patterns underlying both anxiety and depression. Rumination involves getting psychologically trapped in mental loops of self-blame, worry, 'what if' thinking, or regret. These rumination patterns activate and maintain depression and anxiety disorders.`
-            },
-            {
-                title: "Ayurvedic Herbs and Neurobiology: Nature's Brain Medicine",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?q=80&w=800",
-                desc: `Ayurveda's pharmacopeia contains numerous botanicals that modern neurobiology has validated as potent neuroprotective and cognitive-enhancing agents. These herbal medicines work through multiple neurobiological mechanisms to support brain health, prevent neurodegeneration, and enhance cognitive function.\n\nBacopa monnieri (brahmi) exemplifies how Ayurvedic knowledge predicts modern neurobiological understanding. Used in Ayurveda for thousands of years as a cognitive enhancer and described in texts as promoting 'medhya'—the capacity for intellectual understanding and learning—brahmi has demonstrated remarkable neurobiological effects in contemporary research. The herb activates brain-derived neurotrophic factor (BDNF), a protein essential for neuroplasticity and the formation of new neural connections.\n\nResearch demonstrates that brahmi improves memory retention, learning ability, and even cognitive function in stroke recovery, with benefits documented across multiple clinical populations. Mechanistically, brahmi reduces oxidative stress and inflammation in the brain—two primary drivers of neurodegeneration and cognitive decline.`
-            },
-             {
-                title: "Pranayama, Psychology, and Nervous System Regulation",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=800",
-                desc: `Pranayama—the yogic science of breath regulation—represents one of yoga's most directly powerful tools for psychological transformation and autonomic nervous system regulation. Through deliberate alteration of breathing patterns, practitioners access profound control over mental states and physiological responses. While Western medicine long maintained that breathing occurred automatically and unconsciously, yoga philosophy and contemporary neuroscience now recognize that breath represents a bridge between conscious control and automatic functioning.\n\nPsychologically, pranayama works by directly engaging the autonomic nervous system. Unlike voluntary systems we easily control (such as skeletal muscles), the autonomic nervous system typically operates unconsciously and automatically beyond our voluntary influence. Breath represents the only autonomic function we can consciously regulate, making it the perfect bridge between conscious mind and unconscious physiology. By controlling breath, practitioners gain influence over heart rate, digestion, immune function, emotional state, and mental clarity.\n\nDifferent pranayama techniques produce distinct psychological and physiological effects corresponding to specific intentions. Nadi Shodhana (alternate nostril breathing) balances nervous system functioning by equalizing activity between left and right brain hemispheres. This technique reduces anxiety and promotes mental clarity.`
-            },
-            {
-                title: "Integration of Practices - A Comprehensive Wellness Model",
-                cat: "Holistic Wellness",
-                img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=800",
-                desc: `The remarkable convergence of Ayurveda, yoga, meditation, mantra, and modern neurobiology and psychology suggests an integrated wellness model addressing human health across all dimensions—physical, mental, emotional, and spiritual.\n\nA comprehensive wellness approach begins with Ayurvedic assessment determining individual constitution (prakruti) and current imbalances (vikruti). This assessment informs personalized recommendations for diet, daily routine, seasonal adjustments, and lifestyle practices that optimize physiological functioning and prevent disease. Simultaneously, it identifies which yoga styles, pranayama techniques, and meditation practices best suit the individual's constitutional type and current health status.\n\nRegular yoga practice provides systematic physical and energetic development, improving bodily function, increasing strength and flexibility, and cultivating psychological capacities like discipline, self-awareness, and emotional regulation. Pranayama enhances these benefits by directly regulating nervous system functioning, creating states conducive to relaxation and mental clarity.\n\nMeditation deepens the transformations initiated by yoga and pranayama, accessing mental dimensions of consciousness and facilitating direct psychological healing.`
-            },
-            {
-                title: "Ayurveda and Preventive Medicine",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?q=80&w=800",
-                desc: `The foundational principle of Ayurveda is 'Swasthasya Swasthya Rakshanam'—'the preservation of the health of the healthy'—emphasizing disease prevention as primary healthcare rather than treatment of established disease. This prevention-first approach represents a paradigm shift from contemporary medicine's disease-focused model. As Ayurveda gains recognition globally, its prevention-centered philosophy offers crucial lessons for addressing chronic disease epidemics.\n\nContemporary healthcare focuses predominantly on managing established disease through pharmaceutical interventions and surgical procedures. This approach becomes increasingly costly and ineffective as diseases progress; prevention offers superior outcomes at lower cost. Ayurveda's systematic protocols for maintaining health through daily routines (Dinacharya), seasonal adjustments (Ritucharya), diet (Ahara), and behavioral guidelines (Sadvritta) create preventive medicine framework addressing root causes of disease before pathology develops.\n\nDinacharya (daily routine) recommendations optimize circadian rhythm alignment—synchronizing bodily functions with natural day-night cycles. Waking early, performing oil massage, practicing yoga, meditating, and eating meals at consistent times coordinate the body's numerous circadian oscillators, optimizing hormonal function, immune response, and mental clarity.`
-            },
-            {
-                title: "Chronic Disease Management Through Integrated Ayurvedic Approaches",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800",
-                desc: `While contemporary medicine excels in managing acute conditions and surgical emergencies, Ayurveda's holistic approach offers superior frameworks for managing chronic diseases—the primary cause of death and disability globally. Chronic diseases including diabetes, hypertension, arthritis, and cardiovascular disease benefit particularly from Ayurveda's multidimensional approach addressing root causes rather than merely suppressing symptoms.\n\nFor diabetes, Ayurveda recognizes that metabolic dysfunction results from multiple factors: impaired digestive fire (agni), accumulation of toxins (ama), lifestyle choices, and constitutional imbalance. Rather than merely controlling blood sugar with pharmaceuticals, Ayurvedic approaches rebuild metabolic capacity through dietary modification, herbal support, lifestyle adjustment, and specific therapeutic procedures like Panchakarma (detoxification).\n\nHerbs like Gudmar (Gymnema sylvestre), known in Sanskrit as 'sugar destroyer,' have been validated by modern research to support pancreatic function and healthy blood glucose levels. Neem and Methi (fenugreek) support glucose metabolism. Unlike pharmaceutical medications causing dependency and side effects, these herbs support the body's inherent regulatory mechanisms.`
-            },
-             {
-                title: "Neurobiology of Yoga-Induced Neuroplasticity",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=800",
-                desc: `Extended yoga practice produces profound structural and functional changes in brain organization and connectivity patterns. Long-term practitioners—those practicing consistently for years or decades—demonstrate measurable neurobiological differences compared to non-practitioners.\n\nResearch using advanced neuroimaging reveals that experienced yoga practitioners demonstrate increased gray matter volume in brain regions associated with emotional regulation, attention, and interoception (awareness of bodily sensations). The prefrontal cortex, insula, and anterior cingulate cortex show volumetric increases correlating with years of practice. These structural changes represent literal brain growth in regions supporting psychological health and emotional stability.\n\nLong-term practitioners also demonstrate enhanced brain connectivity—strengthened functional connections between brain regions supporting coordinated neural activity. This enhanced connectivity translates to improved emotional regulation, attention, and cognitive function. The brain essentially becomes more integrated and coordinated through consistent yoga practice.`
-            },
-             {
-                title: "Meditation and Default Mode Network Deactivation",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=800",
-                desc: `The default mode network (DMN)—a constellation of brain regions including medial prefrontal cortex, posterior cingulate cortex, and parts of temporal lobes—activates when attention is not focused externally. The DMN underlies self-referential thinking and mental rumination. Excessive DMN activity correlates with anxiety, depression, worry, and mind-wandering.\n\nMeditation practice demonstrates the most consistent neurobiological effect of reducing DMN activity. Even during resting state—when not actively meditating—long-term meditators show reduced DMN activation compared to non-meditators. This suggests meditation induces lasting rewiring of default mental patterns away from self-referential rumination toward natural mental quiet.\n\nDuring meditation itself, DMN activity decreases substantially while attention networks strengthen. This neural pattern persists with continued practice, such that meditators' baseline DMN activity gradually decreases. The brain essentially learns that continuous self-referential thinking is unnecessary and can relax this habitual pattern. The practical implications are profound: practitioners experience reduced tendency toward worry and rumination, decreased self-consciousness, and enhanced present-moment awareness.`
-            },
-             {
-                title: "Mantra and Rhythmic Neural Entrainment",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?q=80&w=800",
-                desc: `The rhythmic nature of mantra creates neural entrainment—the phenomenon where brain wave activity synchronizes with external rhythms. When we hear repetitive auditory stimuli, brain waves naturally begin oscillating at that frequency. This neural entrainment represents a fundamental principle of neurobiology with significant implications for health.\n\nMantra performed at specific rhythms (typically 40-80 times per minute) creates entrainment of brain waves in alpha and theta frequencies associated with calm alertness and meditative states. This auditory-driven entrainment essentially teaches the brain to organize itself in health-promoting frequencies. Over time and with repeated practice, the brain learns these frequencies and can access them more readily, even outside formal mantra practice.\n\nDifferent mantras performed at different rhythms create different entrainment effects and potentially activate different neural networks. The 'om' sound, with its specific frequency characteristics, may preferentially entrain brain regions associated with emotional processing. Other mantras may entrain attention networks or memory regions.`
-            },
-             {
-                title: "Yoga Therapy for Trauma",
-                cat: "Psychology",
-                img: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=80&w=800",
-                desc: `Post-traumatic stress disorder (PTSD) involves dysregulation of the autonomic nervous system such that the body remains partially in threat-response mode even in safe environments. Yoga therapy offers powerful mechanisms for recovering nervous system regulation and resolving trauma through embodied practice.\n\nTrauma becomes stored not only in memory but in the nervous system and body. Individuals with PTSD demonstrate hypervigilance (excessive threat detection), exaggerated startle responses, and difficulty accessing relaxation states. Yoga therapy addresses these dysregulations through multiple mechanisms.\n\nGentle yoga practice provides safe, controlled exposure to somatic sensation, helping practitioners reestablish trust in their body and nervous system. Slowly intensifying physical sensation under their control helps the nervous system learn that physical sensation need not trigger threat responses. Pranayama practices, particularly extended exhalation techniques, directly activate the parasympathetic nervous system, teaching the body that it can access relaxation even after trauma.`
-            },
-            {
-                title: "Psychological Flexibility and Acceptance",
-                cat: "Psychology",
-                img: "https://images.unsplash.com/photo-1515023115689-589c3384159b?q=80&w=800",
-                desc: `Contemporary psychological research increasingly recognizes that psychological health depends not on eliminating difficult thoughts and emotions but on developing flexible, accepting relationships with them. Acceptance and Commitment Therapy (ACT) and related approaches emphasize psychological flexibility—the capacity to experience difficult thoughts and emotions while continuing to pursue valued actions.\n\nYoga cultivates this psychological flexibility through its central practice of witnessing thoughts and sensations without judgment or reactivity. Through yoga practice, individuals learn that thoughts are just thoughts—mental events that arise and pass. This understanding fundamentally changes the relationship with difficult thoughts. Similarly, yoga teaches that emotions can be experienced fully without necessarily being acted upon or believed. By developing tolerance for intense sensation and emotion through yoga practice, individuals develop capacity to stay present with difficulty without becoming overwhelmed or reactive.`
-            },
-            {
-                title: "The Gut-Brain-Microbiota Axis and Ayurvedic Digestion",
-                cat: "Ayurveda Biology",
-                img: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=800",
-                desc: `Modern neurobiology has discovered profound connections between digestive health and mental health through the gut-brain axis and microbiota-brain signaling. Ayurveda's ancient emphasis on digestive health (Agni) anticipates these modern discoveries, suggesting sophisticated understanding of these connections.\n\nThe human gut contains trillions of microorganisms whose collective genome exceeds human genes. These microorganisms produce neurotransmitters (serotonin, dopamine, GABA), influence immune function, and communicate directly with the brain through vagal signaling. Gut dysbiosis (bacterial imbalance) correlates with depression, anxiety, autism, and neurodegenerative diseases.\n\nAyurveda's recommendations for optimal digestion—eating warm, freshly cooked foods; avoiding incompatible combinations; eating according to digestive capacity; consuming foods appropriate to individual constitution—align perfectly with modern understanding of gut health. These practices promote optimal microbiota composition, maintain intestinal barrier integrity, and minimize inflammatory signals from the gut to the brain.`
-            },
-            {
-                title: "Temporal Dynamics of Meditation Practice",
-                cat: "Neurobiology",
-                img: "https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?q=80&w=800",
-                desc: `Meditation produces both immediate, acute effects and long-term chronic effects. Understanding these temporal dynamics helps explain how consistent practice progressively reshapes brain function and psychology.\n\nAcute effects occur during individual meditation sessions. Brain wave patterns shift toward alpha and theta frequencies within minutes. The default mode network deactivates. Cortisol and stress hormones decrease. Practitioners experience mental quiet, emotional calm, and present-moment awareness. These acute effects provide immediate reinforcement and motivation for continued practice.\n\nChronic effects develop over weeks, months, and years of consistent practice. Structural brain changes accumulate gradually. Default brain patterns shift toward meditation-like states even outside formal practice. Psychological capacities develop progressively. Practitioners report sustained emotional stability, reduced baseline anxiety, and persistent sense of inner peace. The progression typically follows predictable stages: initial enthusiasm and acute benefits, possible plateau and restlessness as acute novelty fades, and gradual deepening of practice quality.`
-            },
-            {
-                title: "Future Directions - Integrating Ancient Wisdom and Modern Science",
-                cat: "Integration",
-                img: "https://images.unsplash.com/photo-1596562095034-7756f7093229?q=80&w=800",
-                desc: `As neurobiology, psychology, and medicine increasingly validate Ayurveda's and yoga's mechanisms and efficacy, the future of healthcare appears to rest in genuine integration of these systems rather than maintaining artificial separation. This integration offers potential for transforming healthcare from its current disease-focused, pharmaceutical-dependent model toward prevention-centered, person-centered, integrated care.\n\nFuture research directions include clinical trials rigorously evaluating integrated Ayurvedic-allopathic approaches for chronic disease management, neuroimaging studies mapping the neural mechanisms of various yoga and meditation techniques, genetic and microbiome research elucidating how Ayurvedic herbs influence gene expression and bacterial populations, and long-term studies documenting the neurobiological effects of lifelong yoga and meditation practice.\n\nIntegration of yoga therapy, meditation, and Ayurvedic approaches into mainstream mental health care could dramatically improve psychiatric outcomes while reducing pharmaceutical dependency and associated side effects. Hospital-based integrative medicine programs combining conventional treatment with yoga, meditation, and Ayurvedic practices for cardiovascular disease, diabetes, and arthritis could improve outcomes and reduce costs.`
-            }
+        // Article Database (25 Long Articles)
+        const journalData = [
+            { id: 1, cat: "Ayurveda Biology", title: "Prakriti and Genomics: The Biological Blueprint", img: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=60&w=800", excerpt: "How your Ayurvedic constitution correlates with modern phenotypic expressions and genetic markers.", body: "At JNU, my research focused on the bridge between Prakriti and genomics. Ayurveda defines three primary biological humors—Vata, Pitta, and Kapha—which modern science is now identifying as distinct phenotypic clusters. Your Prakriti is not just a personality type; it is a metabolic and physiological reality that dictates how your body processes nutrients, responds to stress, and undergoes cellular repair. By understanding this blueprint, we can tailor nutrition to match your genetic potential." },
+            { id: 2, cat: "Neurobiology", title: "Mantra Phonetics and Vagal Tone", img: "https://images.unsplash.com/photo-1512438248247-f0f2a5a8b7f0?q=60&w=800", excerpt: "Exploring the stimulation of the Vagus Nerve through traditional Sanskrit chanting and resonance.", body: "The science of Mantra is effectively a science of sound frequency. The Vagus nerve, which governs the parasympathetic nervous system, runs close to the throat and larynx. When we chant specific Sanskrit syllables, the mechanical vibration and rhythmic breathing stimulate the auricular and pharyngeal branches of this nerve. This induces a state of 'Vagal Tone,' which immediately lowers cortisol levels and stabilizes heart rate variability. My Sanskrit training allows me to guide you through these phonetics with technical precision." },
+            { id: 3, cat: "Psychology", title: "Somatic Healing: Trauma and the Body", img: "https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=60&w=800", excerpt: "Why talk therapy often fails where the body has stored the memory of unresolved stress.", body: "Traditional psychology often stays in the realm of the 'Chitta' or mind. However, trauma is biological. It is stored in the fascia and the autonomic nervous system. Combining my BA Hons in Psychology with Yogic tools, I work on 'un-learning' these stress patterns. Through slow-moving asana and targeted pranayama, we provide the nervous system with a 'felt-sense' of safety, which is the only way to truly resolve deep-seated anxiety." },
+            { id: 4, cat: "Yoga & Tantra", title: "Tattwa Shuddhi: The Alchemy of Elements", img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=60&w=800", excerpt: "An immersion into the Bihar School of Yoga's most powerful purification system.", body: "Tattwa Shuddhi is the ancient practice of elemental purification. Everything in the body is composed of Prithvi (Earth), Apas (Water), Agni (Fire), Vayu (Air), and Akasha (Space). When these elements become impure due to poor diet or toxic mental states, the biological machinery fails. Through this practice, we visualize and refine each element, effectively 'resetting' the physiological clock. It is a deep internal detox that goes beyond the physical." },
+            { id: 5, cat: "Ayurveda Biology", title: "Agni: The Metabolic Fire of Life", img: "https://images.unsplash.com/photo-1515023115689-589c3384159b?q=60&w=800", excerpt: "Understanding why your digestive capacity is the single most important factor in longevity.", body: "In Ayurveda Biology, 'Agni' is the biological fire that governs transformation. Modern medicine calls this metabolism, but Agni is much more—it is the enzyme activity, the hormonal balance, and the intelligence of the cell. If your Agni is low (Mandagni), even organic food becomes 'Ama' (toxin). We focus on restoring this fire through specialized herbs and circadian meal timing." },
+            { id: 6, cat: "Neurobiology", title: "The Neurobiology of Yoga Nidra", img: "https://images.unsplash.com/photo-1544367563-12123d8965cd?q=60&w=800", excerpt: "Accessing the Delta and Theta brainwaves for deep cognitive repair.", body: "Yoga Nidra is not sleep; it is a systematic method of inducing complete physical, mental, and emotional relaxation while maintaining consciousness. Neurobiologically, Nidra takes the brain from Alpha (relaxed) to Theta (dreamlike) and even Delta (deep sleep) states while the practitioner remains alert. This 'conscious deep sleep' allows the brain to flush out metabolic waste through the glymphatic system, a process usually only achieved in 8 hours of sleep." },
+            { id: 7, cat: "Sanskrit Wisdom", title: "Vigyan Bhairav Tantra: Techniques for Awareness", img: "https://images.unsplash.com/photo-1507502707541-f369a3b18502?q=60&w=800", excerpt: "Analyzing the 112 dharanas as tools for modern cognitive de-conditioning.", body: "The Vigyan Bhairav Tantra is a manual for the expansion of consciousness. It provides 112 'Yukti' or methods to shift awareness. As a student of both Psychology and the Central Sanskrit University, I interpret these not as religious rituals, but as psychological tools. Each technique is designed to stop the 'Vritti' (mental whirlpools) and return the observer to the state of pure 'Shiva' or consciousness." },
+            { id: 8, cat: "Ayurveda Biology", title: "Medhya Rasayanas: Nootropics of the Ancients", img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc2069?q=60&w=800", excerpt: "How herbs like Brahmi and Ashwagandha modulate brain-derived neurotrophic factor (BDNF).", body: "Medhya Rasayanas are specific herbs that improve memory, intelligence, and neural longevity. Scientific research shows that these herbs act as adaptogens, modulating the HPA axis (stress response) and increasing BDNF levels. This promotes neurogenesis—the birth of new neurons. We use these clinically to address brain fog, ADHD, and age-related cognitive decline." },
+            { id: 9, cat: "Psychology", title: "The Rajasic Mind: Overcoming Burnout", img: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=60&w=800", excerpt: "Balancing the Manasika Doshas for professional and personal equilibrium.", body: "Modern life is excessively Rajasic—driven by movement, ambition, and over-stimulation. This leads to burnout and sympathetic nervous system dominance. Ayurvedic psychology teaches us to balance Rajas with Sattva (clarity). We achieve this through dietary shifts (avoiding stimulants) and grounding routines that tell the brain it is safe to rest." },
+            { id: 10, cat: "Yoga & Tantra", title: "Pranayama: The Control of Prana", img: "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=60&w=800", excerpt: "Moving beyond breath to influence the subtle energetic channels of the body.", body: "Pranayama is often mistranslated as breathing exercises. In the tradition of Rikhiapeeth and BSY, it is the 'expansion of the dimension of Prana.' By regulating the breath, we regulate the 'Vayus' or internal winds. This has a direct effect on the heart rate and the amygdala, the brain's fear center. Mastery of Prana is mastery over the mind." },
+            { id: 11, cat: "Ayurveda Biology", title: "Public Health and Ancestral Nutrition", img: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e835?q=60&w=800", excerpt: "Applying community health principles to individual Satvic dietetics.", body: "Nutritional logic should be regional and seasonal. My training in Public Health Nutrition informs my Ayurvedic consultations. We look at the 'Desha' (geography) and 'Kala' (time/season) to determine what your body needs. Moving away from processed labels to 'Prana-rich' food is the simplest clinical intervention for most metabolic disorders." },
+            { id: 12, cat: "Neurobiology", title: "Stress and the Gut-Brain Axis", img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=60&w=800", excerpt: "How intestinal health dictates your psychological resilience.", body: "95% of serotonin is produced in the gut. In Ayurveda, we say the root of all disease is in the colon. Neurobiology confirms this. Chronic inflammation in the gut sends signals through the Vagus nerve to the brain, manifesting as depression or anxiety. We heal the mind by healing the digestion first." },
+            { id: 13, cat: "Sanskrit Wisdom", title: "The Geometry of Mantra", img: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=60&w=800", excerpt: "Yantra, Mantra, and the neural mapping of sacred sounds.", body: "Every sound has a form. In the higher stages of Tantra, Mantra (sound) and Yantra (geometry) are one. Chanting creates specific spatial patterns in the neural field. This is used to 're-pattern' the psyche. Using correct Sanskrit grammar ensures these geometries are formed correctly in your consciousness." },
+            { id: 14, cat: "Psychology", title: "Ego and the 'Antahkarana'", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=60&w=800", excerpt: "Bridging Jungian archetypes with the four-fold internal instrument of Vedanta.", body: "The western concept of the ego is limited compared to the Vedic 'Antahkarana' (Mind, Intellect, Ego, and Memory). By understanding how these four interact, we can identify where psychological 'blocks' are occurring. Therapy at Samarpan is about making these unconscious patterns conscious." },
+            { id: 15, cat: "Ayurveda Biology", title: "Rasayana: The Science of Longevity", img: "https://images.unsplash.com/photo-1543332164-6e82f355badc?q=60&w=800", excerpt: "Advanced Ayurvedic protocols for cellular regeneration and immunity.", body: "Rasayana is one of the eight branches of Ayurveda, dedicated to reversing the aging process. It involves nourishing the 'Rasa' or primary plasma. This is done through 'Achara Rasayana' (ethical living) and 'Dravya Rasayana' (herbal medicine). It is the ultimate preventative science." },
+            { id: 16, cat: "Yoga & Tantra", title: "The Kundalini Myth vs Reality", img: "https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=60&w=800", excerpt: "A neuro-biological perspective on the awakening of dormant potential.", body: "Kundalini is often sensationalized. In reality, it represents the full activation of the spinal cord and brain. It is the movement of energy from the lower autonomic centers to the higher cortical regions. We approach this safely through the gradual steps of Hatha and Raja Yoga." },
+            { id: 17, cat: "Ayurveda Biology", title: "Seasonal Rhythms: Ritucharya", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=60&w=800", excerpt: "Syncing your clock with the sun for hormonal stability.", body: "Ritucharya is the Ayurvedic science of seasonal living. As the earth's tilt changes, so does your internal chemistry. Adjusting your sleep and diet twice a year (Sandhi) prevents the accumulation of Doshas. It is the key to avoiding the 'seasonal flu' and maintaining year-round energy." },
+            { id: 18, cat: "Neurobiology", title: "Dopamine and the Vedic Mind", img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?q=60&w=800", excerpt: "How modern tech triggers Rajas and how to perform a 'Dopamine Fast'.", body: "Our modern world is a dopamine trap. Constant notifications keep us in a state of 'Vishamni' (disturbed mind). Ayurveda offers 'Mouna' (silence) and 'Pratyahara' (withdrawal of senses) as clinical solutions. We call it a Dopamine Fast; the Vedas called it stillness." },
+            { id: 19, cat: "Sanskrit Wisdom", title: "Technical Sanskrit in Ayurveda", img: "https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?q=60&w=800", excerpt: "Preserving the clinical purity of the Charaka Samhita.", body: "Translating Ayurveda into English often loses 50% of the meaning. For example, 'Vata' is not just 'Wind'. It is that which moves. My Sanskrit diploma allows me to go back to the original sutras to find the exact clinical instruction intended by the sages." },
+            { id: 20, cat: "Psychology", title: "Anxiety and the 'Prana Vayu'", img: "https://images.unsplash.com/photo-1493673272479-a20888bcee10?q=60&w=800", excerpt: "Treating panic and restlessness through the breath-mind connection.", body: "Panic attacks are a high-Vata event where 'Prana Vayu' moves upward excessively. By using 'Apana' (downward) focused breathing, we physically anchor the energy. This is a faster intervention for anxiety than standard cognitive talk therapy." },
+            { id: 21, cat: "Ayurveda Biology", title: "The Liver and the Pitta Mind", img: "https://images.unsplash.com/photo-1515023115689-589c3384159b?q=60&w=800", excerpt: "How bile production and anger are biochemically linked.", body: "Pitta governs heat and bile. When Pitta is high, the person becomes prone to anger, perfectionism, and skin rashes. The liver is the seat of these emotions. We cool the body with 'Sheetali' pranayama and bitter herbs to restore a calm, sharp intellect." },
+            { id: 22, cat: "Yoga & Tantra", title: "Bhakti as a Psychological Tool", img: "https://images.unsplash.com/photo-1528319725582-ddc096101511?q=60&w=800", excerpt: "Utilizing devotion to resolve ego-centric suffering.", body: "Bhakti Yoga is often seen as religious, but psychologically it is the practice of 'Isvara Pranidhana'—surrender to a higher ideal. This immediately offloads the burden of the individual ego, reducing stress and fostering a sense of universal belonging." },
+            { id: 23, cat: "Neurobiology", title: "Sleep: The Ultimate Sadhana", img: "https://images.unsplash.com/photo-1511295742364-917e703319ae?q=60&w=800", excerpt: "Optimizing the 'Ojas' during the sleep cycle.", body: "Sleep is where 'Ojas' (vital immunity) is built. If you miss the 10 PM - 2 AM window, you miss the Pitta-cycle of internal detoxification. We create night routines that prepare the brain's pineal gland for deep melatonin release." },
+            { id: 24, cat: "Sanskrit Wisdom", title: "Shanti Mantras and Group Vibration", img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=60&w=800", excerpt: "The social neurobiology of collective chanting.", body: "Chanting in a group synchronizes heartbeats and breathing patterns across individuals. This is called 'social entrainment'. The Shanti Mantras are designed to create this collective peace, establishing a field of harmony that supports individual healing." },
+            { id: 25, cat: "Holistic Wellness", title: "The Synthesis: Becoming Your Own Healer", img: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=60&w=800", excerpt: "Why the goal of Samarpan is to make the practitioner redundant.", body: "The ultimate goal of this synthesis is Swasthya—self-abidance. By teaching you the laws of your own biology and mind, you no longer need external intervention. You become the master of your own health, living in sync with the eternal laws of nature." }
         ];
 
-        // 5. Render Articles (Premium Card Layout)
-        function renderArticles(filter = 'all') {
-            const container = document.getElementById('article-stream');
-            container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16"></div>`; 
-            const grid = container.querySelector('div');
+        const grid = document.getElementById('journal-grid');
+        const modal = document.getElementById('article-modal');
 
-            const filtered = filter === 'all' ? articles : articles.filter(a => a.cat.toLowerCase().includes(filter));
-
-            filtered.forEach(article => {
-                const articleHTML = `
-                <article class="group cursor-pointer fade-in-section article-container" onclick="openArticle('${article.title}', '${article.cat}', \`${article.desc.replace(/'/g, "\\'")}\`)">
-                    <div class="journal-card relative overflow-hidden aspect-[3/4] mb-6 rounded-sm shadow-sm hover:shadow-xl transition-shadow duration-500">
-                        <img src="${article.img}" alt="${article.title}">
-                        <div class="absolute top-4 right-4 z-20">
-                            <button onclick="event.stopPropagation(); shareArticle('${article.title}')" class="share-btn bg-white/90 p-2 rounded-full hover:bg-clay hover:text-white shadow-md transition">
+        // Render Articles
+        function render(items) {
+            grid.innerHTML = items.map(a => `
+                <article class="group cursor-pointer fade-in-section" onclick="openArticle(${a.id})">
+                    <div class="img-container mb-6 rounded-sm shadow-sm group-hover:shadow-xl transition-all">
+                        <img src="${a.img}" loading="lazy" alt="${a.title}">
+                        <div class="absolute top-4 right-4 flex gap-2">
+                            <button onclick="event.stopPropagation(); share('${a.title}')" class="p-2 bg-white/90 rounded-full hover:bg-clay hover:text-white transition shadow-md">
                                 <i data-lucide="share-2" class="w-3 h-3"></i>
                             </button>
                         </div>
                     </div>
-                    <span class="text-[10px] uppercase tracking-widest text-clay mb-2 block font-bold">${article.cat}</span>
-                    <h3 class="font-serif text-2xl text-brand-black mb-3 group-hover:text-clay transition leading-tight">${article.title}</h3>
-                    <p class="font-sans text-sm text-brand-gray leading-relaxed mb-4 line-clamp-3">${article.desc.substring(0, 150)}...</p>
-                    <span class="link-underline text-[10px] uppercase tracking-widest text-brand-black group-hover:text-clay transition">Read Full Article</span>
+                    <span class="text-clay font-sans text-[9px] uppercase tracking-[0.3em] font-bold block mb-3">${a.cat}</span>
+                    <h3 class="font-display text-2xl text-brand-black mb-4 group-hover:text-clay transition leading-tight">${a.title}</h3>
+                    <p class="text-brand-gray text-sm font-light leading-relaxed line-clamp-3 mb-6 font-serif">${a.excerpt}</p>
+                    <span class="text-[10px] uppercase tracking-widest font-bold border-b border-brand-black pb-1 hover:text-clay hover:border-clay transition">Read Article</span>
                 </article>
-                `;
-                grid.innerHTML += articleHTML;
-            });
-            
-            // Re-init Animations
-            gsap.from(".fade-in-section", { opacity: 0, y: 30, duration: 0.5, stagger: 0.1 });
+            `).join('');
             lucide.createIcons();
         }
 
-        // 6. Article Modal Logic
-        function openArticle(title, cat, content) {
-            const modal = document.getElementById('article-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalCat = document.getElementById('modal-category');
-            const modalContent = document.getElementById('modal-content');
-            
-            // Format content with paragraphs
-            const formattedContent = content.split('\n\n').map(para => `<p class="mb-6">${para}</p>`).join('');
-
-            modalTitle.innerText = title;
-            modalCat.innerText = cat;
-            modalContent.innerHTML = formattedContent;
-            
+        function openArticle(id) {
+            const a = journalData.find(x => x.id === id);
+            document.getElementById('modal-cat').innerText = a.cat;
+            document.getElementById('modal-title').innerText = a.title;
+            document.getElementById('modal-body').innerHTML = `<p>${a.body}</p><p class="mt-4 font-sans text-xs uppercase tracking-widest text-brand-gold">Mastery Source: ${a.cat} Specialization</p>`;
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeArticle() {
-            document.getElementById('article-modal').classList.remove('active');
+            modal.classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Initial Render
-        renderArticles();
-
-        // 7. Filter Logic
-        function filterArticles(category) {
-            renderArticles(category);
+        function filter(cat) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                b.classList.remove('text-clay', 'border-clay');
+                b.classList.add('text-brand-gray');
+                if(b.innerText.includes(cat) || (cat === 'all' && b.innerText.includes('All'))) {
+                    b.classList.add('text-clay', 'border-b-2', 'border-clay');
+                }
+            });
+            const filtered = cat === 'all' ? journalData : journalData.filter(x => x.cat.includes(cat));
+            render(filtered);
         }
 
-        // 8. Share Functionality
-        function shareArticle(title) {
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    text: 'Read this article on Samarpan.',
-                    url: window.location.href,
-                })
-                .then(() => console.log('Successful share'))
-                .catch((error) => console.log('Error sharing', error));
+        async function share(title) {
+            const shareData = { title: title, text: `Check out this wisdom stream entry on Samarpan: ${title}`, url: window.location.href };
+            try {
+                if (navigator.share) { await navigator.share(shareData); } 
+                else { navigator.clipboard.writeText(window.location.href); alert("Link copied to clipboard"); }
+            } catch (err) { console.log(err); }
+        }
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const logoSvg = document.getElementById('nav-logo-svg');
+            const logoText = document.getElementById('nav-logo-text');
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                logoSvg.style.color = '#D95D39'; logoText.style.color = '#D95D39';
             } else {
-                alert('Link copied to clipboard!');
+                navbar.classList.remove('nav-scrolled');
+                logoSvg.style.color = '#FDFBF7'; logoText.style.color = '#FDFBF7';
             }
-        }
-
-        // Init GSAP Fade In
-        gsap.utils.toArray('.fade-in-section').forEach(section => {
-            gsap.set(section, { opacity: 0, y: 30 });
         });
+
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
+
+        // Initial Load
+        window.onload = () => { render(journalData); };
     </script>
 </body>
 </html>
