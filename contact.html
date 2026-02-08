@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule a Session | Samarpan</title>
+    <title>Contact | Harsh Ranjan & Samarpan</title>
     
-    <!-- SEO -->
-    <meta name="description" content="Book a holistic wellness consultation combining Ayurveda Biology, Psychology, and Neurobiology with Harsh Ranjan.">
-
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
@@ -31,8 +28,8 @@
                         'brand-black': '#1C1C1C',
                         'brand-gray': '#666666',
                         'brand-gold': '#C5A059',
-                        'brand-cream': '#FDFBF7',
-                        paper: '#FDFBF7'
+                        paper: '#FDFBF7',
+                        sage: '#4A5D4F'
                     },
                     fontFamily: {
                         sans: ['Lato', 'sans-serif'],
@@ -45,247 +42,304 @@
     </script>
 
     <style>
-        body { background-color: #FDFBF7; color: #1C1C1C; -webkit-font-smoothing: antialiased; }
-        .input-field { 
-            width: 100%; background-color: white; border: 1px solid #e5e7eb; 
-            padding: 0.75rem 1rem; font-size: 0.875rem; border-radius: 0.125rem;
-            transition: border-color 0.3s ease; outline: none;
-        }
-        .input-field:focus { border-color: #D95D39; }
-        label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; color: #666; font-weight: 700; }
+        body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
+        /* Navbar Transitions */
+        #navbar { transition: all 0.5s ease-in-out; }
+        .nav-scrolled { background-color: white !important; border-bottom: 1px solid rgba(0,0,0,0.05); box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        
+        .fade-in-section { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .fade-in-section.visible { opacity: 1; transform: translateY(0); }
+
         #mobile-menu { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 0; visibility: hidden; pointer-events: none; }
         #mobile-menu.active { opacity: 1; visibility: visible; pointer-events: auto; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #D95D39; }
+
+        input, textarea, select { background-color: transparent !important; }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-clay selection:text-white">
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="w-full z-50 bg-white text-brand-black border-b border-black/5">
-        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
-            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
-                <a href="index.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Home</a>
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-700 bg-transparent text-paper border-b border-white/10 group hover:bg-white hover:text-brand-black">
+        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative text-paper">
+            
+            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center font-bold">
                 <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">About</a>
+                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Journals</a>
+                <a href="index.html#programmes" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Sessions</a>
+                <a href="ayurveda.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Ayurveda</a>
             </div>
 
-            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50">
-                <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-clay mb-1">
+            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50 group">
+                <svg id="nav-logo-svg" width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 transition duration-500 group-hover:text-clay">
                     <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
                     <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
                     <circle cx="50" cy="85" r="3" fill="currentColor"/>
                     <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
                 </svg>
-                <span class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-clay">Samarpan</span>
+                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500 group-hover:text-clay text-center">
+                    Samarpan
+                </span>
             </a>
 
             <div class="hidden lg:flex flex-1 justify-end items-center">
-                <a href="mailto:justtheself@gmail.com" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Support</a>
+                <a href="booking.html" class="px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-brand-black transition duration-500 rounded-sm shadow-md flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-3 h-3 text-white"></i> Book Consultation
+                </a>
             </div>
 
-            <button class="lg:hidden text-current z-50 p-2" onclick="toggleMenu()">
+            <button class="lg:hidden text-current p-2" onclick="toggleMenu()">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-paper text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
+            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
+            <a href="about.html" class="font-display text-2xl hover:text-clay">About</a>
+            <a href="ayurveda.html" class="font-display text-2xl hover:text-clay">Ayurveda</a>
+            <a href="booking.html" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Book Consultation</a>
+        </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
-    <main class="py-16 md:py-24 px-6">
-        <div class="max-w-4xl mx-auto">
+    <!-- HERO SECTION -->
+    <header class="relative h-[50vh] w-full overflow-hidden flex items-center justify-center bg-brand-black">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1493673272479-a20888bcee10?q=80&w=2000" class="w-full h-full object-cover opacity-40 scale-105" alt="Contact Background">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-transparent to-brand-black/90"></div>
+        </div>
+        <div class="relative z-10 text-center px-6 pt-12">
+            <span class="gsap-hero opacity-0 text-brand-gold font-display text-[10px] tracking-[0.5em] uppercase mb-4 block font-bold">Connect with the Self</span>
+            <h1 class="gsap-hero opacity-0 text-5xl md:text-7xl font-serif font-light mb-6 text-white drop-shadow-2xl uppercase tracking-widest leading-tight">Get In Touch</h1>
+        </div>
+    </header>
+
+    <!-- CONTACT CONTENT -->
+    <main class="py-24 px-6 bg-paper">
+        <div class="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
             
-            <div class="text-center mb-12" id="header-gsap">
-                <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-4">Reservation</span>
-                <h1 class="font-display text-4xl md:text-5xl text-brand-black mb-6 uppercase">Schedule Your Session</h1>
-                <div class="w-12 h-px bg-clay mx-auto"></div>
-                <p class="mt-8 font-serif text-lg text-brand-gray italic max-w-2xl mx-auto leading-relaxed">
-                    Bridge the gap between ancient wisdom and neurobiology. Choose your pathway to healing and integration.
+            <!-- Column 1: Info -->
+            <div class="fade-in-section">
+                <span class="text-clay font-sans text-[10px] uppercase tracking-[0.3em] block mb-6 font-bold">Harsh Ranjan</span>
+                <h2 class="text-3xl md:text-4xl font-serif text-brand-black mb-8 leading-tight italic">Institutional Inquiry</h2>
+                <p class="text-brand-gray font-light font-sans leading-loose text-base mb-10 text-justify">
+                    For inquiries regarding Ayurvedic consultations, psychological sessions, or collaborative research in Ayurveda Biology, please use the form or contact me directly. I bridge clinical institutional knowledge with traditional healing protocols.
                 </p>
-            </div>
 
-            <div class="bg-white rounded-sm shadow-2xl shadow-black/5 p-8 md:p-12 border border-black/5">
-                <form id="bookingForm" class="space-y-8">
-                    <!-- Personal Info -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" class="input-field" placeholder="E.g. Your Name" required>
+                <div class="space-y-8">
+                    <div class="flex items-start gap-6">
+                        <div class="w-10 h-10 bg-clay/10 text-clay rounded-full flex items-center justify-center shrink-0">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" class="input-field" placeholder="E.g. yourname@example.com" required>
+                            <h4 class="font-display font-bold text-xs uppercase tracking-widest text-brand-black mb-1">Email</h4>
+                            <p class="text-sm text-brand-gray">justtheself@gmail.com</p>
                         </div>
                     </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" class="input-field" placeholder="+91 00000 00000" required>
+                    <div class="flex items-start gap-6">
+                        <div class="w-10 h-10 bg-sage/10 text-sage rounded-full flex items-center justify-center shrink-0">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <label for="service">Select Service</label>
-                            <select id="service" class="input-field" required>
-                                <option value="" disabled selected>Select a session type</option>
-                                <option value="Ayurveda Consultation">Nadi Pariksha & Ayurveda Consult</option>
-                                <option value="Psychology Session">Therapeutic Psychology</option>
-                                <option value="Yoga & Neurobiology">Yoga Sessions</option>
-                                <option value="Mantra & Sound">Mantra & Sound Vibration Therapy</option>
-                                <option value="Public Health Nutrition">Nutrition & diet Planning</option>
-                                <option value="Custom Spiritual Journey">Ajapa Japa / Meditation Session</option>
-                                <option value="Custom Spiritual Journey">Yoga Nidra Session</option>
-                            </select>
+                            <h4 class="font-display font-bold text-xs uppercase tracking-widest text-brand-black mb-1">Instagram</h4>
+                            <p class="text-sm text-brand-gray">@justtheself</p>
                         </div>
                     </div>
-
-                    <!-- Date/Time -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div>
-                            <label for="date">Preferred Date</label>
-                            <input type="date" id="date" class="input-field" required>
+                    <div class="flex items-start gap-6">
+                        <div class="w-10 h-10 bg-brand-gold/10 text-brand-gold rounded-full flex items-center justify-center shrink-0">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
                         </div>
                         <div>
-                            <label for="time">Preferred Time Zone / Slot</label>
-                            <input type="text" id="time" class="input-field" placeholder="E.g. Morning (10 AM - 12 PM IST)" required>
+                            <h4 class="font-display font-bold text-xs uppercase tracking-widest text-brand-black mb-1">Location</h4>
+                            <p class="text-sm text-brand-gray">New Delhi, India (Available Globally via Zoom)</p>
                         </div>
                     </div>
-
-                    <!-- Message -->
-                    <div>
-                        <label for="message">Describe your current health or spiritual goals</label>
-                        <textarea id="message" rows="4" class="input-field resize-none" placeholder="Share briefly about what brings you to Samarpan..."></textarea>
-                    </div>
-
-                    <!-- Submit -->
-                    <div class="pt-4">
-                        <button type="submit" id="submitBtn" class="w-full py-4 bg-brand-black text-white font-bold text-xs uppercase tracking-[0.25em] hover:bg-clay transition-all duration-500 shadow-lg flex justify-center items-center gap-2">
-                            <span>Request Session</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </form>
-
-                <div id="formStatus" class="mt-6 text-center hidden">
-                    <!-- Status injected via JS -->
                 </div>
             </div>
 
-            <!-- Footer Info -->
-            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="p-6">
-                    <i data-lucide="video" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
-                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">Virtual Sessions</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Available globally via Zoom or Google Meet.</p>
-                </div>
-                <div class="p-6">
-                    <i data-lucide="map-pin" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
-                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">In-Person</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Consultations available in New Delhi, India.</p>
-                </div>
-                <div class="p-6">
-                    <i data-lucide="clock" class="w-6 h-6 mx-auto mb-4 text-clay"></i>
-                    <h4 class="font-display text-sm uppercase tracking-wider mb-2">Wait Time</h4>
-                    <p class="text-xs text-brand-gray leading-relaxed">Response within 24-48 hours of request.</p>
+            <!-- Column 2: Form -->
+            <div class="fade-in-section">
+                <div class="bg-white p-8 md:p-12 shadow-xl border-t-4 border-clay rounded-sm">
+                    <form id="contactForm" onsubmit="handleContactFirebase(event)" class="space-y-6">
+                        <input type="text" name="name" id="userName" required class="w-full border-b border-stone-200 p-3 text-sm focus:outline-none focus:border-clay transition" placeholder="Your Full Name">
+                        <input type="email" name="email" id="userEmail" required class="w-full border-b border-stone-200 p-3 text-sm focus:outline-none focus:border-clay transition" placeholder="Email Address">
+                        <select name="subject" id="userSubject" required class="w-full border-b border-stone-200 p-3 text-sm focus:outline-none focus:border-clay transition text-brand-gray">
+                            <option value="" disabled selected>Inquiry Type</option>
+                            <option>Ayurveda Biology</option>
+                            <option>Psychology & Manas Shastra</option>
+                            <option>Yoga & Tantra</option>
+                            <option>General Support</option>
+                        </select>
+                        <textarea name="message" id="userMessage" required class="w-full border border-stone-100 bg-[#FAFAF8] p-4 text-sm rounded-sm focus:outline-none focus:border-clay transition h-32 resize-none" placeholder="Message"></textarea>
+                        <button type="submit" id="submitBtn" class="w-full py-4 bg-brand-black text-white font-bold text-xs uppercase tracking-[0.25em] hover:bg-clay transition duration-500 rounded-sm">Send Message</button>
+                    </form>
+                    <div id="formStatus" class="mt-6"></div>
                 </div>
             </div>
+
         </div>
     </main>
 
-    <!-- MOBILE MENU OVERLAY -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-cream text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
-        <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
-        <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
-        <a href="about.html" class="font-display text-2xl hover:text-clay">About</a>
-        <a href="journal.html" class="font-display text-2xl hover:text-clay">Journals</a>
-        <a href="contact.html" class="font-display text-2xl hover:text-clay">Contact</a>
-    </div>
-
-    <footer class="py-12 border-t border-black/5 bg-white text-center">
-        <p class="text-[10px] uppercase tracking-widest text-brand-gray">&copy; 2026 Samarpan. All Rights Reserved.</p>
+    <!-- FOOTER -->
+    <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
+            <div class="col-span-1 md:col-span-2">
+                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+                    <circle cx="50" cy="85" r="4" fill="currentColor"/>
+                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
+                </svg>
+                <h4 class="font-display text-lg tracking-widest text-paper mb-1 uppercase font-bold">SAMARPAN</h4>
+                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4 font-bold">By Harsh Ranjan</p>
+                <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
+            </div>
+            <div>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold">Links</h5>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="index.html#programmes" class="hover:text-white transition">Sessions</a></li>
+                    <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda Biology</a></li>
+                    <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
+                    <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold font-sans">Contact</h5>
+                <ul class="space-y-3 text-sm font-sans">
+                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition flex items-center gap-2 font-sans"><i data-lucide="mail" class="w-4 h-4 text-clay"></i> justtheself@gmail.com</a></li>
+                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition flex items-center gap-2 font-sans"><i data-lucide="instagram" class="w-4 h-4"></i> @justtheself</a></li>
+                    <li><a href="https://www.youtube.com/@theharshranjan" target="_blank" class="hover:text-white transition flex items-center gap-2 font-sans"><i data-lucide="youtube" class="w-4 h-4"></i> @theharshranjan</a></li>
+                    <li class="flex items-center gap-2 font-sans"><i data-lucide="map-pin" class="w-4 h-4 text-clay font-sans"></i> New Delhi, India</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 text-center text-[10px] text-white/30 font-sans tracking-[0.2em]">
+            &copy; 2026 HARSH RANJAN. ALL RIGHTS RESERVED.
+        </div>
     </footer>
 
     <!-- FIREBASE MODULE -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
-            authDomain: "thesamrpan.firebaseapp.com",
-            projectId: "thesamrpan",
-            storageBucket: "thesamrpan.firebasestorage.app",
-            messagingSenderId: "510287005957",
-            appId: "1:510287005957:web:978533c6dbca0f4969cf6c",
-            measurementId: "G-ML1QLKGR3K"
-        };
-
+        const firebaseConfig = JSON.parse(__firebase_config);
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = 'samarpan-official'; // MATCHES YOUR FIRESTORE RULES
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'samarpan-official';
 
-        const form = document.getElementById('bookingForm');
-        const status = document.getElementById('formStatus');
-        const submitBtn = document.getElementById('submitBtn');
+        // Grouping Logic: Get Current Date for Document Name
+        const getDateKey = () => {
+            const now = new Date();
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = now.toLocaleString('default', { month: 'short' });
+            const year = now.getFullYear();
+            return `${day} ${month} ${year}`;
+        };
 
-        form.addEventListener('submit', async (e) => {
+        window.handleContactFirebase = async function(e) {
             e.preventDefault();
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>Processing...</span>';
-            
-            try {
-                // RULE 3 - AUTH BEFORE QUERIES
-                await signInAnonymously(auth);
-                
-                // RULE 1 - STRICT PATHS (Matching your specific rules: artifacts/samarpan-official/public/data/leads)
-                const colRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
-                
-                await addDoc(colRef, {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    service: document.getElementById('service').value,
-                    date: document.getElementById('date').value,
-                    time: document.getElementById('time').value,
-                    message: document.getElementById('message').value,
-                    timestamp: serverTimestamp(),
-                    source: 'booking_page'
-                });
+            const btn = document.getElementById('submitBtn');
+            const statusDiv = document.getElementById('formStatus');
+            const clientName = document.getElementById('userName').value;
+            const clientEmail = document.getElementById('userEmail').value;
+            const clientSubject = document.getElementById('userSubject').value;
+            const clientMessage = document.getElementById('userMessage').value;
 
-                status.classList.remove('hidden');
-                status.innerHTML = `<p class="text-green-600 font-bold text-xs uppercase tracking-widest p-4 bg-green-50 border border-green-100 rounded">Hari Om! Your request has been received Successfully. Our Team will contact you shortly..</p>`;
-                form.reset();
-                gsap.from(status, { opacity: 0, y: 10, duration: 0.5 });
-            } catch (err) {
-                console.error("Firebase Error:", err);
-                status.classList.remove('hidden');
-                status.innerHTML = `<p class="text-red-600 text-xs font-bold uppercase p-4 bg-red-50 border border-red-100 rounded">Submission Error. Please email directly at justtheself@gmail.com</p>`;
+            btn.disabled = true; 
+            btn.innerText = "Connecting...";
+
+            try {
+                // Rule 3: Auth Before Queries
+                if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+
+                const dateKey = getDateKey();
+                
+                // Rule 1: Strict Paths
+                // Using artifacts/appId/public/data/collection
+                const dayDocRef = doc(db, "artifacts", appId, "public", "data", "contacts_log", dateKey);
+                
+                // Entry Logic: unique key per user using ClientName_Timestamp
+                const entryKey = `${clientName.replace(/\s+/g, '_')}_${Date.now()}`;
+                
+                // Set and Merge to append to existing day document
+                await setDoc(dayDocRef, {
+                    [entryKey]: {
+                        name: clientName,
+                        email: clientEmail,
+                        subject: clientSubject,
+                        message: clientMessage,
+                        submittedAt: new Date().toISOString()
+                    }
+                }, { merge: true });
+
+                statusDiv.innerHTML = `
+                    <div class="p-4 bg-sage/10 text-sage text-center rounded-sm border border-sage/20">
+                        <p class="text-xs font-bold uppercase tracking-widest">Thank you, your message has been received Successfully. I will reach to you shortly.</p>
+                    </div>
+                `;
+                document.getElementById('contactForm').reset();
+            } catch (error) {
+                console.error("Firebase Error:", error);
+                statusDiv.innerHTML = `
+                    <div class="p-4 bg-red-50 text-red-600 text-center rounded-sm border border-red-100 leading-relaxed">
+                        <p class="text-xs font-bold uppercase">Submission Error. Please email directly at justtheself@gmail.com</p>
+                    </div>
+                `;
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>SUBMIT REQUEST</span><i data-lucide="arrow-right" class="w-4 h-4"></i>';
+                btn.disabled = false; 
+                btn.innerText = "Send Message";
                 lucide.createIcons();
             }
-        });
+        };
     </script>
 
     <script>
         lucide.createIcons();
 
-        // Animations
-        window.addEventListener('DOMContentLoaded', () => {
-            gsap.from("#header-gsap", { opacity: 0, y: 30, duration: 1.2, ease: "power3.out" });
-            gsap.from("#bookingForm", { opacity: 0, scale: 0.98, duration: 1, delay: 0.3, ease: "power2.out" });
+        // Navbar Scroll Animation
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const navLogoSvg = document.getElementById('nav-logo-svg');
+            const navLogoText = document.getElementById('nav-logo-text');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled', 'text-brand-black');
+                navbar.classList.remove('text-paper');
+                navLogoSvg.classList.add('text-clay');
+                navLogoSvg.classList.remove('text-paper');
+                navLogoText.classList.add('text-clay');
+                navLogoText.classList.remove('text-paper');
+                navLinks.forEach(link => { link.classList.add('text-brand-black'); link.classList.remove('text-paper'); });
+            } else {
+                navbar.classList.remove('nav-scrolled', 'text-brand-black');
+                navbar.classList.add('text-paper');
+                navLogoSvg.classList.add('text-paper');
+                navLogoSvg.classList.remove('text-clay');
+                navLogoText.classList.add('text-paper');
+                navLogoText.classList.remove('text-clay');
+                navLinks.forEach(link => { link.classList.remove('text-brand-black'); link.classList.add('text-paper'); });
+            }
+
+            document.querySelectorAll('.fade-in-section').forEach(s => {
+                const rect = s.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.9) s.classList.add('visible');
+            });
         });
 
-        function toggleMenu() { 
-            document.getElementById('mobile-menu').classList.toggle('active'); 
-        }
+        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
 
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').setAttribute('min', today);
+        window.onload = () => {
+            gsap.to(".gsap-hero", { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power2.out" });
+        };
     </script>
 </body>
 </html>
-
