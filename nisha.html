@@ -22,7 +22,7 @@
         :root {
             --gold: #d4af37;
             --gold-light: #f3e5ab;
-            --bg-dark: #030408;
+            --bg-dark: #020308;
         }
 
         * {
@@ -44,64 +44,57 @@
         .font-heading { font-family: 'Playfair Display', serif; }
         .font-cinematic { font-family: 'Cinzel', serif; }
         .font-signature { font-family: 'Great Vibes', cursive; }
-        .font-hindi { font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.8; }
+        .font-hindi { font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.9; }
 
         .text-gold { color: var(--gold); }
 
         /* ==========================================
-           SAFE & HIGH-PERFORMANCE CINEMATIC BACKGROUND
+           REVOLVING GALAXY & BLINKING STARS BACKGROUND
            ========================================== */
-        .ambient-background {
+        .sky-wrapper {
             position: fixed; inset: 0; z-index: -10;
-            background-color: var(--bg-dark);
-            overflow: hidden;
-        }
-        
-        .aurora-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px); /* Safe blur radius for mobile */
-            opacity: 0.5;
-            animation: breathe 15s infinite alternate ease-in-out;
-        }
-        
-        .orb-1 {
-            width: 80vw; height: 80vw;
-            background: rgba(212, 175, 55, 0.15); /* Gold */
-            top: -20%; left: -20%;
-        }
-        .orb-2 {
-            width: 90vw; height: 90vw;
-            background: rgba(15, 30, 60, 0.3); /* Deep Blue */
-            bottom: -20%; right: -20%;
-            animation-delay: -5s;
-        }
-        .orb-3 {
-            width: 70vw; height: 70vw;
-            background: rgba(40, 20, 60, 0.2); /* Deep Purple */
-            top: 40%; left: 30%;
-            animation-delay: -10s;
+            overflow: hidden; background-color: #010205;
         }
 
-        @keyframes breathe {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(5vw, 5vh) scale(1.1); }
+        /* The actual rotating high-res image of the night sky */
+        .revolving-sky {
+            position: absolute; top: 50%; left: 50%;
+            width: 250vmax; height: 250vmax; /* Massive size so corners never show */
+            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=3000&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            opacity: 0.5;
+            transform-origin: center center;
+            animation: rotateSky 240s linear infinite;
+        }
+
+        /* Twinkling/Blinking Stars Overlay */
+        .blinking-stars {
+            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -9;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='1.5' fill='white' opacity='0.8'/%3E%3Ccircle cx='200' cy='150' r='2' fill='%23f3e5ab' opacity='0.6'/%3E%3Ccircle cx='350' cy='300' r='1' fill='white' opacity='0.9'/%3E%3Ccircle cx='100' cy='350' r='1.5' fill='white' opacity='0.5'/%3E%3Ccircle cx='280' cy='80' r='1' fill='white' opacity='0.7'/%3E%3C/svg%3E");
+            animation: blink 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotateSky {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
         }
 
         .vignette {
-            position: fixed; inset: 0; z-index: -9; pointer-events: none;
-            background: radial-gradient(circle at center, transparent 30%, rgba(3,4,8,0.95) 100%);
+            position: fixed; inset: 0; z-index: -8; pointer-events: none;
+            background: radial-gradient(circle at center, rgba(2,3,8,0.2) 0%, rgba(2,3,8,0.95) 100%);
         }
 
-        /* --- Native CSS Animations for absolute safety --- */
+        /* --- Native CSS Animations --- */
         .fade-in-up {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 0; transform: translateY(20px);
             animation: fadeInUpAnim 1.5s forwards ease-out;
         }
-        @keyframes fadeInUpAnim {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUpAnim { to { opacity: 1; transform: translateY(0); } }
 
         /* --- Styled Photo Frames (1, 2, 4) --- */
         .photo-frame {
@@ -149,7 +142,8 @@
         }
 
         /* --- Modals --- */
-        #intro-overlay { position: fixed; inset: 0; background: #030408; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1s ease, visibility 1s; }
+        #intro-overlay { position: fixed; inset: 0; background: #010205; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1s ease, visibility 1s; }
+        
         #proposal-modal { position: fixed; inset: 0; background: rgba(3, 4, 8, 0.95); backdrop-filter: blur(10px); z-index: 400; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.5s ease; }
         #proposal-modal.active { opacity: 1; visibility: visible; }
         
@@ -158,7 +152,15 @@
         .btn-yes { background: linear-gradient(45deg, #d4af37, #f3e5ab); color: #030408; border: none; }
         .btn-no { background: transparent; border: 1px solid rgba(255, 107, 107, 0.5); color: #ff6b6b; }
 
-        #celebration-screen { position: fixed; inset: 0; background: radial-gradient(circle at center, #0a0e17 0%, #000000 100%); z-index: 450; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+        /* The Celebration Screen is now a beautiful scrollable canvas for the final words */
+        #celebration-screen { 
+            position: fixed; inset: 0; background: rgba(2, 3, 8, 0.95); backdrop-filter: blur(10px);
+            z-index: 450; display: none; flex-direction: column; align-items: center; justify-content: flex-start;
+            text-align: center; overflow-y: auto; padding-top: 3rem; padding-bottom: 5rem;
+        }
+        #celebration-screen::-webkit-scrollbar { width: 4px; }
+        #celebration-screen::-webkit-scrollbar-track { background: transparent; }
+        #celebration-screen::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         
         .music-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 600; width: 45px; height: 45px; border-radius: 50%; background: rgba(10, 14, 23, 0.8); border: 1px solid rgba(212, 175, 55, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; display: none; }
         .music-toggle.playing { border-color: var(--gold); }
@@ -168,16 +170,16 @@
         .confetti { position: absolute; top: -20px; width: 6px; height: 12px; background: var(--color); animation: fallDown var(--speed) linear forwards; z-index: 452; }
         @keyframes fallDown { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
+        .text-glow { text-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
     </style>
 </head>
 <body>
 
-    <!-- SAFE AMBIENT BACKGROUND -->
-    <div class="ambient-background">
-        <div class="aurora-orb orb-1"></div>
-        <div class="aurora-orb orb-2"></div>
-        <div class="aurora-orb orb-3"></div>
+    <!-- REVOLVING GALAXY & BLINKING STARS BACKGROUND -->
+    <div class="sky-wrapper">
+        <div class="revolving-sky"></div>
     </div>
+    <div class="blinking-stars"></div>
     <div class="vignette"></div>
 
     <!-- AUDIO -->
@@ -187,8 +189,8 @@
     <!-- PHASE 1: THE GATE -->
     <!-- ========================================== -->
     <div id="intro-overlay">
-        <p class="text-gold-light opacity-70 font-cinematic tracking-[0.4em] text-[10px] md:text-xs mb-6 uppercase text-center fade-in-up" style="animation-delay: 0.2s;">A Celebration of Friendship</p>
-        <h1 class="text-6xl md:text-8xl font-signature text-white mb-6 drop-shadow-md text-center px-4 fade-in-up" style="animation-delay: 0.5s;">Nisha</h1>
+        <p class="text-gold-light opacity-70 font-cinematic tracking-[0.4em] text-[10px] md:text-xs mb-6 uppercase text-center fade-in-up" style="animation-delay: 0.2s;">A Cosmic Celebration</p>
+        <h1 class="text-6xl md:text-8xl font-signature text-white mb-6 drop-shadow-md text-center px-4 fade-in-up text-glow" style="animation-delay: 0.5s;">Nisha</h1>
         <p class="font-hindi text-lg md:text-xl text-gold-light/90 mb-12 italic tracking-widest fade-in-up" style="animation-delay: 0.8s;">मित्रं प्रीतिरसायनम्</p>
         <div class="fade-in-up" style="animation-delay: 1.1s;">
             <button onclick="startJourney()" class="btn-gate">Read Letter</button>
@@ -210,10 +212,83 @@
         </div>
     </div>
 
-    <!-- Celebration Screen -->
+    <!-- ========================================== -->
+    <!-- THE FINAL HEARTFELT LETTER SCREEN -->
+    <!-- Opens after clicking "I Promise" -->
+    <!-- ========================================== -->
     <div id="celebration-screen">
-        <h1 class="text-4xl md:text-6xl font-heading text-gold mb-4 italic drop-shadow-md">Best Friends Forever</h1>
-        <p class="text-gray-300 font-sans text-sm md:text-lg px-6">The universe celebrates our bond.</p>
+        <div class="w-full max-w-3xl mx-auto px-6 space-y-12 pb-10">
+            
+            <!-- Beautiful Internet Image at the top of the final letter -->
+            <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop" class="photo-flat mx-auto mt-6" alt="Cosmic Friendship">
+
+            <div class="space-y-10 text-center animate-fadeIn">
+                <p class="font-hindi text-xl md:text-2xl text-gold-light italic drop-shadow-md leading-relaxed">
+                    आज तेरे जन्मदिन पर दिल से एक बात कहना चाहता हूँ…<br>
+                    कुछ रिश्ते अजीब होते हैं, जो शुरू तो बहुत पहले हो जाते हैं,<br>
+                    पर उनकी असली कहानी बहुत बाद में शुरू होती है।
+                </p>
+                
+                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-relaxed">
+                    कक्षा 3 से हम एक ही सफ़र में थे,<br>
+                    एक ही स्कूल, एक ही गलियारे, एक ही क्लास…<br>
+                    पर उस वक़्त शायद किस्मत ने हमें बस दूर से देखने तक ही रखा।<br>
+                    न बातें हुईं, न दोस्ती हुई,<br>
+                    बस हम दोनों अपनी-अपनी दुनिया में चलते रहे।
+                </p>
+
+                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-relaxed">
+                    फिर वक़्त ने एक खूबसूरत मोड़ लिया,<br>
+                    पिछले साल जैसे किस्मत ने कहा —<br>
+                    <span class="text-gold font-medium text-xl md:text-2xl mt-2 block">“अब इन दो लोगों को दोस्त बना ही देते हैं।”</span>
+                </p>
+
+                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-relaxed">
+                    और सच कहूँ,<br>
+                    इतनी देर से शुरू हुई ये दोस्ती आज दिल के बहुत क़रीब हो गई है।<br>
+                    कुछ दोस्तियाँ सालों में भी नहीं बनती,<br>
+                    और कुछ एक साल में ही दिल का हिस्सा बन जाती हैं।<br>
+                    तुम वही दोस्त हो।
+                </p>
+
+                <!-- Beautiful Internet Image 2 -->
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop" class="photo-flat mx-auto my-12" alt="Bonds">
+
+                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-relaxed">
+                    तुम्हारी बातें, तुम्हारी हँसी,<br>
+                    कभी-कभी बेवजह की नोकझोंक भी,<br>
+                    अब दिन का सबसे अच्छा हिस्सा बन गई है।
+                </p>
+
+                <div class="py-8 bg-white/[0.02] border border-gold/20 rounded-xl my-10">
+                    <p class="font-hindi text-xl md:text-2xl text-[#f3e5ab] italic leading-relaxed px-4">
+                        एक छोटी सी शायरी तुम्हारे लिए —<br><br>
+                        “रिश्तों को वक्त की मोहर की ज़रूरत नहीं होती,<br>
+                        दिल से बने रिश्तों की कोई उम्र नहीं होती।<br>
+                        कभी सालों लग जाते हैं किसी को अपना बनाने में,<br>
+                        और कभी एक साल में ही दोस्ती मुकम्मल हो जाती है।”
+                    </p>
+                </div>
+
+                <p class="font-hindi text-lg md:text-xl text-gray-100 font-light leading-relaxed">
+                    तुम्हारे इस खास दिन पर बस यही दुआ है —<br>
+                    तुम्हारी ज़िंदगी हमेशा खुशियों से भरी रहे,<br>
+                    तुम्हारी मुस्कान कभी कम न हो,<br>
+                    और हमारी दोस्ती हमेशा ऐसे ही मजबूत रहे।
+                </p>
+
+                <h3 class="font-heading text-5xl md:text-7xl text-white font-light text-glow py-8">Happy Birthday! 🎂</h3>
+
+                <p class="font-hindi text-xl md:text-3xl text-gold italic leading-relaxed drop-shadow-md">
+                    और हाँ…<br>
+                    थोड़ा लेट सही, पर कक्षा 3 वाली दोस्ती अब जाकर पूरी हुई है।
+                </p>
+
+                <p class="font-cinematic text-xs tracking-[0.4em] text-gray-500 uppercase mt-20 pb-10">
+                    Forever Your Friend
+                </p>
+            </div>
+        </div>
     </div>
 
     <!-- Music Toggle -->
@@ -230,7 +305,7 @@
         
         <!-- Header -->
         <header class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
-            <h1 class="font-heading text-[15vw] md:text-[8vw] leading-tight text-white font-light drop-shadow-lg fade-up-scroll">
+            <h1 class="font-heading text-[15vw] md:text-[8vw] leading-tight text-white font-light text-glow fade-up-scroll">
                 Happy<br>
                 <span class="italic text-gold">Birthday.</span>
             </h1>
@@ -239,22 +314,11 @@
 
         <div class="max-w-3xl mx-auto px-5 space-y-32">
 
-            <!-- Intro Message -->
-            <section class="text-center px-2">
-                <p class="font-hindi text-xl md:text-2xl text-gold-light italic drop-shadow-md leading-relaxed fade-up-scroll">
-                    "आज तेरे जन्मदिन पर दिल से एक बात कहना चाहता हूँ…"
-                </p>
-            </section>
-
             <!-- Chapter 1: nisha1.jpeg -->
             <section class="space-y-8 fade-up-scroll">
                 <div class="text-center mb-8">
                     <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-3">Chapter I</h2>
                     <h3 class="font-heading text-3xl md:text-4xl text-white italic">The Origin</h3>
-                </div>
-
-                <div class="text-base md:text-lg text-gray-300 font-hindi font-light text-justify md:text-center leading-loose px-2">
-                    कुछ रिश्ते अजीब होते हैं, जो शुरू तो बहुत पहले हो जाते हैं, पर उनकी असली कहानी बहुत बाद में शुरू होती है। कक्षा 3 से हम एक ही सफ़र में थे... एक ही स्कूल, एक ही गलियारे, एक ही क्लास। पर उस वक़्त शायद किस्मत ने हमें बस दूर से देखने तक ही रखा।
                 </div>
 
                 <div class="photo-frame">
@@ -269,15 +333,10 @@
             </section>
 
             <!-- Chapter 2: nisha2.jpeg -->
-            <section class="space-y-8 bg-white/[0.03] backdrop-blur-sm border border-white/5 p-6 md:p-10 rounded-2xl shadow-xl fade-up-scroll">
+            <section class="space-y-8 bg-white/[0.02] backdrop-blur-sm border border-white/5 p-6 md:p-10 rounded-2xl shadow-xl fade-up-scroll">
                 <div class="text-center mb-6">
                     <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-3">Chapter II</h2>
-                    <h3 class="font-heading text-3xl md:text-4xl text-white italic">The Turn of Fate</h3>
-                </div>
-
-                <div class="text-base md:text-lg text-gray-200 font-hindi font-light text-center leading-loose px-2">
-                    फिर वक़्त ने एक खूबसूरत मोड़ लिया, पिछले साल जैसे किस्मत ने कहा — <span class="text-gold">"अब इन दो लोगों को दोस्त बना ही देते हैं।"</span> <br><br>
-                    इतनी देर से शुरू हुई ये दोस्ती आज दिल के बहुत क़रीब हो गई है। तुम्हारी बातें, तुम्हारी हँसी, कभी-कभी बेवजह की नोकझोंक भी, अब दिन का सबसे अच्छा हिस्सा बन गई है।
+                    <h3 class="font-heading text-3xl md:text-4xl text-white italic">The Purest Soul</h3>
                 </div>
 
                 <div class="photo-frame my-8">
@@ -304,14 +363,8 @@
                     <img src="nisha4.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'" alt="Her Grace" />
                 </div>
                 
-                <div class="text-center px-4">
-                    <p class="text-base md:text-xl font-hindi text-gold-light italic drop-shadow-md leading-loose mt-8">
-                        “रिश्तों को वक्त की मोहर की ज़रूरत नहीं होती,<br>
-                        दिल से बने रिश्तों की कोई उम्र नहीं होती।<br>
-                        कभी सालों लग जाते हैं किसी को अपना बनाने में,<br>
-                        और कभी एक साल में ही दोस्ती मुकम्मल हो जाती है।”
-                    </p>
-                    <p class="text-gray-300 font-light text-base md:text-lg mt-6">
+                <div class="text-center px-4 mt-6">
+                    <p class="text-gray-300 font-light text-base md:text-lg">
                         There is a deep <em>Spanda</em>—a divine, subtle vibration—in how elegantly you move through life. You are the calm amidst the chaos.
                     </p>
                 </div>
@@ -319,30 +372,11 @@
 
             <!-- Chapter 4: Flat Rectangular - nisha3.jpeg -->
             <section class="py-16 text-center border-t border-white/5 fade-up-scroll">
-                <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-8">Final Blessing</h2>
+                <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-8">The Constant</h2>
                 
-                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-loose max-w-2xl mx-auto px-4 mb-10">
-                    तुम्हारे इस खास दिन पर बस यही दुआ है — तुम्हारी ज़िंदगी हमेशा खुशियों से भरी रहे, तुम्हारी मुस्कान कभी कम न हो, और हमारी दोस्ती हमेशा ऐसे ही मजबूत रहे। 
-                </p>
-
-                <!-- Flat Rectangular Photo as requested -->
                 <div class="photo-flat">
                     <img src="nisha3.jpeg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop'" alt="My Best Friend" />
                 </div>
-                
-                <div class="mt-12 space-y-6 px-4">
-                    <p class="font-hindi text-xl md:text-2xl text-gold mb-2">शुभमस्तु सर्वदा</p>
-                    <h3 class="font-heading text-4xl md:text-6xl text-white font-light drop-shadow-lg mt-8">Happy Birthday! 🎂</h3>
-                    <p class="font-hindi text-lg md:text-xl text-gold mt-6 italic">
-                        "और हाँ… थोड़ा लेट सही, पर कक्षा 3 वाली दोस्ती अब जाकर पूरी हुई है।"
-                    </p>
-                </div>
-            </section>
-
-            <!-- Signature -->
-            <section class="text-center pb-16 border-b border-white/5 fade-up-scroll">
-                <p class="text-gray-500 font-cinematic text-[10px] tracking-[0.4em] uppercase mb-4">Forever Your Friend</p>
-                <p class="font-signature text-5xl md:text-7xl text-gold drop-shadow-md">Harsh</p>
             </section>
 
             <!-- TRIGGER BUTTON -->
@@ -354,6 +388,11 @@
 
         </div>
     </main>
+
+    <style>
+        .animate-fadeIn { opacity: 0; animation: fadeInCustom 1.5s forwards ease-in-out; }
+        @keyframes fadeInCustom { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 
     <script>
         // Start Journey Function
@@ -448,16 +487,19 @@
         function handleYes() {
             proposalModal.classList.remove('active');
             celebrationScreen.style.display = 'flex';
-            for(let i=0; i<60; i++) setTimeout(createConfetti, i * 30);
+            // Ensure scroll is at the top of the message
+            celebrationScreen.scrollTo(0, 0);
+            // Trigger Confetti
+            for(let i=0; i<80; i++) setTimeout(createConfetti, i * 20);
         }
 
         function createConfetti() {
-            const colors = ['#d4af37', '#ffffff', '#aa771c'];
+            const colors = ['#d4af37', '#ffffff', '#aa771c', '#f3e5ab'];
             const confetti = document.createElement('div');
             confetti.classList.add('confetti');
             confetti.style.left = Math.random() * 100 + '%';
             confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
-            confetti.style.setProperty('--speed', Math.random() * 2 + 2 + 's');
+            confetti.style.setProperty('--speed', Math.random() * 3 + 2 + 's');
             celebrationScreen.appendChild(confetti);
         }
     </script>
