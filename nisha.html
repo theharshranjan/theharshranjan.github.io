@@ -2,457 +2,463 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Essence of Nisha</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Nisha • A Celebration</title>
     
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+Devanagari:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for Smooth Scroll Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        /* === CORE VARIABLES & SETUP === */
+        /* --- Core Variables & Reset --- */
         :root {
-            --bg-deep: #050505;
-            --text-light: #fdfbf7;
-            --gold-soft: #e2cba4;
-            --gold-glow: #ffecd2;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(226, 203, 164, 0.15);
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --bg-dark: #030408;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-deep);
-            color: var(--text-light);
-            font-family: 'Jost', sans-serif;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: var(--bg-dark);
+            font-family: 'Lato', sans-serif;
+            color: #e2e8f0;
             overflow-x: hidden;
-            cursor: none; /* Custom cursor */
-            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .font-serif-elegant {
-            font-family: 'Cormorant Garamond', serif;
-        }
+        /* --- Typography --- */
+        .font-heading { font-family: 'Playfair Display', serif; }
+        .font-cinematic { font-family: 'Cinzel', serif; }
+        .font-signature { font-family: 'Great Vibes', cursive; }
+        .font-hindi { font-family: 'Noto Sans Devanagari', sans-serif; line-height: 1.8; }
 
-        /* === CUSTOM CURSOR === */
-        #cursor {
-            position: fixed;
-            top: 0; left: 0;
-            width: 20px; height: 20px;
-            border: 1px solid var(--gold-soft);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
-        }
-        #cursor-dot {
-            position: fixed;
-            top: 0; left: 0;
-            width: 4px; height: 4px;
-            background-color: var(--gold-soft);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 10000;
-        }
-        .hover-target:hover ~ #cursor {
-            width: 50px; height: 50px;
-            background-color: rgba(226, 203, 164, 0.1);
-        }
+        .text-gold { color: var(--gold); }
 
-        /* === CANVAS BACKGROUND === */
-        #canvas-container {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* === TYPOGRAPHY & GLOW === */
-        .text-glow {
-            text-shadow: 0 0 20px rgba(226, 203, 164, 0.3);
-        }
-        .gradient-text {
-            background: linear-gradient(120deg, #ffffff, var(--gold-soft), #ffffff);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: shine 6s linear infinite;
-        }
-        @keyframes shine { to { background-position: 200% center; } }
-
-        /* === THE GATE (LANDING) === */
-        #gate {
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1), filter 2s ease;
+        /* ==========================================
+           SAFE & HIGH-PERFORMANCE CINEMATIC BACKGROUND
+           ========================================== */
+        .ambient-background {
+            position: fixed; inset: 0; z-index: -10;
+            background-color: var(--bg-dark);
+            overflow: hidden;
         }
         
-        .btn-ethereal {
-            position: relative;
-            padding: 15px 40px;
-            background: transparent;
-            color: var(--gold-soft);
-            font-family: 'Jost', sans-serif;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            cursor: none;
-        }
-        .btn-ethereal::before {
-            content: '';
+        .aurora-orb {
             position: absolute;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            background: rgba(226, 203, 164, 0.1);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-        .btn-ethereal:hover::before {
-            width: 300px; height: 300px;
-        }
-        .btn-ethereal:hover {
-            border-color: var(--gold-soft);
-            box-shadow: 0 0 30px rgba(226, 203, 164, 0.2);
-        }
-
-        /* === MAIN CONTENT & SCROLL REVEALS === */
-        #main-content {
-            position: relative;
-            z-index: 10;
-            opacity: 0;
-            display: none;
+            filter: blur(60px); /* Safe blur radius for mobile */
+            opacity: 0.5;
+            animation: breathe 15s infinite alternate ease-in-out;
         }
         
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+        .orb-1 {
+            width: 80vw; height: 80vw;
+            background: rgba(212, 175, 55, 0.15); /* Gold */
+            top: -20%; left: -20%;
+        }
+        .orb-2 {
+            width: 90vw; height: 90vw;
+            background: rgba(15, 30, 60, 0.3); /* Deep Blue */
+            bottom: -20%; right: -20%;
+            animation-delay: -5s;
+        }
+        .orb-3 {
+            width: 70vw; height: 70vw;
+            background: rgba(40, 20, 60, 0.2); /* Deep Purple */
+            top: 40%; left: 30%;
+            animation-delay: -10s;
         }
 
-        /* Cinematic Blur Reveal */
-        .reveal-blur {
+        @keyframes breathe {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5vw, 5vh) scale(1.1); }
+        }
+
+        .vignette {
+            position: fixed; inset: 0; z-index: -9; pointer-events: none;
+            background: radial-gradient(circle at center, transparent 30%, rgba(3,4,8,0.95) 100%);
+        }
+
+        /* --- Native CSS Animations for absolute safety --- */
+        .fade-in-up {
             opacity: 0;
-            filter: blur(15px);
-            transform: translateY(50px) scale(0.95);
-            transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transform: translateY(20px);
+            animation: fadeInUpAnim 1.5s forwards ease-out;
         }
-        .reveal-blur.is-visible {
-            opacity: 1;
-            filter: blur(0px);
-            transform: translateY(0) scale(1);
+        @keyframes fadeInUpAnim {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Image Parallax & Hover */
-        .img-wrapper {
-            overflow: hidden;
-            border-radius: 10px;
-            position: relative;
+        /* --- Styled Photo Frames (1, 2, 4) --- */
+        .photo-frame {
+            position: relative; width: 100%; max-width: 300px; margin: 2rem auto;
+            aspect-ratio: 4/5; padding: 10px; background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            transition: transform 0.5s ease;
         }
-        .img-wrapper::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            pointer-events: none;
+        .photo-frame:hover { transform: scale(1.02); border-color: var(--gold); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%) contrast(1.1); transition: filter 0.8s ease; }
+        .photo-frame:hover img { filter: grayscale(0%) contrast(1.0); }
+        
+        .corner { position: absolute; width: 15px; height: 15px; border: 1px solid var(--gold); opacity: 0.8; }
+        .c-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+        .c-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+        .c-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+        .c-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+        /* --- Flat Rectangular Photo (3) --- */
+        .photo-flat {
+            position: relative; width: 100%; max-width: 700px; margin: 2rem auto;
+            border-radius: 4px; overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.9);
         }
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 2s ease;
-            filter: grayscale(30%) brightness(0.8);
+        .photo-flat img {
+            width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover;
+            display: block; filter: contrast(1.05) brightness(0.9); transition: transform 2s ease;
         }
-        .img-wrapper:hover img {
-            transform: scale(1.08);
-            filter: grayscale(0%) brightness(1.1);
+        .photo-flat:hover img { transform: scale(1.05); filter: contrast(1.0) brightness(1); }
+
+        /* --- Buttons --- */
+        .btn-gate {
+            background: rgba(0,0,0,0.4); border: 1px solid rgba(212, 175, 55, 0.4);
+            color: var(--gold-light); padding: 1rem 3rem; font-family: 'Cinzel', serif;
+            letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem;
+            backdrop-filter: blur(5px); transition: all 0.4s ease; cursor: pointer;
+        }
+        .btn-gate:active { background: rgba(212, 175, 55, 0.2); }
+
+        .btn-magic {
+            background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa771c 100%);
+            color: #030408; border: none; padding: 1.2rem 2.5rem; font-family: 'Cinzel', serif;
+            font-weight: 600; letter-spacing: 0.1em; border-radius: 50px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); cursor: pointer;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--gold-soft); border-radius: 10px; }
+        /* --- Modals --- */
+        #intro-overlay { position: fixed; inset: 0; background: #030408; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 1s ease, visibility 1s; }
+        #proposal-modal { position: fixed; inset: 0; background: rgba(3, 4, 8, 0.95); backdrop-filter: blur(10px); z-index: 400; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.5s ease; }
+        #proposal-modal.active { opacity: 1; visibility: visible; }
+        
+        .proposal-card { background: #0a0e17; padding: 2.5rem 1.5rem; border-radius: 1.5rem; border: 1px solid rgba(212, 175, 55, 0.2); text-align: center; max-width: 90%; width: 380px; }
+        .btn-choice { min-width: 100px; padding: 12px 24px; border-radius: 50px; font-family: 'Cinzel', serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; margin: 0.5rem; cursor: pointer; }
+        .btn-yes { background: linear-gradient(45deg, #d4af37, #f3e5ab); color: #030408; border: none; }
+        .btn-no { background: transparent; border: 1px solid rgba(255, 107, 107, 0.5); color: #ff6b6b; }
+
+        #celebration-screen { position: fixed; inset: 0; background: radial-gradient(circle at center, #0a0e17 0%, #000000 100%); z-index: 450; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+        
+        .music-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 600; width: 45px; height: 45px; border-radius: 50%; background: rgba(10, 14, 23, 0.8); border: 1px solid rgba(212, 175, 55, 0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; display: none; }
+        .music-toggle.playing { border-color: var(--gold); }
+        .music-icon-svg { width: 18px; height: 18px; fill: none; stroke: var(--gold-light); stroke-width: 2; transition: stroke 0.3s; }
+        .music-toggle.playing .music-icon-svg { stroke: var(--gold); }
+        
+        .confetti { position: absolute; top: -20px; width: 6px; height: 12px; background: var(--color); animation: fallDown var(--speed) linear forwards; z-index: 452; }
+        @keyframes fallDown { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
     </style>
 </head>
 <body>
 
-    <!-- CUSTOM CURSOR -->
-    <div id="cursor"></div>
-    <div id="cursor-dot"></div>
+    <!-- SAFE AMBIENT BACKGROUND -->
+    <div class="ambient-background">
+        <div class="aurora-orb orb-1"></div>
+        <div class="aurora-orb orb-2"></div>
+        <div class="aurora-orb orb-3"></div>
+    </div>
+    <div class="vignette"></div>
 
     <!-- AUDIO -->
-    <!-- Place your music.mp3 in the same folder -->
-    <audio id="bg-music" src="music.mp3" loop></audio>
-
-    <!-- STARDUST CANVAS -->
-    <canvas id="canvas-container"></canvas>
+    <audio id="bg-audio" src="music.mp3" loop></audio>
 
     <!-- ========================================== -->
-    <!-- THE GATE -->
+    <!-- PHASE 1: THE GATE -->
     <!-- ========================================== -->
-    <div id="gate" class="hover-target">
-        <p class="font-serif-elegant italic text-xl md:text-2xl text-gray-400 mb-6 tracking-wide opacity-80">A timeless aura.</p>
-        <h1 class="font-serif-elegant text-5xl md:text-8xl gradient-text mb-12 tracking-widest uppercase text-glow">Nisha</h1>
-        <button id="enter-btn" class="btn-ethereal hover-target">Read Letter</button>
+    <div id="intro-overlay">
+        <p class="text-gold-light opacity-70 font-cinematic tracking-[0.4em] text-[10px] md:text-xs mb-6 uppercase text-center fade-in-up" style="animation-delay: 0.2s;">A Celebration of Friendship</p>
+        <h1 class="text-6xl md:text-8xl font-signature text-white mb-6 drop-shadow-md text-center px-4 fade-in-up" style="animation-delay: 0.5s;">Nisha</h1>
+        <p class="font-hindi text-lg md:text-xl text-gold-light/90 mb-12 italic tracking-widest fade-in-up" style="animation-delay: 0.8s;">मित्रं प्रीतिरसायनम्</p>
+        <div class="fade-in-up" style="animation-delay: 1.1s;">
+            <button onclick="startJourney()" class="btn-gate">Read Letter</button>
+        </div>
+        <p class="text-gray-500 text-[9px] mt-8 font-cinematic tracking-widest uppercase fade-in-up" style="animation-delay: 1.4s;">Audio Recommended</p>
+    </div>
+
+    <!-- Promise Modal -->
+    <div id="proposal-modal">
+        <div class="proposal-card">
+            <p class="text-gold-light font-cinematic text-[9px] tracking-[0.3em] uppercase mb-6">The Final Promise</p>
+            <h2 class="text-xl md:text-2xl font-heading text-white mb-6 leading-snug drop-shadow-lg">
+                Will you promise to be<br><span class="text-gold italic">my best friend forever?</span>
+            </h2>
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-4 min-h-[80px] relative">
+                <button id="btn-yes" class="btn-choice btn-yes text-xs md:text-sm" onclick="handleYes()">I Promise</button>
+                <button id="btn-no" class="btn-choice btn-no text-[10px]" onclick="handleNo()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Celebration Screen -->
+    <div id="celebration-screen">
+        <h1 class="text-4xl md:text-6xl font-heading text-gold mb-4 italic drop-shadow-md">Best Friends Forever</h1>
+        <p class="text-gray-300 font-sans text-sm md:text-lg px-6">The universe celebrates our bond.</p>
+    </div>
+
+    <!-- Music Toggle -->
+    <div class="music-toggle" id="music-btn" onclick="toggleMusic()">
+        <svg class="music-icon-svg" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-2v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-2" />
+        </svg>
     </div>
 
     <!-- ========================================== -->
-    <!-- MAIN EXPERIENCE -->
+    <!-- MAIN CONTENT SCROLL -->
     <!-- ========================================== -->
-    <div id="main-content" class="w-full">
-
-        <!-- INTRO -->
-        <section class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
-            <p class="reveal-blur text-xs md:text-sm tracking-[0.4em] text-gray-500 uppercase mb-6">Chapter I • The Genesis</p>
-            <h1 class="reveal-blur font-serif-elegant text-6xl md:text-8xl lg:text-9xl gradient-text leading-tight mb-8" style="transition-delay: 0.2s;">
-                Happy<br>Birthday.
+    <main id="main-content" style="display: none; opacity: 0; transition: opacity 1s ease;" class="relative z-10 min-h-screen pb-20">
+        
+        <!-- Header -->
+        <header class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
+            <h1 class="font-heading text-[15vw] md:text-[8vw] leading-tight text-white font-light drop-shadow-lg fade-up-scroll">
+                Happy<br>
+                <span class="italic text-gold">Birthday.</span>
             </h1>
-            <div class="reveal-blur w-[1px] h-32 bg-gradient-to-b from-[#e2cba4] to-transparent mt-8" style="transition-delay: 0.4s;"></div>
-        </section>
+            <p class="absolute bottom-16 font-cinematic text-[10px] tracking-[0.4em] uppercase text-gray-400 fade-up-scroll">Scroll down</p>
+        </header>
 
-        <!-- THE JOURNEY (DAV) -->
-        <section class="py-32 px-6 md:px-20 max-w-6xl mx-auto flex flex-col items-center">
-            <div class="glass-card p-8 md:p-16 max-w-4xl text-center reveal-blur hover-target">
-                <h2 class="font-serif-elegant text-4xl md:text-6xl text-white mb-8 italic">
-                    From Class 3 <span class="text-[#e2cba4]">to Eternity.</span>
-                </h2>
-                <p class="text-gray-300 font-light leading-loose text-lg md:text-xl mb-6">
-                    We started our journey in the lively corridors of DAV School. Two kids figuring out the world, not knowing that a simple childhood friendship would evolve into the most profound connection of my life.
-                </p>
-                <p class="text-gray-300 font-light leading-loose text-lg md:text-xl">
-                    Years have passed. The world has changed. But amidst the noise, you have remained my anchor, my confidante, and my absolute best friend. Our bond isn't just time; it's a deeply rooted frequency.
-                </p>
-            </div>
-        </section>
+        <div class="max-w-3xl mx-auto px-5 space-y-32">
 
-        <!-- THE BEAUTY (KHUBSHURTI) -->
-        <section class="py-40 px-6 relative w-full overflow-hidden flex items-center justify-center">
-            <!-- Large background text -->
-            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
-                <h1 class="font-serif-elegant text-[15vw] whitespace-nowrap text-[#e2cba4]">Khubshurti</h1>
-            </div>
-            
-            <div class="z-10 max-w-3xl text-center reveal-blur">
-                <h2 class="font-serif-elegant text-4xl md:text-5xl text-white mb-10 leading-snug">
-                    A rare, profound <br><span class="gradient-text text-6xl md:text-7xl">Khubshurti.</span>
-                </h2>
-                <p class="text-gray-300 font-light leading-relaxed text-xl md:text-2xl mb-8">
-                    Everyone is mesmerized by your physical beauty. It's undeniable. But what they see is merely a reflection of something much deeper.
+            <!-- Intro Message -->
+            <section class="text-center px-2">
+                <p class="font-hindi text-xl md:text-2xl text-gold-light italic drop-shadow-md leading-relaxed fade-up-scroll">
+                    "आज तेरे जन्मदिन पर दिल से एक बात कहना चाहता हूँ…"
                 </p>
-                <p class="text-gray-400 font-light leading-relaxed text-lg md:text-xl italic">
-                    Your true 'khubshurti' is the aura you carry. It’s in the purity of your intentions, the warmth of your smile, and the tranquil peace you bring to my mind. You are beautiful in your absolute essence.
-                </p>
-            </div>
-        </section>
+            </section>
 
-        <!-- EDITORIAL GALLERY (4 PHOTOS) -->
-        <section class="py-20 px-4 md:px-12 max-w-[1400px] mx-auto">
-            <div class="text-center mb-32 reveal-blur">
-                <p class="text-xs tracking-[0.4em] text-gray-500 uppercase mb-4">Visual Archives</p>
-                <h2 class="font-serif-elegant text-4xl md:text-5xl text-[#e2cba4] italic">Fragments of Perfection</h2>
-            </div>
+            <!-- Chapter 1: nisha1.jpeg -->
+            <section class="space-y-8 fade-up-scroll">
+                <div class="text-center mb-8">
+                    <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-3">Chapter I</h2>
+                    <h3 class="font-heading text-3xl md:text-4xl text-white italic">The Origin</h3>
+                </div>
 
-            <!-- Grid Layout -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-32 gap-x-16 items-center">
+                <div class="text-base md:text-lg text-gray-300 font-hindi font-light text-justify md:text-center leading-loose px-2">
+                    कुछ रिश्ते अजीब होते हैं, जो शुरू तो बहुत पहले हो जाते हैं, पर उनकी असली कहानी बहुत बाद में शुरू होती है। कक्षा 3 से हम एक ही सफ़र में थे... एक ही स्कूल, एक ही गलियारे, एक ही क्लास। पर उस वक़्त शायद किस्मत ने हमें बस दूर से देखने तक ही रखा।
+                </div>
+
+                <div class="photo-frame">
+                    <div class="corner c-tl"></div><div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div><div class="corner c-br"></div>
+                    <img src="nisha1.jpeg" onerror="this.src='https://images.unsplash.com/photo-1518063319789-7217e6706b04?q=80&w=800&auto=format&fit=crop'" alt="Childhood Memory" />
+                </div>
                 
-                <!-- Photo 1 -->
-                <div class="reveal-blur flex flex-col md:items-end text-center md:text-right hover-target">
-                    <div class="img-wrapper w-full max-w-md h-[600px] mb-8 md:ml-auto">
-                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=1000&auto=format&fit=crop" alt="Nisha 1">
-                    </div>
-                    <h3 class="font-serif-elegant text-3xl text-white mb-3">The Anchor</h3>
-                    <p class="text-gray-400 font-light text-lg max-w-md ml-auto italic">"Through every phase of life since DAV, you've been the calm amidst the chaos."</p>
+                <div class="text-center px-4 mt-6 text-gray-300 font-light text-base md:text-lg">
+                    In psychology, we study the impact of early memories. In Sanskrit, we call them <em>Samskaras</em>—deep imprints left upon the soul. Meeting you at DAV wasn't just a childhood coincidence; it was the forming of my most beautiful <em>Samskara</em>.
+                </div>
+            </section>
+
+            <!-- Chapter 2: nisha2.jpeg -->
+            <section class="space-y-8 bg-white/[0.03] backdrop-blur-sm border border-white/5 p-6 md:p-10 rounded-2xl shadow-xl fade-up-scroll">
+                <div class="text-center mb-6">
+                    <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-3">Chapter II</h2>
+                    <h3 class="font-heading text-3xl md:text-4xl text-white italic">The Turn of Fate</h3>
                 </div>
 
-                <!-- Photo 2 -->
-                <div class="reveal-blur flex flex-col items-center md:items-start text-center md:text-left hover-target mt-0 md:mt-40">
-                    <div class="img-wrapper w-full max-w-md h-[500px] mb-8">
-                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop" alt="Nisha 2">
-                    </div>
-                    <h3 class="font-serif-elegant text-3xl text-white mb-3">That Radiant Smile</h3>
-                    <p class="text-gray-400 font-light text-lg max-w-md italic">"A simple curve that sets everything straight. Your joy is genuinely contagious."</p>
+                <div class="text-base md:text-lg text-gray-200 font-hindi font-light text-center leading-loose px-2">
+                    फिर वक़्त ने एक खूबसूरत मोड़ लिया, पिछले साल जैसे किस्मत ने कहा — <span class="text-gold">"अब इन दो लोगों को दोस्त बना ही देते हैं।"</span> <br><br>
+                    इतनी देर से शुरू हुई ये दोस्ती आज दिल के बहुत क़रीब हो गई है। तुम्हारी बातें, तुम्हारी हँसी, कभी-कभी बेवजह की नोकझोंक भी, अब दिन का सबसे अच्छा हिस्सा बन गई है।
                 </div>
 
-                <!-- Photo 3 -->
-                <div class="reveal-blur flex flex-col md:items-end text-center md:text-right hover-target">
-                    <div class="img-wrapper w-full max-w-lg h-[550px] mb-8 md:ml-auto">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop" alt="Nisha 3">
-                    </div>
-                    <h3 class="font-serif-elegant text-3xl text-white mb-3">Grace & Aura</h3>
-                    <p class="text-gray-400 font-light text-lg max-w-md ml-auto italic">"There is an effortless elegance in how you exist. A poetry that requires no words."</p>
+                <div class="photo-frame my-8">
+                    <div class="corner c-tl"></div><div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div><div class="corner c-br"></div>
+                    <img src="nisha2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop'" alt="Her Smile" />
                 </div>
 
-                <!-- Photo 4 -->
-                <div class="reveal-blur flex flex-col items-center md:items-start text-center md:text-left hover-target mt-0 md:mt-32">
-                    <div class="img-wrapper w-full max-w-md h-[650px] mb-8">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Nisha 4">
-                    </div>
-                    <h3 class="font-serif-elegant text-3xl text-white mb-3">My Best Friend</h3>
-                    <p class="text-gray-400 font-light text-lg max-w-md italic">"To the girl who knows my mind and heals my soul. Forever isn't long enough."</p>
+                <div class="text-center px-4 mt-6 text-gray-300 font-light text-base md:text-lg">
+                    In Ayurveda, true beauty (<em>Saundarya</em>) is the reflection of inner purity (<em>Sattva</em>). Your smile is a literal neurobiological reset for a bad day.
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- THE WISH -->
-        <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative mt-20">
-            <div class="glass-card p-10 md:p-20 max-w-3xl relative z-10 reveal-blur hover-target">
-                <!-- Glowing orb behind text -->
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#e2cba4] opacity-[0.03] rounded-full blur-3xl pointer-events-none"></div>
+            <!-- Chapter 3: nisha4.jpeg -->
+            <section class="space-y-10 fade-up-scroll">
+                <div class="text-center">
+                    <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-3">Chapter III</h2>
+                    <h3 class="font-heading text-3xl md:text-4xl text-white italic">Timeless Bond</h3>
+                </div>
+
+                <div class="photo-frame m-0 mx-auto">
+                    <div class="corner c-tl"></div><div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div><div class="corner c-br"></div>
+                    <img src="nisha4.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'" alt="Her Grace" />
+                </div>
                 
-                <h2 class="font-serif-elegant text-5xl md:text-7xl gradient-text mb-8 text-glow">
-                    Happy Birthday,<br>Nisha.
-                </h2>
-                <p class="text-gray-200 font-light leading-loose text-xl mb-12 italic">
-                    May the universe reflect back to you the immense beauty and pure light you bring into my life. Here is to celebrating your mind, your soul, your khubshurti, and our unbreakable bond today, and for all the lifetimes to come.
-                </p>
-                <div class="w-12 h-[1px] bg-[#e2cba4] mx-auto mb-8"></div>
-                <p class="text-sm tracking-[0.4em] text-gray-400 uppercase">With infinite love.</p>
-            </div>
-        </section>
+                <div class="text-center px-4">
+                    <p class="text-base md:text-xl font-hindi text-gold-light italic drop-shadow-md leading-loose mt-8">
+                        “रिश्तों को वक्त की मोहर की ज़रूरत नहीं होती,<br>
+                        दिल से बने रिश्तों की कोई उम्र नहीं होती।<br>
+                        कभी सालों लग जाते हैं किसी को अपना बनाने में,<br>
+                        और कभी एक साल में ही दोस्ती मुकम्मल हो जाती है।”
+                    </p>
+                    <p class="text-gray-300 font-light text-base md:text-lg mt-6">
+                        There is a deep <em>Spanda</em>—a divine, subtle vibration—in how elegantly you move through life. You are the calm amidst the chaos.
+                    </p>
+                </div>
+            </section>
 
-    </div>
+            <!-- Chapter 4: Flat Rectangular - nisha3.jpeg -->
+            <section class="py-16 text-center border-t border-white/5 fade-up-scroll">
+                <h2 class="font-cinematic text-xs tracking-[0.3em] text-gold uppercase mb-8">Final Blessing</h2>
+                
+                <p class="font-hindi text-lg md:text-xl text-gray-200 font-light leading-loose max-w-2xl mx-auto px-4 mb-10">
+                    तुम्हारे इस खास दिन पर बस यही दुआ है — तुम्हारी ज़िंदगी हमेशा खुशियों से भरी रहे, तुम्हारी मुस्कान कभी कम न हो, और हमारी दोस्ती हमेशा ऐसे ही मजबूत रहे। 
+                </p>
+
+                <!-- Flat Rectangular Photo as requested -->
+                <div class="photo-flat">
+                    <img src="nisha3.jpeg" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop'" alt="My Best Friend" />
+                </div>
+                
+                <div class="mt-12 space-y-6 px-4">
+                    <p class="font-hindi text-xl md:text-2xl text-gold mb-2">शुभमस्तु सर्वदा</p>
+                    <h3 class="font-heading text-4xl md:text-6xl text-white font-light drop-shadow-lg mt-8">Happy Birthday! 🎂</h3>
+                    <p class="font-hindi text-lg md:text-xl text-gold mt-6 italic">
+                        "और हाँ… थोड़ा लेट सही, पर कक्षा 3 वाली दोस्ती अब जाकर पूरी हुई है।"
+                    </p>
+                </div>
+            </section>
+
+            <!-- Signature -->
+            <section class="text-center pb-16 border-b border-white/5 fade-up-scroll">
+                <p class="text-gray-500 font-cinematic text-[10px] tracking-[0.4em] uppercase mb-4">Forever Your Friend</p>
+                <p class="font-signature text-5xl md:text-7xl text-gold drop-shadow-md">Harsh</p>
+            </section>
+
+            <!-- TRIGGER BUTTON -->
+            <section class="text-center pb-32 fade-up-scroll">
+                <button onclick="openProposal()" class="btn-magic text-xs md:text-sm">
+                    One Final Promise...
+                </button>
+            </section>
+
+        </div>
+    </main>
 
     <script>
-        // === CUSTOM CURSOR LOGIC ===
-        const cursor = document.getElementById('cursor');
-        const cursorDot = document.getElementById('cursor-dot');
-        
-        document.addEventListener('mousemove', (e) => {
-            // Slight delay for outer ring to create magnetic drag effect
+        // Start Journey Function
+        function startJourney() {
+            const intro = document.getElementById('intro-overlay');
+            const main = document.getElementById('main-content');
+            const musicBtn = document.getElementById('music-btn');
+            const bgMusic = document.getElementById('bg-audio');
+
+            // Play music safely
+            bgMusic.volume = 0.5;
+            bgMusic.play().then(() => {
+                musicBtn.classList.add('playing');
+                isMusicPlaying = true;
+            }).catch(err => console.log("Audio autoplay prevented"));
+
+            // Hide intro, show main
+            intro.style.opacity = '0';
             setTimeout(() => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            }, 50);
-            
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-        });
+                intro.style.display = 'none';
+                main.style.display = 'block';
+                musicBtn.style.display = 'flex';
+                // Small delay to ensure display:block registers before fading in
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                    initScrollAnimations();
+                }, 50);
+            }, 1000);
+        }
 
-        // === STARDUST CANVAS LOGIC ===
-        const canvas = document.getElementById('canvas-container');
-        const ctx = canvas.getContext('2d');
-        let width, height, particles;
+        // Music Toggle
+        let isMusicPlaying = false;
+        function toggleMusic() {
+            const bgMusic = document.getElementById('bg-audio');
+            const musicBtn = document.getElementById('music-btn');
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
 
-        function initCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            particles = [];
+        // Initialize GSAP ScrollTrigger
+        function initScrollAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
             
-            // Adjust particle count based on screen size for performance
-            const particleCount = window.innerWidth < 768 ? 50 : 120;
-            
-            for(let i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 1.5 + 0.5,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    alpha: Math.random() * 0.5 + 0.1
-                });
+            const fadeElements = document.querySelectorAll('.fade-up-scroll');
+            fadeElements.forEach(el => {
+                gsap.fromTo(el, 
+                    { opacity: 0, y: 30 },
+                    { 
+                        opacity: 1, y: 0, duration: 1, ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: el,
+                            start: "top 85%",
+                        }
+                    }
+                );
+            });
+        }
+
+        // --- Promise Modal Logic ---
+        const proposalModal = document.getElementById('proposal-modal');
+        const btnNo = document.getElementById('btn-no');
+        const btnYes = document.getElementById('btn-yes');
+        const celebrationScreen = document.getElementById('celebration-screen');
+        let noClickCount = 0;
+        const noTexts = ["Are you sure?", "Really?", "Think again!", "You can't escape me!", "Please..."];
+
+        function openProposal() { proposalModal.classList.add('active'); }
+
+        function handleNo() {
+            if (noClickCount < 4) {
+                btnNo.innerText = noTexts[noClickCount];
+                let currentScale = 1 + (noClickCount * 0.1);
+                btnYes.style.transform = `scale(${currentScale})`;
+                btnYes.style.margin = '10px';
+                
+                // Random move
+                const x = (Math.random() - 0.5) * 100;
+                const y = (Math.random() - 0.5) * 60;
+                btnNo.style.transform = `translate(${x}px, ${y}px)`;
+                noClickCount++;
+            } else {
+                btnNo.style.display = 'none';
             }
         }
 
-        function animateCanvas() {
-            ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                
-                // Wrap around screen
-                if(p.x < 0) p.x = width;
-                if(p.x > width) p.x = 0;
-                if(p.y < 0) p.y = height;
-                if(p.y > height) p.y = 0;
-                
-                // Twinkling effect
-                p.alpha += (Math.random() - 0.5) * 0.02;
-                if(p.alpha < 0.1) p.alpha = 0.1;
-                if(p.alpha > 0.8) p.alpha = 0.8;
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(226, 203, 164, ${p.alpha})`;
-                ctx.fill();
-            });
-            
-            requestAnimationFrame(animateCanvas);
+        function handleYes() {
+            proposalModal.classList.remove('active');
+            celebrationScreen.style.display = 'flex';
+            for(let i=0; i<60; i++) setTimeout(createConfetti, i * 30);
         }
 
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        animateCanvas();
-
-        // === TRANSITION & AUDIO LOGIC ===
-        const gate = document.getElementById('gate');
-        const mainContent = document.getElementById('main-content');
-        const enterBtn = document.getElementById('enter-btn');
-        const audio = document.getElementById('bg-music');
-
-        audio.volume = 0.5;
-
-        enterBtn.addEventListener('click', () => {
-            // 1. Play Audio
-            audio.play().catch(e => console.log("Audio play failed:", e));
-            
-            // 2. Dissolve Gate
-            gate.style.filter = 'blur(20px)';
-            gate.style.opacity = '0';
-            
-            // 3. Reveal Main Content
-            setTimeout(() => {
-                gate.style.display = 'none';
-                mainContent.style.display = 'block';
-                // Small delay to allow display:block to render before transitioning opacity
-                setTimeout(() => {
-                    mainContent.style.opacity = '1';
-                    initScrollObservers();
-                }, 50);
-            }, 2000); // 2 second cinematic dissolve
-        });
-
-        // === SCROLL REVEAL OBSERVER ===
-        function initScrollObservers() {
-            const reveals = document.querySelectorAll('.reveal-blur');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: "0px 0px -100px 0px"
-            });
-
-            reveals.forEach(reveal => observer.observe(reveal));
-            
-            // Trigger immediately for elements already in viewport
-            setTimeout(() => {
-                reveals.forEach(reveal => {
-                    const rect = reveal.getBoundingClientRect();
-                    if(rect.top < window.innerHeight - 100) {
-                        reveal.classList.add('is-visible');
-                    }
-                });
-            }, 300);
+        function createConfetti() {
+            const colors = ['#d4af37', '#ffffff', '#aa771c'];
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
+            confetti.style.setProperty('--speed', Math.random() * 2 + 2 + 's');
+            celebrationScreen.appendChild(confetti);
         }
     </script>
 </body>
