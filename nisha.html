@@ -2,754 +2,457 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Khushi • 29th Jan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Essence of Nisha</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Core Variables & Reset --- */
+        /* === CORE VARIABLES & SETUP === */
         :root {
-            --gold: #d4af37;
-            --gold-light: #f3e5ab;
-            --deep-blue: #050a18;
-            --glass-bg: rgba(12, 18, 33, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.08);
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            --bg-deep: #050505;
+            --text-light: #fdfbf7;
+            --gold-soft: #e2cba4;
+            --gold-glow: #ffecd2;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(226, 203, 164, 0.15);
         }
 
         body, html {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--deep-blue);
-            font-family: 'Lato', sans-serif;
-            color: #e2e8f0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: var(--bg-deep);
+            color: var(--text-light);
+            font-family: 'Jost', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+            scroll-behavior: smooth;
         }
 
-        /* --- Typography --- */
-        .font-heading { font-family: 'Playfair Display', serif; }
-        .font-cinematic { font-family: 'Cinzel', serif; }
-        .font-signature { font-family: 'Great Vibes', cursive; }
+        .font-serif-elegant {
+            font-family: 'Cormorant Garamond', serif;
+        }
 
-        .text-gold { color: var(--gold); }
-        .text-gold-light { color: var(--gold-light); }
-        
-        /* Gradient Text */
+        /* === CUSTOM CURSOR === */
+        #cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            border: 1px solid var(--gold-soft);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        #cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 4px; height: 4px;
+            background-color: var(--gold-soft);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10000;
+        }
+        .hover-target:hover ~ #cursor {
+            width: 50px; height: 50px;
+            background-color: rgba(226, 203, 164, 0.1);
+        }
+
+        /* === CANVAS BACKGROUND === */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* === TYPOGRAPHY & GLOW === */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(226, 203, 164, 0.3);
+        }
         .gradient-text {
-            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background: linear-gradient(120deg, #ffffff, var(--gold-soft), #ffffff);
+            background-size: 200% auto;
+            color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
-            background-size: 200% auto;
-            animation: shine 5s linear infinite;
+            animation: shine 6s linear infinite;
         }
         @keyframes shine { to { background-position: 200% center; } }
 
-        /* --- Dynamic Starfield Background --- */
-        #starfield {
+        /* === THE GATE (LANDING) === */
+        #gate {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            pointer-events: none;
+            inset: 0;
+            z-index: 50;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 2s cubic-bezier(0.4, 0, 0.2, 1), filter 2s ease;
         }
-        .star {
+        
+        .btn-ethereal {
+            position: relative;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--gold-soft);
+            font-family: 'Jost', sans-serif;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: none;
+        }
+        .btn-ethereal::before {
+            content: '';
             position: absolute;
-            background: white;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(226, 203, 164, 0.1);
             border-radius: 50%;
-            opacity: 0;
-            animation: twinkle var(--duration) ease-in-out infinite;
-            animation-delay: var(--delay);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
         }
-        @keyframes twinkle {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: var(--opacity); transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.5); }
+        .btn-ethereal:hover::before {
+            width: 300px; height: 300px;
+        }
+        .btn-ethereal:hover {
+            border-color: var(--gold-soft);
+            box-shadow: 0 0 30px rgba(226, 203, 164, 0.2);
         }
 
-        /* --- Glassmorphism Cards --- */
-        .glass-panel {
+        /* === MAIN CONTENT & SCROLL REVEALS === */
+        #main-content {
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            display: none;
+        }
+        
+        .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border-radius: 20px;
         }
 
-        /* --- Photo Frame Effect --- */
-        .photo-frame {
+        /* Cinematic Blur Reveal */
+        .reveal-blur {
+            opacity: 0;
+            filter: blur(15px);
+            transform: translateY(50px) scale(0.95);
+            transition: all 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal-blur.is-visible {
+            opacity: 1;
+            filter: blur(0px);
+            transform: translateY(0) scale(1);
+        }
+
+        /* Image Parallax & Hover */
+        .img-wrapper {
+            overflow: hidden;
+            border-radius: 10px;
             position: relative;
-            width: 100%;
-            max-width: 320px; /* Constrained for mobile */
-            margin: 0 auto;
-            aspect-ratio: 3/4;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-            transition: transform 0.5s ease;
         }
-        .photo-frame:hover {
-            transform: scale(1.02) rotate(1deg);
-            border-color: var(--gold);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.1);
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
-        .photo-frame img {
+        .img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: sepia(20%) contrast(1.1);
-            transition: filter 0.5s;
+            transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 2s ease;
+            filter: grayscale(30%) brightness(0.8);
         }
-        .photo-frame:hover img {
-            filter: sepia(0%) contrast(1.0);
-        }
-        .corner-accent {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--gold);
-            transition: all 0.3s;
-        }
-        .corner-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-        .corner-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
-        .corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
-        .corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-        /* --- Opening Sequence (FIXED) --- */
-        #intro-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #050a18;
-            z-index: 500; /* Highest Z-index */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 1.5s ease-in-out, visibility 1.5s;
+        .img-wrapper:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%) brightness(1.1);
         }
 
-        .btn-enter {
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            color: var(--gold-light);
-            padding: 1rem 3rem;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            z-index: 10;
-        }
-        
-        .btn-enter::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn-enter:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-            color: white;
-        }
-        
-        .btn-enter:hover::before { left: 100%; }
-
-        /* --- Magical Trigger Button --- */
-        .btn-magic {
-            background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 50%, #aa771c 100%);
-            color: #050a18;
-            border: none;
-            padding: 1.2rem 3rem;
-            font-family: 'Cinzel', serif;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            border-radius: 50px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            animation: magicPulse 2s infinite;
-            position: relative;
-            z-index: 10;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-        .btn-magic:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.7);
-        }
-        @keyframes magicPulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
-
-        /* --- Enhanced Music Toggle --- */
-        .music-toggle {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 600; /* Above EVERYTHING including modals */
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            opacity: 0; /* Hidden initially */
-        }
-        
-        .music-toggle:hover { 
-            background: rgba(212, 175, 55, 0.2); 
-            border-color: var(--gold); 
-            transform: scale(1.1); 
-        }
-
-        /* SVG Icon styling */
-        .music-icon-svg {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: var(--gold-light);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.3s;
-        }
-        
-        /* Playing animation state */
-        .music-toggle.playing .music-icon-svg {
-            stroke: var(--gold);
-            animation: pulseIcon 2s infinite;
-        }
-
-        @keyframes pulseIcon {
-            0% { filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
-            50% { filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
-            100% { filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
-        }
-
-        /* --- Proposal Modal Styles --- */
-        #proposal-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 10, 24, 0.92);
-            backdrop-filter: blur(8px);
-            z-index: 400; /* Above content, below music button */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.6s ease;
-        }
-        #proposal-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        /* Modal Card */
-        .proposal-card {
-            background: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-            padding: 2.5rem;
-            border-radius: 2rem;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(212, 175, 55, 0.05);
-            text-align: center;
-            max-width: 90%;
-            width: 450px;
-            transform: scale(0.95);
-            transition: transform 0.5s;
-        }
-        #proposal-modal.active .proposal-card { transform: scale(1); }
-
-        .btn-choice {
-            min-width: 100px;
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            margin: 0.5rem;
-        }
-        .btn-yes {
-            background: linear-gradient(45deg, #d4af37, #f3e5ab);
-            color: #050a18;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-            border: none;
-        }
-        .btn-yes:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6); }
-        .btn-no {
-            background: transparent;
-            border: 1px solid rgba(255, 107, 107, 0.5);
-            color: #ff6b6b;
-        }
-        .btn-no:hover { background: rgba(255, 107, 107, 0.1); }
-
-        /* --- Celebration Effects --- */
-        #celebration-screen {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, #1a1500 0%, #000000 100%);
-            z-index: 450; /* Above modal */
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .balloon {
-            position: absolute;
-            bottom: -120px;
-            width: 40px;
-            height: 50px;
-            background: var(--color);
-            border-radius: 50%;
-            box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3);
-            animation: floatUp var(--speed) linear forwards;
-            z-index: 451;
-        }
-        .balloon::after {
-            content: '';
-            position: absolute;
-            bottom: -8px; left: 50%; transform: translateX(-50%);
-            border-left: 5px solid transparent; border-right: 5px solid transparent;
-            border-bottom: 8px solid var(--color);
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(var(--rotation)); opacity: 0; }
-        }
-
-        .confetti {
-            position: absolute;
-            top: -20px;
-            width: 8px;
-            height: 16px;
-            background: var(--color);
-            animation: fallDown var(--speed) linear forwards;
-            z-index: 452;
-        }
-        @keyframes fallDown {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* Reveal Animations */
-        .reveal-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-        }
-        .reveal-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--gold-soft); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO 1: The Letter -->
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=emotional-piano-110599.mp3" type="audio/mpeg">
-    </audio>
+    <!-- CUSTOM CURSOR -->
+    <div id="cursor"></div>
+    <div id="cursor-dot"></div>
 
-    <!-- AUDIO 2: The Proposal -->
-    <audio id="proposal-music" loop>
-        <source src="Lyrical  Nain Na Jodeen  Badhaai Ho  Ayushmann Khurrana Sanya MalhotraRochak Kohli Neha Kakkar - T-Series.mp3" type="audio/mpeg">
-        <source src="https://cdn.pixabay.com/download/audio/2022/10/25/audio_1d45d6141a.mp3?filename=cinematic-atmosphere-score-2-123447.mp3" type="audio/mpeg">
-    </audio>
+    <!-- AUDIO -->
+    <!-- Place your music.mp3 in the same folder -->
+    <audio id="bg-music" src="music.mp3" loop></audio>
 
-    <!-- Starfield Background -->
-    <div id="starfield"></div>
+    <!-- STARDUST CANVAS -->
+    <canvas id="canvas-container"></canvas>
 
-    <!-- Intro Overlay -->
-    <div id="intro-overlay">
-        <p class="text-gold opacity-60 font-cinematic tracking-[0.4em] text-xs mb-6 uppercase text-center">A Message From The Universe</p>
-        <h1 class="text-5xl md:text-8xl font-signature text-white mb-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] text-center px-4">Khushi</h1>
-        <button onclick="startJourney()" class="btn-enter">Read Letter</button>
-        <p class="text-gray-500 text-[10px] mt-8 font-cinematic tracking-widest uppercase opacity-0 transition-opacity duration-1000" id="audio-hint">Audio Recommended</p>
+    <!-- ========================================== -->
+    <!-- THE GATE -->
+    <!-- ========================================== -->
+    <div id="gate" class="hover-target">
+        <p class="font-serif-elegant italic text-xl md:text-2xl text-gray-400 mb-6 tracking-wide opacity-80">A timeless aura.</p>
+        <h1 class="font-serif-elegant text-5xl md:text-8xl gradient-text mb-12 tracking-widest uppercase text-glow">Nisha</h1>
+        <button id="enter-btn" class="btn-ethereal hover-target">Read Letter</button>
     </div>
 
-    <!-- Proposal Modal -->
-    <div id="proposal-modal">
-        <div class="proposal-card">
-            <p class="text-gold-light font-cinematic text-xs tracking-[0.3em] uppercase mb-6">The Final Question</p>
-            <h2 class="text-3xl md:text-4xl font-heading text-white mb-10 leading-snug drop-shadow-lg">
-                Will you accept<br><span class="text-gold italic">my proposal?</span>
-            </h2>
-            
-            <div class="flex flex-wrap items-center justify-center gap-4 mt-4 min-h-[100px] relative">
-                <!-- Yes Button -->
-                <button id="btn-yes" class="btn-choice btn-yes text-lg" onclick="handleYes()">Yes</button>
-                <!-- No Button -->
-                <button id="btn-no" class="btn-choice btn-no text-sm" onclick="handleNo()">No</button>
+    <!-- ========================================== -->
+    <!-- MAIN EXPERIENCE -->
+    <!-- ========================================== -->
+    <div id="main-content" class="w-full">
+
+        <!-- INTRO -->
+        <section class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
+            <p class="reveal-blur text-xs md:text-sm tracking-[0.4em] text-gray-500 uppercase mb-6">Chapter I • The Genesis</p>
+            <h1 class="reveal-blur font-serif-elegant text-6xl md:text-8xl lg:text-9xl gradient-text leading-tight mb-8" style="transition-delay: 0.2s;">
+                Happy<br>Birthday.
+            </h1>
+            <div class="reveal-blur w-[1px] h-32 bg-gradient-to-b from-[#e2cba4] to-transparent mt-8" style="transition-delay: 0.4s;"></div>
+        </section>
+
+        <!-- THE JOURNEY (DAV) -->
+        <section class="py-32 px-6 md:px-20 max-w-6xl mx-auto flex flex-col items-center">
+            <div class="glass-card p-8 md:p-16 max-w-4xl text-center reveal-blur hover-target">
+                <h2 class="font-serif-elegant text-4xl md:text-6xl text-white mb-8 italic">
+                    From Class 3 <span class="text-[#e2cba4]">to Eternity.</span>
+                </h2>
+                <p class="text-gray-300 font-light leading-loose text-lg md:text-xl mb-6">
+                    We started our journey in the lively corridors of DAV School. Two kids figuring out the world, not knowing that a simple childhood friendship would evolve into the most profound connection of my life.
+                </p>
+                <p class="text-gray-300 font-light leading-loose text-lg md:text-xl">
+                    Years have passed. The world has changed. But amidst the noise, you have remained my anchor, my confidante, and my absolute best friend. Our bond isn't just time; it's a deeply rooted frequency.
+                </p>
+            </div>
+        </section>
+
+        <!-- THE BEAUTY (KHUBSHURTI) -->
+        <section class="py-40 px-6 relative w-full overflow-hidden flex items-center justify-center">
+            <!-- Large background text -->
+            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
+                <h1 class="font-serif-elegant text-[15vw] whitespace-nowrap text-[#e2cba4]">Khubshurti</h1>
             </div>
             
-            <p class="text-gray-500 text-xs mt-10 italic">Listen to the music...</p>
-        </div>
-    </div>
-
-    <!-- Celebration Screen -->
-    <div id="celebration-screen">
-        <h1 class="text-5xl md:text-8xl font-signature text-gold mb-6 drop-shadow-[0_0_20px_var(--gold)] scale-0 animate-popIn" style="animation: popIn 1s forwards 0.5s;">She Said Yes!</h1>
-        <p class="text-white font-heading text-xl md:text-2xl opacity-0 animate-fadeIn" style="animation: fadeIn 2s forwards 1.5s; padding: 0 20px;">The universe knew it all along.</p>
-    </div>
-
-    <!-- Music Toggle -->
-    <div class="music-toggle" id="music-btn" onclick="toggleMusic()">
-        <!-- SVG Music Icon -->
-        <svg class="music-icon-svg" viewBox="0 0 24 24" stroke="currentColor" fill="none">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-2v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-2" />
-        </svg>
-    </div>
-
-    <!-- Main Content -->
-    <main id="main-content" class="relative z-10 min-h-screen pb-20 opacity-0 transition-opacity duration-1000">
-        
-        <!-- Header Section -->
-        <header class="h-screen flex flex-col items-center justify-center text-center px-4 relative">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--deep-blue)] pointer-events-none"></div>
-            
-            <p class="text-gold-light font-cinematic tracking-widest text-xs md:text-sm mb-4 reveal-on-scroll">29th January 2026 • 12:21 AM</p>
-            <h1 class="text-4xl md:text-7xl font-heading text-white mb-8 leading-tight reveal-on-scroll">
-                Tonight, the universe<br>
-                <span class="italic font-light text-gold">spoke to me.</span>
-            </h1>
-            <div class="w-[1px] h-16 md:h-24 bg-gradient-to-b from-gold to-transparent reveal-on-scroll"></div>
-        </header>
-
-        <!-- The Letter Body -->
-        <div class="max-w-3xl mx-auto px-6 md:px-12 space-y-24">
-
-            <!-- Section 1 -->
-            <section class="reveal-on-scroll text-lg md:text-xl leading-relaxed font-light text-gray-300 space-y-6">
-                <p><span class="text-gold font-heading text-3xl float-left mr-2 mt-[-6px]">K</span>hushi, something happened tonight that I need to tell you about.</p>
-                <p>
-                    Bhavani didi came to my room. We were talking about life, about love, about how to say things that matter. And the whole time, I was thinking about you. How to tell you. What to say.
+            <div class="z-10 max-w-3xl text-center reveal-blur">
+                <h2 class="font-serif-elegant text-4xl md:text-5xl text-white mb-10 leading-snug">
+                    A rare, profound <br><span class="gradient-text text-6xl md:text-7xl">Khubshurti.</span>
+                </h2>
+                <p class="text-gray-300 font-light leading-relaxed text-xl md:text-2xl mb-8">
+                    Everyone is mesmerized by your physical beauty. It's undeniable. But what they see is merely a reflection of something much deeper.
                 </p>
-                <p class="text-white">
-                    Then your message came through—and the timing felt like the universe itself was answering.
+                <p class="text-gray-400 font-light leading-relaxed text-lg md:text-xl italic">
+                    Your true 'khubshurti' is the aura you carry. It’s in the purity of your intentions, the warmth of your smile, and the tranquil peace you bring to my mind. You are beautiful in your absolute essence.
                 </p>
-            </section>
+            </div>
+        </section>
 
-            <!-- Section 2: Quote -->
-            <section class="reveal-on-scroll relative py-12">
-                <div class="absolute inset-0 border-y border-gold opacity-20"></div>
-                <div class="text-center space-y-4">
-                    <p class="text-gold font-heading text-2xl md:text-3xl italic leading-relaxed px-4">
-                        "कहते हैं अगर किसी चीज़ को दिल से चाहो...<br>तो पूरी कायनात उसे तुमसे मिलाने की कोशिश में लग जाती है।"
-                    </p>
-                    <p class="font-cinematic text-[10px] md:text-xs tracking-[0.2em] text-gray-500 uppercase mt-4">
-                        If you want something with all your heart, the entire universe conspires to bring it to you.
-                    </p>
-                </div>
-            </section>
+        <!-- EDITORIAL GALLERY (4 PHOTOS) -->
+        <section class="py-20 px-4 md:px-12 max-w-[1400px] mx-auto">
+            <div class="text-center mb-32 reveal-blur">
+                <p class="text-xs tracking-[0.4em] text-gray-500 uppercase mb-4">Visual Archives</p>
+                <h2 class="font-serif-elegant text-4xl md:text-5xl text-[#e2cba4] italic">Fragments of Perfection</h2>
+            </div>
 
-            <!-- Section 3: Truth -->
-            <section class="reveal-on-scroll glass-panel rounded-2xl p-6 md:p-12 space-y-6">
-                <h2 class="font-cinematic text-gold text-center text-lg md:text-xl tracking-widest mb-8 border-b border-white/10 pb-4">The Truth</h2>
-                <p class="text-lg leading-relaxed text-gray-200">
-                    I need you to listen carefully. I know you don't love me the way I love you. I know you might never say yes. I've made peace with that. But there's something you need to understand:
-                </p>
-                <p class="text-xl font-heading text-white text-center italic py-4">
-                    My love for you doesn't depend on your answer.
-                </p>
-                <p class="text-lg leading-relaxed text-gray-200">
-                    I love you. And I always will. It started as a crush—I can't even remember when. But somewhere along these ten years, it became something deeper. It became the foundation of who I am.
-                </p>
-            </section>
-
-            <!-- Section 4: Promise -->
-            <section class="reveal-on-scroll space-y-8">
-                <div class="flex items-center gap-4">
-                    <div class="h-[1px] flex-1 bg-white/20"></div>
-                    <h3 class="font-cinematic text-sm md:text-lg tracking-widest text-gold-light">Building A Future</h3>
-                    <div class="h-[1px] flex-1 bg-white/20"></div>
-                </div>
-
-                <div class="text-lg leading-relaxed text-gray-300 space-y-6">
-                    <p>
-                        I'm not asking you to feel something you don't feel. I'm asking for something simpler: <strong class="text-white">let me stay in your life.</strong> And I'm going to show you—not with words, but with actions.
-                    </p>
-                    <p>
-                        So now I'm focused. On my studies. On <span class="text-gold">Samarpan Wellness</span>. On becoming someone who can stand before your father one day and ask for your hand with dignity.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Section 5: The Proposal -->
-            <section class="reveal-on-scroll text-center py-8">
-                <p class="text-gray-400 font-cinematic text-xs md:text-sm tracking-widest mb-4">25th January 2021</p>
-                <p class="font-heading italic text-xl md:text-2xl text-white mb-6 px-4">"If this wasn't in my life, I would propose to you."</p>
-                <p class="text-lg text-gray-300">
-                    Khushi, I'm here now. I'm proposing—not with a ring today, but with my life. With my commitment. With my work. With every single day that I choose you.
-                </p>
-            </section>
-
-            <!-- Section 6: Photo & Lyrics -->
-            <section class="reveal-on-scroll">
-                <div class="glass-panel p-1 rounded-3xl relative overflow-hidden group">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-blue-900/40 to-transparent blur-3xl -z-10"></div>
-                    <div class="bg-[#050a18]/80 p-6 md:p-12 rounded-[22px] text-center space-y-12">
-                        <div>
-                            <h4 class="font-heading text-gold text-xl md:text-2xl mb-2">"Mere dil mein jagah Khuda ki khaali thi..."</h4>
-                            <p class="font-sans text-xs md:text-sm text-gray-400">My heart was searching for something sacred.</p>
-                        </div>
-                        <div class="relative py-4">
-                            <h4 class="font-heading text-white text-2xl md:text-3xl mb-8 italic">"Dekha wahan pe aaj tera chehra hai"</h4>
-                            <div class="photo-frame">
-                                <div class="corner-accent corner-tl"></div>
-                                <div class="corner-accent corner-tr"></div>
-                                <div class="corner-accent corner-bl"></div>
-                                <div class="corner-accent corner-br"></div>
-                                <img src="khushuu.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'" alt="Khushi" />
-                            </div>
-                            <p class="font-cinematic text-[10px] tracking-[0.3em] text-gold mt-6 uppercase">And I see your face there</p>
-                        </div>
-                        <div class="pt-8 border-t border-white/5">
-                            <h4 class="font-heading text-gold text-xl md:text-2xl mb-2">"Tu saaz hai, main ragini..."</h4>
-                            <p class="font-sans text-xs md:text-sm text-gray-400">We're incomplete alone. But together, we make music.</p>
-                        </div>
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-32 gap-x-16 items-center">
+                
+                <!-- Photo 1 -->
+                <div class="reveal-blur flex flex-col md:items-end text-center md:text-right hover-target">
+                    <div class="img-wrapper w-full max-w-md h-[600px] mb-8 md:ml-auto">
+                        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?q=80&w=1000&auto=format&fit=crop" alt="Nisha 1">
                     </div>
+                    <h3 class="font-serif-elegant text-3xl text-white mb-3">The Anchor</h3>
+                    <p class="text-gray-400 font-light text-lg max-w-md ml-auto italic">"Through every phase of life since DAV, you've been the calm amidst the chaos."</p>
                 </div>
-            </section>
 
-            <!-- Section 7: Final Question -->
-            <section class="reveal-on-scroll text-center py-16 space-y-8">
-                <p class="text-gray-400 tracking-widest uppercase text-xs md:text-sm font-cinematic">My Only Question</p>
-                <h2 class="text-3xl md:text-6xl font-heading gradient-text py-2">Will you let me love you?</h2>
-                <p class="text-gray-300 text-base md:text-lg font-light max-w-lg mx-auto px-4">
-                    Not today, not tomorrow—but one day? <br>
-                    I can wait forever. I can work. I can build a life. <br>
-                    <span class="text-white font-medium mt-4 block">I just need you to let me stay.</span>
+                <!-- Photo 2 -->
+                <div class="reveal-blur flex flex-col items-center md:items-start text-center md:text-left hover-target mt-0 md:mt-40">
+                    <div class="img-wrapper w-full max-w-md h-[500px] mb-8">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop" alt="Nisha 2">
+                    </div>
+                    <h3 class="font-serif-elegant text-3xl text-white mb-3">That Radiant Smile</h3>
+                    <p class="text-gray-400 font-light text-lg max-w-md italic">"A simple curve that sets everything straight. Your joy is genuinely contagious."</p>
+                </div>
+
+                <!-- Photo 3 -->
+                <div class="reveal-blur flex flex-col md:items-end text-center md:text-right hover-target">
+                    <div class="img-wrapper w-full max-w-lg h-[550px] mb-8 md:ml-auto">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000&auto=format&fit=crop" alt="Nisha 3">
+                    </div>
+                    <h3 class="font-serif-elegant text-3xl text-white mb-3">Grace & Aura</h3>
+                    <p class="text-gray-400 font-light text-lg max-w-md ml-auto italic">"There is an effortless elegance in how you exist. A poetry that requires no words."</p>
+                </div>
+
+                <!-- Photo 4 -->
+                <div class="reveal-blur flex flex-col items-center md:items-start text-center md:text-left hover-target mt-0 md:mt-32">
+                    <div class="img-wrapper w-full max-w-md h-[650px] mb-8">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000&auto=format&fit=crop" alt="Nisha 4">
+                    </div>
+                    <h3 class="font-serif-elegant text-3xl text-white mb-3">My Best Friend</h3>
+                    <p class="text-gray-400 font-light text-lg max-w-md italic">"To the girl who knows my mind and heals my soul. Forever isn't long enough."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- THE WISH -->
+        <section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative mt-20">
+            <div class="glass-card p-10 md:p-20 max-w-3xl relative z-10 reveal-blur hover-target">
+                <!-- Glowing orb behind text -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#e2cba4] opacity-[0.03] rounded-full blur-3xl pointer-events-none"></div>
+                
+                <h2 class="font-serif-elegant text-5xl md:text-7xl gradient-text mb-8 text-glow">
+                    Happy Birthday,<br>Nisha.
+                </h2>
+                <p class="text-gray-200 font-light leading-loose text-xl mb-12 italic">
+                    May the universe reflect back to you the immense beauty and pure light you bring into my life. Here is to celebrating your mind, your soul, your khubshurti, and our unbreakable bond today, and for all the lifetimes to come.
                 </p>
-            </section>
+                <div class="w-12 h-[1px] bg-[#e2cba4] mx-auto mb-8"></div>
+                <p class="text-sm tracking-[0.4em] text-gray-400 uppercase">With infinite love.</p>
+            </div>
+        </section>
 
-            <!-- Signature -->
-            <section class="reveal-on-scroll text-center pb-20 border-b border-white/10 mb-20">
-                <p class="text-gray-500 font-cinematic text-xs tracking-[0.3em] uppercase mb-4">Forever Yours</p>
-                <p class="font-signature text-5xl md:text-8xl text-gold">Harsh</p>
-            </section>
-
-            <!-- THE TRIGGER BUTTON -->
-            <section class="reveal-on-scroll text-center pb-32">
-                <button onclick="openProposal()" class="btn-magic">
-                    One Last Question...
-                </button>
-            </section>
-
-        </div>
-    </main>
-
-    <style>
-        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    </div>
 
     <script>
-        // --- Starfield Generation ---
-        const starfield = document.getElementById('starfield');
-        const starCount = 100; // Optimized for mobile
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = Math.random() * 2 + 1 + 'px';
-            star.style.height = star.style.width;
-            star.style.setProperty('--opacity', Math.random() * 0.7 + 0.3);
-            star.style.setProperty('--duration', Math.random() * 3 + 2 + 's');
-            star.style.setProperty('--delay', Math.random() * 5 + 's');
-            starfield.appendChild(star);
+        // === CUSTOM CURSOR LOGIC ===
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        document.addEventListener('mousemove', (e) => {
+            // Slight delay for outer ring to create magnetic drag effect
+            setTimeout(() => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }, 50);
+            
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        // === STARDUST CANVAS LOGIC ===
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            
+            // Adjust particle count based on screen size for performance
+            const particleCount = window.innerWidth < 768 ? 50 : 120;
+            
+            for(let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.5 + 0.5,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    alpha: Math.random() * 0.5 + 0.1
+                });
+            }
         }
 
-        // --- Logic ---
-        const introOverlay = document.getElementById('intro-overlay');
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                // Wrap around screen
+                if(p.x < 0) p.x = width;
+                if(p.x > width) p.x = 0;
+                if(p.y < 0) p.y = height;
+                if(p.y > height) p.y = 0;
+                
+                // Twinkling effect
+                p.alpha += (Math.random() - 0.5) * 0.02;
+                if(p.alpha < 0.1) p.alpha = 0.1;
+                if(p.alpha > 0.8) p.alpha = 0.8;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(226, 203, 164, ${p.alpha})`;
+                ctx.fill();
+            });
+            
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        animateCanvas();
+
+        // === TRANSITION & AUDIO LOGIC ===
+        const gate = document.getElementById('gate');
         const mainContent = document.getElementById('main-content');
-        const audioHint = document.getElementById('audio-hint');
-        const musicBtn = document.getElementById('music-btn');
-        const letterMusic = document.getElementById('bg-music');
-        const proposalMusic = document.getElementById('proposal-music');
-        let currentAudio = letterMusic;
-        let isMusicPlaying = false;
+        const enterBtn = document.getElementById('enter-btn');
+        const audio = document.getElementById('bg-music');
 
-        setTimeout(() => { audioHint.style.opacity = '0.7'; }, 1000);
+        audio.volume = 0.5;
 
-        function startJourney() {
-            // Fade Out Intro
-            introOverlay.style.opacity = '0';
-            introOverlay.style.visibility = 'hidden';
+        enterBtn.addEventListener('click', () => {
+            // 1. Play Audio
+            audio.play().catch(e => console.log("Audio play failed:", e));
             
-            // Fade In Content
-            mainContent.style.opacity = '1';
+            // 2. Dissolve Gate
+            gate.style.filter = 'blur(20px)';
+            gate.style.opacity = '0';
             
-            // Show Music Button
-            musicBtn.style.opacity = '1';
+            // 3. Reveal Main Content
+            setTimeout(() => {
+                gate.style.display = 'none';
+                mainContent.style.display = 'block';
+                // Small delay to allow display:block to render before transitioning opacity
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                    initScrollObservers();
+                }, 50);
+            }, 2000); // 2 second cinematic dissolve
+        });
+
+        // === SCROLL REVEAL OBSERVER ===
+        function initScrollObservers() {
+            const reveals = document.querySelectorAll('.reveal-blur');
             
-            // Start Music
-            letterMusic.volume = 0.5;
-            proposalMusic.volume = 0.6;
-            letterMusic.play().then(() => {
-                isMusicPlaying = true;
-                musicBtn.classList.add('playing');
-            }).catch(() => console.log("Auto-play blocked"));
-        }
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                currentAudio.pause();
-                musicBtn.classList.remove('playing');
-            } else {
-                currentAudio.play();
-                musicBtn.classList.add('playing');
-            }
-            isMusicPlaying = !isMusicPlaying;
-        }
-
-        // --- Scroll Reveal ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
-
-        // --- Proposal Logic ---
-        const proposalModal = document.getElementById('proposal-modal');
-        const btnNo = document.getElementById('btn-no');
-        const btnYes = document.getElementById('btn-yes');
-        const celebrationScreen = document.getElementById('celebration-screen');
-        let noClickCount = 0;
-        const noTexts = ["Are you sure?", "Really?", "Think again...", "Don't!", "Please...", ""];
-
-        function openProposal() {
-            proposalModal.classList.add('active');
-            
-            // Switch Music Fade
-            let fadeOut = setInterval(() => {
-                if (letterMusic.volume > 0.1) {
-                    letterMusic.volume -= 0.1;
-                } else {
-                    clearInterval(fadeOut);
-                    letterMusic.pause();
-                    letterMusic.currentTime = 0;
-                    currentAudio = proposalMusic;
-                    if(isMusicPlaying) {
-                        proposalMusic.play();
-                        musicBtn.classList.add('playing');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
                     }
-                }
-            }, 100);
-        }
-
-        function handleNo() {
-            if (noClickCount < 5) {
-                btnNo.innerText = noTexts[noClickCount];
-                // Increase Yes Button size dynamically
-                let currentScale = 1 + (noClickCount * 0.15);
-                btnYes.style.transform = `scale(${currentScale})`;
-                btnYes.style.margin = '10px';
-                
-                // Move No button
-                const x = (Math.random() - 0.5) * 100;
-                const y = (Math.random() - 0.5) * 100;
-                btnNo.style.transform = `translate(${x}px, ${y}px)`;
-                
-                noClickCount++;
-            } else {
-                btnNo.style.display = 'none';
-            }
-        }
-
-        function handleYes() {
-            proposalModal.classList.remove('active');
-            celebrationScreen.style.display = 'flex';
-            
-            for(let i=0; i<80; i++) setTimeout(createConfetti, i * 20);
-            for(let i=0; i<20; i++) setTimeout(createBalloon, i * 150);
-            for(let i=0; i<40; i++) setTimeout(createSparkle, i * 50);
-        }
-
-        function createBalloon() {
-            const colors = ['#d4af37', '#f3e5ab', '#ff6b6b', '#5f27cd', '#ffffff'];
-            const balloon = document.createElement('div');
-            balloon.classList.add('balloon');
-            balloon.style.left = Math.random() * 80 + 10 + '%';
-            balloon.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
-            balloon.style.setProperty('--speed', Math.random() * 4 + 4 + 's');
-            balloon.style.setProperty('--rotation', Math.random() * 20 - 10 + 'deg');
-            celebrationScreen.appendChild(balloon);
-        }
-
-        function createConfetti() {
-            const colors = ['#d4af37', '#ffffff', '#aa771c'];
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + '%';
-            confetti.style.setProperty('--color', colors[Math.floor(Math.random() * colors.length)]);
-            confetti.style.setProperty('--speed', Math.random() * 3 + 2 + 's');
-            celebrationScreen.appendChild(confetti);
-        }
-
-        function createSparkle() {
-            const sparkle = document.createElement('div');
-            sparkle.style.position = 'fixed';
-            sparkle.style.left = '50%';
-            sparkle.style.top = '50%';
-            sparkle.style.width = '4px';
-            sparkle.style.height = '4px';
-            sparkle.style.background = 'gold';
-            sparkle.style.borderRadius = '50%';
-            sparkle.style.zIndex = '500';
-            celebrationScreen.appendChild(sparkle);
-            
-            const angle = Math.random() * Math.PI * 2;
-            const dist = 100 + Math.random() * 200;
-            const tx = Math.cos(angle) * dist;
-            const ty = Math.sin(angle) * dist;
-            
-            sparkle.animate([
-                { transform: 'translate(0,0) scale(1)', opacity: 1 },
-                { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
-            ], {
-                duration: 1500,
-                easing: 'cubic-bezier(0, .9, .57, 1)'
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -100px 0px"
             });
+
+            reveals.forEach(reveal => observer.observe(reveal));
+            
+            // Trigger immediately for elements already in viewport
+            setTimeout(() => {
+                reveals.forEach(reveal => {
+                    const rect = reveal.getBoundingClientRect();
+                    if(rect.top < window.innerHeight - 100) {
+                        reveal.classList.add('is-visible');
+                    }
+                });
+            }, 300);
         }
     </script>
 </body>
