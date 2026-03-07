@@ -25,17 +25,49 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML1QLKGR3K"></script>
+  <!-- Google tag (gtag.js) — GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
-    window.dataLayer=window.dataLayer||[];
+    window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js',new Date());
-    gtag('config','G-ML1QLKGR3K',{send_page_view:true});
-    function gaEvent(action,category,label){gtag('event',action,{event_category:category,event_label:label});}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7');
+    /* Custom event helper used site-wide */
+    function gaEvent(action, category, label) {
+      gtag('event', action, { event_category: category, event_label: label });
+    }
   </script>
 
   <script>
-    tailwind.config={darkMode:['attribute','[data-theme="dark"]'],theme:{extend:{colors:{clay:'#D95D39','brand-black':'#1C1C1C','brand-gray':'#666666','brand-gold':'#C5A059','brand-cream':'#FDFBF7',paper:'#FDFBF7',sage:'#4A5D4F'},fontFamily:{sans:['Lato','sans-serif'],serif:['Cormorant Garamond','serif'],display:['Marcellus','serif']}}}}
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            clay:          '#D95D39',
+            'brand-black': '#1C1C1C',
+            'brand-gray':  '#666666',
+            'brand-gold':  '#C5A059',
+            'brand-cream': '#FDFBF7',
+            paper:         '#FDFBF7',
+            sage:          '#4A5D4F'
+          },
+          fontFamily: {
+            sans:    ['Lato', 'sans-serif'],
+            serif:   ['Cormorant Garamond', 'serif'],
+            display: ['Marcellus', 'serif']
+          },
+          letterSpacing: { 'widest-xl': '0.25em' },
+          animation: { 'marquee': 'marquee 120s linear infinite' },
+          keyframes: {
+            'marquee': {
+              '0%':   { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' }
+            }
+          }
+        }
+      }
+    };
   </script>
 
   <style>
@@ -44,8 +76,6 @@
       --text:#1C1C1C;--text-muted:#666666;
       --border:#e8e4de;--card-bg:#FFFFFF;
       --input-bg:#FAFAF8;
-      /* ── TRANSPARENT WHITISH NAVBAR ── */
-      --nav-bg:rgba(255,255,255,0.60);
       --shadow:0 2px 24px rgba(0,0,0,0.07);
     }
     [data-theme="dark"]{
@@ -53,13 +83,12 @@
       --text:#F0EDE6;--text-muted:#9A9080;
       --border:#2E2E28;--card-bg:#1F1F1B;
       --input-bg:#252520;
-      --nav-bg:rgba(20,20,16,0.72);
       --shadow:0 2px 24px rgba(0,0,0,0.4);
     }
 
     *,*::before,*::after{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
-    body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;cursor:auto;}
+    body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
 
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
 
@@ -78,22 +107,106 @@
     .hero-img{animation:pan 30s ease-in-out infinite alternate;will-change:transform;}
     @keyframes pan{0%{transform:scale(1);}100%{transform:scale(1.08) translateY(-2%);}}
 
-    /* ── TRANSPARENT NAVBAR ── */
+    /* ══════════════════════════════════════════
+       NAVBAR — matches thesamarpan.co.in exactly
+       ══════════════════════════════════════════ */
     #navbar{
-      background:var(--nav-bg);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      box-shadow:0 1px 0 rgba(0,0,0,0.04);
-      border-bottom:1px solid rgba(232,228,222,0.45);
-      transition:background .4s,box-shadow .4s;
+      position:fixed;
+      left:0;
+      width:100%;
+      z-index:100;
+      height:72px;
+      display:flex;
+      align-items:center;
+      /* top is set dynamically by syncNavbarTop() to clear the promo banner */
+      top:0;
+      background:transparent;
+      border-bottom:1px solid transparent;
+      transition:
+        background 0.45s cubic-bezier(.4,0,.2,1),
+        border-color 0.45s cubic-bezier(.4,0,.2,1),
+        box-shadow 0.45s cubic-bezier(.4,0,.2,1),
+        top 0.45s cubic-bezier(.4,0,.2,1);
     }
-    [data-theme="dark"] #navbar{
-      border-bottom:1px solid rgba(46,46,40,0.5);
+    /* scrolled state — solid cream/white */
+    #navbar.scrolled{
+      background:rgba(253,251,247,0.97);
+      border-bottom:1px solid #e8e4de;
+      box-shadow:0 2px 20px rgba(0,0,0,0.06);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
     }
-    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;transition:color .3s;color:var(--text-muted);}
-    .nav-link:hover{color:var(--text);}
-    .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-    .nav-link:hover::after{transform:scaleX(1);}
+    [data-theme="dark"] #navbar.scrolled{
+      background:rgba(20,20,16,0.96);
+      border-bottom:1px solid #2E2E28;
+      box-shadow:0 2px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Nav links — white on hero, dark when scrolled */
+    .nav-link{
+      position:relative;
+      font-size:10px;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      font-family:'Lato',sans-serif;
+      font-weight:700;
+      transition:color .3s;
+      color:rgba(255,255,255,0.90);
+      text-decoration:none;
+    }
+    #navbar.scrolled .nav-link{ color:var(--text-muted); }
+    .nav-link:hover{ color:#D95D39 !important; }
+    .nav-link::after{
+      content:'';position:absolute;bottom:-3px;left:0;right:0;
+      height:1px;background:#D95D39;
+      transform:scaleX(0);transform-origin:left;transition:transform .3s;
+    }
+    .nav-link:hover::after{ transform:scaleX(1); }
+
+    /* Logo — white on hero, dark on scroll */
+    .nav-logo-text{
+      font-family:'Marcellus',serif;
+      font-size:11px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      font-weight:700;
+      transition:color .3s;
+      color:#ffffff;
+    }
+    #navbar.scrolled .nav-logo-text{ color:var(--text); }
+    .nav-logo-icon{ transition:color .3s; color:#D95D39; }
+
+    /* CTA button — solid clay always */
+    .nav-cta-btn{
+      display:inline-block;
+      padding:.65rem 1.4rem;
+      background:#D95D39;
+      color:#fff !important;
+      font-family:'Lato',sans-serif;
+      font-size:9.5px;
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      border:none;
+      cursor:pointer;
+      transition:background .3s, box-shadow .3s, transform .2s;
+      text-decoration:none;
+      border-radius:2px;
+      white-space:nowrap;
+      position:relative;
+      overflow:hidden;
+    }
+    .nav-cta-btn::before{
+      content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
+      transition:left .55s ease;
+    }
+    .nav-cta-btn:hover::before{ left:120%; }
+    .nav-cta-btn:hover{
+      background:#c24e2c;
+      box-shadow:0 6px 20px rgba(217,93,57,.45);
+      transform:translateY(-1px);
+    }
 
     /* Mobile menu — full screen overlay */
     #mobile-menu{
@@ -106,6 +219,10 @@
     }
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
     [data-theme="dark"] #mobile-menu{background:#141410;}
+
+    /* hamburger icon color handling */
+    #hamburger-icon{ transition:color .3s; color:#ffffff; }
+    #navbar.scrolled #hamburger-icon{ color:var(--text); }
 
     .stat-card-premium{position:relative;overflow:hidden;background:var(--card-bg);transition:transform .3s,box-shadow .3s;}
     .stat-card-premium::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 70%,rgba(217,93,57,.04));pointer-events:none;}
@@ -272,7 +389,7 @@
       position:absolute;inset:0;
       background:linear-gradient(
         to bottom,
-        rgba(253,251,247,0.08) 0%,
+        rgba(0,0,0,0.08) 0%,
         rgba(0,0,0,0.12) 30%,
         rgba(0,0,0,0.45) 70%,
         rgba(28,28,28,0.72) 100%
@@ -293,6 +410,14 @@
 
     .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;letter-spacing:.05em;}
     .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+
+    /* Input validation states */
+    .form-input2.invalid,.form-textarea2.invalid,.form-select2.invalid{border-color:#D95D39 !important;}
+    .form-input2.valid,.form-textarea2.valid{border-color:#4A5D4F !important;}
+
+    /* Loading spinner */
+    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
   </style>
 </head>
 
@@ -364,9 +489,12 @@
       <button onclick="closeGiftPopup()" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition" style="color:var(--text-muted);">✕</button>
       <h3 class="font-serif text-2xl mb-2" style="color:var(--text);">Before you go...</h3>
       <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Claim your <strong class="text-clay">FREE 20-minute Dosha Assessment</strong> — discover your Ayurvedic constitution and the single biggest change that could transform your health.</p>
-      <form id="giftForm" onsubmit="handleGiftSubmit(event)" class="space-y-3">
-        <input type="email" name="email" placeholder="Your email address" class="form-input2 w-full" required>
-        <button type="submit" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Claim Free Session</button>
+      <form id="giftForm" onsubmit="handleGiftSubmit(event)" class="space-y-3" novalidate>
+        <div>
+          <input type="email" name="email" id="giftEmail" placeholder="Your email address" class="form-input2 w-full" required>
+          <span class="text-xs text-red-500 hidden" id="giftEmailErr">Please enter a valid email address.</span>
+        </div>
+        <button type="submit" id="giftSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Claim Free Session</button>
       </form>
       <div id="giftStatus" class="mt-2"></div>
       <p class="text-[10px] mt-3 text-center" style="color:var(--text-muted);">No spam. Unsubscribe anytime.</p>
@@ -426,9 +554,12 @@
   </div>
 </div>
 
-<!-- ══ NAVBAR ══ -->
-<nav id="navbar" class="fixed w-full z-50">
-  <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
+<!-- ══════════════════════════════════
+     NAVBAR — Transparent → Solid White
+     ══════════════════════════════════ -->
+<nav id="navbar">
+  <div class="max-w-[1400px] mx-auto px-6 w-full flex justify-between items-center">
+
     <!-- Desktop Left Links -->
     <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
       <a href="about.html" class="nav-link">About</a>
@@ -436,24 +567,31 @@
       <a href="sessions.html" class="nav-link">Sessions</a>
       <a href="ayurveda.html" class="nav-link">Ayurveda</a>
     </div>
+
     <!-- Logo — centered -->
     <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" class="mb-1 group-hover:scale-110 transition duration-500 drop-shadow-sm text-clay">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="nav-logo-icon mb-1 group-hover:scale-110 transition duration-500 drop-shadow-sm">
         <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
         <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
         <circle cx="50" cy="85" r="3" fill="currentColor"/>
         <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
       </svg>
-      <span class="text-[11px] uppercase tracking-[.25em] font-display font-bold transition-colors duration-500" style="color:var(--text);">Samarpan</span>
+      <span class="nav-logo-text">Samarpan</span>
     </a>
-    <!-- Desktop Right -->
-    <div class="hidden lg:flex flex-1 justify-end items-center gap-4">
-      <a href="booking.html" onclick="gaEvent('click','CTA','Nav Book Now')" class="cta-btn px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[.15em] rounded-sm shadow-md">Start Your Healing Journey</a>
+
+    <!-- Desktop Right CTA -->
+    <div class="hidden lg:flex flex-1 justify-end items-center">
+      <a href="booking.html"
+         onclick="gaEvent('click','CTA','Nav Book Now')"
+         class="nav-cta-btn">
+        Start Your Healing Journey
+      </a>
     </div>
-    <!-- Mobile hamburger -->
+
+    <!-- Mobile Hamburger -->
     <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
-      <button id="hamburger-btn" class="p-2 rounded-sm transition" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
-        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon" style="color:var(--text);"></i>
+      <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon"></i>
       </button>
     </div>
   </div>
@@ -500,7 +638,7 @@
   </div>
 </header>
 
-<!-- ══ PHILOSOPHY — A Sanctuary for the Self ══ -->
+<!-- ══ PHILOSOPHY ══ -->
 <section id="ayurveda" class="py-24 md:py-32 text-center px-6" style="background:var(--bg);">
   <div class="max-w-3xl mx-auto fade-up">
     <div class="divider-gold mb-8"></div>
@@ -773,7 +911,7 @@
       <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body again."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
       <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Women's Health</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"My PCOS symptoms have drastically reduced through the Ayurvedic lifestyle changes. Empowering and sustainable."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Aisha K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Dubai, UAE</p></div></div>
       <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Depression</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"The combination of Yoga Nidra and counseling lifted a fog I've lived with for years. I have my vitality back."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">James L.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Toronto, Canada</p></div></div>
-      <!-- Duplicates for seamless loop -->
+      <!-- Duplicates for loop -->
       <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
       <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
     </div>
@@ -908,7 +1046,6 @@
         <div style="height:1px;width:80px;background:linear-gradient(to left,transparent,#C5A059);"></div>
       </div>
     </div>
-
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 fade-up">
       <!-- Left Column -->
       <div class="lg:col-span-2 flex flex-col gap-6">
@@ -969,9 +1106,12 @@
             </div>
           </div>
           <p class="font-sans text-xs mb-4 leading-relaxed" style="color:var(--text-muted);">Ayurvedic insights, seasonal practices, and consciousness teachings — delivered to your inbox every new moon.</p>
-          <form id="newsletterForm" onsubmit="handleNewsletterFirebase(event)" class="space-y-2">
-            <input type="email" name="email" id="newsEmail" placeholder="your@email.com" class="form-input2" required>
-            <button type="submit" class="cta-btn w-full bg-brand-black text-white py-3 text-[9px] font-bold uppercase tracking-widest hover:bg-clay rounded-sm transition">Join the Inner Circle</button>
+          <form id="newsletterForm" onsubmit="handleNewsletterFirebase(event)" class="space-y-2" novalidate>
+            <div>
+              <input type="email" name="email" id="newsEmail" placeholder="your@email.com" class="form-input2" required>
+              <span class="text-xs text-red-500 hidden" id="newsEmailErr">Please enter a valid email.</span>
+            </div>
+            <button type="submit" id="newsSubmitBtn" class="cta-btn w-full bg-brand-black text-white py-3 text-[9px] font-bold uppercase tracking-widest hover:bg-clay rounded-sm transition">Join the Inner Circle</button>
           </form>
           <div id="newsletterStatus" class="mt-2 text-center"></div>
           <p class="text-[9px] mt-2 text-center" style="color:var(--text-muted);">No spam · Unsubscribe any time</p>
@@ -987,11 +1127,11 @@
             <p class="font-sans text-xs mt-1 text-white/60">We'll respond personally within 24 hours.</p>
           </div>
           <div class="p-8 md:p-10">
-            <form id="bookingForm" onsubmit="handleLeadFirebase(event)" class="space-y-5">
+            <form id="bookingForm" onsubmit="handleLeadFirebase(event)" class="space-y-5" novalidate>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Full Name *</label>
-                  <input type="text" name="name" class="form-input2" placeholder="Your name" required id="formName">
+                  <input type="text" name="name" class="form-input2" placeholder="Your name" required id="formName" minlength="2">
                 </div>
                 <div>
                   <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Email Address *</label>
@@ -1000,7 +1140,7 @@
               </div>
               <div>
                 <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Mobile Number</label>
-                <input type="tel" name="phone" class="form-input2" placeholder="+91 98765 43210">
+                <input type="tel" name="phone" class="form-input2" placeholder="+91 98765 43210" id="formPhone">
               </div>
               <div>
                 <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Programme of Interest</label>
@@ -1020,9 +1160,9 @@
               </div>
               <div>
                 <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Your Message *</label>
-                <textarea name="message" class="form-textarea2" placeholder="Tell us about your health goals or what you're seeking..." required id="formMessage"></textarea>
+                <textarea name="message" class="form-textarea2" placeholder="Tell us about your health goals or what you're seeking..." required id="formMessage" minlength="10"></textarea>
               </div>
-              <button type="submit" class="cta-btn w-full py-4 bg-clay text-white font-bold text-xs uppercase tracking-[.2em] rounded shadow-lg" onclick="gaEvent('click','CTA','Contact Form Submit')">
+              <button type="submit" id="formSubmitBtn" class="cta-btn w-full py-4 bg-clay text-white font-bold text-xs uppercase tracking-[.2em] rounded shadow-lg" onclick="gaEvent('click','CTA','Contact Form Submit')">
                 Submit Your Request
               </button>
             </form>
@@ -1093,102 +1233,228 @@
 <div id="whatsapp-fab"><a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20wellness%20programmes." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
 <div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
 
-<!-- ══ FIREBASE ══ -->
+<!-- ══════════════════════════════════════════════════════════════════
+     FIREBASE — Date-wise storage
+     Structure: artifacts / samarpan-official / public / data / YYYY-MM-DD / {type}
+     Example:   All leads on 7 Oct → .../public/data/2025-10-07/leads
+                All newsletter on 7 Oct → .../public/data/2025-10-07/newsletter
+                All quiz results on 7 Oct → .../public/data/2025-10-07/quiz_results
+     ══════════════════════════════════════════════════════════════════ -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously }
+                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+  /* ── Firebase credentials ── */
   const firebaseConfig = {
-    apiKey:"AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
-    authDomain:"thesamrpan.firebaseapp.com",
-    projectId:"thesamrpan",
-    storageBucket:"thesamrpan.firebasestorage.app",
-    messagingSenderId:"510287005957",
-    appId:"1:510287005957:web:978533c6dbca0f4969cf6c"
-  };
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
-  const auth = getAuth(app);
-  const appId = "samarpan-official";
-  const ensureAuth = async () => { if (!auth.currentUser) await signInAnonymously(auth); };
-  ensureAuth();
-  const today = () => new Date().toISOString().split('T')[0];
-  const saveByDate = async (type, data) => {
-    await ensureAuth();
-    return addDoc(collection(db,"artifacts",appId,"dates",today(),type), {
-      ...data, date:today(), timestamp:serverTimestamp(), source:"website_homepage"
-    });
+    apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+    authDomain:        "thesamrpan.firebaseapp.com",
+    projectId:         "thesamrpan",
+    storageBucket:     "thesamrpan.firebasestorage.app",
+    messagingSenderId: "510287005957",
+    appId:             "1:510287005957:web:978533c6dbca0f4969cf6c",
+    measurementId:     "G-ML1QLKGR3K"
   };
 
+  const customAppId = "samarpan-official";
+
+  /* ── Helper: returns today as "YYYY-MM-DD" (IST-aware) ── */
+  function todayIST() {
+    const now = new Date();
+    // Add IST offset (+5:30) to get the correct calendar date in India
+    const istOffset = 5.5 * 60 * 60 * 1000;
+    const ist = new Date(now.getTime() + istOffset);
+    return ist.toISOString().split('T')[0]; // e.g. "2025-10-07"
+  }
+
+  /* ── Initialise ── */
+  let db, auth;
+  try {
+    const app = initializeApp(firebaseConfig);
+    db   = getFirestore(app);
+    auth = getAuth(app);
+    // Authenticate anonymously — required before any Firestore write
+    (async () => {
+      try { await signInAnonymously(auth); }
+      catch(err) { console.error("Firebase Auth Error:", err); }
+    })();
+    window._fbReady = true;
+  } catch(e) {
+    console.warn("Firebase init failed — forms will use mailto fallback.", e);
+    window._fbReady = false;
+  }
+
+  /* ── Core write helper ──
+     Path: artifacts / samarpan-official / public / data / 2025-10-07 / leads
+     All documents submitted on the same calendar day (IST) land in the same
+     date-bucket, making per-day reporting trivial in the Firebase console.    */
+  const saveByDate = async (type, data) => {
+    if (!db) throw new Error("Firestore not initialised");
+    if (auth && !auth.currentUser) await signInAnonymously(auth);
+
+    const dateKey = todayIST(); // e.g. "2025-10-07"
+
+    return addDoc(
+      collection(db, "artifacts", customAppId, "public", "data", dateKey, type),
+      {
+        ...data,
+        date:      dateKey,
+        timestamp: serverTimestamp(),
+        source:    "website_homepage"
+      }
+    );
+  };
+
+  /* ── 1. Newsletter subscription ── */
   window.handleNewsletterFirebase = async function(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]') || e.target.querySelector('button');
+    const btn        = document.getElementById('newsSubmitBtn');
     const emailInput = document.getElementById('newsEmail');
-    const statusDiv = document.getElementById('newsletterStatus');
-    const orig = btn.innerText;
-    btn.disabled = true; btn.innerText = 'Subscribing…';
+    const statusDiv  = document.getElementById('newsletterStatus');
+    const origText   = btn.innerHTML;
+
+    // Validate
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+      emailInput.classList.add('invalid');
+      document.getElementById('newsEmailErr')?.classList.remove('hidden');
+      emailInput.focus();
+      return;
+    }
+    emailInput.classList.remove('invalid');
+    emailInput.classList.add('valid');
+    document.getElementById('newsEmailErr')?.classList.add('hidden');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> Subscribing…';
+
     try {
-      await saveByDate("newsletter", { email: emailInput.value });
-      statusDiv.innerHTML = `<span class="text-xs font-bold tracking-widest uppercase" style="color:#4A5D4F;">✓ Subscribed! Welcome to the Inner Circle.</span>`;
-      emailInput.value = ''; btn.innerText = 'Done ✓';
-      gaEvent('submit','Form','Newsletter Subscribe');
+      await saveByDate("newsletter", { email: emailInput.value.trim() });
+      statusDiv.innerHTML = `<span class="text-xs text-green-600 font-bold tracking-widest uppercase">✓ Subscribed! Welcome to the Inner Circle.</span>`;
+      emailInput.value = '';
+      emailInput.classList.remove('valid');
+      gaEvent('submit', 'Form', 'Newsletter Subscribe');
     } catch(err) {
-      console.error(err);
-      statusDiv.innerHTML = `<span class="text-xs font-bold" style="color:#D95D39;">Something went wrong. Please try again.</span>`;
-      btn.disabled = false; btn.innerText = orig;
+      console.error("Newsletter error:", err);
+      statusDiv.innerHTML = `<span class="text-xs text-red-600 font-bold">Error. Please try again.</span>`;
     } finally {
-      setTimeout(() => { statusDiv.innerHTML=''; btn.disabled=false; btn.innerText=orig; }, 4000);
+      setTimeout(() => {
+        statusDiv.innerHTML = '';
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }, 4000);
     }
   };
 
+  /* ── 2. Contact / Lead form ── */
   window.handleLeadFirebase = async function(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]') || e.target.querySelector('button');
+    const btn       = e.target.querySelector('button[type="submit"]') || document.getElementById('formSubmitBtn');
     const statusDiv = document.getElementById('formStatus');
-    const fd = new FormData(e.target);
-    const orig = btn.innerText;
-    btn.disabled = true; btn.innerText = 'Sending…';
+    const origText  = btn.innerHTML;
+    const fd        = new FormData(e.target);
+
+    // Basic validation
+    const name    = (fd.get('name')    || '').trim();
+    const email   = (fd.get('email')   || '').trim();
+    const message = (fd.get('message') || '').trim();
+    let valid = true;
+    if (name.length < 2)   { document.getElementById('formName')?.classList.add('invalid');    valid = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+                           { document.getElementById('formEmail')?.classList.add('invalid');   valid = false; }
+    if (message.length < 10){ document.getElementById('formMessage')?.classList.add('invalid'); valid = false; }
+    if (!valid) {
+      statusDiv.innerHTML = `<div class="mt-4 form-error">✗ Please fill in all required fields correctly.</div>`;
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> Sending…';
+
+    const payload = {
+      name,
+      email,
+      phone:   fd.get('phone')   || "Not Provided",
+      service: fd.get('service') || "General Inquiry",
+      message
+    };
+
     try {
-      await saveByDate("leads", {
-        name: fd.get('name'),
-        email: fd.get('email'),
-        phone: fd.get('phone') || "Not Provided",
-        service: fd.get('service'),
-        message: fd.get('message')
-      });
-      statusDiv.innerHTML = `<div class="mt-4 p-4 rounded text-center text-xs font-bold tracking-widest uppercase form-success">✓ Request received. We'll contact you within 24 hours.</div>`;
+      await saveByDate("leads", payload);
+      statusDiv.innerHTML = `<div class="mt-4 p-3 bg-sage/10 text-sage border border-sage rounded text-center text-xs font-bold tracking-widest uppercase form-success">✓ Your request has been received. Our team will contact you within 24 hours.</div>`;
       e.target.reset();
-      gaEvent('submit','Form','Lead Form Submit');
+      ['formName','formEmail','formMessage'].forEach(id => {
+        document.getElementById(id)?.classList.remove('valid','invalid');
+      });
+      gaEvent('submit', 'Form', 'Lead Form Submit');
     } catch(err) {
-      console.error(err);
-      statusDiv.innerHTML = `<div class="mt-4 p-3 rounded text-center text-xs font-bold form-error">Error submitting. Please email support@thesamarpan.co.in</div>`;
+      console.error("Lead form error:", err);
+      // Graceful fallback → open mail client so no inquiry is lost
+      const body = `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nService: ${payload.service}\nMessage: ${payload.message}`;
+      window.open(`mailto:support@thesamarpan.co.in?subject=${encodeURIComponent('Session Inquiry – '+payload.service)}&body=${encodeURIComponent(body)}`, '_blank');
+      statusDiv.innerHTML = `<div class="mt-4 form-error">Error saving. Opening email client as backup.</div>`;
     } finally {
-      setTimeout(() => { btn.disabled=false; btn.innerText=orig; }, 3000);
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }, 3000);
     }
   };
 
+  /* ── 3. Gift popup form ── */
   window.handleGiftSubmit = async function(e) {
     e.preventDefault();
-    const fd = new FormData(e.target);
-    const statusDiv = document.getElementById('giftStatus');
+    const emailInput = document.getElementById('giftEmail');
+    const errSpan    = document.getElementById('giftEmailErr');
+    const btn        = document.getElementById('giftSubmitBtn');
+    const origText   = btn.innerHTML;
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+      emailInput.classList.add('invalid');
+      errSpan?.classList.remove('hidden');
+      emailInput.focus();
+      return;
+    }
+    emailInput.classList.remove('invalid');
+    errSpan?.classList.add('hidden');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span> Claiming…';
+
     try {
-      await saveByDate("leads", { email: fd.get('email'), service:"Free Dosha Assessment", source_type:"gift_popup" });
-      gaEvent('submit','Form','Gift Popup Submit');
-      statusDiv.innerHTML = `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Claimed! We'll be in touch within 24h.</p>`;
-      setTimeout(() => { closeGiftPopup(); }, 1500);
+      await saveByDate("leads", {
+        email:       emailInput.value.trim(),
+        service:     "Free Dosha Assessment",
+        source_type: "gift_popup"
+      });
+      gaEvent('submit', 'Form', 'Gift Popup Submit');
+      document.getElementById('giftStatus').innerHTML =
+        `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Claimed! We'll be in touch within 24h.</p>`;
+      setTimeout(() => { closeGiftPopup(); }, 1800);
     } catch(err) {
-      console.error(err);
-      closeGiftPopup();
-      showNotif("Claimed! 🎉", "We'll be in touch within 24 hours to schedule your free session.");
+      console.error("Gift popup error:", err);
+      document.getElementById('giftStatus').innerHTML =
+        `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Claimed! Check your inbox shortly.</p>`;
+      setTimeout(() => { closeGiftPopup(); }, 1800);
+    } finally {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = origText;
+      }, 3000);
     }
   };
 
+  /* ── 4. Quiz result ── */
   window.saveQuizResult = async function(dosha, name, email) {
     try {
-      await saveByDate("quiz_results", { dosha, name: name||"Anonymous", email: email||"" });
-      gaEvent('complete','Quiz','Prakriti Quiz - '+dosha);
-    } catch(err) { console.error(err); }
+      await saveByDate("quiz_results", {
+        dosha,
+        name:  name  || "Anonymous",
+        email: email || ""
+      });
+      gaEvent('complete', 'Quiz', 'Prakriti Quiz - ' + dosha);
+    } catch(err) { console.error("Quiz save error:", err); }
   };
 </script>
 
@@ -1196,48 +1462,91 @@
 <script>
   lucide.createIcons();
 
-  // LOADER
+  // ── LOADER ──
   window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     if (!loader) return;
     setTimeout(() => { loader.style.opacity='0'; setTimeout(()=>{ loader.style.display='none'; },600); }, 500);
   });
 
-  // HERO ANIMATION
+  // ── HERO ANIMATION ──
   document.querySelectorAll('.gsap-hero').forEach(el => { el.style.transform='translateY(30px)'; });
   window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.querySelectorAll('.gsap-hero').forEach((el,i) => {
         setTimeout(() => {
           el.style.transition='opacity 1.2s ease,transform 1.2s ease';
-          el.style.opacity='1';
-          el.style.transform='translateY(0)';
+          el.style.opacity='1'; el.style.transform='translateY(0)';
         }, 900+i*200);
       });
     }, 0);
   });
 
-  // SCROLL PROGRESS
+  // ══════════════════════════════════════════════
+  //  NAVBAR SCROLL BEHAVIOUR — transparent → solid
+  // ══════════════════════════════════════════════
+  (function() {
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    const HERO_HEIGHT = () => document.querySelector('header')?.offsetHeight || 600;
+
+    function updateNavbar() {
+      const scrolled = window.scrollY;
+      // Apply scrolled class when past ~80px
+      if (scrolled > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      lastScroll = scrolled;
+    }
+
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    // Run once on load in case page is already scrolled
+    updateNavbar();
+  })();
+
+  // ── SCROLL PROGRESS ──
   window.addEventListener('scroll', () => {
     const sp = document.getElementById('scroll-progress');
     if (!sp) return;
     sp.style.width = Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';
   }, {passive:true});
 
-  // TOP BANNER
+  // ── TOP BANNER ──
+  // Keep navbar.top in sync with banner height so they never overlap
+  function syncNavbarTop() {
+    const banner = document.getElementById('top-banner');
+    const navbar = document.getElementById('navbar');
+    if (!banner || !navbar) return;
+    navbar.style.top = banner.offsetHeight + 'px';
+  }
+
+  // Run on load and whenever window resizes
+  window.addEventListener('DOMContentLoaded', syncNavbarTop);
+  window.addEventListener('load', syncNavbarTop);
+  window.addEventListener('resize', syncNavbarTop, { passive: true });
+
   let bannerDismissed = false;
   function dismissBanner() {
     bannerDismissed = true;
     document.getElementById('top-banner').classList.add('dismissed');
+    // After CSS transition completes (500ms), reset navbar to top:0
+    setTimeout(syncNavbarTop, 520);
   }
   window.addEventListener('scroll', () => {
     const banner = document.getElementById('top-banner');
     if (!banner || bannerDismissed) return;
-    if (window.scrollY > 120) banner.classList.add('scroll-hidden');
-    else banner.classList.remove('scroll-hidden');
+    if (window.scrollY > 120) {
+      banner.classList.add('scroll-hidden');
+    } else {
+      banner.classList.remove('scroll-hidden');
+    }
+    // Sync after transition settles
+    setTimeout(syncNavbarTop, 520);
   }, {passive:true});
 
-  // SCROLL-DEPENDENT UI (mobile bar removed)
+  // ── SCROLL-DEPENDENT FABS ──
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (ticking) return;
@@ -1251,12 +1560,12 @@
     ticking = true;
   }, {passive:true});
 
-  // MOBILE MENU
+  // ── MOBILE MENU ──
   let menuOpen = false;
   function toggleMenu() {
     menuOpen = !menuOpen;
     const menu = document.getElementById('mobile-menu');
-    const btn = document.getElementById('hamburger-btn');
+    const btn  = document.getElementById('hamburger-btn');
     const icon = document.getElementById('hamburger-icon');
     menu.classList.toggle('active', menuOpen);
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -1264,11 +1573,9 @@
     icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
     lucide.createIcons();
   }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && menuOpen) toggleMenu();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) toggleMenu(); });
 
-  // CAROUSEL
+  // ── CAROUSEL ──
   let currentSlide = 0;
   const totalSlides = 6;
   let autoplayTimer;
@@ -1297,13 +1604,13 @@
     track.addEventListener('touchend', e => { const diff = startX - e.changedTouches[0].clientX; if (Math.abs(diff) > 40) moveSlide(diff > 0 ? 1 : -1); }, {passive:true});
   })();
 
-  // FADE UP OBSERVER
+  // ── FADE UP ──
   const fadeObs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
   }, {threshold:0.1});
   document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
 
-  // STAT COUNTERS
+  // ── STAT COUNTERS ──
   const counterObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -1317,7 +1624,7 @@
   }, {threshold:0.5});
   document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
 
-  // STAT BARS
+  // ── STAT BARS ──
   const statsObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.querySelectorAll('.stat-bar').forEach(b => { b.style.transform='scaleX(1)'; }); statsObs.unobserve(e.target); }
@@ -1325,7 +1632,7 @@
   }, {threshold:0.2});
   document.querySelectorAll('.stat-card-premium').forEach(el => statsObs.observe(el));
 
-  // FAQ
+  // ── FAQ ──
   function toggleFaq(btn) {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('open');
@@ -1334,7 +1641,7 @@
     lucide.createIcons();
   }
 
-  // LIGHTBOX
+  // ── LIGHTBOX ──
   const galleryImages = [
     'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1600',
     'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600',
@@ -1350,13 +1657,10 @@
   function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
   function lightboxNav(dir) { currentLbIdx=(currentLbIdx+dir+galleryImages.length)%galleryImages.length; document.getElementById('lightbox-img').src=galleryImages[currentLbIdx]; }
 
-  // DARK MODE
+  // ── DARK MODE ──
   const storedTheme = localStorage.getItem('samarpan-theme') || 'light';
   document.documentElement.setAttribute('data-theme', storedTheme);
-  if (storedTheme === 'dark') {
-    const ti = document.getElementById('themeIcon');
-    if (ti) ti.setAttribute('data-lucide', 'sun');
-  }
+  if (storedTheme === 'dark') { const ti = document.getElementById('themeIcon'); if (ti) ti.setAttribute('data-lucide','sun'); }
   function toggleTheme() {
     const html = document.documentElement;
     const isDark = html.getAttribute('data-theme') === 'dark';
@@ -1366,16 +1670,16 @@
     lucide.createIcons();
   }
 
-  // COOKIE
+  // ── COOKIE ──
   function acceptCookies() { localStorage.setItem('samarpan-cookies','accepted'); document.getElementById('cookie-banner').style.display='none'; }
   function declineCookies() { localStorage.setItem('samarpan-cookies','declined'); document.getElementById('cookie-banner').style.display='none'; }
-  window.addEventListener('DOMContentLoaded', () => { if (!localStorage.getItem('samarpan-cookies')) setTimeout(() => { document.getElementById('cookie-banner').style.display='block'; }, 2500); });
+  window.addEventListener('DOMContentLoaded', () => { if (!localStorage.getItem('samarpan-cookies')) setTimeout(()=>{ document.getElementById('cookie-banner').style.display='block'; },2500); });
 
-  // GIFT POPUP
+  // ── GIFT POPUP ──
   function openGiftPopup() { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; }
   function closeGiftPopup() { document.getElementById('gift-popup').classList.remove('open'); document.body.style.overflow=''; }
 
-  // EXIT POPUP
+  // ── EXIT POPUP ──
   let popupShown = false;
   document.addEventListener('mouseleave', e => {
     if (e.clientY <= 0 && !popupShown && !localStorage.getItem('samarpan-popup-shown')) {
@@ -1397,17 +1701,17 @@
     localStorage.setItem('samarpan-popup-shown','true');
   }
 
-  // NOTIFICATION TOAST
+  // ── NOTIFICATION TOAST ──
   function showNotif(title, body) {
     document.getElementById('notif-title').textContent = title;
     document.getElementById('notif-body').textContent = body;
     const toast = document.getElementById('notif-toast');
     toast.classList.remove('fade-out');
     toast.classList.add('show');
-    setTimeout(() => { toast.classList.add('fade-out'); setTimeout(() => toast.classList.remove('show','fade-out'), 400); }, 5000);
+    setTimeout(() => { toast.classList.add('fade-out'); setTimeout(()=>toast.classList.remove('show','fade-out'),400); }, 5000);
   }
 
-  // BEFORE/AFTER SLIDERS
+  // ── BEFORE/AFTER SLIDERS ──
   function initBASlider(cId, aId, sId) {
     const container = document.getElementById(cId);
     const after = document.getElementById(aId);
@@ -1421,20 +1725,19 @@
       after.style.clipPath = `inset(0 ${100-pct}% 0 0)`;
     }
     slider.addEventListener('mousedown', e => { isDragging=true; e.preventDefault(); });
-    container.addEventListener('touchstart', () => { isDragging=true; }, {passive:true});
+    container.addEventListener('touchstart', ()=>{ isDragging=true; }, {passive:true});
     document.addEventListener('mousemove', e => { if (isDragging) update(e.clientX); });
     document.addEventListener('touchmove', e => { if (isDragging) update(e.touches[0].clientX); }, {passive:true});
-    document.addEventListener('mouseup', () => { isDragging=false; });
-    document.addEventListener('touchend', () => { isDragging=false; });
+    document.addEventListener('mouseup', ()=>{ isDragging=false; });
+    document.addEventListener('touchend', ()=>{ isDragging=false; });
   }
   initBASlider('ba1','ba1-after','ba1-slider');
   initBASlider('ba2','ba2-after','ba2-slider');
 
-  // KEYBOARD SHORTCUTS
+  // ── KEYBOARD SHORTCUTS ──
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      closeLightbox();
-      closePopup();
+      closeLightbox(); closePopup();
       document.getElementById('quiz-modal').classList.remove('open');
       document.getElementById('gift-popup').classList.remove('open');
       document.body.style.overflow = '';
@@ -1443,11 +1746,11 @@
     if (e.key === 'ArrowLeft') lightboxNav(-1);
   });
 
-  // PWA
+  // ── PWA ──
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault(); deferredPrompt = e;
-    setTimeout(() => { document.getElementById('pwa-install').classList.add('show'); }, 5000);
+    setTimeout(()=>{ document.getElementById('pwa-install').classList.add('show'); }, 5000);
   });
   const pwaBtn = document.getElementById('pwa-install-btn');
   if (pwaBtn) {
@@ -1460,11 +1763,34 @@
       document.getElementById('pwa-install').classList.remove('show');
     });
   }
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
-  }
 
-  // ══ PRAKRITI QUIZ ══
+  // ════════════════════════════════════════════
+  //  FORM HELPERS — validation UI only
+  //  (actual submit logic lives in the Firebase
+  //   module above as handleNewsletterFirebase,
+  //   handleLeadFirebase, handleGiftSubmit)
+  // ════════════════════════════════════════════
+
+  const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
+  const isValidName  = (v) => v.trim().length >= 2;
+  const isValidMsg   = (v) => v.trim().length >= 10;
+
+  // ── Input live validation feedback ──
+  document.querySelectorAll('.form-input2, .form-textarea2').forEach(el => {
+    el.addEventListener('input', () => {
+      const type = el.type || 'text';
+      let ok = false;
+      if (type === 'email') ok = isValidEmail(el.value);
+      else if (el.tagName === 'TEXTAREA') ok = isValidMsg(el.value);
+      else ok = isValidName(el.value);
+      el.classList.toggle('valid', ok);
+      el.classList.toggle('invalid', !ok && el.value.length > 0);
+    });
+  });
+
+  // ════════════════════
+  //  PRAKRITI QUIZ
+  // ════════════════════
   const quizQuestions = [
     {q:"How would you describe your body frame?",opts:[{text:"Thin, lean — I find it hard to gain weight",dosha:"V"},{text:"Medium, muscular — I maintain weight moderately",dosha:"P"},{text:"Large, sturdy — I gain weight easily",dosha:"K"}]},
     {q:"What best describes your skin?",opts:[{text:"Dry, rough, or thin — gets chapped easily",dosha:"V"},{text:"Warm, oily, prone to redness or acne",dosha:"P"},{text:"Smooth, moist, cool to touch",dosha:"K"}]},
@@ -1482,17 +1808,17 @@
     P:{name:"Pitta",emoji:"🔥",element:"Fire + Water",quality:"Intelligent, Decisive, Passionate",colour:"#D95D39",programmes:["Therapeutic Psychology","Meditation & Ajapa Jap","Nutrition Planning"],desc:"Pitta governs transformation and metabolism. In balance, you are sharp, courageous, and joyful. When imbalanced, you may experience irritability, inflammation, or burnout.",protocol:"Cooling practices, Moon Salutation, anti-inflammatory foods, liver-supporting herbs, and Sheetali (cooling breath) will restore your Pitta balance."},
     K:{name:"Kapha",emoji:"🌊",element:"Earth + Water",quality:"Loving, Stable, Compassionate",colour:"#C5A059",programmes:["Yoga Sessions","Nutrition Planning","Ayurvedic Consultations"],desc:"Kapha governs structure and stability. In balance, you are loving, calm, and grounded. When imbalanced, you may experience sluggishness, weight gain, or emotional attachment.",protocol:"Energising Vinyasa Yoga, detox herbs (Triphala), light and spicy foods, Kapalabhati breathing, and regular vigorous movement will restore your Kapha balance."}
   };
-  let quizAnswers = [], currentQuestion = 0, quizName = '', quizEmail = '';
+  let quizAnswers=[], currentQuestion=0, quizName='', quizEmail='';
 
   function openQuiz() {
-    quizAnswers = []; currentQuestion = 0;
+    quizAnswers=[]; currentQuestion=0;
     document.getElementById('quiz-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow='hidden';
     renderQuizStep();
     gaEvent('start','Quiz','Prakriti Quiz Open');
   }
   function renderQuizStep() {
-    const content = document.getElementById('quiz-content');
+    const content  = document.getElementById('quiz-content');
     const progress = document.getElementById('quiz-progress');
     if (currentQuestion < quizQuestions.length) {
       const q = quizQuestions[currentQuestion];
@@ -1507,8 +1833,8 @@
         ${currentQuestion > 0 ? `<button onclick="quizBack()" class="mt-4 font-sans text-xs text-clay underline">← Back</button>` : ''}
       `;
     } else {
-      progress.style.width = '95%';
-      content.innerHTML = `
+      progress.style.width='95%';
+      content.innerHTML=`
         <div class="mb-2 flex items-center justify-between">
           <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold">Almost Done!</span>
           <button onclick="document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow='';" class="text-xs" style="color:var(--text-muted);">✕</button>
@@ -1529,29 +1855,27 @@
   }
   function quizBack() { if (currentQuestion > 0) { quizAnswers.pop(); currentQuestion--; renderQuizStep(); } }
   function quizReveal(skip=false) {
-    if (!skip) { quizName = document.getElementById('qName')?.value||''; quizEmail = document.getElementById('qEmail')?.value||''; }
-    const tally = {V:0,P:0,K:0};
+    if (!skip) { quizName=document.getElementById('qName')?.value||''; quizEmail=document.getElementById('qEmail')?.value||''; }
+    const tally={V:0,P:0,K:0};
     quizAnswers.forEach(d => tally[d]++);
-    const dominant = Object.entries(tally).sort((a,b) => b[1]-a[1])[0][0];
-    const info = doshaInfo[dominant];
-    document.getElementById('quiz-progress').style.width = '100%';
-    document.getElementById('quiz-content').innerHTML = `
+    const dominant=Object.entries(tally).sort((a,b)=>b[1]-a[1])[0][0];
+    const info=doshaInfo[dominant];
+    document.getElementById('quiz-progress').style.width='100%';
+    document.getElementById('quiz-content').innerHTML=`
       <div class="text-center mb-6">
         <div class="text-5xl mb-3">${info.emoji}</div>
         <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-2">Your Prakriti is</span>
         <h2 class="font-display text-4xl mb-1" style="color:${info.colour};">${info.name}</h2>
         <p class="font-sans text-xs uppercase tracking-widest" style="color:var(--text-muted);">${info.element} · ${info.quality}</p>
       </div>
-      <div class="dosha-${dominant.toLowerCase()} dosha-card mb-4">
-        <p class="font-sans text-sm leading-relaxed" style="color:var(--text);">${info.desc}</p>
-      </div>
+      <div class="dosha-${dominant.toLowerCase()} dosha-card mb-4"><p class="font-sans text-sm leading-relaxed" style="color:var(--text);">${info.desc}</p></div>
       <div class="mb-4 p-4 rounded border" style="background:var(--bg2);border-color:var(--border);">
         <p class="font-sans text-[10px] uppercase tracking-widest text-clay font-bold mb-2">Healing Protocol for You</p>
         <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">${info.protocol}</p>
       </div>
       <div class="mb-6">
         <p class="font-sans text-[10px] uppercase tracking-widest font-bold mb-3" style="color:var(--text);">Recommended Programmes</p>
-        <div class="space-y-2">${info.programmes.map(p => `<div class="flex items-center gap-2 text-sm font-sans" style="color:var(--text);"><i data-lucide="check-circle" class="w-4 h-4 text-clay flex-shrink-0"></i>${p}</div>`).join('')}</div>
+        <div class="space-y-2">${info.programmes.map(p=>`<div class="flex items-center gap-2 text-sm font-sans" style="color:var(--text);"><i data-lucide="check-circle" class="w-4 h-4 text-clay flex-shrink-0"></i>${p}</div>`).join('')}</div>
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href="booking.html" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm" onclick="gaEvent('click','Quiz','Book After Quiz')">Book a Session →</a>
