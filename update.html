@@ -715,20 +715,17 @@
   /* ── INIT ── */
   window.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
-    // Hero reveals
     setTimeout(() => {
       document.querySelectorAll('.reveal-inner').forEach((el, i) => {
         setTimeout(() => el.classList.add('up'), 200 + i * 130);
       });
     }, 80);
-    // Theme
     const stored = localStorage.getItem('samarpan-theme') || 'light';
     document.documentElement.setAttribute('data-theme', stored);
     if (stored === 'dark') {
       document.getElementById('themeIcon')?.setAttribute('data-lucide','sun');
       lucide.createIcons();
     }
-    // Fade-up observer
     const fadeObs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, {threshold:0.07});
@@ -766,7 +763,7 @@
 
   /* ── CONTACT FORM ── */
   async function submitContactForm(e) {
-    if (e) e.preventDefault(); // Crucial to prevent page reload
+    if (e) e.preventDefault(); // Prevents page reload
     const name     = document.getElementById('cf-name').value.trim();
     const email    = document.getElementById('cf-email').value.trim();
     const phone    = document.getElementById('cf-phone').value.trim();
@@ -776,10 +773,10 @@
     const btn      = document.getElementById('cf-submit');
     const status   = document.getElementById('cf-status');
 
-    // Validation
-    if (!name) { status.innerHTML = '<p style="color:#ef4444;font-size:11px;">Please enter your name.</p>'; return; }
-    if (!email || !email.includes('@')) { status.innerHTML = '<p style="color:#ef4444;font-size:11px;">Please enter a valid email address.</p>'; return; }
-    if (!message) { status.innerHTML = '<p style="color:#ef4444;font-size:11px;">Please write a message.</p>'; return; }
+    if (!name || !email || !email.includes('@') || !message) { 
+      status.innerHTML = '<p style="color:#D95D39;font-size:11px;">Please complete all required fields correctly.</p>'; 
+      return; 
+    }
 
     const origText = btn.innerHTML;
     btn.innerHTML = 'Sending…';
@@ -787,28 +784,17 @@
     status.innerHTML = '';
 
     try {
-      // Save contact enquiry
       if (window.saveContactEnquiry) {
         await window.saveContactEnquiry({ name, email, phone, interest, message, newsletter_opted: newsletter });
       }
-      // Also save to newsletter if opted in
       if (newsletter && window.saveFirebaseData) {
-        await window.saveFirebaseData("newsletter", email, {
-          name,
-          subscription_type: "inner_circle_monthly",
-          opted_in: true,
-          form_location: "about_contact_form"
-        });
+        await window.saveFirebaseData("newsletter", email, { name, subscription_type: "inner_circle_monthly", opted_in: true, form_location: "about_contact_form" });
       }
-    } catch(e) {
-      console.warn("Firebase save error", e);
-    }
+    } catch(e) { console.warn("Firebase save error", e); }
 
-    // Show success
     document.getElementById('contactForm').classList.add('hidden');
     document.getElementById('contactSuccess').classList.remove('hidden');
     lucide.createIcons();
-
     if (typeof gaEvent !== 'undefined') gaEvent('contact_form_submit', 'Contact', name);
   }
 
