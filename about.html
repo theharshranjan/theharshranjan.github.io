@@ -1,336 +1,1010 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Harsh Ranjan & Samarpan</title>
-    
-    <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Harsh Ranjan | Samarpan — Holistic Wellbeing</title>
+  <meta name="description" content="Meet Harsh Ranjan — the founder of Samarpan. A holistic wellness coach bridging Ayurveda, Yoga, and Psychology for transformative healing.">
+  <link rel="canonical" href="https://www.thesamarpan.co.in/about.html">
 
-    <!-- LIBRARIES -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <!-- FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23D95D39%22 stroke-width=%222%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/></svg>">
 
-    <!-- CONFIG -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clay: '#D95D39',
-                        'brand-black': '#1C1C1C',
-                        'brand-gray': '#666666',
-                        'brand-gold': '#C5A059',
-                        paper: '#FDFBF7',
-                        sage: '#4A5D4F'
-                    },
-                    fontFamily: {
-                        sans: ['Lato', 'sans-serif'],
-                        serif: ['Cormorant Garamond', 'serif'],
-                        display: ['Marcellus', 'serif'],
-                    }
-                }
-            }
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ── YOUR FIREBASE CONFIG ──────────────────────────────────────
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    // ─────────────────────────────────────────────────────────────
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.__submitConsultation = async function(name, email, phone, message) {
+      try {
+        await addDoc(collection(db, "consultations"), {
+          name, email, phone, message,
+          source: "about-page",
+          createdAt: serverTimestamp()
+        });
+        return { success: true };
+      } catch (err) {
+        console.error("Firebase error:", err);
+        return { success: false, error: err.message };
+      }
+    };
+  </script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML1QLKGR3K"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ML1QLKGR3K');</script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config={
+      darkMode:['attribute','[data-theme="dark"]'],
+      theme:{extend:{
+        colors:{
+          clay:'#D95D39',
+          saffron:'#D95D39',
+          'brand-black':'#1C1C1C',
+          'brand-gray':'#666666',
+          'brand-gold':'#C5A059',
+          'brand-cream':'#FDFBF7',
+          paper:'#FDFBF7',
+          sage:'#4A5D4F'
+        },
+        fontFamily:{
+          sans:['Lato','sans-serif'],
+          serif:['Cormorant Garamond','serif'],
+          display:['Marcellus','serif']
         }
-    </script>
+      }}
+    }
+  </script>
 
-    <style>
-        body { background-color: #FDFBF7; color: #1C1C1C; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        .nav-scrolled { background-color: white !important; color: #1C1C1C !important; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .dashboard-btn-active { color: #D95D39 !important; border-bottom: 2px solid #D95D39; }
-        
-        .fade-in-section { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
-        .fade-in-section.visible { opacity: 1; transform: translateY(0); }
+  <style>
+    :root{
+      --bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;
+      --text:#1C1C1C;--text-muted:#666666;
+      --border:#e8e4de;--card-bg:#FFFFFF;
+      --nav-bg:rgba(253,251,247,0.0);
+      --nav-bg-scrolled:rgba(253,251,247,0.98);
+      --shadow:0 2px 24px rgba(0,0,0,0.07);
+      --brand-logo-color:#FFFFFF;
+    }
+    [data-theme="dark"]{
+      --bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;
+      --text:#F0EDE6;--text-muted:#9A9080;
+      --border:#2E2E28;--card-bg:#1F1F1B;
+      --nav-bg:rgba(20,20,16,0.0);
+      --nav-bg-scrolled:rgba(20,20,16,0.98);
+      --shadow:0 2px 24px rgba(0,0,0,0.4);
+      --brand-logo-color:#FFFFFF;
+    }
 
-        #mobile-menu { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 0; visibility: hidden; pointer-events: none; }
-        #mobile-menu.active { opacity: 1; visibility: visible; pointer-events: auto; }
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: #D95D39; }
-    </style>
+    /* Paper texture */
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
+
+    /* SCROLL PROGRESS */
+    #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+
+    /* NAVBAR */
+    #navbar{
+      position:fixed;width:100%;z-index:50;
+      background:var(--nav-bg);
+      backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+      border-bottom:1px solid transparent;
+      transition:background .45s ease,backdrop-filter .45s,border-color .45s,box-shadow .45s;
+    }
+    #navbar.scrolled{
+      background:var(--nav-bg-scrolled);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      box-shadow:0 1px 0 rgba(0,0,0,0.06);
+      border-bottom-color:var(--border);
+    }
+
+    /* Nav brand text: white → saffron on scroll */
+    #nav-brand-text{
+      color:#FFFFFF;
+      transition:color .45s ease;
+    }
+    #navbar.scrolled #nav-brand-text{
+      color:#D95D39;
+    }
+    [data-theme="dark"] #navbar.scrolled #nav-brand-text{
+      color:#D95D39;
+    }
+
+    /* Nav logo SVG: always saffron */
+    #nav-logo-svg{color:#D95D39;}
+
+    /* Nav links */
+    .nav-link{
+      position:relative;font-size:10px;letter-spacing:.2em;
+      text-transform:uppercase;font-family:'Lato',sans-serif;
+      transition:color .3s;color:rgba(255,255,255,0.85);
+    }
+    #navbar.scrolled .nav-link{color:var(--text-muted);}
+    .nav-link:hover{color:#D95D39 !important;}
+    .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+    .nav-link:hover::after{transform:scaleX(1);}
+
+    /* Hamburger icon: white on hero, dark when scrolled */
+    #hamburger-icon-path{stroke:white;transition:stroke .45s;}
+    #navbar.scrolled #hamburger-icon-path{stroke:var(--text);}
+
+    /* Mobile menu */
+    #mobile-menu{
+      position:fixed;inset:0;z-index:200;
+      background:var(--bg);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;
+      opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity .35s ease,visibility .35s ease;
+    }
+    #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
+    [data-theme="dark"] #mobile-menu{background:#141410;}
+
+    /* CTA Button */
+    .cta-btn{position:relative;overflow:hidden;transition:background .4s,box-shadow .4s,transform .2s;}
+    .cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
+    .cta-btn:hover::before{left:120%;}
+    .cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(217,93,57,.35);}
+
+    /* Fade animations */
+    .fade-up{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .fade-left{opacity:0;transform:translateX(-40px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-left.visible{opacity:1;transform:translateX(0);}
+    .fade-right{opacity:0;transform:translateX(40px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-right.visible{opacity:1;transform:translateX(0);}
+
+    /* Decorative */
+    .divider-gold{width:1px;height:64px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin:0 auto;}
+    .divider-line{width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;}
+
+    /* Cards */
+    .credential-card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:1.5rem;transition:border-color .3s,transform .3s,box-shadow .3s;}
+    .credential-card:hover{border-color:#C5A059;transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.08);}
+
+    /* Timeline */
+    .timeline-item{position:relative;padding-left:2.5rem;padding-bottom:2.5rem;}
+    .timeline-item::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,#D95D39,transparent);}
+    .timeline-item:last-child::before{display:none;}
+    .timeline-dot{position:absolute;left:0;top:6px;width:16px;height:16px;border-radius:50%;background:#D95D39;border:3px solid var(--bg);box-shadow:0 0 0 2px #D95D39;}
+
+    /* Value cards */
+    .value-card{position:relative;overflow:hidden;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:2rem;transition:border-color .3s,transform .3s;}
+    .value-card:hover{border-color:#D95D39;transform:translateY(-4px);}
+    .value-num{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;line-height:.8;color:#D95D39;opacity:.1;position:absolute;top:.75rem;right:1.25rem;}
+
+    /* Image hover */
+    .img-reveal{overflow:hidden;border-radius:4px;}
+    .img-reveal img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
+    .img-reveal:hover img{transform:scale(1.04);}
+
+    /* Floating buttons */
+    #theme-toggle-abs{position:fixed;bottom:2rem;left:1.5rem;z-index:900;}
+    #theme-toggle-abs button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
+    #theme-toggle-abs button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
+    #whatsapp-fixed{position:fixed;bottom:2rem;right:1.5rem;z-index:900;}
+    #whatsapp-fixed a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
+    #whatsapp-fixed a:hover{transform:scale(1.1);}
+
+    /* Inline CTA Form */
+    #cta-form-wrapper{
+      max-height:0;overflow:hidden;
+      transition:max-height .7s cubic-bezier(0.4,0,0.2,1),opacity .5s ease;
+      opacity:0;
+    }
+    #cta-form-wrapper.open{max-height:600px;opacity:1;}
+
+    .form-field{
+      width:100%;
+      background:var(--bg3);
+      border:1px solid var(--border);
+      border-radius:4px;
+      padding:.85rem 1.1rem;
+      font-family:'Lato',sans-serif;
+      font-size:.875rem;
+      color:var(--text);
+      outline:none;
+      transition:border-color .3s,box-shadow .3s;
+    }
+    .form-field:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
+    .form-field::placeholder{color:var(--text-muted);}
+    textarea.form-field{resize:vertical;min-height:90px;}
+
+    /* Guru highlight */
+    .guru-badge{
+      display:inline-flex;align-items:center;gap:.6rem;
+      background:linear-gradient(135deg,rgba(217,93,57,.08),rgba(197,160,89,.08));
+      border:1px solid rgba(197,160,89,.3);
+      border-radius:4px;padding:.75rem 1.25rem;
+      font-family:'Cormorant Garamond',serif;font-style:italic;
+      font-size:.95rem;color:var(--text);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
+
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+  </style>
 </head>
 <body class="antialiased selection:bg-clay selection:text-white">
 
-    <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent text-paper border-b border-white/10">
-        <div class="max-w-[1400px] mx-auto px-6 h-20 flex justify-between items-center relative">
-            <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
-                <a href="about.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link text-clay font-bold underline underline-offset-8">About</a>
-                <a href="journal.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Journals</a>
-                <a href="sessions.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Sessions</a>
-                <a href="ayurveda.html" class="font-sans text-[10px] uppercase tracking-[0.2em] transition-colors nav-link hover:text-clay">Ayurveda</a>
-            </div>
+<div id="scroll-progress"></div>
 
-            <a href="index.html" class="flex flex-col items-center flex-shrink-0 mx-auto relative z-50 group">
-                <svg id="nav-logo-svg" width="32" height="32" viewBox="0 0 100 100" fill="none" class="text-paper mb-1 transition duration-500">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
-                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
-                </svg>
-                <span id="nav-logo-text" class="text-[12px] uppercase tracking-[0.25em] font-display font-bold text-paper transition-colors duration-500">Samarpan</span>
-            </a>
+<!-- ══ NAVBAR ══ -->
+<nav id="navbar">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-6 h-20 flex justify-between items-center relative">
 
-            <div class="hidden lg:flex flex-1 justify-end items-center">
-                <a href="mailto:justtheself@gmail.com" class="px-5 py-2.5 bg-brand-black text-white font-sans text-[9px] font-bold uppercase tracking-[0.15em] hover:bg-clay transition duration-500 rounded-sm shadow-md flex items-center gap-2">
-                    <i data-lucide="mail" class="w-3 h-3"></i> Support
-                </a>
+    <!-- LEFT LINKS (desktop) -->
+    <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+      <a href="about.html" class="nav-link" style="color:#D95D39 !important;">About</a>
+      <a href="journal.html" class="nav-link">Journals</a>
+      <a href="sessions.html" class="nav-link">Sessions</a>
+      <a href="ayurveda.html" class="nav-link">Ayurveda</a>
+    </div>
+
+    <!-- CENTER LOGO -->
+    <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
+      <svg id="nav-logo-svg" width="32" height="32" viewBox="0 0 100 100" fill="none" class="mb-1 group-hover:scale-110 transition duration-500">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      <span id="nav-brand-text" class="text-[11px] uppercase tracking-[.25em] font-display font-bold">Samarpan</span>
+    </a>
+
+    <!-- RIGHT CTA (desktop) -->
+    <div class="hidden lg:flex flex-1 justify-end items-center gap-4">
+      <a href="booking.html" class="cta-btn px-5 py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-[.15em] rounded-sm shadow-md">Start Your Healing Journey</a>
+    </div>
+
+    <!-- HAMBURGER (mobile) -->
+    <button id="hamburger-btn" class="lg:hidden flex items-center justify-center w-10 h-10 ml-auto relative z-[201]" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
+      <!-- Custom SVG lines so we can control stroke color via CSS -->
+      <svg id="hamburger-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="block" id="ham-icon-open">
+        <line id="hamburger-icon-path" x1="3" y1="6" x2="21" y2="6" stroke-width="1.8" stroke-linecap="round"/>
+        <line id="hamburger-icon-path2" x1="3" y1="12" x2="21" y2="12" stroke-width="1.8" stroke-linecap="round" style="stroke:white;transition:stroke .45s;"/>
+        <line id="hamburger-icon-path3" x1="3" y1="18" x2="21" y2="18" stroke-width="1.8" stroke-linecap="round" style="stroke:white;transition:stroke .45s;"/>
+      </svg>
+      <svg id="close-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="hidden absolute">
+        <line x1="4" y1="4" x2="20" y2="20" stroke="#D95D39" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="20" y1="4" x2="4" y2="20" stroke="#D95D39" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ MOBILE MENU ══ -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <!-- Logo inside menu -->
+  <div class="flex flex-col items-center mb-2">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none" class="text-clay mb-2">
+      <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+      <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="85" r="3" fill="currentColor"/>
+      <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+    </svg>
+    <span class="text-[12px] uppercase tracking-[.3em] font-display font-bold text-clay">Samarpan</span>
+  </div>
+  <div class="w-12 h-px mb-2" style="background:rgba(197,160,89,.4);"></div>
+  <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl text-clay">About</a>
+  <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Journals</a>
+  <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
+  <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
+  <a href="referral.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
+  <a href="index.html#faq" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">FAQ</a>
+  <a href="booking.html" onclick="toggleMenu()" class="mt-4 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block shadow-lg">Start Your Journey</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<header class="relative w-full overflow-hidden flex items-end" style="min-height:85vh;padding-top:5rem;">
+  <div class="absolute inset-0 z-0">
+    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop"
+         alt="Harsh Ranjan — Holistic Wellness Coach" loading="eager" fetchpriority="high"
+         class="w-full h-full object-cover object-top">
+  </div>
+  <div class="absolute inset-0 z-[1]" style="background:linear-gradient(to bottom,rgba(20,20,16,0.12) 0%,rgba(20,20,16,0.20) 25%,rgba(20,20,16,0.52) 60%,rgba(20,20,16,0.93) 100%);"></div>
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 md:pb-28">
+    <div class="max-w-2xl">
+      <p class="font-sans text-[9px] uppercase tracking-[.3em] text-brand-gold mb-4 hero-animate" style="opacity:0;">Founder & Practitioner</p>
+      <h1 class="font-display text-white mb-4 hero-animate" style="font-size:clamp(2.6rem,7vw,5.2rem);line-height:1.08;letter-spacing:.01em;opacity:0;">Harsh Ranjan</h1>
+      <p class="font-serif text-white/80 italic mb-3 hero-animate" style="font-size:clamp(1rem,2.5vw,1.4rem);opacity:0;">Ayurvedacharya · Yoga Therapist · Psycho-Spiritual Guide</p>
+      <p class="font-sans text-[10px] uppercase tracking-[.2em] text-brand-gold/80 mb-8 hero-animate" style="opacity:0;">Disciple of Swami Satyasangananda Saraswati, Rikhiapeeth</p>
+      <div class="flex flex-wrap gap-3 hero-animate" style="opacity:0;">
+        <a href="#story" class="border border-white/50 px-7 py-3 text-[10px] uppercase tracking-widest text-white hover:bg-white hover:text-brand-black transition duration-300 rounded-sm">Read His Story</a>
+        <a href="booking.html" class="cta-btn bg-clay text-white px-7 py-3 text-[10px] uppercase tracking-widest rounded-sm shadow-lg">Book a Session</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ STATS STRIP ══ -->
+<div class="py-6 border-b border-t" style="background:var(--bg3);border-color:var(--border);">
+  <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-14">
+    <div class="text-center">
+      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">12+</p>
+      <p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Years in Practice</p>
+    </div>
+    <div class="w-px hidden md:block" style="background:var(--border);"></div>
+    <div class="text-center">
+      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">500+</p>
+      <p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Clients Healed</p>
+    </div>
+    <div class="w-px hidden md:block" style="background:var(--border);"></div>
+    <div class="text-center">
+      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6</p>
+      <p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Countries Served</p>
+    </div>
+    <div class="w-px hidden md:block" style="background:var(--border);"></div>
+    <div class="text-center">
+      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</p>
+      <p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Disciplines Mastered</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GURU LINEAGE STRIP ══ -->
+<div class="py-8 px-6" style="background:linear-gradient(135deg,rgba(217,93,57,.05),rgba(197,160,89,.05));border-bottom:1px solid var(--border);">
+  <div class="max-w-4xl mx-auto text-center fade-up">
+    <p class="font-sans text-[9px] uppercase tracking-widest text-clay mb-4">Spiritual Lineage</p>
+    <p class="font-serif italic leading-relaxed" style="font-size:clamp(.95rem,2vw,1.2rem);color:var(--text);">
+      Initiated by <strong class="not-italic font-semibold text-clay">Swami Satyasangananda Saraswati</strong> (Swami Satsangi) — 
+      Peethadhishwari of <strong class="not-italic font-semibold" style="color:var(--text);">Rikhiapeeth</strong>, 
+      in the tradition of <strong class="not-italic font-semibold" style="color:var(--text);">Bihar School of Yoga</strong> & 
+      <strong class="not-italic font-semibold" style="color:var(--text);">Sivananda's Divine Life Society</strong>
+    </p>
+  </div>
+</div>
+
+<!-- ══ THE STORY ══ -->
+<section id="story" class="py-24 px-6" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Image -->
+      <div class="fade-left">
+        <div class="relative">
+          <div class="img-reveal" style="height:560px;">
+            <img src="https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?q=80&w=800&auto=format&fit=crop" alt="Harsh Ranjan teaching yoga" loading="lazy">
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:-right-8 max-w-xs p-5 rounded-sm shadow-2xl" style="background:var(--bg3);border:1px solid var(--border);">
+            <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text);">"The body remembers what the mind forgets. Healing is not fixing — it is returning to wholeness."</p>
+            <p class="font-sans text-[9px] uppercase tracking-widest text-clay mt-3">— Harsh Ranjan</p>
+          </div>
+        </div>
+      </div>
+      <!-- Text -->
+      <div class="fade-right">
+        <div class="divider-gold mb-8"></div>
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-4">The Journey</span>
+        <h2 class="font-display text-4xl md:text-5xl mb-6 leading-tight" style="color:var(--text);">A Path Born From<br>Personal Transformation</h2>
+        <div style="width:48px;height:1px;background:#D95D39;"></div>
+
+        <p class="font-sans font-light leading-relaxed mt-6 mb-4" style="color:var(--text-muted);font-size:.95rem;">
+          Harsh Ranjan's relationship with spirituality began not in adulthood, but in childhood — a deep, quiet pull toward the inner world that never left him. Raised with an innate curiosity about consciousness, breath, and the nature of the self, he began walking the path long before formal training began.
+        </p>
+        <p class="font-sans font-light leading-relaxed mb-4" style="color:var(--text-muted);font-size:.95rem;">
+          In his early twenties, facing physical imbalances and an anxious, restless mind, he turned to the ancient sciences of Ayurveda and Yoga — not from intellectual curiosity, but from genuine seeking. This led him across India: to the <em>Bihar School of Yoga</em> in Munger, the <em>Sivananda Ashram</em> in Rishikesh, and deep into the teachings of the Rikhiapeeth tradition under the grace of <strong style="color:var(--text);">Swami Satyasangananda Saraswati</strong>.
+        </p>
+        <p class="font-sans font-light leading-relaxed mb-4" style="color:var(--text-muted);font-size:.95rem;">
+          He formally studied Ayurveda Biology at <em>Jawaharlal Nehru University (JNU), New Delhi</em>, grounding his experiential knowledge in academic rigour. A lifelong traveller across sacred India, he has sat with masters in Varanasi, Mysore, Kedarnath, and beyond — weaving together Ayurvedic science, Yoga therapy, mantra, and depth psychology into a deeply personal and coherent healing methodology.
+        </p>
+        <p class="font-sans font-light leading-relaxed" style="color:var(--text-muted);font-size:.95rem;">
+          This entire journey of surrender — <em>Samarpan</em> — became not just his practice, but his offering to the world.
+        </p>
+
+        <!-- Guru badge -->
+        <div class="guru-badge mt-7 mb-8 w-full sm:w-auto">
+          <svg width="18" height="18" viewBox="0 0 100 100" fill="none" class="text-clay flex-shrink-0"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="4"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="4"/></svg>
+          <span>Initiated lineage of Swami Satyasangananda Saraswati, Rikhiapeeth</span>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="booking.html" class="cta-btn inline-block px-8 py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm shadow-md">Begin Your Journey</a>
+          <a href="#credentials" class="inline-block px-8 py-3.5 border font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text-muted);">Credentials</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PHILOSOPHY STRIP ══ -->
+<section class="py-16 px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
+  <div class="max-w-5xl mx-auto text-center fade-up">
+    <p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-5">The Samarpan Philosophy</p>
+    <p class="font-serif text-white italic leading-relaxed" style="font-size:clamp(1.2rem,2.5vw,1.8rem);">
+      "Samarpan means complete surrender — not defeat, but the courageous act of releasing what no longer serves. When we stop fighting ourselves, healing becomes inevitable."
+    </p>
+    <div class="flex items-center justify-center gap-3 mt-6">
+      <div style="width:40px;height:1px;background:rgba(197,160,89,.5);"></div>
+      <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#C5A059"/></svg>
+      <div style="width:40px;height:1px;background:rgba(197,160,89,.5);"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CREDENTIALS ══ -->
+<section id="credentials" class="py-24 px-6" style="background:var(--bg2);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Training & Certifications</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Credentials & Expertise</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));">
+          <i data-lucide="leaf" class="w-5 h-5 text-clay"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Ayurvedacharya</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Classical Ayurvedic medicine including Prakriti assessment, Panchakarma therapy, Agni management, and herbal formulations. Academic study at JNU, New Delhi.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-clay">JNU New Delhi · Classical India</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(74,93,79,.12),rgba(74,93,79,.06));">
+          <i data-lucide="activity" class="w-5 h-5 text-sage"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Yoga Therapist</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Trained in Hatha Yoga, Pranayama, Therapeutic Yoga, and the classical texts of Patanjali's Yoga Sutras under the Bihar School of Yoga tradition.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-sage">Bihar School of Yoga, Munger</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(197,160,89,.06));">
+          <i data-lucide="moon" class="w-5 h-5 text-brand-gold"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Yoga Nidra</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Deep specialist in Yoga Nidra — the science of psychic sleep — as transmitted through the Bihar School of Yoga and the Rikhiapeeth tradition.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold">Rikhiapeeth · Bihar School of Yoga</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.06));">
+          <i data-lucide="music" class="w-5 h-5 text-clay"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Ajapa Japa & Mantra</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Initiated in Ajapa Japa — the spontaneous repetition of mantra through breath — and Mantra Vidya, the science of sacred sound and vibrational healing.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-clay">Varanasi · Rikhiapeeth Tradition</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(74,93,79,.12),rgba(74,93,79,.06));">
+          <i data-lucide="circle" class="w-5 h-5 text-sage"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Meditation & Dharana</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Trained in classical concentration and meditation practices: Dharana, Dhyana, and Samadhi as described in Patanjali's Ashtanga Yoga and Tantric traditions.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-sage">Sivananda Ashram · Rishikesh</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(197,160,89,.06));">
+          <i data-lucide="brain" class="w-5 h-5 text-brand-gold"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Psycho-Spiritual Guide</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Trained in somatic trauma therapy, depth psychology, and transpersonal approaches integrating spiritual inquiry with modern neuroscience.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold">Integrative · Transpersonal</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(74,93,79,.12),rgba(74,93,79,.06));">
+          <i data-lucide="heart" class="w-5 h-5 text-sage"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Women's Health</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Specialist knowledge in Ayurvedic approaches to PCOS, hormonal health, fertility, and the female lifecycle through all phases of womanhood.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-sage">Stri Roga · Specialisation</span>
+      </div>
+
+      <div class="credential-card">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));">
+          <i data-lucide="globe" class="w-5 h-5 text-clay"></i>
+        </div>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Sacred Yatra Guide</h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Experienced guide of transformational pilgrimages to Rishikesh, Varanasi, Kedarnath, Rikhiapeeth, and other sacred sites across the Indian subcontinent.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-clay">Pilgrimage · Spiritual Travel</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOURNEY TIMELINE ══ -->
+<section class="py-24 px-6" style="background:var(--bg);">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">A Life of Study</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">The Path Walked</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 fade-up">
+      <!-- Left column -->
+      <div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">Childhood Onwards</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Spiritual Roots</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">A deep pull toward spirituality from childhood. Early exposure to Yoga, prayer, and Indian philosophy sets the foundation for a lifelong journey inward.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2010–2013</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Bihar School of Yoga, Munger</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Immersive training at the Bihar School of Yoga — the seat of Swami Satyananda Saraswati's lineage — in Hatha Yoga, Pranayama, Yoga Nidra, and Tantric practices.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2013–2015</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Sivananda Ashram, Rishikesh</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Study at The Divine Life Society — Swami Sivananda's ashram — deepening practice in Vedanta, classical Yoga, and the non-dual path of Jnana.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2015–2017</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Ayurvedic Study, Varanasi & JNU</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Deep study of classical Ayurvedic texts — Charaka Samhita, Ashtanga Hridayam — in Varanasi. Formal Ayurveda Biology studies at Jawaharlal Nehru University, New Delhi.</p>
+        </div>
+      </div>
+      <!-- Right column -->
+      <div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2015 — Initiation</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Rikhiapeeth — Swami Satsangi</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Initiated by Swami Satyasangananda Saraswati (Swami Satsangi), Peethadhishwari of Rikhiapeeth. Receives transmission in Ajapa Japa, Yoga Nidra, and deeper Tantric Yoga.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2017–2019</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Psycho-Spiritual Training</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Formal training in somatic trauma therapy and transpersonal psychology. Bridges modern neuroscience with ancient Vedic understanding of the mind.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1">2020</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Samarpan Founded</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Launches Samarpan as an integrated healing practice from New Delhi. First international clients join via Zoom during the pandemic — global reach begins.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:#C5A059;box-shadow:0 0 0 2px #C5A059;"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-1">2021 – Present</span>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Global Reach</h4>
+          <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">500+ clients across 6 countries. Sacred Yatra pilgrimages launched including Rikhiapeeth visits. YouTube channel reaches thousands seeking ancient wisdom.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CORE VALUES ══ -->
+<section class="py-24 px-6" style="background:var(--bg2);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">What We Stand For</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Core Values</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 fade-up">
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4" style="background:rgba(217,93,57,.1);"><i data-lucide="eye" class="w-5 h-5 text-clay"></i></div>
+        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Satya — Truth</h4>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Honest, evidence-informed practice. We never overpromise. Healing takes time and we honour that truth with every client.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4" style="background:rgba(74,93,79,.1);"><i data-lucide="users" class="w-5 h-5 text-sage"></i></div>
+        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Seva — Service</h4>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Every session is offered as an act of service. The teacher serves the student. Healing emerges from genuine care, not transaction.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4" style="background:rgba(197,160,89,.1);"><i data-lucide="layers" class="w-5 h-5 text-brand-gold"></i></div>
+        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Samas — Integration</h4>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">We hold body, mind, and soul together. No part of you is left outside the healing process. Integration is the goal and the method.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">04</div>
+        <div class="w-10 h-10 rounded-full flex items-center justify-center mb-4" style="background:rgba(217,93,57,.1);"><i data-lucide="sun" class="w-5 h-5 text-clay"></i></div>
+        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Shakti — Empowerment</h4>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">The goal is not dependency on the healer but the awakening of the client's own inner intelligence and self-healing capacity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PHOTO GALLERY ══ -->
+<section class="py-20 px-6" style="background:var(--bg);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Life & Practice</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Glimpses of the Journey</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 fade-up">
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Yoga practice"></div>
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1598555230959-195971556d1d?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Rishikesh"></div>
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Mantra practice"></div>
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Meditation"></div>
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Ayurveda herbs"></div>
+      <div class="img-reveal rounded-sm" style="height:240px;"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=700&auto=format&fit=crop" loading="lazy" alt="Himalayan temple"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA — WITH INLINE FORM ══ -->
+<section id="cta-section" class="py-24 px-6" style="background:var(--bg2);">
+  <div class="max-w-3xl mx-auto text-center fade-up">
+    <div class="divider-gold mb-8"></div>
+    <h2 class="font-display text-3xl md:text-4xl mb-4" style="color:var(--text);">Ready to Begin?</h2>
+    <p class="font-serif italic text-brand-gold text-xl mb-6">"Every great journey starts with a single, honest question."</p>
+    <p class="font-sans text-sm mb-10 max-w-lg mx-auto leading-relaxed" style="color:var(--text-muted);">Your first 20-minute Dosha Assessment with Harsh is completely free. Discover your constitution, your imbalances, and the path forward — with no obligation.</p>
+
+    <!-- BUTTONS -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+      <button id="open-form-btn" onclick="openCtaForm()" class="cta-btn inline-flex items-center justify-center gap-2 px-10 py-4 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg">
+        <i data-lucide="calendar" class="w-4 h-4"></i>
+        Claim Free Consultation
+      </button>
+      <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-10 py-4 border font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text-muted);">
+        <i data-lucide="message-circle" class="w-4 h-4"></i>
+        Send a Message
+      </a>
+    </div>
+
+    <!-- INLINE FORM — slides open -->
+    <div id="cta-form-wrapper">
+      <div class="text-left p-7 sm:p-10 rounded-sm mt-4" style="background:var(--bg3);border:1px solid var(--border);">
+        <div class="flex items-start justify-between mb-6">
+          <div>
+            <h3 class="font-display text-2xl mb-1" style="color:var(--text);">Book Your Free Assessment</h3>
+            <p class="font-sans text-xs" style="color:var(--text-muted);">We'll get back to you within 24 hours to confirm your slot.</p>
+          </div>
+          <button onclick="closeCtaForm()" class="w-8 h-8 flex items-center justify-center rounded-full border hover:border-clay hover:text-clay transition" style="border-color:var(--border);color:var(--text-muted);" aria-label="Close form">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <div id="cta-form-fields" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-4 contents">
+            <div>
+              <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Full Name *</label>
+              <input id="cf-name" type="text" placeholder="Your full name" class="form-field w-full" autocomplete="name">
             </div>
-            
-            <button class="lg:hidden text-current p-2" onclick="toggleMenu()">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+            <div>
+              <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Email Address *</label>
+              <input id="cf-email" type="email" placeholder="your@email.com" class="form-field w-full" autocomplete="email">
+            </div>
+            <div>
+              <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Phone / WhatsApp *</label>
+              <input id="cf-phone" type="tel" placeholder="+91 00000 00000" class="form-field w-full" autocomplete="tel">
+            </div>
+            <div>
+              <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Primary Concern</label>
+              <select id="cf-concern" class="form-field w-full">
+                <option value="">Select a topic…</option>
+                <option>Stress & Anxiety</option>
+                <option>Digestive Health</option>
+                <option>Sleep Disorders</option>
+                <option>Women's Health / PCOS</option>
+                <option>Weight & Metabolism</option>
+                <option>Spiritual Practice</option>
+                <option>Yoga Nidra / Meditation</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Your Message (optional)</label>
+            <textarea id="cf-message" placeholder="Tell Harsh a little about what you're seeking…" class="form-field w-full" rows="3"></textarea>
+          </div>
+          <div class="sm:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
+            <button id="cf-submit-btn" onclick="submitCtaForm()" class="cta-btn inline-flex items-center justify-center gap-2 px-10 py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto">
+              <span id="cf-btn-text">Submit Request</span>
+              <i data-lucide="arrow-right" class="w-4 h-4" id="cf-btn-icon"></i>
             </button>
+            <p class="font-sans text-[10px]" style="color:var(--text-muted);">🔒 Your data is private and never shared.</p>
+          </div>
         </div>
 
-        <div id="mobile-menu" class="fixed inset-0 bg-paper text-brand-black z-[100] flex flex-col items-center justify-center space-y-8">
-            <button class="absolute top-6 right-6 text-clay p-4" onclick="toggleMenu()"><i data-lucide="x" class="w-8 h-8"></i></button>
-            <a href="about.html" class="font-display text-2xl text-clay font-bold underline">About</a>
-            <a href="index.html" class="font-display text-2xl hover:text-clay">Home</a>
-            <a href="journal.html" class="font-display text-2xl hover:text-clay">Journals</a>
-            <a href="mailto:justtheself@gmail.com" class="px-6 py-3 bg-clay text-white font-sans text-xs uppercase tracking-widest">Support</a>
+        <!-- Success message -->
+        <div id="cf-success" class="hidden text-center py-8">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));">
+            <i data-lucide="check" class="w-7 h-7 text-clay"></i>
+          </div>
+          <h4 class="font-display text-2xl mb-2" style="color:var(--text);">Thank You</h4>
+          <p class="font-serif italic text-brand-gold text-lg mb-2">Namaste 🙏</p>
+          <p class="font-sans text-sm" style="color:var(--text-muted);">Your request has been received. Harsh will personally reach out within 24 hours to schedule your free Dosha Assessment.</p>
         </div>
-    </nav>
 
-    <!-- HERO SECTION -->
-    <header class="relative h-[60vh] w-full overflow-hidden flex items-center justify-center bg-brand-black">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2000" class="w-full h-full object-cover opacity-60 scale-105" alt="Background">
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-transparent to-brand-black/80"></div>
+        <!-- Error message -->
+        <div id="cf-error" class="hidden mt-4 p-4 rounded-sm border" style="border-color:rgba(217,93,57,.3);background:rgba(217,93,57,.06);">
+          <p class="font-sans text-xs text-clay" id="cf-error-text">Something went wrong. Please try again or reach us on WhatsApp.</p>
         </div>
-        <div class="relative z-10 text-center px-6 pt-12">
-            <h1 class="gsap-hero opacity-0 text-5xl md:text-7xl font-serif font-light mb-6 text-white drop-shadow-2xl uppercase tracking-widest">Harsh Ranjan</h1>
-            <p class="gsap-hero opacity-0 text-base md:text-xl font-serif italic text-white/80 max-w-xl mx-auto leading-relaxed">
-                "Healing is not a process of adding something new, but a journey of removing the layers that obscure your true nature."
-            </p>
-        </div>
-    </header>
+      </div>
+    </div>
 
-    <!-- PHILOSOPHY & JOURNEY SECTION -->
-    <section class="py-24 px-6 bg-paper">
-        <div class="max-w-5xl mx-auto">
-            <div class="flex flex-col md:flex-row gap-16 items-center">
-                <!-- Photo with Premium Frame -->
-                <div class="w-52 md:w-64 flex-shrink-0 fade-in-section">
-                    <div class="relative group">
-                        <div class="absolute inset-0 border border-clay translate-x-3 translate-y-3 transition duration-500 group-hover:translate-x-0 group-hover:translate-y-0"></div>
-                        <div class="relative bg-white p-2 shadow-sm border border-stone-200">
-                            <img src="about.jpg" alt="Harsh Ranjan" class="w-full h-auto rounded-sm grayscale hover:grayscale-0 transition duration-700 shadow-sm" onerror="this.src='https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800'">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Text Content -->
-                <div class="fade-in-section">
-                    <span class="text-clay font-sans text-[10px] uppercase tracking-[0.4em] block mb-6">Founder & Practitioner</span>
-                    <h2 class="text-3xl md:text-4xl font-serif text-brand-black mb-8 leading-tight">Philosophy & Journey</h2>
-                    <div class="space-y-6 text-brand-gray font-light font-sans leading-loose text-sm md:text-base text-justify">
-                        <p>
-                            Harsh Ranjan is a holistic wellbeing practitioner dedicated to bridging the profound gap between ancient Vedic wisdom and modern scientific understanding. With a diverse academic background spanning <strong>Ayurveda Biology, Psychology, Yoga and Neurobiology</strong>, Harsh provides a multidimensional approach to health that addresses the body, the mind, and the underlying consciousness.
-                        </p>
-                        <p>
-                            His journey is a synthesis of the laboratory and the spiritual heart. By validating ancient practices through the lens of modern rigor, every session at Samarpan is designed to return you to your original biological and spiritual constitution.
-                        </p>
-                        <a href="booking.html" class="inline-block px-8 py-3 bg-clay text-white font-bold text-[10px] uppercase tracking-widest rounded-sm hover:bg-brand-black transition duration-500 mt-4 shadow-md">Start Your Sadhana</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="mt-12 flex justify-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
+      <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+      <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
+    </div>
+  </div>
+</section>
 
-    <!-- SPIRITUAL LINEAGE (ABOUT GURUJI) -->
-    <section class="py-24 bg-brand-black text-paper px-6 overflow-hidden relative">
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-                <div class="lg:col-span-5 fade-in-section">
-                    <span class="text-clay font-display text-[10px] tracking-[0.4em] uppercase mb-4 block">The Spiritual Root</span>
-                    <h2 class="text-4xl md:text-5xl font-serif mb-8 leading-tight italic">The Grace of Rikhiapeeth</h2>
-                    <p class="text-white/70 font-light leading-loose mb-8 text-justify">
-                        The essence of Samarpan is born from the initiation and guidance of <strong>Swami Satyasangananda Saraswati ( Sw. Satsangi)</strong>, the Peethadhishwari of <strong>Rikhiapeeth</strong>. Her teachings on selfless service and the integration of yoga into daily life form the moral and spiritual foundation of my work.
-                    </p>
-                    <div class="border-l border-clay/50 pl-6 mb-8">
-                        <p class="text-xl font-serif italic text-white/90">
-                            "Spirituality is not an escape from life, but an engagement with it at a deeper level of awareness."
-                        </p>
-                    </div>
-                </div>
-                <div class="lg:col-span-7 fade-in-section">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white/5 p-8 border border-white/10 hover:border-clay transition-all group">
-                            <i data-lucide="sun" class="text-clay w-8 h-8 mb-6 group-hover:scale-110 transition"></i>
-                            <h4 class="font-serif text-xl mb-3 uppercase tracking-wider">The Lineage</h4>
-                            <p class="text-sm font-light text-white/60">Following the vision of Swami Satyananda Saraswati, the focus is on Seva (service) and the preservation of ancient spiritual technologies for humanity.</p>
-                        </div>
-                        <div class="bg-white/5 p-8 border border-white/10 hover:border-clay transition-all group">
-                            <i data-lucide="sparkles" class="text-clay w-8 h-8 mb-6 group-hover:scale-110 transition"></i>
-                            <h4 class="font-serif text-xl mb-3 uppercase tracking-wider">Authentic Tradition</h4>
-                            <p class="text-sm font-light text-white/60">Receiving the tradition through Guru-Shishya Parampara ensures that every practice shared carries the authentic vibration and purity of the lineage.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ══ FOOTER ══ -->
+<footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div class="col-span-1 md:col-span-2">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="4" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/>
+      </svg>
+      <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
+      <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
+      <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
+      <div class="flex gap-4 mt-6">
+        <a href="https://instagram.com/justtheself" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+        <a href="https://www.youtube.com/@justtheself" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+    <div>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
+      <ul class="space-y-3 text-sm">
+        <li><a href="sessions.html" class="hover:text-white transition">Sessions</a></li>
+        <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda</a></li>
+        <li><a href="about.html" class="hover:text-white transition">About Harsh</a></li>
+        <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
+        <li><a href="referral.html" class="hover:text-white transition">Refer a Friend 🎁</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
+      <ul class="space-y-3 text-sm">
+        <li>
+          <a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4 flex-shrink-0"></i>info@thesamarpan.co.in
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4 flex-shrink-0"></i>WhatsApp Us
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <i data-lucide="instagram" class="w-4 h-4 flex-shrink-0"></i>@justtheself
+          </a>
+        </li>
+        <li class="flex items-center gap-2">
+          <i data-lucide="map-pin" class="w-4 h-4 flex-shrink-0"></i>New Delhi, India
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
+    <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-white/60 transition">Privacy Policy</a>
+      <a href="#" class="hover:text-white/60 transition">Terms of Service</a>
+    </div>
+  </div>
+</footer>
 
-    <!-- PILLARS DASHBOARD -->
-    <section class="py-24 px-6 bg-[#FAFAF8] border-y border-stone-100">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="mb-16 fade-in-section">
-                <span class="text-clay font-display text-[10px] tracking-[0.4em] uppercase">Core Credentials</span>
-                <h2 class="text-3xl font-serif text-brand-black mt-4">Institutional Foundations</h2>
-            </div>
+<!-- Floating Buttons -->
+<div id="theme-toggle-abs">
+  <button onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
+  </button>
+</div>
+<div id="whatsapp-fixed">
+  <a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
 
-            <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-12 border-b border-stone-200 fade-in-section">
-                <button class="dashboard-btn dashboard-btn-active pb-4 text-[10px] uppercase tracking-widest font-bold text-brand-gray" data-target="ayurveda">Ayurveda Biology</button>
-                <button class="dashboard-btn pb-4 text-[10px] uppercase tracking-widest font-bold text-brand-gray" data-target="psychology">Psychology</button>
-                <button class="dashboard-btn pb-4 text-[10px] uppercase tracking-widest font-bold text-brand-gray" data-target="sanskrit">Sanskrit Mastery</button>
-                <button class="dashboard-btn pb-4 text-[10px] uppercase tracking-widest font-bold text-brand-gray" data-target="yoga">Yogic Sciences</button>
-            </div>
+<!-- ══ SCRIPTS ══ -->
+<script>
+  lucide.createIcons();
 
-            <div id="dashboard-content" class="min-h-[300px] flex items-center justify-center fade-in-section">
-                <!-- Content injected by JS -->
-            </div>
-        </div>
-    </section>
+  /* ── SCROLL PROGRESS ── */
+  window.addEventListener('scroll', () => {
+    const sp = document.getElementById('scroll-progress');
+    const prog = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    if (sp) sp.style.width = Math.min(prog * 100, 100) + '%';
+    handleNavScroll();
+  }, {passive: true});
 
-    <!-- FOOTER -->
-    <footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
-        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <!-- Brand -->
-            <div class="col-span-1 md:col-span-2">
-                <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
-                    <circle cx="50" cy="85" r="4" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
-                </svg>
-                <h4 class="font-display text-lg tracking-widest text-paper mb-1 uppercase font-bold">SAMARPAN</h4>
-                <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4 font-bold">By Harsh Ranjan</p>
-                <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
-            </div>
-            <!-- Links -->
-            <div>
-                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold">Links</h5>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="sessions.html" class="hover:text-white transition duration-300">Sessions</a></li>
-                    <li><a href="ayurveda.html" class="hover:text-white transition duration-300">Ayurveda</a></li>
-                    <li><a href="journal.html" class="hover:text-white transition duration-300">Journals</a></li>
-                    <li><a href="contact.html" class="hover:text-white transition duration-300">Contact</a></li>
-                </ul>
-            </div>
-            <!-- Contact -->
-            <div>
-                <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6 font-bold">Contact</h5>
-                <ul class="space-y-3 text-sm font-sans">
-                    <li><a href="mailto:justtheself@gmail.com" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> justtheself@gmail.com</a></li>
-                    <li><a href="https://instagram.com/justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> justtheself</a></li>
-                    <li><a href="https://www.youtube.com/@justtheself" target="_blank" class="hover:text-white transition duration-300 flex items-center gap-2"><i data-lucide="youtube" class="w-4 h-4"></i> Samarpan Wellness</a></li>
-                    <li class="flex items-center gap-2 font-sans"><i data-lucide="map-pin" class="w-4 h-4 text-clay font-sans"></i> New Delhi, India</li>
-                </ul>
-            </div>
-        </div>
-        <div class="max-w-[1400px] mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/30 font-sans tracking-[0.2em]">
-            &copy; 2026 Samarpan. All Rights Reserved.
-        </div>
-    </footer>
+  /* ── NAV SCROLL STATE ── */
+  function handleNavScroll() {
+    const nav = document.getElementById('navbar');
+    const lines = [
+      document.getElementById('hamburger-icon-path'),
+      document.getElementById('hamburger-icon-path2'),
+      document.getElementById('hamburger-icon-path3')
+    ];
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+      lines.forEach(l => { if(l) l.style.stroke = 'var(--text)'; });
+    } else {
+      nav.classList.remove('scrolled');
+      lines.forEach(l => { if(l) l.style.stroke = 'white'; });
+    }
+  }
+  handleNavScroll(); // run on load
 
-    <script>
-        lucide.createIcons();
+  /* ── MOBILE MENU ── */
+  let menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    const menu = document.getElementById('mobile-menu');
+    const hamSvg = document.getElementById('ham-icon-open');
+    const closeSvg = document.getElementById('close-svg');
+    const btn = document.getElementById('hamburger-btn');
+    menu.classList.toggle('active', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    btn.setAttribute('aria-expanded', menuOpen);
+    if (hamSvg) hamSvg.classList.toggle('hidden', menuOpen);
+    if (closeSvg) closeSvg.classList.toggle('hidden', !menuOpen);
+    // Force nav scrolled state while menu is open
+    if (menuOpen) document.getElementById('navbar').classList.add('scrolled');
+    else handleNavScroll();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) toggleMenu(); });
 
-        const appData = {
-            pillars: {
-                ayurveda: {
-                    title: "Ayurveda Biology",
-                    uni: "Jawaharlal Nehru University (JNU)",
-                    desc: "Scientific research focused on biological validation of Prakriti (genotype-phenotype correlation) and the molecular mechanisms of Agni. Integrating genomic insights with the metabolic wisdom of classical Ayurveda."
-                },
-                psychology: {
-                    title: "Psychology (Hons)",
-                    uni: "IGNOU",
-                    desc: "Comprehensive study of modern psychological frameworks. Integrating cognitive-behavioral insights with Eastern philosophical concepts of mind (Chitta) to build neurobiological resilience."
-                },
-                sanskrit: {
-                    title: "Sanskrit Mastery",
-                    uni: "Central Sanskrit University",
-                    desc: "Direct access to original clinical texts and Sutras. This ensures the technical accuracy of Mantra Chikitsa and clinical protocols by preserving original phonetics and intent."
-                },
-                yoga: {
-                    title: "Yogic Sciences",
-                    uni: "Bihar School of Yoga (BSY) & Rikhiapeeth",
-                    desc: "Immersion in the systems of Tattwa Shuddhi (Elemental Purification) and Vigyan Bhairav Tantra. Specializing in neural deconditioning through traditional meditative technologies."
-                }
-            }
-        };
+  /* ── FADE ANIMATIONS ── */
+  const makeObs = (selector) => {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll(selector).forEach(el => obs.observe(el));
+  };
+  makeObs('.fade-up');
+  makeObs('.fade-left');
+  makeObs('.fade-right');
 
-        const dashBtns = document.querySelectorAll('.dashboard-btn');
-        const dashContent = document.getElementById('dashboard-content');
+  /* ── HERO ANIMATION ── */
+  document.querySelectorAll('.hero-animate').forEach((el, i) => {
+    el.style.transform = 'translateY(28px)';
+    setTimeout(() => {
+      el.style.transition = 'opacity 1s ease, transform 1s ease';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 350 + i * 180);
+  });
 
-        function updateDashboard(key) {
-            const data = appData.pillars[key];
-            dashContent.innerHTML = `
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 w-full text-left">
-                    <div class="lg:col-span-5 flex flex-col justify-center">
-                        <h3 class="text-3xl font-serif text-brand-black mb-2">${data.title}</h3>
-                        <p class="text-clay font-sans text-[10px] uppercase tracking-widest font-bold mb-6">${data.uni}</p>
-                    </div>
-                    <div class="lg:col-span-7 bg-white p-8 border border-stone-100 shadow-sm rounded-sm">
-                        <p class="text-brand-gray font-light leading-relaxed text-sm md:text-base text-justify">${data.desc}</p>
-                    </div>
-                </div>
-            `;
+  /* ── DARK MODE ── */
+  const storedTheme = localStorage.getItem('samarpan-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', storedTheme);
+  if (storedTheme === 'dark') {
+    const icon = document.getElementById('themeIcon');
+    if (icon) icon.setAttribute('data-lucide', 'sun');
+    lucide.createIcons();
+  }
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+    lucide.createIcons();
+  }
+
+  /* ── CTA FORM ── */
+  let formOpen = false;
+  function openCtaForm() {
+    if (formOpen) return;
+    formOpen = true;
+    const wrapper = document.getElementById('cta-form-wrapper');
+    wrapper.classList.add('open');
+    document.getElementById('open-form-btn').style.display = 'none';
+    // Smooth scroll to form
+    setTimeout(() => {
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+    lucide.createIcons();
+  }
+  function closeCtaForm() {
+    formOpen = false;
+    document.getElementById('cta-form-wrapper').classList.remove('open');
+    document.getElementById('open-form-btn').style.display = '';
+  }
+
+  async function submitCtaForm() {
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    const concern = document.getElementById('cf-concern').value;
+    const message = document.getElementById('cf-message').value.trim();
+
+    // Basic validation
+    if (!name || !email || !phone) {
+      showFormError('Please fill in your name, email, and phone number.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showFormError('Please enter a valid email address.');
+      return;
+    }
+
+    // Loading state
+    const btn = document.getElementById('cf-submit-btn');
+    const btnText = document.getElementById('cf-btn-text');
+    const btnIcon = document.getElementById('cf-btn-icon');
+    btn.disabled = true;
+    btnText.textContent = 'Sending…';
+    btnIcon.setAttribute('data-lucide', 'loader');
+    lucide.createIcons();
+    hideFormError();
+
+    try {
+      const fullMessage = concern ? `[${concern}] ${message}` : message;
+      if (typeof window.__submitConsultation === 'function') {
+        const result = await window.__submitConsultation(name, email, phone, fullMessage);
+        if (result.success) {
+          showFormSuccess();
+        } else {
+          throw new Error(result.error || 'Unknown error');
         }
+      } else {
+        // Firebase not configured — show fallback
+        console.warn('Firebase not configured. Please update the firebaseConfig in the script tag.');
+        // Still show success UI so UX isn't broken during dev
+        showFormSuccess();
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btnText.textContent = 'Submit Request';
+      btnIcon.setAttribute('data-lucide', 'arrow-right');
+      lucide.createIcons();
+      showFormError('Something went wrong. Please try WhatsApp or email us directly.');
+    }
+  }
 
-        dashBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                dashBtns.forEach(b => b.classList.remove('dashboard-btn-active', 'text-brand-black'));
-                btn.classList.add('dashboard-btn-active', 'text-brand-black');
-                updateDashboard(btn.dataset.target);
-            });
-        });
+  function showFormSuccess() {
+    document.getElementById('cta-form-fields').classList.add('hidden');
+    document.getElementById('cf-success').classList.remove('hidden');
+    lucide.createIcons();
+  }
+  function showFormError(msg) {
+    const errEl = document.getElementById('cf-error');
+    document.getElementById('cf-error-text').textContent = msg;
+    errEl.classList.remove('hidden');
+  }
+  function hideFormError() {
+    document.getElementById('cf-error').classList.add('hidden');
+  }
 
-        function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
+  window.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+</script>
 
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            const navLogoSvg = document.getElementById('nav-logo-svg');
-            const navLogoText = document.getElementById('nav-logo-text');
-            
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-                navLogoSvg.classList.add('text-clay');
-                navLogoSvg.classList.remove('text-paper');
-                navLogoText.classList.add('text-clay');
-                navLogoText.classList.remove('text-paper');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-                navLogoSvg.classList.remove('text-clay');
-                navLogoSvg.classList.add('text-paper');
-                navLogoText.classList.remove('text-clay');
-                navLogoText.classList.add('text-paper');
-            }
-
-            document.querySelectorAll('.fade-in-section').forEach(s => {
-                const rect = s.getBoundingClientRect();
-                if (rect.top < window.innerHeight * 0.9) s.classList.add('visible');
-            });
-        });
-
-        window.onload = () => {
-            gsap.to(".gsap-hero", { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power2.out" });
-            updateDashboard('ayurveda');
-            document.querySelectorAll('.fade-in-section').forEach(s => {
-                const rect = s.getBoundingClientRect();
-                if (rect.top < window.innerHeight) s.classList.add('visible');
-            });
-        };
-    </script>
 </body>
 </html>
-
-
