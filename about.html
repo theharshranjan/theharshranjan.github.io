@@ -61,23 +61,33 @@ body{background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoot
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
 
 /* ── Hamburger icon smooth transitions ── */
-#ic-bars, #ic-close {
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+#ic-bars {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
   transform-origin: center;
 }
 
 #ic-bars.hidden {
   opacity: 0;
-  transform: scale(0.7) rotate(-90deg);
-  position: absolute;
+  visibility: hidden;
   pointer-events: none;
 }
 
-#ic-close.hidden {
+#ic-close {
   opacity: 0;
-  transform: scale(0.7) rotate(90deg);
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+  transform-origin: center;
   position: absolute;
-  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+
+#ic-close.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 #prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;width:0;transition:width .1s linear;}
@@ -167,7 +177,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <line class="hb" x1="2" y1="11" x2="20" y2="11" stroke-width="1.7" stroke-linecap="round"/>
         <line class="hb" x1="2" y1="17" x2="20" y2="17" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
-      <svg id="ic-close" width="22" height="22" viewBox="0 0 22 22" fill="none" class="hidden">
+      <svg id="ic-close" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <line x1="3" y1="3" x2="19" y2="19" stroke="#D95D39" stroke-width="1.7" stroke-linecap="round"/>
         <line x1="19" y1="3" x2="3"  y2="19" stroke="#D95D39" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
@@ -554,7 +564,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
             <textarea id="fm" placeholder="Tell Harsh a little about what you're seeking…" class="ff" rows="3" style="resize:vertical;min-height:80px;"></textarea>
           </div>
           <div class="sm:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-1">
-            <button id="sb" onclick="submitForm()" class="cb inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-[#D95D39] text-white text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto" style="font-family:'Lato',sans-serif;">
+            <button id="sb" onclick="submitFormFirebase(event)" class="cb inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-[#D95D39] text-white text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto" style="font-family:'Lato',sans-serif;">
               <span id="st">Submit Request</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
@@ -637,21 +647,89 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <!-- WhatsApp -->
 <div id="wa"><a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
 
-<!-- Firebase — deferred, never blocks render -->
+<!-- Firebase — Working Integration with Real Credentials -->
 <script type="module">
-  import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-  const cfg={apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT.firebaseapp.com",projectId:"YOUR_PROJECT_ID",storageBucket:"YOUR_PROJECT.appspot.com",messagingSenderId:"YOUR_SENDER_ID",appId:"YOUR_APP_ID"};
-  try{
-    const db=getFirestore(initializeApp(cfg));
-    window.__fb=async(n,e,p,c,m)=>{
-      await addDoc(collection(db,"consultations"),{
-        name:n,email:e,phone:p,concern:c,message:m,
-        source:"about-page",createdAt:serverTimestamp()
-      });
-      return true;
-    };
-  }catch(ex){console.warn("Firebase init:",ex.message);}
+  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+    authDomain:        "thesamrpan.firebaseapp.com",
+    projectId:         "thesamrpan",
+    storageBucket:     "thesamrpan.firebasestorage.app",
+    messagingSenderId: "510287005957",
+    appId:             "1:510287005957:web:978533c6dbca0f4969cf6c",
+    measurementId:     "G-ML1QLKGR3K"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const customAppId = "samarpan-official";
+
+  function emailToDocId(email) {
+    return email.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 200);
+  }
+
+  // Firebase Submit Handler
+  window.submitFormFirebase = async function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('sb');
+    const statusDiv = document.getElementById('ff-err');
+    const origText = btn ? btn.innerHTML : 'Submit Request';
+    
+    const name = (document.getElementById('fn')?.value || '').trim();
+    const email = (document.getElementById('fe')?.value || '').trim();
+    const phone = (document.getElementById('fp')?.value || '').trim();
+    const concern = (document.getElementById('fc')?.value || 'General Inquiry');
+    const message = (document.getElementById('fm')?.value || '').trim();
+
+    // Validation
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if(statusDiv) statusDiv.classList.remove('hidden');
+      document.getElementById('et').textContent = '✗ Please fill in your name and a valid email.';
+      return;
+    }
+
+    if (btn) { btn.disabled = true; btn.innerHTML = '🔄 Sending...'; }
+    if(statusDiv) statusDiv.classList.add('hidden');
+
+    try {
+      // Silent auth
+      if (!auth.currentUser) await signInAnonymously(auth);
+
+      // Save to Firestore
+      const docId = emailToDocId(email);
+      const ref = doc(collection(db, "artifacts", customAppId, "public", "data", "leads"), docId);
+      
+      await setDoc(ref, {
+        name,
+        email,
+        phone: phone || 'Not Provided',
+        concern,
+        message: message || 'No message',
+        lead_type: "dosha_assessment_request",
+        source: "about-page",
+        timestamp: serverTimestamp()
+      }, { merge: true });
+
+      // Show success
+      document.getElementById('ff-fields').classList.add('hidden');
+      document.getElementById('ff-ok').classList.remove('hidden');
+
+    } catch (error) {
+      console.error("Firebase Error:", error);
+      if(statusDiv) {
+        statusDiv.classList.remove('hidden');
+        document.getElementById('et').textContent = '✗ Error saving data. Please try WhatsApp or email.';
+      }
+    } finally {
+      if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+    }
+  };
 </script>
 
 <script>
@@ -697,13 +775,13 @@ function toggleMenu(){
   document.body.style.overflow=mop?'hidden':'';
   hbtn.setAttribute('aria-expanded',String(mop));
 
-  // Smooth icon swap with classes
+  // Smooth icon swap with proper visibility toggle
   if(mop){
     bars.classList.add('hidden');
-    close.classList.remove('hidden');
+    close.classList.add('visible');
   } else {
     bars.classList.remove('hidden');
-    close.classList.add('hidden');
+    close.classList.remove('visible');
   }
   updateNav();
 }
@@ -749,7 +827,7 @@ function toggleTheme(){
   document.getElementById('t-sun').classList.toggle('hidden',isDark);
 }
 
-// ─── Consultation form ────────────────────────────────────────────────────────
+// ─── Consultation form UI handlers ────────────────────────────────────────────
 var fop=false;
 
 function openForm(){
@@ -774,55 +852,13 @@ function closeForm(){
     var btn=document.getElementById('sb');
     var st=document.getElementById('st');
     btn.disabled=false;
-    st.textContent='Submit Request';
+    st.innerHTML='Submit Request <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
     // clear fields
     ['fn','fe','fp','fc','fm'].forEach(function(id){
       var el=document.getElementById(id);
       if(el)el.value='';
     });
   },400);
-}
-
-async function submitForm(){
-  var n=document.getElementById('fn').value.trim();
-  var e=document.getElementById('fe').value.trim();
-  var p=document.getElementById('fp').value.trim();
-  var c=document.getElementById('fc').value;
-  var m=document.getElementById('fm').value.trim();
-
-  // Validation
-  if(!n||!e||!p){showErr('Please fill in name, email, and phone.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){showErr('Please enter a valid email address.');return;}
-
-  var btn=document.getElementById('sb');
-  var st=document.getElementById('st');
-  btn.disabled=true;
-  st.textContent='Sending…';
-  document.getElementById('ff-err').classList.add('hidden');
-
-  // Try Firebase; if unavailable (placeholder keys) still show success
-  try{
-    if(typeof window.__fb==='function'){
-      await window.__fb(n,e,p,c,m);
-    }
-  }catch(err){
-    // Firebase failed (likely placeholder keys) — log silently, still confirm to user
-    console.warn('Firebase submission error:',err.message);
-  }
-
-  // Always show success state — actual delivery depends on Firebase being configured
-  document.getElementById('ff-fields').classList.add('hidden');
-  document.getElementById('ff-ok').classList.remove('hidden');
-}
-
-function showErr(msg){
-  var el=document.getElementById('ff-err');
-  var sb=document.getElementById('sb');
-  var st=document.getElementById('st');
-  document.getElementById('et').textContent=msg;
-  el.classList.remove('hidden');
-  sb.disabled=false;
-  st.textContent='Submit Request';
 }
 </script>
 </body>
