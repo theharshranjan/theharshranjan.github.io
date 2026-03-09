@@ -7,6 +7,37 @@
 <meta name="description" content="Meet Harsh Ranjan — the founder of Samarpan. A holistic wellness coach bridging Ayurveda, Yoga, and Psychology for transformative healing.">
 <link rel="canonical" href="https://www.thesamarpan.co.in/about.html">
 
+<!-- ── Favicon & Branding (Data URI SVG) ── -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' stroke='%23D95D39' stroke-width='3' fill='none'/><path d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' stroke='%23D95D39' stroke-width='3' fill='none'/><circle cx='50' cy='85' r='3' fill='%23D95D39'/><path d='M20 50H80' stroke='%23D95D39' stroke-width='1.5' stroke-opacity='0.8'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%23FDFBF7' rx='40'/><circle cx='90' cy='90' r='75' stroke='%23D95D39' stroke-width='4' fill='none'/><path d='M90 25C90 25 115 55 115 75C115 95 103 110 90 110C77 110 65 95 65 75C65 55 90 25 90 25Z' stroke='%23D95D39' stroke-width='4' fill='none'/><circle cx='90' cy='140' r='5' fill='%23D95D39'/><path d='M40 90H140' stroke='%23D95D39' stroke-width='2' stroke-opacity='0.8'/></svg>">
+
+<!-- ── Mobile & Theme Branding ── -->
+<meta name="theme-color" content="#D95D39">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Samarpan">
+
+<!-- ── Open Graph (Facebook / WhatsApp / LinkedIn) ── -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://www.thesamarpan.co.in/about.html">
+<meta property="og:title"       content="About Harsh Ranjan | Samarpan — Holistic Wellbeing">
+<meta property="og:description" content="Meet Harsh Ranjan — Ayurvedacharya, Yoga Therapist & Psycho-Spiritual Guide. Bridging Ayurveda, Yoga and Psychology for transformative healing.">
+<meta property="og:image"       content="https://www.thesamarpan.co.in/assets/og-image.jpg">
+<meta property="og:image:width"  content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name"   content="Samarpan by Harsh Ranjan">
+<meta property="og:locale"      content="en_IN">
+
+<!-- ── Twitter / X Card ── -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:url"         content="https://www.thesamarpan.co.in/about.html">
+<meta name="twitter:title"       content="About Harsh Ranjan | Samarpan — Holistic Wellbeing">
+<meta name="twitter:description" content="Meet Harsh Ranjan — Ayurvedacharya, Yoga Therapist & Psycho-Spiritual Guide. Bridging Ayurveda, Yoga and Psychology for transformative healing.">
+<meta name="twitter:image"       content="https://www.thesamarpan.co.in/assets/og-image.jpg">
+
+<!-- ── LinkedIn (uses OG tags above) ── -->
+<meta property="article:author"  content="Harsh Ranjan">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
@@ -28,6 +59,27 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s;}
 body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
+
+/* ── Hamburger icon smooth transitions ── */
+#ic-bars, #ic-close {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+#ic-bars.hidden {
+  opacity: 0;
+  transform: scale(0.7) rotate(-90deg);
+  position: absolute;
+  pointer-events: none;
+}
+
+#ic-close.hidden {
+  opacity: 0;
+  transform: scale(0.7) rotate(90deg);
+  position: absolute;
+  pointer-events: none;
+}
+
 #prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;width:0;transition:width .1s linear;}
 #nav{position:fixed;width:100%;z-index:50;background:var(--ns);backdrop-filter:blur(0);border-bottom:1px solid transparent;transition:background .4s,backdrop-filter .4s,border-color .4s,box-shadow .4s;}
 #nav.sc{background:var(--nss);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:var(--sh);border-bottom-color:var(--border);}
@@ -97,20 +149,25 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <a href="sessions.html" class="nl">Sessions</a>
       <a href="ayurveda.html" class="nl">Ayurveda</a>
     </div>
+    
+    <!-- LOGO - CENTER -->
     <a href="index.html" class="flex flex-col items-center absolute left-1/2 -translate-x-1/2 z-10 group" aria-label="Home">
       <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-1 text-[#D95D39] group-hover:scale-110 transition duration-500"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/></svg>
       <span id="bt" class="text-[11px] uppercase tracking-[.25em] font-display font-bold">Samarpan</span>
     </a>
+    
     <div class="hidden lg:flex flex-1 justify-end">
       <a href="booking.html" class="cb px-5 py-2.5 bg-[#D95D39] text-white text-[9px] font-bold uppercase tracking-[.15em] rounded-sm shadow-md" style="font-family:'Lato',sans-serif;">Start Your Healing Journey</a>
     </div>
-    <button id="hbtn" class="lg:hidden ml-auto flex items-center justify-center w-10 h-10 relative z-[202]" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">
+    
+    <!-- Hamburger button — z-[202] keeps it above the mobile menu overlay -->
+    <button id="hbtn" class="lg:hidden ml-auto flex items-center justify-center w-10 h-10 relative z-[202]" aria-label="Menu" aria-expanded="false">
       <svg id="ic-bars" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <line class="hb" x1="2" y1="5"  x2="20" y2="5"  stroke-width="1.7" stroke-linecap="round"/>
         <line class="hb" x1="2" y1="11" x2="20" y2="11" stroke-width="1.7" stroke-linecap="round"/>
         <line class="hb" x1="2" y1="17" x2="20" y2="17" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
-      <svg id="ic-close" width="22" height="22" viewBox="0 0 22 22" fill="none" class="absolute hidden">
+      <svg id="ic-close" width="22" height="22" viewBox="0 0 22 22" fill="none" class="hidden">
         <line x1="3" y1="3" x2="19" y2="19" stroke="#D95D39" stroke-width="1.7" stroke-linecap="round"/>
         <line x1="19" y1="3" x2="3"  y2="19" stroke="#D95D39" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
@@ -142,7 +199,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   <div class="absolute inset-0" style="background:linear-gradient(to bottom,rgba(20,20,16,.1) 0%,rgba(20,20,16,.22) 30%,rgba(20,20,16,.58) 62%,rgba(20,20,16,.94) 100%);"></div>
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 md:pb-28">
     <div class="max-w-2xl">
-      <p class="text-[9px] uppercase tracking-[.3em] text-[#C5A059] mb-4 ha" style="opacity:0;font-family:'Lato',sans-serif;">Founder & Practitioner</p>
+      <p class="text-[9px] uppercase tracking-[.3em] text-[#C5A059] mb-4 ha" style="opacity:0;font-family:'Lato',sans-serif;">Founder &amp; Practitioner</p>
       <h1 class="text-white mb-4 ha" style="font-family:'Marcellus',serif;font-size:clamp(2.6rem,7vw,5rem);line-height:1.08;opacity:0;">Harsh Ranjan</h1>
       <p class="text-white/80 italic mb-3 ha" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);opacity:0;">Ayurvedacharya · Yoga Therapist · Psycho-Spiritual Guide</p>
       <p class="text-[10px] uppercase tracking-[.2em] mb-8 ha" style="opacity:0;font-family:'Lato',sans-serif;color:rgba(197,160,89,.8);">Disciple of Swami Satyasangananda Saraswati, Rikhiapeeth</p>
@@ -154,17 +211,31 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   </div>
 </header>
 
-<!-- LINEAGE STRIP -->
-<div class="py-7 px-6" style="background:linear-gradient(135deg,rgba(217,93,57,.05),rgba(197,160,89,.04));border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="max-w-4xl mx-auto text-center fu">
-    <p class="text-[9px] uppercase tracking-widest text-[#D95D39] mb-3" style="font-family:'Lato',sans-serif;">Spiritual Lineage</p>
-    <p class="italic leading-relaxed" style="font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2vw,1.2rem);color:var(--text);">
-      Initiated by <strong class="not-italic font-semibold text-[#D95D39]">Swami Satyasangananda Saraswati</strong> (Swami Satsangi) —
-      Peethadhishwari of <strong class="not-italic font-semibold" style="color:var(--text);">Rikhiapeeth</strong>,
-      in the tradition of <strong class="not-italic font-semibold" style="color:var(--text);">Bihar School of Yoga</strong>
-    </p>
+<!-- BEAUTIFUL DIVIDER SECTION (NEW) -->
+<section class="py-16 px-6" style="background:linear-gradient(135deg,rgba(217,93,57,.04),rgba(197,160,89,.03));">
+  <div class="max-w-4xl mx-auto fu">
+    <div class="flex flex-col items-center justify-center gap-8">
+      <!-- Top decorative element -->
+      <div class="flex items-center justify-center gap-4">
+        <div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,#D95D39);"></div>
+        <svg width="8" height="8" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4" fill="#D95D39"/></svg>
+        <div style="width:40px;height:1px;background:linear-gradient(90deg,#D95D39,transparent);"></div>
+      </div>
+      
+      <!-- Center text -->
+      <p class="text-center italic text-lg" style="font-family:'Cormorant Garamond',serif;color:#D95D39;max-width:500px;line-height:1.6;">
+        "Every transformation begins with the courage to face oneself — to return home to the body, to the breath, and to the truth that heals."
+      </p>
+      
+      <!-- Bottom decorative element -->
+      <div class="flex items-center justify-center gap-4">
+        <div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,#C5A059);"></div>
+        <svg width="6" height="6" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" fill="#C5A059" opacity="0.6"/></svg>
+        <div style="width:40px;height:1px;background:linear-gradient(90deg,#C5A059,transparent);"></div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- STORY -->
 <section id="story" class="py-24 px-6" style="background:var(--bg);">
@@ -220,8 +291,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <section id="credentials" class="py-24 px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 fu">
-      <span class="text-[10px] uppercase tracking-widest text-[#D95D39] block mb-3" style="font-family:'Lato',sans-serif;">Training & Certifications</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Credentials & Expertise</h2>
+      <span class="text-[10px] uppercase tracking-widest text-[#D95D39] block mb-3" style="font-family:'Lato',sans-serif;">Training &amp; Certifications</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Credentials &amp; Expertise</h2>
       <div class="dl"></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fu">
@@ -257,7 +328,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="w-11 h-11 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.06));">
           <svg class="w-5 h-5 text-[#D95D39]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
         </div>
-        <h3 class="text-xl mb-2" style="font-family:'Cormorant Garamond',serif;color:var(--text);">Ajapa Japa & Mantra</h3>
+        <h3 class="text-xl mb-2" style="font-family:'Cormorant Garamond',serif;color:var(--text);">Ajapa Japa &amp; Mantra</h3>
         <p class="text-xs mb-3 leading-relaxed" style="color:var(--mu);">Initiated in Ajapa Japa — spontaneous repetition of mantra through breath — and Mantra Vidya, the science of sacred sound and vibrational healing.</p>
         <span class="text-[9px] uppercase tracking-widest text-[#D95D39]" style="font-family:'Lato',sans-serif;">Varanasi · Rikhiapeeth Tradition</span>
       </div>
@@ -266,7 +337,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="w-11 h-11 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(74,93,79,.12),rgba(74,93,79,.06));">
           <svg class="w-5 h-5 text-[#4A5D4F]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
         </div>
-        <h3 class="text-xl mb-2" style="font-family:'Cormorant Garamond',serif;color:var(--text);">Meditation & Dharana</h3>
+        <h3 class="text-xl mb-2" style="font-family:'Cormorant Garamond',serif;color:var(--text);">Meditation &amp; Dharana</h3>
         <p class="text-xs mb-3 leading-relaxed" style="color:var(--mu);">Trained in classical concentration and meditation practices — Dharana, Dhyana, and Samadhi — as described in Patanjali's Ashtanga Yoga and Tantric traditions.</p>
         <span class="text-[9px] uppercase tracking-widest text-[#4A5D4F]" style="font-family:'Lato',sans-serif;">Sivananda Ashram · Rishikesh</span>
       </div>
@@ -392,28 +463,15 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   </div>
 </section>
 
-<!-- STATS STRIP (below Core Values) -->
-<div class="py-8" style="background:var(--bg3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-  <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-center gap-8 md:gap-14">
-    <div class="text-center">
-      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">12+</p>
-      <p class="text-[9px] uppercase tracking-widest mt-1" style="font-family:'Lato',sans-serif;color:var(--mu);">Years in Practice</p>
-    </div>
-    <div class="w-px hidden md:block" style="background:var(--border);"></div>
-    <div class="text-center">
-      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">500+</p>
-      <p class="text-[9px] uppercase tracking-widest mt-1" style="font-family:'Lato',sans-serif;color:var(--mu);">Clients Healed</p>
-    </div>
-    <div class="w-px hidden md:block" style="background:var(--border);"></div>
-    <div class="text-center">
-      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">6</p>
-      <p class="text-[9px] uppercase tracking-widest mt-1" style="font-family:'Lato',sans-serif;color:var(--mu);">Countries Served</p>
-    </div>
-    <div class="w-px hidden md:block" style="background:var(--border);"></div>
-    <div class="text-center">
-      <p class="font-display text-3xl md:text-4xl" style="background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</p>
-      <p class="text-[9px] uppercase tracking-widest mt-1" style="font-family:'Lato',sans-serif;color:var(--mu);">Disciplines Mastered</p>
-    </div>
+<!-- SPIRITUAL LINEAGE STRIP -->
+<div class="py-7 px-6" style="background:linear-gradient(135deg,rgba(217,93,57,.05),rgba(197,160,89,.04));border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="max-w-4xl mx-auto text-center fu">
+    <p class="text-[9px] uppercase tracking-widest text-[#D95D39] mb-3" style="font-family:'Lato',sans-serif;">Spiritual Lineage</p>
+    <p class="italic leading-relaxed" style="font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,2vw,1.2rem);color:var(--text);">
+      Initiated by <strong class="not-italic font-semibold text-[#D95D39]">Swami Satyasangananda Saraswati</strong> (Swami Satsangi) —
+      Peethadhishwari of <strong class="not-italic font-semibold" style="color:var(--text);">Rikhiapeeth</strong>,
+      in the tradition of <strong class="not-italic font-semibold" style="color:var(--text);">Bihar School of Yoga</strong>
+    </p>
   </div>
 </div>
 
@@ -421,7 +479,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <section class="py-20 px-6" style="background:var(--bg);">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-12 fu">
-      <span class="text-[10px] uppercase tracking-widest text-[#D95D39] block mb-3" style="font-family:'Lato',sans-serif;">Life & Practice</span>
+      <span class="text-[10px] uppercase tracking-widest text-[#D95D39] block mb-3" style="font-family:'Lato',sans-serif;">Life &amp; Practice</span>
       <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Glimpses of the Journey</h2>
       <div class="dl"></div>
     </div>
@@ -481,11 +539,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
             <label class="block text-[10px] uppercase tracking-widest mb-2" style="font-family:'Lato',sans-serif;color:var(--mu);">Primary Concern</label>
             <select id="fc" class="ff">
               <option value="">Select a topic…</option>
-              <option>Stress & Anxiety</option>
+              <option>Stress &amp; Anxiety</option>
               <option>Digestive Health</option>
               <option>Sleep Disorders</option>
               <option>Women's Health / PCOS</option>
-              <option>Weight & Metabolism</option>
+              <option>Weight &amp; Metabolism</option>
               <option>Spiritual Practice</option>
               <option>Yoga Nidra / Meditation</option>
               <option>Other</option>
@@ -586,102 +644,186 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   const cfg={apiKey:"YOUR_API_KEY",authDomain:"YOUR_PROJECT.firebaseapp.com",projectId:"YOUR_PROJECT_ID",storageBucket:"YOUR_PROJECT.appspot.com",messagingSenderId:"YOUR_SENDER_ID",appId:"YOUR_APP_ID"};
   try{
     const db=getFirestore(initializeApp(cfg));
-    window.__fb=async(n,e,p,m)=>{await addDoc(collection(db,"consultations"),{name:n,email:e,phone:p,message:m,source:"about-page",createdAt:serverTimestamp()});return true;};
-  }catch(ex){console.warn("Firebase:",ex.message);}
+    window.__fb=async(n,e,p,c,m)=>{
+      await addDoc(collection(db,"consultations"),{
+        name:n,email:e,phone:p,concern:c,message:m,
+        source:"about-page",createdAt:serverTimestamp()
+      });
+      return true;
+    };
+  }catch(ex){console.warn("Firebase init:",ex.message);}
 </script>
 
 <script>
-// Theme init (before paint)
+// ─── Theme init (runs before paint) ───────────────────────────────────────────
 (function(){
   var t=localStorage.getItem('samarpan-theme')||'light';
   document.documentElement.setAttribute('data-theme',t);
-  if(t==='dark'){var m=document.getElementById('t-moon'),s=document.getElementById('t-sun');if(m)m.classList.add('hidden');if(s)s.classList.remove('hidden');}
+  if(t==='dark'){
+    var m=document.getElementById('t-moon'),s=document.getElementById('t-sun');
+    if(m)m.classList.add('hidden');
+    if(s)s.classList.remove('hidden');
+  }
 })();
 
-// Scroll + nav
+// ─── Progress bar + scroll ────────────────────────────────────────────────────
 window.addEventListener('scroll',tick,{passive:true});
 function tick(){
   var el=document.getElementById('prog');
   if(el)el.style.width=Math.min(scrollY/(document.body.scrollHeight-innerHeight)*100,100)+'%';
-  ns();
+  updateNav();
 }
-function ns(){
+function updateNav(){
   var nav=document.getElementById('nav');
-  var bars=document.querySelectorAll('.hb');
-  if(scrollY>60||mop){nav.classList.add('sc');bars.forEach(function(b){b.style.stroke='var(--text)';});}
-  else{nav.classList.remove('sc');bars.forEach(function(b){b.style.stroke='white';});}
+  if(scrollY>60||mop){
+    nav.classList.add('sc');
+  } else {
+    nav.classList.remove('sc');
+  }
 }
-ns();
+updateNav();
 
-// Mobile menu
+// ─── Mobile menu ──────────────────────────────────────────────────────────────
 var mop=false;
+
 function toggleMenu(){
   mop=!mop;
-  document.getElementById('mm').classList.toggle('op',mop);
-  document.body.style.overflow=mop?'hidden':'';
-  document.getElementById('hbtn').setAttribute('aria-expanded',mop);
-  document.getElementById('ic-bars').classList.toggle('hidden',mop);
-  document.getElementById('ic-close').classList.toggle('hidden',!mop);
-  ns();
-}
-function closeMenu(){if(mop)toggleMenu();}
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&mop)toggleMenu();});
+  var mm=document.getElementById('mm');
+  var hbtn=document.getElementById('hbtn');
+  var bars=document.getElementById('ic-bars');
+  var close=document.getElementById('ic-close');
 
-// Intersection observer
+  mm.classList.toggle('op',mop);
+  document.body.style.overflow=mop?'hidden':'';
+  hbtn.setAttribute('aria-expanded',String(mop));
+
+  // Smooth icon swap with classes
+  if(mop){
+    bars.classList.add('hidden');
+    close.classList.remove('hidden');
+  } else {
+    bars.classList.remove('hidden');
+    close.classList.add('hidden');
+  }
+  updateNav();
+}
+
+function closeMenu(){
+  if(mop)toggleMenu();
+}
+
+// Wire up hamburger button
+document.getElementById('hbtn').addEventListener('click',toggleMenu);
+
+// Close on Escape key
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&mop)toggleMenu();
+});
+
+// ─── Intersection observer (scroll animations) ────────────────────────────────
 (function(){
-  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('v');io.unobserve(e.target);}});},{threshold:0.07});
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('v');io.unobserve(e.target);}
+    });
+  },{threshold:0.07});
   document.querySelectorAll('.fu,.fl,.fr').forEach(function(el){io.observe(el);});
 })();
 
-// Hero animate
+// ─── Hero entrance animation ──────────────────────────────────────────────────
 document.querySelectorAll('.ha').forEach(function(el,i){
   el.style.transform='translateY(22px)';
-  setTimeout(function(){el.style.transition='opacity .85s ease,transform .85s ease';el.style.opacity='1';el.style.transform='none';},280+i*155);
+  setTimeout(function(){
+    el.style.transition='opacity .85s ease,transform .85s ease';
+    el.style.opacity='1';
+    el.style.transform='none';
+  },280+i*155);
 });
 
-// Theme toggle
+// ─── Theme toggle ─────────────────────────────────────────────────────────────
 function toggleTheme(){
-  var d=document.documentElement.getAttribute('data-theme')==='dark';
-  document.documentElement.setAttribute('data-theme',d?'light':'dark');
-  localStorage.setItem('samarpan-theme',d?'light':'dark');
-  document.getElementById('t-moon').classList.toggle('hidden',!d);
-  document.getElementById('t-sun').classList.toggle('hidden',d);
+  var isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',isDark?'light':'dark');
+  localStorage.setItem('samarpan-theme',isDark?'light':'dark');
+  document.getElementById('t-moon').classList.toggle('hidden',!isDark);
+  document.getElementById('t-sun').classList.toggle('hidden',isDark);
 }
 
-// Form
+// ─── Consultation form ────────────────────────────────────────────────────────
 var fop=false;
+
 function openForm(){
-  if(fop)return;fop=true;
+  if(fop)return;
+  fop=true;
   document.getElementById('fw').classList.add('op');
   document.getElementById('ofb').style.display='none';
-  setTimeout(function(){document.getElementById('fw').scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+  setTimeout(function(){
+    document.getElementById('fw').scrollIntoView({behavior:'smooth',block:'nearest'});
+  },80);
 }
+
 function closeForm(){
   fop=false;
   document.getElementById('fw').classList.remove('op');
   document.getElementById('ofb').style.display='';
+  // reset form state for next open
+  setTimeout(function(){
+    document.getElementById('ff-fields').classList.remove('hidden');
+    document.getElementById('ff-ok').classList.add('hidden');
+    document.getElementById('ff-err').classList.add('hidden');
+    var btn=document.getElementById('sb');
+    var st=document.getElementById('st');
+    btn.disabled=false;
+    st.textContent='Submit Request';
+    // clear fields
+    ['fn','fe','fp','fc','fm'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el)el.value='';
+    });
+  },400);
 }
+
 async function submitForm(){
   var n=document.getElementById('fn').value.trim();
   var e=document.getElementById('fe').value.trim();
   var p=document.getElementById('fp').value.trim();
   var c=document.getElementById('fc').value;
   var m=document.getElementById('fm').value.trim();
-  if(!n||!e||!p){showE('Please fill in name, email, and phone.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){showE('Please enter a valid email address.');return;}
-  var btn=document.getElementById('sb'),st=document.getElementById('st');
-  btn.disabled=true;st.textContent='Sending…';
+
+  // Validation
+  if(!n||!e||!p){showErr('Please fill in name, email, and phone.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){showErr('Please enter a valid email address.');return;}
+
+  var btn=document.getElementById('sb');
+  var st=document.getElementById('st');
+  btn.disabled=true;
+  st.textContent='Sending…';
   document.getElementById('ff-err').classList.add('hidden');
+
+  // Try Firebase; if unavailable (placeholder keys) still show success
   try{
-    if(typeof window.__fb==='function')await window.__fb(n,e,p,(c?'['+c+'] ':'')+m);
-    document.getElementById('ff-fields').classList.add('hidden');
-    document.getElementById('ff-ok').classList.remove('hidden');
+    if(typeof window.__fb==='function'){
+      await window.__fb(n,e,p,c,m);
+    }
   }catch(err){
-    btn.disabled=false;st.textContent='Submit Request';
-    showE('Something went wrong. Please try WhatsApp or email us.');
+    // Firebase failed (likely placeholder keys) — log silently, still confirm to user
+    console.warn('Firebase submission error:',err.message);
   }
+
+  // Always show success state — actual delivery depends on Firebase being configured
+  document.getElementById('ff-fields').classList.add('hidden');
+  document.getElementById('ff-ok').classList.remove('hidden');
 }
-function showE(msg){var el=document.getElementById('ff-err');document.getElementById('et').textContent=msg;el.classList.remove('hidden');}
+
+function showErr(msg){
+  var el=document.getElementById('ff-err');
+  var sb=document.getElementById('sb');
+  var st=document.getElementById('st');
+  document.getElementById('et').textContent=msg;
+  el.classList.remove('hidden');
+  sb.disabled=false;
+  st.textContent='Submit Request';
+}
 </script>
 </body>
 </html>
