@@ -107,8 +107,9 @@
     .nav-link:hover{color:#D95D39 !important;}
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
     .nav-link:hover::after{transform:scaleX(1);}
-    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
-    #navbar.scrolled .nav-logo-text{color:var(--text);}
+    /* ── FIX: Logo text stays saffron always — even when navbar is scrolled ── */
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#D95D39;}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;}
     .nav-logo-icon{transition:color .3s;color:#D95D39;}
     .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
     .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
@@ -231,11 +232,10 @@
     .dosha-pitta{border-color:#D95D39;background:rgba(217,93,57,.06);}
     .dosha-kapha{border-color:#C5A059;background:rgba(197,160,89,.06);}
 
-    /* ── GIFT POPUP — Logo version ── */
+    /* GIFT POPUP */
     #gift-popup{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);padding:1rem;}
     #gift-popup.open{display:flex;}
     .gift-popup-box{background:var(--bg);max-width:460px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
-    /* Logo header strip */
     .gift-popup-header{background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 60%,#1C1C1C 100%);padding:1.5rem 1rem 1.25rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;position:relative;}
     @media(max-width:480px){.gift-popup-header{padding:1.1rem 1rem 1rem;}}
     .gift-popup-logo-svg{width:clamp(36px,8vw,52px);height:clamp(36px,8vw,52px);color:#D95D39;}
@@ -250,7 +250,7 @@
     #exit-popup{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);}
     #exit-popup.open{display:flex;}
 
-    /* ── YOGA POPUP — fully fixed responsive ── */
+    /* YOGA POPUP */
     #yoga-popup{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(5px);padding:1rem;}
     #yoga-popup.open{display:flex;}
     .yoga-popup-inner{
@@ -287,7 +287,6 @@
     }
     .yoga-popup-body{padding:1.25rem 1.25rem 1.4rem;flex:1;min-width:0;}
     @media(min-width:520px){.yoga-popup-body{padding:1.5rem 1.5rem 1.6rem;}}
-    /* Fixed close button for yoga popup */
     .yoga-close-btn{
       position:absolute;
       top:.6rem;right:.6rem;
@@ -302,12 +301,12 @@
     [data-theme="dark"] .yoga-close-btn{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
     [data-theme="dark"] .yoga-close-btn:hover{background:rgba(217,93,57,.25);color:#D95D39;}
 
-    /* ── REFERRAL POPUP ── */
+    /* REFERRAL POPUP */
     #referral-popup{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);padding:1rem;}
     #referral-popup.open{display:flex;}
     .referral-popup-inner{
       background:var(--bg);
-      width:100%;max-width:680px;
+      width:100%;max-width:720px;
       border-radius:12px;overflow:hidden;
       box-shadow:0 32px 80px rgba(0,0,0,.45);
       position:relative;
@@ -335,7 +334,7 @@
       .referral-popup-img-overlay{background:linear-gradient(to right,rgba(28,28,28,.1),rgba(28,28,28,.65));}
     }
     .referral-popup-body{padding:1.5rem;flex:1;min-width:0;}
-    @media(min-width:600px){.referral-popup-body{padding:2rem 1.75rem;};}
+    @media(min-width:600px){.referral-popup-body{padding:1.75rem 1.75rem;};}
     .referral-popup-close{
       position:absolute;top:.7rem;right:.7rem;
       width:32px;height:32px;
@@ -348,7 +347,7 @@
     .referral-popup-close:hover{background:rgba(0,0,0,.35);}
     .share-btn{
       display:flex;align-items:center;gap:.6rem;
-      width:100%;padding:.75rem 1rem;
+      width:100%;padding:.7rem 1rem;
       border-radius:6px;border:1.5px solid var(--border);
       background:transparent;cursor:pointer;
       font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;
@@ -363,7 +362,7 @@
       border-radius:6px;padding:.6rem .85rem;
       font-family:'Lato',sans-serif;font-size:11px;
       color:var(--text-muted);letter-spacing:.02em;
-      word-break:break-all;margin:1rem 0;
+      word-break:break-all;margin:.6rem 0;
     }
 
     /* GENERAL POPUP BOX */
@@ -439,12 +438,8 @@
     .form-input2.valid,.form-textarea2.valid{border-color:#4A5D4F !important;}
     .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
     @keyframes spin{to{transform:rotate(360deg);}}
-
-    /* VIDEO iframe responsive */
     .video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;}
     .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
-
-    /* RESPONSIVE TWEAKS */
     @media(max-width:640px){
       .testi-card{width:calc(100vw - 3rem);}
       .card-content{padding:1.25rem;}
@@ -510,13 +505,11 @@
   </div>
 </div>
 
-<!-- ══ GIFT POPUP — Logo version, no emoji banner ══ -->
+<!-- ══ GIFT POPUP ══ -->
 <div id="gift-popup">
   <div class="gift-popup-box">
-    <!-- Logo header -->
     <div class="gift-popup-header">
       <button class="gift-popup-close" onclick="closeGiftPopup()" aria-label="Close">✕</button>
-      <!-- Website Logo SVG -->
       <svg class="gift-popup-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
         <circle cx="50" cy="50" r="45"/>
         <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
@@ -526,7 +519,6 @@
       <span class="gift-popup-logo-name">Samarpan</span>
       <div class="gift-popup-badge"><span>A Gift For You</span></div>
     </div>
-    <!-- Body -->
     <div class="gift-popup-body">
       <h3 class="font-serif mb-2" style="font-size:clamp(1.25rem,4vw,1.6rem);color:var(--text);">Before you go…</h3>
       <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Claim your <strong class="text-clay">FREE 20-minute Dosha Assessment</strong> — discover your Ayurvedic constitution and the single biggest change that could transform your health.</p>
@@ -564,19 +556,16 @@
   </div>
 </div>
 
-<!-- ══ YOGA SESSION POPUP — fully responsive, working X button ══ -->
+<!-- ══ YOGA SESSION POPUP ══ -->
 <div id="yoga-popup">
   <div class="yoga-popup-inner">
-    <!-- Fixed close button — z-index 20, always on top -->
     <button class="yoga-close-btn" onclick="closeYogaPopup()" aria-label="Close yoga popup">✕</button>
-    <!-- Side photo -->
     <div class="yoga-popup-photo">
       <img src="https://images.unsplash.com/photo-1588286840104-8957b019727f?q=80&w=600&auto=format&fit=crop" alt="Yoga Session" loading="lazy">
       <div class="yoga-popup-badge">
         <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#1C1C1C;font-weight:700;">Limited Spots</span>
       </div>
     </div>
-    <!-- Form body -->
     <div class="yoga-popup-body">
       <div style="display:inline-block;background:rgba(74,93,79,.1);border:1px solid rgba(74,93,79,.3);border-radius:50px;padding:.25rem .75rem;margin-bottom:.75rem;">
         <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#4A5D4F;font-weight:700;">Free Yoga Session</span>
@@ -603,10 +592,9 @@
   </div>
 </div>
 
-<!-- ══ REFERRAL POPUP — beautiful, on-page, mobile responsive ══ -->
+<!-- ══ REFERRAL POPUP — with email capture ══ -->
 <div id="referral-popup">
   <div class="referral-popup-inner">
-    <!-- Image panel with overlay -->
     <div class="referral-popup-img">
       <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Referral — Share Healing" loading="lazy">
       <div class="referral-popup-img-overlay">
@@ -619,21 +607,30 @@
       </div>
       <button class="referral-popup-close" onclick="closeReferralPopup()" aria-label="Close">✕</button>
     </div>
-    <!-- Body -->
     <div class="referral-popup-body">
-      <div style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(197,160,89,.1);border:1px solid rgba(197,160,89,.3);border-radius:50px;padding:.25rem .85rem;margin-bottom:.85rem;">
+      <div style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(197,160,89,.1);border:1px solid rgba(197,160,89,.3);border-radius:50px;padding:.25rem .85rem;margin-bottom:.75rem;">
         <span style="font-size:14px;">🎁</span>
         <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#C5A059;font-weight:700;">Free Session for Both</span>
       </div>
-      <h3 style="font-family:'Marcellus',serif;font-size:clamp(1.2rem,3.5vw,1.5rem);color:var(--text);margin-bottom:.5rem;line-height:1.25;">Know Someone Who<br>Needs Healing?</h3>
-      <p style="font-family:'Lato',sans-serif;font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Refer a friend to Samarpan. When they complete their first session, <strong style="color:var(--text);">both of you receive a complimentary session</strong> — our gift for spreading the light of healing.</p>
+      <h3 style="font-family:'Marcellus',serif;font-size:clamp(1.2rem,3.5vw,1.45rem);color:var(--text);margin-bottom:.4rem;line-height:1.25;">Know Someone Who<br>Needs Healing?</h3>
+      <p style="font-family:'Lato',sans-serif;font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:.85rem;">When your friend completes their first session, <strong style="color:var(--text);">both of you receive a complimentary session</strong> — our gift for spreading healing.</p>
+
+      <!-- ── Email capture form ── -->
+      <form id="referralEmailForm" onsubmit="handleReferralEmailSubmit(event)" novalidate style="margin-bottom:.85rem;">
+        <p style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;font-weight:700;">Your Email (to activate reward)</p>
+        <div style="display:flex;gap:.5rem;">
+          <input type="email" id="referralEmail" placeholder="your@email.com" class="form-input2" required style="flex:1;padding:.7rem .75rem;font-size:.8rem;">
+          <button type="submit" id="referralEmailBtn" class="cta-btn bg-clay text-white text-[9px] font-bold uppercase tracking-widest rounded-sm px-4 whitespace-nowrap" style="flex-shrink:0;">Save</button>
+        </div>
+        <div id="referralEmailStatus" style="margin-top:.35rem;"></div>
+      </form>
 
       <!-- Referral link display -->
-      <p style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.35rem;font-weight:700;">Your Referral Link</p>
+      <p style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem;font-weight:700;">Your Referral Link</p>
       <div class="referral-link-box" id="referralLinkDisplay">https://www.thesamarpan.co.in/?ref=friend</div>
 
       <!-- Share buttons -->
-      <div style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem;">
+      <div style="display:flex;flex-direction:column;gap:.45rem;margin-bottom:.85rem;">
         <button class="share-btn share-btn-wa" onclick="shareReferralWhatsApp()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Share on WhatsApp
@@ -648,7 +645,6 @@
         </button>
       </div>
 
-      <!-- Terms note -->
       <p style="font-family:'Lato',sans-serif;font-size:10px;color:var(--text-muted);line-height:1.6;">Valid for all programmes · No expiry · Your friend must complete their first paid session for both rewards to activate.</p>
       <div id="referralStatus" style="margin-top:.5rem;"></div>
     </div>
@@ -785,7 +781,7 @@
         <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Lives transformed across continents</p>
       </div>
       <div class="stat-card-premium p-6 md:p-10 text-center">
-        <div class="stat-number"><span class="counter" data-target="5+">0</span>+</div>
+        <div class="stat-number"><span class="counter" data-target="5">0</span>+</div>
         <div class="stat-label">Years Experience</div>
         <div class="stat-bar"></div>
         <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Decade of practising Vedic sciences</p>
@@ -1012,7 +1008,7 @@
       <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body again."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
       <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Women's Health</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"My PCOS symptoms have drastically reduced through the Ayurvedic lifestyle changes. Empowering and sustainable."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Aisha K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Dubai, UAE</p></div></div>
       <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Depression</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"The combination of Yoga Nidra and counseling lifted a fog I've lived with for years. I have my vitality back."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">James L.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Toronto, Canada</p></div></div>
-      <!-- seamless loop duplicates -->
+      <!-- duplicates for seamless loop -->
       <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
       <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
     </div>
@@ -1029,21 +1025,15 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 fade-up">
       <div class="vid-testi-card">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1" title="Testimonial 1" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1" title="Testimonial 1" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
         <div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Healing through Ayurveda</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">3-month transformation story</p></div>
       </div>
       <div class="vid-testi-card">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1&start=30" title="Testimonial 2" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1&start=30" title="Testimonial 2" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
         <div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Yoga for Anxiety Relief</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">8-week programme results</p></div>
       </div>
       <div class="vid-testi-card">
-        <div class="video-wrapper">
-          <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1&start=60" title="Testimonial 3" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>
-        </div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&loop=1&playlist=1v1fOuvBlE8&controls=1&rel=0&playsinline=1&start=60" title="Testimonial 3" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div>
         <div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Sacred Yatra Experience</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Kedarnath pilgrimage journey</p></div>
       </div>
     </div>
@@ -1115,42 +1105,44 @@
   </div>
 </section>
 
-<!-- ══ REFERRAL SECTION — with beautiful image + popup trigger ══ -->
+<!-- ══ REFERRAL SECTION — with email capture ══ -->
 <section id="referral-section" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-5xl mx-auto fade-up">
     <div class="referral-banner overflow-hidden rounded-lg" style="position:relative;">
-      <!-- Background image overlay -->
       <div class="absolute inset-0 z-0">
         <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1400&auto=format&fit=crop"
              alt="Friends healing together" loading="lazy"
              style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:.18;">
       </div>
-      <!-- Decorative accent line -->
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#D95D39,#C5A059,transparent);z-index:2;"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C5A059,#D95D39,transparent);z-index:2;"></div>
-      <!-- Content -->
-      <div class="relative z-10 px-6 sm:px-10 py-12 md:py-16 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-        <!-- Left: icon + heading -->
+      <div class="relative z-10 px-6 sm:px-10 py-12 md:py-14 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <!-- Left: heading + email form -->
         <div class="flex-1 text-center md:text-left">
           <div class="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full" style="background:rgba(197,160,89,.12);border:1px solid rgba(197,160,89,.3);">
             <span style="font-size:16px;">🎁</span>
             <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#C5A059;font-weight:700;">Referral Programme</span>
           </div>
           <h2 class="font-display text-white mb-3" style="font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.2;">Know Someone Who<br class="hidden sm:block">Needs Healing?</h2>
-          <p class="font-sans text-sm text-white/70 leading-relaxed max-w-md mx-auto md:mx-0">Refer a friend to Samarpan. When they complete their first session, <strong class="text-brand-gold">both of you receive a complimentary session</strong> — our gift for spreading the light of healing.</p>
+          <p class="font-sans text-sm text-white/70 leading-relaxed max-w-md mx-auto md:mx-0 mb-5">Refer a friend to Samarpan. When they complete their first session, <strong class="text-brand-gold">both of you receive a complimentary session</strong>.</p>
+          <!-- Email capture for referral section -->
+          <form id="referralSectionForm" onsubmit="handleReferralSectionSubmit(event)" novalidate class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto md:mx-0">
+            <input type="email" id="referralSectionEmail" placeholder="Your email to claim reward" class="form-input2 flex-1" required style="background:rgba(253,251,247,.08);border-color:rgba(255,255,255,.25);color:#fff;font-size:.82rem;padding:.75rem .85rem;">
+            <button type="submit" id="referralSectionBtn" class="cta-btn bg-clay text-white text-[10px] font-bold uppercase tracking-widest rounded-sm px-6 py-3 whitespace-nowrap flex-shrink-0">Register</button>
+          </form>
+          <div id="referralSectionStatus" class="mt-2"></div>
         </div>
-        <!-- Right: image card + CTA -->
-        <div class="flex flex-col items-center gap-5">
-          <!-- Small visual card -->
-          <div style="width:160px;height:160px;border-radius:50%;overflow:hidden;border:3px solid rgba(197,160,89,.4);box-shadow:0 0 40px rgba(217,93,57,.2);flex-shrink:0;">
+        <!-- Right: circle image + share CTA -->
+        <div class="flex flex-col items-center gap-5 flex-shrink-0">
+          <div style="width:140px;height:140px;border-radius:50%;overflow:hidden;border:3px solid rgba(197,160,89,.4);box-shadow:0 0 40px rgba(217,93,57,.2);">
             <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400&auto=format&fit=crop"
                  alt="Share healing" loading="lazy"
                  style="width:100%;height:100%;object-fit:cover;">
           </div>
-          <button onclick="openReferralPopup()" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-7 py-3.5 text-[10px] font-bold uppercase tracking-widest rounded-sm whitespace-nowrap" style="min-width:200px;">
-            <i data-lucide="gift" class="w-4 h-4"></i> Refer a Friend →
+          <button onclick="openReferralPopup()" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-7 py-3.5 text-[10px] font-bold uppercase tracking-widest rounded-sm whitespace-nowrap" style="min-width:190px;">
+            <i data-lucide="gift" class="w-4 h-4"></i> Share &amp; Earn →
           </button>
-          <p class="font-sans text-xs text-white/40">No strings attached · Valid for all programmes</p>
+          <p class="font-sans text-xs text-white/40">No strings attached · All programmes</p>
         </div>
       </div>
     </div>
@@ -1340,7 +1332,9 @@
 <div id="whatsapp-fab"><a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%27d%20like%20to%20learn%20more%20about%20your%20wellness%20programmes." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
 <div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
 
-<!-- ══ FIREBASE — all forms including referrals ══ -->
+<!-- ══════════════════════════════════════════
+     FIREBASE — all forms, fully wired
+══════════════════════════════════════════ -->
 <script type="module">
   import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getFirestore, collection, doc, setDoc, serverTimestamp }
@@ -1365,7 +1359,6 @@
     return ist.toISOString().split('T')[0];
   }
 
-  /* Sanitise email for Firestore doc ID */
   function emailToDocId(email) {
     return email.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 200);
   }
@@ -1375,29 +1368,29 @@
     const app = initializeApp(firebaseConfig);
     db   = getFirestore(app);
     auth = getAuth(app);
-    (async () => { try { await signInAnonymously(auth); } catch(e){} })();
-    window._fbReady = true;
+    (async () => { try { await signInAnonymously(auth); } catch(e){ console.warn('Anon auth failed', e); } })();
   } catch(e) {
-    console.warn("Firebase init failed — silent fallback active.", e);
-    window._fbReady = false;
+    console.warn("Firebase init failed:", e);
   }
 
-  /* ── Core save helper: setDoc with email as document ID ── */
-  const save = async (type, email, data) => {
-    if (!db) throw new Error("no-db");
-    if (auth && !auth.currentUser) { try { await signInAnonymously(auth); } catch(e){} }
+  /* ── Core save helper ── */
+  async function save(type, email, data) {
+    if (!db) throw new Error("Firestore not initialised");
+    if (auth && !auth.currentUser) {
+      try { await signInAnonymously(auth); } catch(e) { console.warn('Re-auth failed', e); }
+    }
     const docId = emailToDocId(email || `anon_${Date.now()}`);
     const ref = doc(collection(db, "artifacts", customAppId, "public", "data", type), docId);
-    return setDoc(ref, {
+    await setDoc(ref, {
       ...data,
       email,
       date: todayIST(),
       timestamp: serverTimestamp(),
       source: "website_homepage"
     }, { merge: true });
-  };
+  }
 
-  /* ── 1. Newsletter → "newsletter" collection ── */
+  /* ── 1. Newsletter ── */
   window.handleNewsletterFirebase = async function(e) {
     e.preventDefault();
     const emailInput = document.getElementById('newsEmail');
@@ -1419,15 +1412,18 @@
         subscription_type: "inner_circle_monthly",
         opted_in: true
       });
-    } catch(e) { console.warn("Newsletter save (silent):", e); }
-    statusDiv.innerHTML = `<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle! Check your inbox.</p>`;
-    emailInput.value = '';
-    emailInput.classList.remove('valid','invalid');
-    gaEvent('submit','Form','Newsletter Subscribe');
+      statusDiv.innerHTML = `<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle! Check your inbox.</p>`;
+      emailInput.value = '';
+      emailInput.classList.remove('valid','invalid');
+      gaEvent('submit','Form','Newsletter Subscribe');
+    } catch(err) {
+      console.error("Newsletter save error:", err);
+      statusDiv.innerHTML = `<p class="text-xs mt-1" style="color:#D95D39;">Something went wrong. Please try again.</p>`;
+    }
     setTimeout(() => { statusDiv.innerHTML=''; if(btn){btn.disabled=false;btn.innerHTML=origText;} }, 4500);
   };
 
-  /* ── 2. Contact / Lead form → "leads" collection ── */
+  /* ── 2. Contact / Lead form ── */
   window.handleLeadFirebase = async function(e) {
     e.preventDefault();
     const btn       = document.getElementById('formSubmitBtn');
@@ -1455,20 +1451,24 @@
         message: message || 'No message',
         lead_type: "contact_form"
       });
-    } catch(e) { console.warn("Lead save (silent):", e); }
-    statusDiv.innerHTML = `<div class="mt-4 form-success">✓ Your request has been received. Our team will contact you within 24 hours.</div>`;
-    document.getElementById('bookingForm').reset();
-    ['formName','formEmail','formMessage'].forEach(id => document.getElementById(id)?.classList.remove('valid','invalid'));
-    gaEvent('submit','Form','Lead Form Submit');
+      statusDiv.innerHTML = `<div class="mt-4 form-success">✓ Your request has been received. We'll contact you within 24 hours.</div>`;
+      document.getElementById('bookingForm').reset();
+      ['formName','formEmail','formMessage'].forEach(id => document.getElementById(id)?.classList.remove('valid','invalid'));
+      gaEvent('submit','Form','Lead Form Submit');
+    } catch(err) {
+      console.error("Lead save error:", err);
+      statusDiv.innerHTML = `<div class="mt-4 form-error">✗ Something went wrong. Please try again or email us directly.</div>`;
+    }
     setTimeout(() => { if(btn){btn.disabled=false;btn.innerHTML=origText;} }, 3500);
   };
 
-  /* ── 3. Gift popup → "leads" collection (source_type: gift_popup) ── */
+  /* ── 3. Gift popup ── */
   window.handleGiftSubmit = async function(e) {
     e.preventDefault();
     const emailInput = document.getElementById('giftEmail');
     const errSpan    = document.getElementById('giftEmailErr');
     const btn        = document.getElementById('giftSubmitBtn');
+    const statusDiv  = document.getElementById('giftStatus');
     const origText   = btn.innerHTML;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
       emailInput.classList.add('invalid');
@@ -1486,14 +1486,17 @@
         source_type: "gift_popup",
         lead_type: "free_assessment_claim"
       });
-    } catch(e) { console.warn("Gift save (silent):", e); }
-    document.getElementById('giftStatus').innerHTML = `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Claimed! We'll be in touch within 24h.</p>`;
-    gaEvent('submit','Form','Gift Popup Submit');
-    setTimeout(() => { closeGiftPopup(); }, 1800);
+      statusDiv.innerHTML = `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Claimed! We'll be in touch within 24h.</p>`;
+      gaEvent('submit','Form','Gift Popup Submit');
+      setTimeout(() => { closeGiftPopup(); }, 1800);
+    } catch(err) {
+      console.error("Gift save error:", err);
+      statusDiv.innerHTML = `<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>`;
+    }
     setTimeout(() => { btn.disabled=false; btn.innerHTML=origText; }, 3000);
   };
 
-  /* ── 4. Yoga popup → "yoga_sessions" collection ── */
+  /* ── 4. Yoga popup ── */
   window.handleYogaSubmit = async function(e) {
     e.preventDefault();
     const nameInput   = document.getElementById('yogaName');
@@ -1527,33 +1530,105 @@
         name:    nameInput.value.trim(),
         mobile:  mobileInput.value.trim() || 'Not Provided',
         session_type: "free_hatha_pranayama",
-        platform: "zoom"
+        platform: "zoom",
+        lead_type: "yoga_free_session"
       });
-    } catch(e) { console.warn("Yoga save (silent):", e); }
-    statusDiv.innerHTML = `<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Spot reserved! Check your inbox for session details.</p>`;
-    gaEvent('submit','Form','Yoga Popup Submit');
-    setTimeout(() => { closeYogaPopup(); }, 2200);
+      statusDiv.innerHTML = `<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Spot reserved! Check your inbox for session details.</p>`;
+      gaEvent('submit','Form','Yoga Popup Submit');
+      setTimeout(() => { closeYogaPopup(); }, 2200);
+    } catch(err) {
+      console.error("Yoga save error:", err);
+      statusDiv.innerHTML = `<p class="text-xs mt-1" style="color:#D95D39;">Error saving. Please try again.</p>`;
+    }
     setTimeout(() => { btn.disabled=false; btn.innerHTML=origText; }, 3000);
   };
 
-  /* ── 5. Referral share → "referrals" collection ── */
+  /* ── 5. Referral popup email capture ── */
+  window.handleReferralEmailSubmit = async function(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('referralEmail');
+    const btn        = document.getElementById('referralEmailBtn');
+    const statusDiv  = document.getElementById('referralEmailStatus');
+    const origText   = btn.innerHTML;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+      emailInput.classList.add('invalid');
+      statusDiv.innerHTML = `<p class="text-xs" style="color:#D95D39;">Please enter a valid email.</p>`;
+      return;
+    }
+    emailInput.classList.remove('invalid');
+    btn.disabled=true;
+    btn.innerHTML='<span class="btn-spinner"></span>';
+    try {
+      await save("referrals", emailInput.value.trim(), {
+        action: "email_registered",
+        channel: "referral_popup_form",
+        referral_url: "https://www.thesamarpan.co.in/?ref=friend",
+        lead_type: "referral_email_capture"
+      });
+      statusDiv.innerHTML = `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Registered! Share the link below to activate your reward.</p>`;
+      emailInput.value='';
+      emailInput.classList.remove('valid','invalid');
+      gaEvent('submit','Form','Referral Email Popup');
+    } catch(err) {
+      console.error("Referral email save error:", err);
+      statusDiv.innerHTML = `<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>`;
+    }
+    setTimeout(() => { btn.disabled=false; btn.innerHTML=origText; }, 3000);
+  };
+
+  /* ── 6. Referral section on-page email ── */
+  window.handleReferralSectionSubmit = async function(e) {
+    e.preventDefault();
+    const emailInput = document.getElementById('referralSectionEmail');
+    const btn        = document.getElementById('referralSectionBtn');
+    const statusDiv  = document.getElementById('referralSectionStatus');
+    const origText   = btn.innerHTML;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+      emailInput.classList.add('invalid');
+      statusDiv.innerHTML = `<p class="text-xs text-white/70">Please enter a valid email.</p>`;
+      return;
+    }
+    emailInput.classList.remove('invalid');
+    btn.disabled=true;
+    btn.innerHTML='<span class="btn-spinner"></span>';
+    try {
+      await save("referrals", emailInput.value.trim(), {
+        action: "email_registered",
+        channel: "referral_section_on_page",
+        referral_url: "https://www.thesamarpan.co.in/?ref=friend",
+        lead_type: "referral_section_email_capture"
+      });
+      statusDiv.innerHTML = `<p class="text-xs font-bold" style="color:#C5A059;">✓ Registered! Open the share popup to send your link.</p>`;
+      emailInput.value='';
+      emailInput.classList.remove('valid','invalid');
+      gaEvent('submit','Form','Referral Section Email');
+      // Auto-open referral popup after short delay
+      setTimeout(() => { openReferralPopup(); }, 1500);
+    } catch(err) {
+      console.error("Referral section save error:", err);
+      statusDiv.innerHTML = `<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>`;
+    }
+    setTimeout(() => { btn.disabled=false; btn.innerHTML=origText; }, 3000);
+  };
+
+  /* ── 7. Referral share actions ── */
   window.saveReferralAction = async function(action, channel) {
-    const refId = 'ref_' + Date.now();
+    const refId = 'action_' + Date.now();
     try {
       const ref = doc(collection(db, "artifacts", customAppId, "public", "data", "referrals"), refId);
       await setDoc(ref, {
-        action,           // "share_whatsapp" | "share_email" | "copy_link"
+        action,
         channel,
         referral_url: "https://www.thesamarpan.co.in/?ref=friend",
         date: todayIST(),
         timestamp: serverTimestamp(),
         source: "website_homepage_referral_popup"
       });
-    } catch(e) { console.warn("Referral save (silent):", e); }
+    } catch(err) { console.warn("Referral action save:", err); }
     gaEvent('share', 'Referral', channel);
   };
 
-  /* ── 6. Quiz result → "quiz_results" collection ── */
+  /* ── 8. Quiz result ── */
   window.saveQuizResult = async function(dosha, name, email) {
     try {
       await save("quiz_results", email || `anon_${Date.now()}@quiz`, {
@@ -1562,7 +1637,7 @@
         quiz_type: "prakriti_10q"
       });
       gaEvent('complete','Quiz','Prakriti Quiz - '+dosha);
-    } catch(e) { console.warn("Quiz save (silent):", e); }
+    } catch(err) { console.warn("Quiz save:", err); }
   };
 </script>
 
@@ -1768,7 +1843,6 @@
     document.getElementById('gift-popup').classList.remove('open');
     document.body.style.overflow='';
   }
-  // Close gift popup on backdrop click
   document.getElementById('gift-popup').addEventListener('click', function(e) {
     if (e.target === this) closeGiftPopup();
   });
@@ -1798,7 +1872,7 @@
     if (e.target === this) closePopup();
   });
 
-  // ── YOGA POPUP — trigger once per session ──
+  // ── YOGA POPUP ──
   let yogaPopupShown = false;
   (function() {
     const section = document.getElementById('testimonials-section');
@@ -1830,7 +1904,6 @@
     document.getElementById('yoga-popup').classList.remove('open');
     document.body.style.overflow = '';
   }
-  // Close yoga popup on backdrop click
   document.getElementById('yoga-popup').addEventListener('click', function(e) {
     if (e.target === this) closeYogaPopup();
   });
@@ -1839,7 +1912,6 @@
   function openReferralPopup() {
     document.getElementById('referral-popup').classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Save referral popup view to Firebase
     if (window.saveReferralAction) saveReferralAction('popup_opened', 'website');
     gaEvent('view','Popup','Referral Popup Shown');
   }
@@ -1847,12 +1919,10 @@
     document.getElementById('referral-popup').classList.remove('open');
     document.body.style.overflow = '';
   }
-  // Close on backdrop click
   document.getElementById('referral-popup').addEventListener('click', function(e) {
     if (e.target === this) closeReferralPopup();
   });
 
-  // Hash URL support: open referral popup if #referral-section in URL
   window.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#referral-section') {
       const section = document.getElementById('referral-section');
@@ -1863,7 +1933,7 @@
     }
   });
 
-  // Share functions for referral popup
+  // Share functions
   function shareReferralWhatsApp() {
     const msg = encodeURIComponent("🙏 Heal, grow, and transform with Samarpan — Ayurveda, Yoga & Psychology. Use my referral link and we both get a free session!\n\nhttps://www.thesamarpan.co.in/?ref=friend");
     window.open('https://wa.me/?text=' + msg, '_blank');
@@ -1885,7 +1955,6 @@
       if (window.saveReferralAction) saveReferralAction('copy_link', 'clipboard');
       setTimeout(() => { btn.classList.remove('copied'); txt.textContent = 'Copy Referral Link'; }, 2500);
     }).catch(() => {
-      // Fallback for older browsers
       const ta = document.createElement('textarea');
       ta.value = link; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.focus(); ta.select();
@@ -2007,4 +2076,3 @@
 </script>
 </body>
 </html>
-
