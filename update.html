@@ -30,7 +30,7 @@
   <meta name="twitter:description" content="Ayurveda · Yoga · Psychology. Begin your healing journey with Harsh Ranjan.">
   <meta name="twitter:image" content="https://www.thesamarpan.co.in/og-image.jpg">
 
-  <!-- ══ FAVICON — All sizes ══ -->
+  <!-- ══ FAVICON ══ -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -44,7 +44,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <!-- ══ JSON-LD STRUCTURED DATA ══ -->
+  <!-- ══ JSON-LD ══ -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -242,25 +242,9 @@
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
     .nav-link:hover::after{transform:scaleX(1);}
 
-    /* ── LOGO ICON: ALWAYS SAFFRON (never white) ── */
-    .nav-logo-icon{
-      color:#D95D39 !important; /* ALWAYS SAFFRON — never changes */
-      transition:transform .5s;
-    }
-
-    /* ── LOGO TEXT: White on hero → Saffron when scrolled ── */
-    .nav-logo-text{
-      font-family:'Marcellus',serif;
-      font-size:11px;
-      letter-spacing:.28em;
-      text-transform:uppercase;
-      font-weight:700;
-      transition:color .3s;
-      color:#ffffff;          /* WHITE over hero */
-    }
-    #navbar.scrolled .nav-logo-text{
-      color:#D95D39;          /* SAFFRON after scroll */
-    }
+    .nav-logo-icon{color:#D95D39 !important;transition:transform .5s;}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;}
 
     .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
     .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
@@ -338,8 +322,20 @@
     .marquee-content{display:flex;width:max-content;animation:marquee 80s linear infinite;gap:1.5rem;padding:.5rem 0;}
     .marquee-container:hover .marquee-content{animation-play-state:paused;}
     @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-    .testi-card{width:clamp(260px,80vw,360px);flex-shrink:0;background:var(--card-bg);border-radius:2px;padding:1.75rem 2rem;box-shadow:0 2px 20px rgba(0,0,0,.06);border-left:3px solid var(--accent,#D95D39);transition:box-shadow .3s,transform .3s;}
+
+    /* ── TESTIMONIAL CARDS — fixed mobile size ── */
+    .testi-card{
+      width:clamp(260px,75vw,360px);
+      flex-shrink:0;
+      background:var(--card-bg);
+      border-radius:2px;
+      padding:1.5rem 1.6rem;
+      box-shadow:0 2px 20px rgba(0,0,0,.06);
+      border-left:3px solid var(--accent,#D95D39);
+      transition:box-shadow .3s,transform .3s;
+    }
     .testi-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-3px);}
+    .testi-card p.font-serif{font-size:1rem;line-height:1.6;}
 
     /* GALLERY */
     .gallery-item{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/3;}
@@ -511,12 +507,23 @@
     @keyframes spin{to{transform:rotate(360deg);}}
     .video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;}
     .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
+    /* ── MOBILE OVERRIDES ── */
     @media(max-width:640px){
-      .testi-card{width:calc(100vw - 4rem);padding:1.1rem 1.25rem;}
-      .testi-card .font-serif{font-size:.95rem!important;line-height:1.5;}
+      .testi-card{
+        width:calc(100vw - 2.5rem);
+        padding:1.1rem 1.2rem;
+      }
+      .testi-card p.font-serif{
+        font-size:0.9rem !important;
+        line-height:1.55;
+      }
       .card-content{padding:1.25rem;}
       .card-title{font-size:1.25rem;}
       .retreat-overlay{padding:1.5rem;}
+    }
+    @media(max-width:390px){
+      .testi-card{width:calc(100vw - 1.5rem);}
     }
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
   </style>
@@ -579,9 +586,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     POPUP 1 — 🎁 FREE DOSHA ASSESSMENT
-══════════════════════════════════════ -->
+<!-- ══ POPUP 1 — FREE DOSHA ASSESSMENT ══ -->
 <div id="gift-popup" role="dialog" aria-modal="true" aria-labelledby="giftPopupTitle">
   <div class="gift-popup-box">
     <div class="gift-popup-header">
@@ -615,9 +620,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     POPUP 2 — EXIT INTENT
-══════════════════════════════════════ -->
+<!-- ══ POPUP 2 — EXIT INTENT ══ -->
 <div id="exit-popup" role="dialog" aria-modal="true">
   <div class="popup-box">
     <div class="relative h-32 overflow-hidden">
@@ -638,9 +641,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     POPUP 3 — FREE YOGA SESSION
-══════════════════════════════════════ -->
+<!-- ══ POPUP 3 — FREE YOGA SESSION ══ -->
 <div id="yoga-popup" role="dialog" aria-modal="true" aria-labelledby="yogaPopupTitle">
   <div class="yoga-popup-inner">
     <button class="yoga-close-btn" onclick="closeYogaPopup()" aria-label="Close yoga popup">✕</button>
@@ -677,9 +678,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     POPUP 4 — REFERRAL PROGRAMME
-══════════════════════════════════════ -->
+<!-- ══ POPUP 4 — REFERRAL PROGRAMME ══ -->
 <div id="referral-popup" role="dialog" aria-modal="true">
   <div class="referral-popup-inner">
     <div class="referral-popup-img">
@@ -771,7 +770,6 @@
       <a href="sessions.html" class="nav-link">Sessions</a>
       <a href="ayurveda.html" class="nav-link">Ayurveda</a>
     </div>
-    <!-- LOGO — icon always saffron, text white→saffron on scroll -->
     <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
       <svg width="30" height="30" viewBox="0 0 100 100" fill="none"
            class="nav-logo-icon mb-1 group-hover:scale-110 drop-shadow-sm"
@@ -992,7 +990,7 @@
   </div>
 </section>
 
-<!-- ══ BEFORE / AFTER SLIDER ══ -->
+<!-- ══ BEFORE / AFTER ══ -->
 <section class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12 fade-up">
@@ -1084,16 +1082,16 @@
   </div>
   <div class="marquee-container">
     <div class="marquee-content">
-      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root. My gut health is finally restored."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
-      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Yoga</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"The precision in practice taught me how to inhabit my body again. It wasn't just exercise; it was moving meditation."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">David R.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">New York, USA</p></div></div>
-      <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Ajapa Japa</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Learning Ajapa Japa changed my relationship with my breath. A stillness I had never experienced before."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Priya M.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Bangalore, India</p></div></div>
-      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Mantra</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Chanting sessions unlocked a vibration within me that dissolved deep-seated emotional blocks. I felt truly connected."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Michael C.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Sydney, Australia</p></div></div>
-      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body again."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
-      <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Women's Health</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"My PCOS symptoms have drastically reduced through the Ayurvedic lifestyle changes. Empowering and sustainable."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Aisha K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Dubai, UAE</p></div></div>
-      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Depression</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"The combination of Yoga Nidra and counseling lifted a fog I've lived with for years. I have my vitality back."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">James L.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Toronto, Canada</p></div></div>
+      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root. My gut health is finally restored."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
+      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Yoga</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"The precision in practice taught me how to inhabit my body again. It wasn't just exercise; it was moving meditation."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">David R.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">New York, USA</p></div></div>
+      <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Ajapa Japa</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"Learning Ajapa Japa changed my relationship with my breath. A stillness I had never experienced before."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Priya M.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Bangalore, India</p></div></div>
+      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Mantra</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"Chanting sessions unlocked a vibration within me that dissolved deep-seated emotional blocks. I felt truly connected."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Michael C.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Sydney, Australia</p></div></div>
+      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body again."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
+      <div class="testi-card" style="--accent:#C5A059;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Women's Health</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"My PCOS symptoms have drastically reduced through the Ayurvedic lifestyle changes. Empowering and sustainable."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Aisha K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Dubai, UAE</p></div></div>
+      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Depression</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"The combination of Yoga Nidra and counseling lifted a fog I've lived with for years. I have my vitality back."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">James L.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Toronto, Canada</p></div></div>
       <!-- Duplicates for seamless loop -->
-      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
-      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif text-lg leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
+      <div class="testi-card" style="--accent:#D95D39;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Ayurveda</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"I battled chronic digestive issues for years. The Ayurvedic protocol Harsh designed cured the root."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p></div></div>
+      <div class="testi-card" style="--accent:#4A5D4F;"><div class="flex justify-between items-start mb-4"><span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">Psychology</span><span class="text-brand-gold text-xs">★★★★★</span></div><p class="font-serif leading-relaxed mb-4 italic" style="color:var(--text);">"Somatic therapy helped me process trauma that talk therapy couldn't reach. I finally feel safe in my own body."</p><div class="border-t pt-3" style="border-color:var(--border);"><p class="font-bold text-sm" style="color:var(--text);">Elena K.</p><p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Berlin, Germany</p></div></div>
     </div>
   </div>
 </section>
@@ -1123,14 +1121,14 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 fade-up">
-      <div class="gallery-item rounded-sm" onclick="openLightbox(0)" role="button" tabindex="0" aria-label="Gallery image 1"><img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=600" loading="lazy" alt="Retreat 1"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(1)" role="button" tabindex="0" aria-label="Gallery image 2"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600" loading="lazy" alt="Retreat 2"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(2)" role="button" tabindex="0" aria-label="Gallery image 3"><img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=600" loading="lazy" alt="Retreat 3"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(3)" role="button" tabindex="0" aria-label="Gallery image 4"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600" loading="lazy" alt="Retreat 4"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(4)" role="button" tabindex="0" aria-label="Gallery image 5"><img src="yogaasana.jpg" loading="lazy" alt="Retreat 5"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(5)" role="button" tabindex="0" aria-label="Gallery image 6"><img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=600" loading="lazy" alt="Retreat 6"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(6)" role="button" tabindex="0" aria-label="Gallery image 7"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600" loading="lazy" alt="Retreat 7"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(7)" role="button" tabindex="0" aria-label="Gallery image 8"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=600" loading="lazy" alt="Retreat 8"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(0)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=600" loading="lazy" alt="Retreat 1"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(1)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600" loading="lazy" alt="Retreat 2"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(2)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=600" loading="lazy" alt="Retreat 3"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(3)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600" loading="lazy" alt="Retreat 4"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(4)" role="button" tabindex="0"><img src="yogaasana.jpg" loading="lazy" alt="Retreat 5"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(5)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=600" loading="lazy" alt="Retreat 6"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(6)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=600" loading="lazy" alt="Retreat 7"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(7)" role="button" tabindex="0"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=600" loading="lazy" alt="Retreat 8"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
     </div>
   </div>
 </section>
@@ -1245,9 +1243,9 @@
             <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-1">Connect Directly</p>
             <h3 class="font-serif text-xl" style="color:var(--text);">We're Here For You</h3>
           </div>
-          <a href="/cdn-cgi/l/email-protection#432a2d252c03372b2630222e223133222d6d202c6d2a2d" onclick="gaEvent('click','Contact','Email Click')" class="contact-info-row">
+          <a href="mailto:info@thesamarpan.co.in" onclick="gaEvent('click','Contact','Email Click')" class="contact-info-row">
             <div class="contact-icon-wrap" style="background:linear-gradient(135deg,#D95D39,#C5A059);"><i data-lucide="mail" class="w-4 h-4 text-white"></i></div>
-            <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p><p class="font-serif text-sm" style="color:var(--text);"><span class="__cf_email__" data-cfemail="640d0a020b24100c01170509051614050a4a070b4a0d0a">[email&#160;protected]</span></p></div>
+            <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p><p class="font-serif text-sm" style="color:var(--text);">info@thesamarpan.co.in</p></div>
             <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
           </a>
           <a href="https://wa.me/919999999999" target="_blank" rel="noopener" onclick="gaEvent('click','Contact','WhatsApp Click')" class="contact-info-row">
@@ -1264,8 +1262,7 @@
             <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Sessions</p><p class="font-serif text-sm" style="color:var(--text);">Global Zoom — All time zones</p></div>
           </div>
         </div>
-
-        <!-- INNER CIRCLE NEWSLETTER -->
+        <!-- NEWSLETTER -->
         <div class="p-6 rounded-sm border" style="background:var(--card-bg);border-color:var(--border);">
           <div class="flex items-center gap-3 mb-4">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));"><i data-lucide="rss" class="w-4 h-4 text-clay"></i></div>
@@ -1373,7 +1370,7 @@
     <div>
       <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
-        <li><a href="/cdn-cgi/l/email-protection#caa3a4aca58abea2afb9aba7abb8baaba4e4a9a5e4a3a4" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i><span class="__cf_email__" data-cfemail="422b2c242d02362a2731232f233032232c6c212d6c2b2c">[email&#160;protected]</span></a></li>
+        <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
         <li><a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
         <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i>@justtheself</a></li>
         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
@@ -1395,16 +1392,13 @@
 <div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
 
 <!-- ══════════════════════════════════════════════════════
-     FIREBASE — All 7 forms wired to Firestore
-     Collections prefixed "homepage_" to match Firestore rules:
-       homepage_leads / homepage_yoga_sessions /
-       homepage_newsletter / homepage_referrals / homepage_quiz_results
+     FIREBASE — Auth-free, direct Firestore writes
+     All 7 forms use homepage_ prefix to match your security rules
 ══════════════════════════════════════════════════════ -->
-<script data-cfasync="false" type="module">
-  import { initializeApp, getApps, getApp }
-                           from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp }
-                           from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<script type="module">
+  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, serverTimestamp }
+                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
@@ -1417,31 +1411,35 @@
   };
 
   function todayIST() {
-    return new Date(Date.now() + 5.5*3600000).toISOString().split('T')[0];
+    const ist = new Date(Date.now() + 5.5 * 3600000);
+    return ist.toISOString().split('T')[0];
+  }
+  function emailToDocId(email) {
+    return (email || '').toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 200) || 'anon_' + Date.now();
   }
 
-  /* Guard: reuse existing app if already initialised (avoids Cloudflare duplicate-init crash) */
-  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  let db;
+  try {
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+  } catch(e) { console.warn("Firebase init failed:", e); }
 
-  /*
-   * save() → addDoc = always a fresh CREATE document.
-   * Firestore rule: allow create if collectionName.startsWith("homepage_")
-   * No auth required. Works for first submission AND repeat submissions.
-   */
   async function save(type, email, data) {
-    const ref = await addDoc(collection(db, 'homepage_' + type), {
+    if (!db) throw new Error("Firestore not ready");
+    const collectionName = 'homepage_' + type;
+    const docId = emailToDocId(email);
+    const ref = doc(collection(db, collectionName), docId);
+    await setDoc(ref, {
       ...data,
-      email:     email || '',
+      email,
       date:      todayIST(),
       timestamp: serverTimestamp(),
       source:    "website_homepage",
       page_url:  window.location.href
-    });
-    console.log("✓ Saved to homepage_" + type, ref.id);
+    }, { merge: true });
   }
 
-  /* ══ FORM 1 — Gift Popup (Free Dosha Assessment) → homepage_leads ══ */
+  /* ══ FORM 1 — Gift Popup → homepage_leads ══ */
   window.handleGiftSubmit = async function(e) {
     e.preventDefault();
     const nameEl  = document.getElementById('giftName');
@@ -1451,7 +1449,6 @@
     const btn     = document.getElementById('giftSubmitBtn');
     const status  = document.getElementById('giftStatus');
     const orig    = btn.innerHTML;
-
     if (!nameEl.value.trim()) { nameEl.classList.add('invalid'); nameEl.focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) {
       emailEl.classList.add('invalid'); errSpan?.classList.remove('hidden'); emailEl.focus(); return;
@@ -1460,17 +1457,17 @@
     btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span> Claiming…';
     try {
       await save("leads", emailEl.value.trim(), {
-        name:       nameEl.value.trim(),
-        phone:      phoneEl?.value.trim() || 'Not Provided',
-        service:    "Free 20-min Dosha Assessment",
-        lead_type:  "free_assessment_claim"
+        name:      nameEl.value.trim(),
+        phone:     phoneEl?.value.trim() || 'Not Provided',
+        service:   "Free 20-min Dosha Assessment",
+        lead_type: "free_assessment_claim"
       });
       status.innerHTML = `<div class="form-success mt-2">✓ Claimed! Harsh will contact you within 24h to schedule your session.</div>`;
       gaEvent('submit','Form','Gift Popup — Dosha Assessment');
       setTimeout(() => { closeGiftPopup(); status.innerHTML = ''; }, 2200);
     } catch(err) {
-      console.error(err);
-      status.innerHTML = `<div class="form-error mt-2">✗ Error saving. Please email info@thesamarpan.co.in directly.</div>`;
+      console.error("Gift form error:", err);
+      status.innerHTML = `<div class="form-error mt-2">✗ Something went wrong. Please try again or WhatsApp us.</div>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; }, 3200);
   };
@@ -1502,7 +1499,7 @@
       gaEvent('submit','Form','Yoga Popup — Free Class');
       setTimeout(closeYogaPopup, 2500);
     } catch(err) {
-      console.error(err);
+      console.error("Yoga form error:", err);
       status.innerHTML = `<div class="form-error mt-1">✗ Error. Please try again or WhatsApp us.</div>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; }, 3500);
@@ -1527,7 +1524,7 @@
       emailEl.value = ''; emailEl.classList.remove('valid','invalid');
       gaEvent('submit','Form','Newsletter — Inner Circle');
     } catch(err) {
-      console.error(err);
+      console.error("Newsletter error:", err);
       status.innerHTML = `<p class="text-xs mt-1 text-red-500">Something went wrong. Please try again.</p>`;
     }
     setTimeout(() => { status.innerHTML = ''; btn.disabled = false; btn.innerHTML = orig; }, 4500);
@@ -1561,13 +1558,13 @@
       ['formName','formEmail','formMessage'].forEach(id => document.getElementById(id)?.classList.remove('valid','invalid'));
       gaEvent('submit','Form','Contact Form — Lead');
     } catch(err) {
-      console.error(err);
+      console.error("Contact form error:", err);
       status.innerHTML = `<div class="mt-4 form-error">✗ Error. Please email info@thesamarpan.co.in or WhatsApp us.</div>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; }, 3500);
   };
 
-  /* ══ FORM 5 — Referral Popup Email → homepage_referrals ══ */
+  /* ══ FORM 5 — Referral Popup → homepage_referrals ══ */
   window.handleReferralEmailSubmit = async function(e) {
     e.preventDefault();
     const emailEl = document.getElementById('referralEmail');
@@ -1585,7 +1582,7 @@
       status.innerHTML = `<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Registered! Now copy and share your link.</p>`;
       emailEl.value = ''; gaEvent('submit','Form','Referral Email — Popup');
     } catch(err) {
-      console.error(err);
+      console.error("Referral popup error:", err);
       status.innerHTML = `<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; }, 3000);
@@ -1610,13 +1607,13 @@
       emailEl.value = ''; gaEvent('submit','Form','Referral Section Email');
       setTimeout(openReferralPopup, 1500);
     } catch(err) {
-      console.error(err);
+      console.error("Referral section error:", err);
       status.innerHTML = `<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>`;
     }
     setTimeout(() => { btn.disabled = false; btn.innerHTML = orig; }, 3000);
   };
 
-  /* ══ REFERRAL SHARE ACTIONS ══ */
+  /* ══ SHARE ACTIONS ══ */
   window.shareReferralWhatsApp = function() {
     const msg = encodeURIComponent("🙏 Heal with Samarpan — Ayurveda, Yoga & Psychology. Use my referral and we BOTH get a free session!\n\nhttps://www.thesamarpan.co.in/?ref=friend");
     window.open('https://wa.me/?text=' + msg, '_blank');
@@ -1640,7 +1637,7 @@
   /* ══ FORM 7 — Quiz Result → homepage_quiz_results ══ */
   window.saveQuizResult = async function(dosha, name, email) {
     try {
-      await save("quiz_results", email || 'anon_quiz@samarpan', { dosha, name: name || 'Anonymous', quiz_type: "prakriti_10q" });
+      await save("quiz_results", email || ('anon_' + Date.now() + '@quiz'), { dosha, name: name || 'Anonymous', quiz_type: "prakriti_10q" });
       gaEvent('complete','Quiz','Prakriti — '+dosha);
     } catch(err) { console.warn("Quiz save:", err); }
   };
@@ -1775,7 +1772,7 @@
     lucide.createIcons();
   }
 
-  /* GALLERY / LIGHTBOX */
+  /* LIGHTBOX */
   const galleryImages = [
     'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1600',
     'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600',
@@ -2020,4 +2017,14 @@
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href="booking.html" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm">Book a Session →</a>
-        <button onclick="document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow=''
+        <button onclick="document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow='';" class="flex-1 py-3 border text-xs font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Close</button>
+      </div>
+    `;
+    lucide.createIcons();
+    if (window.saveQuizResult) saveQuizResult(info.name, qName, qEmail);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+</script>
+</body>
+</html>
