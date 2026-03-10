@@ -338,7 +338,7 @@
     .marquee-content{display:flex;width:max-content;animation:marquee 80s linear infinite;gap:1.5rem;padding:.5rem 0;}
     .marquee-container:hover .marquee-content{animation-play-state:paused;}
     @keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-    .testi-card{width:clamp(300px,90vw,380px);flex-shrink:0;background:var(--card-bg);border-radius:2px;padding:1.75rem 2rem;box-shadow:0 2px 20px rgba(0,0,0,.06);border-left:3px solid var(--accent,#D95D39);transition:box-shadow .3s,transform .3s;}
+    .testi-card{width:clamp(260px,80vw,360px);flex-shrink:0;background:var(--card-bg);border-radius:2px;padding:1.75rem 2rem;box-shadow:0 2px 20px rgba(0,0,0,.06);border-left:3px solid var(--accent,#D95D39);transition:box-shadow .3s,transform .3s;}
     .testi-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.1);transform:translateY(-3px);}
 
     /* GALLERY */
@@ -512,7 +512,8 @@
     .video-wrapper{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;}
     .video-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
     @media(max-width:640px){
-      .testi-card{width:calc(100vw - 3rem);}
+      .testi-card{width:calc(100vw - 4rem);padding:1.1rem 1.25rem;}
+      .testi-card .font-serif{font-size:.95rem!important;line-height:1.5;}
       .card-content{padding:1.25rem;}
       .card-title{font-size:1.25rem;}
       .retreat-overlay{padding:1.5rem;}
@@ -1244,9 +1245,9 @@
             <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-1">Connect Directly</p>
             <h3 class="font-serif text-xl" style="color:var(--text);">We're Here For You</h3>
           </div>
-          <a href="mailto:info@thesamarpan.co.in" onclick="gaEvent('click','Contact','Email Click')" class="contact-info-row">
+          <a href="/cdn-cgi/l/email-protection#432a2d252c03372b2630222e223133222d6d202c6d2a2d" onclick="gaEvent('click','Contact','Email Click')" class="contact-info-row">
             <div class="contact-icon-wrap" style="background:linear-gradient(135deg,#D95D39,#C5A059);"><i data-lucide="mail" class="w-4 h-4 text-white"></i></div>
-            <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p><p class="font-serif text-sm" style="color:var(--text);">info@thesamarpan.co.in</p></div>
+            <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p><p class="font-serif text-sm" style="color:var(--text);"><span class="__cf_email__" data-cfemail="640d0a020b24100c01170509051614050a4a070b4a0d0a">[email&#160;protected]</span></p></div>
             <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
           </a>
           <a href="https://wa.me/919999999999" target="_blank" rel="noopener" onclick="gaEvent('click','Contact','WhatsApp Click')" class="contact-info-row">
@@ -1372,7 +1373,7 @@
     <div>
       <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
-        <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#caa3a4aca58abea2afb9aba7abb8baaba4e4a9a5e4a3a4" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i><span class="__cf_email__" data-cfemail="422b2c242d02362a2731232f233032232c6c212d6c2b2c">[email&#160;protected]</span></a></li>
         <li><a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
         <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i>@justtheself</a></li>
         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
@@ -1399,12 +1400,11 @@
        homepage_leads / homepage_yoga_sessions /
        homepage_newsletter / homepage_referrals / homepage_quiz_results
 ══════════════════════════════════════════════════════ -->
-<script type="module">
-  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, serverTimestamp }
-                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously }
-                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+<script data-cfasync="false" type="module">
+  import { initializeApp, getApps, getApp }
+                           from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+                           from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
@@ -1417,39 +1417,28 @@
   };
 
   function todayIST() {
-    const ist = new Date(Date.now() + 5.5 * 3600000);
-    return ist.toISOString().split('T')[0];
-  }
-  function emailToDocId(email) {
-    return (email || '').toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 200) || 'anon_' + Date.now();
+    return new Date(Date.now() + 5.5*3600000).toISOString().split('T')[0];
   }
 
-  let db, auth;
-  try {
-    const app = initializeApp(firebaseConfig);
-    db   = getFirestore(app);
-    auth = getAuth(app);
-    (async () => { try { await signInAnonymously(auth); } catch(e){ console.warn('Anon auth:', e); } })();
-  } catch(e) { console.warn("Firebase init failed:", e); }
+  /* Guard: reuse existing app if already initialised (avoids Cloudflare duplicate-init crash) */
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
 
-  /* ── Master save helper: uses homepage_ prefix to match Firestore rules ── */
+  /*
+   * save() → addDoc = always a fresh CREATE document.
+   * Firestore rule: allow create if collectionName.startsWith("homepage_")
+   * No auth required. Works for first submission AND repeat submissions.
+   */
   async function save(type, email, data) {
-    if (!db) throw new Error("Firestore not ready");
-    // Ensure anon auth before writing
-    if (auth && !auth.currentUser) {
-      try { await signInAnonymously(auth); } catch(e) { console.warn('Re-auth:', e); }
-    }
-    const collectionName = 'homepage_' + type; // e.g. homepage_leads, homepage_newsletter
-    const docId = emailToDocId(email);
-    const ref = doc(collection(db, collectionName), docId);
-    await setDoc(ref, {
+    const ref = await addDoc(collection(db, 'homepage_' + type), {
       ...data,
-      email,
+      email:     email || '',
       date:      todayIST(),
       timestamp: serverTimestamp(),
       source:    "website_homepage",
       page_url:  window.location.href
-    }, { merge: true });
+    });
+    console.log("✓ Saved to homepage_" + type, ref.id);
   }
 
   /* ══ FORM 1 — Gift Popup (Free Dosha Assessment) → homepage_leads ══ */
@@ -2031,14 +2020,4 @@
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
         <a href="booking.html" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm">Book a Session →</a>
-        <button onclick="document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow='';" class="flex-1 py-3 border text-xs font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Close</button>
-      </div>
-    `;
-    lucide.createIcons();
-    if (window.saveQuizResult) saveQuizResult(info.name, qName, qEmail);
-  }
-
-  window.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
-</script>
-</body>
-</html>
+        <button onclick="document.getElementById('quiz-modal').classList.remove('open');document.body.style.overflow=''
