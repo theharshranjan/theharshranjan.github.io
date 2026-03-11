@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
@@ -48,38 +48,44 @@
   </script>
 
   <style>
-    :root{
-      --bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;
-      --text:#1C1C1C;--text-muted:#666666;
-      --border:#e8e4de;--card-bg:#FFFFFF;
-      --shadow:0 2px 24px rgba(0,0,0,0.07);
-    }
-    [data-theme="dark"]{
-      --bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;
-      --text:#F0EDE6;--text-muted:#9A9080;
-      --border:#2E2E28;--card-bg:#1F1F1B;
-      --shadow:0 2px 24px rgba(0,0,0,0.4);
-    }
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--input-bg:#FAFAF8;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--input-bg:#252520;--shadow:0 2px 24px rgba(0,0,0,0.4);}
     *,*::before,*::after{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
     body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
-    #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;width:0%;}
+
+    /* SCROLL PROGRESS */
+    #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+
+    /* TOP BANNER */
+    #top-banner{background:linear-gradient(90deg,#1C1C1C 0%,#2d1f1a 50%,#1C1C1C 100%);color:#fff;text-align:center;padding:.6rem 3rem;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:.15em;position:relative;z-index:200;transition:max-height .5s ease,padding .5s ease,opacity .5s ease;overflow:hidden;max-height:60px;}
+    #top-banner.dismissed{max-height:0;padding:0;opacity:0;pointer-events:none;}
+    #top-banner span.gift{color:#C5A059;font-weight:700;}
+    #top-banner a.claim-link{color:#D95D39;font-weight:700;text-decoration:underline;margin-left:.5rem;cursor:pointer;}
+    #top-banner-close{position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:16px;line-height:1;padding:4px;}
 
     /* NAVBAR */
-    #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);transition:background .45s,border-color .45s;}
-    [data-theme="dark"] #navbar{background:rgba(20,20,16,0.96);border-bottom-color:#2E2E28;}
-    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:var(--text-muted);text-decoration:none;}
-    .nav-link:hover{color:#D95D39!important;}
+    #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s,top 0.45s;}
+    #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+    [data-theme="dark"] #navbar.scrolled{background:rgba(20,20,16,0.96);border-bottom:1px solid #2E2E28;}
+    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,0.90);text-decoration:none;}
+    #navbar.scrolled .nav-link{color:var(--text-muted);}
+    .nav-link:hover{color:#D95D39 !important;}
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
     .nav-link:hover::after{transform:scaleX(1);}
-    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;}
-    .nav-logo-icon{color:#D95D39;}
-    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;}
-    .nav-cta-btn:hover{background:#c24e2c;transform:translateY(-1px);}
-    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s,visibility .35s;}
+    .nav-logo-icon{color:#D95D39 !important;transition:transform .5s;}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;}
+    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
+    .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
+    .nav-cta-btn:hover::before{left:120%;}
+    .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
+    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
-    #hamburger-icon{color:var(--text);}
+    [data-theme="dark"] #mobile-menu{background:#141410;}
+    #hamburger-icon{transition:color .3s;color:#ffffff;}
+    #navbar.scrolled #hamburger-icon{color:var(--text);}
 
     /* PAGE HERO */
     .page-hero{position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4rem;}
@@ -96,7 +102,7 @@
     .prog-btn:hover .prog-img-wrap img{transform:scale(1.06);}
     .prog-body{padding:.85rem 1rem 1rem;}
 
-    /* SESSION CARDS (type selector) */
+    /* SESSION TYPE */
     .session-type-btn{border:1.5px solid var(--border);border-radius:6px;padding:.75rem 1rem;cursor:pointer;background:transparent;transition:border-color .3s,background .3s;text-align:left;width:100%;}
     .session-type-btn:hover{border-color:#D95D39;background:rgba(217,93,57,.03);}
     .session-type-btn.selected{border-color:#D95D39;background:rgba(217,93,57,.06);}
@@ -107,16 +113,16 @@
     .time-slot.selected{border-color:#D95D39;background:#D95D39;color:#fff;}
     .time-slot.unavailable{opacity:.35;cursor:not-allowed;pointer-events:none;}
 
-    /* FORM */
-    .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
-    .form-input2:focus{border-color:#D95D39;}
-    .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);resize:none;height:6.5rem;outline:none;transition:border-color .3s;}
-    .form-textarea2:focus{border-color:#D95D39;}
-    .form-select2{width:100%;background:var(--card-bg);border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);outline:none;transition:border-color .3s;appearance:none;}
-    .form-select2:focus{border-color:#D95D39;}
+    /* FORM INPUTS */
+    .form-input2{width:100%;background:var(--input-bg);border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
+    .form-input2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.08);}
+    .form-textarea2{width:100%;background:var(--input-bg);border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);resize:none;height:6.5rem;outline:none;transition:border-color .3s;}
+    .form-textarea2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.08);}
+    .form-select2{width:100%;background:var(--input-bg);border:1.5px solid var(--border);border-radius:6px;padding:.85rem .9rem;font-size:.875rem;font-family:'Lato',sans-serif;color:var(--text);outline:none;transition:border-color .3s;appearance:none;-webkit-appearance:none;}
+    .form-select2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.08);}
     .form-label{font-family:'Lato',sans-serif;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.5rem;}
-    .form-input2.invalid,.form-textarea2.invalid,.form-select2.invalid{border-color:#D95D39!important;}
-    .form-input2.valid{border-color:#4A5D4F!important;}
+    .form-input2.invalid,.form-textarea2.invalid,.form-select2.invalid{border-color:#ef4444 !important;}
+    .required-star{color:#D95D39;}
 
     /* CTA BUTTON */
     .cta-btn{position:relative;overflow:hidden;transition:background .4s,box-shadow .4s,transform .2s;cursor:pointer;}
@@ -138,20 +144,6 @@
     #successState{display:none;}
     #successState.show{display:flex;}
 
-    /* MISC */
-    .fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
-    .fade-up.visible{opacity:1;transform:translateY(0);}
-    .divider-line{width:48px;height:1px;background:#D95D39;margin:1.25rem auto 0;}
-    .ornament-gold{display:inline-block;width:32px;height:1px;background:linear-gradient(90deg,transparent,#C5A059,transparent);vertical-align:middle;margin:0 .5rem;}
-    ::-webkit-scrollbar{width:5px;}
-    ::-webkit-scrollbar-track{background:var(--bg);}
-    ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
-    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
-    @keyframes spin{to{transform:rotate(360deg);}}
-    .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:6px;padding:1rem 1.25rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.82rem;text-align:center;}
-    .form-error{background:rgba(217,93,57,.07);border:1px solid #D95D39;border-radius:6px;padding:1rem 1.25rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.82rem;text-align:center;}
-    .required-star{color:#D95D39;}
-
     /* FAQ */
     .faq-item{border-bottom:1px solid var(--border);}
     .faq-btn{width:100%;text-align:left;padding:1.1rem 0;display:flex;justify-content:space-between;align-items:center;background:transparent;border:none;cursor:pointer;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.1rem;}
@@ -171,17 +163,37 @@
     #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s;}
     #theme-toggle button:hover{background:#D95D39;color:#fff;border-color:#D95D39;}
 
+    /* COOKIE BANNER */
+    #cookie-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10000;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.15);display:none;max-width:500px;width:90%;}
+
+    /* MISC */
+    .fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:6px;padding:1rem 1.25rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.82rem;text-align:center;}
+    .form-error{background:rgba(217,93,57,.07);border:1px solid #D95D39;border-radius:6px;padding:1rem 1.25rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.82rem;text-align:center;}
+    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
     @media(max-width:640px){.prog-img-wrap{height:80px;}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
   </style>
 </head>
 
 <body class="antialiased selection:bg-clay selection:text-white">
-
 <div id="scroll-progress"></div>
 
+<!-- TOP BANNER -->
+<div id="top-banner">
+  <span>🎁 </span>
+  <span class="gift">FREE 20-min Dosha Assessment</span>
+  <span class="hidden sm:inline"> — Limited spots this week.</span>
+  <button id="top-banner-close" onclick="dismissBanner()" aria-label="Dismiss">✕</button>
+</div>
+
 <!-- ══ NAVBAR ══ -->
-<nav id="navbar">
+<nav id="navbar" role="navigation" aria-label="Main navigation">
   <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
     <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
       <a href="about.html"    class="nav-link">About</a>
@@ -190,7 +202,7 @@
       <a href="ayurveda.html" class="nav-link">Ayurveda</a>
     </div>
     <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
-      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="nav-logo-icon mb-1 group-hover:scale-110 transition duration-500">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="nav-logo-icon mb-1 group-hover:scale-110 drop-shadow-sm" style="color:#D95D39;">
         <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
         <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
         <circle cx="50" cy="85" r="3" fill="currentColor"/>
@@ -199,10 +211,10 @@
       <span class="nav-logo-text">Samarpan</span>
     </a>
     <div class="hidden lg:flex flex-1 justify-end items-center">
-      <a href="index.html#contact" class="nav-cta-btn">Contact Us</a>
+      <a href="booking.html" onclick="gaEvent('click','CTA','Nav Book Now')" class="nav-cta-btn">Start Your Healing Journey</a>
     </div>
     <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
-      <button id="hamburger-btn" class="p-2" onclick="toggleMenu()" aria-label="Open menu">
+      <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
         <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon"></i>
       </button>
     </div>
@@ -210,12 +222,12 @@
 </nav>
 
 <!-- MOBILE MENU -->
-<div id="mobile-menu" role="dialog" aria-modal="true">
-  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()">
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()" aria-label="Close menu">
     <i data-lucide="x" class="w-7 h-7"></i>
   </button>
   <div class="mb-2 flex flex-col items-center">
-    <svg width="44" height="44" viewBox="0 0 100 100" fill="none" class="text-clay">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
       <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
       <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
       <circle cx="50" cy="85" r="3" fill="currentColor"/>
@@ -227,14 +239,14 @@
   <a href="journal.html"  onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Journals</a>
   <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
   <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
-  <a href="index.html"    onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Home</a>
+  <a href="index.html#faq" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">FAQ</a>
+  <a href="booking.html"  onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
 </div>
 
 <!-- ══ PAGE HERO ══ -->
 <div class="page-hero" style="height:clamp(320px,45vh,480px);padding-top:72px;">
   <img class="page-hero-img" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=2000&auto=format&fit=crop" alt="Begin Your Healing" loading="eager">
   <div class="page-hero-overlay"></div>
-  <!-- floating breadcrumb -->
   <div class="absolute top-0 left-0 right-0 z-10 flex justify-center" style="padding-top:calc(72px + 1.5rem);">
     <div class="flex items-center gap-2 font-sans text-[9px] tracking-widest uppercase text-white/60">
       <a href="index.html" class="hover:text-white/90 transition">Home</a>
@@ -242,7 +254,6 @@
       <span class="text-brand-gold">Book a Session</span>
     </div>
   </div>
-  <!-- hero text -->
   <div class="relative z-10 text-center text-white px-4 pb-10 max-w-2xl mx-auto">
     <span class="font-sans text-[9px] uppercase tracking-[.3em] text-brand-gold block mb-3">Begin Your Healing Journey</span>
     <h1 class="font-display font-light mb-4 leading-tight" style="font-size:clamp(2.4rem,6vw,4rem);">Book a Session</h1>
@@ -258,7 +269,7 @@
       <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold" style="color:var(--text-muted);">Platform</p><p class="font-serif text-sm" style="color:var(--text);">Zoom · Worldwide</p></div>
     </div>
     <div class="trust-badge">
-      <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(197,160,89,.1);"><i data-lucide="gift" class="w-4 h-4 text-brand-gold"></i></div>
+      <div class="w-8 h-8 rounded-full flex items-center justify-content-center flex-shrink-0" style="background:rgba(197,160,89,.1);"><i data-lucide="gift" class="w-4 h-4 text-brand-gold"></i></div>
       <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold" style="color:var(--text-muted);">First Step</p><p class="font-serif text-sm" style="color:var(--text);">Free 20-min consult</p></div>
     </div>
     <div class="trust-badge">
@@ -289,10 +300,8 @@
               <h2 class="font-display text-xl" style="color:var(--text);">Choose Your Programme</h2>
             </div>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="programmeGrid">
-            <!-- cards injected by JS -->
-          </div>
-          <p class="font-sans text-[10px] text-clay mt-2" id="progError" style="display:none;">Please select a programme to continue.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="programmeGrid"></div>
+          <p class="font-sans text-[10px] text-clay mt-2 hidden" id="progError">Please select a programme to continue.</p>
         </div>
 
         <!-- STEP 2 — Session type -->
@@ -313,7 +322,7 @@
             <button class="session-type-btn selected" data-type="Monthly Programme" onclick="selectSessionType(this)">
               <div class="flex items-center gap-2 mb-1">
                 <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold">Monthly</p>
-                <span class="font-sans text-[8px] uppercase tracking-[.12em] bg-clay text-white px-1.5 py-0.5 rounded" style="letter-spacing:.08em;">Popular</span>
+                <span class="font-sans text-[8px] uppercase tracking-[.08em] bg-clay text-white px-1.5 py-0.5 rounded">Popular</span>
               </div>
               <p class="font-serif text-base" style="color:var(--text);">4 Sessions / Month</p>
               <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Consistent progress with weekly guidance</p>
@@ -367,6 +376,8 @@
               <p class="font-sans text-xs mt-0.5 text-white/55">All information is kept strictly private and confidential.</p>
             </div>
             <div class="p-6 sm:p-8">
+
+              <!-- FORM -->
               <div id="bookingFormWrap">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                   <div>
@@ -407,7 +418,7 @@
                   </div>
                 </div>
                 <div class="mb-5">
-                  <label class="form-label">Age & Gender <span class="required-star" title="Helps us personalise your Ayurvedic assessment">*</span></label>
+                  <label class="form-label">Age & Gender <span class="required-star">*</span></label>
                   <div class="grid grid-cols-2 gap-4">
                     <input type="number" id="bAge" class="form-input2" placeholder="Age (e.g. 32)" min="10" max="100">
                     <div class="relative">
@@ -461,9 +472,9 @@
                   </div>
                 </div>
 
-                <!-- Consent checkboxes -->
+                <!-- Consent -->
                 <div class="space-y-3 mb-7 p-4 rounded-lg" style="background:var(--bg2);border:1px solid var(--border);">
-                  <label class="flex items-start gap-3 cursor-pointer group">
+                  <label class="flex items-start gap-3 cursor-pointer">
                     <input type="checkbox" id="bConsent1" class="mt-0.5 w-4 h-4 accent-[#D95D39] flex-shrink-0">
                     <span class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">I understand that Samarpan's services are holistic wellness coaching and do not replace medical treatment. <span class="required-star">*</span></span>
                   </label>
@@ -487,18 +498,24 @@
 
               <!-- SUCCESS STATE -->
               <div id="successState" class="flex-col items-center text-center py-8">
-                <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(74,93,79,.1);">
-                  <svg class="w-10 h-10 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5" style="background:rgba(74,93,79,.1);border:2px solid #4A5D4F;">
+                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="#4A5D4F" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
                 </div>
                 <span class="font-sans text-[9px] uppercase tracking-[.25em] text-sage block mb-2">Request Received</span>
                 <h3 class="font-display text-3xl mb-3" style="color:var(--text);">You're One Step Closer</h3>
-                <p class="font-sans text-sm mb-2 max-w-sm mx-auto" style="color:var(--text-muted);line-height:1.7;">Your booking request has been received. Harsh Ranjan will personally reach out within <strong style="color:var(--text);">24 hours</strong> to confirm your session.</p>
+                <p class="font-sans text-sm mb-1 max-w-sm mx-auto" style="color:var(--text-muted);line-height:1.7;">Your booking request has been received successfully.</p>
+                <p class="font-display text-xl mb-2" style="color:var(--text);">Our team will contact you shortly.</p>
+                <p class="font-sans text-sm mb-6 max-w-sm mx-auto" style="color:var(--text-muted);line-height:1.7;">Harsh Ranjan will personally reach out within <strong style="color:var(--text);">24 hours</strong> to confirm your session details via email or WhatsApp.</p>
                 <div id="successSummary" class="my-5 p-4 rounded-lg text-left max-w-xs mx-auto" style="background:var(--bg2);border:1px solid var(--border);"></div>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center mt-2">
-                  <a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%20just%20submitted%20a%20booking%20request%21" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-sans text-[10px] font-bold uppercase tracking-widest text-white" style="background:#25D366;"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Chat on WhatsApp</a>
+                  <a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%20just%20submitted%20a%20booking%20request%21" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-sans text-[10px] font-bold uppercase tracking-widest text-white" style="background:#25D366;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat on WhatsApp
+                  </a>
                   <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-sans text-[10px] font-bold uppercase tracking-widest border" style="border-color:var(--border);color:var(--text-muted);">← Back to Home</a>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -508,7 +525,7 @@
       <!-- ── RIGHT COLUMN: sidebar ── -->
       <div class="lg:col-span-1 space-y-6 fade-up">
 
-        <!-- What to expect -->
+        <!-- What happens next -->
         <div class="rounded-xl overflow-hidden" style="background:var(--card-bg);border:1px solid var(--border);">
           <div class="p-5 border-b" style="background:linear-gradient(135deg,rgba(217,93,57,.06),rgba(197,160,89,.04));border-color:var(--border);">
             <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-0.5">After You Book</span>
@@ -521,7 +538,7 @@
             </div>
             <div class="flex gap-3">
               <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold font-sans text-white" style="background:#C5A059;">2</div>
-              <div><p class="font-sans text-xs font-bold mb-0.5" style="color:var(--text);">Zoom link & prep notes</p><p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">You'll receive a secure Zoom link along with a short pre-session questionnaire.</p></div>
+              <div><p class="font-sans text-xs font-bold mb-0.5" style="color:var(--text);">Zoom link & prep notes</p><p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">You'll receive a secure Zoom link and a short pre-session questionnaire.</p></div>
             </div>
             <div class="flex gap-3">
               <div class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold font-sans text-white" style="background:#4A5D4F;">3</div>
@@ -567,7 +584,7 @@
         <div class="rounded-xl p-5" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
           <p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold mb-1">Prefer to talk first?</p>
           <p class="font-serif text-base text-white mb-4">Reach out directly — we respond fast.</p>
-          <a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%20want%20to%20enquire%20about%20booking%20a%20session." target="_blank" class="flex items-center gap-2 w-full py-3 px-4 rounded-lg font-sans text-[10px] font-bold uppercase tracking-widest text-white justify-center" style="background:#25D366;">
+          <a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%20want%20to%20enquire%20about%20booking%20a%20session." target="_blank" rel="noopener" class="flex items-center gap-2 w-full py-3 px-4 rounded-lg font-sans text-[10px] font-bold uppercase tracking-widest text-white justify-center" style="background:#25D366;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Chat on WhatsApp
           </a>
@@ -575,13 +592,13 @@
             <i data-lucide="mail" class="w-4 h-4"></i> Email Us
           </a>
         </div>
+      </div>
 
-      </div><!-- /right col -->
     </div>
   </div>
 </section>
 
-<!-- ══ BOOKING FAQ ══ -->
+<!-- ══ FAQ ══ -->
 <section class="py-16 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-2xl mx-auto fade-up">
     <div class="text-center mb-10">
@@ -590,21 +607,26 @@
       <div style="width:40px;height:1px;background:#D95D39;margin:1rem auto 0;"></div>
     </div>
     <div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Is the first consultation really free?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Yes, completely. The initial 20-minute Dosha Assessment is complimentary — no credit card, no obligation. It is a genuine opportunity for you to experience the approach and for Harsh to understand your needs before recommending a programme.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How long is each session?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Individual sessions are typically 60 minutes. Initial consultations (Ayurveda and Psychology) may run to 75–90 minutes as we need to understand your full health picture. Yoga and Meditation sessions are 60 minutes.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What do I need for an online session?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>A stable internet connection, a device with a camera and microphone, and the free Zoom app. For Yoga sessions, ensure you have enough floor space for a mat and wear comfortable clothing. A quiet, private space is recommended for Psychology and Ayurveda sessions.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can I reschedule or cancel?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Yes. Please notify us at least 24 hours in advance to reschedule or cancel without charge. Cancellations within 24 hours may be charged. We understand emergencies — just communicate with us and we will always find a solution.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How are payments handled?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>After your booking request is confirmed, Harsh Ranjan will send payment details for your chosen programme. We accept UPI, bank transfer (India), and international wire transfer. Payment is made in advance of each session or monthly cycle.</p></div></div>
-      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Is my information kept confidential?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Absolutely. All health information, session content, and personal details shared with Samarpan are held in the strictest confidence. They are never shared with third parties. Your privacy is sacred — this is a core principle of how we practise.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Is the first consultation really free?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Yes, completely. The initial 20-minute Dosha Assessment is complimentary — no credit card, no obligation. It's a genuine opportunity for you to experience the approach and for Harsh to understand your needs.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How long is each session?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Individual sessions are typically 60 minutes. Initial consultations (Ayurveda and Psychology) may run 75–90 minutes. Yoga and Meditation sessions are 60 minutes.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What do I need for an online session?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>A stable internet connection, a device with a camera and microphone, and the free Zoom app. For Yoga sessions, ensure you have space for a mat and wear comfortable clothing.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can I reschedule or cancel?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Yes. Please notify us at least 24 hours in advance to reschedule or cancel without charge. We understand emergencies — just communicate and we will always find a solution.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How are payments handled?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>After your booking request is confirmed, Harsh will send payment details. We accept UPI, bank transfer (India), and international wire transfer. Payment is made in advance of each session or monthly cycle.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Is my information kept confidential?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Absolutely. All health information and personal details are held in strictest confidence — never shared with third parties. Your privacy is a core principle of how we practise.</p></div></div>
     </div>
   </div>
 </section>
 
 <!-- ══ FOOTER ══ -->
-<footer class="bg-brand-black text-white/60 py-14 px-4 sm:px-6 border-t border-white/10">
+<footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
     <div class="sm:col-span-2">
-      <svg width="44" height="44" viewBox="0 0 100 100" fill="none" class="text-clay mb-4"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="85" r="4" fill="currentColor"/><path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/></svg>
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="mb-4" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="4" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/>
+      </svg>
       <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
       <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
       <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
@@ -615,376 +637,395 @@
       </div>
     </div>
     <div>
-      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-5">Quick Links</h5>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Quick Links</h5>
       <ul class="space-y-3 text-sm">
-        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+        <li><a href="index.html"    class="hover:text-white transition">Home</a></li>
         <li><a href="sessions.html" class="hover:text-white transition">Sessions</a></li>
         <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda</a></li>
-        <li><a href="about.html" class="hover:text-white transition">About Harsh</a></li>
-        <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
+        <li><a href="about.html"    class="hover:text-white transition">About Harsh</a></li>
+        <li><a href="journal.html"  class="hover:text-white transition">Journals</a></li>
       </ul>
     </div>
     <div>
-      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-5">Contact</h5>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
         <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
         <li><a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
+        <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i>@justtheself</a></li>
         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
         <li class="flex items-center gap-2"><i data-lucide="video" class="w-4 h-4"></i>Online · All Time Zones</li>
       </ul>
     </div>
   </div>
-  <div class="max-w-7xl mx-auto mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
+  <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
     <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
-    <div class="flex gap-5">
+    <div class="flex gap-6">
       <a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
       <a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
     </div>
   </div>
 </footer>
 
-<!-- FLOATING -->
-<div id="whatsapp-fab"><a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%27d%20like%20to%20book%20a%20session." target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
-<div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
+<!-- FLOATING BUTTONS -->
+<div id="whatsapp-fab">
+  <a href="https://wa.me/919999999999?text=Hi%20Samarpan%2C%20I%27d%20like%20to%20book%20a%20session." target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+<div id="theme-toggle">
+  <button onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
+  </button>
+</div>
 
-<!-- ══════════════════════════════════════
-     FIREBASE MODULE — same pattern as index.html
-══════════════════════════════════════ -->
-<script type="module">
-  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, serverTimestamp }
-                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously }
-                              from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <div class="flex flex-col sm:flex-row items-start gap-4">
+    <i data-lucide="cookie" class="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5"></i>
+    <p class="text-xs font-sans flex-1" style="color:var(--text-muted);line-height:1.6;">We use cookies to enhance your experience. By continuing, you agree to our <a href="privacy-policy.html" class="text-clay underline">Privacy Policy</a>.</p>
+    <div class="flex gap-2 flex-shrink-0">
+      <button onclick="acceptCookies()" class="cta-btn px-4 py-2 bg-clay text-white text-[9px] font-bold uppercase tracking-widest rounded-sm">Accept</button>
+      <button onclick="declineCookies()" class="px-4 py-2 border text-[9px] font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Decline</button>
+    </div>
+  </div>
+</div>
 
-  const firebaseConfig = {
-    apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
-    authDomain:        "thesamrpan.firebaseapp.com",
-    projectId:         "thesamrpan",
-    storageBucket:     "thesamrpan.firebasestorage.app",
-    messagingSenderId: "510287005957",
-    appId:             "1:510287005957:web:978533c6dbca0f4969cf6c",
-    measurementId:     "G-ML1QLKGR3K"
-  };
+<!-- ══════════════════════════════════════════════════
+     FIREBASE REST API — No ES modules, no scope issues
+══════════════════════════════════════════════════ -->
+<script>
+  // ── Firebase Config ──
+  var FIREBASE_PROJECT = 'thesamrpan';
+  var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+  var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
 
-  const customAppId = "samarpan-official";
-
-  function todayIST() {
-    const ist = new Date(Date.now() + 5.5 * 3600000);
-    return ist.toISOString().split('T')[0];
+  // ── Convert JS object → Firestore field format ──
+  function toFirestoreFields(data) {
+    var fields = {};
+    Object.keys(data).forEach(function(k) {
+      var v = data[k];
+      if (v === null || v === undefined || v === '') return;
+      if (typeof v === 'boolean')     fields[k] = { booleanValue: v };
+      else if (typeof v === 'number') fields[k] = { integerValue: String(v) };
+      else                            fields[k] = { stringValue: String(v) };
+    });
+    return fields;
   }
 
-  function emailToDocId(email) {
-    return email.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 200);
+  // ── Generate readable doc ID: email__YYYYMMDD_HHMMSS_mmm ──
+  // e.g. harsh_gmail_com__20260311_143022_847
+  function makeDocId(email) {
+    var now = new Date(Date.now() + 5.5 * 3600000); // IST
+    var pad = function(n, w){ return String(n).padStart(w || 2, '0'); };
+    var datePart = now.getUTCFullYear() + pad(now.getUTCMonth()+1) + pad(now.getUTCDate());
+    var timePart = pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds());
+    var msPart   = pad(now.getUTCMilliseconds(), 3);
+    var emailPart = (email || 'anonymous').toLowerCase()
+                      .replace(/@/g,'_').replace(/\./g,'_')
+                      .replace(/[^a-z0-9_]/g,'').slice(0, 40);
+    return emailPart + '__' + datePart + '_' + timePart + '_' + msPart;
   }
 
-  let db, auth;
-  try {
-    const app = initializeApp(firebaseConfig);
-    db   = getFirestore(app);
-    auth = getAuth(app);
-    (async () => { try { await signInAnonymously(auth); } catch(e){ console.warn('Anon auth failed', e); } })();
-  } catch(e) {
-    console.warn("Firebase init failed:", e);
+  // ── Save to Firestore via PATCH (custom doc ID) ──
+  async function saveToFS(collection, data) {
+    var nowUTC = new Date();
+    var nowIST = new Date(nowUTC.getTime() + 5.5 * 3600000);
+    // Full readable timestamp
+    var pad    = function(n){ return String(n).padStart(2,'0'); };
+    var dateIST = nowIST.getUTCFullYear() + '-' + pad(nowIST.getUTCMonth()+1) + '-' + pad(nowIST.getUTCDate());
+    var timeIST = pad(nowIST.getUTCHours()) + ':' + pad(nowIST.getUTCMinutes()) + ':' + pad(nowIST.getUTCSeconds());
+    var docId   = makeDocId(data.email || '');
+    var payload = {
+      fields: toFirestoreFields(Object.assign({}, data, {
+        date:           dateIST,                        // "2026-03-11"
+        time_ist:       timeIST,                        // "14:30:22"
+        datetime_ist:   dateIST + ' ' + timeIST + ' IST', // "2026-03-11 14:30:22 IST"
+        timestamp_utc:  nowUTC.toISOString(),           // full UTC ISO
+        source:         'website_booking_page',
+        page_url:       window.location.href
+      }))
+    };
+    var url  = FIRESTORE_BASE + collection + '/' + docId + '?key=' + FIREBASE_API_KEY;
+    var resp = await fetch(url, {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    if (!resp.ok) { var err = await resp.text(); throw new Error('Firestore ' + resp.status + ': ' + err); }
+    return resp.json();
   }
 
-  /* ── Core save helper — identical to index.html ── */
-  async function save(type, email, data) {
-    if (!db) throw new Error("Firestore not initialised");
-    if (auth && !auth.currentUser) {
-      try { await signInAnonymously(auth); } catch(e) { console.warn('Re-auth failed', e); }
+  function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim()); }
+
+  // ── PROGRAMME DATA ──
+  var programmes = [
+    { id:'ayurveda',   title:'Ayurvedic Consultation',  sub:'Dosha · Detox · Diet',      img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=400&fit=crop', colour:'#D95D39' },
+    { id:'psychology', title:'Therapeutic Psychology',  sub:'Trauma · Anxiety · Mind',   img:'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=400&fit=crop', colour:'#4A5D4F' },
+    { id:'yoga',       title:'Yoga Sessions',           sub:'Hatha · Pranayama',          img:'https://images.unsplash.com/photo-1588286840104-8957b019727f?q=80&w=400&fit=crop', colour:'#4A5D4F' },
+    { id:'meditation', title:'Meditation & Ajapa Jap',  sub:'Mindfulness · Clarity',      img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=400&fit=crop', colour:'#C5A059' },
+    { id:'nutrition',  title:'Nutrition Planning',      sub:'Weight · Digestion',         img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400&fit=crop', colour:'#C5A059' },
+    { id:'mantra',     title:'Mantra Chanting',         sub:'Sound · Vibration',          img:'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=400&fit=crop', colour:'#D95D39' },
+    { id:'yatra',      title:'Sacred Yatra / Retreat',  sub:'Pilgrimage · Immersion',     img:'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=400&fit=crop',   colour:'#1C1C1C' },
+    { id:'free',       title:'Free Dosha Assessment',   sub:'20-min · No obligation',     img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=400&fit=crop', colour:'#C5A059', badge:'FREE' },
+  ];
+
+  // ── State ──
+  var _selectedProgramme   = '';
+  var _selectedSessionType = 'Monthly Programme';
+  var _selectedTime        = '';
+
+  // ── Render programme grid ──
+  document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+    var grid = document.getElementById('programmeGrid');
+    programmes.forEach(function(p) {
+      var btn = document.createElement('button');
+      btn.className = 'prog-btn';
+      btn.dataset.programme = p.title;
+      btn.innerHTML =
+        '<div class="prog-img-wrap">' +
+          '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy">' +
+          (p.badge ? '<span class="absolute top-2 left-2 font-sans text-[8px] uppercase tracking-widest font-bold text-white px-2 py-0.5 rounded z-10" style="background:#C5A059;">' + p.badge + '</span>' : '') +
+        '</div>' +
+        '<div class="prog-body">' +
+          '<p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:' + p.colour + ';">' + p.sub + '</p>' +
+          '<p class="font-serif text-sm leading-tight" style="color:var(--text);">' + p.title + '</p>' +
+        '</div>';
+      btn.onclick = function() { selectProgramme(btn, p.title); };
+      grid.appendChild(btn);
+    });
+
+    // ── URL param pre-select ──
+    var params = new URLSearchParams(window.location.search);
+    var preSelect = params.get('programme');
+    if (preSelect) {
+      var match = programmes.find(function(p){ return p.id === preSelect.toLowerCase() || p.title.toLowerCase().includes(preSelect.toLowerCase()); });
+      if (match) {
+        setTimeout(function() {
+          document.querySelectorAll('.prog-btn').forEach(function(b){
+            if (b.dataset.programme === match.title) selectProgramme(b, match.title);
+          });
+        }, 300);
+      }
     }
-    const docId = emailToDocId(email || `anon_${Date.now()}`);
-    const ref = doc(collection(db, "artifacts", customAppId, "public", "data", type), docId);
-    await setDoc(ref, {
-      ...data,
-      email,
-      date: todayIST(),
-      timestamp: serverTimestamp(),
-      source: "website_homepage"
-    }, { merge: true });
+
+    // ── Theme on load ──
+    var stored = localStorage.getItem('samarpan-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', stored);
+    var ti = document.getElementById('themeIcon');
+    if (ti) { ti.setAttribute('data-lucide', stored === 'dark' ? 'sun' : 'moon'); }
+    lucide.createIcons();
+
+    // ── Cookie banner ──
+    if (!localStorage.getItem('samarpan-cookies'))
+      setTimeout(function(){ document.getElementById('cookie-banner').style.display='block'; }, 2500);
+
+    // ── Fade-up observer ──
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+    }, {threshold:0.1});
+    document.querySelectorAll('.fade-up').forEach(function(el){ obs.observe(el); });
+
+    // ── Top banner dismissed? ──
+    if (localStorage.getItem('samarpan-banner-dismissed')) {
+      document.getElementById('top-banner').classList.add('dismissed');
+    }
+  });
+
+  // ── Selection helpers ──
+  function selectProgramme(btn, name) {
+    document.querySelectorAll('.prog-btn').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    _selectedProgramme = name;
+    document.getElementById('progError').classList.add('hidden');
+    ['step2Wrap','step3Wrap','step4Wrap'].forEach(function(id){
+      var el = document.getElementById(id);
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'auto';
+    });
+    gaEvent('select','Booking','Programme: ' + name);
   }
 
-  /* ── MAIN BOOKING SUBMIT ── */
-  window.handleBookingSubmit = async function() {
-    const btn       = document.getElementById('bookingSubmitBtn');
-    const statusDiv = document.getElementById('bookingStatus');
-    const origHTML  = btn.innerHTML;
+  function selectSessionType(btn) {
+    document.querySelectorAll('.session-type-btn').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    _selectedSessionType = btn.dataset.type;
+  }
 
-    // ── Read selected values ──
-    const programme   = window._selectedProgramme  || '';
-    const sessionType = window._selectedSessionType || 'Monthly Programme';
-    const timeSlot    = window._selectedTime        || 'Flexible';
+  function selectTime(btn) {
+    if (btn.classList.contains('unavailable')) return;
+    document.querySelectorAll('.time-slot').forEach(function(b){ b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    _selectedTime = btn.textContent.trim();
+  }
 
-    // ── Read form values ──
-    const name       = document.getElementById('bName').value.trim();
-    const email      = document.getElementById('bEmail').value.trim();
-    const phone      = document.getElementById('bPhone').value.trim();
-    const timezone   = document.getElementById('bTimezone').value;
-    const age        = document.getElementById('bAge').value.trim();
-    const gender     = document.getElementById('bGender').value;
-    const concerns   = document.getElementById('bConcerns').value.trim();
-    const experience = document.getElementById('bExperience').value;
-    const medical    = document.getElementById('bMedical').value.trim();
-    const source     = document.getElementById('bSource').value;
-    const newsletter = document.getElementById('bNewsletter').checked;
-    const consent1   = document.getElementById('bConsent1').checked;
-    const consent2   = document.getElementById('bConsent2').checked;
+  // ── BOOKING SUBMIT ──
+  async function handleBookingSubmit() {
+    var btn       = document.getElementById('bookingSubmitBtn');
+    var statusDiv = document.getElementById('bookingStatus');
+    var origHTML  = btn.innerHTML;
 
-    // ── Validation ──
-    let valid = true;
+    // Read values
+    var name       = document.getElementById('bName').value.trim();
+    var email      = document.getElementById('bEmail').value.trim();
+    var phone      = document.getElementById('bPhone').value.trim();
+    var timezone   = document.getElementById('bTimezone').value;
+    var age        = document.getElementById('bAge').value.trim();
+    var gender     = document.getElementById('bGender').value;
+    var concerns   = document.getElementById('bConcerns').value.trim();
+    var experience = document.getElementById('bExperience').value;
+    var medical    = document.getElementById('bMedical').value.trim();
+    var source     = document.getElementById('bSource').value;
+    var newsletter = document.getElementById('bNewsletter').checked;
+    var consent1   = document.getElementById('bConsent1').checked;
+    var consent2   = document.getElementById('bConsent2').checked;
 
-    if (!programme) {
-      document.getElementById('progError').style.display = 'block';
+    // Validate
+    var valid = true;
+
+    if (!_selectedProgramme) {
+      document.getElementById('progError').classList.remove('hidden');
       document.getElementById('programmeGrid').scrollIntoView({ behavior:'smooth', block:'center' });
       return;
     }
-    document.getElementById('progError').style.display = 'none';
 
-    if (!name) {
-      document.getElementById('bName').classList.add('invalid');
-      document.getElementById('bNameErr').classList.remove('hidden');
-      valid = false;
-    } else {
-      document.getElementById('bName').classList.remove('invalid');
-      document.getElementById('bNameErr').classList.add('hidden');
-    }
+    if (!name)           { document.getElementById('bName').classList.add('invalid'); document.getElementById('bNameErr').classList.remove('hidden'); valid=false; }
+    else                 { document.getElementById('bName').classList.remove('invalid'); document.getElementById('bNameErr').classList.add('hidden'); }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      document.getElementById('bEmail').classList.add('invalid');
-      document.getElementById('bEmailErr').classList.remove('hidden');
-      valid = false;
-    } else {
-      document.getElementById('bEmail').classList.remove('invalid');
-      document.getElementById('bEmailErr').classList.add('hidden');
-    }
+    if (!isEmail(email)) { document.getElementById('bEmail').classList.add('invalid'); document.getElementById('bEmailErr').classList.remove('hidden'); valid=false; }
+    else                 { document.getElementById('bEmail').classList.remove('invalid'); document.getElementById('bEmailErr').classList.add('hidden'); }
 
-    if (!timezone) {
-      document.getElementById('bTimezone').classList.add('invalid');
-      document.getElementById('bTimezoneErr').classList.remove('hidden');
-      valid = false;
-    } else {
-      document.getElementById('bTimezone').classList.remove('invalid');
-      document.getElementById('bTimezoneErr').classList.add('hidden');
-    }
+    if (!timezone)       { document.getElementById('bTimezone').classList.add('invalid'); document.getElementById('bTimezoneErr').classList.remove('hidden'); valid=false; }
+    else                 { document.getElementById('bTimezone').classList.remove('invalid'); document.getElementById('bTimezoneErr').classList.add('hidden'); }
 
-    if (!concerns) {
-      document.getElementById('bConcerns').classList.add('invalid');
-      document.getElementById('bConcernsErr').classList.remove('hidden');
-      valid = false;
-    } else {
-      document.getElementById('bConcerns').classList.remove('invalid');
-      document.getElementById('bConcernsErr').classList.add('hidden');
-    }
+    if (!concerns)       { document.getElementById('bConcerns').classList.add('invalid'); document.getElementById('bConcernsErr').classList.remove('hidden'); valid=false; }
+    else                 { document.getElementById('bConcerns').classList.remove('invalid'); document.getElementById('bConcernsErr').classList.add('hidden'); }
 
-    if (!consent1 || !consent2) {
-      document.getElementById('bConsentErr').classList.remove('hidden');
-      valid = false;
-    } else {
-      document.getElementById('bConsentErr').classList.add('hidden');
-    }
+    if (!consent1 || !consent2) { document.getElementById('bConsentErr').classList.remove('hidden'); valid=false; }
+    else                        { document.getElementById('bConsentErr').classList.add('hidden'); }
 
     if (!valid) {
-      statusDiv.innerHTML = `<div class="form-error">✗ Please fill all required fields and accept the terms.</div>`;
+      statusDiv.innerHTML = '<div class="form-error">✗ Please fill all required fields and accept the terms.</div>';
       document.getElementById('bName').scrollIntoView({ behavior:'smooth', block:'center' });
       return;
     }
 
-    // ── Loading state ──
+    // Loading
     btn.disabled = true;
     btn.innerHTML = '<span class="btn-spinner"></span> Submitting your booking…';
     statusDiv.innerHTML = '';
 
     try {
-      // Save to "leads" — same collection index.html uses for contact/booking forms
-      await save("leads", email, {
-        name,
-        phone:            phone      || 'Not provided',
-        service:          programme,
-        message:          concerns,
-        session_type:     sessionType,
-        preferred_time:   timeSlot,
-        timezone,
-        age:              age        || 'Not specified',
-        gender:           gender     || 'Not specified',
-        prior_experience: experience || 'Not specified',
-        medical_notes:    medical    || 'None mentioned',
-        referral_source:  source     || 'Not specified',
-        newsletter_opted_in:         newsletter,
-        consent_health_disclaimer:   consent1,
-        consent_communications:      consent2,
-        lead_type:        "booking_request",
-        booking_status:   "pending_confirmation"
+      // Save to homepage_bookings
+      await saveToFS('homepage_bookings', {
+        name:                      name,
+        email:                     email,
+        phone:                     phone      || 'Not provided',
+        programme:                 _selectedProgramme,
+        session_type:              _selectedSessionType,
+        preferred_time_ist:        _selectedTime || 'Flexible',
+        timezone:                  timezone,
+        age:                       age        || 'Not specified',
+        gender:                    gender     || 'Not specified',
+        health_concerns:           concerns,
+        prior_experience:          experience || 'Not specified',
+        medical_notes:             medical    || 'None mentioned',
+        referral_source:           source     || 'Not specified',
+        newsletter_opted_in:       String(newsletter),
+        consent_health_disclaimer: String(consent1),
+        consent_communications:    String(consent2),
+        lead_type:                 'booking_page_request',
+        booking_status:            'pending_confirmation'
       });
 
-      // If newsletter opted in → save to newsletter collection (same as index.html)
+      // Also save newsletter subscription if opted in
       if (newsletter) {
-        await save("newsletter", email, {
-          name,
-          subscription_type: "inner_circle_monthly",
-          opted_in:  true,
-          subscribed_via: "booking_form"
+        await saveToFS('homepage_newsletter', {
+          name:               name,
+          email:              email,
+          opted_in:           'true',
+          subscribed_via:     'booking_form',
+          subscription_type:  'inner_circle_monthly'
         });
       }
 
-      // ── Show success ──
+      gaEvent('submit','Booking','Booking Form - ' + _selectedProgramme);
+
+      // Show success
       document.getElementById('bookingFormWrap').style.display = 'none';
-      const successEl = document.getElementById('successState');
+      var successEl = document.getElementById('successState');
       successEl.classList.add('show');
-
-      document.getElementById('successSummary').innerHTML = `
-        <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-2" style="color:var(--text-muted);">Your Booking Summary</p>
-        <div class="space-y-1.5">
-          <div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Programme</span><span class="font-sans text-xs font-bold" style="color:var(--text);">${programme}</span></div>
-          <div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Type</span><span class="font-sans text-xs font-bold" style="color:var(--text);">${sessionType}</span></div>
-          <div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Time Pref.</span><span class="font-sans text-xs font-bold" style="color:var(--text);">${timeSlot}</span></div>
-          <div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Timezone</span><span class="font-sans text-xs font-bold" style="color:var(--text);">${timezone.split('(')[0].trim()}</span></div>
-        </div>`;
-
-      gaEvent('submit', 'Booking', 'Booking Form Submit - ' + programme);
+      document.getElementById('successSummary').innerHTML =
+        '<p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-2" style="color:var(--text-muted);">Your Booking Summary</p>' +
+        '<div class="space-y-1.5">' +
+          '<div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Programme</span><span class="font-sans text-xs font-bold" style="color:var(--text);">' + _selectedProgramme + '</span></div>' +
+          '<div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Type</span><span class="font-sans text-xs font-bold" style="color:var(--text);">' + _selectedSessionType + '</span></div>' +
+          '<div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Time Pref.</span><span class="font-sans text-xs font-bold" style="color:var(--text);">' + (_selectedTime || 'Flexible') + '</span></div>' +
+          '<div class="flex justify-between gap-2"><span class="font-sans text-xs" style="color:var(--text-muted);">Timezone</span><span class="font-sans text-xs font-bold" style="color:var(--text);">' + timezone.split('(')[0].trim() + '</span></div>' +
+        '</div>';
+      lucide.createIcons();
       successEl.scrollIntoView({ behavior:'smooth', block:'center' });
 
     } catch(err) {
-      console.error("Booking save error:", err);
-      statusDiv.innerHTML = `<div class="form-error">✗ Something went wrong (${err.message}). Please try again or WhatsApp us directly.</div>`;
+      console.error('Booking error:', err);
+      statusDiv.innerHTML = '<div class="form-error">✗ Something went wrong (' + err.message + '). Please try again or WhatsApp us directly.</div>';
       btn.disabled = false;
       btn.innerHTML = origHTML;
       lucide.createIcons();
     }
-  };
-</script>
+  }
 
-<!-- ══ MAIN UI SCRIPTS ══ -->
-<script>
-  lucide.createIcons();
+  // ── Navbar scroll ──
+  window.addEventListener('scroll', function() {
+    var nav = document.getElementById('navbar');
+    if (window.scrollY > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    // Scroll progress
+    var sp = document.getElementById('scroll-progress');
+    var h  = document.documentElement.scrollHeight - window.innerHeight;
+    if (sp) sp.style.width = (h > 0 ? (window.scrollY / h * 100) : 0) + '%';
+    // FABs
+    var show = window.scrollY > 300;
+    ['whatsapp-fab','theme-toggle'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.toggle('visible', show); });
+  }, {passive:true});
 
-  // Scroll progress
-  window.addEventListener('scroll', () => {
-    const sp = document.getElementById('scroll-progress');
-    if (sp) sp.style.width = Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';
-  },{passive:true});
+  // ── Mobile menu ──
+  var _menuOpen = false;
+  function toggleMenu() {
+    _menuOpen = !_menuOpen;
+    document.getElementById('mobile-menu').classList.toggle('active', _menuOpen);
+    document.body.style.overflow = _menuOpen ? 'hidden' : '';
+    document.getElementById('hamburger-btn').setAttribute('aria-expanded', _menuOpen);
+    document.getElementById('hamburger-icon').setAttribute('data-lucide', _menuOpen ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && _menuOpen) toggleMenu(); });
 
-  // FABs
-  window.addEventListener('scroll', () => {
-    const show = window.scrollY > 300;
-    ['whatsapp-fab','theme-toggle'].forEach(id => document.getElementById(id)?.classList.toggle('visible', show));
-  },{passive:true});
-
-  // Dark mode
-  const storedTheme = localStorage.getItem('samarpan-theme') || 'light';
-  document.documentElement.setAttribute('data-theme', storedTheme);
-  if (storedTheme === 'dark') { const ti=document.getElementById('themeIcon'); if(ti)ti.setAttribute('data-lucide','sun'); }
+  // ── Theme ──
   function toggleTheme() {
-    const html=document.documentElement, isDark=html.getAttribute('data-theme')==='dark';
-    html.setAttribute('data-theme',isDark?'light':'dark');
-    localStorage.setItem('samarpan-theme',isDark?'light':'dark');
-    document.getElementById('themeIcon').setAttribute('data-lucide',isDark?'moon':'sun');
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
     lucide.createIcons();
   }
 
-  // Mobile menu
-  let menuOpen=false;
-  function toggleMenu(){
-    menuOpen=!menuOpen;
-    document.getElementById('mobile-menu').classList.toggle('active',menuOpen);
-    document.body.style.overflow=menuOpen?'hidden':'';
-    document.getElementById('hamburger-icon').setAttribute('data-lucide',menuOpen?'x':'menu');
+  // ── Top banner ──
+  function dismissBanner() {
+    document.getElementById('top-banner').classList.add('dismissed');
+    localStorage.setItem('samarpan-banner-dismissed', '1');
+  }
+
+  // ── Cookie ──
+  function acceptCookies()  { localStorage.setItem('samarpan-cookies','accepted'); document.getElementById('cookie-banner').style.display='none'; }
+  function declineCookies() { localStorage.setItem('samarpan-cookies','declined'); document.getElementById('cookie-banner').style.display='none'; }
+
+  // ── FAQ ──
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item'), isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
     lucide.createIcons();
   }
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&menuOpen)toggleMenu(); });
-
-  // Fade up
-  const fadeObs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);} });
-  },{threshold:0.1});
-  document.querySelectorAll('.fade-up').forEach(el=>fadeObs.observe(el));
-
-  // FAQ
-  function toggleFaq(btn){
-    const item=btn.closest('.faq-item'), isOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
-    if(!isOpen)item.classList.add('open');
-    lucide.createIcons();
-  }
-
-  // ══ PROGRAMME DATA ══
-  const programmes = [
-    { id:'ayurveda', title:'Ayurvedic Consultation', sub:'Dosha · Detox · Diet', img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=400&fit=crop', colour:'#D95D39' },
-    { id:'psychology', title:'Therapeutic Psychology', sub:'Trauma · Anxiety · Mind', img:'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=400&fit=crop', colour:'#4A5D4F' },
-    { id:'yoga', title:'Yoga Sessions', sub:'Hatha · Pranayama', img:'https://images.unsplash.com/photo-1588286840104-8957b019727f?q=80&w=400&fit=crop', colour:'#4A5D4F' },
-    { id:'meditation', title:'Meditation & Ajapa Jap', sub:'Mindfulness · Clarity', img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=400&fit=crop', colour:'#C5A059' },
-    { id:'nutrition', title:'Nutrition Planning', sub:'Weight · Digestion', img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=400&fit=crop', colour:'#C5A059' },
-    { id:'mantra', title:'Mantra Chanting', sub:'Sound · Vibration', img:'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=400&fit=crop', colour:'#D95D39' },
-    { id:'yatra', title:'Sacred Yatra / Retreat', sub:'Pilgrimage · Immersion', img:'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=400&fit=crop', colour:'#1C1C1C' },
-    { id:'free', title:'Free Dosha Assessment', sub:'20-min · No obligation', img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=400&fit=crop', colour:'#C5A059', badge:'FREE' },
-  ];
-
-  // Render programme grid
-  const grid = document.getElementById('programmeGrid');
-  programmes.forEach(p => {
-    const div = document.createElement('button');
-    div.className = 'prog-btn';
-    div.dataset.programme = p.title;
-    div.innerHTML = `
-      <div class="prog-img-wrap">
-        <img src="${p.img}" alt="${p.title}" loading="lazy">
-        ${p.badge ? `<span class="absolute top-2 left-2 font-sans text-[8px] uppercase tracking-widest font-bold text-white px-2 py-0.5 rounded z-10" style="background:#C5A059;">${p.badge}</span>` : ''}
-      </div>
-      <div class="prog-body">
-        <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:${p.colour};">${p.sub}</p>
-        <p class="font-serif text-sm leading-tight" style="color:var(--text);">${p.title}</p>
-      </div>`;
-    div.onclick = () => selectProgramme(div, p.title);
-    grid.appendChild(div);
-  });
-
-  // State variables
-  window._selectedProgramme   = '';
-  window._selectedSessionType = 'Monthly Programme';
-  window._selectedTime        = '';
-
-  function selectProgramme(btn, name) {
-    document.querySelectorAll('.prog-btn').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    window._selectedProgramme = name;
-    document.getElementById('progError').style.display='none';
-    // Unlock next steps
-    ['step2Wrap','step3Wrap','step4Wrap'].forEach(id=>{
-      const el=document.getElementById(id);
-      el.style.opacity='1';
-      el.style.pointerEvents='auto';
-    });
-    gaEvent('select','Booking','Programme: '+name);
-  }
-
-  function selectSessionType(btn) {
-    document.querySelectorAll('.session-type-btn').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    window._selectedSessionType = btn.dataset.type;
-  }
-
-  function selectTime(btn) {
-    if (btn.classList.contains('unavailable')) return;
-    document.querySelectorAll('.time-slot').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    window._selectedTime = btn.textContent.trim();
-  }
-
-  // Handle URL param: ?programme=yoga  → pre-select
-  window.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
-    const params = new URLSearchParams(window.location.search);
-    const preSelect = params.get('programme');
-    if (preSelect) {
-      const match = programmes.find(p => p.id === preSelect.toLowerCase() || p.title.toLowerCase().includes(preSelect.toLowerCase()));
-      if (match) {
-        setTimeout(() => {
-          const btns = document.querySelectorAll('.prog-btn');
-          btns.forEach(b => { if(b.dataset.programme === match.title) selectProgramme(b, match.title); });
-        }, 300);
-      }
-    }
-  });
 </script>
 </body>
 </html>
