@@ -1238,11 +1238,34 @@
     return fields;
   }
 
-  // ── Write to Firestore using REST API (always POST = auto-ID) ──
+  // ── Generate a readable document ID ──
+  // Format: email_sanitized__YYYYMMDD_HHMMSS
+  // e.g.  harsh_gmail_com__20260311_143022
+  function makeDocId(email) {
+    var now = new Date(Date.now() + 5.5 * 3600000); // IST
+    var pad = function(n){ return String(n).padStart(2,'0'); };
+    var datePart = now.getUTCFullYear() +
+                   pad(now.getUTCMonth()+1) +
+                   pad(now.getUTCDate());
+    var timePart = pad(now.getUTCHours()) +
+                   pad(now.getUTCMinutes()) +
+                   pad(now.getUTCSeconds());
+    var emailPart = (email || 'anonymous')
+                      .toLowerCase()
+                      .replace(/@/g, '_')
+                      .replace(/\./g, '_')
+                      .replace(/[^a-z0-9_]/g, '')
+                      .slice(0, 40);
+    return emailPart + '__' + datePart + '_' + timePart;
+  }
+
+  // ── Write to Firestore using PATCH with a meaningful custom ID ──
+  // PATCH creates or merges — document ID is human-readable
   async function saveToFS(collection, data) {
     var now  = new Date();
     var ist  = new Date(now.getTime() + 5.5 * 3600000);
     var date = ist.toISOString().split('T')[0];
+    var docId = makeDocId(data.email || '');
     var payload = {
       fields: toFirestoreFields(Object.assign({}, data, {
         date:       date,
@@ -1251,9 +1274,10 @@
         page_url:   window.location.href
       }))
     };
-    var url = FIRESTORE_BASE + collection + '?key=' + FIREBASE_API_KEY;
+    // PATCH to a named document path = custom ID, no random string
+    var url = FIRESTORE_BASE + collection + '/' + docId + '?key=' + FIREBASE_API_KEY;
     var resp = await fetch(url, {
-      method:  'POST',
+      method:  'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload)
     });
