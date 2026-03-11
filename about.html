@@ -141,6 +141,8 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 #wa{position:fixed;bottom:2rem;right:1.5rem;z-index:900;}
 #wa a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 4px 20px rgba(37,211,102,.38);transition:transform .3s;}
 #wa a:hover{transform:scale(1.1);}
+.btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
@@ -532,7 +534,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
             <textarea id="fm" placeholder="Tell Harsh a little about what you're seeking…" class="ff" rows="3" style="resize:vertical;min-height:80px;"></textarea>
           </div>
           <div class="sm:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-1">
-            <button id="sb" onclick="submitFormFirebase(event)" class="cb inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-[#D95D39] text-white text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto" style="font-family:'Lato',sans-serif;">
+            <button id="sb" onclick="submitFormAbout(event)" class="cb inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-[#D95D39] text-white text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto" style="font-family:'Lato',sans-serif;">
               <span id="st">Submit Request</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
@@ -609,53 +611,151 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <!-- WhatsApp -->
 <div id="wa"><a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
 
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp }   from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getFirestore, collection, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+<!-- ══════════════════════════════════════════════════
+     FIREBASE REST API — matches booking.html pattern
+     Collection: homepage_leads (already in security rules)
+     Sub-collection tag: lead_type = "about_page_dosha_assessment"
+══════════════════════════════════════════════════ -->
+<script>
+  // ── Firebase Config ──────────────────────────────────────────────────────────
+  var FIREBASE_PROJECT = 'thesamrpan';
+  var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+  var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
 
-  const firebaseConfig = {
-    apiKey:            "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
-    authDomain:        "thesamrpan.firebaseapp.com",
-    projectId:         "thesamrpan",
-    storageBucket:     "thesamrpan.firebasestorage.app",
-    messagingSenderId: "510287005957",
-    appId:             "1:510287005957:web:978533c6dbca0f4969cf6c",
-    measurementId:     "G-ML1QLKGR3K"
-  };
+  // ── Convert JS object → Firestore field format ───────────────────────────────
+  function toFirestoreFields(data) {
+    var fields = {};
+    Object.keys(data).forEach(function(k) {
+      var v = data[k];
+      if (v === null || v === undefined || v === '') return;
+      if (typeof v === 'boolean')     fields[k] = { booleanValue: v };
+      else if (typeof v === 'number') fields[k] = { integerValue: String(v) };
+      else                            fields[k] = { stringValue: String(v) };
+    });
+    return fields;
+  }
 
-  const app  = initializeApp(firebaseConfig);
-  const db   = getFirestore(app);
-  const auth = getAuth(app);
-  const customAppId = "samarpan-official";
+  // ── Generate readable doc ID: email__YYYYMMDD_HHMMSS_mmm ────────────────────
+  function makeDocId(email) {
+    var now = new Date(Date.now() + 5.5 * 3600000); // IST offset
+    var pad = function(n, w){ return String(n).padStart(w || 2, '0'); };
+    var datePart = now.getUTCFullYear() + pad(now.getUTCMonth()+1) + pad(now.getUTCDate());
+    var timePart = pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds());
+    var msPart   = pad(now.getUTCMilliseconds(), 3);
+    var emailPart = (email || 'anonymous').toLowerCase()
+                      .replace(/@/g,'_').replace(/\./g,'_')
+                      .replace(/[^a-z0-9_]/g,'').slice(0, 40);
+    return emailPart + '__' + datePart + '_' + timePart + '_' + msPart;
+  }
 
-  function emailToDocId(email){return email.toLowerCase().replace(/[^a-z0-9]/g,'_').slice(0,200);}
-
-  window.submitFormFirebase = async function(e){
-    e.preventDefault();
-    const btn=document.getElementById('sb'),statusDiv=document.getElementById('ff-err'),origText=btn?btn.innerHTML:'Submit Request';
-    const name=(document.getElementById('fn')?.value||'').trim();
-    const email=(document.getElementById('fe')?.value||'').trim();
-    const phone=(document.getElementById('fp')?.value||'').trim();
-    const concern=(document.getElementById('fc')?.value||'General Inquiry');
-    const message=(document.getElementById('fm')?.value||'').trim();
-    if(!name||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      if(statusDiv)statusDiv.classList.remove('hidden');
-      document.getElementById('et').textContent='✗ Please fill in your name and a valid email.';return;
+  // ── Save to Firestore via PATCH (custom doc ID) ──────────────────────────────
+  async function saveToFirestore(collectionName, data) {
+    var nowUTC = new Date();
+    var nowIST = new Date(nowUTC.getTime() + 5.5 * 3600000);
+    var pad    = function(n){ return String(n).padStart(2,'0'); };
+    var dateIST = nowIST.getUTCFullYear() + '-' + pad(nowIST.getUTCMonth()+1) + '-' + pad(nowIST.getUTCDate());
+    var timeIST = pad(nowIST.getUTCHours()) + ':' + pad(nowIST.getUTCMinutes()) + ':' + pad(nowIST.getUTCSeconds());
+    var docId   = makeDocId(data.email || '');
+    var payload = {
+      fields: toFirestoreFields(Object.assign({}, data, {
+        date:           dateIST,
+        time_ist:       timeIST,
+        datetime_ist:   dateIST + ' ' + timeIST + ' IST',
+        timestamp_utc:  nowUTC.toISOString(),
+        page_source:    'about_page',
+        page_url:       window.location.href
+      }))
+    };
+    var url  = FIRESTORE_BASE + collectionName + '/' + docId + '?key=' + FIREBASE_API_KEY;
+    var resp = await fetch(url, {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    if (!resp.ok) {
+      var errText = await resp.text();
+      throw new Error('Firestore ' + resp.status + ': ' + errText);
     }
-    if(btn){btn.disabled=true;btn.innerHTML='🔄 Sending...';}
-    if(statusDiv)statusDiv.classList.add('hidden');
-    try{
-      if(!auth.currentUser)await signInAnonymously(auth);
-      const ref=doc(collection(db,"artifacts",customAppId,"public","data","leads"),emailToDocId(email));
-      await setDoc(ref,{name,email,phone:phone||'Not Provided',concern,message:message||'No message',lead_type:"dosha_assessment_request",source:"about-page",timestamp:serverTimestamp()},{merge:true});
+    return resp.json();
+  }
+
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());
+  }
+
+  // ── About Page Form Submit ───────────────────────────────────────────────────
+  window.submitFormAbout = async function(e) {
+    if (e) e.preventDefault();
+
+    var btn       = document.getElementById('sb');
+    var statusDiv = document.getElementById('ff-err');
+    var origHTML  = btn ? btn.innerHTML : '';
+
+    var name    = (document.getElementById('fn')?.value || '').trim();
+    var email   = (document.getElementById('fe')?.value || '').trim();
+    var phone   = (document.getElementById('fp')?.value || '').trim();
+    var concern = (document.getElementById('fc')?.value || 'General Inquiry');
+    var message = (document.getElementById('fm')?.value || '').trim();
+
+    // ── Validation ──────────────────────────────────────────────────────────
+    if (!name || !isValidEmail(email)) {
+      if (statusDiv) statusDiv.classList.remove('hidden');
+      document.getElementById('et').textContent = '✗ Please enter your name and a valid email address.';
+      return;
+    }
+
+    // ── Loading state ───────────────────────────────────────────────────────
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<span class="btn-spinner"></span> <span>Sending…</span>';
+    }
+    if (statusDiv) statusDiv.classList.add('hidden');
+
+    try {
+      // Save to homepage_leads (matches existing Firestore security rules)
+      await saveToFirestore('homepage_about_leads', {
+        name:         name,
+        email:        email,
+        phone:        phone   || 'Not provided',
+        concern:      concern,
+        message:      message || 'No message provided',
+        lead_type:    'about_page_dosha_assessment',
+        lead_source:  'about_page_cta_form',
+        booking_status: 'pending_confirmation'
+      });
+
+      // Also log to homepage_newsletter if we want to track about-page leads separately
+      // (optional — remove if not needed)
+      await saveToFirestore('homepage_newsletter', {
+        name:              name,
+        email:             email,
+        opted_in:          'true',
+        subscribed_via:    'about_page_form',
+        subscription_type: 'dosha_assessment_request'
+      });
+
+      // ── Show success ──────────────────────────────────────────────────────
       document.getElementById('ff-fields').classList.add('hidden');
       document.getElementById('ff-ok').classList.remove('hidden');
-    }catch(error){
-      console.error("Firebase Error:",error);
-      if(statusDiv){statusDiv.classList.remove('hidden');document.getElementById('et').textContent='✗ Error saving data. Please try WhatsApp or email.';}
-    }finally{if(btn){btn.disabled=false;btn.innerHTML=origText;}}
+
+      // GA event
+      if (typeof gtag === 'function') {
+        gtag('event', 'submit', { event_category: 'Lead', event_label: 'About Page Dosha Assessment - ' + concern });
+      }
+
+    } catch (error) {
+      console.error('Firebase Error:', error);
+      if (statusDiv) {
+        statusDiv.classList.remove('hidden');
+        document.getElementById('et').textContent =
+          '✗ Error saving your request (' + error.message + '). Please try WhatsApp or email us directly.';
+      }
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
+      }
+    }
   };
 </script>
 
@@ -693,7 +793,6 @@ function toggleMenu() {
   document.body.style.overflow = menuOpen ? 'hidden' : '';
   if (btn) btn.setAttribute('aria-expanded', String(menuOpen));
 
-  // Swap Lucide icon between menu and x
   if (icon) {
     icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
     lucide.createIcons();
@@ -701,8 +800,6 @@ function toggleMenu() {
 
   updateNav();
 }
-
-function closeMenu() { if (menuOpen) toggleMenu(); }
 
 document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&menuOpen)toggleMenu(); });
 
@@ -754,9 +851,3 @@ function closeForm(){
 </script>
 </body>
 </html>
-
-
-
-
-
-
