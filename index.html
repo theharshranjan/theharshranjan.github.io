@@ -10,11 +10,11 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.thesamarpan.co.in/">
 
-  <!-- FAVICON — SVG inline data URI works in all browsers & social platforms -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23FDFBF7' stroke='%23D95D39' stroke-width='4'/%3E%3Cpath d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' fill='none' stroke='%23D95D39' stroke-width='4'/%3E%3Ccircle cx='50' cy='85' r='5' fill='%23D95D39'/%3E%3Cline x1='20' y1='50' x2='80' y2='50' stroke='%23D95D39' stroke-width='2' opacity='0.8'/%3E%3C/svg%3E">
+  <!-- FIX 1: FAVICON — dark background matching website -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%231C1C1C'/%3E%3Ccircle cx='50' cy='50' r='48' fill='%231C1C1C' stroke='%23D95D39' stroke-width='4'/%3E%3Cpath d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' fill='none' stroke='%23D95D39' stroke-width='4'/%3E%3Ccircle cx='50' cy='85' r='5' fill='%23D95D39'/%3E%3Cline x1='20' y1='50' x2='80' y2='50' stroke='%23D95D39' stroke-width='2' opacity='0.8'/%3E%3C/svg%3E">
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231C1C1C'/%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%23D95D39' stroke-width='3'/%3E%3Cpath d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' fill='none' stroke='%23D95D39' stroke-width='3'/%3E%3Ccircle cx='50' cy='85' r='4' fill='%23D95D39'/%3E%3C/svg%3E">
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#D95D39">
+  <meta name="theme-color" content="#1C1C1C">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -311,7 +311,6 @@
     @media(max-width:390px){.testi-card{width:calc(100vw - 1.5rem);}}
     /* TOUCH */
     *{-webkit-tap-highlight-color:transparent;}
-    /* Prevent iOS zoom on focus */
     @media(max-width:768px){
       select,textarea{font-size:16px!important;}
     }
@@ -544,14 +543,15 @@
   </div>
 </div>
 
-<!-- NAVBAR -->
+<!-- FIX 3: NAVBAR — Added Community link -->
 <nav id="navbar" role="navigation" aria-label="Main navigation">
   <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
-    <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
       <a href="about.html" class="nav-link">About</a>
       <a href="journal.html" class="nav-link">Journals</a>
       <a href="sessions.html" class="nav-link">Sessions</a>
       <a href="ayurveda.html" class="nav-link">Ayurveda</a>
+      <a href="community.html" class="nav-link">Community</a>
     </div>
     <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
       <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="nav-logo-icon mb-1 group-hover:scale-110 drop-shadow-sm" style="color:#D95D39;">
@@ -573,7 +573,7 @@
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- FIX 4: MOBILE MENU — Removed FAQ, added Community -->
 <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
   <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()" aria-label="Close menu">
     <i data-lucide="x" class="w-7 h-7"></i>
@@ -591,8 +591,8 @@
   <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Journals</a>
   <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
   <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
+  <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community 🌿</a>
   <a href="#referral-section" onclick="toggleMenu();setTimeout(openReferralPopup,400);" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
-  <a href="#faq" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">FAQ</a>
   <a href="booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
 </div>
 
@@ -933,7 +933,7 @@
   </div>
 </section>
 
-<!-- VIDEO TESTIMONIALS -->
+<!-- FIX 2: VIDEO TESTIMONIALS — autoplay=1, loop=1, muted -->
 <section class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12 fade-up">
@@ -942,9 +942,9 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 fade-up">
-      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=0&mute=1&controls=1&rel=0&playsinline=1" title="Testimonial 1" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Healing through Ayurveda</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">3-month transformation story</p></div></div>
-      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=0&mute=1&controls=1&rel=0&playsinline=1&start=30" title="Testimonial 2" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Yoga for Anxiety Relief</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">8-week programme results</p></div></div>
-      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=0&mute=1&controls=1&rel=0&playsinline=1&start=60" title="Testimonial 3" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Sacred Yatra Experience</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Kedarnath pilgrimage journey</p></div></div>
+      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&loop=1&playlist=1v1fOuvBlE8" title="Testimonial 1" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Healing through Ayurveda</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">3-month transformation story</p></div></div>
+      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&loop=1&playlist=1v1fOuvBlE8&start=30" title="Testimonial 2" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Yoga for Anxiety Relief</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">8-week programme results</p></div></div>
+      <div class="vid-testi-card"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&loop=1&playlist=1v1fOuvBlE8&start=60" title="Testimonial 3" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe></div><div class="p-4"><p class="font-serif text-base" style="color:var(--text);">Sacred Yatra Experience</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Kedarnath pilgrimage journey</p></div></div>
     </div>
   </div>
 </section>
@@ -985,7 +985,8 @@
           <div class="absolute -inset-1 bg-gradient-to-r from-clay to-brand-gold rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-700"></div>
           <div class="relative rounded-xl shadow-xl overflow-hidden bg-black">
             <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=0&mute=1&controls=1&rel=0&playsinline=1&modestbranding=1" title="Visual Wisdom" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
+              <!-- FIX 2: Journal video — autoplay=1, loop=1 -->
+              <iframe src="https://www.youtube.com/embed/1v1fOuvBlE8?autoplay=1&mute=1&controls=1&rel=0&playsinline=1&loop=1&playlist=1v1fOuvBlE8&modestbranding=1" title="Visual Wisdom" loading="lazy" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"></iframe>
             </div>
           </div>
         </div>
@@ -1175,7 +1176,7 @@
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FIX 5: FOOTER — Added Community link -->
 <footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
     <div class="sm:col-span-2">
@@ -1201,6 +1202,7 @@
         <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda</a></li>
         <li><a href="about.html" class="hover:text-white transition">About</a></li>
         <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
+        <li><a href="community.html" class="hover:text-white transition">Community 🌿</a></li>
         <li><a href="#referral-section" onclick="setTimeout(openReferralPopup,300);" class="hover:text-white transition">Refer a Friend 🎁</a></li>
       </ul>
     </div>
