@@ -10,7 +10,6 @@
   <meta name="author" content="Harsh Ranjan">
   <link rel="canonical" href="https://www.thesamarpan.co.in/journal.html">
 
-  <!-- ══ FAVICONS — all sizes from your server ══ -->
   <link rel="shortcut icon"     href="favicon.ico">
   <link rel="icon"              href="favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16"   href="favicon-16x16.png">
@@ -32,7 +31,6 @@
   <meta name="apple-mobile-web-app-status-bar-style"   content="black-translucent">
   <meta name="apple-mobile-web-app-title"              content="Samarpan">
 
-  <!-- ══ Open Graph ══ -->
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="Samarpan — Holistic Wellbeing">
   <meta property="og:url"         content="https://www.thesamarpan.co.in/journal.html">
@@ -44,7 +42,6 @@
   <meta property="og:image:alt"    content="Samarpan Journal — Wisdom Stream by Harsh Ranjan">
   <meta property="og:locale"      content="en_IN">
 
-  <!-- ══ Twitter Card ══ -->
   <meta name="twitter:card"        content="summary_large_image">
   <meta name="twitter:site"        content="@justtheself">
   <meta name="twitter:creator"     content="@justtheself">
@@ -52,7 +49,6 @@
   <meta name="twitter:description" content="Ancient knowledge distilled for the modern seeker. Ayurveda · Yoga · Quantum & Vedic Sciences.">
   <meta name="twitter:image"       content="https://www.thesamarpan.co.in/og-image.jpg">
 
-  <!-- ══ Structured Data — Blog + Organisation ══ -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -84,7 +80,7 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js',new Date());
     gtag('config','G-HMM7CJSCW7');
-    function gaEvent(a,c,l){gtag('event',a,{event_category:c,event_label:l});}
+    function gaEvent(a,c,l){try{gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,25 +107,26 @@
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
 
-    /* ── NAVBAR — transparent over hero, opaque on scroll (matches about/booking) ── */
+    /* ── NAVBAR ── */
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background .45s cubic-bezier(.4,0,.2,1),border-color .45s,box-shadow .45s,backdrop-filter .45s;}
     #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
     [data-theme="dark"] #navbar.scrolled{background:rgba(20,20,16,0.96);border-bottom:1px solid #2E2E28;}
-    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,0.88);text-decoration:none;}
+    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,0.90);text-decoration:none;}
     #navbar.scrolled .nav-link{color:var(--text-muted);}
-    .nav-link:hover,.nav-link.active{color:#D95D39!important;}
+    .nav-link:hover,.nav-link.active-page{color:#D95D39!important;}
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-    .nav-link:hover::after,.nav-link.active::after{transform:scaleX(1);}
+    .nav-link:hover::after,.nav-link.active-page::after{transform:scaleX(1);}
     .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
     #navbar.scrolled .nav-logo-text{color:#D95D39;}
-    .nav-logo-icon{color:#D95D39!important;transition:transform .5s;}
     .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
     .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
     .nav-cta-btn:hover::before{left:120%;}
     .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
     #hamburger-icon{transition:color .3s;color:#ffffff;}
     #navbar.scrolled #hamburger-icon{color:var(--text);}
-    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s,visibility .35s;}
+
+    /* ── MOBILE MENU ── */
+    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
     [data-theme="dark"] #mobile-menu{background:#141410;}
 
@@ -192,14 +189,18 @@
     .dot-sep::before{content:'·';margin:0 .5rem;opacity:.4;}
 
     /* FLOATING */
-    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
+    #fab{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
+    #fab.visible{opacity:1;transform:translateY(0);}
+    #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s;}
+    #fab a:hover{background:#1C1C1C;}
+    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
     #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
     #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
     #whatsapp-fab a:hover{transform:scale(1.1);}
-    #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
+    #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .15s,transform .4s .15s;}
     #theme-toggle.visible{opacity:1;transform:translateY(0);}
-    #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;cursor:pointer;color:var(--text);transition:background .3s,transform .3s;}
-    #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;}
+    #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
+    #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
 
     /* MODAL */
     #article-modal{position:fixed;inset:0;z-index:10001;display:none;align-items:flex-start;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);overflow-y:auto;padding:2rem 1rem;}
@@ -248,8 +249,6 @@
     .share-btn-sm:hover{transform:translateY(-1px);}
     .share-wa:hover{border-color:#25D366;color:#25D366;background:rgba(37,211,102,.06);}
     .share-tw:hover{border-color:#1DA1F2;color:#1DA1F2;background:rgba(29,161,242,.06);}
-    .share-fb:hover{border-color:#4267B2;color:#4267B2;background:rgba(66,103,178,.06);}
-    .share-li:hover{border-color:#0077B5;color:#0077B5;background:rgba(0,119,181,.06);}
     .share-copy:hover{border-color:#D95D39;color:#D95D39;background:rgba(217,93,57,.06);}
     .share-copy.copied{border-color:#4A5D4F;color:#4A5D4F;background:rgba(74,93,79,.08);}
     .url-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(197,160,89,.1);border:1px solid rgba(197,160,89,.25);border-radius:50px;padding:.25rem .75rem;font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.12em;color:#C5A059;margin-bottom:.75rem;}
@@ -257,22 +256,24 @@
     ::-webkit-scrollbar-track{background:var(--bg);}
     ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+    *{-webkit-tap-highlight-color:transparent;}
   </style>
 </head>
-<body class="antialiased">
+<body class="antialiased selection:bg-clay selection:text-white">
 <div id="scroll-progress"></div>
 
-<!-- ══ NAVBAR — transparent over hero, opaque on scroll ══ -->
+<!-- ══ NAVBAR ══ -->
 <nav id="navbar" role="navigation" aria-label="Main navigation">
   <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
-    <div class="hidden lg:flex flex-1 justify-start gap-8 items-center">
-      <a href="about.html"    class="nav-link">About</a>
-      <a href="journal.html"  class="nav-link active">Journals</a>
-      <a href="sessions.html" class="nav-link">Sessions</a>
-      <a href="ayurveda.html" class="nav-link">Ayurveda</a>
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
+      <a href="about.html"     class="nav-link">About</a>
+      <a href="journal.html"   class="nav-link active-page">Journals</a>
+      <a href="sessions.html"  class="nav-link">Sessions</a>
+      <a href="ayurveda.html"  class="nav-link">Ayurveda</a>
+      <a href="community.html" class="nav-link">Community</a>
     </div>
     <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
-      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="nav-logo-icon mb-1 group-hover:scale-110 drop-shadow-sm">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-1 group-hover:scale-110 transition-transform drop-shadow-sm" style="color:#D95D39;">
         <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
         <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
         <circle cx="50" cy="85" r="3" fill="currentColor"/>
@@ -281,7 +282,7 @@
       <span class="nav-logo-text">Samarpan</span>
     </a>
     <div class="hidden lg:flex flex-1 justify-end items-center">
-      <a href="booking.html" class="nav-cta-btn">Start Your Healing Journey</a>
+      <a href="booking.html" onclick="gaEvent('click','CTA','Nav Book Now')" class="nav-cta-btn">Start Your Healing Journey</a>
     </div>
     <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
       <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
@@ -291,7 +292,7 @@
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
+<!-- ══ MOBILE MENU ══ -->
 <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
   <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()" aria-label="Close menu">
     <i data-lucide="x" class="w-7 h-7"></i>
@@ -301,18 +302,20 @@
       <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
       <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
       <circle cx="50" cy="85" r="3" fill="currentColor"/>
+      <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
     </svg>
     <p class="font-display text-xs tracking-widest text-center mt-1.5 text-clay">SAMARPAN</p>
   </div>
-  <a href="about.html"    onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
-  <a href="journal.html"  onclick="toggleMenu()" class="font-display text-2xl text-clay">Journals</a>
-  <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
-  <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
-  <a href="index.html#faq" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">FAQ</a>
+  <a href="about.html"     onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
+  <a href="journal.html"   onclick="toggleMenu()" class="font-display text-2xl text-clay">Journals</a>
+  <a href="sessions.html"  onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
+  <a href="ayurveda.html"  onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
+  <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community</a>
+  <a href="index.html#referral-section" onclick="toggleMenu();" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
   <a href="booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
 </div>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section class="journal-hero pt-[72px]">
   <div class="hero-bg">
     <img src="joshua-woroniecki-0UOI9Pgau7A-unsplash.jpg" alt="Wisdom Stream — Samarpan Journal" loading="eager" fetchpriority="high">
@@ -346,11 +349,11 @@
   </div>
 </section>
 
-<!-- ARTICLES SECTION -->
+<!-- ══ ARTICLES SECTION ══ -->
 <section class="py-16 px-4 sm:px-6" style="background:var(--bg);" id="articlesSection">
   <div class="max-w-7xl mx-auto">
 
-    <!-- Featured Article (first in ARTICLES array) -->
+    <!-- Featured Article -->
     <div class="mb-4 fade-up article-item" data-category="quantum" data-title="quantum physics ayurveda srishti utpatti creation sankhya vedanta adwaita charaka">
       <div class="featured-card" style="height:clamp(380px,58vh,540px);" onclick="openArticle('quantum-physics-ayurveda-srishti-utpatti')">
         <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1800&auto=format&fit=crop" alt="Quantum Physics in Ayurveda — Srishti Utpatti" loading="eager">
@@ -368,7 +371,7 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <div class="md:col-span-1 article-card article-item fade-up fade-up-d1" data-category="ayurveda" data-title="prakriti ayurvedic constitution dosha body type vata pitta kapha" onclick="openArticle('understanding-prakriti-ayurvedic-constitution')">
+      <div class="md:col-span-1 article-card article-item fade-up fade-up-d1" data-category="ayurveda" data-title="prakriti ayurvedic constitution dosha body type vata pitta kapha nadi pariksha" onclick="openArticle('understanding-prakriti-ayurvedic-constitution')">
         <div class="card-img" style="height:220px;"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=600&auto=format&fit=crop" alt="Prakriti — Ayurvedic Constitution" loading="lazy"></div>
         <div class="p-5"><span class="tag bg-clay/10 text-clay">Ayurveda</span><h3 class="font-serif mt-3 mb-2 leading-snug" style="font-size:1.3rem;color:var(--text);">Understanding Your Prakriti</h3><p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Your Ayurvedic constitution — the unchanging blueprint of your being.</p><div class="border-t pt-4" style="border-color:var(--border);"><p class="font-sans text-[9px] uppercase tracking-widest mb-1" style="color:var(--text-muted);">12 min</p><span class="read-more">Read Article <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div></div>
       </div>
@@ -407,7 +410,7 @@
           <a href="about.html" class="mt-4 read-more block">Learn more <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
         </div>
 
-        <!-- ── SIDEBAR NEWSLETTER — Inner Circle ── -->
+        <!-- Sidebar Newsletter -->
         <div class="rounded overflow-hidden fade-up fade-up-d1" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
           <div class="p-6">
             <div class="w-8 h-8 rounded-full bg-clay/20 flex items-center justify-center mb-4"><i data-lucide="moon" class="w-4 h-4 text-brand-gold"></i></div>
@@ -443,14 +446,14 @@
           <div class="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-4"><i data-lucide="calendar" class="w-5 h-5 text-clay"></i></div>
           <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Ready to Begin?</h4>
           <p class="font-sans text-xs mb-5 leading-relaxed" style="color:var(--text-muted);">Book a free 20-minute Dosha Assessment and start your healing journey.</p>
-          <a href="booking.html" class="cta-btn block w-full py-3 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-widest rounded-sm text-center">Book Free Session</a>
+          <a href="booking.html" onclick="gaEvent('click','CTA','Journal Sidebar Book')" class="cta-btn block w-full py-3 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-widest rounded-sm text-center">Book Free Session</a>
         </div>
       </aside>
     </div>
   </div>
 </section>
 
-<!-- ══ FOOTER NEWSLETTER BANNER — Inner Circle ══ -->
+<!-- ══ FOOTER NEWSLETTER BANNER ══ -->
 <section class="py-20 px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
   <div class="max-w-4xl mx-auto fade-up">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -480,65 +483,76 @@
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-brand-black text-white/60 py-16 px-6 border-t border-white/10">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-    <div class="col-span-1 md:col-span-2">
-      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="text-clay mb-4"><circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="85" r="4" fill="currentColor"/><path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/></svg>
+<!-- ══ FOOTER ══ -->
+<footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
+    <div class="sm:col-span-2">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="mb-4" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="4" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/>
+      </svg>
       <h4 class="font-display text-lg tracking-widest text-paper mb-1">SAMARPAN</h4>
-      <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">By Harsh Ranjan</p>
+      <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">Holistic Wellbeing</p>
       <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
       <div class="flex gap-4 mt-6">
-        <a href="https://instagram.com/justtheself" target="_blank" rel="noopener" aria-label="Instagram" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
-        <a href="https://www.youtube.com/@justtheself" target="_blank" rel="noopener" aria-label="YouTube" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+        <a href="https://instagram.com/justtheself" target="_blank" rel="noopener" onclick="gaEvent('click','Social','Instagram')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+        <a href="https://www.youtube.com/@justtheself" target="_blank" rel="noopener" onclick="gaEvent('click','Social','YouTube')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/919661486740" target="_blank" rel="noopener" onclick="gaEvent('click','Social','WhatsApp')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
       </div>
     </div>
     <div>
-      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Journal</h5>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Links</h5>
       <ul class="space-y-3 text-sm">
-        <li><button onclick="setCategory('ayurveda',null)" class="hover:text-white transition">Ayurveda</button></li>
-        <li><button onclick="setCategory('yoga',null)" class="hover:text-white transition">Yoga</button></li>
-        <li><button onclick="setCategory('psychology',null)" class="hover:text-white transition">Psychology</button></li>
-        <li><button onclick="setCategory('meditation',null)" class="hover:text-white transition">Meditation</button></li>
-        <li><button onclick="setCategory('quantum',null)" class="hover:text-white transition">Quantum & Vedas</button></li>
+        <li><a href="sessions.html"  class="hover:text-white transition">Sessions</a></li>
+        <li><a href="ayurveda.html"  class="hover:text-white transition">Ayurveda</a></li>
+        <li><a href="about.html"     class="hover:text-white transition">About</a></li>
+        <li><a href="journal.html"   class="hover:text-white transition">Journals</a></li>
+        <li><a href="community.html" class="hover:text-white transition">Community</a></li>
+        <li><a href="index.html#referral-section" class="hover:text-white transition">Refer a Friend 🎁</a></li>
       </ul>
     </div>
     <div>
-      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Explore</h5>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
-        <li><a href="sessions.html"  class="hover:text-white transition">Sessions</a></li>
-        <li><a href="about.html"     class="hover:text-white transition">About Harsh</a></li>
-        <li><a href="booking.html"   class="hover:text-white transition">Book a Session</a></li>
-        <li><a href="referral.html"  class="hover:text-white transition">Refer a Friend 🎁</a></li>
-        <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition">Contact</a></li>
+        <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
+        <li><a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
+        <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i>@justtheself</a></li>
+        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
       </ul>
     </div>
   </div>
-  <div class="max-w-7xl mx-auto mt-14 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
+  <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
     <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
-    <div class="flex gap-6"><a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a><a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a></div>
+    <div class="flex gap-6">
+      <a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
+      <a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
+    </div>
   </div>
 </footer>
 
-<!-- FLOATING BUTTONS -->
-<div id="whatsapp-fab"><a href="https://wa.me/919999999999" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
-<div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
+<!-- ══ FLOATING BUTTONS ══ -->
+<div id="fab">
+  <a href="booking.html" onclick="gaEvent('click','CTA','FAB Book Now')">
+    <i data-lucide="calendar" class="w-4 h-4"></i>Book Now
+  </a>
+</div>
+<div id="whatsapp-fab">
+  <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20came%20across%20your%20Journal%20and%20feel%20drawn%20to%20begin%20my%20healing%20journey.%20Could%20you%20please%20guide%20me%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+<div id="theme-toggle">
+  <button onclick="toggleTheme()" aria-label="Toggle dark mode">
+    <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
+  </button>
+</div>
 
 <!-- ARTICLE MODAL -->
 <div id="article-modal" role="dialog" aria-modal="true" aria-label="Article"><div class="modal-inner" id="modalContent"></div></div>
 
-<!-- ══════════════════════════════════════════════════════════════════
-     FIREBASE REST API  — same pattern as booking.html
-     Newsletter → homepage_newsletter  (existing security rule)
-     Article views → homepage_journal_leads (needs rule below)
-
-     FIRESTORE SECURITY RULE TO ADD:
-     match /homepage_journal_leads/{docId} {
-       allow create: if isValidEmail();
-       allow read, update, delete: if false;
-     }
-══════════════════════════════════════════════════════════════════ -->
+<!-- ══ FIREBASE REST API ══ -->
 <script>
   var FIREBASE_PROJECT = 'thesamrpan';
   var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
@@ -591,13 +605,11 @@
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim()); }
 
-  /* ── SIDEBAR NEWSLETTER ── */
   async function subscribeSidebar() {
     var email  = (document.getElementById('sidebarEmail').value || '').trim();
     var name   = (document.getElementById('sidebarName').value  || '').trim();
     var status = document.getElementById('sidebarStatus');
     var btn    = document.getElementById('sidebarBtn');
-
     if (!isValidEmail(email)) {
       document.getElementById('sidebarEmail').classList.add('invalid');
       status.innerHTML = '<p style="color:#ef4444;font-size:10px;">Please enter a valid email.</p>';
@@ -607,7 +619,6 @@
     btn.innerHTML = '<span class="btn-spinner"></span> Joining…';
     btn.disabled  = true;
     status.innerHTML = '';
-
     try {
       await saveToFirestore('homepage_newsletter', {
         email:             email,
@@ -631,13 +642,11 @@
     setTimeout(function(){ status.innerHTML = ''; }, 5000);
   }
 
-  /* ── BANNER NEWSLETTER ── */
   async function handleBannerNewsletter() {
     var email  = (document.getElementById('bannerEmail').value || '').trim();
     var name   = (document.getElementById('bannerName').value  || '').trim();
     var status = document.getElementById('bannerStatus');
     var btn    = document.getElementById('bannerBtn');
-
     if (!isValidEmail(email)) {
       document.getElementById('bannerEmail').classList.add('invalid');
       status.innerHTML = '<p style="color:#ef4444;font-size:11px;margin-top:.4rem;">Please enter a valid email address.</p>';
@@ -647,7 +656,6 @@
     btn.innerHTML = '<span class="btn-spinner"></span> Subscribing…';
     btn.disabled  = true;
     status.innerHTML = '';
-
     try {
       await saveToFirestore('homepage_newsletter', {
         email:             email,
@@ -674,237 +682,57 @@
 <script>
 lucide.createIcons();
 
-/* ═══════════════════════════════════════════════════════════════════════
-   ARTICLE DATABASE
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HOW TO ADD A NEW ARTICLE — copy the template at the bottom of this
-   array, fill in your content, and save. That's it. No other changes
-   needed. The article will automatically appear in the list, be
-   searchable, and get its own URL (#slug).
-
-   FIELD GUIDE:
-   slug          → URL-friendly ID, lowercase, hyphens only (no spaces)
-   title         → Article headline (can include <em> for italics)
-   category      → One of: ayurveda | yoga | psychology | tantra |
-                           nutrition | meditation | quantum
-   categoryLabel → Display name shown on the card and in the modal
-   img           → Unsplash URL or your own image path
-   time          → Estimated reading time in minutes (number as string)
-   isNew         → true = shows "NEW" badge. Remove or set false when old.
-   author.name   → Author full name
-   author.role   → Author's title / role
-   author.avatar → Author photo URL
-   excerpt       → 1–2 sentence summary shown on the article card
-   keywords      → Space-separated SEO keywords (used for search + Google)
-   content       → Full HTML article body. Use these components:
-                   <h3>Section Title</h3>
-                   <p>Paragraph text</p>
-                   <ul><li>List item</li></ul>
-                   <div class="modal-blockquote">Quote text</div>
-                   <div class="modal-shloka">
-                     <div class="devanagari">Sanskrit text</div>
-                     <div class="citation">Source reference</div>
-                     <div class="translation">English meaning</div>
-                   </div>
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-═══════════════════════════════════════════════════════════════════════ */
 var ARTICLES = [
-
- /* ─── ARTICLE 1 ─────────────────────────────────────────────────── */
- {
-  slug:'quantum-physics-ayurveda-srishti-utpatti',
-  title:'Quantum Physics in Ayurveda — Exploring <em>Srishti Utpatti</em>',
-  category:'quantum', categoryLabel:'Quantum & Vedas',
-  img:'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1600&auto=format&fit=crop',
-  time:'14',
-  author:{name:'Lella Naga Durga Bhavani',role:'Final-Year BAMS Student | Aspiring Hospital Intern / Junior Doctor',avatar:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200'},
-  excerpt:'How the ancient Sankhya framework of creation mirrors modern quantum field theory — and why Nobel Laureate Dr. Hans-Peter Dürr found Advaita Vedanta in his equations.',
-  keywords:'quantum physics ayurveda srishti utpatti creation sankhya vedanta adwaita charaka hans peter durr fritjof capra',
-  content:`
-   <div class="modal-blockquote">
-     "To have something different, you must do something different. But in order to do something different, you must be able to think something different. And before you can think something different, you must be willing to believe something different."
-     <div class="mt-3 font-sans text-xs font-bold tracking-widest uppercase" style="color:#C5A059;">— Dr. B.M. Hegde</div>
-   </div>
+ {slug:'quantum-physics-ayurveda-srishti-utpatti',title:'Quantum Physics in Ayurveda — Exploring <em>Srishti Utpatti</em>',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1600&auto=format&fit=crop',time:'14',author:{name:'Lella Naga Durga Bhavani',role:'Final-Year BAMS Student | Aspiring Hospital Intern / Junior Doctor',avatar:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200'},excerpt:'How the ancient Sankhya framework of creation mirrors modern quantum field theory — and why Nobel Laureate Dr. Hans-Peter Dürr found Advaita Vedanta in his equations.',keywords:'quantum physics ayurveda srishti utpatti creation sankhya vedanta adwaita charaka hans peter durr fritjof capra',content:`
+   <div class="modal-blockquote">"To have something different, you must do something different. But in order to do something different, you must be able to think something different. And before you can think something different, you must be willing to believe something different."<div class="mt-3 font-sans text-xs font-bold tracking-widest uppercase" style="color:#C5A059;">— Dr. B.M. Hegde</div></div>
    <h3>Introduction</h3>
    <p>Ayurveda is widely recognised as a holistic healing system that cures diseases from their roots — addressing ailments of not just the body, but the mind as well. However, Ayurveda is deeply rooted in profound philosophical backgrounds (<em>Darshanas</em>). It is not merely a science dealing with physiology and pathology; it contains sophisticated concepts operating at the subtlest subconscious levels, which we commonly overlook.</p>
    <p>One such profound concept is <strong>सृष्टि उत्पत्ति</strong> (<em>Srishti Utpatti</em>) — the Creation of the Universe. When we read or hear about this, our minds often gravitate toward the Big Bang Theory. However, when we observe ourselves deeply, we find rhythmic pulses inside and outside our bodies — particles constantly being created and destroyed — which is precisely what our great sages described centuries ago.</p>
    <h3>The Idea of Quantum Physics in <em>Srishti Utpatti</em></h3>
    <p>Even within Ayurveda and ancient Indian philosophy, there are multiple perspectives on the principles of creation. Each tradition approached the same fundamental question from a different angle:</p>
-   <table class="modal-table">
-     <thead><tr><th>Theory / Philosophy</th><th>Principle of Creation</th></tr></thead>
-     <tbody>
-       <tr><td>Dharmika Grantha</td><td>Parabhrama</td></tr>
-       <tr><td>Vaisheshika Darshana</td><td>Paramanu Samyoga</td></tr>
-       <tr><td>Sankhya Darshana</td><td>Avyakta</td></tr>
-       <tr><td>Charaka Samhita</td><td>Prakriti – Purusha Samyoga</td></tr>
-       <tr><td>Upanishads</td><td>Paramatma</td></tr>
-       <tr><td>Jaina & Bauddha Darshana</td><td>Swabhava</td></tr>
-       <tr><td>Nyaya & Yoga Darshana</td><td>Ishwara</td></tr>
-       <tr><td>Vedanta Darshana</td><td>Brahma</td></tr>
-       <tr><td>Quran</td><td>Allah</td></tr>
-       <tr><td>Bhagavata Purana</td><td>Avyakta</td></tr>
-       <tr><td>Modern Science</td><td>Electrons / Subatomic Particles</td></tr>
-     </tbody>
-   </table>
+   <table class="modal-table"><thead><tr><th>Theory / Philosophy</th><th>Principle of Creation</th></tr></thead><tbody><tr><td>Dharmika Grantha</td><td>Parabhrama</td></tr><tr><td>Vaisheshika Darshana</td><td>Paramanu Samyoga</td></tr><tr><td>Sankhya Darshana</td><td>Avyakta</td></tr><tr><td>Charaka Samhita</td><td>Prakriti – Purusha Samyoga</td></tr><tr><td>Upanishads</td><td>Paramatma</td></tr><tr><td>Jaina & Bauddha Darshana</td><td>Swabhava</td></tr><tr><td>Nyaya & Yoga Darshana</td><td>Ishwara</td></tr><tr><td>Vedanta Darshana</td><td>Brahma</td></tr><tr><td>Quran</td><td>Allah</td></tr><tr><td>Bhagavata Purana</td><td>Avyakta</td></tr><tr><td>Modern Science</td><td>Electrons / Subatomic Particles</td></tr></tbody></table>
    <p>Among all these concepts, we primarily and authentically study the ideologies presented by <strong>Sankhya, Sushruta, and Charaka</strong>.</p>
    <h3>Sankhya Darshana</h3>
    <p>Sankhya Darshana proposes the <em>Panchavimshati Tattva</em> (25 elements) for the evolution of creation:</p>
-   <div class="creation-flow">
-     <div class="flow-box">Moola Prakriti (Avyakta) + Purusha</div>
-     <div class="flow-arrow">↓</div>
-     <div class="flow-box">Mahat (Cosmic Intelligence)</div>
-     <div class="flow-arrow">↓</div>
-     <div class="flow-box">Trividha Ahankara (Threefold Ego)</div>
-     <div class="flow-arrow">↓</div>
-     <div class="flow-branches">
-       <div class="flow-branch"><strong>Sattvika</strong><br>Ekadasha Indriyas (11)</div>
-       <div class="flow-branch"><strong>Rajasika</strong><br>Activating Force</div>
-       <div class="flow-branch"><strong>Tamasika</strong><br>Pancha Tanmatras → Pancha Mahabhutas</div>
-     </div>
-   </div>
+   <div class="creation-flow"><div class="flow-box">Moola Prakriti (Avyakta) + Purusha</div><div class="flow-arrow">↓</div><div class="flow-box">Mahat (Cosmic Intelligence)</div><div class="flow-arrow">↓</div><div class="flow-box">Trividha Ahankara (Threefold Ego)</div><div class="flow-arrow">↓</div><div class="flow-branches"><div class="flow-branch"><strong>Sattvika</strong><br>Ekadasha Indriyas (11)</div><div class="flow-branch"><strong>Rajasika</strong><br>Activating Force</div><div class="flow-branch"><strong>Tamasika</strong><br>Pancha Tanmatras → Pancha Mahabhutas</div></div></div>
    <h3>Sushruta Samhita — The Shat Karanas</h3>
    <p>Acharya Sushruta accepted the <em>Panchavimshati Tattva</em> alongside the <em>Shat Karanas</em> (Six Causes) as the core principles of creation.</p>
-   <div class="modal-shloka">
-     <div class="devanagari">स्वभावमीश्वरं कालं यदृच्छा नियतिं तथा।<br>परिणामं च मन्यन्ते प्रकृतिं पृथुदर्शिनः॥</div>
-     <div class="citation">Su. Sha. 1/11</div>
-     <div class="translation">Those of broad vision consider Swabhava, Ishwara, Kala, Yadriccha, Niyati, and Parinama as the causes of Prakriti.</div>
-   </div>
-   <p>The six causes are: <strong>(1) Swabhava</strong> (Inherent Nature), <strong>(2) Ishwara</strong> (God / Supreme Soul), <strong>(3) Kala</strong> (Time), <strong>(4) Yadriccha</strong> (Chance / Accident), <strong>(5) Niyati</strong> (Fate / Destiny), and <strong>(6) Parinama</strong> (Transformation).</p>
+   <div class="modal-shloka"><div class="devanagari">स्वभावमीश्वरं कालं यदृच्छा नियतिं तथा।<br>परिणामं च मन्यन्ते प्रकृतिं पृथुदर्शिनः॥</div><div class="citation">Su. Sha. 1/11</div><div class="translation">Those of broad vision consider Swabhava, Ishwara, Kala, Yadriccha, Niyati, and Parinama as the causes of Prakriti.</div></div>
    <h3>Charaka Samhita — The Chaturvimshati Tattva</h3>
    <p>Unlike Sushruta and Sankhya, Acharya Charaka presented a unique framework through the <em>Chaturvimshati Tattva</em> (24 elements), viewing <em>Purusha</em> and <em>Prakriti</em> as inseparable (<em>Abheda</em>).</p>
-   <div class="modal-shloka">
-     <div class="devanagari">अव्यक्तमस्य क्षेत्रस्य क्षेत्रज्ञमृषयो विदुः।</div>
-     <div class="citation">Cha. Sha. 1/65</div>
-     <div class="translation">The sages know the Unmanifest as the Field (Kshetra), and its Knower (Kshetrajna) as the one who resides within it.</div>
-   </div>
-   <div class="tattva-grid">
-     <div class="tattva-item"><span class="name">Avyakta (Purusha = Prakriti)</span><span class="count">× 1</span></div>
-     <div class="tattva-item"><span class="name">Mahan (Intellect)</span><span class="count">× 1</span></div>
-     <div class="tattva-item"><span class="name">Ahankar (Ego)</span><span class="count">× 1</span></div>
-     <div class="tattva-item"><span class="name">Pancha Tanmatras</span><span class="count">× 5</span></div>
-     <div class="tattva-item"><span class="name">Pancha Mahabhutas</span><span class="count">× 5</span></div>
-     <div class="tattva-item"><span class="name">Ekadasha Indriyas</span><span class="count">× 11</span></div>
-   </div>
-   <ul>
-     <li><strong>Kshetra (The Field)</strong> — The 24 Achetana Tattvas (inert / unconscious elements). The Dwelling.</li>
-     <li><strong>Kshetrajna (The Knower of the Field)</strong> — The 25th Tattva, Purusha or Chetana. The Dweller.</li>
-   </ul>
+   <div class="modal-shloka"><div class="devanagari">अव्यक्तमस्य क्षेत्रस्य क्षेत्रज्ञमृषयो विदुः।</div><div class="citation">Cha. Sha. 1/65</div><div class="translation">The sages know the Unmanifest as the Field (Kshetra), and its Knower (Kshetrajna) as the one who resides within it.</div></div>
+   <div class="tattva-grid"><div class="tattva-item"><span class="name">Avyakta (Purusha = Prakriti)</span><span class="count">× 1</span></div><div class="tattva-item"><span class="name">Mahan (Intellect)</span><span class="count">× 1</span></div><div class="tattva-item"><span class="name">Ahankar (Ego)</span><span class="count">× 1</span></div><div class="tattva-item"><span class="name">Pancha Tanmatras</span><span class="count">× 5</span></div><div class="tattva-item"><span class="name">Pancha Mahabhutas</span><span class="count">× 5</span></div><div class="tattva-item"><span class="name">Ekadasha Indriyas</span><span class="count">× 11</span></div></div>
    <h3>The Parallels with Modern Quantum Physics</h3>
    <p>This ancient understanding deeply mirrors the findings of modern quantum physics. German physicist and Nobel Laureate <strong>Dr. Hans-Peter Dürr</strong>, in his article <em>"Matter is Not Made Out of Matter"</em>, beautifully encapsulated this convergence:</p>
-   <div class="modal-blockquote">
-     "I have been a nuclear scientist looking for matter. One fine day, I found there is no matter at all, but I wasn't worried because I was expecting the same. I called it <strong>'Aduality'</strong> — no duality between matter and energy — but who am I in front of the great Indian sage Shankaracharya, who called it <strong>'Adwaita'</strong> centuries ago?"
-     <div class="mt-2 font-sans text-xs" style="color:#C5A059;font-weight:700;">— Dr. Hans-Peter Dürr, German Physicist & Nobel Laureate</div>
-   </div>
+   <div class="modal-blockquote">"I have been a nuclear scientist looking for matter. One fine day, I found there is no matter at all, but I wasn't worried because I was expecting the same. I called it <strong>'Aduality'</strong> — no duality between matter and energy — but who am I in front of the great Indian sage Shankaracharya, who called it <strong>'Adwaita'</strong> centuries ago?"<div class="mt-2 font-sans text-xs" style="color:#C5A059;font-weight:700;">— Dr. Hans-Peter Dürr, German Physicist & Nobel Laureate</div></div>
    <h3>Adwaita Siddhantha — The Doctrine of Non-Duality</h3>
-   <p>Adwaita Vedanta explains that there is nothing in the world except <em>Brahma Padartha</em> (Pure Energy / Consciousness). Dr. Dürr referenced this shloka from the Bhagavad Gita to illustrate this concept:</p>
-   <div class="modal-shloka">
-     <div class="devanagari">बहिरन्तश्च भूतानामचरं चरमेव च।<br>सूक्ष्मत्वात्तदविज्ञेयं दूरस्थं चान्तिके च तत्॥</div>
-     <div class="citation">Bhagavad Gita 13/15</div>
-     <div class="translation">It exists inside and outside of all beings, moving and unmoving. It is so subtle that it is incomprehensible; it is far away, yet it is very near.</div>
-   </div>
-   <p>Energy is constantly moving inside and outside of everything. Even though objects appear solid, the underlying reality is so subtle that future science may only begin to grasp it. Dr. Dürr referred to this underlying reality as <em>"Wirklichkeit"</em> — meaning <strong>actuality</strong> or <strong>true reality</strong>.</p>
+   <div class="modal-shloka"><div class="devanagari">बहिरन्तश्च भूतानामचरं चरमेव च।<br>सूक्ष्मत्वात्तदविज्ञेयं दूरस्थं चान्तिके च तत्॥</div><div class="citation">Bhagavad Gita 13/15</div><div class="translation">It exists inside and outside of all beings, moving and unmoving. It is so subtle that it is incomprehensible; it is far away, yet it is very near.</div></div>
    <h3>Fritjof Capra & The Dance of Shiva</h3>
-   <p>A colleague of Dr. Dürr, the Austrian physicist <strong>Fritjof Capra</strong>, became famous for discussing the intersection of Eastern thought and modern science in his landmark book <em>The Tao of Physics</em>. He wrote of a pivotal moment of realisation:</p>
-   <div class="modal-blockquote">
-     "I was sitting by the ocean one late summer afternoon, watching the waves rolling in and feeling the rhythm of my breathing, when I suddenly became aware of my whole environment as being engaged in a gigantic cosmic dance... I saw the atoms of elements and those of my body participating in this cosmic dance of energy. I felt its rhythm and I 'heard' its sound, and at that moment I knew that this was the <strong>Dance of Shiva</strong>, the Lord of Dancers worshipped by the Hindus."
-     <div class="mt-2 font-sans text-xs" style="color:#C5A059;font-weight:700;">— Fritjof Capra, <em>The Tao of Physics</em></div>
-   </div>
+   <div class="modal-blockquote">"I was sitting by the ocean one late summer afternoon, watching the waves rolling in and feeling the rhythm of my breathing, when I suddenly became aware of my whole environment as being engaged in a gigantic cosmic dance... I felt its rhythm and I 'heard' its sound, and at that moment I knew that this was the <strong>Dance of Shiva</strong>, the Lord of Dancers worshipped by the Hindus."<div class="mt-2 font-sans text-xs" style="color:#C5A059;font-weight:700;">— Fritjof Capra, <em>The Tao of Physics</em></div></div>
    <h3>Conclusion</h3>
-   <p>When we read or hear about <em>Srishti Utpatti Krama</em>, our minds often gravitate toward the Big Bang Theory. We frequently confuse the Ayurvedic framework with Newtonian mechanics when we attempt to correlate the two. However, when we deeply observe ourselves and the universe, we discover rhythmic pulses inside and outside our bodies — everywhere, particles are constantly being created and destroyed.</p>
-   <p>This profound cosmic rhythm, articulated centuries ago by great sages like <strong>Adi Shankaracharya</strong> and <strong>Acharya Charaka</strong>, is the exact same phenomenon being described by modern minds like <strong>Dr. Hans-Peter Dürr</strong> and <strong>Fritjof Capra</strong> today. The language differs; the truth is one.</p>
-  `
- },
-
- /* ─── ARTICLE 2 ─────────────────────────────────────────────────── */
- {slug:'understanding-prakriti-ayurvedic-constitution',title:'Understanding Your Prakriti — The Blueprint of Your Being',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=1600&auto=format&fit=crop',time:'12',author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How your Ayurvedic constitution shapes your reality, relationships, and path to vibrant health.',keywords:'prakriti ayurvedic constitution dosha body type vata pitta kapha nadi pariksha',content:`<h3>What is Prakriti?</h3><p>Prakriti is your unique biological and psychological constitution — determined at the moment of conception and unchanging throughout your life. It is the lens through which you experience the world, your inherent strengths and vulnerabilities, and the key to your most vibrant health.</p><h3>The Three Doshas</h3><p>Prakriti is expressed through three fundamental bio-energies: <strong>Vata</strong> (air and ether), governing all movement; <strong>Pitta</strong> (fire and water), governing transformation and digestion; and <strong>Kapha</strong> (earth and water), governing structure, stability, and immunity. Every individual is a unique combination of these three forces.</p><h3>Why Prakriti Matters</h3><p>Modern medicine treats every human as having the same optimal parameters. Ayurveda recognised 5,000 years ago that each body has unique optimal requirements. A Vata person thrives on warmth, routine, and grounding practices. A Pitta person needs cooling, non-competitive environments. A Kapha person needs stimulation and variety.</p><div class="modal-blockquote">"Prakriti is not just your body type — it is the original song of your existence."</div><h3>How Prakriti is Assessed</h3><p>A trained Ayurvedic practitioner assesses Prakriti through pulse diagnosis (Nadi Pariksha), physical characteristics, mental tendencies, digestive capacity, sleep patterns, emotional responses, and speech. No two Prakritis are identical — which is why Ayurveda offers truly personalised medicine.</p>`},
-
- /* ─── ARTICLE 3 ─────────────────────────────────────────────────── */
+   <p>When we deeply observe ourselves and the universe, we discover rhythmic pulses inside and outside our bodies — everywhere, particles are constantly being created and destroyed. This profound cosmic rhythm, articulated centuries ago by great sages like <strong>Adi Shankaracharya</strong> and <strong>Acharya Charaka</strong>, is the exact same phenomenon being described by modern minds like <strong>Dr. Hans-Peter Dürr</strong> and <strong>Fritjof Capra</strong> today. The language differs; the truth is one.</p>
+  `},
+ {slug:'understanding-prakriti-ayurvedic-constitution',title:'Understanding Your Prakriti — The Blueprint of Your Being',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=1600&auto=format&fit=crop',time:'12',author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How your Ayurvedic constitution shapes your reality, relationships, and path to vibrant health.',keywords:'prakriti ayurvedic constitution dosha body type vata pitta kapha nadi pariksha',content:`<h3>What is Prakriti?</h3><p>Prakriti is your unique biological and psychological constitution — determined at the moment of conception and unchanging throughout your life. It is the lens through which you experience the world, your inherent strengths and vulnerabilities, and the key to your most vibrant health.</p><h3>The Three Doshas</h3><p>Prakriti is expressed through three fundamental bio-energies: <strong>Vata</strong> (air and ether), governing all movement; <strong>Pitta</strong> (fire and water), governing transformation and digestion; and <strong>Kapha</strong> (earth and water), governing structure, stability, and immunity.</p><div class="modal-blockquote">"Prakriti is not just your body type — it is the original song of your existence."</div><h3>How Prakriti is Assessed</h3><p>A trained Ayurveda Biologist assesses Prakriti through pulse diagnosis (Nadi Pariksha), physical characteristics, mental tendencies, digestive capacity, sleep patterns, emotional responses, and speech. No two Prakritis are identical — which is why Ayurveda offers truly personalised medicine.</p>`},
  {slug:'trauma-body-somatic-healing',title:'Trauma & The Body — Why Talk Therapy Isn\'t Enough',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1600&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan',role:'Integrative Psychologist & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Somatic therapy, Yoga Nidra, and breathwork heal what words cannot reach.',keywords:'trauma body somatic healing nervous system yoga nidra polyvagal',content:`<h3>Where Trauma Lives</h3><p>Trauma is not a story in your mind — it is a physiological state encoded in your nervous system, muscles, and fascia. Dr. Bessel van der Kolk's research demonstrated what somatic practitioners have long known: the body holds unresolved trauma even when the conscious mind has "moved on."</p><h3>Somatic Approaches</h3><p>Somatic Experiencing guides clients to track body sensations and slowly discharge the freeze response stored in the nervous system. Yoga Nidra accesses delta brainwave states where traumatic imprints can dissolve without re-traumatisation. Pranayama directly regulates the vagus nerve — the superhighway between body and brain.</p><div class="modal-blockquote">"The wound is not in the story — it is in the body. Healing begins the moment the body is heard."</div>`},
-
- /* ─── ARTICLE 4 ─────────────────────────────────────────────────── */
- {slug:'neurobiology-of-mantra-sacred-sound',title:'The Neurobiology of Mantra — How Sacred Sound Rewires the Brain',category:'tantra',categoryLabel:'Tantra & Spirit',img:'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1600&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan',role:'Vedic Sciences Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Modern neuroscience maps what yogis have known for millennia about sacred sound.',keywords:'mantra neurobiology sound vibration brain neural rewiring cortisol AUM',content:`<h3>Sound and the Nervous System</h3><p>Studies at Harvard Medical School and NIMHANS Bangalore have shown that sustained chanting activates the parasympathetic nervous system, reduces cortisol, and increases grey matter volume in the left prefrontal cortex. The repetitive phonemes of Sanskrit mantras synchronise brainwave activity, entraining the mind into healing frequencies.</p><h3>Nada Brahma — Sound is Brahma</h3><p>The Vedic principle that the universe emerged from primordial sound (Anahata Nada) is not mere metaphor. Modern string theory proposes that all matter is composed of vibrating strings of energy. Patanjali codified AUM as representing the four states of consciousness — and neuroscience finds that chanting AUM activates the vagus nerve, thalamus, and limbic system simultaneously.</p>`},
-
- /* ─── ARTICLE 5 ─────────────────────────────────────────────────── */
+ {slug:'neurobiology-of-mantra-sacred-sound',title:'The Neurobiology of Mantra — How Sacred Sound Rewires the Brain',category:'tantra',categoryLabel:'Tantra & Spirit',img:'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1600&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan',role:'Vedic Sciences Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Modern neuroscience maps what yogis have known for millennia about sacred sound.',keywords:'mantra neurobiology sound vibration brain neural rewiring cortisol AUM',content:`<h3>Sound and the Nervous System</h3><p>Studies at Harvard Medical School and NIMHANS Bangalore have shown that sustained chanting activates the parasympathetic nervous system, reduces cortisol, and increases grey matter volume in the left prefrontal cortex. The repetitive phonemes of Sanskrit mantras synchronise brainwave activity, entraining the mind into healing frequencies.</p><h3>Nada Brahma — Sound is Brahma</h3><p>The Vedic principle that the universe emerged from primordial sound (Anahata Nada) is not mere metaphor. Patanjali codified AUM as representing the four states of consciousness — and neuroscience finds that chanting AUM activates the vagus nerve, thalamus, and limbic system simultaneously.</p>`},
  {slug:'agni-sacred-fire-ayurvedic-health',title:'Agni — The Sacred Fire That Determines Your Health',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1600&auto=format&fit=crop',time:'9',isNew:true,author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'In Ayurveda, Agni is the metabolic intelligence behind every transformation in the body and mind.',keywords:'agni digestive fire ayurveda metabolism pitta gut health',content:`<h3>The Four States of Agni</h3><p><strong>Sama Agni</strong> (balanced) digests well and creates mental clarity. <strong>Vishama Agni</strong> (variable, Vata type) causes bloating, anxiety, and irregular digestion. <strong>Tikshna Agni</strong> (sharp, Pitta type) causes acidity, inflammation, and irritability. <strong>Manda Agni</strong> (slow, Kapha type) causes sluggishness and weight gain.</p><div class="modal-shloka"><div class="devanagari">आयुः सत्त्वबलारोग्यसुखप्रीतिविवर्धनाः।</div><div class="citation">Charaka Samhita, Su. 27/3</div><div class="translation">Agni is the source of life, complexion, strength, health, enthusiasm and the vital breath.</div></div><h3>Kindling Your Agni</h3><p>Warm water with ginger and lemon before meals primes digestive enzymes. Eating in silence, chewing thoroughly, and avoiding cold water during meals preserves Agni. Spices like cumin, coriander, and fennel fan the digestive flame without burning it.</p>`},
-
- /* ─── ARTICLE 6 ─────────────────────────────────────────────────── */
- {slug:'ajapa-japa-mantra-breath-meditation',title:'Ajapa Japa — The Mantra You Are Already Chanting',category:'meditation',categoryLabel:'Meditation',img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop',time:'11',author:{name:'Harsh Ranjan',role:'Meditation & Tantra Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Every breath you take is a silent mantra — Soham: "I am That." Turn the breath into conscious awakening.',keywords:'ajapa japa soham mantra breath meditation consciousness vijnana bhairava',content:`<h3>The Meaning of Soham</h3><p>Right now, with every breath, you are chanting the most sacred mantra in existence. <em>So</em> — on the inhale. <em>Ham</em> — on the exhale. Soham: "I am That." This happens 21,600 times per day, every day of your life. The practice of Ajapa Japa is simply becoming conscious of what is already occurring.</p><p>The Vijnana Bhairava Tantra describes Ajapa Japa as the fastest path to liberation because it requires no separate practice — only awareness of what is already happening.</p><h3>The Practice</h3><p>Sit comfortably. Observe the natural breath without controlling it. On the inhale, internally hear <em>So</em>. On the exhale, internally hear <em>Ham</em>. Do not force — simply listen. Over weeks, the vibration begins to permeate consciousness even outside of formal practice.</p>`},
-
- /* ─── ARTICLE 7 ─────────────────────────────────────────────────── */
+ {slug:'ajapa-japa-mantra-breath-meditation',title:'Ajapa Japa — The Mantra You Are Already Chanting',category:'meditation',categoryLabel:'Meditation',img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop',time:'11',author:{name:'Harsh Ranjan',role:'Meditation & Tantra Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Every breath you take is a silent mantra — Soham: "I am That." Turn the breath into conscious awakening.',keywords:'ajapa japa soham mantra breath meditation consciousness vijnana bhairava',content:`<h3>The Meaning of Soham</h3><p>Right now, with every breath, you are chanting the most sacred mantra in existence. <em>So</em> — on the inhale. <em>Ham</em> — on the exhale. Soham: "I am That." This happens 21,600 times per day, every day of your life. The practice of Ajapa Japa is simply becoming conscious of what is already occurring.</p><h3>The Practice</h3><p>Sit comfortably. Observe the natural breath without controlling it. On the inhale, internally hear <em>So</em>. On the exhale, internally hear <em>Ham</em>. Do not force — simply listen. Over weeks, the vibration begins to permeate consciousness even outside of formal practice.</p>`},
  {slug:'sattvic-diet-clarity-peace-vitality',title:'The Sattvic Diet — Eating for Clarity, Peace & Vitality',category:'nutrition',categoryLabel:'Nutrition',img:'https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=1600&auto=format&fit=crop',time:'6',author:{name:'Harsh Ranjan',role:'Ayurveda Nutritionist & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'What you eat shapes your mind as much as your body — the Ayurvedic key to mental clarity.',keywords:'sattvic diet food ayurveda nutrition clarity peace vitality gunas',content:`<h3>Three Qualities of Food</h3><p>The Bhagavad Gita and Charaka Samhita both articulate the same truth: food is not merely fuel — it is information that shapes consciousness. <strong>Sattvic</strong> foods promote clarity, compassion, and spiritual sensitivity. <strong>Rajasic</strong> foods increase agitation and hyperactivity. <strong>Tamasic</strong> foods induce lethargy, dullness, and mental fog.</p><h3>Sattvic Foods</h3><p>Fresh fruits, vegetables, whole grains, legumes, dairy products, seeds, and mild spices are the foundation of a Sattvic diet. Food should be freshly prepared, eaten mindfully, and ideally offered in gratitude before consumption.</p>`},
-
- /* ─── ARTICLE 8 ─────────────────────────────────────────────────── */
  {slug:'rewiring-anxiety-vagus-nerve-yoga',title:'Rewiring Anxiety — The Vagus Nerve, Yoga & Modern Science',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop',time:'13',author:{name:'Harsh Ranjan',role:'Integrative Psychologist & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'The intersection of ancient pranayama and polyvagal theory reveals a direct pathway to calm.',keywords:'anxiety vagus nerve yoga polyvagal theory nervous system nadi shodhana pranayama',content:`<h3>Polyvagal Theory & The Vagus Nerve</h3><p>Dr. Stephen Porges' polyvagal theory explains that the vagus nerve — the longest nerve in the body — acts as a brake on the sympathetic nervous system. When vagal tone is high, we feel calm, social, and creative. When low, we oscillate between anxious hyperactivation and depressive shutdown.</p><h3>Yogic Vagal Activation</h3><p><strong>Nadi Shodhana</strong> (alternate nostril breathing) directly stimulates vagal afferents. <strong>Bhramari</strong> (humming breath) creates internal resonance that activates vagal ganglia. <strong>Extended exhalation</strong> (4-count inhale, 8-count exhale) engages the parasympathetic response within seconds of beginning.</p>`},
-
- /* ─── ARTICLE 9 ─────────────────────────────────────────────────── */
  {slug:'seven-chakras-consciousness-tantra',title:'The Seven Chakras — Centres of Consciousness, Not Just Energy',category:'tantra',categoryLabel:'Tantra & Spirit',img:'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1600&auto=format&fit=crop',time:'15',author:{name:'Harsh Ranjan',role:'Tantra & Vedic Sciences Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'A rigorous exploration of the chakra system through Tantra Shastra and modern psychology.',keywords:'chakra energy centres kundalini vedanta consciousness tantra bija mantra',content:`<h3>The Tantric Chakra System</h3><p>In Tantra Shastra, chakras are psycho-energetic centres along the Sushumna Nadi — the central channel of the subtle body. Described as lotus flowers with specific petal counts corresponding to Sanskrit phonemes, each has a seed syllable (Bija Mantra), a presiding deity, and an elemental correspondence.</p><h3>The Seven Centres</h3><p>Muladhara (survival, earth), Svadhisthana (creativity, water), Manipura (will, fire), Anahata (love, air), Vishuddha (expression, ether), Ajna (intuition, light), Sahasrara (pure consciousness, beyond elements). Kundalini Shakti — the evolutionary energy — rises through these centres as consciousness expands.</p>`},
-
- /* ─── ARTICLE 10 ────────────────────────────────────────────────── */
- {slug:'yoga-nidra-sleep-healing-science',title:'Yoga Nidra — The Sleep of the Yogis That Heals Faster Than Rest',category:'yoga',categoryLabel:'Yoga',img:'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1600&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan',role:'Yoga & Meditation Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'30 minutes of Yoga Nidra can provide the restorative equivalent of four hours of sleep.',keywords:'yoga nidra sleep consciousness delta waves healing AIIMS nsdr koshas',content:`<h3>The Science</h3><p>Research from AIIMS Delhi confirms that 30 minutes of Yoga Nidra produces hormonal and neurological restoration equivalent to 4 hours of conventional sleep. Growth hormone secretion spikes. Cortisol drops significantly. The prefrontal cortex, suppressed during stress, reactivates.</p><h3>The Practice Structure</h3><p>A traditional Yoga Nidra session follows: physical relaxation (Shavasana) → breath awareness → Sankalpa (intention) → rotation of consciousness through body parts → awareness of opposites (hot/cold, heavy/light) → inner space visualisation → return to waking consciousness. The practitioner remains at the threshold between waking and sleep.</p>`},
-
- /* ─── ARTICLE 11 ────────────────────────────────────────────────── */
+ {slug:'yoga-nidra-sleep-healing-science',title:'Yoga Nidra — The Sleep of the Yogis That Heals Faster Than Rest',category:'yoga',categoryLabel:'Yoga',img:'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1600&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan',role:'Yoga & Meditation Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'30 minutes of Yoga Nidra can provide the restorative equivalent of four hours of sleep.',keywords:'yoga nidra sleep consciousness delta waves healing AIIMS nsdr koshas',content:`<h3>The Science</h3><p>Research from AIIMS Delhi confirms that 30 minutes of Yoga Nidra produces hormonal and neurological restoration equivalent to 4 hours of conventional sleep. Growth hormone secretion spikes. Cortisol drops significantly. The prefrontal cortex, suppressed during stress, reactivates.</p><h3>The Practice Structure</h3><p>A traditional Yoga Nidra session follows: physical relaxation (Shavasana) → breath awareness → Sankalpa (intention) → rotation of consciousness through body parts → awareness of opposites (hot/cold, heavy/light) → inner space visualisation → return to waking consciousness.</p>`},
  {slug:'ritucharya-seasonal-eating-ayurveda',title:'Ritucharya — Eating With the Seasons to Prevent Disease',category:'nutrition',categoryLabel:'Nutrition',img:'https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?q=80&w=1600&auto=format&fit=crop',time:'7',author:{name:'Harsh Ranjan',role:'Ayurveda Nutritionist & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:"Ayurveda's seasonal eating guide reveals why monsoon demands completely different foods than winter.",keywords:'ritucharya seasonal eating ayurveda monsoon winter spring disease prevention ritu',content:`<h3>The Six Seasons of Ayurveda</h3><p>Ayurveda recognises six seasons (Ritus): Vasanta (Spring), Grishma (Summer), Varsha (Monsoon), Sharad (Autumn), Hemanta (Early Winter), and Shishira (Late Winter). Each season accumulates specific doshas and requires specific dietary adjustments to maintain balance.</p><h3>Monsoon — The Most Critical Season</h3><p>During Varsha Ritu, Agni is at its weakest. Ayurveda prescribes warm, light, easily digestible foods: moong dal khichdi, cooked vegetables, warming spices, and minimal raw food. This is precisely when modern people consume salads and cold smoothies — inadvertently creating conditions for digestive disorders.</p>`},
-
- /* ─── ARTICLE 12 ────────────────────────────────────────────────── */
  {slug:'pranayama-science-conscious-breathing',title:'Pranayama — The Ancient Science of Conscious Breathing',category:'yoga',categoryLabel:'Yoga',img:'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1600&auto=format&fit=crop',time:'7',author:{name:'Harsh Ranjan',role:'Yoga & Pranayama Teacher, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How controlling the breath controls the mind — and the five techniques that will change your life.',keywords:'pranayama breath yoga science kapalabhati bhastrika nadi shodhana kumbhaka',content:`<h3>Five Essential Practices</h3><p><strong>Nadi Shodhana</strong> — balances left and right brain hemispheres, deeply calms the nervous system. <strong>Kapalabhati</strong> — rapid exhalations stimulate digestive fire and clear the frontal lobes. <strong>Bhastrika</strong> — increases oxygenation and Prana flow throughout the body. <strong>Bhramari</strong> — activates vagus nerve, rapidly reduces anxiety. <strong>Kumbhaka</strong> (breath retention) — suspends mental activity and induces deep meditative states.</p>`},
-
- /* ─── ARTICLE 13 ────────────────────────────────────────────────── */
  {slug:'vata-pitta-kapha-three-doshas-deep-dive',title:'Vata, Pitta & Kapha — A Deep Dive Into the Three Doshas',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How the doshas interact, fluctuate through seasons, and how to identify imbalance before it becomes disease.',keywords:'vata pitta kapha doshas imbalance disease seasons ayurveda constitution',content:`<h3>Vata — The Force of Movement</h3><p>Governed by air and ether, Vata controls all movement — nerve impulses, circulation, breathing, and elimination. In balance: creative, enthusiastic, quick-thinking. Imbalanced: anxiety, insomnia, constipation, dry skin, scattered thinking, joint pain.</p><h3>Pitta — The Force of Transformation</h3><p>Governed by fire and water, Pitta controls digestion, metabolism, and intelligence. In balance: courageous, focused, warm, and decisive. Imbalanced: inflammation, acidity, skin rashes, anger, perfectionism, and burnout.</p><h3>Kapha — The Force of Cohesion</h3><p>Governed by earth and water, Kapha provides structure, stability, and lubrication. In balance: compassionate, patient, stable, with enduring strength. Imbalanced: weight gain, congestion, depression, lethargy, and attachment.</p>`},
-
- /* ─── ARTICLE 14 ────────────────────────────────────────────────── */
  {slug:'four-states-consciousness-vedanta-neuroscience',title:'The Four States of Consciousness — Vedanta Meets Neuroscience',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1600&auto=format&fit=crop',time:'16',author:{name:'Harsh Ranjan',role:'Vedanta & Consciousness Studies, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Waking, dreaming, deep sleep, and Turiya — the fourth state that modern science is only beginning to confirm.',keywords:'vedanta neuroscience four states consciousness turiya waking dreaming mandukya upanishad',content:`<h3>The Mandukya Upanishad Framework</h3><p>The Mandukya Upanishad describes four states: Jagrat (waking), Svapna (dreaming), Sushupti (deep sleep), and Turiya (the fourth). Neuroscience has mapped the first three with extraordinary precision through EEG brainwave research.</p><h3>Turiya — The Fourth State</h3><p>Turiya is not a state that comes and goes — it is the unchanging witness of all three states. It is pure awareness itself. Neuroscience has detected Gamma brainwaves (40+ Hz) in long-term meditators during deep practice — the closest science has come to mapping what Vedanta has always called Turiya.</p>`},
-
- /* ─── ARTICLE 15 ────────────────────────────────────────────────── */
  {slug:'gut-brain-axis-second-brain-mental-health',title:'The Gut-Brain Axis — Your Second Brain & Mental Health',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=1600&auto=format&fit=crop',time:'11',author:{name:'Harsh Ranjan',role:'Integrative Health Practitioner, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How the microbiome influences mood, anxiety, and cognition — and why Ayurveda has always known this.',keywords:'gut brain axis microbiome mental health serotonin ayurveda second brain enteric nervous system',content:`<h3>The Microbiome & Mood</h3><p>The enteric nervous system contains over 500 million neurons and produces 95% of the body's serotonin. Research shows gut bacterial composition directly influences neurotransmitter production, inflammatory markers, and cortisol regulation. Dysbiosis — gut microbial imbalance — is now linked to depression, anxiety, and cognitive decline.</p><h3>The Ayurvedic Solution</h3><p>Ayurveda identified three types of gut imbalance thousands of years ago and prescribed specific dietary protocols, herbal interventions, and lifestyle practices for each. Fermented foods, warming spices, regular meal timing, and the avoidance of incompatible food combinations are the foundational prescriptions.</p>`},
-
- /* ─── ARTICLE 16 ────────────────────────────────────────────────── */
  {slug:'panchakarma-ayurvedic-detox-explained',title:'Panchakarma — The Complete Ayurvedic Detox Explained',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1507120878965-54b2d3939100?q=80&w=1600&auto=format&fit=crop',time:'12',author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'The five purification therapies of Panchakarma and how they cleanse toxins at the cellular level.',keywords:'panchakarma detox ayurveda vamana virechana basti nasyam raktamokshana',content:`<h3>The Five Therapies</h3><p><strong>Vamana</strong> (therapeutic emesis) — eliminates excess Kapha from the upper body. <strong>Virechana</strong> (therapeutic purgation) — the gold standard for Pitta-related disorders. <strong>Basti</strong> (medicated enema) — the most important Panchakarma therapy, described as the half of all treatments in Charaka Samhita. <strong>Nasyam</strong> (nasal administration) — clears Kapha from the head and neck. <strong>Raktamokshana</strong> (blood purification) — for specific skin and haematological conditions.</p>`},
-
- /* ─── ARTICLE 17 ────────────────────────────────────────────────── */
  {slug:'dinacharya-ayurvedic-daily-routine',title:'Dinacharya — The Ayurvedic Daily Routine That Transforms Everything',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1600&auto=format&fit=crop',time:'9',author:{name:'Harsh Ranjan',role:'Ayurveda Lifestyle Practitioner, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'How a structured morning ritual aligns your body with the natural rhythms of the day.',keywords:'dinacharya daily routine ayurveda morning ritual abhyanga oil pulling brahma muhurta',content:`<h3>The Morning Sequence</h3><p>Rise before sunrise during <strong>Brahma Muhurta</strong> (4:30–6:00 AM). Drink warm water to stimulate the colon. Oil pull with sesame oil for 10–20 minutes (Kavala Graha). Tongue scraping removes overnight Ama accumulation. Self-massage (Abhyanga) with warm sesame oil grounds Vata. Pranayama and meditation. A warm, nourishing breakfast only after Agni is kindled (approximately 8 AM).</p><h3>The Chronobiology</h3><p>Modern chronobiology confirms this ancient science: cortisol peaks at sunrise to mobilise energy; digestive enzyme secretion peaks at midday; melatonin rises after dusk. Ayurveda designed Dinacharya precisely to leverage these biological rhythms.</p>`},
-
- /* ─── ARTICLE 18 ────────────────────────────────────────────────── */
  {slug:'ojas-vital-essence-immunity-longevity',title:'Ojas — The Vital Essence Behind Immunity, Glow & Longevity',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1600&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'Ojas is the ultimate refined essence of all bodily tissues — the source of immunity, glow, and longevity.',keywords:'ojas vital essence immunity ayurveda tejas prana rasayana longevity',content:`<h3>What Depletes Ojas</h3><p>Excessive sexual activity, overwork, chronic emotional stress, poor sleep, alcohol, processed food, and prolonged grief are the primary Ojas-depleting factors. Modern life is extraordinarily depleting — which explains the epidemic of autoimmune disease, infertility, chronic fatigue, and anxiety.</p><h3>Building Ojas</h3><p>Sattvic diet, adequate restorative sleep, loving relationships, regular meditation, and Rasayana (rejuvenative) therapies build Ojas steadily over time. The most potent Ojas-building substances are: warm full-fat milk with ashwagandha and saffron, dates, ghee, soaked almonds, and raw honey.</p>`},
-
- /* ─── ARTICLE 19 ────────────────────────────────────────────────── */
  {slug:'advaita-self-vedanta-neuroscience',title:'Advaita & the Self — Who Are You Really?',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1600&auto=format&fit=crop',time:'18',author:{name:'Harsh Ranjan',role:'Vedanta & Consciousness Studies, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:'The self you think you are is a construct — and liberation lies beyond it. Science and Vedanta now agree.',keywords:'advaita non duality self identity consciousness awareness vedanta ramana maharshi default mode network',content:`<h3>The Neuroscience of Self</h3><p>The Default Mode Network (DMN) — the brain's self-referential circuitry — is what neuroscience calls the "self." Studies of experienced meditators show that deep practice dramatically reduces DMN activity. When the narrative self quietens, practitioners report experiences of boundless awareness — what Vedanta calls Sat-Chit-Ananda (Being-Consciousness-Bliss).</p><div class="modal-blockquote">"You are not the body. You are not the mind. You are the pure awareness in which the body and mind appear." — Ramana Maharshi</div><h3>The Practical Path</h3><p>Atma Vichara (self-inquiry) — tracing every experience back to its witness — is the direct path recommended by Ramana Maharshi. Ask: "To whom is this thought appearing? Who is aware of this sensation?" This practice progressively weakens false identification with the constructed self, revealing the unchanging awareness you have always been.</p>`},
+ {slug:'pcos-hormonal-health-ayurveda-women',title:'PCOS & Hormonal Healing — The Ayurvedic Approach to Women\'s Health',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=1600&auto=format&fit=crop',time:'11',isNew:true,author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:"Ayurveda's approach to PCOS, irregular cycles, and hormonal imbalance — addressing the root cause, not just the symptoms.",keywords:'PCOS hormonal health ayurveda women fertility irregular periods Kapha Vata stri roga rasayana',content:`<h3>PCOS Through the Ayurvedic Lens</h3><p>In Ayurveda, PCOS is understood primarily as a Kapha-Vata imbalance affecting the Artavaha Srotas (reproductive channels). Excess Kapha causes the formation of cysts; disturbed Vata disrupts the hormonal communication network. The modern approach of symptom suppression addresses nothing at the root.</p><h3>Ayurvedic Protocol</h3><p><strong>Dietary Correction:</strong> Reducing Kapha-aggravating foods (dairy, sugar, cold foods) and increasing bitter and astringent tastes. <strong>Herbal Support:</strong> Shatavari (Asparagus racemosus) is the primary Stri Rasayana — a rasayana specifically for female reproductive health. Guduchi, Ashoka, and Lodhra support hormonal balance. <strong>Yoga Therapy:</strong> Specific asanas targeting the pelvic region improve blood flow and reduce cystic formations over time.</p><div class="modal-blockquote">"A woman's hormonal intelligence is intimately connected to the lunar cycles. Restoring this natural rhythm is the beginning of healing."</div>`}
+];
 
- /* ─── ARTICLE 20 ────────────────────────────────────────────────── */
- {slug:'pcos-hormonal-health-ayurveda-women',title:'PCOS & Hormonal Healing — The Ayurvedic Approach to Women\'s Health',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=1600&auto=format&fit=crop',time:'11',isNew:true,author:{name:'Harsh Ranjan',role:'Ayurveda Practitioner & Founder, Samarpan',avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'},excerpt:"Ayurveda's approach to PCOS, irregular cycles, and hormonal imbalance — addressing the root cause, not just the symptoms.",keywords:'PCOS hormonal health ayurveda women fertility irregular periods Kapha Vata stri roga rasayana',content:`<h3>PCOS Through the Ayurvedic Lens</h3><p>In Ayurveda, PCOS is understood primarily as a Kapha-Vata imbalance affecting the Artavaha Srotas (reproductive channels). Excess Kapha causes the formation of cysts; disturbed Vata disrupts the hormonal communication network. The modern approach of symptom suppression addresses nothing at the root.</p><h3>Ayurvedic Protocol</h3><p><strong>Dietary Correction:</strong> Reducing Kapha-aggravating foods (dairy, sugar, cold foods) and increasing bitter and astringent tastes. <strong>Herbal Support:</strong> Shatavari (Asparagus racemosus) is the primary Stri Rasayana — a rasayana specifically for female reproductive health. Guduchi, Ashoka, and Lodhra support hormonal balance. <strong>Yoga Therapy:</strong> Specific asanas targeting the pelvic region improve blood flow and reduce cystic formations over time.</p><div class="modal-blockquote">"A woman's hormonal intelligence is intimately connected to the lunar cycles. Restoring this natural rhythm is the beginning of healing."</div>`},
-
- /* ═══════════════════════════════════════════════════════════════════
-    ➕ TO ADD A NEW ARTICLE — copy this template and fill it in:
-
- {
-  slug:'your-article-slug-here',
-  title:'Your Article Title Here',
-  category:'ayurveda',        // ayurveda | yoga | psychology | tantra | nutrition | meditation | quantum
-  categoryLabel:'Ayurveda',   // display name
-  img:'https://images.unsplash.com/photo-XXXXXXX?q=80&w=1600&auto=format&fit=crop',
-  time:'8',                   // reading time in minutes
-  isNew:true,                 // remove this line once article is older
-  author:{
-    name:'Harsh Ranjan',
-    role:'Your Role Here',
-    avatar:'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?q=80&w=200'
-  },
-  excerpt:'One or two sentences summarising the article for the card.',
-  keywords:'keyword1 keyword2 keyword3 topic ayurveda yoga',
-  content:`
-    <h3>First Section Title</h3>
-    <p>Your paragraph text here...</p>
-    <h3>Second Section</h3>
-    <p>More content...</p>
-    <div class="modal-blockquote">A quote if you have one.</div>
-  `
- },
-    ═══════════════════════════════════════════════════════════════════ */
-
-]; // ← END OF ARTICLES ARRAY — do not remove this line
-
-/* ══════════════════════════════════════════════════════════════════
-   BUILD ARTICLE LIST
-══════════════════════════════════════════════════════════════════ */
 function buildArticleList() {
   var container = document.getElementById('articleList');
   container.innerHTML = ARTICLES.slice(1).map(function(a) {
@@ -932,85 +760,40 @@ function buildArticleList() {
   lucide.createIcons();
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   OPEN ARTICLE MODAL + SEO (updates page title & meta for Google)
-══════════════════════════════════════════════════════════════════ */
 function openArticle(slug) {
   var a = ARTICLES.find(function(x){ return x.slug === slug; });
   if (!a) return;
-
   var articleUrl  = 'https://www.thesamarpan.co.in/journal.html#' + a.slug;
   var cleanTitle  = a.title.replace(/<[^>]+>/g,'');
   var shareText   = encodeURIComponent(cleanTitle + ' — Samarpan Journal');
   var shareUrl    = encodeURIComponent(articleUrl);
-
-  /* ── Update page title & meta description for SEO ── */
   document.title = cleanTitle + ' | Samarpan Journal';
   var metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) metaDesc.setAttribute('content', a.excerpt);
-  var ogTitle = document.querySelector('meta[property="og:title"]');
-  if (ogTitle) ogTitle.setAttribute('content', cleanTitle + ' | Samarpan Journal');
-  var ogDesc = document.querySelector('meta[property="og:description"]');
-  if (ogDesc) ogDesc.setAttribute('content', a.excerpt);
   var canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) canonical.setAttribute('href', articleUrl);
-
-  /* ── Inject per-article JSON-LD for Google ── */
   var oldLd = document.getElementById('article-ld');
   if (oldLd) oldLd.remove();
   var ld = document.createElement('script');
-  ld.id = 'article-ld';
-  ld.type = 'application/ld+json';
-  ld.textContent = JSON.stringify({
-    '@context':'https://schema.org',
-    '@type':'BlogPosting',
-    'headline': cleanTitle,
-    'description': a.excerpt,
-    'keywords': a.keywords,
-    'url': articleUrl,
-    'image': a.img,
-    'author':{'@type':'Person','name': a.author.name,'url':'https://www.thesamarpan.co.in/about.html'},
-    'publisher':{'@type':'Organization','name':'Samarpan','url':'https://www.thesamarpan.co.in','logo':{'@type':'ImageObject','url':'https://www.thesamarpan.co.in/logo-512.png'}},
-    'mainEntityOfPage': articleUrl,
-    'inLanguage':'en-IN',
-    'timeRequired':'PT' + a.time + 'M'
-  });
+  ld.id = 'article-ld'; ld.type = 'application/ld+json';
+  ld.textContent = JSON.stringify({'@context':'https://schema.org','@type':'BlogPosting','headline':cleanTitle,'description':a.excerpt,'keywords':a.keywords,'url':articleUrl,'image':a.img,'author':{'@type':'Person','name':a.author.name,'url':'https://www.thesamarpan.co.in/about.html'},'publisher':{'@type':'Organization','name':'Samarpan','url':'https://www.thesamarpan.co.in'},'inLanguage':'en-IN','timeRequired':'PT'+a.time+'M'});
   document.head.appendChild(ld);
-
   document.getElementById('modalContent').innerHTML =
-    '<div class="modal-hero-img">' +
-      '<img src="' + a.img + '" alt="' + cleanTitle + '">' +
-      '<div class="modal-hero-overlay"></div>' +
-      '<button class="modal-close" onclick="closeModal()" aria-label="Close article">✕</button>' +
-      '<div class="absolute bottom-5 left-6 right-6" style="z-index:2;">' +
-        '<span class="tag bg-clay text-white">' + a.categoryLabel + '</span>' +
-        '<p class="font-sans text-[9px] uppercase tracking-widest text-white/60 mt-2">' + a.time + ' min read</p>' +
-      '</div>' +
-    '</div>' +
+    '<div class="modal-hero-img"><img src="' + a.img + '" alt="' + cleanTitle + '"><div class="modal-hero-overlay"></div>' +
+    '<button class="modal-close" onclick="closeModal()" aria-label="Close article">✕</button>' +
+    '<div class="absolute bottom-5 left-6 right-6" style="z-index:2;"><span class="tag bg-clay text-white">' + a.categoryLabel + '</span><p class="font-sans text-[9px] uppercase tracking-widest text-white/60 mt-2">' + a.time + ' min read</p></div></div>' +
     '<div class="modal-body">' +
-      '<div class="url-badge"><i data-lucide="link" class="w-3 h-3"></i> thesamarpan.co.in/journal.html#' + a.slug + '</div>' +
-      '<h2>' + a.title + '</h2>' +
-      '<div class="author-card">' +
-        '<div class="author-avatar"><img src="' + a.author.avatar + '" alt="' + a.author.name + '" class="w-full h-full object-cover"></div>' +
-        '<div>' +
-          '<p class="font-serif text-base font-semibold" style="color:var(--text);">' + a.author.name + '</p>' +
-          '<p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">' + a.author.role + '</p>' +
-          '<p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:#C5A059;">' + a.time + ' min read · ' + a.categoryLabel + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="share-bar">' +
-        '<span class="font-sans text-[9px] uppercase tracking-widest self-center" style="color:var(--text-muted);margin-right:.25rem;">Share:</span>' +
-        '<button class="share-btn-sm share-wa" onclick="shareA(\'wa\',\'' + shareUrl + '\',\'' + shareText + '\')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</button>' +
-        '<button class="share-btn-sm share-tw" onclick="shareA(\'tw\',\'' + shareUrl + '\',\'' + shareText + '\')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</button>' +
-        '<button class="share-btn-sm share-copy" id="copyBtn" onclick="copyLink(\'' + articleUrl + '\')"><i data-lucide="link" class="w-3 h-3"></i> Copy Link</button>' +
-      '</div>' +
-      a.content +
-      '<div class="mt-8 pt-6 border-t flex flex-col sm:flex-row gap-3" style="border-color:var(--border);">' +
-        '<a href="booking.html" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm">Book a Session →</a>' +
-        '<button onclick="closeModal()" class="flex-1 py-3 border text-xs font-bold uppercase tracking-widest rounded-sm hover:border-clay hover:text-clay transition" style="border-color:var(--border);color:var(--text-muted);">Close</button>' +
-      '</div>' +
+    '<div class="url-badge"><i data-lucide="link" class="w-3 h-3"></i> thesamarpan.co.in/journal.html#' + a.slug + '</div>' +
+    '<h2>' + a.title + '</h2>' +
+    '<div class="author-card"><div class="author-avatar"><img src="' + a.author.avatar + '" alt="' + a.author.name + '" class="w-full h-full object-cover"></div>' +
+    '<div><p class="font-serif text-base font-semibold" style="color:var(--text);">' + a.author.name + '</p><p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">' + a.author.role + '</p><p class="font-sans text-[9px] uppercase tracking-widest mt-1" style="color:#C5A059;">' + a.time + ' min read · ' + a.categoryLabel + '</p></div></div>' +
+    '<div class="share-bar"><span class="font-sans text-[9px] uppercase tracking-widest self-center" style="color:var(--text-muted);margin-right:.25rem;">Share:</span>' +
+    '<button class="share-btn-sm share-wa" onclick="shareA(\'wa\',\'' + shareUrl + '\',\'' + shareText + '\')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</button>' +
+    '<button class="share-btn-sm share-tw" onclick="shareA(\'tw\',\'' + shareUrl + '\',\'' + shareText + '\')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Twitter</button>' +
+    '<button class="share-btn-sm share-copy" id="copyBtn" onclick="copyLink(\'' + articleUrl + '\')"><i data-lucide="link" class="w-3 h-3"></i> Copy Link</button></div>' +
+    a.content +
+    '<div class="mt-8 pt-6 border-t flex flex-col sm:flex-row gap-3" style="border-color:var(--border);"><a href="booking.html" onclick="gaEvent(\'click\',\'CTA\',\'Article Modal Book\')" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm">Book a Session →</a><button onclick="closeModal()" class="flex-1 py-3 border text-xs font-bold uppercase tracking-widest rounded-sm hover:border-clay hover:text-clay transition" style="border-color:var(--border);color:var(--text-muted);">Close</button></div>' +
     '</div>';
-
   document.getElementById('article-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
   document.getElementById('article-modal').scrollTop = 0;
@@ -1030,51 +813,38 @@ function closeModal() {
   history.pushState({}, '', '/journal.html');
 }
 
-/* ── SHARE ── */
 function shareA(p, url, text) {
-  var urls = {
-    wa:'https://wa.me/?text=' + text + '%20' + url,
-    tw:'https://twitter.com/intent/tweet?text=' + text + '&url=' + url + '&via=justtheself',
-    fb:'https://www.facebook.com/sharer/sharer.php?u=' + url,
-    li:'https://www.linkedin.com/sharing/share-offsite/?url=' + url
-  };
+  var urls = { wa:'https://wa.me/?text='+text+'%20'+url, tw:'https://twitter.com/intent/tweet?text='+text+'&url='+url+'&via=justtheself' };
   window.open(urls[p], '_blank', 'width=600,height=500');
   gaEvent('share','Article',p);
 }
 function copyLink(url) {
-  var btn  = document.getElementById('copyBtn');
+  var btn = document.getElementById('copyBtn');
   var done = function() {
-    btn.classList.add('copied');
-    btn.innerHTML = '<i data-lucide="check" class="w-3 h-3"></i> Copied!';
-    lucide.createIcons();
+    btn.classList.add('copied'); btn.innerHTML='<i data-lucide="check" class="w-3 h-3"></i> Copied!'; lucide.createIcons();
     setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<i data-lucide="link" class="w-3 h-3"></i> Copy Link'; lucide.createIcons(); }, 2500);
   };
-  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(done);
-  else done();
+  if (navigator.clipboard) navigator.clipboard.writeText(url).then(done).catch(done); else done();
   gaEvent('copy_link','Article',url);
 }
 
-/* ── INTERSECTION OBSERVER ── */
 var fadeObs = new IntersectionObserver(function(entries){
   entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); }});
 },{threshold:0.07});
 
-/* ── INIT ── */
 window.addEventListener('DOMContentLoaded', function() {
   lucide.createIcons();
   buildArticleList();
-  setTimeout(function(){ document.querySelectorAll('.reveal-inner').forEach(function(el,i){ setTimeout(function(){ el.classList.add('up'); }, 300 + i * 150); }); }, 100);
-
-  /* Theme on load */
+  setTimeout(function(){
+    document.querySelectorAll('.reveal-inner').forEach(function(el,i){
+      setTimeout(function(){ el.classList.add('up'); }, 300 + i * 150);
+    });
+  }, 100);
   var stored = localStorage.getItem('samarpan-theme') || 'light';
   document.documentElement.setAttribute('data-theme', stored);
   var ti = document.getElementById('themeIcon');
   if (ti) { ti.setAttribute('data-lucide', stored === 'dark' ? 'sun' : 'moon'); lucide.createIcons(); }
-
-  /* Fade-up observer */
   document.querySelectorAll('.fade-up').forEach(function(el){ fadeObs.observe(el); });
-
-  /* Open article from hash URL (e.g. /journal.html#slug) */
   var hash = window.location.hash.replace('#','');
   if (hash) {
     var found = ARTICLES.find(function(a){ return a.slug === hash; });
@@ -1082,20 +852,17 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-/* ── SCROLL ── */
 window.addEventListener('scroll', function() {
   var sp = document.getElementById('scroll-progress');
-  if (sp) sp.style.width = Math.min((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100) + '%';
+  if (sp) sp.style.width = Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';
   var nav = document.getElementById('navbar');
-  if (nav) { if (window.scrollY > 60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled'); }
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
   var show = window.scrollY > 300;
-  var wf = document.getElementById('whatsapp-fab');
-  var tt = document.getElementById('theme-toggle');
-  if (wf) wf.classList.toggle('visible', show);
-  if (tt) tt.classList.toggle('visible', show);
+  ['fab','whatsapp-fab','theme-toggle'].forEach(function(id){
+    var el = document.getElementById(id); if (el) el.classList.toggle('visible', show);
+  });
 },{passive:true});
 
-/* ── MOBILE MENU ── */
 var menuOpen = false;
 function toggleMenu() {
   menuOpen = !menuOpen;
@@ -1107,7 +874,6 @@ function toggleMenu() {
   lucide.createIcons();
 }
 
-/* ── THEME TOGGLE ── */
 function toggleTheme() {
   var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
@@ -1116,7 +882,6 @@ function toggleTheme() {
   lucide.createIcons();
 }
 
-/* ── FILTER ── */
 var activeCategory = 'all';
 function setCategory(cat, btn) {
   activeCategory = cat;
@@ -1141,7 +906,6 @@ function filterArticles() {
   if (c) c.textContent = visible + ' Article' + (visible !== 1 ? 's' : '');
 }
 
-/* ── KEYBOARD ── */
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeModal(); if (menuOpen) toggleMenu(); }
 });
