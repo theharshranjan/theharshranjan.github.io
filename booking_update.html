@@ -114,6 +114,7 @@
     .form-select2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.08);}
     .form-label{font-family:'Lato',sans-serif;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.5rem;}
     .form-input2.invalid,.form-textarea2.invalid,.form-select2.invalid{border-color:#ef4444 !important;}
+    .form-input2.valid-field,.form-textarea2.valid-field{border-color:#4A5D4F !important;}
     .required-star{color:#D95D39;}
 
     .cta-btn{position:relative;overflow:hidden;transition:background .4s,box-shadow .4s,transform .2s;cursor:pointer;}
@@ -401,7 +402,7 @@
                   </div>
                 </div>
                 <div class="mb-5">
-                  <label class="form-label">Age &amp; Gender <span class="required-star">*</span></label>
+                  <label class="form-label">Age &amp; Gender <span class="font-sans text-[9px]" style="color:var(--text-muted);font-weight:400;">(Optional)</span></label>
                   <div class="grid grid-cols-2 gap-4">
                     <input type="number" id="bAge" class="form-input2" placeholder="Age (e.g. 32)" min="10" max="100">
                     <div class="relative">
@@ -456,7 +457,7 @@
                 </div>
 
                 <!-- Consent -->
-                <div class="space-y-3 mb-7 p-4 rounded-lg" style="background:var(--bg2);border:1px solid var(--border);">
+                <div id="consentBox" class="space-y-3 mb-7 p-4 rounded-lg" style="background:var(--bg2);border:1px solid var(--border);transition:border-color .3s;">
                   <label class="flex items-start gap-3 cursor-pointer">
                     <input type="checkbox" id="bConsent1" class="mt-0.5 w-4 h-4 accent-[#D95D39] flex-shrink-0">
                     <span class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">I understand that Samarpan's services are holistic wellness coaching and do not replace medical treatment. <span class="required-star">*</span></span>
@@ -804,6 +805,13 @@
     // Banner
     if (localStorage.getItem('samarpan-banner-dismissed'))
       document.getElementById('top-banner').classList.add('dismissed');
+
+    // Wire up real-time validation
+    attachLiveValidation();
+
+    // Store original button HTML for restore after error
+    var submitBtn = document.getElementById('bookingSubmitBtn');
+    if (submitBtn) submitBtn.setAttribute('data-orig-html', submitBtn.innerHTML);
   });
 
   function selectProgramme(btn, name) {
@@ -832,11 +840,52 @@
     _selectedTime = btn.textContent.trim();
   }
 
+  // Real-time inline validation
+  function attachLiveValidation() {
+    // Name
+    document.getElementById('bName').addEventListener('input', function() {
+      var ok = this.value.trim().length > 0;
+      this.classList.toggle('invalid', !ok && this.value.length > 0);
+      this.classList.toggle('valid-field', ok);
+      document.getElementById('bNameErr').classList.toggle('hidden', ok || this.value.length === 0);
+    });
+    // Email
+    document.getElementById('bEmail').addEventListener('input', function() {
+      var ok = isEmail(this.value);
+      this.classList.toggle('invalid', !ok && this.value.length > 0);
+      this.classList.toggle('valid-field', ok);
+      document.getElementById('bEmailErr').classList.toggle('hidden', ok || this.value.length === 0);
+    });
+    // Timezone
+    document.getElementById('bTimezone').addEventListener('change', function() {
+      var ok = this.value !== '';
+      this.classList.toggle('invalid', !ok);
+      document.getElementById('bTimezoneErr').classList.toggle('hidden', ok);
+    });
+    // Concerns
+    document.getElementById('bConcerns').addEventListener('input', function() {
+      var ok = this.value.trim().length > 0;
+      this.classList.toggle('invalid', !ok && this.value.length > 0);
+      document.getElementById('bConcernsErr').classList.toggle('hidden', ok || this.value.length === 0);
+    });
+    // Consents — clear consent error box when user ticks
+    ['bConsent1','bConsent2'].forEach(function(id) {
+      document.getElementById(id).addEventListener('change', function() {
+        var c1 = document.getElementById('bConsent1').checked;
+        var c2 = document.getElementById('bConsent2').checked;
+        if (c1 && c2) {
+          document.getElementById('bConsentErr').classList.add('hidden');
+          document.getElementById('consentBox').style.borderColor = 'var(--border)';
+        }
+      });
+    });
+  }
+
   async function handleBookingSubmit() {
     var btn       = document.getElementById('bookingSubmitBtn');
     var statusDiv = document.getElementById('bookingStatus');
-    var origHTML  = btn.innerHTML;
 
+    // Collect all values
     var name       = document.getElementById('bName').value.trim();
     var email      = document.getElementById('bEmail').value.trim();
     var phone      = document.getElementById('bPhone').value.trim();
@@ -851,33 +900,93 @@
     var consent1   = document.getElementById('bConsent1').checked;
     var consent2   = document.getElementById('bConsent2').checked;
 
+    // Track the first invalid element to scroll to
+    var firstInvalidEl = null;
     var valid = true;
 
+    // Must have a programme selected first
     if (!_selectedProgramme) {
       document.getElementById('progError').classList.remove('hidden');
       document.getElementById('programmeGrid').scrollIntoView({ behavior:'smooth', block:'center' });
       return;
     }
 
-    if (!name)           { document.getElementById('bName').classList.add('invalid');     document.getElementById('bNameErr').classList.remove('hidden');     valid=false; }
-    else                 { document.getElementById('bName').classList.remove('invalid');   document.getElementById('bNameErr').classList.add('hidden'); }
-    if (!isEmail(email)) { document.getElementById('bEmail').classList.add('invalid');    document.getElementById('bEmailErr').classList.remove('hidden');    valid=false; }
-    else                 { document.getElementById('bEmail').classList.remove('invalid');  document.getElementById('bEmailErr').classList.add('hidden'); }
-    if (!timezone)       { document.getElementById('bTimezone').classList.add('invalid'); document.getElementById('bTimezoneErr').classList.remove('hidden'); valid=false; }
-    else                 { document.getElementById('bTimezone').classList.remove('invalid'); document.getElementById('bTimezoneErr').classList.add('hidden'); }
-    if (!concerns)       { document.getElementById('bConcerns').classList.add('invalid'); document.getElementById('bConcernsErr').classList.remove('hidden'); valid=false; }
-    else                 { document.getElementById('bConcerns').classList.remove('invalid'); document.getElementById('bConcernsErr').classList.add('hidden'); }
-    if (!consent1 || !consent2) { document.getElementById('bConsentErr').classList.remove('hidden'); valid=false; }
-    else                        { document.getElementById('bConsentErr').classList.add('hidden'); }
+    // Validate name
+    if (!name) {
+      document.getElementById('bName').classList.add('invalid');
+      document.getElementById('bNameErr').classList.remove('hidden');
+      if (!firstInvalidEl) firstInvalidEl = document.getElementById('bName');
+      valid = false;
+    } else {
+      document.getElementById('bName').classList.remove('invalid');
+      document.getElementById('bNameErr').classList.add('hidden');
+    }
 
+    // Validate email
+    if (!isEmail(email)) {
+      document.getElementById('bEmail').classList.add('invalid');
+      document.getElementById('bEmailErr').classList.remove('hidden');
+      if (!firstInvalidEl) firstInvalidEl = document.getElementById('bEmail');
+      valid = false;
+    } else {
+      document.getElementById('bEmail').classList.remove('invalid');
+      document.getElementById('bEmailErr').classList.add('hidden');
+    }
+
+    // Validate timezone
+    if (!timezone) {
+      document.getElementById('bTimezone').classList.add('invalid');
+      document.getElementById('bTimezoneErr').classList.remove('hidden');
+      if (!firstInvalidEl) firstInvalidEl = document.getElementById('bTimezone');
+      valid = false;
+    } else {
+      document.getElementById('bTimezone').classList.remove('invalid');
+      document.getElementById('bTimezoneErr').classList.add('hidden');
+    }
+
+    // Validate concerns (only required text field besides name/email)
+    if (!concerns) {
+      document.getElementById('bConcerns').classList.add('invalid');
+      document.getElementById('bConcernsErr').classList.remove('hidden');
+      if (!firstInvalidEl) firstInvalidEl = document.getElementById('bConcerns');
+      valid = false;
+    } else {
+      document.getElementById('bConcerns').classList.remove('invalid');
+      document.getElementById('bConcernsErr').classList.add('hidden');
+    }
+
+    // Validate consent checkboxes
+    if (!consent1 || !consent2) {
+      document.getElementById('bConsentErr').classList.remove('hidden');
+      document.getElementById('consentBox').style.borderColor = '#ef4444';
+      if (!firstInvalidEl) firstInvalidEl = document.getElementById('consentBox');
+      valid = false;
+    } else {
+      document.getElementById('bConsentErr').classList.add('hidden');
+      document.getElementById('consentBox').style.borderColor = 'var(--border)';
+    }
+
+    // Scroll to the very first problem — not always bName
     if (!valid) {
-      statusDiv.innerHTML = '<div class="form-error">✗ Please fill all required fields and accept the terms.</div>';
-      document.getElementById('bName').scrollIntoView({ behavior:'smooth', block:'center' });
+      if (firstInvalidEl) {
+        firstInvalidEl.scrollIntoView({ behavior:'smooth', block:'center' });
+        // Small focus delay for fields
+        setTimeout(function() {
+          if (firstInvalidEl.tagName === 'INPUT' || firstInvalidEl.tagName === 'TEXTAREA' || firstInvalidEl.tagName === 'SELECT') {
+            firstInvalidEl.focus();
+          }
+        }, 400);
+      }
+      statusDiv.innerHTML = '';
       return;
     }
 
+    // Clear any old status
+    statusDiv.innerHTML = '';
+
     btn.disabled = true;
     btn.innerHTML = '<span class="btn-spinner"></span> Submitting your booking…';
+    var origHTML = btn.getAttribute('data-orig-html') || '<i data-lucide="calendar-check" class="w-4 h-4"></i> Confirm My Booking Request';
     statusDiv.innerHTML = '';
 
     try {
