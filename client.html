@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wellness Portal — Samarpan</title>
+  <meta name="description" content="Your personal Samarpan wellness portal. View your Dosha profile, sessions, and resources.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://thesamarpan.co.in/client.html">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23FDFBF7' stroke='%23D95D39' stroke-width='4'/%3E%3Cpath d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' fill='none' stroke='%23D95D39' stroke-width='4'/%3E%3Ccircle cx='50' cy='85' r='5' fill='%23D95D39'/%3E%3Cline x1='20' y1='50' x2='80' y2='50' stroke='%23D95D39' stroke-width='2' opacity='0.8'/%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1C1C1C">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --bg:#FDFBF7; --bg2:#F9F7F4; --bg3:#FFFFFF;
+      --text:#1C1C1C; --text-muted:#666666;
+      --border:#e8e4de; --card-bg:#FFFFFF;
+      --clay:#D95D39; --gold:#C5A059; --sage:#4A5D4F;
+      --shadow:0 2px 24px rgba(0,0,0,0.07);
+    }
+    [data-theme="dark"] {
+      --bg:#141410; --bg2:#1A1A16; --bg3:#1F1F1B;
+      --text:#F0EDE6; --text-muted:#9A9080;
+      --border:#2E2E28; --card-bg:#1F1F1B;
+      --shadow:0 2px 24px rgba(0,0,0,0.4);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      transition: background .4s, color .4s;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: .4;
+    }
+
+    /* ── Typography helpers ── */
+    .font-serif  { font-family: 'Cormorant Garamond', serif; }
+    .font-display{ font-family: 'Marcellus', serif; }
+    .text-clay   { color: var(--clay); }
+    .text-gold   { color: var(--gold); }
+    .text-muted  { color: var(--text-muted); }
+
+    /* ── Form inputs ── */
+    .input {
+      width: 100%; background: transparent;
+      border: 1.5px solid var(--border); border-radius: 4px;
+      padding: .85rem .75rem; font-size: 16px;
+      font-family: 'Lato', sans-serif; color: var(--text);
+      outline: none; transition: border-color .3s;
+    }
+    .input:focus { border-color: var(--clay); }
+    .input.err   { border-color: var(--clay); }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      position: relative; overflow: hidden;
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      background: var(--clay); color: #fff;
+      border: none; border-radius: 2px; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: 10px;
+      font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+      padding: .9rem 1.5rem; transition: background .3s, transform .2s, box-shadow .3s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: #c24e2c; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(217,93,57,.4); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: transparent; border: 1.5px solid var(--border);
+      border-radius: 2px; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: 10px;
+      font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      padding: .75rem 1.2rem; color: var(--text-muted);
+      transition: border-color .3s, color .3s;
+    }
+    .btn-ghost:hover { border-color: var(--clay); color: var(--clay); }
+    .btn-google {
+      display: flex; align-items: center; justify-content: center; gap: .75rem;
+      width: 100%; background: var(--card-bg);
+      border: 1.5px solid var(--border); border-radius: 4px;
+      padding: .85rem 1rem; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--text); transition: border-color .3s, background .2s;
+    }
+    .btn-google:hover { border-color: var(--clay); background: rgba(217,93,57,.03); }
+    .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,.35); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Layout screens ── */
+    .screen { display: none; min-height: 100vh; position: relative; z-index: 1; }
+    .screen.active { display: flex; flex-direction: column; }
+
+    /* ── Auth screen ── */
+    #auth-screen {
+      align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .auth-card {
+      width: 100%; max-width: 440px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,.1);
+    }
+    .auth-header {
+      background: linear-gradient(135deg,#1C1C1C,#2d1a12);
+      padding: 2rem 2rem 1.5rem;
+      text-align: center;
+    }
+    .auth-body { padding: 1.75rem 2rem 2rem; }
+    .divider-or {
+      display: flex; align-items: center; gap: .75rem;
+      margin: 1.25rem 0;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .divider-or::before, .divider-or::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .tab-row { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+    .tab {
+      flex: 1; padding: .75rem; background: transparent; border: none;
+      cursor: pointer; font-family: 'Lato', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--text-muted);
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color .3s, border-color .3s;
+    }
+    .tab.active { color: var(--clay); border-bottom-color: var(--clay); }
+
+    /* ── Dashboard screen ── */
+    #dashboard-screen { background: var(--bg); }
+
+    .dash-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(253,251,247,.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      padding: 0 1.5rem; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    [data-theme="dark"] .dash-nav {
+      background: rgba(20,20,16,.96);
+    }
+    .dash-logo {
+      display: flex; align-items: center; gap: .65rem;
+      text-decoration: none;
+    }
+    .dash-logo-text {
+      font-family: 'Marcellus', serif;
+      font-size: 11px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--clay);
+    }
+    .dash-user-pill {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg,var(--clay),var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Marcellus', serif; font-size: 13px; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .dash-content { max-width: 1000px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* ── Welcome banner ── */
+    .welcome-banner {
+      background: linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);
+      border-radius: 8px; padding: 1.75rem 2rem;
+      display: flex; flex-direction: column; gap: .5rem;
+      position: relative; overflow: hidden; margin-bottom: 2rem;
+    }
+    .welcome-banner::after {
+      content: '';
+      position: absolute; right: -20px; top: -20px;
+      width: 120px; height: 120px;
+      border: 1px solid rgba(197,160,89,.15);
+      border-radius: 50%;
+    }
+
+    /* ── Dosha card ── */
+    .dosha-result-card {
+      border-radius: 6px; overflow: hidden;
+      border: 1px solid var(--border); margin-bottom: 1.5rem;
+    }
+    .dosha-bar { height: 4px; }
+    .dosha-bar-vata  { background: linear-gradient(90deg,#4A5D4F,#7A9B82); }
+    .dosha-bar-pitta { background: linear-gradient(90deg,#D95D39,#E8855A); }
+    .dosha-bar-kapha { background: linear-gradient(90deg,#C5A059,#D4B878); }
+    .dosha-inner { padding: 1.25rem 1.5rem; background: var(--card-bg); }
+
+    /* ── Info cards grid ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+    }
+    .info-card-label {
+      font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--text-muted); font-weight: 700; margin-bottom: .5rem;
+    }
+    .info-card-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; color: var(--text);
+    }
+    .info-card-sub {
+      font-size: 11px; color: var(--text-muted); margin-top: .2rem;
+    }
+
+    /* ── Session list ── */
+    .section-title {
+      font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+      font-weight: 700; color: var(--text-muted);
+      margin-bottom: .85rem; margin-top: 1.75rem;
+      display: flex; align-items: center; gap: .75rem;
+    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .session-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 1rem 1.25rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: .6rem;
+      transition: border-color .25s;
+    }
+    .session-item:hover { border-color: var(--clay); }
+    .session-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 4px;
+    }
+    .dot-done    { background: var(--sage); }
+    .dot-upcoming{ background: var(--clay); }
+    .dot-free    { background: var(--gold); }
+
+    /* ── Resources ── */
+    .resource-link {
+      display: flex; align-items: center; gap: .75rem;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 6px; padding: .85rem 1.1rem;
+      text-decoration: none; margin-bottom: .5rem;
+      transition: border-color .25s;
+    }
+    .resource-link:hover { border-color: var(--gold); }
+    .resource-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Empty / loading state ── */
+    .empty-state {
+      text-align: center; padding: 2.5rem 1rem;
+      border: 1px dashed var(--border); border-radius: 6px;
+      color: var(--text-muted); font-size: 13px; line-height: 1.7;
+    }
+    .skeleton {
+      background: linear-gradient(90deg,var(--border) 25%,var(--bg2) 50%,var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* ── Status messages ── */
+    .msg-error { color: var(--clay); font-size: 12px; margin-top: .4rem; }
+    .msg-success { color: var(--sage); font-size: 12px; margin-top: .4rem; }
+
+    /* ── Mobile ── */
+    @media(max-width:600px) {
+      .auth-body { padding: 1.25rem 1.25rem 1.5rem; }
+      .welcome-banner { padding: 1.25rem; }
+      .dash-user-pill span { display: none; }
+    }
+
+    :focus-visible { outline: 2px solid var(--clay); outline-offset: 3px; border-radius: 2px; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-thumb { background: var(--clay); border-radius: 4px; }
+  </style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 1 — AUTH (Login / Register)
+══════════════════════════════════════════════════════ -->
+<div id="auth-screen" class="screen active" role="main">
+  <div class="auth-card">
+    <div class="auth-header">
+      <a href="/" aria-label="Samarpan home" style="display:inline-flex;flex-direction:column;align-items:center;gap:.4rem;text-decoration:none;">
+        <svg width="40" height="40" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3">
+          <circle cx="50" cy="50" r="45"/>
+          <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+          <circle cx="50" cy="85" r="3" fill="#D95D39"/>
+          <path d="M20 50H80" stroke-opacity=".8"/>
+        </svg>
+        <span style="font-family:'Marcellus',serif;letter-spacing:.32em;text-transform:uppercase;font-size:11px;color:#fff;">Samarpan</span>
+      </a>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.65);font-size:.95rem;margin-top:.75rem;">Your personal wellness portal</p>
+    </div>
+
+    <div class="auth-body">
+      <!-- Google sign-in -->
+      <button class="btn-google" id="google-btn" onclick="signInWithGoogle()" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="divider-or">or</div>
+
+      <!-- Tabs: Login / Register -->
+      <div class="tab-row">
+        <button class="tab active" id="tab-login"    onclick="switchTab('login')"    type="button">Sign In</button>
+        <button class="tab"        id="tab-register" onclick="switchTab('register')" type="button">Create Account</button>
+      </div>
+
+      <!-- Login form -->
+      <form id="login-form" onsubmit="handleLogin(event)" novalidate>
+        <div style="margin-bottom:.85rem;">
+          <label style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.4rem;">Email</label>
+          <input type="email" id="login-email" class="input" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div style="margin-bottom:1.25rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;">
+            <label style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-muted);">Password</label>
+            <button type="button" onclick="handleForgotPassword()" style="font-size:11px;background:none;border:none;cursor:pointer;color:var(--clay);text-decoration:underline;">Forgot password?</button>
+          </div>
+          <input type="password" id="login-password" class="input" placeholder="Your password" autocomplete="current-password" required>
+        </div>
+        <div id="login-msg" class="msg-error"></div>
+        <button type="submit" id="login-btn" class="btn-primary" style="width:100%;margin-top:.75rem;">
+          Sign In to My Portal
+        </button>
+      </form>
+
+      <!-- Register form (hidden by default) -->
+      <form id="register-form" onsubmit="handleRegister(event)" novalidate style="display:none;">
+        <div style="margin-bottom:.85rem;">
+          <label style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.4rem;">Full Name</label>
+          <input type="text" id="reg-name" class="input" placeholder="Your name" autocomplete="name" required>
+        </div>
+        <div style="margin-bottom:.85rem;">
+          <label style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.4rem;">Email</label>
+          <input type="email" id="reg-email" class="input" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <div style="margin-bottom:1.25rem;">
+          <label style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--text-muted);display:block;margin-bottom:.4rem;">Password (min 8 characters)</label>
+          <input type="password" id="reg-password" class="input" placeholder="Create a password" autocomplete="new-password" required>
+        </div>
+        <div id="register-msg" class="msg-error"></div>
+        <button type="submit" id="register-btn" class="btn-primary" style="width:100%;margin-top:.75rem;">
+          Create My Portal Account
+        </button>
+      </form>
+
+      <p style="font-size:10px;text-align:center;margin-top:1rem;color:var(--text-muted);line-height:1.6;">
+        By signing in you agree to our <a href="privacy-policy.html" style="color:var(--clay);">Privacy Policy</a>.<br>
+        Your data is private and never shared.
+      </p>
+    </div>
+  </div>
+</div><!-- end auth-screen -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     SCREEN 2 — DASHBOARD
+══════════════════════════════════════════════════════ -->
+<div id="dashboard-screen" class="screen" role="main" aria-label="Client dashboard">
+
+  <!-- Navbar -->
+  <nav class="dash-nav" role="navigation" aria-label="Portal navigation">
+    <a href="/" class="dash-logo" aria-label="Back to Samarpan">
+      <svg width="26" height="26" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3">
+        <circle cx="50" cy="50" r="45"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+        <circle cx="50" cy="85" r="3" fill="#D95D39"/>
+        <path d="M20 50H80" stroke-opacity=".8"/>
+      </svg>
+      <span class="dash-logo-text">Samarpan</span>
+    </a>
+    <div class="dash-user-pill">
+      <span style="font-size:12px;color:var(--text-muted);" id="nav-user-name">Loading…</span>
+      <div class="user-avatar" id="user-avatar-initials">?</div>
+      <button onclick="handleSignOut()" class="btn-ghost" style="padding:.45rem .9rem;" aria-label="Sign out">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="dash-content">
+
+    <!-- Welcome banner -->
+    <div class="welcome-banner">
+      <span style="font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;">Welcome back</span>
+      <h1 id="welcome-name" class="font-serif" style="font-size:clamp(1.5rem,4vw,2.2rem);color:#fff;line-height:1.2;">Namaste 🙏</h1>
+      <p style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;max-width:480px;">Your healing journey continues. Below is everything connected to your Samarpan account.</p>
+      <div style="display:flex;gap:.75rem;margin-top:.75rem;flex-wrap:wrap;">
+        <a href="booking.html" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book next session →
+        </a>
+        <a href="/#contact" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.5);text-decoration:none;">Message us</a>
+      </div>
+    </div>
+
+    <!-- Dosha result -->
+    <div id="dosha-section">
+      <p class="section-title">Your Prakriti (Dosha Profile)</p>
+      <div id="dosha-display">
+        <!-- Populated by JS -->
+        <div class="empty-state">
+          <p>You haven't taken the Prakriti quiz yet.</p>
+          <a href="/#programmes" onclick="setTimeout(()=>document.querySelector('[onclick=\"openQuiz()\"]')?.click?.(),600)" style="display:inline-block;margin-top:.75rem;font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--clay);text-decoration:underline;">Take the Free Quiz →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <p class="section-title">Your Journey at a Glance</p>
+    <div class="cards-grid" id="stats-grid">
+      <div class="info-card"><div class="info-card-label">Sessions Completed</div><div class="info-card-value skeleton" id="stat-completed" style="height:2rem;width:3rem;">&nbsp;</div></div>
+      <div class="info-card"><div class="info-card-label">Member Since</div><div class="info-card-value skeleton" id="stat-since" style="height:2rem;width:8rem;">&nbsp;</div></div>
+      <div class="info-card"><div class="info-card-label">Primary Programme</div><div class="info-card-value skeleton" id="stat-programme" style="height:2rem;width:10rem;">&nbsp;</div></div>
+    </div>
+
+    <!-- Sessions -->
+    <p class="section-title">Sessions</p>
+    <div id="sessions-list">
+      <div class="empty-state" id="sessions-empty" style="display:none;">
+        <p>No sessions recorded yet. Your history will appear here after your first session.</p>
+      </div>
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Free resources -->
+    <p class="section-title">Resources for You</p>
+    <div id="resources-list">
+      <!-- Default resources — always shown -->
+      <a class="resource-link" href="journal.html">
+        <div class="resource-icon" style="background:rgba(217,93,57,.1);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D95D39" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);">Wisdom Journal</p>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">Ayurveda, psychology and spiritual insights from Samarpan</p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto;flex-shrink:0;color:var(--text-muted);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a class="resource-link" href="community.html">
+        <div class="resource-icon" style="background:rgba(74,93,79,.1);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5D4F" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);">Healing Community</p>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">Join weekly circles, sadhana groups and live Zoom sessions</p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto;flex-shrink:0;color:var(--text-muted);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a class="resource-link" href="https://wa.me/919661486740?text=Namaste%2C%20I%20have%20a%20question%20about%20my%20session." target="_blank" rel="noopener">
+        <div class="resource-icon" style="background:rgba(37,211,102,.1);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);">WhatsApp Support</p>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">Message our team directly — reply within 2 hours</p>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:auto;flex-shrink:0;color:var(--text-muted);"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Sign out bottom -->
+    <div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <p style="font-size:11px;color:var(--text-muted);">Signed in as <strong id="footer-email" style="color:var(--text);"></strong></p>
+      <button onclick="handleSignOut()" class="btn-ghost">Sign Out</button>
+    </div>
+
+  </div><!-- end dash-content -->
+</div><!-- end dashboard-screen -->
+
+
+<!-- ══════════════════════════════════════════════════════
+     FIREBASE + APP LOGIC
+══════════════════════════════════════════════════════ -->
+<script>
+// ── Firebase config — same project as index.html ──────────────────────────
+var firebaseConfig = {
+  apiKey:     "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+  authDomain: "thesamrpan.firebaseapp.com",
+  projectId:  "thesamrpan",
+};
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
+var db   = firebase.firestore();
+
+// ── Theme (respect index.html setting) ───────────────────────────────────
+var storedTheme = localStorage.getItem('samarpan-theme') || 'light';
+document.documentElement.setAttribute('data-theme', storedTheme);
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function setBtn(id, loading, label) {
+  var btn = document.getElementById(id);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.innerHTML = loading
+    ? '<span class="spinner"></span>' + label
+    : label;
+}
+function getInitials(name) {
+  if (!name) return '?';
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+}
+function formatDate(ts) {
+  if (!ts) return '—';
+  var d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('login-form').style.display    = tab === 'login'    ? '' : 'none';
+  document.getElementById('register-form').style.display = tab === 'register' ? '' : 'none';
+  document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+  document.getElementById('login-msg').textContent    = '';
+  document.getElementById('register-msg').textContent = '';
+}
+
+// ── Auth: Google ──────────────────────────────────────────────────────────
+function signInWithGoogle() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider).catch(function(err) {
+    document.getElementById('login-msg').textContent = err.message;
+  });
+}
+
+// ── Auth: Email login ─────────────────────────────────────────────────────
+function handleLogin(e) {
+  e.preventDefault();
+  var email    = document.getElementById('login-email').value.trim();
+  var password = document.getElementById('login-password').value;
+  var msgEl    = document.getElementById('login-msg');
+  if (!email || !password) { msgEl.textContent = 'Please fill in both fields.'; return; }
+  setBtn('login-btn', true, 'Signing in…');
+  msgEl.textContent = '';
+  auth.signInWithEmailAndPassword(email, password)
+    .catch(function(err) {
+      var msgs = {
+        'auth/user-not-found':   'No account found. Please register first.',
+        'auth/wrong-password':   'Incorrect password. Try again.',
+        'auth/invalid-email':    'Please enter a valid email.',
+        'auth/too-many-requests':'Too many attempts. Please wait a moment.',
+      };
+      msgEl.textContent = msgs[err.code] || err.message;
+      setBtn('login-btn', false, 'Sign In to My Portal');
+    });
+}
+
+// ── Auth: Register ────────────────────────────────────────────────────────
+function handleRegister(e) {
+  e.preventDefault();
+  var name     = document.getElementById('reg-name').value.trim();
+  var email    = document.getElementById('reg-email').value.trim();
+  var password = document.getElementById('reg-password').value;
+  var msgEl    = document.getElementById('register-msg');
+  if (!name || !email || password.length < 8) {
+    msgEl.textContent = 'Please fill all fields. Password must be at least 8 characters.';
+    return;
+  }
+  setBtn('register-btn', true, 'Creating account…');
+  msgEl.textContent = '';
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function(cred) {
+      return cred.user.updateProfile({ displayName: name }).then(function() {
+        // Save profile to Firestore
+        return db.collection('client_profiles').doc(cred.user.uid).set({
+          name:      name,
+          email:     email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          source:    'portal_registration'
+        }, { merge: true });
+      });
+    })
+    .catch(function(err) {
+      var msgs = {
+        'auth/email-already-in-use': 'Account exists. Please sign in instead.',
+        'auth/weak-password':        'Password is too weak.',
+        'auth/invalid-email':        'Please enter a valid email.',
+      };
+      msgEl.textContent = msgs[err.code] || err.message;
+      setBtn('register-btn', false, 'Create My Portal Account');
+    });
+}
+
+// ── Auth: Forgot password ─────────────────────────────────────────────────
+function handleForgotPassword() {
+  var email = document.getElementById('login-email').value.trim();
+  var msgEl = document.getElementById('login-msg');
+  if (!email) { msgEl.textContent = 'Enter your email above first.'; msgEl.style.color = 'var(--clay)'; return; }
+  auth.sendPasswordResetEmail(email).then(function() {
+    msgEl.textContent = '✓ Password reset email sent. Check your inbox.';
+    msgEl.style.color = 'var(--sage)';
+  }).catch(function(err) {
+    msgEl.textContent = err.message;
+    msgEl.style.color = 'var(--clay)';
+  });
+}
+
+// ── Auth: Sign out ────────────────────────────────────────────────────────
+function handleSignOut() {
+  auth.signOut();
+}
+
+// ── Auth state observer ───────────────────────────────────────────────────
+auth.onAuthStateChanged(function(user) {
+  if (user) {
+    showScreen('dashboard-screen');
+    loadDashboard(user);
+  } else {
+    showScreen('auth-screen');
+  }
+});
+
+// ── Dashboard: load all data ──────────────────────────────────────────────
+async function loadDashboard(user) {
+  var name = user.displayName || user.email.split('@')[0];
+
+  // Nav + header
+  document.getElementById('nav-user-name').textContent      = name;
+  document.getElementById('user-avatar-initials').textContent = getInitials(name);
+  document.getElementById('welcome-name').textContent        = 'Namaste, ' + name.split(' ')[0] + ' 🙏';
+  document.getElementById('footer-email').textContent        = user.email;
+
+  // Load Firestore profile
+  try {
+    var profileSnap = await db.collection('client_profiles').doc(user.uid).get();
+    var profile = profileSnap.exists ? profileSnap.data() : {};
+
+    // Member since
+    var since = profile.createdAt
+      ? formatDate(profile.createdAt)
+      : (user.metadata.creationTime ? new Date(user.metadata.creationTime).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—');
+    document.getElementById('stat-since').textContent = since;
+    document.getElementById('stat-since').classList.remove('skeleton');
+
+    // Primary programme
+    var prog = profile.primaryProgramme || profile.service || 'General Wellness';
+    document.getElementById('stat-programme').textContent = prog;
+    document.getElementById('stat-programme').classList.remove('skeleton');
+
+    // Dosha result
+    renderDosha(profile.dosha || null);
+
+  } catch(err) {
+    console.warn('Profile load error:', err);
+    document.getElementById('stat-since').textContent = '—';
+    document.getElementById('stat-since').classList.remove('skeleton');
+    document.getElementById('stat-programme').textContent = 'General Wellness';
+    document.getElementById('stat-programme').classList.remove('skeleton');
+    renderDosha(null);
+  }
+
+  // Load sessions from homepage_leads
+  loadSessions(user);
+}
+
+// ── Dashboard: render dosha ───────────────────────────────────────────────
+function renderDosha(dosha) {
+  var el = document.getElementById('dosha-display');
+  if (!dosha) return; // keep empty state
+  var info = {
+    Vata:  { emoji:'🌬️', element:'Air + Ether', quality:'Creative, Energetic, Sensitive', barClass:'dosha-bar-vata',  color:'#4A5D4F' },
+    Pitta: { emoji:'🔥', element:'Fire + Water', quality:'Intelligent, Decisive, Passionate', barClass:'dosha-bar-pitta', color:'#D95D39' },
+    Kapha: { emoji:'🌊', element:'Earth + Water', quality:'Loving, Stable, Compassionate', barClass:'dosha-bar-kapha', color:'#C5A059' },
+  };
+  var d = info[dosha] || info.Vata;
+  el.innerHTML = `
+    <div class="dosha-result-card">
+      <div class="dosha-bar ${d.barClass}"></div>
+      <div class="dosha-inner" style="display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap;">
+        <div style="font-size:2.5rem;line-height:1;">${d.emoji}</div>
+        <div style="flex:1;min-width:180px;">
+          <p style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:${d.color};">Your Primary Prakriti</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--text);line-height:1.1;margin:.2rem 0;">${dosha}</p>
+          <p style="font-size:12px;color:var(--text-muted);">${d.element} · ${d.quality}</p>
+        </div>
+        <a href="/#programmes" style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:${d.color};text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;margin-top:.5rem;">
+          View your programme →
+        </a>
+      </div>
+    </div>`;
+}
+
+// ── Dashboard: load sessions ──────────────────────────────────────────────
+async function loadSessions(user) {
+  var el    = document.getElementById('sessions-list');
+  var empty = document.getElementById('sessions-empty');
+  var statEl= document.getElementById('stat-completed');
+
+  try {
+    // Query all dates, get entries where email matches
+    // Simple approach: query homepage_leads where email == user.email
+    var email = user.email;
+    var sessions = [];
+
+    // Query across all subcollections via collectionGroup
+    var snap = await db.collectionGroup('entries')
+      .where('email', '==', email)
+      .orderBy('timestamp_utc', 'desc')
+      .limit(20)
+      .get();
+
+    snap.forEach(function(doc) {
+      var d = doc.data();
+      sessions.push(d);
+    });
+
+    var completed = sessions.filter(s => s.lead_type === 'contact_form' || s.lead_type === 'inline_free_consultation').length;
+    statEl.textContent = completed;
+    statEl.classList.remove('skeleton');
+
+    if (sessions.length === 0) {
+      empty.style.display = '';
+      return;
+    }
+
+    var html = '';
+    sessions.forEach(function(s) {
+      var isQuiz = s.lead_type === 'prakriti_10q';
+      var isFree = s.lead_type === 'free_assessment_claim' || s.lead_type === 'yoga_free_session';
+      var dotClass = isQuiz ? 'dot-free' : (isFree ? 'dot-free' : 'dot-done');
+      var label = isQuiz  ? 'Prakriti Quiz' :
+                  isFree  ? 'Free Assessment Claimed' :
+                  (s.service || 'Session enquiry');
+      var dateStr = s.date || '—';
+
+      html += `<div class="session-item">
+        <div class="session-dot ${dotClass}"></div>
+        <div style="flex:1;min-width:0;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);">${label}</p>
+          <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">${dateStr}
+            ${s.message && s.message !== 'No message' ? ' · "' + s.message.slice(0,60) + (s.message.length>60?'…':'') + '"' : ''}
+          </p>
+        </div>
+      </div>`;
+    });
+    el.innerHTML = html;
+
+  } catch(err) {
+    console.warn('Sessions load error (may need Firestore index):', err);
+    statEl.textContent = '—';
+    statEl.classList.remove('skeleton');
+    // Firestore collectionGroup queries need an index — show helpful message
+    el.innerHTML = `<div class="empty-state">
+      <p>Session history will appear here once your Firestore collectionGroup index is set up.<br>
+      <a href="https://console.firebase.google.com/project/thesamrpan/firestore/indexes" target="_blank" style="color:var(--clay);">Create the index in Firebase Console →</a></p>
+    </div>`;
+  }
+}
+</script>
+
+</body>
+</html>
