@@ -1,362 +1,1175 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO -->
-    <title>Mantra Sadhana & Sound Healing | Harsh Ranjan</title>
-    <meta name="description" content="Experience the transformative power of Vedic Mantras. Gayatri, Mahamrityunjaya, and Durga Sapta Shloki chanting sessions with Harsh Ranjan.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantra Chanting & Sound Healing | Samarpan Holistic Wellbeing</title>
+  <meta name="description" content="Discover the transformative power of Mantra Chanting and sound healing at Samarpan. Ancient Vedic mantras for anxiety relief, emotional release, and spiritual awakening. Online sessions worldwide.">
+  <meta name="keywords" content="mantra chanting, sound healing, vedic mantra, japa meditation, om chanting, healing mantras, mantra therapy, Samarpan, online mantra session India">
+  <meta name="author" content="Samarpan Holistic Wellness">
+  <link rel="canonical" href="https://www.thesamarpan.co.in/mantra.html">
 
-    <!-- FAVICON -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22none%22 stroke=%22%23C88D72%22 stroke-width=%224%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22/><path d=%22M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z%22/><circle cx=%2250%22 cy=%2285%22 r=%223%22 fill=%22%23C88D72%22/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='%23D95D39' stroke-width='4'/%3E%3Cpath d='M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z' fill='none' stroke='%23D95D39' stroke-width='4'/%3E%3Ccircle cx='50' cy='85' r='5' fill='%23D95D39'/%3E%3Cline x1='20' y1='50' x2='80' y2='50' stroke='%23D95D39' stroke-width='2' opacity='0.8'/%3E%3C/svg%3E">
 
-    <!-- Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Martel:wght@400;700&display=swap" rel="stylesheet">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.thesamarpan.co.in/mantra.html">
+  <meta property="og:title" content="Mantra Chanting & Sound Healing | Samarpan">
+  <meta property="og:description" content="Ancient Vedic mantras for healing, clarity, and spiritual awakening. Online sessions worldwide from New Delhi.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1200&auto=format&fit=crop">
 
-    <!-- Design System -->
-    <style>
-        :root {
-            --color-bg: #FDFCF8;
-            --color-sage: #4A5D4F;
-            --color-terra: #C88D72;
-            --color-gold: #D4AF37; /* Gold for Mantra accents */
-            --color-deep: #2C1810; /* Deep Earth/Wood */
-        }
-        
-        body { font-family: 'Manrope', sans-serif; background-color: var(--color-bg); color: var(--color-deep); overflow-x: hidden; }
-        .serif { font-family: 'Cormorant Garamond', serif; }
-        .logo-font { font-family: 'Cinzel', serif; }
-        .sanskrit { font-family: 'Martel', serif; }
-        
-        /* Animations */
-        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-up.active { opacity: 1; transform: translateY(0); }
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=2064&auto=format&fit=crop" fetchpriority="high">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-        /* Mantra Card */
-        .mantra-card {
-            background: white;
-            border: 1px solid rgba(191, 165, 125, 0.2);
-            border-radius: 4px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px -10px rgba(44, 24, 16, 0.05);
-            transition: all 0.5s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .mantra-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.15); /* Golden glow */
-            border-color: var(--color-gold);
-        }
-        .mantra-card::before {
-            content: ''; position: absolute; top: 0; left: 0; w-full; h-1; 
-            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-            opacity: 0; transition: opacity 0.5s;
-        }
-        .mantra-card:hover::before { opacity: 1; }
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js',new Date());gtag('config','G-HMM7CJSCW7');
+    function gaEvent(a,c,l){try{gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
+  </script>
 
-        /* Custom Audio Player Styling */
-        .audio-player {
-            background: #F9F5F0;
-            border-radius: 4px;
-            padding: 10px;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .play-btn {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: var(--color-deep);
-            color: var(--color-gold);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .play-btn:hover { transform: scale(1.1); background: var(--color-terra); }
-        .track-info { font-size: 0.75rem; color: #666; flex-grow: 1; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  <script>
+    tailwind.config={
+      darkMode:['attribute','[data-theme="dark"]'],
+      theme:{extend:{
+        colors:{clay:'#D95D39','brand-black':'#1C1C1C','brand-gray':'#666666','brand-gold':'#C5A059','brand-cream':'#FDFBF7',paper:'#FDFBF7',sage:'#4A5D4F'},
+        fontFamily:{sans:['Lato','sans-serif'],serif:['Cormorant Garamond','serif'],display:['Marcellus','serif']}
+      }}
+    };
+  </script>
 
-        /* Mandala Background */
-        .mandala-bg { position: absolute; background-image: url('https://www.transparenttextures.com/patterns/black-scales.png'); opacity: 0.04; animation: spin 160s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+  <style>
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
+    #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+    #loader{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#FDFBF7 0%,#F5F0E8 100%);transition:opacity .6s ease-out;}
+    .hero-img{will-change:transform;}
+    @media(min-width:769px){.hero-img{animation:pan 30s ease-in-out infinite alternate;}}
+    @keyframes pan{0%{transform:scale(1);}100%{transform:scale(1.08) translateY(-2%);}}
 
-        /* Mobile Menu */
-        #mobile-menu { transition: transform 0.3s ease-in-out; }
-        .hidden-menu { transform: translateX(100%); }
-        .visible-menu { transform: translateX(0); }
-    </style>
+    /* NAVBAR */
+    #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background .45s cubic-bezier(.4,0,.2,1),border-color .45s,box-shadow .45s;}
+    #navbar.scrolled{background:rgba(253,251,247,.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,.06);backdrop-filter:blur(12px);}
+    [data-theme="dark"] #navbar.scrolled{background:rgba(20,20,16,.96);border-bottom:1px solid #2E2E28;}
+    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,.9);text-decoration:none;}
+    #navbar.scrolled .nav-link{color:var(--text-muted);}
+    .nav-link:hover,.nav-link.active-page{color:#D95D39!important;}
+    .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+    .nav-link:hover::after,.nav-link.active-page::after{transform:scaleX(1);}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#fff;}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;}
+    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
+    .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
+    .nav-cta-btn:hover::before{left:120%;}
+    .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
+    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
+    #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
+    [data-theme="dark"] #mobile-menu{background:#141410;}
+    #hamburger-icon{transition:color .3s;color:#fff;}
+    #navbar.scrolled #hamburger-icon{color:var(--text);}
+
+    /* HERO */
+    .hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15) 0%,rgba(0,0,0,.2) 30%,rgba(0,0,0,.58) 70%,rgba(28,28,28,.85) 100%);z-index:1;}
+    [data-theme="dark"] .hero-bg-overlay{background:linear-gradient(to bottom,rgba(20,20,16,.18) 0%,rgba(0,0,0,.28) 30%,rgba(0,0,0,.65) 70%,rgba(20,20,16,.9) 100%);}
+
+    /* SHARED */
+    .divider-gold{width:1px;height:64px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin:0 auto;}
+    .divider-line{width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;}
+    .ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1.5rem 0;}
+    .ornament::before,.ornament::after{content:'';flex:1;max-width:80px;height:1px;}
+    .ornament::before{background:linear-gradient(to right,transparent,#C5A059);}
+    .ornament::after{background:linear-gradient(to left,transparent,#C5A059);}
+    .cta-btn{position:relative;overflow:hidden;transition:background .4s,box-shadow .4s,transform .2s;}
+    .cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
+    .cta-btn:hover::before{left:120%;}
+    .cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(217,93,57,.3);}
+    .fade-up{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+
+    /* SOUND WAVE ANIMATION */
+    .sound-wave{display:flex;align-items:center;gap:3px;height:40px;}
+    .sound-bar{width:3px;border-radius:2px;background:linear-gradient(to top,#D95D39,#C5A059);animation:wave 1.4s ease-in-out infinite;}
+    .sound-bar:nth-child(1){height:20%;animation-delay:0s;}
+    .sound-bar:nth-child(2){height:55%;animation-delay:.1s;}
+    .sound-bar:nth-child(3){height:80%;animation-delay:.2s;}
+    .sound-bar:nth-child(4){height:100%;animation-delay:.3s;}
+    .sound-bar:nth-child(5){height:70%;animation-delay:.4s;}
+    .sound-bar:nth-child(6){height:45%;animation-delay:.5s;}
+    .sound-bar:nth-child(7){height:80%;animation-delay:.35s;}
+    .sound-bar:nth-child(8){height:55%;animation-delay:.25s;}
+    .sound-bar:nth-child(9){height:30%;animation-delay:.15s;}
+    @keyframes wave{0%,100%{transform:scaleY(1);}50%{transform:scaleY(.35);}}
+
+    /* OM PULSE */
+    .om-pulse{position:relative;display:inline-flex;align-items:center;justify-content:center;}
+    .om-pulse::before,.om-pulse::after{content:'';position:absolute;border-radius:50%;animation:omPulse 3s ease-out infinite;}
+    .om-pulse::before{inset:-16px;border:1px solid rgba(197,160,89,.25);animation-delay:0s;}
+    .om-pulse::after{inset:-32px;border:1px solid rgba(217,93,57,.15);animation-delay:1s;}
+    @keyframes omPulse{0%{transform:scale(.9);opacity:.8;}100%{transform:scale(1.15);opacity:0;}}
+
+    /* MANTRA CARD */
+    .mantra-card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .35s,transform .35s,box-shadow .35s;cursor:pointer;}
+    .mantra-card:hover{border-color:#C5A059;transform:translateY(-6px);box-shadow:0 24px 56px rgba(197,160,89,.12);}
+    .mantra-card .sanskrit{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;color:#C5A059;letter-spacing:.04em;}
+    .mantra-card .transliteration{font-family:'Lato',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin:.5rem 0;}
+    .mantra-card .meaning{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text-muted);line-height:1.7;}
+
+    /* BENEFIT PILL */
+    .benefit-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:10px;font-weight:700;letter-spacing:.08em;border:1.5px solid var(--border);color:var(--text-muted);background:transparent;margin:.2rem;transition:all .3s;}
+    .benefit-pill:hover{border-color:#C5A059;color:#C5A059;background:rgba(197,160,89,.06);}
+
+    /* SCIENCE CARD */
+    .science-card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:1.75rem;transition:border-color .3s,transform .3s,box-shadow .3s;}
+    .science-card:hover{border-color:#D95D39;transform:translateY(-5px);box-shadow:0 18px 44px rgba(217,93,57,.09);}
+
+    /* PRACTICE CARD */
+    .practice-card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .practice-card:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.1);border-color:#C5A059;}
+
+    /* CHAKRA ROW */
+    .chakra-row{display:flex;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border);}
+    .chakra-row:last-child{border-bottom:none;}
+    .chakra-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+
+    /* TESTIMONIAL */
+    .testi-card-full{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:1.75rem;transition:box-shadow .3s,transform .3s;}
+    .testi-card-full:hover{box-shadow:0 12px 36px rgba(0,0,0,.1);transform:translateY(-3px);}
+
+    /* STAT */
+    .stat-num-lg{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1;background:linear-gradient(135deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+    /* FAQ */
+    .faq-item{border-bottom:1px solid var(--border);}
+    .faq-btn{width:100%;text-align:left;padding:1.25rem 0;display:flex;justify-content:space-between;align-items:center;background:transparent;border:none;cursor:pointer;color:var(--text);font-family:'Cormorant Garamond',serif;font-size:1.15rem;}
+    .faq-icon{transition:transform .35s;flex-shrink:0;color:#D95D39;}
+    .faq-item.open .faq-icon{transform:rotate(45deg);}
+    .faq-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+    .faq-item.open .faq-body{max-height:500px;}
+    .faq-body p{padding-bottom:1.25rem;font-family:'Lato',sans-serif;font-size:.875rem;color:var(--text-muted);line-height:1.8;}
+
+    /* FORM */
+    .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
+    .form-input2:focus{border-color:#D95D39;}
+    .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);resize:none;height:6rem;outline:none;transition:border-color .3s;}
+    .form-textarea2:focus{border-color:#D95D39;}
+    .form-select2{width:100%;background:var(--card-bg);border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);outline:none;transition:border-color .3s;appearance:none;-webkit-appearance:none;}
+    .form-select2:focus{border-color:#D95D39;}
+    .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+    .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* FABS */
+    #fab{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
+    #fab.visible{opacity:1;transform:translateY(0);}
+    #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s;}
+    #fab a:hover{background:#1C1C1C;}
+    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
+    #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
+    #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
+    #whatsapp-fab a:hover{transform:scale(1.1);}
+    #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .15s,transform .4s .15s;}
+    #theme-toggle.visible{opacity:1;transform:translateY(0);}
+    #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
+    #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
+
+    /* POPUP */
+    .popup-overlay{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);padding:1rem;}
+    .popup-overlay.open{display:flex;}
+    @keyframes popIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+    .popup-box-inner{background:var(--bg);max-width:480px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;}
+    .popup-header-dark{background:linear-gradient(135deg,#1C1C1C 0%,#1a100e 60%,#1C1C1C 100%);padding:1.5rem 1rem 1.25rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;position:relative;}
+    .popup-close-btn{position:absolute;top:.6rem;right:.6rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.1);border:none;cursor:pointer;color:rgba(255,255,255,.6);font-size:15px;line-height:1;transition:background .2s,color .2s;}
+    .popup-close-btn:hover{background:rgba(255,255,255,.25);color:#fff;}
+
+    /* BREADCRUMB */
+    .bc-link{font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s;}
+    .bc-link:hover{color:#C5A059;}
+
+    /* MANTRA PLAYER CARD */
+    .player-card{background:linear-gradient(135deg,rgba(28,28,28,.95),rgba(45,26,18,.95));border:1px solid rgba(197,160,89,.2);border-radius:8px;padding:1.5rem 1.75rem;position:relative;overflow:hidden;}
+    .player-card::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(217,93,57,.12),transparent 70%);pointer-events:none;}
+
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-track{background:var(--bg);}
+    ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
+    img{max-width:100%;height:auto;}
+    *{-webkit-tap-highlight-color:transparent;}
+    @media(max-width:768px){select,textarea{font-size:16px!important;}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+  </style>
 </head>
-<body class="antialiased selection:bg-[#C88D72] selection:text-white">
+<body class="antialiased selection:bg-clay selection:text-white">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 text-white border-b border-white/10 bg-black/40 backdrop-blur-md">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            
-            <!-- Logo -->
-            <a href="index.html" class="group flex flex-col items-center justify-center pt-1">
-                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mb-1 group-hover:scale-110 transition duration-500">
-                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2"/>
-                    <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="50" cy="85" r="3" fill="currentColor"/>
-                    <path d="M20 50H80" stroke="currentColor" stroke-width="1" stroke-opacity="0.6"/>
-                </svg>
-                <div class="flex items-center gap-2 opacity-90">
-                    <span class="text-[11px] uppercase tracking-[0.25em] logo-font text-[#FDFCF8] group-hover:text-[#C88D72] transition">Samarpan</span>
-                </div>
-            </a>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
-                <a href="index.html" class="hover:text-[#C88D72] transition">Home</a>
-                <a href="about.html" class="hover:text-[#C88D72] transition">About</a>
-                <a href="sessions.html" class="hover:text-[#C88D72] transition">Sessions</a>
-                <a href="ayurveda.html" class="hover:text-[#C88D72] transition">Ayurveda</a>
-                <a href="psychology.html" class="hover:text-[#C88D72] transition">Psychology</a>
-                <a href="blog.html" class="hover:text-[#C88D72] transition">Blog</a>
-                <a href="nutrition.html" class="hover:text-[#C88D72] transition">Diet</a>
-                <a href="contact.html" class="px-8 py-3 border border-white/30 hover:bg-white hover:text-black transition duration-300 rounded-sm">Book Now</a>
+<div id="scroll-progress"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="flex flex-col items-center relative">
+    <div class="absolute w-32 h-32 border-2 border-[#D95D39] rounded-full animate-ping opacity-20" style="animation-duration:2s;"></div>
+    <div class="absolute w-24 h-24 border border-[#C5A059] rounded-full animate-pulse" style="animation-duration:2.5s;"></div>
+    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="2" class="mb-5 relative z-10 animate-pulse" style="animation-duration:3s;">
+      <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+      <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".6"/>
+    </svg>
+    <span class="font-display tracking-[.4em] text-base" style="background:linear-gradient(90deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SAMARPAN</span>
+    <div class="mt-4 flex gap-2">
+      <div class="w-1.5 h-1.5 bg-[#D95D39] rounded-full animate-bounce" style="animation-delay:0s;"></div>
+      <div class="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce" style="animation-delay:.2s;"></div>
+      <div class="w-1.5 h-1.5 bg-[#4A5D4F] rounded-full animate-bounce" style="animation-delay:.4s;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING POPUP -->
+<div id="book-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="bookPopupTitle">
+  <div class="popup-box-inner">
+    <div class="popup-header-dark">
+      <button class="popup-close-btn" onclick="closeBookPopup()" aria-label="Close">✕</button>
+      <svg width="44" height="44" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3" class="mb-1">
+        <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+        <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".8"/>
+      </svg>
+      <span style="font-family:'Marcellus',serif;letter-spacing:.32em;text-transform:uppercase;font-size:12px;color:#fff;">Samarpan</span>
+      <div style="background:rgba(197,160,89,.18);border:1px solid rgba(197,160,89,.4);border-radius:50px;padding:.3rem .9rem;">
+        <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#C5A059;font-weight:700;">🕉 Mantra Session</span>
+      </div>
+    </div>
+    <div style="padding:1.5rem 1.75rem;">
+      <h3 id="bookPopupTitle" class="font-serif mb-2" style="font-size:1.5rem;color:var(--text);">Begin Your Mantra Journey</h3>
+      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">No prior experience needed. Share a little about yourself and we will guide you to the right practice within 24 hours.</p>
+      <form id="bookForm" onsubmit="handleBookSubmit(event)" class="space-y-3" novalidate>
+        <input type="text" id="bookName" placeholder="Your full name *" class="form-input2" required autocomplete="name">
+        <input type="email" id="bookEmail" placeholder="Email address *" class="form-input2" required autocomplete="email">
+        <input type="tel" id="bookPhone" placeholder="WhatsApp number (optional)" class="form-input2" autocomplete="tel">
+        <div class="relative">
+          <select id="bookType" class="form-select2">
+            <option>Personal Mantra Initiation</option>
+            <option>Healing Mantra Session</option>
+            <option>Japa Meditation Training</option>
+            <option>Chakra Sound Healing</option>
+            <option>Group Chanting (Kirtan)</option>
+            <option>Mantra for Anxiety & Stress</option>
+            <option>Vedic Mantra for Prosperity</option>
+            <option>Not sure — guide me</option>
+          </select>
+          <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-muted);"></i>
+        </div>
+        <textarea id="bookMessage" placeholder="Anything you'd like us to know… (optional)" class="form-textarea2"></textarea>
+        <button type="submit" id="bookSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Reserve My Session →</button>
+      </form>
+      <div id="bookStatus" class="mt-2"></div>
+      <p class="text-[10px] mt-3 text-center" style="color:var(--text-muted);">No prior experience needed · Reply within 24 hours · Worldwide via Zoom</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
+      <a href="about.html" class="nav-link">About</a>
+      <a href="journal.html" class="nav-link">Journals</a>
+      <a href="sessions.html" class="nav-link">Sessions</a>
+      <a href="ayurveda.html" class="nav-link">Ayurveda</a>
+      <a href="community.html" class="nav-link">Community</a>
+    </div>
+    <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-1 group-hover:scale-110 drop-shadow-sm" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      <span class="nav-logo-text">Samarpan</span>
+    </a>
+    <div class="hidden lg:flex flex-1 justify-end">
+      <a href="booking.html" class="nav-cta-btn">Start Your Healing Journey</a>
+    </div>
+    <div class="flex lg:hidden ml-auto z-[201] relative">
+      <button id="hamburger-btn" class="p-2" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="dialog" aria-modal="true">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()">
+    <i data-lucide="x" class="w-7 h-7"></i>
+  </button>
+  <div class="mb-2 flex flex-col items-center">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+      <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+      <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="85" r="3" fill="currentColor"/>
+    </svg>
+    <p class="font-display text-xs tracking-widest text-center mt-1.5 text-clay">SAMARPAN</p>
+  </div>
+  <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
+  <a href="journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Journals</a>
+  <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
+  <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
+  <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community</a>
+  <a href="booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm">Start Your Journey</a>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════ -->
+<header class="relative w-full overflow-hidden flex items-end justify-center" style="height:clamp(70vh,90vh,90vh);">
+  <div class="absolute inset-0 z-0">
+    <img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=2064&auto=format&fit=crop"
+         alt="Mantra Chanting — Samarpan" loading="eager" fetchpriority="high"
+         class="w-full h-full object-cover hero-img">
+  </div>
+  <div class="hero-bg-overlay"></div>
+  <div class="absolute top-28 left-0 right-0 z-10 flex justify-center">
+    <div class="flex items-center">
+      <a href="index.html" class="bc-link">Home</a>
+      <span class="text-white/30 text-xs mx-1.5">›</span>
+      <a href="sessions.html" class="bc-link">Sessions</a>
+      <span class="text-white/30 text-xs mx-1.5">›</span>
+      <span class="font-sans text-[9px] uppercase tracking-[.15em] text-white/75">Mantra Chanting</span>
+    </div>
+  </div>
+  <div class="relative z-10 text-center text-white px-4 pb-20 md:pb-28 max-w-3xl mx-auto">
+    <!-- Live sound wave -->
+    <div class="gsap-hero opacity-0 flex justify-center mb-6">
+      <div class="sound-wave">
+        <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
+        <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
+        <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
+      </div>
+    </div>
+    <div class="gsap-hero opacity-0 inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full" style="background:rgba(197,160,89,.18);border:1px solid rgba(197,160,89,.4);">
+      <span style="font-size:14px;">🕉</span>
+      <span class="font-sans text-[9px] uppercase tracking-[.2em] text-brand-gold font-bold">Mantra Chanting &amp; Sound Healing</span>
+    </div>
+    <h1 class="gsap-hero opacity-0 font-display font-light mb-5 tracking-wide drop-shadow-lg leading-tight" style="font-size:clamp(2.6rem,8vw,5.2rem);">The Universe<br/>Began With Sound</h1>
+    <p class="gsap-hero opacity-0 font-serif italic text-lg md:text-2xl mb-8 max-w-xl mx-auto" style="color:rgba(255,255,255,.82);">"Nada Brahma — The world is sound."<br><span class="text-sm not-italic" style="color:rgba(255,255,255,.5);">— Ancient Vedic teaching</span></p>
+    <div class="gsap-hero opacity-0 flex flex-col sm:flex-row gap-3 justify-center">
+      <button onclick="openBookPopup()" class="cta-btn inline-flex items-center gap-2 bg-clay px-8 py-3 text-[10px] uppercase tracking-widest rounded-sm text-white">
+        <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Book a Session
+      </button>
+      <a href="#mantras" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-brand-black transition duration-300 rounded-sm">Explore Mantras</a>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════
+     PHILOSOPHY
+══════════════════════════════════════════════ -->
+<section class="py-24 md:py-32 text-center px-6" style="background:var(--bg);">
+  <div class="max-w-3xl mx-auto fade-up">
+    <div class="divider-gold mb-8"></div>
+    <h2 class="font-display text-3xl md:text-4xl mb-6" style="color:var(--text);">Sound as the First Creation</h2>
+    <div class="ornament"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C5A059"><circle cx="12" cy="12" r="10"/></svg></div>
+    <p class="font-serif text-xl md:text-2xl text-brand-gold italic mb-8">"In the beginning was the Word —<br class="hidden sm:block">and the Word was vibration."</p>
+    <p class="font-sans font-light leading-loose text-sm md:text-base mb-6" style="color:var(--text-muted);">In the Vedic tradition, the entire cosmos emerges from primordial sound — <em>Nada Brahma</em>. Every mantra is a precise sonic formula, encoded over thousands of years by the ancient Rishis who perceived the universe's fundamental frequencies directly in deep states of meditation. When we chant these sacred syllables, we are not merely reciting words — we are tuning our body, nervous system, and consciousness to the very frequencies from which we emerged.</p>
+    <p class="font-sans font-light leading-loose text-sm md:text-base" style="color:var(--text-muted);">Modern neuroscience increasingly validates what the ancients knew: specific sound patterns restructure neural pathways, regulate the autonomic nervous system, shift brainwave states, and create measurable changes in the body's biochemistry. At Samarpan, we bridge this ancient science with modern understanding — so your chanting practice is both deeply sacred and rigorously grounded.</p>
+    <div class="mt-12 flex justify-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
+      <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+      <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     STATS
+══════════════════════════════════════════════ -->
+<section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--border)] fade-up">
+      <div class="p-8 text-center" style="background:var(--card-bg);">
+        <div class="stat-num-lg"><span class="ctr" data-target="108">0</span></div>
+        <p class="font-sans text-[9px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Sacred Mantra Beads (Japa Mala)</p>
+      </div>
+      <div class="p-8 text-center" style="background:var(--card-bg);">
+        <div class="stat-num-lg"><span class="ctr" data-target="40">0</span>+</div>
+        <p class="font-sans text-[9px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Mantras in Practice</p>
+      </div>
+      <div class="p-8 text-center" style="background:var(--card-bg);">
+        <div class="stat-num-lg"><span class="ctr" data-target="5000">0</span>+</div>
+        <p class="font-sans text-[9px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Years of Vedic Tradition</p>
+      </div>
+      <div class="p-8 text-center" style="background:var(--card-bg);">
+        <div class="stat-num-lg"><span class="ctr" data-target="7">0</span></div>
+        <p class="font-sans text-[9px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Chakras Addressed</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     WHAT IS MANTRA
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="fade-up">
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Understanding</span>
+        <h2 class="font-display text-3xl md:text-4xl mb-6" style="color:var(--text);">What Exactly Is a Mantra?</h2>
+        <p class="font-sans text-sm leading-relaxed mb-5" style="color:var(--text-muted);">The word <em>Mantra</em> derives from two Sanskrit roots: <strong class="font-bold" style="color:var(--text);">Manas</strong> (mind) and <strong class="font-bold" style="color:var(--text);">Trana</strong> (liberation or tool). A mantra is literally a tool that liberates the mind — from its habitual patterns, its anxious chatter, its identification with suffering.</p>
+        <p class="font-sans text-sm leading-relaxed mb-5" style="color:var(--text-muted);">Unlike affirmations, mantras are not wishes or positive statements. They are <em>vibrational formulae</em> — precise arrangements of Sanskrit phonemes whose sonic qualities create specific effects in the body and consciousness when repeated with correct pronunciation, rhythm, and intention.</p>
+        <p class="font-sans text-sm leading-relaxed mb-8" style="color:var(--text-muted);">There are thousands of mantras in the Vedic tradition — for healing, for strength, for devotion, for awakening, for clearing karma, for attracting abundance, for calming the nervous system. At Samarpan we match the right mantra to your constitution, intention, and current life circumstances.</p>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(217,93,57,.1);"><i data-lucide="music" class="w-4 h-4 text-clay"></i></div>
+            <div><p class="font-sans text-xs font-bold" style="color:var(--text);">Sabda (Sound)</p><p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">The literal vibration of the syllables creates direct physiological effects.</p></div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(197,160,89,.1);"><i data-lucide="heart" class="w-4 h-4 text-brand-gold"></i></div>
+            <div><p class="font-sans text-xs font-bold" style="color:var(--text);">Bhava (Feeling)</p><p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">The devotional quality and intention amplify the mantra's healing power exponentially.</p></div>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(74,93,79,.1);"><i data-lucide="repeat" class="w-4 h-4 text-sage"></i></div>
+            <div><p class="font-sans text-xs font-bold" style="color:var(--text);">Japa (Repetition)</p><p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">Consistent daily repetition deepens the groove (Samskara) of the mantra in consciousness.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up">
+        <!-- OM card -->
+        <div class="player-card mb-6">
+          <div class="flex items-center gap-5 mb-5">
+            <div class="om-pulse flex-shrink-0">
+              <div class="w-20 h-20 rounded-full flex items-center justify-center" style="background:rgba(197,160,89,.12);border:2px solid rgba(197,160,89,.3);">
+                <span style="font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#C5A059;line-height:1;">ॐ</span>
+              </div>
             </div>
-
-            <!-- Mobile Toggle -->
-            <button id="mobile-menu-btn" class="lg:hidden text-white"><i data-lucide="menu" class="w-8 h-8"></i></button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="fixed inset-0 bg-[#FDFCF8] text-[#1A1A1A] z-40 hidden-menu flex flex-col justify-center items-center space-y-8 w-screen h-screen">
-            <button id="close-menu-btn" class="absolute top-8 right-8"><i data-lucide="x" class="w-10 h-10 text-[#C88D72]"></i></button>
-            <a href="index.html" class="text-3xl serif mobile-link">Home</a>
-            <a href="about.html" class="text-3xl serif mobile-link">About</a>
-            <a href="sessions.html" class="text-3xl serif mobile-link">Sessions</a>
-            <a href="ayurveda.html" class="text-3xl serif mobile-link">Ayurveda</a>
-            <a href="psychology.html" class="text-3xl serif mobile-link">Psychology</a>
-            <a href="blog.html" class="text-3xl serif mobile-link">Blog</a>
-            <a href="contact.html" class="text-3xl serif text-[#C88D72] mobile-link">Book Now</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="relative w-full h-[60vh] overflow-hidden flex items-center justify-center bg-[#2C1810]">
-        <!-- Image: Fire Ceremony / Chanting -->
-        <img src="https://images.unsplash.com/photo-1604882737321-e6937ad4f640?q=80&w=1600&auto=format&fit=crop" alt="Sacred Fire Havan" class="absolute inset-0 w-full h-full object-cover opacity-50">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#FDFCF8] via-transparent to-black/60"></div>
-
-        <div class="relative z-10 text-center px-4 mt-10">
-            <span class="text-[#C88D72] text-sm font-bold uppercase tracking-[0.5em] mb-6 block reveal-up">Shabda Brahman</span>
-            <h1 class="text-6xl md:text-8xl serif text-white mb-8 reveal-up drop-shadow-2xl">
-                Mantra Sadhana
-            </h1>
-            <p class="text-white/90 font-light max-w-2xl mx-auto text-xl reveal-up leading-relaxed">
-                Harnessing the vibrational technology of Sanskrit to clear energetic blockages and awaken consciousness.
-            </p>
-        </div>
-    </header>
-
-    <!-- Intro: The Science of Sound -->
-    <section class="py-24 bg-[#FDFCF8] relative overflow-hidden">
-        <div class="mandala-bg w-[800px] h-[800px] top-0 -left-64 rounded-full border border-[#C88D72]/10"></div>
-        
-        <div class="container mx-auto px-6 md:px-12 relative z-10 text-center">
-            <div class="max-w-3xl mx-auto reveal-up">
-                <!-- Custom Logo as Icon -->
-                <div class="w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                    <svg width="64" height="64" viewBox="0 0 100 100" fill="none" class="text-[#C88D72]">
-                        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2.5"/>
-                        <path d="M50 15C50 15 70 40 70 55C70 66.0457 61.0457 75 50 75C38.9543 75 30 66.0457 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="2.5"/>
-                        <circle cx="50" cy="85" r="4" fill="currentColor"/>
-                        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.6"/>
-                    </svg>
-                </div>
-                
-                <h2 class="text-4xl serif text-[#2C1810] mb-6">Vibration is Reality</h2>
-                <p class="text-gray-600 text-lg leading-relaxed mb-8">
-                    Mantra is not mere prayer; it is a precise arrangement of sound syllables (<em>Bijus</em>) that interact with the subtle energy centers (<em>Chakras</em>) of the body. 
-                    <br><br>
-                    My sessions integrate the correct pronunciation (<em>Ucharana</em>), rhythm (<em>Chhandas</em>), and intention (<em>Sankalpa</em>) required to unlock the potency of these ancient formulas.
-                </p>
+            <div>
+              <p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold mb-1">Primordial Mantra</p>
+              <h3 class="font-serif text-2xl text-white mb-0.5">Om (Aum)</h3>
+              <p class="font-sans text-xs" style="color:rgba(255,255,255,.5);">The sound of the universe itself</p>
             </div>
-        </div>
-    </section>
-
-    <!-- MANTRA GRID -->
-    <section class="py-12 bg-[#FDFCF8] pb-32">
-        <div class="container mx-auto px-6 md:px-12">
-            <div class="grid lg:grid-cols-3 gap-12">
-
-                <!-- 1. Gayatri Mantra -->
-                <div class="mantra-card reveal-up">
-                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">Gayatri Mantra</h3>
-                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Illumination of Intellect</p>
-                    
-                    <div class="text-center mb-6">
-                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
-                            ॐ भूर्भुवः स्वः <br>
-                            तत्सवितुर्वरेण्यं <br>
-                            भर्गो देवस्य धीमहि <br>
-                            धियो यो नः प्रचोदयात् ॥
-                        </p>
-                    </div>
-                    
-                    <p class="text-sm text-gray-500 italic text-center mb-4">
-                        "Om Bhur Bhuva Swaha, Tat Savitur Varenyam, Bhargo Devasya Dheemahi, Dhiyo Yo Nah Prachodayat"
-                    </p>
-
-                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
-                        <strong>Benefit:</strong> Awakens the <em>Ajna Chakra</em> (Wisdom center). Recommended for students, professionals, and seekers of clarity.
-                    </div>
-                    
-                    <!-- Audio Player -->
-                    <div class="audio-player">
-                        <button class="play-btn" onclick="playAudio('audio-gayatri')"><i data-lucide="play" class="w-4 h-4"></i></button>
-                        <span class="track-info">Listen to Chant</span>
-                        <audio id="audio-gayatri" src="gayatri.mp3"></audio>
-                    </div>
-                </div>
-
-                <!-- 2. Mahamrityunjaya Mantra -->
-                <div class="mantra-card reveal-up" style="transition-delay: 0.1s">
-                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">Mahamrityunjaya</h3>
-                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Healing & Protection</p>
-                    
-                    <div class="text-center mb-6">
-                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
-                            ॐ त्र्यम्बकं यजामहे <br>
-                            सुगन्धिं पुष्टिवर्धनम् । <br>
-                            उर्वारुकमिव बन्धनान् <br>
-                            मृत्योर्मुक्षीय मामृतात् ॥
-                        </p>
-                    </div>
-                    
-                    <p class="text-sm text-gray-500 italic text-center mb-4">
-                        "Om Tryambakam Yajamahe, Sugandhim Pushti Vardhanam, Urvarukamiva Bandhanan, Mrityor Mukshiya Maamritat"
-                    </p>
-
-                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
-                        <strong>Benefit:</strong> The great death-conquering mantra. Used for physical healing, overcoming fear, and vitality (<em>Ojas</em>).
-                    </div>
-                    
-                    <div class="audio-player">
-                        <button class="play-btn" onclick="playAudio('audio-maha')"><i data-lucide="play" class="w-4 h-4"></i></button>
-                        <span class="track-info">Listen to Chant</span>
-                        <audio id="audio-maha" src="mahamrityunjaya.mp3"></audio>
-                    </div>
-                </div>
-
-                <!-- 3. Durga 32 Names -->
-                <div class="mantra-card reveal-up" style="transition-delay: 0.2s">
-                    <h3 class="text-2xl serif text-[#2C1810] mb-2 text-center">32 Names of Durga</h3>
-                    <p class="text-center text-xs uppercase tracking-widest text-[#C88D72] mb-6">Removing Obstacles</p>
-                    
-                    <div class="text-center mb-6">
-                        <p class="sanskrit text-xl font-medium text-[#4A5D4F] leading-loose">
-                            दुर्गा दुर्गार्तिशमनी <br>
-                            दुर्गापद्विनिवारिणी । <br>
-                            दुर्गमच्छेदिनी दुर्ग- <br>
-                            साधिनी दुर्गनाशिनी ॥
-                        </p>
-                    </div>
-                    
-                    <p class="text-sm text-gray-500 italic text-center mb-4">
-                        "Durga, Durgartishamani, Durgapadminivarini..."
-                    </p>
-
-                    <div class="border-t border-gray-100 pt-4 text-sm text-gray-600 leading-relaxed">
-                        <strong>Benefit:</strong> A powerful Tantric mala used to remove external obstacles, distress, and confusion from life's path.
-                    </div>
-
-                    <div class="audio-player">
-                        <button class="play-btn" onclick="playAudio('audio-durga')"><i data-lucide="play" class="w-4 h-4"></i></button>
-                        <span class="track-info">Listen to Chant</span>
-                        <audio id="audio-durga" src="durga.mp3"></audio>
-                    </div>
-                </div>
-
+          </div>
+          <div class="flex justify-center mb-4">
+            <div class="sound-wave" style="height:32px;">
+              <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
+              <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
+              <div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div>
             </div>
-
-            <!-- CTA -->
-            <div class="text-center mt-20 reveal-up">
-                <h3 class="text-2xl serif text-[#1A1A1A] mb-6">Initiate Your Sadhana</h3>
-                <p class="text-gray-600 mb-8 max-w-lg mx-auto">Receive personalized mantra initiation and learn the correct pronunciation and rhythm for maximum efficacy.</p>
-                <a href="form.html?service=Mantra Session" class="inline-block px-12 py-4 bg-[#2C1810] text-white text-xs font-bold uppercase tracking-widest hover:bg-[#C88D72] transition rounded-sm shadow-xl">
-                    Book Mantra Session
-                </a>
-            </div>
+          </div>
+          <p class="font-sans text-xs leading-relaxed text-center" style="color:rgba(255,255,255,.6);">Om encompasses the three states of consciousness: waking (A), dreaming (U), and deep sleep (M) — plus the silence that contains them all (the fourth, Turiya). Chanting Om even once recalibrates the entire system.</p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-[#121212] text-white pt-12 pb-12 border-t border-white/10">
-        <div class="container mx-auto px-6 text-center">
-            <a href="index.html" class="inline-block mb-4">
-                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="text-[#C88D72] mx-auto mb-2">
-                    <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="3"/>
-                    <path d="M50 20C50 20 65 40 65 55C65 63.2843 58.2843 70 50 70C41.7157 70 35 63.2843 35 55C35 40 50 20 50 20Z" stroke="currentColor" stroke-width="3"/>
-                </svg>
-                <span class="text-xl logo-font tracking-wider text-white">SAMARPAN</span>
-            </a>
-            <p class="text-xs text-gray-500">© 2025 Harsh Ranjan (Samarpan). All Rights Reserved.</p>
-            
-            <div class="flex justify-center gap-4 mt-6">
-                <a href="https://instagram.com/samarpan_wellness" class="hover:text-[#C88D72] transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                <a href="https://linkedin.com/in/harshranjan" class="hover:text-[#C88D72] transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                <a href="#" class="hover:text-[#C88D72] transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                <a href="mailto:justtheself@gmail.com" class="hover:text-[#C88D72] transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
-            </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 rounded text-center" style="background:var(--bg2);border:1px solid var(--border);">
+            <div class="stat-num-lg text-3xl">432</div>
+            <p class="font-sans text-[10px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Hz — Vedic tuning frequency</p>
+          </div>
+          <div class="p-4 rounded text-center" style="background:var(--bg2);border:1px solid var(--border);">
+            <div class="stat-num-lg text-3xl">α</div>
+            <p class="font-sans text-[10px] uppercase tracking-widest mt-1" style="color:var(--text-muted);">Brainwave shift from chanting</p>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Scripts -->
-    <script>
-        lucide.createIcons();
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.reveal-up').forEach(e => {
-            gsap.fromTo(e, {opacity:0, y:40}, {opacity:1, y:0, duration:1.2, scrollTrigger:{trigger:e, start:"top 85%"}})
-        });
+<!-- ══════════════════════════════════════════════
+     HEALING MANTRAS LIBRARY
+══════════════════════════════════════════════ -->
+<section id="mantras" class="py-24 px-4 sm:px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#1a100e 100%);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-3">Sacred Library</span>
+      <h2 class="font-display text-3xl md:text-4xl text-white mb-4">Healing Mantras We Work With</h2>
+      <p class="font-sans text-sm max-w-xl mx-auto mb-2" style="color:rgba(255,255,255,.55);">Each mantra is a doorway into a specific quality of consciousness. These are not mere sounds — they are invitations to a particular state of being.</p>
+      <div style="width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
 
-        // Mobile Menu Logic
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const closeBtn = document.getElementById('close-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+      <!-- Gayatri -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1473177104440-ffee2f376098?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Gayatri" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Wisdom &amp; Illumination</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">ॐ भूर्भुवः स्वः</div>
+          <p class="transliteration">Om Bhur Bhuva Svaha — Gayatri Mantra</p>
+          <p class="meaning">"We meditate upon the divine light of the sun — may it illuminate our intellect."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Enhances mental clarity &amp; intelligence</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Purifies subtle energy channels (Nadis)</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Best chanted at sunrise &amp; sunset</div>
+          </div>
+        </div>
+      </div>
 
-        if(menuBtn && closeBtn && menu) {
-            menuBtn.onclick = () => { menu.classList.remove('hidden-menu'); menu.classList.add('visible-menu'); };
-            closeBtn.onclick = () => { menu.classList.remove('visible-menu'); menu.classList.add('hidden-menu'); };
-        }
+      <!-- Maha Mrityunjaya -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Maha Mrityunjaya" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Healing &amp; Liberation</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">ॐ त्र्यम्बकं यजामहे</div>
+          <p class="transliteration">Maha Mrityunjaya Mantra</p>
+          <p class="meaning">"We worship the three-eyed Shiva who nourishes all beings. May he free us from the bondage of illness and death."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Physical and psychic healing</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Dissolves fear of death &amp; change</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Deeply protective vibration</div>
+          </div>
+        </div>
+      </div>
 
-        // Audio Player Logic with Fallback
-        function playAudio(id) {
-            const audio = document.getElementById(id);
-            const btn = audio.previousElementSibling.previousElementSibling; // Get the button
-            
-            if (audio.paused) {
-                const playPromise = audio.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>';
-                    })
-                    .catch(error => {
-                        alert("Audio file not found. Please ensure 'gayatri.mp3', 'mahamrityunjaya.mp3', or 'durga.mp3' are in the folder.");
-                    });
-                }
-            } else {
-                audio.pause();
-                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
-            }
-            
-            // Reset icon on end
-            audio.onended = function() {
-                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
-            };
-        }
-    </script>
+      <!-- So Hum -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="So Hum" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Self-Realisation</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">सोऽहम्</div>
+          <p class="transliteration">So Hum — The Breath Mantra</p>
+          <p class="meaning">"I am That — the eternal consciousness that underlies all creation."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Synchronised with the breath naturally</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Dissolves ego identification</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Ideal for beginners &amp; advanced seekers</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Om Namah Shivaya -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Om Namah Shivaya" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Transformation</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">ॐ नमः शिवाय</div>
+          <p class="transliteration">Om Namah Shivaya</p>
+          <p class="meaning">"I bow to the inner self — the divine consciousness that resides within all beings."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Addresses all five elements</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Releases deep emotional blockages</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>One of the most powerful Shaiva mantras</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Om Shanti -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Om Shanti" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Peace &amp; Stillness</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">ॐ शान्तिः शान्तिः शान्तिः</div>
+          <p class="transliteration">Om Shanti Shanti Shanti</p>
+          <p class="meaning">"Peace in body, peace in mind, peace in spirit — peace at all three levels of existence."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Soothes anxiety &amp; panic instantly</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Addresses three levels of disturbance</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Used as closing prayer in all Vedic rituals</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lokah Samastah -->
+      <div class="mantra-card">
+        <div class="h-36 overflow-hidden relative">
+          <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Lokah Samastah" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75),transparent 60%);"></div>
+          <div class="absolute bottom-3 left-4">
+            <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">Compassion &amp; Devotion</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <div class="sanskrit mb-2">लोकाः समस्ताः सुखिनो भवन्तु</div>
+          <p class="transliteration">Lokah Samastah Sukhino Bhavantu</p>
+          <p class="meaning">"May all beings everywhere be happy and free — and may my life contribute to that happiness."</p>
+          <div class="mt-4 pt-4 border-t space-y-1.5" style="border-color:var(--border);">
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Opens the heart chakra (Anahata)</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Cultivates compassion &amp; reduces selfishness</div>
+            <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-brand-gold flex-shrink-0"></i>Used in Bhakti Yoga traditions</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="text-center mt-10 fade-up">
+      <p class="font-sans text-sm mb-4" style="color:rgba(255,255,255,.5);">This is only a sample. We work with 40+ mantras — personalised to your constitution and intention.</p>
+      <button onclick="openBookPopup()" class="cta-btn inline-flex items-center gap-2 border border-white/40 text-white px-8 py-3 text-[10px] uppercase tracking-widest rounded-sm hover:bg-white/10 transition">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Find Your Personal Mantra
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     SCIENCE OF MANTRA
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">The Research</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">The Neuroscience of Mantra</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base max-w-xl mx-auto">What the ancient Rishis knew intuitively, modern science is now confirming through measurable data.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12 fade-up">
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(217,93,57,.1);"><i data-lucide="brain" class="w-5 h-5 text-clay"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Brainwave Entrainment</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">EEG studies show mantra chanting reliably induces alpha (8–13 Hz) and theta (4–7 Hz) brainwave states — associated with deep relaxation, heightened creativity, and accelerated learning. These are the same states experienced in deep meditation.</p>
+      </div>
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(197,160,89,.1);"><i data-lucide="activity" class="w-5 h-5 text-brand-gold"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Vagal Nerve Activation</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">The vibratory resonance of chanting directly stimulates the vagus nerve — the primary regulator of the parasympathetic nervous system. This reduces cortisol, lowers heart rate, improves heart rate variability (HRV), and shifts the body from stress response into rest-and-digest mode.</p>
+      </div>
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(74,93,79,.1);"><i data-lucide="shield" class="w-5 h-5 text-sage"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Cortisol Reduction</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Research from AIIMS New Delhi and multiple international studies demonstrates that regular mantra practice significantly reduces cortisol (the primary stress hormone) and increases DHEA, serotonin, and endorphin levels — creating measurable improvements in mood, immunity, and vitality.</p>
+      </div>
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(217,93,57,.1);"><i data-lucide="layers" class="w-5 h-5 text-clay"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Neural Pathway Rewiring</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Neuroplasticity research confirms that consistent mantra repetition creates new neural grooves (Samskaras) — literally restructuring the brain's default mode network and reducing the rumination patterns that underlie anxiety and depression.</p>
+      </div>
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(197,160,89,.1);"><i data-lucide="zap" class="w-5 h-5 text-brand-gold"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Cymatic Resonance</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Cymatics — the study of sound's effect on matter — demonstrates that specific frequencies create organised, coherent geometric patterns. Sanskrit phonemes produce particularly complex and beautiful cymatics, suggesting their ancient precision as vibrational medicine.</p>
+      </div>
+      <div class="science-card">
+        <div class="w-12 h-12 mb-4 rounded-full flex items-center justify-center" style="background:rgba(74,93,79,.1);"><i data-lucide="heart" class="w-5 h-5 text-sage"></i></div>
+        <h4 class="font-serif text-xl mb-2" style="color:var(--text);">Heart Coherence</h4>
+        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">HeartMath Institute research shows mantra chanting creates measurable heart coherence — the synchronisation of heart and brain rhythms associated with peak performance, emotional regulation, and physical health. A coherent heart is a healing heart.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CHAKRA — MANTRA MAP
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg2);">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Energy Centres</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Chakra &amp; Bija Mantra Map</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base max-w-xl mx-auto">Every chakra has a corresponding seed (Bija) mantra — the sonic key that unlocks and balances that energy centre.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start fade-up">
+      <div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#FF0000;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Muladhara — Root</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">LAM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Grounding, security, survival instincts, connection to earth. Chanting LAM addresses fear, rootlessness, and adrenal fatigue.</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#FF6A00;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Svadhisthana — Sacral</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">VAM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Creativity, pleasure, sexuality, emotional flow. Addresses emotional numbness, guilt, and creative blocks.</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#FFD600;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Manipura — Solar Plexus</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">RAM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Personal power, confidence, will. Transforms shame, powerlessness, and poor self-worth. Kindles Agni (digestive fire).</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#00B050;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Anahata — Heart</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">YAM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Love, compassion, grief, forgiveness. Opens the heart after loss, heartbreak, or prolonged emotional shut-down.</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#00B0F0;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Vishuddha — Throat</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">HAM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Communication, truth, authentic expression. Heals the inability to speak one's truth or the fear of being heard.</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#7030A0;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Ajna — Third Eye</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">OM</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Intuition, clarity, inner vision. Dissolves confusion, mental fog, and over-identification with thought.</p>
+          </div>
+        </div>
+        <div class="chakra-row">
+          <div class="chakra-dot" style="background:#9966FF;"></div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between">
+              <h4 class="font-serif text-lg" style="color:var(--text);">Sahasrara — Crown</h4>
+              <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-brand-gold">SILENCE</span>
+            </div>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Unity consciousness, spiritual connection. The crown chakra opens not through sound, but through the silence that remains after the mantra dissolves.</p>
+          </div>
+        </div>
+      </div>
+      <div class="sticky top-24">
+        <div class="relative rounded-lg overflow-hidden" style="height:440px;">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" loading="lazy" alt="Chakra Energy" class="w-full h-full object-cover">
+          <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.8) 0%,rgba(0,0,0,.2) 50%,transparent 100%);"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <p class="font-serif text-white text-xl italic mb-2">"The chakras are not metaphors — they are functional energy centres that respond to specific vibrational inputs."</p>
+            <p class="font-sans text-xs text-white/55 uppercase tracking-widest">— Samarpan Faculty</p>
+          </div>
+        </div>
+        <div class="mt-4 p-5 rounded" style="background:var(--card-bg);border:1px solid var(--border);">
+          <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-2">Our Chakra Assessment</p>
+          <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">During your first session we identify which chakras are most imbalanced using pulse diagnosis (Nadi Pariksha), a questionnaire, and energetic reading — then design a personalised Bija mantra protocol to restore balance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     PRACTICES WE OFFER
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Our Offerings</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Mantra Practices We Offer</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base max-w-xl mx-auto">From silent solo Japa to communal Kirtan — there is a mantra practice suited to every temperament and stage.</p>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
+
+      <div class="practice-card">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Japa" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">01</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Japa Meditation</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">Silent or whispered repetition of a personal mantra on a 108-bead Mala — the foundational practice of mantra yoga. You are initiated into a mantra suited to your nature and taught the classical technique.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="moon" class="w-3 h-3"></i>Daily practice</span>
+            <span class="benefit-pill"><i data-lucide="user" class="w-3 h-3"></i>Solo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card" style="border-color:#C5A059;">
+        <div class="bg-brand-gold text-brand-black text-center py-1.5">
+          <span class="font-sans text-[9px] uppercase tracking-widest font-bold">Most Transformative</span>
+        </div>
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Kirtan" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-2">02</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Kirtan — Group Chanting</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">Call-and-response devotional chanting in a group setting — the most ancient and powerful form of mantra practice. Kirtan opens the heart with a speed and depth that solo practice rarely achieves. Available in monthly online group sessions.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="users" class="w-3 h-3"></i>Group</span>
+            <span class="benefit-pill"><i data-lucide="heart" class="w-3 h-3"></i>Devotional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Mantra Healing" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">03</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Therapeutic Mantra Sessions</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">One-on-one sessions using specific mantras chosen for your current psychological or physical condition — anxiety, grief, low energy, confusion, heartbreak. The facilitator chants with you and for you.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="user" class="w-3 h-3"></i>1-on-1</span>
+            <span class="benefit-pill"><i data-lucide="activity" class="w-3 h-3"></i>Therapeutic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Ajapa Japa" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">04</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Ajapa Japa</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">The most subtle mantra practice — the unconsious, effortless repetition of the So-Hum mantra with each breath. Every human being already chants this mantra 21,600 times per day. We learn to become aware of it.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="wind" class="w-3 h-3"></i>Breath-based</span>
+            <span class="benefit-pill"><i data-lucide="sparkles" class="w-3 h-3"></i>Advanced</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1473177104440-ffee2f376098?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Mantra Puja" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">05</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Vedic Mantra &amp; Puja</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">Traditional Vedic chanting with ritual context — Pujas (offerings), Homa (fire ceremony), and Sandhya Vandanam. The structured ritual framework amplifies the mantra's vibrational power exponentially.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="flame" class="w-3 h-3"></i>Ritual</span>
+            <span class="benefit-pill"><i data-lucide="book-open" class="w-3 h-3"></i>Traditional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="h-44 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Mantra Programme" class="w-full h-full object-cover transition duration-700 hover:scale-105">
+        </div>
+        <div class="p-5">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">06</span>
+          <h3 class="font-serif text-xl mb-2" style="color:var(--text);">40-Day Mantra Sadhana</h3>
+          <p class="font-sans text-sm leading-relaxed mb-4" style="color:var(--text-muted);">A structured 40-day daily practice programme — the traditional timeframe for a mantra to fully establish itself in the practitioner's system and create lasting neurological and spiritual change.</p>
+          <div class="flex flex-wrap gap-1">
+            <span class="benefit-pill"><i data-lucide="calendar" class="w-3 h-3"></i>40 days</span>
+            <span class="benefit-pill"><i data-lucide="trending-up" class="w-3 h-3"></i>Transformative</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     BENEFITS CLOUD
+══════════════════════════════════════════════ -->
+<section class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
+  <div class="max-w-4xl mx-auto text-center fade-up">
+    <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Benefits</span>
+    <h2 class="font-display text-3xl md:text-4xl mb-4" style="color:var(--text);">What Mantra Chanting Can Do</h2>
+    <p class="font-serif italic text-brand-gray mb-8 text-base">A consistent mantra practice touches every dimension of the human being.</p>
+    <div class="flex flex-wrap justify-center mb-8">
+      <span class="benefit-pill"><i data-lucide="wind" class="w-3.5 h-3.5"></i>Reduces anxiety</span>
+      <span class="benefit-pill"><i data-lucide="moon" class="w-3.5 h-3.5"></i>Improves sleep</span>
+      <span class="benefit-pill"><i data-lucide="brain" class="w-3.5 h-3.5"></i>Sharpens focus</span>
+      <span class="benefit-pill"><i data-lucide="heart" class="w-3.5 h-3.5"></i>Opens the heart</span>
+      <span class="benefit-pill"><i data-lucide="shield" class="w-3.5 h-3.5"></i>Boosts immunity</span>
+      <span class="benefit-pill"><i data-lucide="sun" class="w-3.5 h-3.5"></i>Elevates mood</span>
+      <span class="benefit-pill"><i data-lucide="layers" class="w-3.5 h-3.5"></i>Dissolves trauma</span>
+      <span class="benefit-pill"><i data-lucide="anchor" class="w-3.5 h-3.5"></i>Creates inner stability</span>
+      <span class="benefit-pill"><i data-lucide="activity" class="w-3.5 h-3.5"></i>Lowers blood pressure</span>
+      <span class="benefit-pill"><i data-lucide="zap" class="w-3.5 h-3.5"></i>Increases vital energy (Prana)</span>
+      <span class="benefit-pill"><i data-lucide="users" class="w-3.5 h-3.5"></i>Deepens relationships</span>
+      <span class="benefit-pill"><i data-lucide="star" class="w-3.5 h-3.5"></i>Accelerates spiritual growth</span>
+      <span class="benefit-pill"><i data-lucide="repeat" class="w-3.5 h-3.5"></i>Breaks negative patterns</span>
+      <span class="benefit-pill"><i data-lucide="infinity" class="w-3.5 h-3.5"></i>Cultivates witness consciousness</span>
+      <span class="benefit-pill"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Awakens Kundalini energy</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Client Experiences</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Voices of the Practice</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
+      <div class="testi-card-full" style="border-left:3px solid #C5A059;">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-[9px] uppercase tracking-widest font-bold text-brand-gold bg-brand-gold/10 px-2 py-1 rounded">Ajapa Japa</span>
+          <span class="text-brand-gold text-xs">★★★★★</span>
+        </div>
+        <p class="font-serif leading-relaxed mb-5 italic" style="font-size:1rem;color:var(--text);">"Learning Ajapa Japa completely changed my relationship with my breath. A stillness I had never experienced — I discovered I had been meditating every moment without knowing it."</p>
+        <div class="border-t pt-3" style="border-color:var(--border);">
+          <p class="font-bold text-sm" style="color:var(--text);">Priya M.</p>
+          <p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Bangalore, India</p>
+        </div>
+      </div>
+      <div class="testi-card-full" style="border-left:3px solid #D95D39;">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-[9px] uppercase tracking-widest font-bold text-clay bg-clay/10 px-2 py-1 rounded">Mantra Chanting</span>
+          <span class="text-brand-gold text-xs">★★★★★</span>
+        </div>
+        <p class="font-serif leading-relaxed mb-5 italic" style="font-size:1rem;color:var(--text);">"The chanting sessions unlocked a vibration within me that dissolved deep emotional blocks I had carried for years. I wept during my first Maha Mrityunjaya session — and afterwards felt lighter than I had in a decade."</p>
+        <div class="border-t pt-3" style="border-color:var(--border);">
+          <p class="font-bold text-sm" style="color:var(--text);">Michael C.</p>
+          <p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">Sydney, Australia</p>
+        </div>
+      </div>
+      <div class="testi-card-full" style="border-left:3px solid #4A5D4F;">
+        <div class="flex justify-between items-start mb-4">
+          <span class="text-[9px] uppercase tracking-widest font-bold text-sage bg-sage/10 px-2 py-1 rounded">40-Day Sadhana</span>
+          <span class="text-brand-gold text-xs">★★★★★</span>
+        </div>
+        <p class="font-serif leading-relaxed mb-5 italic" style="font-size:1rem;color:var(--text);">"I completed the 40-day Gayatri Sadhana. By day 21 something shifted permanently. My mind became quieter, my intuition sharper, and my anxiety — which had been with me since childhood — simply faded."</p>
+        <div class="border-t pt-3" style="border-color:var(--border);">
+          <p class="font-bold text-sm" style="color:var(--text);">Sarah T.</p>
+          <p class="text-xs uppercase tracking-wider" style="color:var(--text-muted);">London, UK</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:var(--bg2);">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-14 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Have Questions?</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Frequently Asked</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="fade-up">
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Do I need to be Hindu or believe in Vedic religion to practise mantras?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Not at all. Mantras are vibrational tools — their effects are physiological and neurological as much as spiritual. You do not need any religious belief to benefit from mantra practice, just as you do not need to understand acoustics to be moved by music. Samarpan works with clients of all faiths, including secular and atheist practitioners. The only requirement is an open and sincere practice.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>I can't pronounce Sanskrit — can I still benefit?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Yes, and this is precisely why working with a teacher matters. Correct pronunciation is important — different phonemes create different vibrational effects. However, the goal is not perfection but genuine engagement. At Samarpan we teach precise pronunciation step by step, and within a few sessions most students find the Sanskrit sounds become natural and intuitive.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How long do I need to chant each day to see results?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Even 10–15 minutes of sincere daily Japa produces measurable effects within 2–3 weeks. Traditional texts recommend one full Mala (108 repetitions) per day as the minimum for therapeutic purposes. For deeper transformation — including the 40-day Sadhana — 30–40 minutes daily is ideal. Consistency is far more important than duration.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What is the difference between Japa and Ajapa Japa?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Japa means conscious, deliberate repetition of a mantra — using a Mala, in a dedicated sitting, with intention. Ajapa Japa means "un-chanted chanting" — becoming aware of the So-Hum mantra that the breath already performs 21,600 times per day unconsciously. Japa requires effort; Ajapa Japa is the recognition that the practice is already happening. Both have their place, and Samarpan teaches the progression from one to the other.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can I use mantra alongside other therapeutic approaches?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Absolutely. Mantra works beautifully alongside Ayurvedic diet and herbs (which balance the nervous system biochemically), Yoga (which works through the pranic body), and psychological therapy (which works through the mind). At Samarpan these are not separate programmes — they are aspects of a single integrated approach, and combining them produces results far greater than any alone.</p></div></div>
+      <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What is a personal mantra initiation?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button><div class="faq-body"><p>Mantra initiation (Diksha) is the transmission of a specific mantra from teacher to student — chosen for your unique constitution, temperament, and life circumstances. Unlike generic mantras you might find online, a personally transmitted mantra carries the teacher's intention and the lineage's energy. At Samarpan, initiation includes: the selection of your mantra, correct pronunciation training, guidance on practice method, and a ritual context that activates the mantra within your system.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     OTHER PROGRAMMES
+══════════════════════════════════════════════ -->
+<section class="py-20 px-4 sm:px-6" style="background:var(--bg);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Complete Healing</span>
+      <h2 class="font-display text-3xl" style="color:var(--text);">Explore Other Programmes</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
+      <a href="ayurveda.html" class="group relative overflow-hidden rounded-sm" style="height:220px;">
+        <img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Ayurveda" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">01</span>
+          <h4 class="font-serif text-white text-lg">Ayurvedic Consultations</h4>
+        </div>
+      </a>
+      <a href="yoga.html" class="group relative overflow-hidden rounded-sm" style="height:220px;">
+        <img src="https://images.unsplash.com/photo-1588286840104-8957b019727f?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Yoga" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">02</span>
+          <h4 class="font-serif text-white text-lg">Yoga Sessions</h4>
+        </div>
+      </a>
+      <a href="meditation.html" class="group relative overflow-hidden rounded-sm" style="height:220px;">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Meditation" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">03</span>
+          <h4 class="font-serif text-white text-lg">Meditation &amp; Ajapa Jap</h4>
+        </div>
+      </a>
+      <a href="psychology.html" class="group relative overflow-hidden rounded-sm" style="height:220px;">
+        <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Psychology" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">04</span>
+          <h4 class="font-serif text-white text-lg">Therapeutic Psychology</h4>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════ -->
+<section class="py-24 px-4 sm:px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#1a100e 50%,#1C1C1C 100%);">
+  <div class="max-w-3xl mx-auto text-center fade-up">
+    <div class="divider-gold mb-8"></div>
+    <div class="text-6xl mb-6" style="font-family:'Cormorant Garamond',serif;color:#C5A059;text-shadow:0 0 40px rgba(197,160,89,.4);">ॐ</div>
+    <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-4">Begin the Practice</span>
+    <h2 class="font-display text-3xl md:text-5xl text-white mb-5 leading-tight">Every Chant Is a<br>Step Closer to Yourself.</h2>
+    <p class="font-sans text-sm mb-4 leading-relaxed max-w-xl mx-auto" style="color:rgba(255,255,255,.6);">You don't need a perfect voice, a spiritual background, or any special equipment. You need only the willingness to begin. The mantra will do the rest — it has been doing so for five thousand years.</p>
+    <p class="font-serif italic text-brand-gold text-lg mb-10">"The mantra is the sound of the silence within you,<br class="hidden sm:block">already waiting to be heard."</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <button onclick="openBookPopup()" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-10 py-4 text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg">
+        <i data-lucide="calendar" class="w-4 h-4"></i> Book a Session
+      </button>
+      <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20would%20like%20to%20learn%20about%20your%20Mantra%20Chanting%20sessions.%20Could%20you%20please%20guide%20me%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 border border-white/40 text-white px-10 py-4 text-xs font-bold uppercase tracking-widest rounded-sm hover:bg-white/10 transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+    <p class="font-sans text-xs mt-5" style="color:rgba(255,255,255,.3);">No experience needed · Free discovery call · Worldwide via Zoom</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div class="sm:col-span-2">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" class="mb-4" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="4" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".6"/>
+      </svg>
+      <h4 class="font-display text-lg tracking-widest mb-1" style="color:#FDFBF7;">SAMARPAN</h4>
+      <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">Holistic Wellbeing</p>
+      <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
+      <div class="flex gap-4 mt-6">
+        <a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+        <a href="https://www.youtube.com/@justtheself" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+        <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+    <div>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Programmes</h5>
+      <ul class="space-y-3 text-sm">
+        <li><a href="ayurveda.html" class="hover:text-white transition">Ayurveda</a></li>
+        <li><a href="diet.html" class="hover:text-white transition">Nutrition Planning</a></li>
+        <li><a href="psychology.html" class="hover:text-white transition">Therapeutic Psychology</a></li>
+        <li><a href="yoga.html" class="hover:text-white transition">Yoga</a></li>
+        <li><a href="meditation.html" class="hover:text-white transition">Meditation</a></li>
+        <li><a href="mantra.html" class="text-white">Mantra Chanting</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
+      <ul class="space-y-3 text-sm">
+        <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
+        <li><a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
+        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
+        <li class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4"></i>Sessions worldwide via Zoom</li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
+    <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
+    <div class="flex gap-6">
+      <a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
+      <a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div id="fab"><a href="booking.html"><i data-lucide="calendar" class="w-4 h-4"></i>Book Now</a></div>
+<div id="whatsapp-fab"><a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20am%20interested%20in%20Mantra%20Chanting%20sessions.%20Could%20you%20guide%20me%3F" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
+<div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
+
+<!-- SCRIPTS -->
+<script>
+  var FP='thesamrpan',FK='AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+  var FB='https://firestore.googleapis.com/v1/projects/'+FP+'/databases/(default)/documents/';
+  function toFF(d){var f={};Object.keys(d).forEach(function(k){var v=d[k];if(typeof v==='boolean')f[k]={booleanValue:v};else if(typeof v==='number')f[k]={integerValue:v};else f[k]={stringValue:String(v==null?'':v)};});return f;}
+  function docId(e){var n=new Date(Date.now()+5.5*3600000),p=function(x){return String(x).padStart(2,'0');};var d=n.getUTCFullYear()+p(n.getUTCMonth()+1)+p(n.getUTCDate()),t=p(n.getUTCHours())+p(n.getUTCMinutes())+p(n.getUTCSeconds());var ep=(e||'anon').toLowerCase().replace(/@/g,'_').replace(/\./g,'_').replace(/[^a-z0-9_]/g,'').slice(0,40);return ep+'__'+d+'_'+t;}
+  async function saveFS(col,data){var now=new Date(),ist=new Date(now.getTime()+5.5*3600000),date=ist.toISOString().split('T')[0];var pl={fields:toFF(Object.assign({},data,{date:date,timestamp:now.toISOString(),source:'website_mantra_page',page_url:window.location.href}))};var url=FB+col+'/'+docId(data.email||'')+'?key='+FK;var r=await fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(pl)});if(!r.ok)throw new Error(await r.text());return r.json();}
+  function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());}
+  function setStatus(id,ok,msg){var el=document.getElementById(id);if(el)el.innerHTML='<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';}
+  function setBtnLoad(id,on){var b=document.getElementById(id);if(!b)return;b.disabled=on;if(on){b.setAttribute('data-o',b.innerHTML);b.innerHTML='<span class="btn-spinner"></span>Submitting…';}else{var o=b.getAttribute('data-o');if(o)b.innerHTML=o;}}
+
+  function openBookPopup(){document.getElementById('book-popup').classList.add('open');document.body.style.overflow='hidden';gaEvent('view','Popup','Mantra Book Popup');}
+  function closeBookPopup(){document.getElementById('book-popup').classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('book-popup').addEventListener('click',function(e){if(e.target===this)closeBookPopup();});
+
+  async function handleBookSubmit(e){
+    e.preventDefault();
+    var name=document.getElementById('bookName').value.trim();
+    var email=document.getElementById('bookEmail').value.trim();
+    var phone=document.getElementById('bookPhone').value.trim();
+    var type=document.getElementById('bookType').value;
+    var msg=document.getElementById('bookMessage').value.trim();
+    if(!name||!isEmail(email)){setStatus('bookStatus',false,'Please fill in your name and a valid email.');return;}
+    setBtnLoad('bookSubmitBtn',true);
+    try{
+      await saveFS('homepage_leads',{name:name,email:email,phone:phone||'Not Provided',service:'Mantra — '+type,message:msg||'No message',lead_type:'mantra_page_booking'});
+      setStatus('bookStatus',true,'Namaste! We will reach out within 24 hours to begin your practice.');
+      document.getElementById('bookForm').reset();
+      gaEvent('submit','Form','Mantra — Book Session');
+      setTimeout(closeBookPopup,2800);
+    }catch(err){setStatus('bookStatus',false,'Something went wrong — please email info@thesamarpan.co.in or WhatsApp us.');}
+    setBtnLoad('bookSubmitBtn',false);
+  }
+
+  function toggleFaq(btn){var item=btn.closest('.faq-item'),open=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(function(i){i.classList.remove('open');});if(!open)item.classList.add('open');lucide.createIcons();}
+
+  (function(){var n=document.getElementById('navbar');function u(){n.classList.toggle('scrolled',window.scrollY>80);}window.addEventListener('scroll',u,{passive:true});u();})();
+  window.addEventListener('scroll',function(){var sp=document.getElementById('scroll-progress');if(sp)sp.style.width=Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';},{passive:true});
+  window.addEventListener('scroll',function(){var s=window.scrollY>400;['fab','whatsapp-fab','theme-toggle'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('visible',s);});},{passive:true});
+
+  var menuOpen=false;
+  function toggleMenu(){menuOpen=!menuOpen;document.getElementById('mobile-menu').classList.toggle('active',menuOpen);document.body.style.overflow=menuOpen?'hidden':'';document.getElementById('hamburger-btn').setAttribute('aria-expanded',menuOpen);var ic=document.getElementById('hamburger-icon');if(ic){ic.setAttribute('data-lucide',menuOpen?'x':'menu');lucide.createIcons();}}
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(menuOpen)toggleMenu();closeBookPopup();}});
+
+  var fo=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');fo.unobserve(e.target);}});},{threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(function(el){fo.observe(el);});
+
+  var co=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(!entry.isIntersecting)return;var el=entry.target,t=parseInt(el.getAttribute('data-target')),c=0,s=Math.max(1,Math.ceil(t/80));var iv=setInterval(function(){c=Math.min(c+s,t);el.textContent=c.toLocaleString();if(c>=t)clearInterval(iv);},20);co.unobserve(el);});},{threshold:0.5});
+  document.querySelectorAll('.ctr').forEach(function(el){co.observe(el);});
+
+  var st=localStorage.getItem('samarpan-theme')||'light';
+  document.documentElement.setAttribute('data-theme',st);
+  if(st==='dark'){var ti=document.getElementById('themeIcon');if(ti)ti.setAttribute('data-lucide','sun');}
+  function toggleTheme(){var h=document.documentElement,d=h.getAttribute('data-theme')==='dark';h.setAttribute('data-theme',d?'light':'dark');localStorage.setItem('samarpan-theme',d?'light':'dark');var ti=document.getElementById('themeIcon');if(ti){ti.setAttribute('data-lucide',d?'moon':'sun');lucide.createIcons();}}
+
+  window.addEventListener('load',function(){var l=document.getElementById('loader');if(!l)return;setTimeout(function(){l.style.opacity='0';setTimeout(function(){l.style.display='none';},600);},400);});
+
+  document.querySelectorAll('.gsap-hero').forEach(function(el){el.style.transform='translateY(30px)';});
+  window.addEventListener('DOMContentLoaded',function(){
+    setTimeout(function(){
+      document.querySelectorAll('.gsap-hero').forEach(function(el,i){
+        setTimeout(function(){el.style.transition='opacity 1.2s ease,transform 1.2s ease';el.style.opacity='1';el.style.transform='translateY(0)';},900+i*200);
+      });
+    },0);
+    lucide.createIcons();
+  });
+</script>
 </body>
 </html>
