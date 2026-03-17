@@ -1,0 +1,487 @@
+<!-- 
+  SAMARPAN JOURNAL — PREVIEW / STAGING FILE
+  Upload this entire /update/ folder to your GitHub repo.
+  Preview at: thesamarpan.co.in/update/update.html
+  When happy → copy journal.html + journal/ folder to root.
+  DO NOT link this from your live site until ready.
+-->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[PREVIEW] Wisdom Stream — Samarpan Journal</title>
+  <!-- NOINDEX — don't let Google index the preview -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="STAGING PREVIEW — Samarpan Journal with individual article pages for SEO.">
+
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config={
+      darkMode:['attribute','[data-theme="dark"]'],
+      theme:{extend:{
+        colors:{clay:'#D95D39','brand-black':'#1C1C1C','brand-gray':'#666666','brand-gold':'#C5A059','brand-cream':'#FDFBF7',paper:'#FDFBF7',sage:'#4A5D4F'},
+        fontFamily:{sans:['Lato','sans-serif'],serif:['Cormorant Garamond','serif'],display:['Marcellus','serif']}
+      }}
+    }
+  </script>
+
+  <style>
+    /* ── PREVIEW BANNER ── */
+    .preview-banner{position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#1C1C1C;color:#fff;padding:.6rem 1rem;display:flex;align-items:center;justify-content:space-between;font-family:'Lato',sans-serif;font-size:11px;gap:1rem;flex-wrap:wrap;}
+    .preview-banner strong{color:#C5A059;}
+    .preview-banner a{color:#D95D39;text-decoration:none;font-weight:700;}
+
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+    *,*::before,*::after{box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;padding-bottom:52px;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
+    #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+
+    #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background .45s cubic-bezier(.4,0,.2,1),border-color .45s,box-shadow .45s,backdrop-filter .45s;}
+    #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+    [data-theme="dark"] #navbar.scrolled{background:rgba(20,20,16,0.96);border-bottom:1px solid #2E2E28;}
+    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,0.90);text-decoration:none;}
+    #navbar.scrolled .nav-link{color:var(--text-muted);}
+    .nav-link:hover,.nav-link.active-page{color:#D95D39!important;}
+    .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+    .nav-link:hover::after,.nav-link.active-page::after{transform:scaleX(1);}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;}
+    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
+    .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
+    #hamburger-icon{transition:color .3s;color:#ffffff;}
+    #navbar.scrolled #hamburger-icon{color:var(--text);}
+    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
+    #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
+
+    .journal-hero{position:relative;overflow:hidden;min-height:80vh;display:flex;align-items:flex-end;}
+    .hero-bg{position:absolute;inset:0;}
+    .hero-bg img{width:100%;height:100%;object-fit:cover;animation:heroKen 25s ease-in-out infinite alternate;}
+    @keyframes heroKen{0%{transform:scale(1);}100%{transform:scale(1.06) translateY(-1%)}}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.05) 0%,rgba(0,0,0,.2) 35%,rgba(0,0,0,.7) 70%,rgba(20,20,16,.96) 100%);}
+    .hero-content{position:relative;z-index:10;width:100%;text-align:center;padding:0 1.5rem 4rem;}
+    .reveal-line{overflow:hidden;}
+    .reveal-inner{transform:translateY(105%);transition:transform 1s cubic-bezier(.16,1,.3,1);}
+    .reveal-inner.up{transform:translateY(0);}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(197,160,89,.15);border:1px solid rgba(197,160,89,.4);border-radius:50px;padding:.4rem 1rem;margin-bottom:1.5rem;}
+
+    .cat-pill{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:.38rem .9rem;border-radius:2px;cursor:pointer;transition:background .25s,color .25s,border-color .25s;border:1px solid var(--border);color:var(--text-muted);background:transparent;white-space:nowrap;}
+    .cat-pill:hover,.cat-pill.active{background:#D95D39;color:#fff;border-color:#D95D39;}
+
+    .search-wrap{position:relative;max-width:420px;margin:0 auto;}
+    .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:rgba(255,255,255,.65);z-index:2;pointer-events:none;}
+    .search-input{background:rgba(255,255,255,.10);border:1.5px solid rgba(255,255,255,.30);border-radius:4px;padding:.75rem 1rem .75rem 2.75rem;font-size:.85rem;font-family:'Lato',sans-serif;color:#fff;outline:none;transition:border-color .3s,background .3s;width:100%;}
+    .search-input:focus{border-color:#C5A059;background:rgba(255,255,255,.15);}
+    .search-input::placeholder{color:rgba(255,255,255,.5);}
+
+    .featured-card{position:relative;overflow:hidden;cursor:pointer;border-radius:4px;}
+    .featured-card img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.25,.46,.45,.94);}
+    .featured-card:hover img{transform:scale(1.04);}
+    .featured-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 55%,transparent 100%);}
+    .article-card{background:var(--card-bg);border:1px solid var(--border);overflow:hidden;transition:border-color .35s,transform .35s,box-shadow .35s;cursor:pointer;border-radius:4px;}
+    .article-card:hover{border-color:#D95D39;transform:translateY(-5px);box-shadow:0 20px 48px rgba(217,93,57,.1);}
+    .article-card .card-img{overflow:hidden;}
+    .article-card .card-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s;}
+    .article-card:hover .card-img img{transform:scale(1.06);}
+    .article-item{display:block;}
+    .article-item.hidden-filter{display:none!important;}
+    .read-more{display:inline-flex;align-items:center;gap:.4rem;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#C5A059;transition:color .3s,gap .3s;}
+    .read-more:hover{color:#D95D39;gap:.7rem;}
+    .tag{display:inline-block;font-family:'Lato',sans-serif;font-size:8px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:.22rem .55rem;border-radius:2px;}
+
+    .sidebar-card{background:var(--card-bg);border:1px solid var(--border);padding:1.5rem;border-radius:4px;}
+    .community-card{background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(217,93,57,.06));border:1px solid rgba(197,160,89,.25);border-radius:6px;padding:1.5rem;}
+    .pull-quote{border-left:3px solid #C5A059;padding:1rem 1.5rem;font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--text);background:rgba(197,160,89,.04);border-radius:0 4px 4px 0;}
+
+    .nl-input{background:transparent;border:1.5px solid rgba(255,255,255,.3);border-radius:4px;padding:.75rem 1rem;font-size:.8rem;font-family:'Lato',sans-serif;color:#fff;outline:none;transition:border-color .3s;width:100%;}
+    .nl-input:focus{border-color:#C5A059;}
+    .nl-input::placeholder{color:rgba(255,255,255,.5);}
+    .nl-input.invalid{border-color:#ef4444!important;}
+    .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    .cta-btn{position:relative;overflow:hidden;transition:background .3s,box-shadow .3s,transform .2s;}
+    .cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(217,93,57,.3);}
+    .fade-up{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .fade-up-d1{transition-delay:.1s;}.fade-up-d2{transition-delay:.2s;}.fade-up-d3{transition-delay:.3s;}
+    .dot-sep::before{content:'·';margin:0 .5rem;opacity:.4;}
+
+    #fab{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
+    #fab.visible{opacity:1;transform:translateY(0);}
+    #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s;}
+    #fab a:hover{background:#1C1C1C;}
+    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
+    #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
+    #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
+    #whatsapp-fab a:hover{transform:scale(1.1);}
+    #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .15s,transform .4s .15s;}
+    #theme-toggle.visible{opacity:1;transform:translateY(0);}
+    #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
+    #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
+    ::-webkit-scrollbar{width:5px;}
+    ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
+  </style>
+</head>
+<body class="antialiased selection:bg-clay selection:text-white">
+<div id="scroll-progress"></div>
+
+<!-- PREVIEW BANNER -->
+<div class="preview-banner">
+  <div>🔍 <strong>PREVIEW MODE</strong> — This is your staging file at <strong>/update/update.html</strong>. Not indexed by Google.</div>
+  <div>Happy with it? Copy <code>journal.html</code> + <code>journal/</code> folder to your root. Also replace <code>sitemap.xml</code>.</div>
+  <a href="../journal.html" target="_blank">View Live Journal →</a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
+      <a href="../about.html" class="nav-link">About</a>
+      <a href="update.html" class="nav-link active-page">Journals</a>
+      <a href="../sessions.html" class="nav-link">Sessions</a>
+      <a href="../ayurveda.html" class="nav-link">Ayurveda</a>
+      <a href="../community.html" class="nav-link">Community</a>
+    </div>
+    <a href="../index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" class="mb-1 group-hover:scale-110 transition-transform drop-shadow-sm" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      <span class="nav-logo-text">Samarpan</span>
+    </a>
+    <div class="hidden lg:flex flex-1 justify-end items-center">
+      <a href="../booking.html" class="nav-cta-btn">Start Your Healing Journey</a>
+    </div>
+    <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
+      <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()">
+    <i data-lucide="x" class="w-7 h-7"></i>
+  </button>
+  <div class="mb-2 flex flex-col items-center">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+      <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+      <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="85" r="3" fill="currentColor"/>
+    </svg>
+    <p class="font-display text-xs tracking-widest text-center mt-1.5 text-clay">SAMARPAN</p>
+  </div>
+  <a href="../about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
+  <a href="update.html" onclick="toggleMenu()" class="font-display text-2xl text-clay">Journals</a>
+  <a href="../sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
+  <a href="../booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
+</div>
+
+<!-- HERO -->
+<section class="journal-hero pt-[72px]">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=2400&auto=format&fit=crop" alt="Wisdom Stream — Samarpan Journal" loading="eager" fetchpriority="high">
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="absolute top-1/4 left-8 opacity-10 hidden lg:block" style="z-index:5;">
+    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" stroke="#C5A059" stroke-width="0.8"><circle cx="60" cy="60" r="55"/><circle cx="60" cy="60" r="40"/><circle cx="60" cy="60" r="25"/><line x1="60" y1="5" x2="60" y2="115"/><line x1="5" y1="60" x2="115" y2="60"/><line x1="21" y1="21" x2="99" y2="99"/><line x1="99" y1="21" x2="21" y2="99"/></svg>
+  </div>
+  <div class="hero-content" style="z-index:10;">
+    <div class="reveal-line mb-4"><div class="reveal-inner" style="display:inline-block;"><div class="hero-badge"><svg width="12" height="12" viewBox="0 0 100 100" fill="none" stroke="#C5A059" stroke-width="4"><circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/></svg><span class="font-sans text-[10px] uppercase tracking-[.25em] text-brand-gold">The Journal</span></div></div></div>
+    <div class="reveal-line mb-2"><h1 class="reveal-inner font-display text-white font-light leading-none" style="font-size:clamp(3.5rem,10vw,7.5rem);">Wisdom</h1></div>
+    <div class="reveal-line mb-6"><h2 class="reveal-inner font-serif italic text-brand-gold font-light" style="font-size:clamp(3rem,9vw,7rem);line-height:.9;">Stream</h2></div>
+    <div class="reveal-line mb-10"><p class="reveal-inner font-serif text-xl italic text-white/70">Ancient knowledge distilled for the modern seeker</p></div>
+    <div class="reveal-inner mb-6">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search articles…" class="search-input" oninput="filterArticles()" aria-label="Search articles">
+      </div>
+    </div>
+    <div class="reveal-inner flex flex-wrap gap-2 justify-center" id="categoryPills">
+      <button class="cat-pill active" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('all',this)">All</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('ayurveda',this)">Ayurveda</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('yoga',this)">Yoga</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('psychology',this)">Psychology</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('neurobiology',this)">Neurobiology</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('tantra',this)">Tantra & Spirit</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('nutrition',this)">Nutrition</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('meditation',this)">Meditation</button>
+      <button class="cat-pill" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.7);" onclick="setCategory('quantum',this)">Quantum & Vedas</button>
+    </div>
+    <div class="mt-12 flex flex-col items-center gap-2 opacity-50"><span class="font-sans text-[9px] uppercase tracking-[.3em] text-white">Scroll to Explore</span><div class="w-px h-10 bg-gradient-to-b from-white/60 to-transparent"></div></div>
+  </div>
+</section>
+
+<!-- ARTICLES SECTION -->
+<section class="py-16 px-4 sm:px-6" style="background:var(--bg);" id="articlesSection">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Featured -->
+    <div class="mb-4 fade-up article-item" data-category="quantum" data-title="quantum physics ayurveda srishti utpatti creation sankhya vedanta adwaita charaka">
+      <div class="featured-card" style="height:clamp(380px,58vh,540px);" onclick="window.location.href='journal/quantum-physics-ayurveda-srishti-utpatti.html'">
+        <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1800&auto=format&fit=crop" alt="Quantum Physics in Ayurveda" loading="eager">
+        <div class="featured-overlay"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12" style="z-index:2;">
+          <div class="flex items-center gap-3 mb-3"><span class="tag bg-brand-gold text-white">Quantum & Vedas</span><span class="font-sans text-[9px] uppercase tracking-widest text-white/60">Featured · New</span></div>
+          <h3 class="font-serif text-white leading-tight mb-3 max-w-3xl" style="font-size:clamp(1.8rem,4vw,3rem);">Quantum Physics in Ayurveda — Exploring <em>Srishti Utpatti</em></h3>
+          <p class="font-sans text-sm text-white/75 mb-5 max-w-2xl leading-relaxed hidden sm:block">How the ancient Sankhya framework of creation mirrors modern quantum field theory — and why Nobel Laureate Dr. Hans-Peter Dürr found Advaita in his equations.</p>
+          <div class="flex items-center gap-4">
+            <div><p class="font-sans text-[9px] uppercase tracking-widest text-white/70">By Lella Naga Durga Bhavani</p><p class="font-sans text-[9px] text-white/50 mt-0.5">Final-Year BAMS Student · 14 min read</p></div>
+            <span class="ml-auto read-more text-white/80 hover:!text-white">Read Article <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      <div class="md:col-span-2 article-card article-item fade-up" data-category="neurobiology" data-title="stress neurobiology ayurveda HPA axis cortisol brain dosha ashwagandha brahmi pranayama harsh ranjan JNU" onclick="window.location.href='journal/stress-neurobiology-ayurveda.html'">
+        <div class="sm:flex">
+          <div class="card-img sm:w-72 flex-shrink-0" style="min-height:220px;"><img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=800&auto=format&fit=crop" alt="Stress Neurobiology" loading="lazy"></div>
+          <div class="p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2"><span class="tag bg-clay/10 text-clay">Neurobiology</span><span class="font-sans text-[9px] text-clay font-bold tracking-wider">NEW · DEEP DIVE</span></div>
+              <h3 class="font-serif mb-2 leading-snug" style="font-size:1.4rem;color:var(--text);">Stress: An Integrative Exploration Through Neurobiology & Ayurveda</h3>
+              <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">From HPA axis dysregulation and epigenetics to Dosha theory and Rasayana — a rigorous 35-minute academic deep-dive.</p>
+            </div>
+            <div class="mt-4 pt-4 border-t flex items-center justify-between" style="border-color:var(--border);">
+              <span class="font-sans text-[9px] uppercase tracking-widest" style="color:var(--text-muted);">Harsh Ranjan · JNU<span class="dot-sep"></span>35 min</span>
+              <span class="read-more">Read Article <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="md:col-span-1 article-card article-item fade-up fade-up-d1" data-category="neurobiology" data-title="stress brain ayurveda calm HPA cortisol harsh ranjan" onclick="window.location.href='journal/stress-brain-ayurveda-calm.html'">
+        <div class="card-img" style="height:200px;"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=600&auto=format&fit=crop" alt="Stress What the Brain Does" loading="lazy"></div>
+        <div class="p-5"><span class="tag bg-clay/10 text-clay">Neurobiology</span><h3 class="font-serif mt-3 mb-2 leading-snug" style="font-size:1.2rem;color:var(--text);">Stress: What the Brain Does — and How Ayurveda Helps Calm the System</h3><p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">A clear practical guide to the HPA axis, cortisol, and Ayurvedic recovery.</p><div class="border-t pt-4" style="border-color:var(--border);"><p class="font-sans text-[9px] mb-1" style="color:var(--text-muted);">Harsh Ranjan · 8 min</p><span class="read-more">Read Article <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div></div>
+      </div>
+    </div>
+
+    <!-- Lella row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div class="article-card article-item fade-up" data-category="quantum" data-title="dark energy samadhi quantum pranayama prana cosmos Lella Bhavani" onclick="window.location.href='journal/dark-energy-samadhi-quantum-pranayama.html'">
+        <div class="sm:flex"><div class="card-img sm:w-48 flex-shrink-0" style="min-height:180px;"><img src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=600&auto=format&fit=crop" alt="Dark Energy Samadhi" loading="lazy"></div><div class="p-5 flex flex-col justify-between"><div><span class="tag" style="background:rgba(197,160,89,.15);color:#C5A059;">Quantum & Vedas</span><h3 class="font-serif mt-2 mb-2 leading-snug" style="font-size:1.1rem;color:var(--text);">The Transduction of Dark Energy: Reconciling Samadhi with Quantum Constants</h3><p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">How the Sage survives where the Patient fails — bridging Pranayama with cosmological dark energy.</p></div><div class="mt-3 pt-3 border-t" style="border-color:var(--border);"><span class="font-sans text-[9px]" style="color:var(--text-muted);">Lella Naga Durga Bhavani<span class="dot-sep"></span>12 min</span></div></div></div>
+      </div>
+      <div class="article-card article-item fade-up fade-up-d1" data-category="ayurveda" data-title="prakriti ayurvedic constitution dosha body type vata pitta kapha" onclick="window.location.href='journal/understanding-prakriti-ayurvedic-constitution.html'">
+        <div class="sm:flex"><div class="card-img sm:w-48 flex-shrink-0" style="min-height:180px;"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=600&auto=format&fit=crop" alt="Prakriti" loading="lazy"></div><div class="p-5 flex flex-col justify-between"><div><span class="tag bg-clay/10 text-clay">Ayurveda</span><h3 class="font-serif mt-2 mb-2 leading-snug" style="font-size:1.1rem;color:var(--text);">Understanding Your Prakriti — The Blueprint of Your Being</h3><p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Your Ayurvedic constitution — the unchanging blueprint that shapes every aspect of your health.</p></div><div class="mt-3 pt-3 border-t" style="border-color:var(--border);"><span class="font-sans text-[9px]" style="color:var(--text-muted);">Harsh Ranjan · JNU<span class="dot-sep"></span>12 min</span></div></div></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+      <div class="lg:col-span-2 space-y-5">
+        <div class="flex items-center gap-4 mb-2">
+          <span class="font-sans text-[9px] uppercase tracking-widest font-bold text-clay">All Articles</span>
+          <div class="flex-1 h-px" style="background:var(--border);"></div>
+          <span class="font-sans text-[9px] uppercase tracking-widest" style="color:var(--text-muted);" id="articleCount">24 Articles</span>
+        </div>
+        <div id="articleList"></div>
+        <div id="noResults" class="hidden text-center py-16">
+          <div class="text-4xl mb-4">🔍</div>
+          <h3 class="font-serif text-2xl mb-2" style="color:var(--text);">No articles found</h3>
+          <button onclick="setCategory('all',document.querySelector('#categoryPills .cat-pill'))" class="mt-4 px-6 py-2 border border-clay text-clay font-sans text-xs uppercase tracking-widest rounded-sm hover:bg-clay hover:text-white transition">Clear Filter</button>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-1 space-y-6">
+        <div class="community-card fade-up">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:rgba(197,160,89,.15);">
+              <svg width="20" height="20" viewBox="0 0 100 100" fill="none" stroke="#C5A059" stroke-width="4"><circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/></svg>
+            </div>
+            <div>
+              <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold">Samarpan Global Community</p>
+              <p class="font-sans text-[10px] mt-0.5" style="color:var(--text-muted);">Seekers from 18+ countries</p>
+            </div>
+          </div>
+          <h4 class="font-serif text-lg mb-2 leading-snug" style="color:var(--text);">Join a Community of Conscious Seekers</h4>
+          <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Practitioners, healers, students, and seekers — united by Ayurveda, Yoga, Neurobiology, and Vedic sciences.</p>
+          <a href="../community.html" class="mt-4 block w-full text-center py-2.5 border border-brand-gold text-brand-gold font-sans text-[9px] font-bold uppercase tracking-widest rounded-sm hover:bg-brand-gold hover:text-white transition">Join the Community →</a>
+        </div>
+
+        <div class="rounded overflow-hidden fade-up fade-up-d1" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
+          <div class="p-6">
+            <div class="w-8 h-8 rounded-full bg-clay/20 flex items-center justify-center mb-4"><i data-lucide="moon" class="w-4 h-4 text-brand-gold"></i></div>
+            <p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold mb-2">Inner Circle</p>
+            <h4 class="font-serif text-xl text-white mb-3 leading-snug">Monthly Wisdom,<br>Every New Moon</h4>
+            <p class="font-sans text-xs text-white/60 mb-5 leading-relaxed">Seasonal Ayurvedic guides, consciousness teachings, and retreat announcements.</p>
+            <input type="text" id="sidebarName" placeholder="Your name (optional)" class="nl-input mb-2">
+            <input type="email" id="sidebarEmail" placeholder="your@email.com" class="nl-input mb-3" required>
+            <button id="sidebarBtn" onclick="subscribeSidebar()" class="cta-btn w-full py-2.5 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-widest rounded-sm">Join the Circle →</button>
+            <div id="sidebarStatus" class="mt-2 text-center" aria-live="polite"></div>
+            <p class="font-sans text-[9px] text-white/30 mt-3 text-center">No spam · Unsubscribe anytime</p>
+          </div>
+        </div>
+
+        <div class="sidebar-card fade-up fade-up-d2">
+          <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-4">Browse by Topic</p>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setCategory('ayurveda',null)" class="cat-pill">Ayurveda</button>
+            <button onclick="setCategory('yoga',null)" class="cat-pill">Yoga</button>
+            <button onclick="setCategory('psychology',null)" class="cat-pill">Psychology</button>
+            <button onclick="setCategory('neurobiology',null)" class="cat-pill">Neurobiology</button>
+            <button onclick="setCategory('meditation',null)" class="cat-pill">Meditation</button>
+            <button onclick="setCategory('tantra',null)" class="cat-pill">Tantra</button>
+            <button onclick="setCategory('nutrition',null)" class="cat-pill">Nutrition</button>
+            <button onclick="setCategory('quantum',null)" class="cat-pill">Quantum & Vedas</button>
+          </div>
+        </div>
+
+        <div class="fade-up fade-up-d3">
+          <div class="pull-quote">"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need."<p class="font-sans text-[9px] uppercase tracking-widest mt-3 text-brand-gold font-bold">— Ayurvedic Proverb</p></div>
+        </div>
+
+        <div class="sidebar-card text-center fade-up" style="background:var(--bg2);">
+          <div class="w-12 h-12 rounded-full bg-clay/10 flex items-center justify-center mx-auto mb-4"><i data-lucide="calendar" class="w-5 h-5 text-clay"></i></div>
+          <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Ready to Begin?</h4>
+          <p class="font-sans text-xs mb-5 leading-relaxed" style="color:var(--text-muted);">Book a free 20-minute Dosha Assessment with Harsh Ranjan.</p>
+          <a href="../booking.html" class="cta-btn block w-full py-3 bg-clay text-white font-sans text-[9px] font-bold uppercase tracking-widest rounded-sm text-center">Book Free Session</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER NEWSLETTER -->
+<section class="py-20 px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
+  <div class="max-w-4xl mx-auto fade-up">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-3">The Inner Circle</span>
+        <h2 class="font-display text-3xl md:text-4xl text-white mb-4 leading-tight">Wisdom Delivered<br>Every New Moon</h2>
+        <p class="font-sans text-sm text-white/65 leading-relaxed">Every lunar cycle, Harsh Ranjan sends a curated letter — seasonal Ayurvedic practices, consciousness teachings, and exclusive retreat invitations.</p>
+      </div>
+      <div class="space-y-3">
+        <input type="text" id="bannerName" placeholder="Your name (Optional)" class="nl-input">
+        <input type="email" id="bannerEmail" placeholder="your@email.com" class="nl-input" required>
+        <button id="bannerBtn" onclick="handleBannerNewsletter()" class="cta-btn w-full py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm">Join the Inner Circle →</button>
+        <div id="bannerStatus" class="text-center" aria-live="polite"></div>
+        <p class="font-sans text-[10px] text-white/30 text-center">No spam. Unsubscribe with one click.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
+    <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
+    <div class="flex gap-6">
+      <a href="../privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
+      <a href="../terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<div id="fab"><a href="../booking.html"><i data-lucide="calendar" class="w-4 h-4"></i>Book Now</a></div>
+<div id="whatsapp-fab">
+  <a href="https://wa.me/919661486740" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+</div>
+<div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
+
+<script>
+var FIREBASE_PROJECT='thesamrpan',FIREBASE_API_KEY='AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ',FIRESTORE_BASE='https://firestore.googleapis.com/v1/projects/'+FIREBASE_PROJECT+'/databases/(default)/documents/';
+function toFirestoreFields(d){var f={};Object.keys(d).forEach(function(k){var v=d[k];if(v===null||v===undefined||v==='')return;if(typeof v==='boolean')f[k]={booleanValue:v};else f[k]={stringValue:String(v)};});return f;}
+function makeDocId(email){var n=new Date(Date.now()+5.5*3600000),p=function(n,w){return String(n).padStart(w||2,'0');},d=n.getUTCFullYear()+p(n.getUTCMonth()+1)+p(n.getUTCDate()),t=p(n.getUTCHours())+p(n.getUTCMinutes())+p(n.getUTCSeconds()),ep=(email||'anonymous').toLowerCase().replace(/@/g,'_').replace(/\./g,'_').replace(/[^a-z0-9_]/g,'').slice(0,40);return ep+'__'+d+'_'+t;}
+async function saveToFirestore(col,data){var now=new Date(),ist=new Date(now.getTime()+5.5*3600000),p=function(n){return String(n).padStart(2,'0');},di=ist.getUTCFullYear()+'-'+p(ist.getUTCMonth()+1)+'-'+p(ist.getUTCDate()),ti=p(ist.getUTCHours())+':'+p(ist.getUTCMinutes()),id=makeDocId(data.email||''),payload={fields:toFirestoreFields(Object.assign({},data,{date:di,time_ist:ti,timestamp_utc:now.toISOString(),page_source:'journal_preview',page_url:window.location.href}))},url=FIRESTORE_BASE+col+'/'+id+'?key='+FIREBASE_API_KEY,r=await fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error('Firestore '+r.status);return r.json();}
+function isValidEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v||'').trim());}
+async function subscribeSidebar(){var email=(document.getElementById('sidebarEmail').value||'').trim(),name=(document.getElementById('sidebarName').value||'').trim(),status=document.getElementById('sidebarStatus'),btn=document.getElementById('sidebarBtn');if(!isValidEmail(email)){document.getElementById('sidebarEmail').classList.add('invalid');status.innerHTML='<p style="color:#ef4444;font-size:10px;">Please enter a valid email.</p>';return;}document.getElementById('sidebarEmail').classList.remove('invalid');btn.innerHTML='<span class="btn-spinner"></span>Joining…';btn.disabled=true;try{await saveToFirestore('homepage_newsletter',{email:email,name:name||'Not provided',subscribed_via:'journal_preview_sidebar',opted_in:'true'});status.innerHTML='<p style="color:#C5A059;font-size:10px;">✓ Welcome to the Inner Circle!</p>';document.getElementById('sidebarEmail').value='';document.getElementById('sidebarName').value='';btn.innerHTML='Joined ✓';}catch(e){status.innerHTML='<p style="color:#ef4444;font-size:10px;">✗ Error — please try again.</p>';btn.innerHTML='Join the Circle →';btn.disabled=false;}setTimeout(function(){status.innerHTML='';},5000);}
+async function handleBannerNewsletter(){var email=(document.getElementById('bannerEmail').value||'').trim(),name=(document.getElementById('bannerName').value||'').trim(),status=document.getElementById('bannerStatus'),btn=document.getElementById('bannerBtn');if(!isValidEmail(email)){document.getElementById('bannerEmail').classList.add('invalid');status.innerHTML='<p style="color:#ef4444;font-size:11px;">Please enter a valid email.</p>';return;}document.getElementById('bannerEmail').classList.remove('invalid');btn.innerHTML='<span class="btn-spinner"></span>Subscribing…';btn.disabled=true;try{await saveToFirestore('homepage_newsletter',{email:email,name:name||'Not provided',subscribed_via:'journal_preview_banner',opted_in:'true'});status.innerHTML='<p style="color:#C5A059;font-size:11px;">✓ Subscribed!</p>';document.getElementById('bannerEmail').value='';document.getElementById('bannerName').value='';btn.innerHTML='Subscribed ✓';}catch(e){status.innerHTML='<p style="color:#ef4444;font-size:11px;">✗ Error.</p>';btn.innerHTML='Join the Inner Circle →';btn.disabled=false;}}
+</script>
+
+<script>
+lucide.createIcons();
+var ARTICLES=[
+ {slug:'stress-neurobiology-ayurveda',title:'Stress: An Integrative Exploration Through Neurobiology & Ayurveda',category:'neurobiology',categoryLabel:'Neurobiology',img:'https://images.unsplash.com/photo-1559757175-5700dde675bc?q=80&w=800&auto=format&fit=crop',time:'35',isNew:true,author:{name:'Harsh Ranjan'},excerpt:'From HPA axis to epigenetics to Rasayana — a rigorous synthesis bridging modern neurobiology with ancient Ayurvedic wisdom.',keywords:'stress neurobiology ayurveda HPA axis cortisol BDNF dosha ashwagandha brahmi pranayama harsh ranjan JNU'},
+ {slug:'stress-brain-ayurveda-calm',title:'Stress: What the Brain Does — and How Ayurveda Helps Calm the System',category:'neurobiology',categoryLabel:'Neurobiology',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop',time:'8',isNew:true,author:{name:'Harsh Ranjan'},excerpt:'A clear practical guide: HPA axis, cortisol, dosha-specific recovery, pranayama, and Ashwagandha.',keywords:'stress brain ayurveda calm HPA cortisol hippocampus harsh ranjan'},
+ {slug:'dark-energy-samadhi-quantum-pranayama',title:'The Transduction of Dark Energy: Reconciling Samadhi with Quantum Constants',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=800&auto=format&fit=crop',time:'12',author:{name:'Lella Naga Durga Bhavani'},excerpt:'How the Sage survives where the Patient fails — bridging Pranayama with cosmological dark energy and the Bhagavad Gita.',keywords:'dark energy samadhi quantum pranayama prana cosmos Lella Bhavani BAMS'},
+ {slug:'understanding-prakriti-ayurvedic-constitution',title:'Understanding Your Prakriti — The Blueprint of Your Being',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=800&auto=format&fit=crop',time:'12',author:{name:'Harsh Ranjan'},excerpt:'Your Ayurvedic constitution — determined at conception, unchanging through life. The key to truly personalised health.',keywords:'prakriti ayurvedic constitution dosha vata pitta kapha nadi pariksha'},
+ {slug:'agni-sacred-fire-ayurvedic-health',title:'Agni — The Sacred Fire That Determines Your Health',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800&auto=format&fit=crop',time:'9',isNew:true,author:{name:'Harsh Ranjan'},excerpt:'Agni is the metabolic intelligence behind every transformation in body and mind. Learn the four states and how to restore yours.',keywords:'agni digestive fire ayurveda metabolism pitta gut health'},
+ {slug:'ojas-vital-essence-immunity-longevity',title:'Ojas — The Vital Essence Behind Immunity, Glow & Longevity',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=800&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan'},excerpt:'Ojas is the ultimate refined essence of all bodily tissues — source of immunity, skin glow, and longevity.',keywords:'ojas vital essence immunity ayurveda rasayana longevity'},
+ {slug:'dinacharya-ayurvedic-daily-routine',title:'Dinacharya — The Ayurvedic Daily Routine That Transforms Everything',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop',time:'9',author:{name:'Harsh Ranjan'},excerpt:'From Brahma Muhurta rising to Abhyanga and pranayama — the morning sequence that aligns your body with natural rhythms.',keywords:'dinacharya daily routine ayurveda morning ritual abhyanga brahma muhurta'},
+ {slug:'panchakarma-ayurvedic-detox-explained',title:'Panchakarma — The Complete Ayurvedic Detox Explained',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1507120878965-54b2d3939100?q=80&w=800&auto=format&fit=crop',time:'12',author:{name:'Harsh Ranjan'},excerpt:'Vamana, Virechana, Basti, Nasyam, Raktamokshana — the five purification therapies that cleanse at the cellular level.',keywords:'panchakarma detox ayurveda vamana virechana basti nasyam'},
+ {slug:'trauma-body-somatic-healing',title:'Trauma & The Body — Why Talk Therapy Isn\'t Enough',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=800&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan'},excerpt:'Trauma is not a story — it is a physiological state. Why somatic therapy, Yoga Nidra, and breathwork heal what talk therapy cannot.',keywords:'trauma body somatic healing nervous system yoga nidra polyvagal'},
+ {slug:'rewiring-anxiety-vagus-nerve-yoga',title:'Rewiring Anxiety — The Vagus Nerve, Yoga & Modern Science',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop',time:'13',author:{name:'Harsh Ranjan'},excerpt:'Ancient pranayama meets polyvagal theory — a direct, evidence-based pathway from anxiety to calm.',keywords:'anxiety vagus nerve yoga polyvagal nadi shodhana pranayama HRV'},
+ {slug:'gut-brain-axis-second-brain-mental-health',title:'The Gut-Brain Axis — Your Second Brain & Mental Health',category:'psychology',categoryLabel:'Psychology',img:'https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=800&auto=format&fit=crop',time:'11',author:{name:'Harsh Ranjan'},excerpt:'The gut produces 95% of your serotonin. How the microbiome influences mood, anxiety, and cognition.',keywords:'gut brain axis microbiome mental health serotonin ayurveda second brain'},
+ {slug:'yoga-nidra-sleep-healing-science',title:'Yoga Nidra — The Sleep of the Yogis That Heals Faster Than Rest',category:'yoga',categoryLabel:'Yoga',img:'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=800&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan'},excerpt:'30 minutes of Yoga Nidra provides the restorative equivalent of 4 hours of sleep. The AIIMS research and the practice structure.',keywords:'yoga nidra sleep delta waves healing AIIMS koshas sankalpa'},
+ {slug:'pranayama-science-conscious-breathing',title:'Pranayama — The Ancient Science of Conscious Breathing',category:'yoga',categoryLabel:'Yoga',img:'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=800&auto=format&fit=crop',time:'7',author:{name:'Harsh Ranjan'},excerpt:'How controlling the breath controls the mind — and the five techniques that will transform your nervous system.',keywords:'pranayama breath yoga kapalabhati bhastrika nadi shodhana kumbhaka bhramari'},
+ {slug:'neurobiology-of-mantra-sacred-sound',title:'The Neurobiology of Mantra — How Sacred Sound Rewires the Brain',category:'tantra',categoryLabel:'Tantra & Spirit',img:'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=800&auto=format&fit=crop',time:'8',author:{name:'Harsh Ranjan'},excerpt:'Harvard and NIMHANS research shows chanting reduces cortisol and increases grey matter. The neuroscience of mantra.',keywords:'mantra neurobiology sound brain AUM vagus nerve chanting Harvard'},
+ {slug:'seven-chakras-consciousness-tantra',title:'The Seven Chakras — Centres of Consciousness, Not Just Energy',category:'tantra',categoryLabel:'Tantra & Spirit',img:'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=800&auto=format&fit=crop',time:'15',author:{name:'Harsh Ranjan'},excerpt:'A rigorous exploration of the chakra system through Tantra Shastra and modern psychology.',keywords:'chakra consciousness kundalini tantra bija mantra sushumna nadi'},
+ {slug:'ajapa-japa-mantra-breath-meditation',title:'Ajapa Japa — The Mantra You Are Already Chanting',category:'meditation',categoryLabel:'Meditation',img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop',time:'11',author:{name:'Harsh Ranjan'},excerpt:'Soham — I am That. You chant it 21,600 times a day. The practice of becoming conscious of what already occurs.',keywords:'ajapa japa soham mantra breath meditation consciousness'},
+ {slug:'sattvic-diet-clarity-peace-vitality',title:'The Sattvic Diet — Eating for Clarity, Peace & Vitality',category:'nutrition',categoryLabel:'Nutrition',img:'https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=800&auto=format&fit=crop',time:'6',author:{name:'Harsh Ranjan'},excerpt:'Food is information that shapes consciousness. The three gunas — Sattvic, Rajasic, Tamasic — and mental clarity.',keywords:'sattvic diet ayurveda nutrition clarity gunas rajasic tamasic'},
+ {slug:'ritucharya-seasonal-eating-ayurveda',title:'Ritucharya — Eating With the Seasons to Prevent Disease',category:'nutrition',categoryLabel:'Nutrition',img:'https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?q=80&w=800&auto=format&fit=crop',time:'7',author:{name:'Harsh Ranjan'},excerpt:"Ayurveda's six-season dietary guide reveals why monsoon demands completely different foods than winter.",keywords:'ritucharya seasonal eating ayurveda monsoon winter spring disease prevention'},
+ {slug:'vata-pitta-kapha-three-doshas-deep-dive',title:'Vata, Pitta & Kapha — A Deep Dive Into the Three Doshas',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop',time:'10',author:{name:'Harsh Ranjan'},excerpt:'How the doshas interact, fluctuate through seasons, and how to identify imbalance before it becomes disease.',keywords:'vata pitta kapha doshas imbalance disease seasons ayurveda tridosha'},
+ {slug:'four-states-consciousness-vedanta-neuroscience',title:'The Four States of Consciousness — Vedanta Meets Neuroscience',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop',time:'16',author:{name:'Harsh Ranjan'},excerpt:'Waking, dreaming, deep sleep, and Turiya — the fourth state neuroscience is only beginning to confirm.',keywords:'vedanta neuroscience four states consciousness turiya mandukya upanishad gamma brainwaves'},
+ {slug:'advaita-self-vedanta-neuroscience',title:'Advaita & the Self — Who Are You Really?',category:'quantum',categoryLabel:'Quantum & Vedas',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop',time:'18',author:{name:'Harsh Ranjan'},excerpt:'The self is a construct of the Default Mode Network. Neuroscience and Advaita Vedanta now agree.',keywords:'advaita non duality self consciousness vedanta ramana maharshi default mode network'},
+ {slug:'pcos-hormonal-health-ayurveda-women',title:'PCOS & Hormonal Healing — The Ayurvedic Approach to Women\'s Health',category:'ayurveda',categoryLabel:'Ayurveda',img:'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=800&auto=format&fit=crop',time:'11',isNew:true,author:{name:'Harsh Ranjan'},excerpt:"Ayurveda's approach to PCOS — root causes through Kapha-Vata theory, Shatavari, dietary correction, and yoga therapy.",keywords:'PCOS hormonal health ayurveda women fertility shatavari rasayana'}
+];
+
+function buildArticleList(){
+  var c=document.getElementById('articleList');
+  c.innerHTML=ARTICLES.map(function(a){
+    return '<a href="journal/'+a.slug+'.html" class="article-card article-item fade-up" data-category="'+a.category+'" data-title="'+(a.keywords||'')+'" style="text-decoration:none;display:block;">'+
+      '<div class="sm:flex">'+
+        '<div class="card-img sm:w-52 flex-shrink-0" style="height:180px;"><img src="'+a.img+'" alt="'+a.title.replace(/<[^>]+>/g,'')+'" loading="lazy"></div>'+
+        '<div class="p-5 flex flex-col justify-between">'+
+          '<div>'+
+            '<div class="flex items-center gap-2 mb-2">'+
+              '<span class="tag" style="background:rgba(217,93,57,.1);color:#D95D39;">'+a.categoryLabel+'</span>'+
+              (a.isNew?'<span class="font-sans text-[9px] text-clay font-bold tracking-wider">NEW</span>':'')+
+            '</div>'+
+            '<h3 class="font-serif mb-2 leading-snug" style="font-size:1.3rem;color:var(--text);">'+a.title+'</h3>'+
+            '<p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">'+a.excerpt+'</p>'+
+          '</div>'+
+          '<div class="flex items-center justify-between mt-4 pt-4 border-t" style="border-color:var(--border);">'+
+            '<span class="font-sans text-[9px] uppercase tracking-widest" style="color:var(--text-muted);">'+a.author.name+'<span class="dot-sep"></span>'+a.time+' min</span>'+
+            '<span class="read-more">Read Article <i data-lucide="arrow-right" class="w-3 h-3"></i></span>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</a>';
+  }).join('');
+  document.querySelectorAll('#articleList .fade-up').forEach(function(el){fadeObs.observe(el);});
+  lucide.createIcons();
+}
+
+var fadeObs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:0.07});
+
+window.addEventListener('DOMContentLoaded',function(){
+  lucide.createIcons();buildArticleList();
+  setTimeout(function(){document.querySelectorAll('.reveal-inner').forEach(function(el,i){setTimeout(function(){el.classList.add('up');},300+i*150);});},100);
+  var stored=localStorage.getItem('samarpan-theme')||'light';
+  document.documentElement.setAttribute('data-theme',stored);
+  var ti=document.getElementById('themeIcon');
+  if(ti){ti.setAttribute('data-lucide',stored==='dark'?'sun':'moon');lucide.createIcons();}
+  document.querySelectorAll('.fade-up').forEach(function(el){fadeObs.observe(el);});
+});
+
+window.addEventListener('scroll',function(){
+  var sp=document.getElementById('scroll-progress');
+  if(sp)sp.style.width=Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  var show=window.scrollY>300;
+  ['fab','whatsapp-fab','theme-toggle'].forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('visible',show);});
+},{passive:true});
+
+var menuOpen=false;
+function toggleMenu(){menuOpen=!menuOpen;document.getElementById('mobile-menu').classList.toggle('active',menuOpen);document.body.style.overflow=menuOpen?'hidden':'';}
+function toggleTheme(){var d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');localStorage.setItem('samarpan-theme',d?'light':'dark');document.getElementById('themeIcon').setAttribute('data-lucide',d?'moon':'sun');lucide.createIcons();}
+var activeCategory='all';
+function setCategory(cat,btn){activeCategory=cat;document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});if(btn)btn.classList.add('active');filterArticles();document.getElementById('articlesSection').scrollIntoView({behavior:'smooth',block:'start'});}
+function filterArticles(){var q=(document.getElementById('searchInput')?.value||'').toLowerCase().trim(),items=document.querySelectorAll('.article-item'),v=0;items.forEach(function(i){var s=(activeCategory==='all'||i.dataset.category===activeCategory)&&(!q||(i.dataset.title||'').includes(q));i.classList.toggle('hidden-filter',!s);if(s)v++;});document.getElementById('noResults').classList.toggle('hidden',v>0);var c=document.getElementById('articleCount');if(c)c.textContent=v+' Article'+(v!==1?'s':'');}
+</script>
+</body>
+</html>
