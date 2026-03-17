@@ -398,7 +398,7 @@
 
     <!-- Featured Article -->
     <div class="mb-4 fade-up article-item" data-category="quantum" data-title="quantum physics ayurveda srishti utpatti creation sankhya vedanta adwaita charaka">
-      <div class="featured-card" style="height:clamp(380px,58vh,540px);" onclick="openArticle('quantum-physics-ayurveda-srishti-utpatti')">
+      <div class="featured-card" style="height:clamp(380px,58vh,540px);" onclick="window.location.href='journal/quantum-physics-ayurveda-srishti-utpatti.html'">
         <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=1800&auto=format&fit=crop" alt="Quantum Physics in Ayurveda — Srishti Utpatti" loading="eager">
         <div class="featured-overlay"></div>
         <div class="absolute inset-0 flex flex-col justify-end p-8 md:p-12" style="z-index:2;">
@@ -1173,7 +1173,8 @@ var ARTICLES = [
 function buildArticleList() {
   var container = document.getElementById('articleList');
   container.innerHTML = ARTICLES.slice(1).map(function(a) {
-    return '<div class="article-card article-item fade-up" data-category="' + a.category + '" data-title="' + (a.keywords||'') + '" onclick="openArticle(\'' + a.slug + '\')">' +
+    var articleUrl = 'journal/' + a.slug + '.html';
+    return '<a href="' + articleUrl + '" class="article-card article-item fade-up" data-category="' + a.category + '" data-title="' + (a.keywords||'') + '" style="text-decoration:none;display:block;">' +
       '<div class="sm:flex">' +
         '<div class="card-img sm:w-52 flex-shrink-0" style="height:180px;"><img src="' + a.img + '" alt="' + a.title.replace(/<[^>]+>/g,'') + '" loading="lazy"></div>' +
         '<div class="p-5 flex flex-col justify-between">' +
@@ -1191,7 +1192,7 @@ function buildArticleList() {
           '</div>' +
         '</div>' +
       '</div>' +
-    '</div>';
+    '</a>';
   }).join('');
   document.querySelectorAll('#articleList .fade-up').forEach(function(el){ fadeObs.observe(el); });
   lucide.createIcons();
