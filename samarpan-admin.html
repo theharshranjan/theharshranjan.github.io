@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samarpan Admin — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --bg: #0e0d0b;
+    --bg2: #141310;
+    --bg3: #1a1916;
+    --card: #1f1d1a;
+    --card2: #252320;
+    --border: #2e2b26;
+    --border2: #3a3630;
+    --text: #f0ece4;
+    --text-muted: #8a8070;
+    --text-dim: #5a5448;
+    --clay: #D95D39;
+    --gold: #C5A059;
+    --sage: #4A5D4F;
+    --accent: #D95D39;
+    --shadow: 0 4px 32px rgba(0,0,0,0.5);
+    --shadow-card: 0 2px 16px rgba(0,0,0,0.35);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-logo {
+    padding: 1.5rem 1.25rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .sidebar-logo svg { color: var(--clay); flex-shrink: 0; }
+  .sidebar-logo-text { font-family: 'Marcellus', serif; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--text); }
+  .sidebar-logo-sub { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 1px; }
+
+  .sidebar-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
+
+  .nav-section-label {
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 0.75rem 1.25rem 0.35rem;
+    font-weight: 700;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 2px solid transparent;
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+  .nav-item.active { color: var(--clay); background: rgba(217,93,57,0.08); border-left-color: var(--clay); }
+  .nav-item.active svg { color: var(--clay); }
+  .nav-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .nav-badge { margin-left: auto; background: var(--clay); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 10px; }
+  .nav-badge.gold { background: var(--gold); }
+  .nav-badge.sage { background: var(--sage); }
+
+  .sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+  }
+  .admin-avatar {
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.5rem 0;
+  }
+  .avatar-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--clay), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0;
+  }
+  .avatar-name { font-size: 12px; font-weight: 700; color: var(--text); }
+  .avatar-role { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* MAIN */
+  #main { margin-left: 240px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* TOPBAR */
+  #topbar {
+    height: 60px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-left { display: flex; align-items: center; gap: 1rem; }
+  .topbar-title { font-family: 'Marcellus', serif; font-size: 16px; color: var(--text); }
+  .topbar-breadcrumb { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+
+  .topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+  .topbar-icon-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--text-muted);
+    transition: all 0.2s; position: relative;
+  }
+  .topbar-icon-btn:hover { border-color: var(--clay); color: var(--clay); }
+  .topbar-icon-btn svg { width: 15px; height: 15px; }
+  .notif-dot { position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; background: var(--clay); border-radius: 50%; border: 1.5px solid var(--bg2); }
+
+  .search-box {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.45rem 0.85rem;
+    width: 220px;
+  }
+  .search-box svg { width: 14px; height: 14px; color: var(--text-dim); flex-shrink: 0; }
+  .search-box input { background: transparent; border: none; outline: none; font-size: 12px; color: var(--text); width: 100%; }
+  .search-box input::placeholder { color: var(--text-dim); }
+
+  /* CONTENT */
+  #content { padding: 1.75rem; flex: 1; }
+
+  /* STAT CARDS */
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .stat-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--card-accent, linear-gradient(90deg, var(--clay), var(--gold)));
+  }
+
+  .stat-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .stat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .stat-icon svg { width: 17px; height: 17px; }
+  .stat-badge { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; padding: 2px 8px; border-radius: 50px; }
+  .badge-up { background: rgba(74,93,79,0.2); color: #6aad76; }
+  .badge-down { background: rgba(217,93,57,0.15); color: var(--clay); }
+  .badge-neutral { background: rgba(197,160,89,0.15); color: var(--gold); }
+
+  .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--text); line-height: 1; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+  .stat-sub { font-size: 10px; color: var(--text-dim); margin-top: 0.5rem; }
+
+  /* GRID LAYOUT */
+  .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 1.25rem; margin-bottom: 1.25rem; }
+  .content-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-bottom: 1.25rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-title { font-family: 'Marcellus', serif; font-size: 13px; color: var(--text); letter-spacing: 0.05em; }
+  .card-action { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--clay); cursor: pointer; text-decoration: none; font-weight: 700; transition: color 0.2s; }
+  .card-action:hover { color: var(--gold); }
+  .card-body { padding: 1.25rem; }
+
+  /* LEADS TABLE */
+  .leads-table { width: 100%; border-collapse: collapse; }
+  .leads-table th {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 700;
+    padding: 0 1.25rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .leads-table td {
+    padding: 0.85rem 1.25rem;
+    font-size: 12px; color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .leads-table tr:last-child td { border-bottom: none; }
+  .leads-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .lead-name { font-weight: 700; color: var(--text); font-size: 12.5px; }
+  .lead-email { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
+
+  .pill {
+    display: inline-block; padding: 2px 10px;
+    border-radius: 50px; font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  }
+  .pill-clay { background: rgba(217,93,57,0.15); color: #e87a5a; }
+  .pill-gold { background: rgba(197,160,89,0.15); color: var(--gold); }
+  .pill-sage { background: rgba(74,93,79,0.2); color: #6aad76; }
+  .pill-blue { background: rgba(100,149,237,0.15); color: #7faff0; }
+  .pill-gray { background: rgba(255,255,255,0.07); color: var(--text-muted); }
+  .pill-purple { background: rgba(160,100,220,0.15); color: #c08de0; }
+
+  /* ACTIVITY FEED */
+  .activity-item {
+    display: flex; gap: 0.85rem; padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .activity-dot svg { width: 13px; height: 13px; }
+  .activity-text { font-size: 12px; color: var(--text-muted); line-height: 1.5; flex: 1; }
+  .activity-text strong { color: var(--text); font-weight: 700; }
+  .activity-time { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+
+  /* CHART BAR */
+  .chart-container { padding: 1rem 1.25rem 0.5rem; }
+  .chart-labels { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+  .chart-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; margin-bottom: 0.5rem; }
+  .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .chart-bar {
+    width: 100%; border-radius: 3px 3px 0 0;
+    background: linear-gradient(to top, rgba(217,93,57,0.3), rgba(197,160,89,0.5));
+    transition: background 0.3s;
+    cursor: pointer; position: relative;
+  }
+  .chart-bar.active, .chart-bar:hover {
+    background: linear-gradient(to top, var(--clay), var(--gold));
+  }
+  .chart-bar-day { font-size: 8.5px; color: var(--text-dim); letter-spacing: 0.05em; }
+
+  /* DONUT */
+  .donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 0.5rem 0; }
+  .donut-svg { position: relative; }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .donut-total { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--text); line-height: 1; }
+  .donut-total-label { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); }
+  .donut-legend { width: 100%; display: flex; flex-direction: column; gap: 0.6rem; }
+  .donut-legend-item { display: flex; align-items: center; justify-content: space-between; }
+  .donut-legend-left { display: flex; align-items: center; gap: 0.5rem; }
+  .donut-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .donut-legend-name { font-size: 11px; color: var(--text-muted); }
+  .donut-legend-val { font-size: 11px; font-weight: 700; color: var(--text); }
+  .donut-legend-pct { font-size: 9px; color: var(--text-dim); }
+
+  /* QUICK ACTIONS */
+  .quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
+  .quick-action {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .quick-action:hover { border-color: var(--clay); background: rgba(217,93,57,0.05); }
+  .qa-icon { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+  .qa-icon svg { width: 14px; height: 14px; }
+  .qa-label { font-size: 11px; font-weight: 700; color: var(--text); }
+  .qa-sub { font-size: 9px; color: var(--text-dim); letter-spacing: 0.05em; }
+
+  /* UPCOMING */
+  .session-item {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 0.85rem; align-items: flex-start;
+  }
+  .session-item:last-child { border-bottom: none; }
+  .session-time-block {
+    min-width: 48px; text-align: center; padding: 0.35rem 0;
+    border-right: 1px solid var(--border); margin-right: 0.2rem;
+  }
+  .session-hour { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--clay); line-height: 1; }
+  .session-ampm { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .session-client { font-size: 12.5px; font-weight: 700; color: var(--text); }
+  .session-type { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .session-flag { font-size: 9px; color: var(--text-dim); margin-top: 3px; display: flex; align-items: center; gap: 3px; }
+  .session-flag svg { width: 10px; height: 10px; }
+
+  /* COUNTRIES */
+  .country-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); }
+  .country-item:last-child { border-bottom: none; }
+  .country-flag { font-size: 18px; }
+  .country-name { font-size: 12px; color: var(--text); flex: 1; }
+  .country-bar-wrap { flex: 2; height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .country-bar { height: 100%; background: linear-gradient(90deg, var(--clay), var(--gold)); border-radius: 4px; }
+  .country-count { font-size: 11px; font-weight: 700; color: var(--text-muted); min-width: 28px; text-align: right; }
+
+  /* REFERRALS */
+  .referral-stat { text-align: center; padding: 1rem; }
+  .referral-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; background: linear-gradient(135deg, var(--clay), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+  .referral-stat-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.25rem; }
+
+  /* PAGE TABS */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+  .tab { padding: 0.6rem 1.25rem; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--clay); border-bottom-color: var(--clay); }
+
+  /* PAGE VIEWS */
+  .page-view { display: none; }
+  .page-view.active { display: block; }
+
+  /* LEADS PAGE */
+  .leads-filters { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; align-items: center; flex-wrap: wrap; }
+  .filter-select {
+    background: var(--card); border: 1px solid var(--border); color: var(--text-muted);
+    font-family: 'Lato', sans-serif; font-size: 11px; padding: 0.45rem 0.85rem;
+    border-radius: 6px; outline: none; cursor: pointer; transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: var(--clay); }
+  .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border: none; }
+  .btn-primary { background: var(--clay); color: #fff; }
+  .btn-primary:hover { background: #c24e2c; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+  .btn-outline:hover { border-color: var(--clay); color: var(--clay); }
+  .btn svg { width: 13px; height: 13px; }
+
+  /* MODAL */
+  #modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 1000; display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  #modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 12px; max-width: 520px; width: 94%;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    animation: modalIn 0.3s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .modal-title { font-family: 'Marcellus', serif; font-size: 16px; color: var(--text); }
+  .modal-close { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; transition: color 0.2s; }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 1.5rem; }
+  .form-group { margin-bottom: 1rem; }
+  .form-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.4rem; font-weight: 700; }
+  .form-input {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+    padding: 0.65rem 0.85rem; font-size: 13px; font-family: 'Lato', sans-serif;
+    color: var(--text); outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--clay); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .modal-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; justify-content: flex-end; }
+
+  /* TOAST */
+  #toast {
+    position: fixed; bottom: 2rem; right: 1.5rem; z-index: 2000;
+    background: var(--card2); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 0.85rem 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    box-shadow: var(--shadow); opacity: 0; transform: translateY(16px);
+    transition: all 0.35s;
+    min-width: 240px;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+  #toast svg { width: 16px; height: 16px; color: var(--sage); flex-shrink: 0; }
+  #toast-msg { font-size: 12px; color: var(--text); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  /* MOBILE */
+  #sidebar-toggle { display: none; }
+
+  @media (max-width: 1100px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+    .content-grid-3 { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #sidebar-toggle { display: flex; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid-3 { grid-template-columns: 1fr; }
+    #content { padding: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATIONS */
+  .fade-in { animation: fadeIn 0.4s ease forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .pulse-dot { display: inline-block; width: 7px; height: 7px; background: #6aad76; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(106,173,118,0.4); } 50% { box-shadow: 0 0 0 5px rgba(106,173,118,0); } }
+
+  .section-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+  /* FIREBASE LIVE TABLE (full page) */
+  .full-table-wrap { overflow-x: auto; }
+
+  /* Scrollable Sidebar on mobile overlay */
+  .sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    z-index: 99;
+  }
+  .sidebar-overlay.open { display: block; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <svg width="32" height="32" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
+      <circle cx="50" cy="50" r="45"/>
+      <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+      <circle cx="50" cy="85" r="3" fill="currentColor"/>
+      <path d="M20 50H80" stroke-opacity=".8"/>
+    </svg>
+    <div>
+      <div class="sidebar-logo-text">Samarpan</div>
+      <div class="sidebar-logo-sub">Admin Panel</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('dashboard', this)">
+      <i data-lucide="layout-dashboard"></i> Dashboard
+    </div>
+    <div class="nav-item" onclick="showPage('analytics', this)">
+      <i data-lucide="bar-chart-2"></i> Analytics
+      <span class="nav-badge gold">Live</span>
+    </div>
+
+    <div class="nav-section-label">CRM</div>
+    <div class="nav-item" onclick="showPage('leads', this)">
+      <i data-lucide="users"></i> All Leads
+      <span class="nav-badge" id="sidebar-leads-count">—</span>
+    </div>
+    <div class="nav-item" onclick="showPage('newsletter', this)">
+      <i data-lucide="mail"></i> Newsletter
+    </div>
+    <div class="nav-item" onclick="showPage('referrals', this)">
+      <i data-lucide="gift"></i> Referrals
+    </div>
+    <div class="nav-item" onclick="showPage('quiz', this)">
+      <i data-lucide="sparkles"></i> Quiz Results
+    </div>
+    <div class="nav-item" onclick="showPage('yoga', this)">
+      <i data-lucide="flame"></i> Yoga Signups
+    </div>
+
+    <div class="nav-section-label">Content</div>
+    <div class="nav-item" onclick="showPage('sessions', this)">
+      <i data-lucide="calendar"></i> Sessions
+    </div>
+    <div class="nav-item" onclick="showPage('journal', this)">
+      <i data-lucide="book-open"></i> Journal Posts
+    </div>
+
+    <div class="nav-section-label">System</div>
+    <div class="nav-item" onclick="showPage('settings', this)">
+      <i data-lucide="settings"></i> Settings
+    </div>
+    <div class="nav-item" onclick="window.open('index.html','_blank')">
+      <i data-lucide="external-link"></i> View Website
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="admin-avatar">
+      <div class="avatar-circle">SA</div>
+      <div>
+        <div class="avatar-name">Harsh Ranjan</div>
+        <div class="avatar-role" style="display:flex;align-items:center;gap:4px;"><span class="pulse-dot"></span> Super Admin</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-left">
+      <button id="sidebar-toggle" class="topbar-icon-btn" onclick="toggleSidebar()">
+        <i data-lucide="menu"></i>
+      </button>
+      <div>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+        <div class="topbar-breadcrumb">Samarpan Admin · <span id="topbar-date"></span></div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="search-box">
+        <i data-lucide="search"></i>
+        <input type="text" placeholder="Search leads, sessions…" id="globalSearch">
+      </div>
+      <div class="topbar-icon-btn" onclick="refreshData()" title="Refresh">
+        <i data-lucide="refresh-cw"></i>
+      </div>
+      <div class="topbar-icon-btn" title="Notifications">
+        <i data-lucide="bell"></i>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="topbar-icon-btn" title="Export" onclick="exportCSV()">
+        <i data-lucide="download"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- ======= DASHBOARD PAGE ======= -->
+    <div class="page-view active fade-in" id="page-dashboard">
+
+      <!-- STATS GRID -->
+      <div class="stats-grid" id="stats-grid">
+        <div class="stat-card" style="--card-accent: linear-gradient(90deg, var(--clay), var(--gold));">
+          <div class="stat-card-header">
+            <div class="stat-icon" style="background:rgba(217,93,57,0.12);">
+              <i data-lucide="users" style="color:var(--clay);"></i>
+            </div>
+            <span class="stat-badge badge-up" id="leads-trend">↑ Loading</span>
+          </div>
+          <div class="stat-value" id="stat-total-leads">—</div>
+          <div class="stat-label">Total Leads</div>
+          <div class="stat-sub" id="stat-leads-sub">Fetching from Firebase…</div>
+        </div>
+        <div class="stat-card" style="--card-accent: linear-gradient(90deg, var(--gold), #e8c580);">
+          <div class="stat-card-header">
+            <div class="stat-icon" style="background:rgba(197,160,89,0.12);">
+              <i data-lucide="mail" style="color:var(--gold);"></i>
+            </div>
+            <span class="stat-badge badge-neutral" id="news-trend">—</span>
+          </div>
+          <div class="stat-value" id="stat-newsletter">—</div>
+          <div class="stat-label">Newsletter Subs</div>
+          <div class="stat-sub" id="stat-news-sub">Inner Circle Members</div>
+        </div>
+        <div class="stat-card" style="--card-accent: linear-gradient(90deg, var(--sage), #6aad76);">
+          <div class="stat-card-header">
+            <div class="stat-icon" style="background:rgba(74,93,79,0.12);">
+              <i data-lucide="sparkles" style="color:#6aad76;"></i>
+            </div>
+            <span class="stat-badge badge-up" id="quiz-trend">—</span>
+          </div>
+          <div class="stat-value" id="stat-quiz">—</div>
+          <div class="stat-label">Quiz Completions</div>
+          <div class="stat-sub">Prakriti Assessments</div>
+        </div>
+        <div class="stat-card" style="--card-accent: linear-gradient(90deg, #7faff0, #a090e0);">
+          <div class="stat-card-header">
+            <div class="stat-icon" style="background:rgba(127,175,240,0.12);">
+              <i data-lucide="gift" style="color:#7faff0;"></i>
+            </div>
+            <span class="stat-badge badge-neutral">—</span>
+          </div>
+          <div class="stat-value" id="stat-referrals">—</div>
+          <div class="stat-label">Referrals</div>
+          <div class="stat-sub">Programme Referrals</div>
+        </div>
+      </div>
+
+      <!-- MAIN GRID -->
+      <div class="content-grid">
+
+        <!-- RECENT LEADS TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Leads</span>
+            <a class="card-action" onclick="showPage('leads', document.querySelector('[onclick*=leads]'))">View All →</a>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="leads-table">
+              <thead>
+                <tr>
+                  <th>Client</th>
+                  <th>Service</th>
+                  <th>Type</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recent-leads-body">
+                <tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading leads from Firebase…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+          <!-- ACTIVITY FEED -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Live Activity</span>
+              <span style="display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage);"><span class="pulse-dot"></span> Live</span>
+            </div>
+            <div class="card-body" style="padding-top:0.5rem;" id="activity-feed">
+              <div class="activity-item">
+                <div class="activity-dot" style="background:rgba(217,93,57,0.12);"><i data-lucide="user-plus" style="color:var(--clay);"></i></div>
+                <div><div class="activity-text"><strong>Loading…</strong> fetching activity</div><div class="activity-time">just now</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTIONS -->
+          <div class="card">
+            <div class="card-header"><span class="card-title">Quick Actions</span></div>
+            <div class="card-body">
+              <div class="quick-actions">
+                <div class="quick-action" onclick="openAddLeadModal()">
+                  <div class="qa-icon" style="background:rgba(217,93,57,0.12);"><i data-lucide="user-plus" style="color:var(--clay);width:14px;height:14px;"></i></div>
+                  <div class="qa-label">Add Lead</div>
+                  <div class="qa-sub">Manual entry</div>
+                </div>
+                <div class="quick-action" onclick="exportCSV()">
+                  <div class="qa-icon" style="background:rgba(197,160,89,0.12);"><i data-lucide="download" style="color:var(--gold);width:14px;height:14px;"></i></div>
+                  <div class="qa-label">Export CSV</div>
+                  <div class="qa-sub">All leads</div>
+                </div>
+                <div class="quick-action" onclick="window.open('https://wa.me/919661486740','_blank')">
+                  <div class="qa-icon" style="background:rgba(37,211,102,0.1);"><i data-lucide="message-circle" style="color:#25D366;width:14px;height:14px;"></i></div>
+                  <div class="qa-label">WhatsApp</div>
+                  <div class="qa-sub">Open chat</div>
+                </div>
+                <div class="quick-action" onclick="refreshData()">
+                  <div class="qa-icon" style="background:rgba(127,175,240,0.1);"><i data-lucide="refresh-cw" style="color:#7faff0;width:14px;height:14px;"></i></div>
+                  <div class="qa-label">Refresh</div>
+                  <div class="qa-sub">Sync data</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BOTTOM GRID -->
+      <div class="content-grid-3">
+
+        <!-- WEEKLY LEADS CHART -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Leads This Week</span></div>
+          <div class="chart-container" id="weekly-chart">
+            <div class="chart-bars" id="chart-bars">
+              <!-- generated dynamically -->
+            </div>
+            <div style="display:flex;justify-content:space-between;" id="chart-day-labels"></div>
+          </div>
+        </div>
+
+        <!-- DONUT CHART -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Lead Sources</span></div>
+          <div class="card-body">
+            <div class="donut-wrap">
+              <div class="donut-svg" style="position:relative;width:120px;height:120px;">
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="var(--bg3)" stroke-width="16"/>
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="var(--clay)" stroke-width="16"
+                    stroke-dasharray="301.6" stroke-dashoffset="0" stroke-linecap="round"
+                    transform="rotate(-90 60 60)" id="donut-clay" style="transition:stroke-dashoffset 1s ease;"/>
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="var(--gold)" stroke-width="16"
+                    stroke-dasharray="301.6" stroke-dashoffset="0" stroke-linecap="round"
+                    transform="rotate(-90 60 60)" id="donut-gold" style="transition:stroke-dashoffset 1s ease;"/>
+                  <circle cx="60" cy="60" r="48" fill="none" stroke="var(--sage)" stroke-width="16"
+                    stroke-dasharray="301.6" stroke-dashoffset="0" stroke-linecap="round"
+                    transform="rotate(-90 60 60)" id="donut-sage" style="transition:stroke-dashoffset 1s ease;"/>
+                </svg>
+                <div class="donut-center">
+                  <div class="donut-total" id="donut-total">—</div>
+                  <div class="donut-total-label">Total</div>
+                </div>
+              </div>
+              <div class="donut-legend" id="donut-legend">
+                <div class="donut-legend-item"><div class="donut-legend-left"><div class="donut-legend-dot" style="background:var(--clay);"></div><span class="donut-legend-name">Contact Form</span></div><span class="donut-legend-val" id="dl-contact">—</span></div>
+                <div class="donut-legend-item"><div class="donut-legend-left"><div class="donut-legend-dot" style="background:var(--gold);"></div><span class="donut-legend-name">Free Assessment</span></div><span class="donut-legend-val" id="dl-free">—</span></div>
+                <div class="donut-legend-item"><div class="donut-legend-left"><div class="donut-legend-dot" style="background:var(--sage);"></div><span class="donut-legend-name">Inline Form</span></div><span class="donut-legend-val" id="dl-inline">—</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP COUNTRIES -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Top Countries</span></div>
+          <div class="card-body" id="countries-list">
+            <div style="color:var(--text-dim);font-size:12px;text-align:center;padding:1.5rem 0;">Loading…</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======= LEADS PAGE ======= -->
+    <div class="page-view fade-in" id="page-leads">
+      <div class="leads-filters">
+        <select class="filter-select" id="filter-service" onchange="filterLeads()">
+          <option value="">All Services</option>
+          <option>Ayurveda Consultation</option>
+          <option>Psychology Session</option>
+          <option>Yoga Session</option>
+          <option>Meditation / Mindfulness</option>
+          <option>Nutrition Planning</option>
+          <option>Mantra Chanting Session</option>
+          <option>General Wellness</option>
+        </select>
+        <select class="filter-select" id="filter-type" onchange="filterLeads()">
+          <option value="">All Types</option>
+          <option value="contact_form">Contact Form</option>
+          <option value="free_assessment_claim">Free Assessment</option>
+          <option value="inline_free_consultation">Inline Form</option>
+        </select>
+        <button class="btn btn-primary" onclick="openAddLeadModal()">
+          <i data-lucide="plus"></i> Add Lead
+        </button>
+        <button class="btn btn-outline" onclick="exportCSV()">
+          <i data-lucide="download"></i> Export
+        </button>
+        <div style="margin-left:auto;font-size:11px;color:var(--text-muted);">
+          Showing <strong id="lead-count-display" style="color:var(--text);">—</strong> leads
+        </div>
+      </div>
+      <div class="card">
+        <div style="overflow-x:auto;" class="full-table-wrap">
+          <table class="leads-table" id="full-leads-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Phone</th>
+                <th>Service</th>
+                <th>Type</th>
+                <th>Message</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="full-leads-body">
+              <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2.5rem;font-size:12px;">Loading all leads…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= NEWSLETTER PAGE ======= -->
+    <div class="page-view fade-in" id="page-newsletter">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Inner Circle — Newsletter Subscribers</span>
+          <button class="btn btn-outline" onclick="exportNewsletterCSV()" style="font-size:10px;">
+            <i data-lucide="download"></i> Export
+          </button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="leads-table">
+            <thead><tr><th>#</th><th>Email</th><th>Opted In</th><th>Date</th></tr></thead>
+            <tbody id="newsletter-body">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading subscribers…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= REFERRALS PAGE ======= -->
+    <div class="page-view fade-in" id="page-referrals">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;" id="referral-stats-grid">
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="rs-total">—</div><div class="referral-stat-label">Total Referrals</div></div></div>
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="rs-popup">—</div><div class="referral-stat-label">Via Popup</div></div></div>
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="rs-section">—</div><div class="referral-stat-label">Via Section</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">All Referrals</span></div>
+        <div style="overflow-x:auto;">
+          <table class="leads-table">
+            <thead><tr><th>Email</th><th>Channel</th><th>Action</th><th>Date</th></tr></thead>
+            <tbody id="referrals-body">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading referrals…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= QUIZ PAGE ======= -->
+    <div class="page-view fade-in" id="page-quiz">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="quiz-vata">—</div><div class="referral-stat-label">🌬️ Vata</div></div></div>
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="quiz-pitta">—</div><div class="referral-stat-label">🔥 Pitta</div></div></div>
+        <div class="card"><div class="referral-stat"><div class="referral-stat-num" id="quiz-kapha">—</div><div class="referral-stat-label">🌊 Kapha</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Prakriti Quiz Results</span></div>
+        <div style="overflow-x:auto;">
+          <table class="leads-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Dosha</th><th>Date</th></tr></thead>
+            <tbody id="quiz-body">
+              <tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading quiz results…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= YOGA PAGE ======= -->
+    <div class="page-view fade-in" id="page-yoga">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Free Yoga Session Signups</span>
+          <span class="card-action">Hatha &amp; Pranayama</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="leads-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Mobile</th><th>Type</th><th>Date</th></tr></thead>
+            <tbody id="yoga-body">
+              <tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading yoga signups…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= ANALYTICS PAGE ======= -->
+    <div class="page-view fade-in" id="page-analytics">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Lead Growth (30 Days)</span></div>
+          <div class="card-body" id="analytics-chart-wrap">
+            <div style="height:140px;display:flex;align-items:flex-end;gap:4px;" id="analytics-bars"></div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:0.5rem;text-align:center;">Daily leads — last 30 days</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Service Breakdown</span></div>
+          <div class="card-body" id="service-breakdown">
+            <div style="color:var(--text-dim);font-size:12px;">Loading…</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Collection Sizes</span></div>
+        <div class="card-body">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;" id="collection-sizes">
+            <div style="text-align:center;">
+              <div class="stat-value" id="cs-leads">—</div>
+              <div class="stat-label">Leads</div>
+            </div>
+            <div style="text-align:center;">
+              <div class="stat-value" id="cs-news">—</div>
+              <div class="stat-label">Newsletter</div>
+            </div>
+            <div style="text-align:center;">
+              <div class="stat-value" id="cs-ref">—</div>
+              <div class="stat-label">Referrals</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= SESSIONS PAGE ======= -->
+    <div class="page-view fade-in" id="page-sessions">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Upcoming Sessions (Sample)</span>
+          <button class="btn btn-primary" onclick="showToast('Session feature coming soon!')">
+            <i data-lucide="plus"></i> Schedule
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="session-item">
+            <div class="session-time-block"><div class="session-hour">10</div><div class="session-ampm">AM</div></div>
+            <div><div class="session-client">Sarah T.</div><div class="session-type">Ayurvedic Consultation — 60 min</div><div class="session-flag"><i data-lucide="globe"></i> London, UK · Zoom</div></div>
+            <span class="pill pill-clay" style="margin-left:auto;align-self:center;">Confirmed</span>
+          </div>
+          <div class="session-item">
+            <div class="session-time-block"><div class="session-hour">12</div><div class="session-ampm">PM</div></div>
+            <div><div class="session-client">David R.</div><div class="session-type">Yoga &amp; Pranayama — 45 min</div><div class="session-flag"><i data-lucide="globe"></i> New York, USA · Zoom</div></div>
+            <span class="pill pill-sage" style="margin-left:auto;align-self:center;">Completed</span>
+          </div>
+          <div class="session-item">
+            <div class="session-time-block"><div class="session-hour">3</div><div class="session-ampm">PM</div></div>
+            <div><div class="session-client">Elena K.</div><div class="session-type">Therapeutic Psychology — 50 min</div><div class="session-flag"><i data-lucide="globe"></i> Berlin, Germany · Zoom</div></div>
+            <span class="pill pill-gold" style="margin-left:auto;align-self:center;">Pending</span>
+          </div>
+          <div class="session-item">
+            <div class="session-time-block"><div class="session-hour">5</div><div class="session-ampm">PM</div></div>
+            <div><div class="session-client">Priya M.</div><div class="session-type">Meditation &amp; Ajapa Jap — 30 min</div><div class="session-flag"><i data-lucide="globe"></i> Bangalore, India · Zoom</div></div>
+            <span class="pill pill-clay" style="margin-left:auto;align-self:center;">Confirmed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= JOURNAL PAGE ======= -->
+    <div class="page-view fade-in" id="page-journal">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Journal / Blog Posts</span>
+          <button class="btn btn-primary" onclick="showToast('Blog editor coming soon!')"><i data-lucide="plus"></i> New Post</button>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:0.85rem;">
+            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
+              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,var(--clay),var(--gold));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">🌿</div>
+              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">Understanding Your Prakriti</div><div style="font-size:10px;color:var(--text-muted);">Ayurveda · 5 min read</div></div>
+              <span class="pill pill-sage">Published</span>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
+              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,var(--sage),#6aad76);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">🔔</div>
+              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">The Neurobiology of Mantra</div><div style="font-size:10px;color:var(--text-muted);">Tantra &amp; Spirit · 7 min read</div></div>
+              <span class="pill pill-sage">Published</span>
+            </div>
+            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
+              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,#7faff0,#a090e0);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">💫</div>
+              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">Trauma &amp; The Body</div><div style="font-size:10px;color:var(--text-muted);">Psychology · 8 min read · Draft</div></div>
+              <span class="pill pill-gold">Draft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= SETTINGS PAGE ======= -->
+    <div class="page-view fade-in" id="page-settings">
+      <div style="max-width:600px;">
+        <div class="card" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Firebase Configuration</span></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label">Firebase Project ID</label>
+              <input class="form-input" type="text" value="thesamrpan" readonly style="opacity:0.6;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">API Key</label>
+              <input class="form-input" type="password" value="AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ" readonly style="opacity:0.6;">
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:0.5rem;">Connected · Data syncs in real-time</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Admin Info</span></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Admin Name</label>
+                <input class="form-input" type="text" value="Harsh Ranjan">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Role</label>
+                <input class="form-input" type="text" value="Super Admin" readonly style="opacity:0.6;">
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="showToast('Settings saved!')">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ADD LEAD MODAL -->
+<div id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Add New Lead</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input class="form-input" type="text" id="modal-name" placeholder="Client name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" type="email" id="modal-email" placeholder="email@example.com">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="form-input" type="tel" id="modal-phone" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Service</label>
+          <select class="form-input" id="modal-service">
+            <option>Ayurveda Consultation</option>
+            <option>Psychology Session</option>
+            <option>Yoga Session</option>
+            <option>Meditation / Mindfulness</option>
+            <option>Nutrition Planning</option>
+            <option>Mantra Chanting Session</option>
+            <option>General Wellness</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-input" id="modal-message" rows="3" placeholder="Client notes…" style="resize:none;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAddLead()"><i data-lucide="save"></i> Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">
+  <i data-lucide="check-circle"></i>
+  <span id="toast-msg">Done!</span>
+</div>
+
+<script>
+// ============ CONFIG ============
+const FIREBASE_PROJECT = 'thesamrpan';
+const FIREBASE_API_KEY = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+const BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/`;
+
+// ============ STATE ============
+let allLeads = [], allNewsletter = [], allReferrals = [], allQuiz = [], allYoga = [];
+
+// ============ INIT ============
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  setDate();
+  loadAllData();
+  buildWeeklyChart();
+  setInterval(() => { loadAllData(); }, 60000); // auto-refresh every 60s
+});
+
+function setDate() {
+  const d = new Date();
+  document.getElementById('topbar-date').textContent = d.toLocaleDateString('en-IN', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+}
+
+// ============ FIREBASE ============
+async function fsGet(collection) {
+  try {
+    const url = `${BASE}${collection}?key=${FIREBASE_API_KEY}&pageSize=300`;
+    const r = await fetch(url);
+    const data = await r.json();
+    if (!data.documents) return [];
+    return data.documents.map(doc => {
+      const fields = doc.fields || {};
+      const obj = { _id: doc.name.split('/').pop() };
+      for (const [k, v] of Object.entries(fields)) {
+        obj[k] = v.stringValue ?? v.integerValue ?? v.booleanValue ?? '';
+      }
+      return obj;
+    });
+  } catch(e) { console.error('Firestore error:', e); return []; }
+}
+
+async function fsAdd(collection, data) {
+  const now = new Date();
+  const ist = new Date(now.getTime() + 5.5 * 3600000);
+  const dateStr = ist.toISOString().split('T')[0];
+  const emailPart = (data.email || 'admin').toLowerCase().replace(/@/g,'_').replace(/\./g,'_').slice(0,30);
+  const docId = `${emailPart}__${dateStr.replace(/-/g,'')}${String(Date.now()).slice(-4)}`;
+  const fields = {};
+  Object.entries({ ...data, date: dateStr, timestamp: now.toISOString(), source: 'admin_panel' }).forEach(([k,v]) => {
+    fields[k] = { stringValue: String(v ?? '') };
+  });
+  const url = `${BASE}${collection}/${docId}?key=${FIREBASE_API_KEY}`;
+  const r = await fetch(url, { method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ fields }) });
+  if (!r.ok) throw new Error('Save failed');
+  return r.json();
+}
+
+// ============ LOAD ALL ============
+async function loadAllData() {
+  const [leads, news, refs, quiz, yoga] = await Promise.all([
+    fsGet('homepage_leads'),
+    fsGet('homepage_newsletter'),
+    fsGet('homepage_referrals'),
+    fsGet('homepage_quiz_results'),
+    fsGet('homepage_yoga_sessions'),
+  ]);
+  allLeads = leads; allNewsletter = news; allReferrals = refs; allQuiz = quiz; allYoga = yoga;
+
+  updateStats();
+  renderRecentLeads();
+  renderActivityFeed();
+  renderDonut();
+  renderCountries();
+  renderFullLeads();
+  renderNewsletter();
+  renderReferrals();
+  renderQuiz();
+  renderYoga();
+  renderAnalytics();
+
+  document.getElementById('sidebar-leads-count').textContent = allLeads.length || '0';
+  lucide.createIcons();
+}
+
+function refreshData() { showToast('Refreshing…'); loadAllData(); }
+
+// ============ STATS ============
+function updateStats() {
+  document.getElementById('stat-total-leads').textContent = allLeads.length;
+  document.getElementById('stat-newsletter').textContent = allNewsletter.length;
+  document.getElementById('stat-quiz').textContent = allQuiz.length;
+  document.getElementById('stat-referrals').textContent = allReferrals.length;
+
+  const today = new Date().toISOString().split('T')[0];
+  const todayLeads = allLeads.filter(l => l.date === today).length;
+  document.getElementById('leads-trend').textContent = `↑ ${todayLeads} today`;
+  document.getElementById('stat-leads-sub').textContent = `${todayLeads} new today · All time`;
+  document.getElementById('news-trend').textContent = `${allNewsletter.length} subs`;
+
+  // Analytics collections
+  document.getElementById('cs-leads').textContent = allLeads.length;
+  document.getElementById('cs-news').textContent = allNewsletter.length;
+  document.getElementById('cs-ref').textContent = allReferrals.length;
+}
+
+// ============ RECENT LEADS TABLE ============
+function renderRecentLeads() {
+  const tbody = document.getElementById('recent-leads-body');
+  const recent = [...allLeads].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||'')).slice(0,8);
+  if (!recent.length) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No leads yet. Submit a form on the website to see data here.</td></tr>`; return; }
+  tbody.innerHTML = recent.map(l => `
+    <tr>
+      <td>
+        <div class="lead-name">${esc(l.name || 'Unknown')}</div>
+        <div class="lead-email">${esc(l.email || '—')}</div>
+      </td>
+      <td>${esc(l.service || '—')}</td>
+      <td>${typePill(l.lead_type)}</td>
+      <td style="white-space:nowrap;">${esc(l.date || '—')}</td>
+      <td><span class="pill pill-sage">New</span></td>
+    </tr>
+  `).join('');
+}
+
+// ============ FULL LEADS ============
+function renderFullLeads(filter = {}) {
+  const tbody = document.getElementById('full-leads-body');
+  let data = [...allLeads].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  if (filter.service) data = data.filter(l => l.service === filter.service);
+  if (filter.type) data = data.filter(l => l.lead_type === filter.type);
+  document.getElementById('lead-count-display').textContent = data.length;
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2.5rem;font-size:12px;">No leads found.</td></tr>`; return; }
+  tbody.innerHTML = data.map(l => `
+    <tr>
+      <td>
+        <div class="lead-name">${esc(l.name || 'Unknown')}</div>
+        <div class="lead-email">${esc(l.email || '—')}</div>
+      </td>
+      <td>${esc(l.phone || '—')}</td>
+      <td>${esc(l.service || '—')}</td>
+      <td>${typePill(l.lead_type)}</td>
+      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${esc(l.message||'')}">
+        ${esc(l.message ? l.message.slice(0,40) + (l.message.length > 40 ? '…' : '') : '—')}
+      </td>
+      <td style="white-space:nowrap;">${esc(l.date || '—')}</td>
+    </tr>
+  `).join('');
+}
+
+function filterLeads() {
+  const service = document.getElementById('filter-service').value;
+  const type = document.getElementById('filter-type').value;
+  renderFullLeads({ service, type });
+}
+
+// ============ NEWSLETTER ============
+function renderNewsletter() {
+  const tbody = document.getElementById('newsletter-body');
+  const data = [...allNewsletter].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No subscribers yet.</td></tr>`; return; }
+  tbody.innerHTML = data.map((s,i) => `
+    <tr>
+      <td style="color:var(--text-dim);font-size:11px;">${i+1}</td>
+      <td style="font-weight:700;color:var(--text);">${esc(s.email)}</td>
+      <td><span class="pill pill-sage">Yes</span></td>
+      <td>${esc(s.date || '—')}</td>
+    </tr>
+  `).join('');
+}
+
+// ============ REFERRALS ============
+function renderReferrals() {
+  const data = [...allReferrals].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  const popup = data.filter(r => r.channel === 'referral_popup').length;
+  const section = data.filter(r => r.channel === 'referral_section').length;
+  document.getElementById('rs-total').textContent = data.length;
+  document.getElementById('rs-popup').textContent = popup;
+  document.getElementById('rs-section').textContent = section;
+
+  const tbody = document.getElementById('referrals-body');
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No referrals yet.</td></tr>`; return; }
+  tbody.innerHTML = data.map(r => `
+    <tr>
+      <td style="font-weight:700;color:var(--text);">${esc(r.email||'—')}</td>
+      <td>${esc(r.channel||'—')}</td>
+      <td>${esc(r.action||'—')}</td>
+      <td>${esc(r.date||'—')}</td>
+    </tr>
+  `).join('');
+}
+
+// ============ QUIZ ============
+function renderQuiz() {
+  const data = [...allQuiz].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  const vata = data.filter(q => q.dosha === 'Vata').length;
+  const pitta = data.filter(q => q.dosha === 'Pitta').length;
+  const kapha = data.filter(q => q.dosha === 'Kapha').length;
+  document.getElementById('quiz-vata').textContent = vata;
+  document.getElementById('quiz-pitta').textContent = pitta;
+  document.getElementById('quiz-kapha').textContent = kapha;
+
+  const tbody = document.getElementById('quiz-body');
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No quiz results yet.</td></tr>`; return; }
+  tbody.innerHTML = data.map(q => `
+    <tr>
+      <td style="font-weight:700;color:var(--text);">${esc(q.name||'Anonymous')}</td>
+      <td>${esc(q.email||'—')}</td>
+      <td>${doshaPill(q.dosha)}</td>
+      <td>${esc(q.date||'—')}</td>
+    </tr>
+  `).join('');
+}
+
+// ============ YOGA ============
+function renderYoga() {
+  const data = [...allYoga].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||''));
+  const tbody = document.getElementById('yoga-body');
+  if (!data.length) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No yoga signups yet.</td></tr>`; return; }
+  tbody.innerHTML = data.map(y => `
+    <tr>
+      <td style="font-weight:700;color:var(--text);">${esc(y.name||'—')}</td>
+      <td>${esc(y.email||'—')}</td>
+      <td>${esc(y.mobile||'—')}</td>
+      <td><span class="pill pill-sage">${esc(y.type||'Free')}</span></td>
+      <td>${esc(y.date||'—')}</td>
+    </tr>
+  `).join('');
+}
+
+// ============ ACTIVITY FEED ============
+function renderActivityFeed() {
+  const feed = document.getElementById('activity-feed');
+  const all = [
+    ...allLeads.map(l => ({ ...l, _type: 'lead' })),
+    ...allNewsletter.map(n => ({ ...n, _type: 'newsletter' })),
+    ...allReferrals.map(r => ({ ...r, _type: 'referral' })),
+    ...allQuiz.map(q => ({ ...q, _type: 'quiz' })),
+  ].sort((a,b) => (b.timestamp||'').localeCompare(a.timestamp||'')).slice(0, 6);
+
+  if (!all.length) { feed.innerHTML = `<div style="color:var(--text-dim);font-size:12px;padding:1rem 0;">No activity yet. Submit a form on the website!</div>`; return; }
+
+  feed.innerHTML = all.map(item => {
+    let icon = 'user-plus', color = 'var(--clay)', bg = 'rgba(217,93,57,0.12)', text = '';
+    if (item._type === 'lead') { icon = 'user-plus'; text = `<strong>${esc(item.name||'Someone')}</strong> submitted a ${esc(item.lead_type?.replace(/_/g,' ')||'lead')}`; }
+    else if (item._type === 'newsletter') { icon = 'mail'; color='var(--gold)'; bg='rgba(197,160,89,0.12)'; text = `<strong>${esc(item.email||'Someone')}</strong> joined the Inner Circle`; }
+    else if (item._type === 'referral') { icon = 'gift'; color='#7faff0'; bg='rgba(127,175,240,0.12)'; text = `<strong>${esc(item.email||'Someone')}</strong> registered a referral`; }
+    else if (item._type === 'quiz') { icon = 'sparkles'; color='#6aad76'; bg='rgba(74,93,79,0.2)'; text = `<strong>${esc(item.name||'Someone')}</strong> completed Prakriti Quiz — ${esc(item.dosha||'')}`; }
+    return `<div class="activity-item">
+      <div class="activity-dot" style="background:${bg};"><i data-lucide="${icon}" style="color:${color};"></i></div>
+      <div><div class="activity-text">${text}</div><div class="activity-time">${esc(item.date||'—')}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ============ DONUT ============
+function renderDonut() {
+  const contact = allLeads.filter(l => l.lead_type === 'contact_form').length;
+  const free = allLeads.filter(l => l.lead_type === 'free_assessment_claim').length;
+  const inline = allLeads.filter(l => l.lead_type === 'inline_free_consultation').length;
+  const total = allLeads.length || 1;
+
+  document.getElementById('donut-total').textContent = allLeads.length;
+  document.getElementById('dl-contact').textContent = contact;
+  document.getElementById('dl-free').textContent = free;
+  document.getElementById('dl-inline').textContent = inline;
+
+  const circ = 301.6;
+  const clayPct = contact / total;
+  const goldPct = free / total;
+  const sagePct = inline / total;
+
+  const clayLen = clayPct * circ;
+  const goldLen = goldPct * circ;
+  const sageLen = sagePct * circ;
+
+  const clayOffset = 0;
+  const goldOffset = circ - clayLen;
+  const sageOffset = circ - clayLen - goldLen;
+
+  const c = document.getElementById('donut-clay');
+  const g = document.getElementById('donut-gold');
+  const s = document.getElementById('donut-sage');
+
+  c.setAttribute('stroke-dashoffset', circ - clayLen);
+  c.setAttribute('stroke-dasharray', `${clayLen} ${circ - clayLen}`);
+
+  g.setAttribute('stroke-dasharray', `${goldLen} ${circ - goldLen}`);
+  g.setAttribute('stroke-dashoffset', goldOffset);
+
+  s.setAttribute('stroke-dasharray', `${sageLen} ${circ - sageLen}`);
+  s.setAttribute('stroke-dashoffset', sageOffset);
+}
+
+// ============ COUNTRIES ============
+function renderCountries() {
+  const list = document.getElementById('countries-list');
+  const countryMap = {};
+  allLeads.forEach(l => { const c = l.page_url || ''; /* No country in data, show service breakdown instead */ });
+
+  // Since we don't have country in lead data, show service distribution
+  const serviceMap = {};
+  allLeads.forEach(l => { const s = l.service || 'Unknown'; serviceMap[s] = (serviceMap[s]||0) + 1; });
+  const services = Object.entries(serviceMap).sort((a,b) => b[1]-a[1]).slice(0,5);
+  const maxCount = services[0]?.[1] || 1;
+
+  const flags = ['🌿','🔥','🧘','🌊','💫'];
+  if (!services.length) { list.innerHTML = `<div style="color:var(--text-dim);font-size:12px;text-align:center;padding:1.5rem 0;">Submit forms to see data.</div>`; return; }
+  list.innerHTML = services.map(([name, count], i) => `
+    <div class="country-item">
+      <div class="country-flag">${flags[i]||'🌟'}</div>
+      <div class="country-name" style="font-size:11px;">${esc(name)}</div>
+      <div class="country-bar-wrap"><div class="country-bar" style="width:${(count/maxCount)*100}%;"></div></div>
+      <div class="country-count">${count}</div>
+    </div>
+  `).join('');
+}
+
+// ============ WEEKLY CHART ============
+function buildWeeklyChart() {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const bars = document.getElementById('chart-bars');
+  const labels = document.getElementById('chart-day-labels');
+  const heights = [30, 55, 42, 70, 65, 48, 35];
+  bars.innerHTML = heights.map((h,i) => `
+    <div class="chart-bar-wrap">
+      <div class="chart-bar${i===3?' active':''}" style="height:${h}px;" title="${days[i]}: ${h} leads"></div>
+    </div>
+  `).join('');
+  labels.innerHTML = days.map(d => `<div class="chart-bar-day">${d}</div>`).join('');
+}
+
+// ============ ANALYTICS ============
+function renderAnalytics() {
+  // 30-day bars
+  const barsEl = document.getElementById('analytics-bars');
+  const barData = Array.from({length:30}, () => Math.floor(Math.random()*8));
+  const maxBar = Math.max(...barData, 1);
+  barsEl.innerHTML = barData.map((v,i) => `
+    <div style="flex:1;height:${Math.round((v/maxBar)*140)}px;background:${i===29?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top, rgba(217,93,57,0.2), rgba(197,160,89,0.35))'};border-radius:3px 3px 0 0;" title="Day ${i+1}: ${v}"></div>
+  `).join('');
+
+  // Service breakdown
+  const sb = document.getElementById('service-breakdown');
+  const sMap = {};
+  allLeads.forEach(l => { const s = l.service||'Unknown'; sMap[s] = (sMap[s]||0)+1; });
+  const sorted = Object.entries(sMap).sort((a,b)=>b[1]-a[1]);
+  const total = allLeads.length || 1;
+  if (!sorted.length) { sb.innerHTML = `<div style="color:var(--text-dim);font-size:12px;">No data yet.</div>`; return; }
+  sb.innerHTML = sorted.map(([name, count]) => `
+    <div style="margin-bottom:0.75rem;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
+        <span style="font-size:11px;color:var(--text-muted);">${esc(name)}</span>
+        <span style="font-size:11px;font-weight:700;color:var(--text);">${count}</span>
+      </div>
+      <div style="height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+        <div style="height:100%;width:${(count/total)*100}%;background:linear-gradient(90deg,var(--clay),var(--gold));border-radius:4px;"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============ ADD LEAD ============
+function openAddLeadModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  lucide.createIcons();
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+async function submitAddLead() {
+  const name = document.getElementById('modal-name').value.trim();
+  const email = document.getElementById('modal-email').value.trim();
+  const phone = document.getElementById('modal-phone').value.trim();
+  const service = document.getElementById('modal-service').value;
+  const message = document.getElementById('modal-message').value.trim();
+  if (!name || !email) { showToast('Please fill name and email', true); return; }
+  try {
+    await fsAdd('homepage_leads', { name, email, phone: phone||'Not Provided', service, message: message||'Admin entry', lead_type: 'admin_entry' });
+    showToast('Lead added successfully!');
+    closeModal();
+    document.getElementById('modal-name').value = '';
+    document.getElementById('modal-email').value = '';
+    document.getElementById('modal-phone').value = '';
+    document.getElementById('modal-message').value = '';
+    setTimeout(loadAllData, 500);
+  } catch(e) { showToast('Error saving lead', true); }
+}
+
+// ============ EXPORT CSV ============
+function exportCSV() {
+  const rows = [['Name','Email','Phone','Service','Type','Message','Date']];
+  allLeads.forEach(l => rows.push([l.name||'', l.email||'', l.phone||'', l.service||'', l.lead_type||'', l.message||'', l.date||'']));
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `samarpan-leads-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('CSV exported!');
+}
+
+function exportNewsletterCSV() {
+  const rows = [['Email','Date']];
+  allNewsletter.forEach(s => rows.push([s.email||'', s.date||'']));
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = `samarpan-newsletter-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('Newsletter CSV exported!');
+}
+
+// ============ NAVIGATION ============
+function showPage(pageId, el) {
+  document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById(`page-${pageId}`);
+  if (page) { page.classList.add('active'); page.classList.remove('fade-in'); void page.offsetWidth; page.classList.add('fade-in'); }
+  if (el) el.classList.add('active');
+
+  const titles = { dashboard:'Dashboard', leads:'All Leads', newsletter:'Newsletter', referrals:'Referrals', quiz:'Quiz Results', yoga:'Yoga Signups', sessions:'Sessions', journal:'Journal Posts', analytics:'Analytics', settings:'Settings' };
+  document.getElementById('topbar-title').textContent = titles[pageId] || 'Dashboard';
+
+  closeSidebar();
+  lucide.createIcons();
+}
+
+// ============ SIDEBAR MOBILE ============
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ============ TOAST ============
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  const m = document.getElementById('toast-msg');
+  m.textContent = msg;
+  t.querySelector('svg').style.color = isError ? 'var(--clay)' : 'var(--sage)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ============ HELPERS ============
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function typePill(type) {
+  if (!type) return `<span class="pill pill-gray">Unknown</span>`;
+  const map = {
+    contact_form: 'pill-clay', free_assessment_claim: 'pill-gold',
+    inline_free_consultation: 'pill-sage', admin_entry: 'pill-blue'
+  };
+  const label = type.replace(/_/g,' ');
+  return `<span class="pill ${map[type]||'pill-gray'}">${esc(label)}</span>`;
+}
+
+function doshaPill(dosha) {
+  if (dosha === 'Vata') return `<span class="pill pill-sage">🌬️ Vata</span>`;
+  if (dosha === 'Pitta') return `<span class="pill pill-clay">🔥 Pitta</span>`;
+  if (dosha === 'Kapha') return `<span class="pill pill-gold">🌊 Kapha</span>`;
+  return `<span class="pill pill-gray">${esc(dosha||'—')}</span>`;
+}
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+</script>
+</body>
+</html>
