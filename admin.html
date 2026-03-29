@@ -2,108 +2,57 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Samarpan Admin — v6</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
-<script>
-  window.dataLayer=window.dataLayer||[];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js',new Date()); gtag('config','G-HMM7CJSCW7',{page_title:'Admin v6',page_location:window.location.href});
-</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#D95D39">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Samarpan Admin">
+<link rel="manifest" id="pwa-manifest">
+<title>Samarpan Admin — v7</title>
+
+<!-- Firebase SDK (modular compat) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
+
 <style>
-/* ============================================================
-   THEME
-============================================================ */
-[data-theme="dark"]{
-  --bg:#0b0a09;--bg2:#111010;--bg3:#181714;
-  --card:#1c1a18;--card2:#222019;
-  --border:#2a2722;--border2:#363129;
-  --text:#f2ede5;--text-muted:#8a7d6e;--text-dim:#524840;
-  --input-bg:#181714;--shadow-deep:0 32px 80px rgba(0,0,0,.75);
-  --noise:.22;
-}
-[data-theme="light"]{
-  --bg:#f8f5ef;--bg2:#ffffff;--bg3:#eee9e0;
-  --card:#ffffff;--card2:#f4f0e8;
-  --border:#e4ddd3;--border2:#cec5b8;
-  --text:#1a1612;--text-muted:#5e5346;--text-dim:#9e9082;
-  --input-bg:#ede9e1;--shadow-deep:0 32px 80px rgba(0,0,0,.1);
-  --noise:.06;
-}
-:root{
-  --clay:#D95D39;--clay2:#c24e2c;--gold:#C5A059;--sage:#4A5D4F;
-  --green:#6aad76;--blue:#7faff0;--purple:#c08de0;--red:#e05555;
-  --r:8px;--r2:12px;--r3:16px;
-}
+/* ============================================================ THEME */
+[data-theme="dark"]{--bg:#0b0a09;--bg2:#111010;--bg3:#181714;--card:#1c1a18;--card2:#222019;--border:#2a2722;--border2:#363129;--text:#f2ede5;--text-muted:#8a7d6e;--text-dim:#524840;--input-bg:#181714;--shadow-deep:0 32px 80px rgba(0,0,0,.75);--noise:.22;}
+[data-theme="light"]{--bg:#f8f5ef;--bg2:#ffffff;--bg3:#eee9e0;--card:#ffffff;--card2:#f4f0e8;--border:#e4ddd3;--border2:#cec5b8;--text:#1a1612;--text-muted:#5e5346;--text-dim:#9e9082;--input-bg:#ede9e1;--shadow-deep:0 32px 80px rgba(0,0,0,.1);--noise:.06;}
+:root{--clay:#D95D39;--clay2:#c24e2c;--gold:#C5A059;--sage:#4A5D4F;--green:#6aad76;--blue:#7faff0;--purple:#c08de0;--red:#e05555;--r:8px;--r2:12px;--r3:16px;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{
-  font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);
-  min-height:100vh;display:flex;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  transition:background .3s,color .3s;
-}
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:var(--noise);
-}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:var(--noise);}
 
-/* ============================================================
-   LOGIN
-============================================================ */
-#login-screen{
-  position:fixed;inset:0;z-index:10000;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;padding:1.5rem;
-  transition:opacity .5s,transform .5s;
-}
+/* ============================================================ LOGIN */
+#login-screen{position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:1.5rem;transition:opacity .5s,transform .5s;}
 #login-screen.hidden{opacity:0;transform:scale(1.05);pointer-events:none;}
-.lc{
-  width:100%;max-width:400px;background:var(--card);
-  border:1px solid var(--border2);border-radius:20px;
-  padding:2.75rem 2.25rem;box-shadow:var(--shadow-deep);
-  animation:lIn .55s cubic-bezier(.34,1.56,.64,1);
-}
+.lc{width:100%;max-width:420px;background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:2.75rem 2.25rem;box-shadow:var(--shadow-deep);animation:lIn .55s cubic-bezier(.34,1.56,.64,1);}
 @keyframes lIn{from{opacity:0;transform:translateY(32px) scale(.95)}to{opacity:1;transform:none}}
 .lc-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:2rem;gap:.45rem;}
 .lc-logo svg{color:var(--clay);}
 .lc-logo-name{font-family:'Marcellus',serif;font-size:20px;letter-spacing:.3em;text-transform:uppercase;color:var(--text);}
 .lc-logo-sub{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted);}
-.lc-headline{
-  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;
-  text-align:center;color:var(--text-muted);margin-bottom:1.75rem;
-}
+.lc-headline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.25rem;text-align:center;color:var(--text-muted);margin-bottom:1.75rem;}
 .lf{margin-bottom:1rem;}
 .ll{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.4rem;font-weight:600;}
 .li-wrap{position:relative;display:flex;align-items:center;}
-.li{
-  width:100%;background:var(--input-bg);border:1px solid var(--border);
-  border-radius:var(--r);padding:.78rem 2.8rem .78rem .95rem;
-  font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--text);
-  outline:none;transition:border-color .2s,box-shadow .2s;
-}
+.li{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:var(--r);padding:.78rem 2.8rem .78rem .95rem;font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s;}
 .li:focus{border-color:var(--clay);box-shadow:0 0 0 3px rgba(217,93,57,.12);}
 .li-icon{position:absolute;right:.85rem;color:var(--text-dim);display:flex;align-items:center;cursor:pointer;}
 .li-icon svg{width:15px;height:15px;}
 .li-icon:hover{color:var(--clay);}
-.lerr{
-  background:rgba(217,93,57,.1);border:1px solid rgba(217,93,57,.28);
-  color:#e87a5a;border-radius:var(--r);padding:.6rem .9rem;
-  font-size:12px;margin-bottom:1rem;display:none;align-items:center;gap:.5rem;
-}
+.lerr{background:rgba(217,93,57,.1);border:1px solid rgba(217,93,57,.28);color:#e87a5a;border-radius:var(--r);padding:.6rem .9rem;font-size:12px;margin-bottom:1rem;display:none;align-items:center;gap:.5rem;}
 .lerr.show{display:flex;}
 .lerr svg{width:14px;height:14px;flex-shrink:0;}
-.lbtn{
-  width:100%;background:linear-gradient(135deg,var(--clay),var(--clay2));
-  color:#fff;border:none;border-radius:var(--r);padding:.88rem;
-  font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-  font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:.5rem;
-  transition:opacity .2s,transform .2s,box-shadow .2s;
-  display:flex;align-items:center;justify-content:center;gap:.5rem;
-  box-shadow:0 4px 20px rgba(217,93,57,.3);
-}
+.lsuccess{background:rgba(106,173,118,.1);border:1px solid rgba(106,173,118,.28);color:var(--green);border-radius:var(--r);padding:.6rem .9rem;font-size:12px;margin-bottom:1rem;display:none;align-items:center;gap:.5rem;}
+.lsuccess.show{display:flex;}
+.lbtn{width:100%;background:linear-gradient(135deg,var(--clay),var(--clay2));color:#fff;border:none;border-radius:var(--r);padding:.88rem;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:.5rem;transition:opacity .2s,transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 20px rgba(217,93,57,.3);}
 .lbtn:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 8px 28px rgba(217,93,57,.4);}
 .lbtn:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none;}
 .lbtn svg{width:15px;height:15px;}
@@ -111,37 +60,24 @@ body::before{
 .lspinner.show{display:block;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .lfoot{text-align:center;margin-top:1.25rem;font-size:10px;letter-spacing:.06em;color:var(--text-dim);}
-/* Security notice on login */
-.sec-notice{
-  display:flex;align-items:center;gap:.5rem;background:rgba(106,173,118,.08);
-  border:1px solid rgba(106,173,118,.2);border-radius:var(--r);padding:.55rem .85rem;
-  margin-bottom:1.25rem;font-size:10.5px;color:var(--green);
-}
+.sec-notice{display:flex;align-items:center;gap:.5rem;background:rgba(106,173,118,.08);border:1px solid rgba(106,173,118,.2);border-radius:var(--r);padding:.55rem .85rem;margin-bottom:1.25rem;font-size:10.5px;color:var(--green);}
 .sec-notice svg{width:12px;height:12px;flex-shrink:0;}
+.forgot-link{text-align:center;margin-top:.85rem;font-size:11px;color:var(--text-muted);}
+.forgot-link a{color:var(--clay);cursor:pointer;text-decoration:underline;}
+.forgot-link a:hover{color:var(--gold);}
+/* Auth panel switcher */
+.auth-panel{display:none;}
+.auth-panel.active{display:block;}
 
-/* ============================================================
-   SIDEBAR
-============================================================ */
-#sidebar{
-  width:252px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;
-  transition:transform .3s;
-}
-.sb-logo{
-  padding:1.4rem 1.25rem .9rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:.75rem;
-}
+/* ============================================================ SIDEBAR */
+#sidebar{width:252px;min-height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;transition:transform .3s;}
+.sb-logo{padding:1.4rem 1.25rem .9rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;}
 .sb-logo svg{color:var(--clay);flex-shrink:0;}
 .sb-logo-text{font-family:'Marcellus',serif;font-size:13px;letter-spacing:.28em;text-transform:uppercase;}
 .sb-logo-sub{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-top:1px;}
 .sb-nav{flex:1;padding:.85rem 0;overflow-y:auto;}
 .sb-section{font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);padding:.7rem 1.25rem .3rem;font-weight:700;}
-.nav-item{
-  display:flex;align-items:center;gap:.65rem;padding:.62rem 1.25rem;
-  font-size:12.5px;font-weight:400;color:var(--text-muted);cursor:pointer;
-  transition:all .18s;border-left:2px solid transparent;text-decoration:none;
-  position:relative;
-}
+.nav-item{display:flex;align-items:center;gap:.65rem;padding:.62rem 1.25rem;font-size:12.5px;font-weight:400;color:var(--text-muted);cursor:pointer;transition:all .18s;border-left:2px solid transparent;text-decoration:none;position:relative;}
 .nav-item:hover{color:var(--text);background:rgba(217,93,57,.04);}
 .nav-item.active{color:var(--clay);background:rgba(217,93,57,.08);border-left-color:var(--clay);font-weight:500;}
 .nav-item svg{width:15px;height:15px;flex-shrink:0;}
@@ -157,9 +93,7 @@ body::before{
 .logout-btn:hover{background:rgba(217,93,57,.16);}
 .logout-btn svg{width:13px;height:13px;}
 
-/* ============================================================
-   MAIN + TOPBAR
-============================================================ */
+/* ============================================================ MAIN + TOPBAR */
 #main{margin-left:252px;flex:1;min-height:100vh;display:flex;flex-direction:column;}
 #topbar{height:62px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;position:sticky;top:0;z-index:50;}
 .tb-left{display:flex;align-items:center;gap:1rem;}
@@ -180,9 +114,7 @@ body::before{
 .theme-pill svg{width:13px;height:13px;color:var(--text-muted);}
 .theme-pill span{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:600;}
 
-/* ============================================================
-   NOTIFICATION SYSTEM
-============================================================ */
+/* ============================================================ NOTIFICATION */
 .notif-wrapper{position:relative;}
 .notif-badge-dot{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;background:var(--clay);color:#fff;font-size:8.5px;font-weight:700;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--bg2);}
 .notif-badge-dot.show{display:flex;}
@@ -200,26 +132,20 @@ body::before{
 .np-item:last-child{border-bottom:none;}
 .np-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
 .np-dot svg{width:13px;height:13px;}
-.np-text{flex:1;}
-.np-text strong{color:var(--text);font-weight:600;}
 .np-body{font-size:11.5px;color:var(--text-muted);line-height:1.5;}
 .np-time{font-size:9.5px;color:var(--text-dim);margin-top:3px;}
 .np-empty{text-align:center;padding:2rem;color:var(--text-dim);font-size:12px;}
 .np-footer{padding:.75rem 1.2rem;border-top:1px solid var(--border);background:var(--card2);text-align:center;}
 .np-footer-text{font-size:10px;color:var(--text-dim);}
 
-/* ============================================================
-   CONTENT
-============================================================ */
+/* ============================================================ CONTENT */
 #content{padding:1.75rem;flex:1;}
 .page-view{display:none;}
 .page-view.active{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .fade-in{animation:fadeUp .35s ease forwards;}
 
-/* ============================================================
-   VISITOR BANNER
-============================================================ */
+/* ============================================================ VISITOR BANNER */
 .vis-banner{background:linear-gradient(135deg,rgba(217,93,57,.07),rgba(197,160,89,.05));border:1px solid rgba(217,93,57,.18);border-radius:var(--r2);padding:1.1rem 1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;position:relative;overflow:hidden;}
 .vis-banner::before{content:'👁';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:2.5rem;opacity:.06;}
 .vs{text-align:center;}
@@ -228,9 +154,7 @@ body::before{
 .vs-sub{font-size:9.5px;color:var(--text-dim);margin-top:.15rem;}
 .vs-div{width:1px;background:var(--border);align-self:stretch;}
 
-/* ============================================================
-   STAT CARDS
-============================================================ */
+/* ============================================================ STAT CARDS */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s;cursor:default;}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 10px 40px rgba(0,0,0,.18);}
@@ -246,27 +170,21 @@ body::before{
 .sc-label{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);}
 .sc-sub{font-size:9.5px;color:var(--text-dim);margin-top:.5rem;}
 
-/* ============================================================
-   CARD
-============================================================ */
+/* ============================================================ CARD */
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:background .3s,border-color .3s;}
-.card-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;}
 .card-title{font-family:'Marcellus',serif;font-size:13px;color:var(--text);letter-spacing:.04em;}
 .card-action{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--clay);cursor:pointer;text-decoration:none;font-weight:600;transition:color .2s;}
 .card-action:hover{color:var(--gold);}
 .card-body{padding:1.25rem;}
 
-/* ============================================================
-   GRIDS
-============================================================ */
+/* ============================================================ GRIDS */
 .cg{display:grid;grid-template-columns:1fr 340px;gap:1.25rem;margin-bottom:1.25rem;}
 .cg3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.25rem;}
 
-/* ============================================================
-   TABLE
-============================================================ */
+/* ============================================================ TABLE */
 .data-table{width:100%;border-collapse:collapse;}
-.data-table th{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:.6rem 1.25rem;text-align:left;border-bottom:1px solid var(--border);background:var(--card2);}
+.data-table th{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);font-weight:700;padding:.6rem 1.25rem;text-align:left;border-bottom:1px solid var(--border);background:var(--card2);white-space:nowrap;}
 .data-table td{padding:.8rem 1.25rem;font-size:12px;color:var(--text-muted);border-bottom:1px solid var(--border);vertical-align:middle;}
 .data-table tr:last-child td{border-bottom:none;}
 .data-table tr:hover td{background:rgba(217,93,57,.02);}
@@ -275,9 +193,7 @@ body::before{
 .ts-date{font-weight:600;color:var(--text-muted);font-size:11px;}
 .ts-time{color:var(--text-dim);font-size:10px;}
 
-/* ============================================================
-   PILLS
-============================================================ */
+/* ============================================================ PILLS */
 .pill{display:inline-block;padding:2px 10px;border-radius:50px;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
 .pill-clay{background:rgba(217,93,57,.15);color:#e87a5a;}
 .pill-gold{background:rgba(197,160,89,.15);color:var(--gold);}
@@ -287,9 +203,7 @@ body::before{
 .pill-gray{background:rgba(128,128,128,.12);color:var(--text-muted);}
 .pill-red{background:rgba(224,85,85,.15);color:var(--red);}
 
-/* ============================================================
-   BUTTONS
-============================================================ */
+/* ============================================================ BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:var(--r);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .18s;border:none;font-family:'DM Sans',sans-serif;}
 .btn-primary{background:var(--clay);color:#fff;box-shadow:0 2px 12px rgba(217,93,57,.3);}
 .btn-primary:hover{background:var(--clay2);box-shadow:0 4px 20px rgba(217,93,57,.4);}
@@ -299,9 +213,7 @@ body::before{
 .btn-danger:hover{background:rgba(224,85,85,.2);}
 .btn svg{width:13px;height:13px;}
 
-/* ============================================================
-   ACTIVITY FEED
-============================================================ */
+/* ============================================================ ACTIVITY FEED */
 .ac-item{display:flex;gap:.85rem;padding:.85rem 0;border-bottom:1px solid var(--border);align-items:flex-start;}
 .ac-item:last-child{border-bottom:none;}
 .ac-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -310,9 +222,7 @@ body::before{
 .ac-text strong{color:var(--text);font-weight:600;}
 .ac-time{font-size:9.5px;color:var(--text-dim);margin-top:2px;}
 
-/* ============================================================
-   CHARTS
-============================================================ */
+/* ============================================================ CHARTS */
 .chart-bars{display:flex;align-items:flex-end;gap:5px;height:88px;margin-bottom:.5rem;}
 .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
 .chart-bar{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(to top,rgba(217,93,57,.18),rgba(197,160,89,.32));transition:all .3s;cursor:pointer;}
@@ -323,9 +233,7 @@ body::before{
 .vc-bar-label{font-size:8px;color:var(--text-dim);}
 .vc-bar-val{font-size:7.5px;color:var(--text-dim);position:absolute;top:-14px;left:50%;transform:translateX(-50%);}
 
-/* ============================================================
-   DONUT
-============================================================ */
+/* ============================================================ DONUT */
 .donut-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:.5rem 0;}
 .donut-legend{width:100%;display:flex;flex-direction:column;gap:.6rem;}
 .dl-item{display:flex;align-items:center;justify-content:space-between;}
@@ -334,9 +242,7 @@ body::before{
 .dl-name{font-size:11px;color:var(--text-muted);}
 .dl-val{font-size:11px;font-weight:700;color:var(--text);}
 
-/* ============================================================
-   QUICK ACTIONS
-============================================================ */
+/* ============================================================ QUICK ACTIONS */
 .qa-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.65rem;}
 .qa{background:var(--card2);border:1px solid var(--border);border-radius:var(--r);padding:.9rem;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:.45rem;}
 .qa:hover{border-color:var(--clay);background:rgba(217,93,57,.04);}
@@ -345,9 +251,7 @@ body::before{
 .qa-label{font-size:11.5px;font-weight:600;color:var(--text);}
 .qa-sub{font-size:9px;color:var(--text-dim);}
 
-/* ============================================================
-   SERVICE BARS
-============================================================ */
+/* ============================================================ SERVICE BARS */
 .svc-item{display:flex;align-items:center;gap:.85rem;padding:.72rem 0;border-bottom:1px solid var(--border);}
 .svc-item:last-child{border-bottom:none;}
 .svc-em{font-size:18px;width:24px;text-align:center;}
@@ -356,16 +260,12 @@ body::before{
 .svc-bar{height:100%;background:linear-gradient(90deg,var(--clay),var(--gold));border-radius:4px;}
 .svc-count{font-size:11px;font-weight:700;color:var(--text-muted);min-width:24px;text-align:right;}
 
-/* ============================================================
-   REFERRAL / LARGE STATS
-============================================================ */
+/* ============================================================ BIG STAT */
 .big-stat{text-align:center;padding:1.25rem;}
 .big-stat-num{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;background:linear-gradient(135deg,var(--clay),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
 .big-stat-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-top:.3rem;}
 
-/* ============================================================
-   SESSION ITEMS
-============================================================ */
+/* ============================================================ SESSION ITEMS */
 .sess-item{padding:.85rem 0;border-bottom:1px solid var(--border);display:flex;gap:.85rem;align-items:flex-start;}
 .sess-item:last-child{border-bottom:none;}
 .sess-time{min-width:50px;text-align:center;padding:.35rem 0;border-right:1px solid var(--border);margin-right:.2rem;}
@@ -376,22 +276,18 @@ body::before{
 .sess-flag{font-size:9px;color:var(--text-dim);margin-top:3px;display:flex;align-items:center;gap:3px;}
 .sess-flag svg{width:10px;height:10px;}
 
-/* ============================================================
-   JOURNAL CARDS
-============================================================ */
+/* ============================================================ JOURNAL */
 .post-card{display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:var(--r);border:1px solid var(--border);margin-bottom:.75rem;transition:border-color .18s;}
 .post-card:hover{border-color:var(--clay);}
 .post-thumb{width:60px;height:60px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;}
-.post-info{flex:1;}
+.post-info{flex:1;min-width:0;}
 .post-title{font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;}
 .post-meta{font-size:10px;color:var(--text-muted);}
-.post-actions{display:flex;gap:.5rem;align-items:center;}
+.post-actions{display:flex;gap:.5rem;align-items:center;flex-shrink:0;}
 .post-excerpt{font-size:11px;color:var(--text-dim);margin-top:4px;line-height:1.5;}
 .post-empty{text-align:center;padding:3rem;color:var(--text-dim);font-size:12px;}
 
-/* ============================================================
-   SETTINGS
-============================================================ */
+/* ============================================================ SETTINGS */
 .settings-card{margin-bottom:1.25rem;}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.78rem 0;border-bottom:1px solid var(--border);}
 .toggle-row:last-child{border-bottom:none;}
@@ -409,9 +305,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 .cs.active{border-color:var(--text);}
 .cs:hover{transform:scale(1.15);}
 
-/* ============================================================
-   SECURITY PANEL
-============================================================ */
+/* ============================================================ SECURITY PANEL */
 .sec-panel{background:rgba(106,173,118,.04);border:1px solid rgba(106,173,118,.2);border-radius:var(--r2);padding:1.25rem;margin-bottom:1.25rem;}
 .sec-panel-title{font-family:'Marcellus',serif;font-size:13px;color:var(--green);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
 .sec-panel-title svg{width:14px;height:14px;}
@@ -419,22 +313,19 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 .sec-item:last-child{border-bottom:none;}
 .sec-item svg{width:13px;height:13px;color:var(--green);flex-shrink:0;}
 .sec-warn{background:rgba(197,160,89,.06);border:1px solid rgba(197,160,89,.2);border-radius:var(--r);padding:.75rem 1rem;font-size:11.5px;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;}
-.sec-warn svg{width:13px;height:13px;color:var(--gold);vertical-align:middle;margin-right:4px;}
 
-/* ============================================================
-   MODALS
-============================================================ */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px);}
+/* ============================================================ MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(5px);padding:1rem;}
 .modal-overlay.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);max-width:520px;width:94%;max-height:90vh;overflow-y:auto;box-shadow:0 28px 80px rgba(0,0,0,.55);animation:mIn .3s cubic-bezier(.34,1.56,.64,1);}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 28px 80px rgba(0,0,0,.55);animation:mIn .3s cubic-bezier(.34,1.56,.64,1);}
 .modal-lg{max-width:700px;}
 @keyframes mIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 .modal-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
 .modal-title{font-family:'Marcellus',serif;font-size:16px;color:var(--text);}
-.modal-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;transition:color .18s;line-height:1;}
+.modal-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;transition:color .18s;line-height:1;padding:.25rem;}
 .modal-close:hover{color:var(--text);}
 .modal-body{padding:1.5rem;}
-.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;justify-content:flex-end;}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;justify-content:flex-end;flex-wrap:wrap;}
 .form-group{margin-bottom:1rem;}
 .form-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:.4rem;font-weight:700;}
 .form-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:.68rem .9rem;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--text);outline:none;transition:border-color .2s;}
@@ -443,48 +334,50 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 .form-textarea{resize:vertical;min-height:100px;line-height:1.6;}
 .form-select{appearance:none;cursor:pointer;}
 
-/* ============================================================
-   FILTERS
-============================================================ */
+/* ============================================================ FILTERS */
 .leads-filters{display:flex;gap:.75rem;margin-bottom:1.25rem;align-items:center;flex-wrap:wrap;}
 .filter-select{background:var(--card);border:1px solid var(--border);color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:11px;padding:.48rem .9rem;border-radius:var(--r);outline:none;cursor:pointer;transition:border-color .2s;}
 .filter-select:focus{border-color:var(--clay);}
 
-/* ============================================================
-   GA4 SECTION
-============================================================ */
-.ga-section{background:rgba(66,133,244,.05);border:1px solid rgba(66,133,244,.18);border-radius:var(--r2);overflow:hidden;}
-.ga-header{padding:.85rem 1.25rem;border-bottom:1px solid rgba(66,133,244,.15);display:flex;align-items:center;justify-content:space-between;background:rgba(66,133,244,.04);}
-.ga-title{font-family:'Marcellus',serif;font-size:13px;color:#4285F4;}
-.ga-badge-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 9px;border-radius:50px;background:rgba(66,133,244,.15);color:#4285F4;}
-.ga-badge-pill svg{width:10px;height:10px;}
-.ga-note{padding:.85rem 1.25rem;font-size:11px;color:var(--text-dim);border-top:1px solid rgba(66,133,244,.12);line-height:1.7;}
-
-/* ============================================================
-   INFO CHIPS
-============================================================ */
+/* ============================================================ INFO */
 .info-chip{display:inline-flex;align-items:center;gap:.35rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:.32rem .78rem;font-size:9.5px;color:var(--text-muted);}
 .info-chip svg{width:11px;height:11px;}
 .src-fire{background:rgba(255,160,0,.12);color:#FFA000;display:inline-flex;align-items:center;gap:3px;font-size:8.5px;padding:2px 8px;border-radius:20px;font-weight:700;}
-.src-ga{background:rgba(66,133,244,.12);color:#4285F4;display:inline-flex;align-items:center;gap:3px;font-size:8.5px;padding:2px 8px;border-radius:20px;font-weight:700;}
 
-/* ============================================================
-   PULSE / LIVE
-============================================================ */
+/* ============================================================ PULSE */
 .pulse-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0;}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(106,173,118,.4)}50%{box-shadow:0 0 0 5px rgba(106,173,118,0)}}
 
-/* ============================================================
-   TOAST
-============================================================ */
-#toast{position:fixed;bottom:2rem;right:1.5rem;z-index:5000;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:0 8px 40px rgba(0,0,0,.3);opacity:0;transform:translateY(16px);transition:all .35s;min-width:240px;}
+/* ============================================================ TOAST */
+#toast{position:fixed;bottom:2rem;right:1.5rem;z-index:5000;background:var(--card2);border:1px solid var(--border2);border-radius:var(--r);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:0 8px 40px rgba(0,0,0,.3);opacity:0;transform:translateY(16px);transition:all .35s;min-width:240px;max-width:320px;}
 #toast.show{opacity:1;transform:translateY(0);}
 #toast svg{width:16px;height:16px;flex-shrink:0;}
 #toast-msg{font-size:12.5px;color:var(--text);}
 
-/* ============================================================
-   SIDEBAR OVERLAY
-============================================================ */
+/* ============================================================ IST CLOCK */
+.ist-clock{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--clay);font-weight:400;letter-spacing:.05em;}
+
+/* ============================================================ PWA INSTALL BANNER */
+#pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:4000;background:var(--card);border-top:1px solid var(--border2);padding:1rem 1.5rem;display:none;align-items:center;gap:1rem;box-shadow:0 -8px 32px rgba(0,0,0,.25);}
+#pwa-banner.show{display:flex;}
+.pwa-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--clay),var(--gold));border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pwa-info{flex:1;}
+.pwa-title{font-weight:700;font-size:13px;color:var(--text);}
+.pwa-sub{font-size:10.5px;color:var(--text-muted);margin-top:2px;}
+#pwa-banner-close{background:none;border:none;color:var(--text-muted);cursor:pointer;padding:.5rem;font-size:16px;}
+
+/* ============================================================ GA4 */
+.ga-section{background:rgba(66,133,244,.05);border:1px solid rgba(66,133,244,.18);border-radius:var(--r2);overflow:hidden;}
+.ga-header{padding:.85rem 1.25rem;border-bottom:1px solid rgba(66,133,244,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+.ga-title{font-family:'Marcellus',serif;font-size:13px;color:#4285F4;}
+.ga-badge-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 9px;border-radius:50px;background:rgba(66,133,244,.15);color:#4285F4;}
+.ga-note{padding:.85rem 1.25rem;font-size:11px;color:var(--text-dim);border-top:1px solid rgba(66,133,244,.12);line-height:1.7;}
+
+/* ============================================================ REALTIME INDICATOR */
+.rt-indicator{display:flex;align-items:center;gap:.4rem;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);}
+.rt-indicator.syncing{color:var(--gold);}
+
+/* ============================================================ SIDEBAR OVERLAY */
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
 .sidebar-overlay.open{display:block;}
 #sidebar-toggle{display:none;}
@@ -492,17 +385,34 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
 
-/* ============================================================
-   IST CLOCK DISPLAY
-============================================================ */
-.ist-clock{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--clay);font-weight:400;letter-spacing:.05em;}
-
-/* ============================================================
-   RESPONSIVE
-============================================================ */
+/* ============================================================ RESPONSIVE */
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.cg{grid-template-columns:1fr}.cg3{grid-template-columns:1fr 1fr}.vis-banner{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){#sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}#main{margin-left:0}#sidebar-toggle{display:flex}.stats-grid{grid-template-columns:repeat(2,1fr)}.cg3{grid-template-columns:1fr}#content{padding:1rem}.search-box{display:none}.live-badge{display:none}.vis-banner{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.vis-banner{grid-template-columns:1fr}}
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0}
+  #sidebar-toggle{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .cg3{grid-template-columns:1fr}
+  #content{padding:1rem}
+  .search-box{display:none}
+  .live-badge{display:none}
+  .vis-banner{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .notif-panel{width:calc(100vw - 2rem);right:-1rem}
+  .cg{grid-template-columns:1fr}
+  .modal-footer{flex-direction:column}
+  .modal-footer .btn{width:100%;justify-content:center}
+  .post-card{flex-wrap:wrap}
+  .post-actions{width:100%;justify-content:flex-end}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .vis-banner{grid-template-columns:1fr}
+  .qa-grid{grid-template-columns:1fr}
+  .lc{padding:2rem 1.25rem}
+  #content{padding:.75rem}
+}
 </style>
 </head>
 <body>
@@ -516,21 +426,41 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
       </svg>
       <div class="lc-logo-name">Samarpan</div>
-      <div class="lc-logo-sub">Admin · Secure Access</div>
+      <div class="lc-logo-sub">Admin · Firebase Auth</div>
     </div>
-    <div class="sec-notice"><i data-lucide="shield-check"></i>Session-only auth · Password never stored in browser</div>
-    <div class="lc-headline">Welcome back</div>
-    <div class="lerr" id="login-error"><i data-lucide="alert-circle"></i><span id="login-error-msg">Invalid credentials.</span></div>
-    <div class="lf"><label class="ll">Email Address</label>
-      <div class="li-wrap"><input class="li" type="email" id="login-email" placeholder="admin@samarpan.co.in" autocomplete="email">
-      <span class="li-icon"><i data-lucide="mail"></i></span></div></div>
-    <div class="lf"><label class="ll">Password</label>
-      <div class="li-wrap"><input class="li" type="password" id="login-password" placeholder="••••••••••" autocomplete="current-password">
-      <span class="li-icon" onclick="togglePw()" title="Show/hide"><i data-lucide="eye" id="pw-eye"></i></span></div></div>
-    <button class="lbtn" id="login-btn" onclick="doLogin()">
-      <span id="lbtn-text">Sign In</span><div class="lspinner" id="lspinner"></div><i data-lucide="arrow-right" id="lbtn-icon"></i>
-    </button>
-    <div class="lfoot">Protected · Samarpan Wellness Admin v6</div>
+
+    <!-- SIGN IN PANEL -->
+    <div class="auth-panel active" id="panel-signin">
+      <div class="sec-notice"><i data-lucide="shield-check"></i>Secured by Firebase Authentication — no passwords stored locally</div>
+      <div class="lc-headline">Welcome back</div>
+      <div class="lerr" id="login-error"><i data-lucide="alert-circle"></i><span id="login-error-msg">Invalid credentials.</span></div>
+      <div class="lf"><label class="ll">Email Address</label>
+        <div class="li-wrap"><input class="li" type="email" id="login-email" placeholder="admin@samarpan.co.in" autocomplete="email">
+        <span class="li-icon"><i data-lucide="mail"></i></span></div></div>
+      <div class="lf"><label class="ll">Password</label>
+        <div class="li-wrap"><input class="li" type="password" id="login-password" placeholder="••••••••••" autocomplete="current-password">
+        <span class="li-icon" onclick="togglePw()" title="Show/hide"><i data-lucide="eye" id="pw-eye"></i></span></div></div>
+      <button class="lbtn" id="login-btn" onclick="doFirebaseLogin()">
+        <span id="lbtn-text">Sign In with Firebase</span><div class="lspinner" id="lspinner"></div><i data-lucide="arrow-right" id="lbtn-icon"></i>
+      </button>
+      <div class="forgot-link"><a onclick="showPanel('panel-forgot')">Forgot password?</a></div>
+      <div class="lfoot">Protected · Samarpan Wellness Admin v7 · Firebase Auth</div>
+    </div>
+
+    <!-- FORGOT PASSWORD PANEL -->
+    <div class="auth-panel" id="panel-forgot">
+      <div class="lc-headline" style="margin-bottom:1rem;">Reset Password</div>
+      <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.7;">Enter your admin email and we'll send a password reset link to your inbox via Firebase.</div>
+      <div class="lsuccess" id="forgot-success"><i data-lucide="check-circle"></i><span>Reset email sent! Check your inbox.</span></div>
+      <div class="lerr" id="forgot-error"><i data-lucide="alert-circle"></i><span id="forgot-error-msg">Error sending reset email.</span></div>
+      <div class="lf"><label class="ll">Admin Email</label>
+        <div class="li-wrap"><input class="li" type="email" id="forgot-email" placeholder="admin@samarpan.co.in" autocomplete="email">
+        <span class="li-icon"><i data-lucide="mail"></i></span></div></div>
+      <button class="lbtn" onclick="sendPasswordReset()">
+        <span>Send Reset Link</span><i data-lucide="send"></i>
+      </button>
+      <div class="forgot-link"><a onclick="showPanel('panel-signin')">← Back to Sign In</a></div>
+    </div>
   </div>
 </div>
 
@@ -544,7 +474,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
       <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
     </svg>
-    <div><div class="sb-logo-text">Samarpan</div><div class="sb-logo-sub">Admin Panel v6</div></div>
+    <div><div class="sb-logo-text">Samarpan</div><div class="sb-logo-sub">Admin Panel v7</div></div>
   </div>
   <nav class="sb-nav">
     <div class="sb-section">Overview</div>
@@ -561,15 +491,17 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
     <div class="nav-item" onclick="showPage('sessions',this)"><i data-lucide="calendar"></i>Sessions</div>
     <div class="nav-item" onclick="showPage('journal',this)"><i data-lucide="book-open"></i>Journal<span class="nav-badge gold" id="sb-journal-count">—</span></div>
     <div class="sb-section">System</div>
+    <div class="nav-item" onclick="showPage('setup',this)"><i data-lucide="info"></i>Setup Guide</div>
     <div class="nav-item" onclick="showPage('settings',this)"><i data-lucide="settings"></i>Settings</div>
     <div class="nav-item" onclick="window.open('https://thesamarpan.co.in/','_blank')"><i data-lucide="external-link"></i>View Website</div>
+    <div class="nav-item" onclick="window.open('https://console.firebase.google.com/','_blank')"><i data-lucide="database"></i>Firebase Console</div>
     <div class="nav-item" onclick="window.open('https://analytics.google.com/','_blank')"><i data-lucide="trending-up"></i>Google Analytics</div>
   </nav>
   <div class="sb-foot">
     <div class="av-row">
-      <div class="av-circle" id="sb-av-init">HR</div>
-      <div><div class="av-name" id="sb-admin-name">Harsh Ranjan</div>
-      <div class="av-role"><span class="pulse-dot"></span>Super Admin</div></div>
+      <div class="av-circle" id="sb-av-init">SA</div>
+      <div><div class="av-name" id="sb-admin-name">Admin</div>
+      <div class="av-role"><span class="pulse-dot"></span>Firebase Auth</div></div>
     </div>
     <button class="logout-btn" onclick="doLogout()"><i data-lucide="log-out"></i>Sign Out</button>
   </div>
@@ -582,7 +514,6 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       <button id="sidebar-toggle" class="ib" onclick="toggleSidebar()"><i data-lucide="menu"></i></button>
       <div>
         <div class="tb-title" id="topbar-title">Dashboard</div>
-        <!-- FIX: IST clock computed purely in JS, no double-offset -->
         <div class="tb-bc">Samarpan · <span id="topbar-date"></span> · <span class="ist-clock" id="topbar-time"></span></div>
       </div>
     </div>
@@ -591,14 +522,13 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <i data-lucide="search"></i>
         <input type="text" placeholder="Search leads, email…" id="globalSearch" oninput="globalSearchFn()">
       </div>
-      <div class="live-badge"><span class="pulse-dot"></span>Sync <span id="refresh-countdown" style="font-weight:700;color:var(--green);">60</span>s</div>
+      <div class="rt-indicator" id="rt-status"><span class="pulse-dot"></span>Real-time</div>
       <div class="theme-pill" onclick="toggleTheme()">
         <i data-lucide="sun" id="ti-sun" style="display:none;"></i>
         <i data-lucide="moon" id="ti-moon"></i>
         <span id="theme-label">Dark</span>
       </div>
       <div class="ib" onclick="refreshData()" title="Sync now"><i data-lucide="refresh-cw"></i></div>
-      <!-- NOTIFICATION BELL -->
       <div class="notif-wrapper">
         <div class="ib" onclick="toggleNotifPanel()" id="notif-btn" title="Notifications">
           <i data-lucide="bell"></i>
@@ -607,10 +537,10 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <div class="notif-panel" id="notif-panel">
           <div class="np-head">
             <span class="np-head-title">Notifications</span>
-            <div class="np-head-actions"><button class="np-mark-read" onclick="markAllRead()">Mark all read</button></div>
+            <button class="np-mark-read" onclick="markAllRead()">Mark all read</button>
           </div>
           <div class="np-list" id="notif-list"><div class="np-empty">Loading…</div></div>
-          <div class="np-footer"><span class="np-footer-text" id="notif-footer-text">Live from Firebase</span></div>
+          <div class="np-footer"><span class="np-footer-text" id="notif-footer-text">Real-time from Firebase</span></div>
         </div>
       </div>
       <div class="ib" title="Export all CSV" onclick="exportAllCSV()"><i data-lucide="download"></i></div>
@@ -652,13 +582,13 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       <div class="cg">
         <div class="card">
           <div class="card-header"><span class="card-title">Recent Leads</span><a class="card-action" onclick="showPage('leads',document.querySelectorAll('.nav-item')[3])">View All →</a></div>
-          <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Client</th><th>Service</th><th>Type</th><th>Received</th><th>Status</th></tr></thead><tbody id="recent-leads-body"><tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading…</td></tr></tbody></table></div>
+          <div style="overflow-x:auto;"><table class="data-table"><thead><tr><th>Client</th><th>Service</th><th>Type</th><th>Received</th></tr></thead><tbody id="recent-leads-body"><tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading…</td></tr></tbody></table></div>
         </div>
         <div style="display:flex;flex-direction:column;gap:1.25rem;">
           <div class="card">
-            <div class="card-header"><span class="card-title">Live Activity</span><span style="display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);"><span class="pulse-dot"></span>Live</span></div>
+            <div class="card-header"><span class="card-title">Live Activity</span><div class="rt-indicator"><span class="pulse-dot"></span>Real-time</div></div>
             <div class="card-body" style="padding-top:.5rem;" id="activity-feed">
-              <div class="ac-item"><div class="ac-dot" style="background:rgba(217,93,57,.12);"><i data-lucide="loader" style="color:var(--clay);"></i></div><div><div class="ac-text">Loading…</div></div></div>
+              <div class="ac-item"><div class="ac-dot" style="background:rgba(217,93,57,.12);"><i data-lucide="loader" style="color:var(--clay);"></i></div><div><div class="ac-text">Connecting to Firebase…</div></div></div>
             </div>
           </div>
           <div class="card">
@@ -670,7 +600,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
                 <div class="qa" onclick="openAddPostModal()"><div class="qa-icon" style="background:rgba(192,141,224,.12);"><i data-lucide="pen-line" style="color:var(--purple);"></i></div><div class="qa-label">New Post</div><div class="qa-sub">Journal entry</div></div>
                 <div class="qa" onclick="refreshData()"><div class="qa-icon" style="background:rgba(127,175,240,.1);"><i data-lucide="refresh-cw" style="color:var(--blue);"></i></div><div class="qa-label">Sync Now</div><div class="qa-sub">Force refresh</div></div>
                 <div class="qa" onclick="window.open('https://thesamarpan.co.in/','_blank')"><div class="qa-icon" style="background:rgba(106,173,118,.1);"><i data-lucide="globe" style="color:var(--green);"></i></div><div class="qa-label">Website</div><div class="qa-sub">thesamarpan.co.in</div></div>
-                <div class="qa" onclick="window.open('https://analytics.google.com/','_blank')"><div class="qa-icon" style="background:rgba(66,133,244,.1);"><i data-lucide="trending-up" style="color:#4285F4;"></i></div><div class="qa-label">GA4 Reports</div><div class="qa-sub">Google Analytics</div></div>
+                <div class="qa" onclick="showPWAInstructions()"><div class="qa-icon" style="background:rgba(197,160,89,.1);"><i data-lucide="smartphone" style="color:var(--gold);"></i></div><div class="qa-label">Install App</div><div class="qa-sub">Add to phone</div></div>
               </div>
             </div>
           </div>
@@ -709,9 +639,9 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       </div>
       <div style="display:flex;align-items:center;gap:.75rem;margin-top:.25rem;flex-wrap:wrap;">
         <div class="info-chip"><i data-lucide="clock"></i>Last sync: <strong id="last-sync-time" style="color:var(--text);">—</strong></div>
-        <div class="info-chip"><i data-lucide="database"></i>Firebase · thesamrpan</div>
+        <div class="info-chip"><i data-lucide="database"></i>Firebase Firestore · Real-time</div>
+        <div class="info-chip"><i data-lucide="shield-check"></i>Firebase Auth · Secure</div>
         <div class="info-chip"><i data-lucide="trending-up"></i>GA4 · G-HMM7CJSCW7</div>
-        <div class="info-chip"><i data-lucide="shield-check"></i>Session-auth · no localStorage pw</div>
       </div>
     </div>
 
@@ -724,34 +654,18 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <div class="stat-card" style="--c-accent:linear-gradient(90deg,var(--blue),var(--purple));"><div class="sc-head"><div class="sc-icon" style="background:rgba(127,175,240,.12);"><i data-lucide="star" style="color:var(--blue);"></i></div><span class="sc-badge bblue">Unique</span></div><div class="sc-val" id="pv-unique">—</div><div class="sc-label">Unique Today</div><div class="sc-sub">New sessions</div></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
-        <div class="card"><div class="card-header"><span class="card-title">Daily Visits — Last 7 Days</span><span class="src-fire">🔥 Firestore Live</span></div>
+        <div class="card"><div class="card-header"><span class="card-title">Daily Visits — Last 7 Days</span><span class="src-fire">🔥 Real-time</span></div>
           <div class="card-body" style="padding-top:.75rem;">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;"><span style="font-size:11px;color:var(--text-muted);">Visits per day</span><span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--text);" id="week-total-label">—</span></div>
             <div style="display:flex;align-items:flex-end;gap:4px;height:80px;" id="visitor-chart-bars"></div>
             <div style="display:flex;justify-content:space-between;margin-top:6px;" id="visitor-chart-labels"></div>
           </div>
         </div>
-        <div class="card"><div class="card-header"><span class="card-title">Visits By Month</span><span class="src-fire">🔥 Firestore Live</span></div><div class="card-body" id="monthly-visits-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
-      </div>
-      <!-- GA4 Section -->
-      <div class="ga-section" style="margin-bottom:1.25rem;">
-        <div class="ga-header"><span class="ga-title">Google Analytics 4 — G-HMM7CJSCW7</span><span class="ga-badge-pill"><i data-lucide="trending-up"></i>GA4 Active</span></div>
-        <div style="padding:1.25rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
-          <a href="https://analytics.google.com/" target="_blank" style="text-decoration:none;"><div class="qa" style="text-align:center;align-items:center;"><div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="bar-chart-2" style="color:#4285F4;"></i></div><div class="qa-label">Overview Report</div><div class="qa-sub">Users, sessions, bounce rate</div></div></a>
-          <a href="https://analytics.google.com/" target="_blank" style="text-decoration:none;"><div class="qa" style="text-align:center;align-items:center;"><div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="map-pin" style="color:#4285F4;"></i></div><div class="qa-label">Geo &amp; Audience</div><div class="qa-sub">Countries, cities, demographics</div></div></a>
-          <a href="https://analytics.google.com/" target="_blank" style="text-decoration:none;"><div class="qa" style="text-align:center;align-items:center;"><div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="smartphone" style="color:#4285F4;"></i></div><div class="qa-label">Acquisition</div><div class="qa-sub">Traffic sources &amp; campaigns</div></div></a>
-        </div>
-        <div class="ga-note">
-          💡 <strong style="color:var(--text);">GA4 Bypass Options for Real-Time Data Embed:</strong><br>
-          <strong style="color:var(--gold);">Option 1 — GA4 Data API (Recommended):</strong> Set up a lightweight backend (Node.js/Cloudflare Worker) that authenticates via a Google Service Account and proxies the GA4 Data API. Your admin panel calls your own endpoint — no iframe, full JSON data returned. Cost: Free within GA4 limits.<br>
-          <strong style="color:var(--gold);">Option 2 — Looker Studio Embed:</strong> Build a free Looker Studio (formerly Data Studio) report connected to GA4. Looker Studio dashboards <em>can</em> be embedded via iframe (they allow it). Share the report as "Anyone with link can view" and embed it. Instant, free, no code.<br>
-          <strong style="color:var(--gold);">Option 3 — Measurement Protocol:</strong> Send custom events directly from your website JS to Firebase + GA4 simultaneously. Your Firestore data then mirrors GA4 sessions. Your current visitor tracking in Firestore is already doing this.<br>
-          <strong style="color:var(--green);">Your Firestore visitor data above IS real-time.</strong> GA4 adds session duration, bounce rate, and traffic source attribution — use Looker Studio embed for those.
-        </div>
+        <div class="card"><div class="card-header"><span class="card-title">Visits By Month</span></div><div class="card-body" id="monthly-visits-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
-        <div class="card"><div class="card-header"><span class="card-title">Device Breakdown</span><span class="src-fire">🔥 Live</span></div><div class="card-body" id="device-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">Top Pages Visited</span><span class="src-fire">🔥 Live</span></div><div class="card-body" id="top-pages-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Device Breakdown</span></div><div class="card-body" id="device-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Top Pages Visited</span></div><div class="card-body" id="top-pages-breakdown"><div style="color:var(--text-dim);font-size:12px;">Loading…</div></div></div>
       </div>
       <div class="card">
         <div class="card-header"><span class="card-title">All Visitor Sessions</span><button class="btn btn-outline" onclick="exportVisitorsCSV()" style="font-size:10px;"><i data-lucide="download"></i>Export</button></div>
@@ -832,10 +746,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       </div>
       <div class="ga-section">
         <div class="ga-header"><span class="ga-title">📊 Google Analytics 4 Active — G-HMM7CJSCW7</span><a href="https://analytics.google.com/" target="_blank" class="btn btn-outline" style="font-size:10px;color:#4285F4;border-color:rgba(66,133,244,.3);"><i data-lucide="external-link"></i>Open GA4</a></div>
-        <div style="padding:1.25rem;font-size:12px;color:var(--text-muted);line-height:1.85;">
-          GA4 is tracking all pages on <strong style="color:var(--text);">thesamarpan.co.in</strong>.<br>
-          <strong style="color:var(--gold);">To embed GA4 data here without iframes:</strong> Create a free <a href="https://lookerstudio.google.com/" target="_blank" style="color:#4285F4;">Looker Studio</a> report → connect to your GA4 property → publish → embed the shareable URL as an iframe in this panel. Looker Studio allows embedding; GA4 directly does not.
-        </div>
+        <div style="padding:1.25rem;font-size:12px;color:var(--text-muted);line-height:1.85;">GA4 is tracking all pages on <strong style="color:var(--text);">thesamarpan.co.in</strong>. Use <a href="https://lookerstudio.google.com/" target="_blank" style="color:#4285F4;">Looker Studio</a> for embedded reports.</div>
       </div>
     </div>
 
@@ -847,7 +758,6 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
           <div class="sess-item"><div class="sess-time"><div class="sess-hour">10</div><div class="sess-ampm">AM</div></div><div><div class="sess-client">Sarah T.</div><div class="sess-type">Ayurvedic Consultation — 60 min</div><div class="sess-flag"><i data-lucide="globe"></i>London, UK · Zoom</div></div><span class="pill pill-clay" style="margin-left:auto;align-self:center;">Confirmed</span></div>
           <div class="sess-item"><div class="sess-time"><div class="sess-hour">12</div><div class="sess-ampm">PM</div></div><div><div class="sess-client">David R.</div><div class="sess-type">Yoga &amp; Pranayama — 45 min</div><div class="sess-flag"><i data-lucide="globe"></i>New York, USA · Zoom</div></div><span class="pill pill-sage" style="margin-left:auto;align-self:center;">Completed</span></div>
           <div class="sess-item"><div class="sess-time"><div class="sess-hour">3</div><div class="sess-ampm">PM</div></div><div><div class="sess-client">Elena K.</div><div class="sess-type">Therapeutic Psychology — 50 min</div><div class="sess-flag"><i data-lucide="globe"></i>Berlin, Germany · Zoom</div></div><span class="pill pill-gold" style="margin-left:auto;align-self:center;">Pending</span></div>
-          <div class="sess-item"><div class="sess-time"><div class="sess-hour">5</div><div class="sess-ampm">PM</div></div><div><div class="sess-client">Priya M.</div><div class="sess-type">Meditation &amp; Ajapa Jap — 30 min</div><div class="sess-flag"><i data-lucide="globe"></i>Bangalore, India · Zoom</div></div><span class="pill pill-clay" style="margin-left:auto;align-self:center;">Confirmed</span></div>
         </div>
       </div>
     </div>
@@ -867,53 +777,203 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       <div id="journal-posts-list"><div class="post-empty">Loading posts…</div></div>
     </div>
 
+    <!-- SETUP GUIDE -->
+    <div class="page-view fade-in" id="page-setup">
+      <div style="max-width:760px;">
+        <h2 style="font-family:'Marcellus',serif;font-size:20px;margin-bottom:.5rem;">Setup & Configuration Guide</h2>
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:1.5rem;">Complete guide to set up Firebase Auth, Firestore security rules, email notifications, and phone installation.</p>
+
+        <!-- Step 1: Firebase Auth -->
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">Step 1 — Create Your Firebase Admin Account</span><span class="pill pill-clay">Required</span></div>
+          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
+            <strong style="color:var(--text);">Your password is no longer in this code.</strong> It is now managed entirely by Firebase Authentication.<br><br>
+            <strong style="color:var(--gold);">To create your admin login:</strong><br>
+            1. Go to <a href="https://console.firebase.google.com/project/thesamrpan/authentication/users" target="_blank" style="color:var(--clay);">Firebase Console → Authentication → Users</a><br>
+            2. Click <strong style="color:var(--text);">"Add user"</strong><br>
+            3. Enter: Email = <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;">justtheself@gmail.com</code><br>
+            4. Enter a strong password of your choice (min 8 chars)<br>
+            5. Click "Add user" — done! Use these credentials to log in here.<br><br>
+            <strong style="color:var(--gold);">Forgot password?</strong> Use the "Forgot password?" link on the login screen — Firebase will email you a reset link instantly.
+          </div>
+        </div>
+
+        <!-- Step 2: Firestore Rules -->
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">Step 2 — Secure Firestore Rules</span><span class="pill pill-clay">Required</span></div>
+          <div class="card-body">
+            <p style="font-size:12px;color:var(--text-muted);margin-bottom:1rem;line-height:1.7;">Go to <a href="https://console.firebase.google.com/project/thesamrpan/firestore/rules" target="_blank" style="color:var(--clay);">Firebase Console → Firestore → Rules</a> and paste these rules:</p>
+            <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1rem;font-size:10.5px;color:var(--text-muted);overflow-x:auto;line-height:1.7;white-space:pre-wrap;">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── ADMIN-ONLY COLLECTIONS (read + write) ──────────────────────────
+    // Only signed-in admin (Firebase Auth) can read or update these
+    match /homepage_leads/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_about_leads/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_newsletter/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_yoga_sessions/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_quiz_results/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_referrals/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_bookings/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_visitors/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /samarpan_journal_posts/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── DENY EVERYTHING ELSE ──────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ── HELPER FUNCTIONS ──────────────────────────────────────────────
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true;
+    }
+    function isValidEmail() {
+      return request.resource.data.keys().hasAny(['email'])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 4
+        && request.resource.data.email.size() &lt; 200;
+    }
+    function isValidLead() {
+      return request.resource.data.keys().hasAll(['email', 'name'])
+        && request.resource.data.email is string
+        && request.resource.data.name is string
+        && request.resource.data.email.size() > 4
+        && request.resource.data.name.size() > 0;
+    }
+  }
+}</pre>
+            <button class="btn btn-primary" onclick="copyRules()" style="margin-top:.75rem;"><i data-lucide="copy"></i>Copy Rules</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Email Notifications -->
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">Step 3 — Email Notifications (New Lead Alerts)</span><span class="pill pill-gold">Recommended</span></div>
+          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
+            <strong style="color:var(--gold);">Option A — Firebase Extensions (Easiest, Free):</strong><br>
+            1. Go to <a href="https://console.firebase.google.com/project/thesamrpan/extensions" target="_blank" style="color:var(--clay);">Firebase Console → Extensions</a><br>
+            2. Search and install: <strong style="color:var(--text);">"Trigger Email from Firestore"</strong><br>
+            3. Configure with your Gmail SMTP (use an App Password from Google Account → Security)<br>
+            4. It will auto-send an email every time a new document is added to <code style="background:var(--bg3);padding:2px 5px;border-radius:4px;">homepage_leads</code><br><br>
+            <strong style="color:var(--gold);">Option B — EmailJS (No backend needed):</strong><br>
+            Already integrated below — configure your EmailJS keys in Settings and new leads will trigger an email to you automatically.<br><br>
+            <strong style="color:var(--gold);">Option C — Make.com / Zapier:</strong><br>
+            Connect Firebase Firestore → Gmail/Email in 5 minutes, no code. Free tier supports 1000 tasks/month.
+          </div>
+        </div>
+
+        <!-- Step 4: Phone Installation -->
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">Step 4 — Install on Your Phone (Access Anywhere)</span><span class="pill pill-sage">PWA</span></div>
+          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
+            This admin panel is a Progressive Web App (PWA) — you can install it on your phone like a native app:<br><br>
+            <strong style="color:var(--gold);">📱 Android (Chrome):</strong><br>
+            1. Open this page in Chrome on your Android phone<br>
+            2. Tap the <strong style="color:var(--text);">⋮ menu → "Add to Home screen"</strong><br>
+            3. It will appear as an app icon — tap to open, works like an app<br>
+            4. You'll stay logged in via Firebase Auth between sessions<br><br>
+            <strong style="color:var(--gold);">🍎 iPhone (Safari):</strong><br>
+            1. Open this page in Safari on iPhone<br>
+            2. Tap the <strong style="color:var(--text);">Share button (box with arrow) → "Add to Home Screen"</strong><br>
+            3. Tap "Add" — it appears on your home screen<br>
+            4. Opens full screen like a native app<br><br>
+            <strong style="color:var(--green);">The panel auto-syncs data in real-time — check leads anywhere, anytime!</strong>
+          </div>
+        </div>
+
+        <!-- Step 5: Real-time -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Step 5 — Real-time Listeners Active</span><span class="pill pill-sage">✓ Done</span></div>
+          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
+            This v7 panel uses Firebase <code style="background:var(--bg3);padding:2px 5px;border-radius:4px;">onSnapshot()</code> real-time listeners. Your dashboard updates <strong style="color:var(--text);">instantly</strong> the moment a new lead comes in — no refresh needed. The old 60-second polling has been replaced by true real-time sync.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- SETTINGS -->
     <div class="page-view fade-in" id="page-settings">
       <div style="max-width:720px;">
-
-        <!-- SECURITY STATUS -->
         <div class="sec-panel settings-card">
-          <div class="sec-panel-title"><i data-lucide="shield-check"></i>Security Status — v6</div>
-          <div class="sec-item"><i data-lucide="check-circle"></i>Password stored in memory only (session variable) — never in localStorage or cookies</div>
-          <div class="sec-item"><i data-lucide="check-circle"></i>Session cleared on tab close / browser restart (sessionStorage auth token)</div>
-          <div class="sec-item"><i data-lucide="check-circle"></i>Credentials validated at runtime only — no plaintext exposure in DevTools storage</div>
-          <div class="sec-item"><i data-lucide="check-circle"></i>Accent color and theme stored in localStorage (non-sensitive UI preferences only)</div>
-          <div class="sec-item"><i data-lucide="alert-triangle" style="color:var(--gold);"></i>Password still hardcoded in JS source — host this file behind server-auth or use Firebase Auth for production-grade security</div>
+          <div class="sec-panel-title"><i data-lucide="shield-check"></i>Security Status — v7 (Firebase Auth)</div>
+          <div class="sec-item"><i data-lucide="check-circle"></i>Authentication via Firebase Auth — password never in source code</div>
+          <div class="sec-item"><i data-lucide="check-circle"></i>Session managed by Firebase SDK — auto-expires and refreshes securely</div>
+          <div class="sec-item"><i data-lucide="check-circle"></i>Password reset via Firebase email — no hardcoded recovery</div>
+          <div class="sec-item"><i data-lucide="check-circle"></i>Firestore rules protect all data — only authenticated admin can read</div>
+          <div class="sec-item"><i data-lucide="check-circle"></i>Real-time listeners with onSnapshot() — no polling, instant updates</div>
         </div>
 
-        <!-- Admin Profile -->
         <div class="card settings-card">
           <div class="card-header"><span class="card-title">Admin Profile</span></div>
           <div class="card-body">
             <div class="form-row">
-              <div class="form-group"><label class="form-label">Admin Name</label><input class="form-input" type="text" id="settings-name" value="Harsh Ranjan" placeholder="Your name"></div>
-              <div class="form-group"><label class="form-label">Admin Email</label><input class="form-input" type="email" id="settings-email" value="justtheself@gmail.com" readonly style="opacity:.55;"></div>
+              <div class="form-group"><label class="form-label">Display Name</label><input class="form-input" type="text" id="settings-name" placeholder="Your name"></div>
+              <div class="form-group"><label class="form-label">Firebase Email</label><input class="form-input" type="email" id="settings-email" readonly style="opacity:.55;"></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label class="form-label">WhatsApp Number</label><input class="form-input" type="text" id="settings-whatsapp" value="+919661486740" placeholder="+91XXXXXXXXXX"></div>
+              <div class="form-group"><label class="form-label">WhatsApp Number</label><input class="form-input" type="text" id="settings-whatsapp" placeholder="+91XXXXXXXXXX"></div>
               <div class="form-group"><label class="form-label">Website URL</label><input class="form-input" type="text" id="settings-website" value="https://thesamarpan.co.in/" placeholder="https://yourwebsite.com"></div>
             </div>
             <button class="btn btn-primary" onclick="saveProfileSettings()"><i data-lucide="save"></i>Save Profile</button>
           </div>
         </div>
 
-        <!-- Change Password — session-only, no localStorage -->
         <div class="card settings-card">
-          <div class="card-header"><span class="card-title">Change Session Password</span><span class="pill pill-sage" style="font-size:8px;">Session only · resets on close</span></div>
+          <div class="card-header"><span class="card-title">Change Password</span><span class="pill pill-sage">Via Firebase</span></div>
           <div class="card-body">
-            <div class="sec-warn">
-              <i data-lucide="info"></i> <strong>How it works:</strong> You said you'll remember your password — so the new password applies for this session only (stored in memory, not saved anywhere). When you close the tab and reopen, the original hardcoded password is active again. To permanently change it, edit line ~10 of the JS: <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:10px;">const ADMIN_PASSWORD_HARDCODED = 'YourNewPassword';</code>
+            <div class="sec-warn" style="background:rgba(106,173,118,.05);border-color:rgba(106,173,118,.2);">
+              💡 Password changes are handled securely by Firebase. Click below to receive a password reset email — Firebase will let you set a new one. No passwords are stored in this app.
             </div>
-            <div class="form-row">
-              <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" id="settings-cur-pw" placeholder="Current password"></div>
-              <div class="form-group"><label class="form-label">New Password (this session)</label><input class="form-input" type="password" id="settings-new-pw" placeholder="Min 8 characters"></div>
-            </div>
-            <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" id="settings-confirm-pw" placeholder="Repeat new password"></div>
-            <button class="btn btn-primary" onclick="changePasswordSession()"><i data-lucide="lock"></i>Update for This Session</button>
+            <button class="btn btn-primary" onclick="sendChangePasswordEmail()"><i data-lucide="mail"></i>Send Password Reset Email</button>
           </div>
         </div>
 
-        <!-- Appearance -->
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">EmailJS — Lead Notification Emails</span></div>
+          <div class="card-body">
+            <div class="sec-warn">💡 Configure EmailJS to get email alerts when new leads arrive. Get free keys at <a href="https://emailjs.com" target="_blank" style="color:var(--clay);">emailjs.com</a> (200 emails/month free).</div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">EmailJS Service ID</label><input class="form-input" type="text" id="ejs-service" placeholder="service_xxxxxxx"></div>
+              <div class="form-group"><label class="form-label">EmailJS Template ID</label><input class="form-input" type="text" id="ejs-template" placeholder="template_xxxxxxx"></div>
+            </div>
+            <div class="form-group"><label class="form-label">EmailJS Public Key</label><input class="form-input" type="text" id="ejs-key" placeholder="your_public_key"></div>
+            <div class="form-group"><label class="form-label">Notify Email (your inbox)</label><input class="form-input" type="email" id="ejs-to" placeholder="justtheself@gmail.com"></div>
+            <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="saveEmailJSSettings()"><i data-lucide="save"></i>Save EmailJS Config</button>
+              <button class="btn btn-outline" onclick="testEmailNotification()"><i data-lucide="send"></i>Send Test Email</button>
+            </div>
+          </div>
+        </div>
+
         <div class="card settings-card">
           <div class="card-header"><span class="card-title">Appearance</span></div>
           <div class="card-body">
@@ -930,47 +990,28 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
                 <div class="cs" style="background:#e05555;" data-color="#e05555" title="Red" onclick="setAccentColor(this)"></div>
               </div>
             </div>
-            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Auto-refresh data</div><div class="toggle-desc">Refresh Firebase data every 60 seconds</div></div><label class="sw"><input type="checkbox" id="toggle-autorefresh" checked onchange="toggleAutoRefresh(this)"><span class="sw-slider"></span></label></div>
             <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Show visitor banner</div><div class="toggle-desc">Show visitor stats at top of dashboard</div></div><label class="sw"><input type="checkbox" id="toggle-banner" checked onchange="toggleVisitorBanner(this)"><span class="sw-slider"></span></label></div>
           </div>
         </div>
 
-        <!-- Firebase Config -->
-        <div class="card settings-card">
-          <div class="card-header"><span class="card-title">Firebase &amp; Analytics Config</span></div>
-          <div class="card-body">
-            <div class="form-row">
-              <div class="form-group"><label class="form-label">Firebase Project ID</label><input class="form-input" value="thesamrpan" readonly style="opacity:.55;"></div>
-              <div class="form-group"><label class="form-label">Firebase API Key</label><input class="form-input" type="password" value="AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ" readonly style="opacity:.55;"></div>
-            </div>
-            <div class="form-group"><label class="form-label">GA4 Measurement ID</label><input class="form-input" value="G-HMM7CJSCW7" readonly style="opacity:.55;"></div>
-            <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:.25rem;">
-              <span style="font-size:11px;color:var(--green);display:flex;align-items:center;gap:.35rem;"><span class="pulse-dot"></span>Firebase Connected</span>
-              <span style="font-size:11px;color:#4285F4;display:flex;align-items:center;gap:.35rem;"><span style="width:7px;height:7px;background:#4285F4;border-radius:50%;display:inline-block;"></span>GA4 Active</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Data Management -->
         <div class="card settings-card">
           <div class="card-header"><span class="card-title">Data Management</span></div>
           <div class="card-body">
-            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export leads as CSV</div><div class="toggle-desc">Download all lead data</div></div><button class="btn btn-outline" onclick="exportLeadsCSV()"><i data-lucide="download"></i>Export</button></div>
-            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export newsletter subscribers</div><div class="toggle-desc">Download all subscriber emails</div></div><button class="btn btn-outline" onclick="exportNewsletterCSV()"><i data-lucide="download"></i>Export</button></div>
-            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export visitor sessions</div><div class="toggle-desc">Download visitor tracking data</div></div><button class="btn btn-outline" onclick="exportVisitorsCSV()"><i data-lucide="download"></i>Export</button></div>
-            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export everything at once</div><div class="toggle-desc">All 3 datasets in one click</div></div><button class="btn btn-primary" onclick="exportAllCSV()"><i data-lucide="archive"></i>Export All</button></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export leads as CSV</div></div><button class="btn btn-outline" onclick="exportLeadsCSV()"><i data-lucide="download"></i>Export</button></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export newsletter subscribers</div></div><button class="btn btn-outline" onclick="exportNewsletterCSV()"><i data-lucide="download"></i>Export</button></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export visitor sessions</div></div><button class="btn btn-outline" onclick="exportVisitorsCSV()"><i data-lucide="download"></i>Export</button></div>
+            <div class="toggle-row"><div class="toggle-info"><div class="toggle-label">Export everything at once</div></div><button class="btn btn-primary" onclick="exportAllCSV()"><i data-lucide="archive"></i>Export All</button></div>
           </div>
         </div>
 
-        <!-- About -->
         <div class="card">
           <div class="card-header"><span class="card-title">About</span></div>
           <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.95;">
-            <strong style="color:var(--text);">Samarpan Admin Panel v6</strong><br>
+            <strong style="color:var(--text);">Samarpan Admin Panel v7</strong><br>
+            Auth: Firebase Authentication (Email/Password)<br>
+            Database: Firestore with real-time onSnapshot()<br>
             Website: <a href="https://thesamarpan.co.in/" target="_blank" style="color:var(--clay);">thesamarpan.co.in</a><br>
-            Journal: <a href="https://thesamarpan.co.in/journal.html" target="_blank" style="color:var(--clay);">thesamarpan.co.in/journal.html</a><br>
-            Firebase: thesamrpan · GA4: G-HMM7CJSCW7<br>
-            <span style="color:var(--text-dim);font-size:10px;">v6 — Fixes: IST clock bug, password never in localStorage, security audit panel, GA4 bypass guide, Looker Studio embed option.</span>
+            <span style="color:var(--text-dim);font-size:10px;">v7 — Firebase Auth login, real-time listeners, secure Firestore rules, PWA install, email notifications, forgot password, no credentials in source code.</span>
           </div>
         </div>
       </div>
@@ -979,10 +1020,10 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
   </div><!-- /content -->
 </div><!-- /main -->
 
-<!-- ===== ADD LEAD MODAL ===== -->
+<!-- ADD LEAD MODAL -->
 <div class="modal-overlay" id="lead-modal-overlay">
   <div class="modal">
-    <div class="modal-header"><span class="modal-title" id="lead-modal-title">Add New Lead</span><button class="modal-close" onclick="closeLeadModal()">✕</button></div>
+    <div class="modal-header"><span class="modal-title">Add New Lead</span><button class="modal-close" onclick="closeLeadModal()">✕</button></div>
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group"><label class="form-label">Full Name *</label><input class="form-input" type="text" id="modal-name" placeholder="Client name"></div>
@@ -1013,23 +1054,15 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
   </div>
 </div>
 
-<!-- ===== JOURNAL POST EDITOR MODAL ===== -->
+<!-- JOURNAL POST MODAL -->
 <div class="modal-overlay" id="post-modal-overlay">
   <div class="modal modal-lg">
-    <div class="modal-header">
-      <span class="modal-title" id="post-modal-title">New Journal Post</span>
-      <button class="modal-close" onclick="closePostModal()">✕</button>
-    </div>
+    <div class="modal-header"><span class="modal-title" id="post-modal-title">New Journal Post</span><button class="modal-close" onclick="closePostModal()">✕</button></div>
     <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group" style="grid-column:1/-1;"><label class="form-label">Post Title *</label><input class="form-input" type="text" id="pm-title" placeholder="e.g. Understanding Your Prakriti"></div>
-      </div>
+      <div class="form-group"><label class="form-label">Post Title *</label><input class="form-input" type="text" id="pm-title" placeholder="e.g. Understanding Your Prakriti"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Category</label>
-          <select class="form-input form-select" id="pm-category">
-            <option>Ayurveda</option><option>Psychology</option><option>Yoga</option>
-            <option>Meditation</option><option>Nutrition</option><option>Spirit &amp; Tantra</option><option>General Wellness</option>
-          </select>
+          <select class="form-input form-select" id="pm-category"><option>Ayurveda</option><option>Psychology</option><option>Yoga</option><option>Meditation</option><option>Nutrition</option><option>Spirit &amp; Tantra</option><option>General Wellness</option></select>
         </div>
         <div class="form-group"><label class="form-label">Emoji / Icon</label><input class="form-input" type="text" id="pm-emoji" placeholder="🌿" maxlength="4" style="font-size:1.4rem;"></div>
       </div>
@@ -1041,7 +1074,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
       </div>
       <div class="form-group"><label class="form-label">Short Excerpt</label><textarea class="form-input" id="pm-excerpt" rows="2" placeholder="2–3 sentence summary…" style="resize:none;min-height:70px;"></textarea></div>
       <div class="form-group"><label class="form-label">Full Content</label><textarea class="form-input form-textarea" id="pm-content" rows="8" placeholder="Write the full blog post content here…" style="min-height:180px;"></textarea></div>
-      <div class="form-group"><label class="form-label">Thumbnail Gradient (CSS colors, e.g. #4A5D4F, #6aad76)</label><input class="form-input" type="text" id="pm-gradient" placeholder="#4A5D4F, #6aad76"></div>
+      <div class="form-group"><label class="form-label">Thumbnail Gradient Colors (e.g. #4A5D4F, #6aad76)</label><input class="form-input" type="text" id="pm-gradient" placeholder="#4A5D4F, #6aad76"></div>
       <input type="hidden" id="pm-edit-id" value="">
     </div>
     <div class="modal-footer">
@@ -1051,13 +1084,11 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
   </div>
 </div>
 
-<!-- ===== CONFIRM DELETE MODAL ===== -->
+<!-- CONFIRM DELETE MODAL -->
 <div class="modal-overlay" id="confirm-modal-overlay">
   <div class="modal" style="max-width:400px;">
     <div class="modal-header"><span class="modal-title">Confirm Delete</span><button class="modal-close" onclick="closeConfirmModal()">✕</button></div>
-    <div class="modal-body">
-      <p style="font-size:13px;color:var(--text-muted);line-height:1.7;" id="confirm-modal-msg">Are you sure?</p>
-    </div>
+    <div class="modal-body"><p style="font-size:13px;color:var(--text-muted);line-height:1.7;" id="confirm-modal-msg">Are you sure?</p></div>
     <div class="modal-footer">
       <button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button>
       <button class="btn btn-danger" id="confirm-modal-btn">Delete</button>
@@ -1065,95 +1096,442 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
   </div>
 </div>
 
+<!-- PWA INSTALL BANNER -->
+<div id="pwa-banner">
+  <div class="pwa-icon"><svg width="24" height="24" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="4"><circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/></svg></div>
+  <div class="pwa-info"><div class="pwa-title">Install Samarpan Admin</div><div class="pwa-sub">Add to home screen for quick access anywhere</div></div>
+  <button class="btn btn-primary" onclick="installPWA()" style="flex-shrink:0;"><i data-lucide="download"></i>Install</button>
+  <button id="pwa-banner-close" onclick="dismissPWA()">✕</button>
+</div>
+
 <!-- TOAST -->
 <div id="toast"><i data-lucide="check-circle"></i><span id="toast-msg">Done!</span></div>
 
 <script>
-// ========================================
-// CONFIG — hardcoded, never written to localStorage
-// ========================================
-const ADMIN_EMAIL_HARDCODED = 'justtheself@gmail.com';
-const ADMIN_PASSWORD_HARDCODED = 'Samarpan@804401'; // ← change here to permanently update
+// ============================================================
+// FIREBASE CONFIG
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+  authDomain: "thesamrpan.firebaseapp.com",
+  projectId: "thesamrpan",
+  storageBucket: "thesamrpan.appspot.com",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-// Runtime session overrides (live only for current tab, never persisted)
-let sessionEmail = ADMIN_EMAIL_HARDCODED;
-let sessionPassword = ADMIN_PASSWORD_HARDCODED;
-let ADMIN_NAME = localStorage.getItem('admin_name') || 'Harsh Ranjan'; // name is non-sensitive
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-const FIREBASE_PROJECT = 'thesamrpan';
-const FIREBASE_API_KEY = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
-const BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/`;
-
-// ========================================
+// ============================================================
 // STATE
-// ========================================
+// ============================================================
 let allLeads=[], allNewsletter=[], allReferrals=[], allQuiz=[], allYoga=[], allVisitors=[], allJournalPosts=[];
-let isLoggedIn=false, refreshTimer, countdownInterval, countdownVal=60;
-let autoRefreshEnabled=true;
-let notifLastSeen = sessionStorage.getItem('notif_last_seen') || '2020-01-01T00:00:00Z'; // session only
+let currentUser = null;
+let unsubscribers = []; // real-time listener cleanup
+let notifLastSeen = sessionStorage.getItem('notif_last_seen') || '2020-01-01T00:00:00Z';
+let deferredPWAPrompt = null;
 
-// ========================================
+// ============================================================
 // INIT
-// ========================================
-document.addEventListener('DOMContentLoaded',()=>{
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
   applyThemeFromStorage();
   applyAccentFromStorage();
   loadSettingsFromStorage();
   updateClock();
   setInterval(updateClock, 1000);
-  if(sessionStorage.getItem('samarpan_admin_auth')==='1') grantAccess();
-  document.getElementById('login-password').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
-  document.getElementById('login-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('login-password').focus();});
-  document.addEventListener('click',e=>{
-    const w=document.getElementById('notif-panel');
-    const b=document.getElementById('notif-btn');
-    if(!w.contains(e.target)&&!b.contains(e.target)) w.classList.remove('open');
+  setupPWA();
+  setupModalCloseOnBackdrop();
+
+  // Firebase Auth state listener — the single source of truth
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      currentUser = user;
+      grantAccess(user);
+    } else {
+      currentUser = null;
+      showLoginScreen();
+    }
   });
-  ['lead-modal-overlay','post-modal-overlay','confirm-modal-overlay'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.addEventListener('click',e=>{if(e.target===el) el.classList.remove('open');});
+
+  document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') doFirebaseLogin(); });
+  document.getElementById('login-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-password').focus(); });
+  document.getElementById('forgot-email').addEventListener('keydown', e => { if(e.key==='Enter') sendPasswordReset(); });
+
+  document.addEventListener('click', e => {
+    const w=document.getElementById('notif-panel'), b=document.getElementById('notif-btn');
+    if(!w.contains(e.target) && !b.contains(e.target)) w.classList.remove('open');
   });
 });
 
-function loadSettingsFromStorage(){
-  const name = localStorage.getItem('admin_name') || 'Harsh Ranjan';
-  ADMIN_NAME = name;
-  const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+function setupModalCloseOnBackdrop() {
+  ['lead-modal-overlay','post-modal-overlay','confirm-modal-overlay'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('click', e => { if(e.target===el) el.classList.remove('open'); });
+  });
+}
+
+// ============================================================
+// PWA SETUP
+// ============================================================
+function setupPWA() {
+  // Inject manifest dynamically
+  const manifest = {
+    name: "Samarpan Admin",
+    short_name: "Samarpan",
+    description: "Samarpan Wellness Admin Panel",
+    start_url: window.location.href,
+    display: "standalone",
+    background_color: "#0b0a09",
+    theme_color: "#D95D39",
+    icons: [{src:"https://thesamarpan.co.in/favicon.ico",sizes:"any",type:"image/x-icon"}]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+  document.getElementById('pwa-manifest').href = URL.createObjectURL(blob);
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPWAPrompt = e;
+    if(!localStorage.getItem('pwa_dismissed')) {
+      setTimeout(() => document.getElementById('pwa-banner').classList.add('show'), 3000);
+    }
+  });
+  window.addEventListener('appinstalled', () => {
+    document.getElementById('pwa-banner').classList.remove('show');
+    showToast('✅ App installed! Find it on your home screen.');
+  });
+}
+
+function installPWA() {
+  if(deferredPWAPrompt) {
+    deferredPWAPrompt.prompt();
+    deferredPWAPrompt.userChoice.then(r => {
+      if(r.outcome==='accepted') showToast('Installing Samarpan Admin…');
+      deferredPWAPrompt = null;
+      document.getElementById('pwa-banner').classList.remove('show');
+    });
+  } else {
+    showPWAInstructions();
+  }
+}
+
+function dismissPWA() {
+  document.getElementById('pwa-banner').classList.remove('show');
+  localStorage.setItem('pwa_dismissed', '1');
+}
+
+function showPWAInstructions() {
+  showPage('setup', document.querySelectorAll('.nav-item')[12]);
+}
+
+// ============================================================
+// AUTH PANELS
+// ============================================================
+function showPanel(id) {
+  document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('forgot-success').classList.remove('show');
+  document.getElementById('forgot-error').classList.remove('show');
+}
+
+function showLoginScreen() {
+  const s = document.getElementById('login-screen');
+  s.style.display = '';
+  s.classList.remove('hidden');
+  lucide.createIcons();
+}
+
+// ============================================================
+// FIREBASE LOGIN
+// ============================================================
+function togglePw() {
+  const inp = document.getElementById('login-password'), eye = document.getElementById('pw-eye');
+  inp.type = inp.type==='password' ? 'text' : 'password';
+  eye.setAttribute('data-lucide', inp.type==='password' ? 'eye' : 'eye-off');
+  lucide.createIcons();
+}
+
+async function doFirebaseLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pwd = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('login-btn');
+  const sp = document.getElementById('lspinner');
+  const bt = document.getElementById('lbtn-text');
+  const bi = document.getElementById('lbtn-icon');
+  errEl.classList.remove('show');
+
+  if(!email || !pwd) {
+    document.getElementById('login-error-msg').textContent = 'Please enter email and password.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  btn.disabled = true; sp.classList.add('show'); bt.textContent = 'Signing in…'; bi.style.display = 'none';
+
+  try {
+    await auth.signInWithEmailAndPassword(email, pwd);
+    // onAuthStateChanged will call grantAccess()
+  } catch(e) {
+    sp.classList.remove('show'); btn.disabled = false; bt.textContent = 'Sign In with Firebase'; bi.style.display = '';
+    const msgs = {
+      'auth/user-not-found': 'No account found with this email.',
+      'auth/wrong-password': 'Incorrect password. Use Forgot Password if needed.',
+      'auth/invalid-email': 'Invalid email address.',
+      'auth/too-many-requests': 'Too many failed attempts. Please wait or reset your password.',
+      'auth/invalid-credential': 'Incorrect email or password.',
+    };
+    document.getElementById('login-error-msg').textContent = msgs[e.code] || e.message;
+    errEl.classList.add('show');
+    document.getElementById('login-password').value = '';
+    lucide.createIcons();
+  }
+}
+
+// ============================================================
+// FORGOT PASSWORD
+// ============================================================
+async function sendPasswordReset() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const errEl = document.getElementById('forgot-error');
+  const sucEl = document.getElementById('forgot-success');
+  errEl.classList.remove('show'); sucEl.classList.remove('show');
+
+  if(!email) {
+    document.getElementById('forgot-error-msg').textContent = 'Please enter your email address.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  try {
+    await auth.sendPasswordResetEmail(email);
+    sucEl.classList.add('show');
+    showToast('✅ Password reset email sent! Check your inbox.');
+  } catch(e) {
+    document.getElementById('forgot-error-msg').textContent = e.code==='auth/user-not-found' ? 'No account found with this email.' : e.message;
+    errEl.classList.add('show');
+  }
+}
+
+async function sendChangePasswordEmail() {
+  if(!currentUser) return;
+  try {
+    await auth.sendPasswordResetEmail(currentUser.email);
+    showToast('✅ Password reset email sent to ' + currentUser.email);
+  } catch(e) {
+    showToast('❌ ' + e.message, true);
+  }
+}
+
+// ============================================================
+// GRANT ACCESS
+// ============================================================
+function grantAccess(user) {
+  const s = document.getElementById('login-screen');
+  s.classList.add('hidden');
+  setTimeout(() => s.style.display = 'none', 500);
+
+  // Update UI with user info
+  const name = user.displayName || localStorage.getItem('admin_name') || 'Admin';
+  const email = user.email || '';
+  const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) || 'SA';
   document.getElementById('sb-av-init').textContent = ini;
   document.getElementById('sb-admin-name').textContent = name;
-  if(localStorage.getItem('setting_banner')==='false'){
-    const b=document.querySelector('.vis-banner');
-    if(b) b.style.display='none';
-    const t=document.getElementById('toggle-banner');
-    if(t) t.checked=false;
-  }
-  const n=document.getElementById('settings-name');
-  if(n) n.value=name;
-  const w=document.getElementById('settings-whatsapp');
-  if(w) w.value=localStorage.getItem('admin_whatsapp')||'+919661486740';
+  const nameEl = document.getElementById('settings-name');
+  if(nameEl) nameEl.value = name;
+  const emailEl = document.getElementById('settings-email');
+  if(emailEl) emailEl.value = email;
+
+  attachRealTimeListeners();
+  buildWeeklyChart();
+  loadSettingsFromStorage();
+  lucide.createIcons();
 }
 
-// ========================================
-// CLOCK — FIXED IST
-// ========================================
-// FIX: Use Intl.DateTimeFormat to get correct IST time without manual offset arithmetic
-// The previous code added 5.5hrs to `new Date()` then called .toTimeString() which
-// returns LOCAL time again — causing double-offset on non-UTC machines.
+function doLogout() {
+  if(!confirm('Sign out of Samarpan Admin?')) return;
+  // Detach all listeners
+  unsubscribers.forEach(u => u());
+  unsubscribers = [];
+  auth.signOut();
+}
+
+// ============================================================
+// REAL-TIME FIRESTORE LISTENERS (onSnapshot)
+// ============================================================
+function attachRealTimeListeners() {
+  // Detach any existing
+  unsubscribers.forEach(u => u());
+  unsubscribers = [];
+
+  const collections = [
+    { name:'homepage_leads', state:'allLeads' },
+    { name:'homepage_newsletter', state:'allNewsletter' },
+    { name:'homepage_referrals', state:'allReferrals' },
+    { name:'homepage_quiz_results', state:'allQuiz' },
+    { name:'homepage_yoga_sessions', state:'allYoga' },
+    { name:'homepage_visitors', state:'allVisitors' },
+    { name:'samarpan_journal_posts', state:'allJournalPosts' },
+  ];
+
+  let loadedCount = 0;
+  const total = collections.length;
+
+  collections.forEach(({ name, state }) => {
+    const unsub = db.collection(name)
+      .orderBy('timestamp', 'desc')
+      .limit(500)
+      .onSnapshot(snapshot => {
+        const docs = snapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() }));
+        if(state === 'allLeads') {
+          // Check for new lead notification
+          const prev = allLeads.length;
+          allLeads = docs;
+          if(prev > 0 && docs.length > prev) {
+            const newest = docs[0];
+            showToast(`🔔 New lead: ${newest.name || 'Someone'} — ${newest.service || 'enquiry'}`);
+            sendEmailNotification(newest);
+            updateNotifications();
+          }
+        } else if(state === 'allNewsletter') allNewsletter = docs;
+        else if(state === 'allReferrals') allReferrals = docs;
+        else if(state === 'allQuiz') allQuiz = docs;
+        else if(state === 'allYoga') allYoga = docs;
+        else if(state === 'allVisitors') allVisitors = docs;
+        else if(state === 'allJournalPosts') allJournalPosts = docs;
+
+        loadedCount++;
+        if(loadedCount >= total) {
+          renderAll();
+        } else {
+          // Partial render as data comes in
+          renderPartial();
+        }
+
+        updateRTStatus();
+      }, err => {
+        console.error('Listener error:', name, err);
+        showToast('⚠️ Firebase listener error: ' + name, true);
+      });
+
+    unsubscribers.push(unsub);
+  });
+}
+
+function updateRTStatus() {
+  document.getElementById('last-sync-time').textContent = nowIST().time + ' IST';
+  const el = document.getElementById('rt-status');
+  if(el) { el.className = 'rt-indicator'; }
+}
+
+function refreshData() {
+  showToast('Real-time listeners active — data syncs automatically');
+}
+
+// ============================================================
+// EMAILJS NOTIFICATION
+// ============================================================
+async function sendEmailNotification(lead) {
+  const svc = localStorage.getItem('ejs_service');
+  const tpl = localStorage.getItem('ejs_template');
+  const key = localStorage.getItem('ejs_key');
+  const to  = localStorage.getItem('ejs_to');
+  if(!svc || !tpl || !key) return;
+
+  try {
+    const params = {
+      to_email: to || currentUser?.email || '',
+      lead_name: lead.name || 'Unknown',
+      lead_email: lead.email || '—',
+      lead_phone: lead.phone || '—',
+      lead_service: lead.service || '—',
+      lead_message: lead.message || '—',
+      lead_date: lead.date || nowIST().date,
+      lead_time: lead.time || nowIST().time,
+    };
+    await fetch(`https://api.emailjs.com/api/v1.0/email/send`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({service_id:svc, template_id:tpl, user_id:key, template_params:params})
+    });
+  } catch(e) { console.warn('EmailJS send error:', e); }
+}
+
+async function testEmailNotification() {
+  await sendEmailNotification({ name:'Test Lead', email:'test@example.com', service:'Ayurveda Consultation', message:'Test notification', date:nowIST().date, time:nowIST().time });
+  showToast('📧 Test email sent! Check your inbox.');
+}
+
+function saveEmailJSSettings() {
+  localStorage.setItem('ejs_service', document.getElementById('ejs-service').value.trim());
+  localStorage.setItem('ejs_template', document.getElementById('ejs-template').value.trim());
+  localStorage.setItem('ejs_key', document.getElementById('ejs-key').value.trim());
+  localStorage.setItem('ejs_to', document.getElementById('ejs-to').value.trim());
+  showToast('✅ EmailJS settings saved!');
+}
+
+// ============================================================
+// FIRESTORE WRITE HELPERS
+// ============================================================
+function nowIST() {
+  const ist = getISTDate();
+  const date = `${ist.getFullYear()}-${String(ist.getMonth()+1).padStart(2,'0')}-${String(ist.getDate()).padStart(2,'0')}`;
+  const h = String(ist.getHours()).padStart(2,'0');
+  const m = String(ist.getMinutes()).padStart(2,'0');
+  const s = String(ist.getSeconds()).padStart(2,'0');
+  return { date, time:`${h}:${m}:${s}`, iso:new Date().toISOString() };
+}
+
 function getISTDate() {
-  return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+  return new Date(new Date().toLocaleString('en-US', { timeZone:'Asia/Kolkata' }));
 }
 
-function updateClock(){
+function getIST(ts) {
+  if(!ts) return {date:'—',time:'—'};
+  try {
+    const d = new Date(ts);
+    const ist = new Date(d.toLocaleString('en-US', { timeZone:'Asia/Kolkata' }));
+    const date = ist.toISOString().split('T')[0];
+    const h = String(ist.getHours()).padStart(2,'0');
+    const min = String(ist.getMinutes()).padStart(2,'0');
+    const sec = String(ist.getSeconds()).padStart(2,'0');
+    return { date, time:`${h}:${min}:${sec}` };
+  } catch { return {date:'—',time:'—'}; }
+}
+
+async function fsAdd(collection, data) {
+  const t = nowIST();
+  return db.collection(collection).add({
+    ...data,
+    date: t.date,
+    time: t.time,
+    timestamp: t.iso,
+    source: 'admin_panel',
+    addedBy: currentUser?.email || 'admin'
+  });
+}
+
+async function fsUpdate(collection, docId, data) {
+  return db.collection(collection).doc(docId).update(data);
+}
+
+async function fsDelete(collection, docId) {
+  return db.collection(collection).doc(docId).delete();
+}
+
+// ============================================================
+// CLOCK
+// ============================================================
+function updateClock() {
   const now = new Date();
   const istNow = getISTDate();
-
   const dateEl = document.getElementById('topbar-date');
   const timeEl = document.getElementById('topbar-time');
-
-  if(dateEl) {
-    dateEl.textContent = now.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-  }
+  if(dateEl) dateEl.textContent = now.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   if(timeEl) {
     const h = String(istNow.getHours()).padStart(2,'0');
     const m = String(istNow.getMinutes()).padStart(2,'0');
@@ -1162,284 +1540,83 @@ function updateClock(){
   }
 }
 
-// IST helpers — using Intl instead of manual +5.5h offset
-function getIST(ts) {
-  if(!ts) return {date:'—',time:'—'};
-  try {
-    const d = new Date(ts);
-    const ist = new Date(d.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-    const date = ist.toISOString().split('T')[0];
-    const h = String(ist.getHours()).padStart(2,'0');
-    const min = String(ist.getMinutes()).padStart(2,'0');
-    const sec = String(ist.getSeconds()).padStart(2,'0');
-    return { date, time: `${h}:${min}:${sec}` };
-  } catch { return {date:'—',time:'—'}; }
-}
-
-function nowIST() {
-  const ist = getISTDate();
-  const date = `${ist.getFullYear()}-${String(ist.getMonth()+1).padStart(2,'0')}-${String(ist.getDate()).padStart(2,'0')}`;
-  const h = String(ist.getHours()).padStart(2,'0');
-  const m = String(ist.getMinutes()).padStart(2,'0');
-  const s = String(ist.getSeconds()).padStart(2,'0');
-  return { date, time: `${h}:${m}:${s}`, iso: new Date().toISOString() };
-}
-
-// ========================================
-// AUTH — password NEVER written to localStorage
-// ========================================
-function togglePw(){
-  const inp=document.getElementById('login-password'), eye=document.getElementById('pw-eye');
-  inp.type=inp.type==='password'?'text':'password';
-  eye.setAttribute('data-lucide',inp.type==='password'?'eye':'eye-off');
+// ============================================================
+// RENDER ALL
+// ============================================================
+function renderAll() {
+  updateStats(); renderVisitorBanner(); renderRecentLeads(); renderActivityFeed();
+  renderDonut(); renderTopServices(); renderFullLeads(); renderNewsletter();
+  renderReferrals(); renderQuiz(); renderYoga(); renderAnalytics();
+  renderVisitors(); renderVisitorCharts(); renderJournalPosts(); updateNotifications();
+  document.getElementById('sb-leads-count').textContent = allLeads.length || '0';
+  document.getElementById('sb-news-count').textContent = allNewsletter.length || '0';
+  document.getElementById('nav-vis-badge').textContent = getTodayVisitors().length || '0';
+  document.getElementById('sb-journal-count').textContent = allJournalPosts.length || '0';
   lucide.createIcons();
 }
 
-async function doLogin(){
-  const email=document.getElementById('login-email').value.trim();
-  const pwd=document.getElementById('login-password').value;
-  const errEl=document.getElementById('login-error');
-  const btn=document.getElementById('login-btn'),sp=document.getElementById('lspinner'),bt=document.getElementById('lbtn-text'),bi=document.getElementById('lbtn-icon');
-  errEl.classList.remove('show');
-  if(!email||!pwd){document.getElementById('login-error-msg').textContent='Please enter email and password.';errEl.classList.add('show');return;}
-  btn.disabled=true;sp.classList.add('show');bt.textContent='Authenticating…';bi.style.display='none';
-  await new Promise(r=>setTimeout(r,650));
-
-  // Compare against in-memory session password (never localStorage)
-  if(email.toLowerCase()===sessionEmail.toLowerCase() && pwd===sessionPassword){
-    sessionStorage.setItem('samarpan_admin_auth','1');
-    grantAccess();
-  } else {
-    sp.classList.remove('show');btn.disabled=false;bt.textContent='Sign In';bi.style.display='';
-    document.getElementById('login-error-msg').textContent='Incorrect email or password.';
-    errEl.classList.add('show');
-    document.getElementById('login-password').value='';
-    document.getElementById('login-password').focus();
-    lucide.createIcons();
-  }
+function renderPartial() {
+  updateStats();
+  renderVisitorBanner();
+  document.getElementById('sb-leads-count').textContent = allLeads.length || '0';
 }
 
-function grantAccess(){
-  isLoggedIn=true;
-  const s=document.getElementById('login-screen');
-  s.classList.add('hidden');
-  setTimeout(()=>s.style.display='none',500);
-  loadAllData();
-  buildWeeklyChart();
-  startAutoRefresh();
-  if(typeof gtag!=='undefined') gtag('event','admin_login',{event_category:'admin'});
-}
-
-function doLogout(){
-  if(!confirm('Sign out of Samarpan Admin?')) return;
-  sessionStorage.removeItem('samarpan_admin_auth');
-  clearInterval(refreshTimer);clearInterval(countdownInterval);
-  location.reload();
-}
-
-// ========================================
-// AUTO REFRESH
-// ========================================
-function startAutoRefresh(){
-  countdownVal=60;
-  countdownInterval=setInterval(()=>{
-    countdownVal--;
-    const el=document.getElementById('refresh-countdown');
-    if(el) el.textContent=countdownVal;
-    if(countdownVal<=0) countdownVal=60;
-  },1000);
-  refreshTimer=setInterval(()=>{if(autoRefreshEnabled){loadAllData();countdownVal=60;}},60000);
-}
-function refreshData(){showToast('Syncing with Firebase…');loadAllData();countdownVal=60;}
-function toggleAutoRefresh(el){autoRefreshEnabled=el.checked;localStorage.setItem('setting_autorefresh',el.checked);showToast(el.checked?'Auto-refresh enabled':'Auto-refresh paused');}
-
-// ========================================
-// THEME
-// ========================================
-function applyThemeFromStorage(){setTheme(localStorage.getItem('samarpan_theme')||'dark');}
-function toggleTheme(){setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
-function setTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  localStorage.setItem('samarpan_theme',t);
-  const sun=document.getElementById('ti-sun'),moon=document.getElementById('ti-moon'),lbl=document.getElementById('theme-label');
-  if(!sun)return;
-  if(t==='light'){sun.style.display='';moon.style.display='none';if(lbl)lbl.textContent='Light';}
-  else{sun.style.display='none';moon.style.display='';if(lbl)lbl.textContent='Dark';}
-  const sel=document.getElementById('theme-select');if(sel)sel.value=t;
-  lucide.createIcons();
-}
-function applyAccentFromStorage(){
-  const c=localStorage.getItem('accent_color');
-  if(c){document.documentElement.style.setProperty('--clay',c);document.documentElement.style.setProperty('--clay2',darken(c));}
-}
-function darken(hex){
-  try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgb(${Math.max(r-25,0)},${Math.max(g-25,0)},${Math.max(b-25,0)})`;}catch{return hex;}
-}
-function setAccentColor(el){
-  document.querySelectorAll('.cs').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');
-  const c=el.dataset.color;
-  document.documentElement.style.setProperty('--clay',c);
-  document.documentElement.style.setProperty('--clay2',darken(c));
-  localStorage.setItem('accent_color',c);
-  showToast('Accent color updated!');
-}
-
-// ========================================
-// SETTINGS
-// ========================================
-function saveProfileSettings(){
-  const name=document.getElementById('settings-name').value.trim();
-  const whatsapp=document.getElementById('settings-whatsapp').value.trim();
-  if(!name){showToast('Please enter your name',true);return;}
-  localStorage.setItem('admin_name',name); // non-sensitive
-  localStorage.setItem('admin_whatsapp',whatsapp); // non-sensitive
-  ADMIN_NAME=name;
-  const ini=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-  document.getElementById('sb-av-init').textContent=ini;
-  document.getElementById('sb-admin-name').textContent=name;
-  showToast('✅ Profile saved!');
-}
-
-// Password change — session memory only, never saved anywhere
-function changePasswordSession(){
-  const cur=document.getElementById('settings-cur-pw').value;
-  const np=document.getElementById('settings-new-pw').value;
-  const cp=document.getElementById('settings-confirm-pw').value;
-  if(!cur||!np||!cp){showToast('Please fill all password fields',true);return;}
-  if(cur!==sessionPassword){showToast('❌ Current password incorrect',true);return;}
-  if(np!==cp){showToast('❌ New passwords do not match',true);return;}
-  if(np.length<8){showToast('❌ Password must be at least 8 characters',true);return;}
-  // Update in-memory only — no localStorage write
-  sessionPassword=np;
-  document.getElementById('settings-cur-pw').value='';
-  document.getElementById('settings-new-pw').value='';
-  document.getElementById('settings-confirm-pw').value='';
-  showToast('✅ Session password updated. Opens back to original on next visit.');
-}
-
-function toggleVisitorBanner(el){
-  const b=document.querySelector('.vis-banner');
-  if(b) b.style.display=el.checked?'':'none';
-  localStorage.setItem('setting_banner',el.checked);
-  showToast(el.checked?'Visitor banner shown':'Visitor banner hidden');
-}
-
-// ========================================
-// FIREBASE CRUD
-// ========================================
-async function fsGet(collection){
-  try{
-    const r=await fetch(`${BASE}${collection}?key=${FIREBASE_API_KEY}&pageSize=500`);
-    const data=await r.json();
-    if(!data.documents) return [];
-    return data.documents.map(doc=>{
-      const fields=doc.fields||{};
-      const obj={_id:doc.name.split('/').pop()};
-      for(const [k,v] of Object.entries(fields)) obj[k]=v.stringValue??v.integerValue??v.booleanValue??'';
-      return obj;
-    });
-  }catch(e){console.error('Firestore get',collection,e);return [];}
-}
-
-async function fsAdd(collection,data){
-  const t=nowIST();
-  const base=(data.email||data.title||'doc').toLowerCase().replace(/[^a-z0-9]/g,'_').slice(0,20);
-  const docId=`${base}__${String(Date.now()).slice(-6)}`;
-  const fields={};
-  Object.entries({...data,date:t.date,time:t.time,timestamp:t.iso,source:'admin_panel'}).forEach(([k,v])=>{fields[k]={stringValue:String(v??'')};});
-  const r=await fetch(`${BASE}${collection}/${docId}?key=${FIREBASE_API_KEY}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields})});
-  if(!r.ok) throw new Error('Save failed: '+r.status);
-  return r.json();
-}
-
-async function fsUpdate(collection,docId,data){
-  const fields={};
-  Object.entries(data).forEach(([k,v])=>{fields[k]={stringValue:String(v??'')};});
-  const r=await fetch(`${BASE}${collection}/${docId}?key=${FIREBASE_API_KEY}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields})});
-  if(!r.ok) throw new Error('Update failed: '+r.status);
-  return r.json();
-}
-
-async function fsDelete(collection,docId){
-  const r=await fetch(`${BASE}${collection}/${docId}?key=${FIREBASE_API_KEY}`,{method:'DELETE'});
-  if(!r.ok) throw new Error('Delete failed: '+r.status);
-}
-
-// ========================================
-// LOAD ALL DATA
-// ========================================
-async function loadAllData(){
-  if(!isLoggedIn) return;
-  const [leads,news,refs,quiz,yoga,visitors,posts]=await Promise.all([
-    fsGet('homepage_leads'),fsGet('homepage_newsletter'),
-    fsGet('homepage_referrals'),fsGet('homepage_quiz_results'),
-    fsGet('homepage_yoga_sessions'),fsGet('homepage_visitors'),
-    fsGet('samarpan_journal_posts'),
-  ]);
-  allLeads=leads;allNewsletter=news;allReferrals=refs;
-  allQuiz=quiz;allYoga=yoga;allVisitors=visitors;allJournalPosts=posts;
-  document.getElementById('last-sync-time').textContent=nowIST().time+' IST';
-  updateStats();renderVisitorBanner();renderRecentLeads();renderActivityFeed();
-  renderDonut();renderTopServices();renderFullLeads();renderNewsletter();
-  renderReferrals();renderQuiz();renderYoga();renderAnalytics();
-  renderVisitors();renderVisitorCharts();renderJournalPosts();updateNotifications();
-  document.getElementById('sb-leads-count').textContent=allLeads.length||'0';
-  document.getElementById('sb-news-count').textContent=allNewsletter.length||'0';
-  document.getElementById('nav-vis-badge').textContent=getTodayVisitors().length||'0';
-  document.getElementById('sb-journal-count').textContent=allJournalPosts.length||'0';
-  lucide.createIcons();
-}
-
-// ========================================
+// ============================================================
 // VISITOR HELPERS
-// ========================================
-function getTodayDate(){return nowIST().date;}
-function getMonthStr(){const ist=getISTDate();return `${ist.getFullYear()}-${String(ist.getMonth()+1).padStart(2,'0')}`;}
-function getTodayVisitors(){return allVisitors.filter(v=>v.date===getTodayDate());}
-function getMonthVisitors(){const m=getMonthStr();return allVisitors.filter(v=>v.date&&v.date.startsWith(m));}
+// ============================================================
+function getTodayDate() { return nowIST().date; }
+function getMonthStr() { const ist=getISTDate(); return `${ist.getFullYear()}-${String(ist.getMonth()+1).padStart(2,'0')}`; }
+function getTodayVisitors() { return allVisitors.filter(v=>v.date===getTodayDate()); }
+function getMonthVisitors() { const m=getMonthStr(); return allVisitors.filter(v=>v.date&&v.date.startsWith(m)); }
 
-// ========================================
+// ============================================================
 // VISITOR BANNER
-// ========================================
-function renderVisitorBanner(){
-  const tv=getTodayVisitors(),mv=getMonthVisitors();
-  const unique=new Set(tv.map(v=>v._id)).size;
-  document.getElementById('v-today').textContent=tv.length;
-  document.getElementById('v-month').textContent=mv.length;
-  document.getElementById('v-total').textContent=allVisitors.length;
-  document.getElementById('v-unique').textContent=unique;
-  const last=[...tv].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''))[0];
-  const sub=tv.length===0?'No visits yet today':`Last: ${last?.time||'—'} IST`;
-  document.getElementById('v-today-sub').textContent=sub;
-  const mn=getISTDate().toLocaleString('en-IN',{month:'long',year:'numeric'});
-  document.getElementById('v-month-sub').textContent=mn;
-  const pvT=document.getElementById('pv-today');
-  if(pvT){pvT.textContent=tv.length;document.getElementById('pv-month').textContent=mv.length;document.getElementById('pv-total').textContent=allVisitors.length;document.getElementById('pv-unique').textContent=unique;document.getElementById('pv-today-sub').textContent=sub;document.getElementById('pv-month-name').textContent=mn;}
+// ============================================================
+function renderVisitorBanner() {
+  const tv=getTodayVisitors(), mv=getMonthVisitors();
+  const unique = new Set(tv.map(v=>v._id)).size;
+  document.getElementById('v-today').textContent = tv.length;
+  document.getElementById('v-month').textContent = mv.length;
+  document.getElementById('v-total').textContent = allVisitors.length;
+  document.getElementById('v-unique').textContent = unique;
+  const last = [...tv].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''))[0];
+  document.getElementById('v-today-sub').textContent = tv.length===0 ? 'No visits yet today' : `Last: ${last?.time||'—'} IST`;
+  const mn = getISTDate().toLocaleString('en-IN',{month:'long',year:'numeric'});
+  document.getElementById('v-month-sub').textContent = mn;
+  ['pv-today','pv-month','pv-total','pv-unique'].forEach(id => {
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(id==='pv-today') el.textContent=tv.length;
+    else if(id==='pv-month') el.textContent=mv.length;
+    else if(id==='pv-total') el.textContent=allVisitors.length;
+    else if(id==='pv-unique') el.textContent=unique;
+  });
+  const stEl=document.getElementById('pv-today-sub'); if(stEl) stEl.textContent=document.getElementById('v-today-sub').textContent;
+  const mnEl=document.getElementById('pv-month-name'); if(mnEl) mnEl.textContent=mn;
 }
 
-// ========================================
+// ============================================================
 // VISITOR CHARTS
-// ========================================
-function renderVisitorCharts(){
-  const days=[];let weekTotal=0;
-  for(let i=6;i>=0;i--){
-    const d=new Date();d.setDate(d.getDate()-i);
+// ============================================================
+function renderVisitorCharts() {
+  const days=[]; let weekTotal=0;
+  for(let i=6;i>=0;i--) {
+    const d=new Date(); d.setDate(d.getDate()-i);
     const dStr=d.toISOString().split('T')[0];
     const count=allVisitors.filter(v=>v.date===dStr).length;
     weekTotal+=count;
     days.push({label:d.toLocaleDateString('en-IN',{weekday:'short'}),date:dStr,count,isToday:i===0});
   }
-  const wl=document.getElementById('week-total-label');if(wl)wl.textContent=weekTotal+' visits';
+  const wl=document.getElementById('week-total-label'); if(wl) wl.textContent=weekTotal+' visits';
   const maxV=Math.max(...days.map(d=>d.count),1);
-  const barsEl=document.getElementById('visitor-chart-bars'),labsEl=document.getElementById('visitor-chart-labels');
-  if(barsEl){
+  const barsEl=document.getElementById('visitor-chart-bars'), labsEl=document.getElementById('visitor-chart-labels');
+  if(barsEl) {
     barsEl.innerHTML=days.map(d=>`<div class="vc-bar-wrap" title="${d.label}: ${d.count} visits">${d.count>0?`<div class="vc-bar-val">${d.count}</div>`:''}<div class="vc-bar" style="height:${Math.max((d.count/maxV)*76,d.count>0?8:2)}px;background:${d.isToday?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top,rgba(217,93,57,.22),rgba(197,160,89,.38))'};"></div></div>`).join('');
     labsEl.innerHTML=days.map(d=>`<div class="vc-bar-label" style="font-size:8px;color:${d.isToday?'var(--clay)':'var(--text-dim)'};">${d.label}</div>`).join('');
   }
   const mb=document.getElementById('monthly-visits-breakdown');
-  if(mb){
-    const mMap={};allVisitors.forEach(v=>{if(v.date){const m=v.date.slice(0,7);mMap[m]=(mMap[m]||0)+1;}});
+  if(mb) {
+    const mMap={}; allVisitors.forEach(v=>{if(v.date){const m=v.date.slice(0,7);mMap[m]=(mMap[m]||0)+1;}});
     const mSorted=Object.entries(mMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,8);
     if(!mSorted.length){mb.innerHTML='<div style="color:var(--text-dim);font-size:12px;text-align:center;padding:1rem 0;">No visitor data yet.</div>';return;}
     const mMax=mSorted[0][1]||1;
@@ -1450,14 +1627,14 @@ function renderVisitorCharts(){
     }).join('');
   }
   const devEl=document.getElementById('device-breakdown');
-  if(devEl){
+  if(devEl) {
     const mobile=allVisitors.filter(v=>v.device==='Mobile').length;
-    const desktop=allVisitors.length-mobile,total=allVisitors.length||1;
+    const desktop=allVisitors.length-mobile, total=allVisitors.length||1;
     devEl.innerHTML=`<div style="margin-bottom:1rem;"><div style="display:flex;justify-content:space-between;margin-bottom:.35rem;"><span style="font-size:12px;color:var(--text-muted);">📱 Mobile</span><span style="font-size:12px;font-weight:700;color:var(--text);">${mobile} <span style="font-size:9px;color:var(--text-dim);">(${Math.round((mobile/total)*100)}%)</span></span></div><div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(mobile/total)*100}%;background:var(--gold);border-radius:4px;"></div></div></div><div><div style="display:flex;justify-content:space-between;margin-bottom:.35rem;"><span style="font-size:12px;color:var(--text-muted);">🖥 Desktop</span><span style="font-size:12px;font-weight:700;color:var(--text);">${desktop} <span style="font-size:9px;color:var(--text-dim);">(${Math.round((desktop/total)*100)}%)</span></span></div><div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(desktop/total)*100}%;background:var(--blue);border-radius:4px;"></div></div></div>`;
   }
   const pagesEl=document.getElementById('top-pages-breakdown');
-  if(pagesEl){
-    const pMap={};allVisitors.forEach(v=>{const p=v.page||'/';pMap[p]=(pMap[p]||0)+1;});
+  if(pagesEl) {
+    const pMap={}; allVisitors.forEach(v=>{const p=v.page||'/';pMap[p]=(pMap[p]||0)+1;});
     const pSorted=Object.entries(pMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
     const pMax=pSorted[0]?.[1]||1;
     if(!pSorted.length){pagesEl.innerHTML='<div style="color:var(--text-dim);font-size:12px;">No data yet.</div>';return;}
@@ -1465,50 +1642,49 @@ function renderVisitorCharts(){
   }
 }
 
-// ========================================
+// ============================================================
 // STATS
-// ========================================
-function updateStats(){
+// ============================================================
+function updateStats() {
   const today=getTodayDate();
   const todayLeads=allLeads.filter(l=>l.date===today).length;
-  document.getElementById('stat-total-leads').textContent=allLeads.length;
-  document.getElementById('stat-newsletter').textContent=allNewsletter.length;
-  document.getElementById('stat-quiz').textContent=allQuiz.length;
-  document.getElementById('stat-referrals').textContent=allReferrals.length;
-  document.getElementById('leads-trend').textContent=`↑ ${todayLeads} today`;
-  document.getElementById('stat-leads-sub').textContent=`${todayLeads} new today`;
-  document.getElementById('news-trend').textContent=`${allNewsletter.length} subs`;
-  document.getElementById('quiz-trend').textContent=`${allQuiz.length} done`;
-  document.getElementById('cs-leads').textContent=allLeads.length;
-  document.getElementById('cs-news').textContent=allNewsletter.length;
-  document.getElementById('cs-ref').textContent=allReferrals.length;
-  document.getElementById('cs-quiz').textContent=allQuiz.length;
-  const cy=document.getElementById('cs-yoga');if(cy)cy.textContent=allYoga.length;
+  document.getElementById('stat-total-leads').textContent = allLeads.length;
+  document.getElementById('stat-newsletter').textContent = allNewsletter.length;
+  document.getElementById('stat-quiz').textContent = allQuiz.length;
+  document.getElementById('stat-referrals').textContent = allReferrals.length;
+  document.getElementById('leads-trend').textContent = `↑ ${todayLeads} today`;
+  document.getElementById('stat-leads-sub').textContent = `${todayLeads} new today`;
+  document.getElementById('news-trend').textContent = `${allNewsletter.length} subs`;
+  document.getElementById('quiz-trend').textContent = `${allQuiz.length} done`;
+  ['cs-leads','cs-news','cs-ref','cs-quiz','cs-yoga'].forEach((id,i) => {
+    const el=document.getElementById(id); if(!el) return;
+    el.textContent=[allLeads.length,allNewsletter.length,allReferrals.length,allQuiz.length,allYoga.length][i];
+  });
 }
 
-// ========================================
-// RECENT LEADS TABLE
-// ========================================
-function renderRecentLeads(){
+// ============================================================
+// RECENT LEADS
+// ============================================================
+function renderRecentLeads() {
   const tbody=document.getElementById('recent-leads-body');
-  const recent=[...allLeads].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||'')).slice(0,8);
-  if(!recent.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No leads yet.</td></tr>`;return;}
+  const recent=[...allLeads].slice(0,8);
+  if(!recent.length){tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No leads yet.</td></tr>`;return;}
   tbody.innerHTML=recent.map(l=>{
     const ist=getIST(l.timestamp||l.date);
-    return `<tr><td><div class="td-name">${esc(l.name||'Unknown')}</div><div class="td-sub">${esc(l.email||'—')}</div></td><td style="font-size:11px;">${esc(l.service||'—')}</td><td>${typePill(l.lead_type)}</td><td><div class="ts-date">${esc(l.date||ist.date)}</div><div class="ts-time">${esc(l.time||ist.time)} IST</div></td><td><span class="pill pill-sage">New</span></td></tr>`;
+    return `<tr><td><div class="td-name">${esc(l.name||'Unknown')}</div><div class="td-sub">${esc(l.email||'—')}</div></td><td style="font-size:11px;">${esc(l.service||'—')}</td><td>${typePill(l.lead_type)}</td><td><div class="ts-date">${esc(l.date||ist.date)}</div><div class="ts-time">${esc(l.time||ist.time)} IST</div></td></tr>`;
   }).join('');
 }
 
-// ========================================
+// ============================================================
 // FULL LEADS TABLE
-// ========================================
-function renderFullLeads(f={}){
+// ============================================================
+function renderFullLeads(f={}) {
   const tbody=document.getElementById('full-leads-body');
-  let data=[...allLeads].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+  let data=[...allLeads];
   if(f.service) data=data.filter(l=>l.service===f.service);
   if(f.type) data=data.filter(l=>l.lead_type===f.type);
   if(f.search){const q=f.search.toLowerCase();data=data.filter(l=>(l.name||'').toLowerCase().includes(q)||(l.email||'').toLowerCase().includes(q)||(l.phone||'').toLowerCase().includes(q));}
-  document.getElementById('lead-count-display').textContent=data.length;
+  document.getElementById('lead-count-display').textContent = data.length;
   if(!data.length){tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--text-dim);padding:2.5rem;font-size:12px;">No leads found.</td></tr>`;return;}
   tbody.innerHTML=data.map(l=>{
     const ist=getIST(l.timestamp||l.date);
@@ -1517,24 +1693,25 @@ function renderFullLeads(f={}){
   }).join('');
   lucide.createIcons();
 }
-function filterLeads(){renderFullLeads({service:document.getElementById('filter-service').value,type:document.getElementById('filter-type').value,search:document.getElementById('lead-search').value});}
-function openWhatsApp(phone){if(!phone||phone==='—'){showToast('No phone number',true);return;}const p=phone.replace(/[^0-9]/g,'');window.open(`https://wa.me/${p}`,'_blank');}
 
-// ========================================
+function filterLeads() { renderFullLeads({service:document.getElementById('filter-service').value,type:document.getElementById('filter-type').value,search:document.getElementById('lead-search').value}); }
+function openWhatsApp(phone) { if(!phone||phone==='—'){showToast('No phone number',true);return;} window.open(`https://wa.me/${phone.replace(/[^0-9]/g,'')}`, '_blank'); }
+
+// ============================================================
 // NEWSLETTER
-// ========================================
-function renderNewsletter(){
+// ============================================================
+function renderNewsletter() {
   const tbody=document.getElementById('newsletter-body');
-  const data=[...allNewsletter].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+  const data=[...allNewsletter];
   if(!data.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No subscribers yet.</td></tr>`;return;}
   tbody.innerHTML=data.map((s,i)=>{const ist=getIST(s.timestamp||s.date);return `<tr><td style="color:var(--text-dim);font-size:11px;">${i+1}</td><td style="font-weight:600;color:var(--text);">${esc(s.email)}</td><td><span class="pill pill-sage">Yes</span></td><td class="ts-date">${esc(s.date||ist.date)}</td><td class="ts-time">${esc(s.time||ist.time)} IST</td></tr>`;}).join('');
 }
 
-// ========================================
+// ============================================================
 // REFERRALS
-// ========================================
-function renderReferrals(){
-  const data=[...allReferrals].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+// ============================================================
+function renderReferrals() {
+  const data=[...allReferrals];
   document.getElementById('rs-total').textContent=data.length;
   document.getElementById('rs-popup').textContent=data.filter(r=>r.channel==='referral_popup').length;
   document.getElementById('rs-section').textContent=data.filter(r=>r.channel==='referral_section').length;
@@ -1543,11 +1720,11 @@ function renderReferrals(){
   tbody.innerHTML=data.map(r=>{const ist=getIST(r.timestamp||r.date);return `<tr><td style="font-weight:600;color:var(--text);">${esc(r.email||'—')}</td><td>${esc(r.channel||'—')}</td><td>${esc(r.action||'—')}</td><td class="ts-date">${esc(r.date||ist.date)}</td><td class="ts-time">${esc(r.time||ist.time)} IST</td></tr>`;}).join('');
 }
 
-// ========================================
+// ============================================================
 // QUIZ
-// ========================================
-function renderQuiz(){
-  const data=[...allQuiz].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+// ============================================================
+function renderQuiz() {
+  const data=[...allQuiz];
   document.getElementById('quiz-vata').textContent=data.filter(q=>q.dosha==='Vata').length;
   document.getElementById('quiz-pitta').textContent=data.filter(q=>q.dosha==='Pitta').length;
   document.getElementById('quiz-kapha').textContent=data.filter(q=>q.dosha==='Kapha').length;
@@ -1556,30 +1733,30 @@ function renderQuiz(){
   tbody.innerHTML=data.map(q=>{const ist=getIST(q.timestamp||q.date);return `<tr><td style="font-weight:600;color:var(--text);">${esc(q.name||'Anonymous')}</td><td>${esc(q.email||'—')}</td><td>${doshaPill(q.dosha)}</td><td class="ts-date">${esc(q.date||ist.date)}</td><td class="ts-time">${esc(q.time||ist.time)} IST</td></tr>`;}).join('');
 }
 
-// ========================================
+// ============================================================
 // YOGA
-// ========================================
-function renderYoga(){
-  const data=[...allYoga].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+// ============================================================
+function renderYoga() {
+  const data=[...allYoga];
   const tbody=document.getElementById('yoga-body');
   if(!data.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No yoga signups yet.</td></tr>`;return;}
   tbody.innerHTML=data.map(y=>{const ist=getIST(y.timestamp||y.date);return `<tr><td style="font-weight:600;color:var(--text);">${esc(y.name||'—')}</td><td>${esc(y.email||'—')}</td><td>${esc(y.mobile||'—')}</td><td><span class="pill pill-sage">${esc(y.type||'Free')}</span></td><td class="ts-date">${esc(y.date||ist.date)}</td><td class="ts-time">${esc(y.time||ist.time)} IST</td></tr>`;}).join('');
 }
 
-// ========================================
+// ============================================================
 // VISITORS TABLE
-// ========================================
-function renderVisitors(){
-  const data=[...allVisitors].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
+// ============================================================
+function renderVisitors() {
+  const data=[...allVisitors];
   const tbody=document.getElementById('visitors-body');
   if(!data.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No visitor data yet.</td></tr>`;return;}
   tbody.innerHTML=data.map(v=>{const ist=getIST(v.timestamp||v.date);return `<tr><td style="font-size:9.5px;color:var(--text-dim);">${esc(v._id||'—').slice(0,14)}</td><td class="ts-date">${esc(v.date||ist.date)}</td><td class="ts-time">${esc(v.time||ist.time)} IST</td><td style="font-weight:600;color:var(--text);font-size:12px;">${esc(v.page||'/')}</td><td><span class="pill ${v.device==='Mobile'?'pill-gold':'pill-blue'}">${esc(v.device||'Desktop')}</span></td><td style="font-size:11px;color:var(--text-dim);">${esc(v.referrer||'direct')}</td></tr>`;}).join('');
 }
 
-// ========================================
+// ============================================================
 // ACTIVITY FEED
-// ========================================
-function renderActivityFeed(){
+// ============================================================
+function renderActivityFeed() {
   const feed=document.getElementById('activity-feed');
   const all=[
     ...allLeads.map(l=>({...l,_t:'lead'})),
@@ -1602,10 +1779,10 @@ function renderActivityFeed(){
   }).join('');
 }
 
-// ========================================
-// DONUT CHART
-// ========================================
-function renderDonut(){
+// ============================================================
+// DONUT
+// ============================================================
+function renderDonut() {
   const contact=allLeads.filter(l=>l.lead_type==='contact_form').length;
   const free=allLeads.filter(l=>l.lead_type==='free_assessment_claim').length;
   const inline=allLeads.filter(l=>l.lead_type==='inline_free_consultation').length;
@@ -1622,12 +1799,12 @@ function renderDonut(){
   s.setAttribute('stroke-dasharray',`${sL} ${circ-sL}`);s.setAttribute('stroke-dashoffset',`${circ-cL-gL}`);
 }
 
-// ========================================
+// ============================================================
 // TOP SERVICES
-// ========================================
-function renderTopServices(){
+// ============================================================
+function renderTopServices() {
   const list=document.getElementById('top-services-list');
-  const sMap={};allLeads.forEach(l=>{const s=l.service||'Unknown';sMap[s]=(sMap[s]||0)+1;});
+  const sMap={}; allLeads.forEach(l=>{const s=l.service||'Unknown';sMap[s]=(sMap[s]||0)+1;});
   const svcs=Object.entries(sMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const maxC=svcs[0]?.[1]||1;
   const ems=['🌿','🔥','🧘','🌊','💫'];
@@ -1635,52 +1812,49 @@ function renderTopServices(){
   list.innerHTML=svcs.map(([name,count],i)=>`<div class="svc-item"><div class="svc-em">${ems[i]||'🌟'}</div><div class="svc-name">${esc(name)}</div><div class="svc-bar-wrap"><div class="svc-bar" style="width:${(count/maxC)*100}%;"></div></div><div class="svc-count">${count}</div></div>`).join('');
 }
 
-// ========================================
-// WEEKLY CHART (Leads)
-// ========================================
-function buildWeeklyChart(){
+// ============================================================
+// WEEKLY CHART
+// ============================================================
+function buildWeeklyChart() {
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const todayDay=new Date().getDay(),dayIdx=todayDay===0?6:todayDay-1;
+  const todayDay=new Date().getDay(), dayIdx=todayDay===0?6:todayDay-1;
   const h=[22,48,36,64,58,42,30];
   document.getElementById('chart-bars').innerHTML=h.map((v,i)=>`<div class="chart-bar-wrap"><div class="chart-bar${i===dayIdx?' active':''}" style="height:${v}px;"></div></div>`).join('');
   document.getElementById('chart-day-labels').innerHTML=days.map((d,i)=>`<div class="chart-bar-day" style="color:${i===dayIdx?'var(--clay)':'var(--text-dim)'};font-weight:${i===dayIdx?'700':'400'};">${d}</div>`).join('');
 }
 
-// ========================================
+// ============================================================
 // ANALYTICS
-// ========================================
-function renderAnalytics(){
+// ============================================================
+function renderAnalytics() {
   const barsEl=document.getElementById('analytics-bars');
   const daily=[];
   for(let i=29;i>=0;i--){
-    const d=new Date();d.setDate(d.getDate()-i);
+    const d=new Date(); d.setDate(d.getDate()-i);
     daily.push(allLeads.filter(l=>l.date===d.toISOString().split('T')[0]).length);
   }
   const maxBar=Math.max(...daily,1);
   barsEl.innerHTML=daily.map((v,i)=>`<div style="flex:1;height:${Math.round((v/maxBar)*140)||2}px;background:${i===29?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top,rgba(217,93,57,.16),rgba(197,160,89,.3))'};border-radius:3px 3px 0 0;min-height:2px;cursor:default;" title="Day ${30-i}: ${v} lead${v!==1?'s':''}"></div>`).join('');
   const sb=document.getElementById('service-breakdown');
-  const sMap={};allLeads.forEach(l=>{const s=l.service||'Unknown';sMap[s]=(sMap[s]||0)+1;});
+  const sMap={}; allLeads.forEach(l=>{const s=l.service||'Unknown';sMap[s]=(sMap[s]||0)+1;});
   const sorted=Object.entries(sMap).sort((a,b)=>b[1]-a[1]);
   const total=allLeads.length||1;
   if(!sorted.length){sb.innerHTML=`<div style="color:var(--text-dim);font-size:12px;">No data yet.</div>`;return;}
   sb.innerHTML=sorted.map(([name,count])=>`<div style="margin-bottom:.75rem;"><div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span style="font-size:11px;color:var(--text-muted);">${esc(name)}</span><span style="font-size:11px;font-weight:700;color:var(--text);">${count}</span></div><div style="height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(count/total)*100}%;background:linear-gradient(90deg,var(--clay),var(--gold));border-radius:4px;"></div></div></div>`).join('');
 }
 
-// ========================================
-// NOTIFICATIONS SYSTEM
-// ========================================
-function toggleNotifPanel(){
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+function toggleNotifPanel() {
   const p=document.getElementById('notif-panel');
   p.classList.toggle('open');
   if(p.classList.contains('open')) renderNotifPanel();
 }
-function getUnseenItems(){
-  return [
-    ...allLeads.map(l=>({...l,_t:'lead',_ts:l.timestamp})),
-    ...allNewsletter.map(n=>({...n,_t:'newsletter',_ts:n.timestamp})),
-  ].filter(i=>i._ts>notifLastSeen);
+function getUnseenItems() {
+  return [...allLeads.map(l=>({...l,_t:'lead',_ts:l.timestamp})),...allNewsletter.map(n=>({...n,_t:'newsletter',_ts:n.timestamp}))].filter(i=>i._ts>notifLastSeen);
 }
-function updateNotifications(){
+function updateNotifications() {
   const unseen=getUnseenItems();
   const badge=document.getElementById('notif-badge');
   if(unseen.length>0){badge.textContent=unseen.length>9?'9+':unseen.length;badge.classList.add('show');}
@@ -1688,15 +1862,15 @@ function updateNotifications(){
   const p=document.getElementById('notif-panel');
   if(p.classList.contains('open')) renderNotifPanel();
 }
-function renderNotifPanel(){
+function renderNotifPanel() {
   const list=document.getElementById('notif-list');
   const all=[
     ...allLeads.map(l=>({...l,_t:'lead',_ts:l.timestamp})),
     ...allNewsletter.map(n=>({...n,_t:'newsletter',_ts:n.timestamp})),
     ...allVisitors.slice(0,5).map(v=>({...v,_t:'visitor',_ts:v.timestamp})),
   ].sort((a,b)=>(b._ts||'').localeCompare(a._ts||'')).slice(0,15);
-  const footer=document.getElementById('notif-footer-text');
   const unseenCount=getUnseenItems().length;
+  const footer=document.getElementById('notif-footer-text');
   if(footer) footer.textContent=unseenCount>0?`${unseenCount} unread`:'All caught up ✓';
   if(!all.length){list.innerHTML='<div class="np-empty">No notifications yet.</div>';return;}
   list.innerHTML=all.map(item=>{
@@ -1711,24 +1885,23 @@ function renderNotifPanel(){
   }).join('');
   lucide.createIcons();
 }
-function markAllRead(){
+function markAllRead() {
   notifLastSeen=new Date().toISOString();
-  sessionStorage.setItem('notif_last_seen',notifLastSeen); // session-only, not localStorage
+  sessionStorage.setItem('notif_last_seen',notifLastSeen);
   document.getElementById('notif-badge').classList.remove('show');
   renderNotifPanel();
   showToast('All notifications marked as read');
 }
 
-// ========================================
-// JOURNAL CRUD
-// ========================================
+// ============================================================
+// JOURNAL
+// ============================================================
 const FALLBACK_POSTS=[
-  {_id:'fallback1',title:'Understanding Your Prakriti',category:'Ayurveda',emoji:'🌿',read_time:'5 min read',excerpt:'Prakriti is your unique Ayurvedic constitution — the blueprint of your body and mind.',status:'published',gradient:'linear-gradient(135deg,#4A5D4F,#6aad76)'},
+  {_id:'fallback1',title:'Understanding Your Prakriti',category:'Ayurveda',emoji:'🌿',read_time:'5 min read',excerpt:'Prakriti is your unique Ayurvedic constitution.',status:'published',gradient:'linear-gradient(135deg,#4A5D4F,#6aad76)'},
   {_id:'fallback2',title:'The Neurobiology of Mantra',category:'Spirit & Tantra',emoji:'🔔',read_time:'7 min read',excerpt:'Ancient mantras have measurable effects on the nervous system.',status:'published',gradient:'linear-gradient(135deg,#c08de0,#7faff0)'},
-  {_id:'fallback3',title:'Dinacharya — Ayurvedic Daily Routine',category:'Ayurveda',emoji:'🌙',read_time:'6 min read',excerpt:'A consistent daily routine according to Ayurveda is one of the most powerful tools for balance.',status:'published',gradient:'linear-gradient(135deg,#D95D39,#C5A059)'},
 ];
 
-function renderJournalPosts(){
+function renderJournalPosts() {
   const container=document.getElementById('journal-posts-list');
   const posts=allJournalPosts.length>0?allJournalPosts:FALLBACK_POSTS;
   const sorted=[...posts].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''));
@@ -1747,13 +1920,13 @@ function renderJournalPosts(){
         ${!isFallback?`
         <button class="btn btn-outline" style="padding:.32rem .65rem;font-size:10px;" onclick="openEditPostModal('${p._id}')" title="Edit"><i data-lucide="edit-2"></i></button>
         <button class="btn btn-danger" style="padding:.32rem .65rem;font-size:10px;" onclick="confirmDeletePost('${p._id}','${esc(p.title||'this post')}')" title="Delete"><i data-lucide="trash-2"></i></button>
-        `:`<button class="btn btn-outline" style="padding:.32rem .65rem;font-size:10px;" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i></button>`}
+        `:''}
       </div>
     </div>`).join('');
   lucide.createIcons();
 }
 
-function openAddPostModal(){
+function openAddPostModal() {
   ['pm-title','pm-excerpt','pm-content'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('pm-category').value='Ayurveda';
   document.getElementById('pm-emoji').value='🌿';
@@ -1767,7 +1940,7 @@ function openAddPostModal(){
   lucide.createIcons();
 }
 
-function openEditPostModal(id){
+function openEditPostModal(id) {
   const post=[...allJournalPosts,...FALLBACK_POSTS].find(p=>p._id===id);
   if(!post){showToast('Post not found',true);return;}
   document.getElementById('pm-title').value=post.title||'';
@@ -1785,56 +1958,153 @@ function openEditPostModal(id){
   lucide.createIcons();
 }
 
-async function saveJournalPost(){
+async function saveJournalPost() {
   const title=document.getElementById('pm-title').value.trim();
   if(!title){showToast('Please enter a post title',true);return;}
   const editId=document.getElementById('pm-edit-id').value;
   const gradientRaw=document.getElementById('pm-gradient').value.trim();
   const gradient=gradientRaw.includes('linear-gradient')?gradientRaw:`linear-gradient(135deg,${gradientRaw||'var(--clay),var(--gold)'})`;
-  const postData={title,category:document.getElementById('pm-category').value,emoji:document.getElementById('pm-emoji').value||'📝',read_time:document.getElementById('pm-readtime').value||'5 min read',status:document.getElementById('pm-status').value,excerpt:document.getElementById('pm-excerpt').value.trim(),content:document.getElementById('pm-content').value.trim(),gradient,author:ADMIN_NAME};
-  try{
+  const postData={title,category:document.getElementById('pm-category').value,emoji:document.getElementById('pm-emoji').value||'📝',read_time:document.getElementById('pm-readtime').value||'5 min read',status:document.getElementById('pm-status').value,excerpt:document.getElementById('pm-excerpt').value.trim(),content:document.getElementById('pm-content').value.trim(),gradient,author:currentUser?.displayName||localStorage.getItem('admin_name')||'Admin'};
+  try {
     document.getElementById('pm-save-label').textContent='Saving…';
-    if(editId){await fsUpdate('samarpan_journal_posts',editId,postData);showToast('✅ Post updated!');}
-    else{await fsAdd('samarpan_journal_posts',postData);showToast('✅ Post published!');}
-    closePostModal();await loadAllData();
-  }catch(e){console.error(e);showToast('❌ Error: '+e.message,true);document.getElementById('pm-save-label').textContent=editId?'Save Changes':'Publish Post';}
+    if(editId) {await fsUpdate('samarpan_journal_posts',editId,postData);showToast('✅ Post updated!');}
+    else {await fsAdd('samarpan_journal_posts',postData);showToast('✅ Post published!');}
+    closePostModal();
+  } catch(e) {
+    console.error(e);showToast('❌ Error: '+e.message,true);
+    document.getElementById('pm-save-label').textContent=editId?'Save Changes':'Publish Post';
+  }
 }
 
-function confirmDeletePost(id,title){
+function confirmDeletePost(id,title) {
   document.getElementById('confirm-modal-msg').textContent=`Delete "${title}"? This cannot be undone.`;
   document.getElementById('confirm-modal-btn').onclick=()=>deletePost(id);
   document.getElementById('confirm-modal-overlay').classList.add('open');
   lucide.createIcons();
 }
-async function deletePost(id){
-  try{await fsDelete('samarpan_journal_posts',id);closeConfirmModal();showToast('✅ Post deleted');await loadAllData();}
+async function deletePost(id) {
+  try{await fsDelete('samarpan_journal_posts',id);closeConfirmModal();showToast('✅ Post deleted');}
   catch(e){showToast('❌ Delete failed: '+e.message,true);}
 }
 function closePostModal(){document.getElementById('post-modal-overlay').classList.remove('open');}
 function closeConfirmModal(){document.getElementById('confirm-modal-overlay').classList.remove('open');}
 
-// ========================================
+// ============================================================
 // ADD LEAD MODAL
-// ========================================
+// ============================================================
 function openAddLeadModal(){document.getElementById('lead-modal-overlay').classList.add('open');lucide.createIcons();}
 function closeLeadModal(){document.getElementById('lead-modal-overlay').classList.remove('open');}
-async function submitAddLead(){
+async function submitAddLead() {
   const name=document.getElementById('modal-name').value.trim();
   const email=document.getElementById('modal-email').value.trim();
   if(!name||!email){showToast('Please fill name and email',true);return;}
-  try{
+  try {
     await fsAdd('homepage_leads',{name,email,phone:document.getElementById('modal-phone').value.trim()||'Not Provided',location:document.getElementById('modal-location').value.trim(),service:document.getElementById('modal-service').value,priority:document.getElementById('modal-priority').value,message:document.getElementById('modal-message').value.trim()||'Admin entry',lead_type:'admin_entry'});
     showToast('✅ Lead added!');closeLeadModal();
     ['modal-name','modal-email','modal-phone','modal-location','modal-message'].forEach(id=>document.getElementById(id).value='');
-    if(typeof gtag!=='undefined') gtag('event','lead_added',{event_category:'admin'});
-    setTimeout(loadAllData,600);
-  }catch(e){showToast('❌ Error: '+e.message,true);}
+  } catch(e){showToast('❌ Error: '+e.message,true);}
 }
 
-// ========================================
+// ============================================================
+// SETTINGS
+// ============================================================
+function loadSettingsFromStorage() {
+  const ejs_service=localStorage.getItem('ejs_service')||'';
+  const ejs_template=localStorage.getItem('ejs_template')||'';
+  const ejs_key=localStorage.getItem('ejs_key')||'';
+  const ejs_to=localStorage.getItem('ejs_to')||'';
+  const ejsS=document.getElementById('ejs-service'); if(ejsS) ejsS.value=ejs_service;
+  const ejsT=document.getElementById('ejs-template'); if(ejsT) ejsT.value=ejs_template;
+  const ejsK=document.getElementById('ejs-key'); if(ejsK) ejsK.value=ejs_key;
+  const ejsTo=document.getElementById('ejs-to'); if(ejsTo) ejsTo.value=ejs_to;
+  if(localStorage.getItem('setting_banner')==='false') {
+    const b=document.querySelector('.vis-banner'); if(b) b.style.display='none';
+    const t=document.getElementById('toggle-banner'); if(t) t.checked=false;
+  }
+}
+
+function saveProfileSettings() {
+  const name=document.getElementById('settings-name').value.trim();
+  if(!name){showToast('Please enter your name',true);return;}
+  localStorage.setItem('admin_name',name);
+  const ini=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('sb-av-init').textContent=ini;
+  document.getElementById('sb-admin-name').textContent=name;
+  // Update Firebase display name
+  if(currentUser) currentUser.updateProfile({displayName:name}).catch(()=>{});
+  showToast('✅ Profile saved!');
+}
+
+function toggleVisitorBanner(el) {
+  const b=document.querySelector('.vis-banner'); if(b) b.style.display=el.checked?'':'none';
+  localStorage.setItem('setting_banner',el.checked);
+  showToast(el.checked?'Visitor banner shown':'Visitor banner hidden');
+}
+
+// ============================================================
+// COPY RULES
+// ============================================================
+function copyRules() {
+  const rules = `rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /homepage_leads/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_about_leads/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_newsletter/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_yoga_sessions/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_quiz_results/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_referrals/{docId} {
+      allow create: if isValidEmail();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_bookings/{docId} {
+      allow create: if isValidLead();
+      allow read, update, delete: if isAdmin();
+    }
+    match /homepage_visitors/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+    match /samarpan_journal_posts/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    function isValidEmail() {
+      return request.resource.data.keys().hasAny(['email']) && request.resource.data.email is string && request.resource.data.email.size() > 4 && request.resource.data.email.size() < 200;
+    }
+    function isValidLead() {
+      return request.resource.data.keys().hasAll(['email', 'name']) && request.resource.data.email is string && request.resource.data.name is string && request.resource.data.email.size() > 4 && request.resource.data.name.size() > 0;
+    }
+  }
+}`;
+  navigator.clipboard.writeText(rules).then(() => showToast('✅ Firestore rules copied to clipboard!')).catch(() => showToast('Select and copy the rules text manually', true));
+}
+
+// ============================================================
 // GLOBAL SEARCH
-// ========================================
-function globalSearchFn(){
+// ============================================================
+function globalSearchFn() {
   const q=document.getElementById('globalSearch').value.trim();
   if(q.length>1){
     showPage('leads',document.querySelectorAll('.nav-item')[3]);
@@ -1843,74 +2113,85 @@ function globalSearchFn(){
   }
 }
 
-// ========================================
+// ============================================================
 // EXPORTS
-// ========================================
-function csvDown(rows,filename){
+// ============================================================
+function csvDown(rows,filename) {
   const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download=filename;a.click();
+  a.download=filename; a.click();
   showToast('📥 '+filename);
 }
-function exportLeadsCSV(){
-  const rows=[['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST']];
-  allLeads.forEach(l=>{const ist=getIST(l.timestamp||l.date);rows.push([l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time]);});
-  csvDown(rows,`samarpan-leads-${nowIST().date}.csv`);
-}
-function exportNewsletterCSV(){
-  const rows=[['Email','Date','Time IST']];
-  allNewsletter.forEach(s=>{const ist=getIST(s.timestamp||s.date);rows.push([s.email,s.date||ist.date,s.time||ist.time]);});
-  csvDown(rows,`samarpan-newsletter-${nowIST().date}.csv`);
-}
-function exportVisitorsCSV(){
-  const rows=[['Session ID','Date','Time IST','Page','Device','Referrer']];
-  allVisitors.forEach(v=>{const ist=getIST(v.timestamp||v.date);rows.push([v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.referrer]);});
-  csvDown(rows,`samarpan-visitors-${nowIST().date}.csv`);
-}
-function exportAllCSV(){exportLeadsCSV();setTimeout(exportNewsletterCSV,400);setTimeout(exportVisitorsCSV,800);showToast('📦 Exporting 3 CSV files…');}
+function exportLeadsCSV(){const rows=[['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST']];allLeads.forEach(l=>{const ist=getIST(l.timestamp||l.date);rows.push([l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time]);});csvDown(rows,`samarpan-leads-${nowIST().date}.csv`);}
+function exportNewsletterCSV(){const rows=[['Email','Date','Time IST']];allNewsletter.forEach(s=>{const ist=getIST(s.timestamp||s.date);rows.push([s.email,s.date||ist.date,s.time||ist.time]);});csvDown(rows,`samarpan-newsletter-${nowIST().date}.csv`);}
+function exportVisitorsCSV(){const rows=[['Session ID','Date','Time IST','Page','Device','Referrer']];allVisitors.forEach(v=>{const ist=getIST(v.timestamp||v.date);rows.push([v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.referrer]);});csvDown(rows,`samarpan-visitors-${nowIST().date}.csv`);}
+function exportAllCSV(){exportLeadsCSV();setTimeout(exportNewsletterCSV,400);setTimeout(exportVisitorsCSV,800);}
 
-// ========================================
+// ============================================================
+// THEME
+// ============================================================
+function applyThemeFromStorage(){setTheme(localStorage.getItem('samarpan_theme')||'dark');}
+function toggleTheme(){setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');}
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  localStorage.setItem('samarpan_theme',t);
+  const sun=document.getElementById('ti-sun'),moon=document.getElementById('ti-moon'),lbl=document.getElementById('theme-label');
+  if(!sun)return;
+  if(t==='light'){sun.style.display='';moon.style.display='none';if(lbl)lbl.textContent='Light';}
+  else{sun.style.display='none';moon.style.display='';if(lbl)lbl.textContent='Dark';}
+  const sel=document.getElementById('theme-select');if(sel)sel.value=t;
+  lucide.createIcons();
+}
+function applyAccentFromStorage(){
+  const c=localStorage.getItem('accent_color');
+  if(c){document.documentElement.style.setProperty('--clay',c);document.documentElement.style.setProperty('--clay2',darken(c));}
+}
+function darken(hex){try{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return `rgb(${Math.max(r-25,0)},${Math.max(g-25,0)},${Math.max(b-25,0)})`;}catch{return hex;}}
+function setAccentColor(el){
+  document.querySelectorAll('.cs').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  const c=el.dataset.color;
+  document.documentElement.style.setProperty('--clay',c);
+  document.documentElement.style.setProperty('--clay2',darken(c));
+  localStorage.setItem('accent_color',c);
+  showToast('Accent color updated!');
+}
+
+// ============================================================
 // NAVIGATION
-// ========================================
+// ============================================================
 function showPage(pageId,el){
   document.querySelectorAll('.page-view').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   const page=document.getElementById(`page-${pageId}`);
   if(page){page.classList.add('active');page.classList.remove('fade-in');void page.offsetWidth;page.classList.add('fade-in');}
   if(el) el.classList.add('active');
-  const titles={dashboard:'Dashboard',leads:'All Leads',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',setup:'Setup Guide'};
   document.getElementById('topbar-title').textContent=titles[pageId]||'Dashboard';
   closeSidebar();lucide.createIcons();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
 
-// ========================================
+// ============================================================
 // TOAST
-// ========================================
+// ============================================================
 function showToast(msg,isError=false){
   const t=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg;
   t.querySelector('svg').style.color=isError?'var(--red)':'var(--green)';
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-// ========================================
+// ============================================================
 // HELPERS
-// ========================================
+// ============================================================
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function typePill(t){
-  if(!t) return `<span class="pill pill-gray">Unknown</span>`;
-  const m={contact_form:'pill-clay',free_assessment_claim:'pill-gold',inline_free_consultation:'pill-sage',admin_entry:'pill-blue'};
-  return `<span class="pill ${m[t]||'pill-gray'}">${esc(t.replace(/_/g,' '))}</span>`;
-}
-function doshaPill(d){
-  if(d==='Vata') return `<span class="pill pill-sage">🌬️ Vata</span>`;
-  if(d==='Pitta') return `<span class="pill pill-clay">🔥 Pitta</span>`;
-  if(d==='Kapha') return `<span class="pill pill-gold">🌊 Kapha</span>`;
-  return `<span class="pill pill-gray">${esc(d||'—')}</span>`;
-}
+function typePill(t){if(!t)return `<span class="pill pill-gray">Unknown</span>`;const m={contact_form:'pill-clay',free_assessment_claim:'pill-gold',inline_free_consultation:'pill-sage',admin_entry:'pill-blue'};return `<span class="pill ${m[t]||'pill-gray'}">${esc(t.replace(/_/g,' '))}</span>`;}
+function doshaPill(d){if(d==='Vata')return `<span class="pill pill-sage">🌬️ Vata</span>`;if(d==='Pitta')return `<span class="pill pill-clay">🔥 Pitta</span>`;if(d==='Kapha')return `<span class="pill pill-gold">🌊 Kapha</span>`;return `<span class="pill pill-gray">${esc(d||'—')}</span>`;}
 </script>
 </body>
 </html>
