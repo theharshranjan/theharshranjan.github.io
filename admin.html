@@ -65,7 +65,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .forgot-link{text-align:center;margin-top:.85rem;font-size:11px;color:var(--text-muted);}
 .forgot-link a{color:var(--clay);cursor:pointer;text-decoration:underline;}
 .forgot-link a:hover{color:var(--gold);}
-/* Auth panel switcher */
 .auth-panel{display:none;}
 .auth-panel.active{display:block;}
 
@@ -370,12 +369,9 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 .ga-section{background:rgba(66,133,244,.05);border:1px solid rgba(66,133,244,.18);border-radius:var(--r2);overflow:hidden;}
 .ga-header{padding:.85rem 1.25rem;border-bottom:1px solid rgba(66,133,244,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
 .ga-title{font-family:'Marcellus',serif;font-size:13px;color:#4285F4;}
-.ga-badge-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 9px;border-radius:50px;background:rgba(66,133,244,.15);color:#4285F4;}
-.ga-note{padding:.85rem 1.25rem;font-size:11px;color:var(--text-dim);border-top:1px solid rgba(66,133,244,.12);line-height:1.7;}
 
 /* ============================================================ REALTIME INDICATOR */
 .rt-indicator{display:flex;align-items:center;gap:.4rem;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);}
-.rt-indicator.syncing{color:var(--gold);}
 
 /* ============================================================ SIDEBAR OVERLAY */
 .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
@@ -431,7 +427,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
 
     <!-- SIGN IN PANEL -->
     <div class="auth-panel active" id="panel-signin">
-      <div class="sec-notice"><i data-lucide="shield-check"></i>Secured by Firebase Authentication — no passwords stored locally</div>
+      <div class="sec-notice"><i data-lucide="shield-check"></i>Secured by Firebase Authentication</div>
       <div class="lc-headline">Welcome back</div>
       <div class="lerr" id="login-error"><i data-lucide="alert-circle"></i><span id="login-error-msg">Invalid credentials.</span></div>
       <div class="lf"><label class="ll">Email Address</label>
@@ -450,7 +446,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
     <!-- FORGOT PASSWORD PANEL -->
     <div class="auth-panel" id="panel-forgot">
       <div class="lc-headline" style="margin-bottom:1rem;">Reset Password</div>
-      <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.7;">Enter your admin email and we'll send a password reset link to your inbox via Firebase.</div>
+      <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.7;">Enter your admin email and we'll send a password reset link via Firebase.</div>
       <div class="lsuccess" id="forgot-success"><i data-lucide="check-circle"></i><span>Reset email sent! Check your inbox.</span></div>
       <div class="lerr" id="forgot-error"><i data-lucide="alert-circle"></i><span id="forgot-error-msg">Error sending reset email.</span></div>
       <div class="lf"><label class="ll">Admin Email</label>
@@ -641,7 +637,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <div class="info-chip"><i data-lucide="clock"></i>Last sync: <strong id="last-sync-time" style="color:var(--text);">—</strong></div>
         <div class="info-chip"><i data-lucide="database"></i>Firebase Firestore · Real-time</div>
         <div class="info-chip"><i data-lucide="shield-check"></i>Firebase Auth · Secure</div>
-        <div class="info-chip"><i data-lucide="trending-up"></i>GA4 · G-HMM7CJSCW7</div>
+        <div class="info-chip"><i data-lucide="trending-up"></i>GA4 · G-ML1QLKGR3K</div>
       </div>
     </div>
 
@@ -745,7 +741,7 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <div class="card"><div style="text-align:center;padding:1rem;"><div class="sc-val" id="cs-yoga">—</div><div class="sc-label">Yoga</div></div></div>
       </div>
       <div class="ga-section">
-        <div class="ga-header"><span class="ga-title">📊 Google Analytics 4 Active — G-HMM7CJSCW7</span><a href="https://analytics.google.com/" target="_blank" class="btn btn-outline" style="font-size:10px;color:#4285F4;border-color:rgba(66,133,244,.3);"><i data-lucide="external-link"></i>Open GA4</a></div>
+        <div class="ga-header"><span class="ga-title">📊 Google Analytics 4 Active — G-ML1QLKGR3K</span><a href="https://analytics.google.com/" target="_blank" class="btn btn-outline" style="font-size:10px;color:#4285F4;border-color:rgba(66,133,244,.3);"><i data-lucide="external-link"></i>Open GA4</a></div>
         <div style="padding:1.25rem;font-size:12px;color:var(--text-muted);line-height:1.85;">GA4 is tracking all pages on <strong style="color:var(--text);">thesamarpan.co.in</strong>. Use <a href="https://lookerstudio.google.com/" target="_blank" style="color:#4285F4;">Looker Studio</a> for embedded reports.</div>
       </div>
     </div>
@@ -783,32 +779,26 @@ input:checked+.sw-slider:before{transform:translateX(18px);}
         <h2 style="font-family:'Marcellus',serif;font-size:20px;margin-bottom:.5rem;">Setup & Configuration Guide</h2>
         <p style="font-size:12px;color:var(--text-muted);margin-bottom:1.5rem;">Complete guide to set up Firebase Auth, Firestore security rules, email notifications, and phone installation.</p>
 
-        <!-- Step 1: Firebase Auth -->
         <div class="card settings-card">
           <div class="card-header"><span class="card-title">Step 1 — Create Your Firebase Admin Account</span><span class="pill pill-clay">Required</span></div>
           <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
-            <strong style="color:var(--text);">Your password is no longer in this code.</strong> It is now managed entirely by Firebase Authentication.<br><br>
+            <strong style="color:var(--text);">Your password is managed entirely by Firebase Authentication.</strong><br><br>
             <strong style="color:var(--gold);">To create your admin login:</strong><br>
             1. Go to <a href="https://console.firebase.google.com/project/thesamrpan/authentication/users" target="_blank" style="color:var(--clay);">Firebase Console → Authentication → Users</a><br>
             2. Click <strong style="color:var(--text);">"Add user"</strong><br>
-            3. Enter: Email = <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;">justtheself@gmail.com</code><br>
-            4. Enter a strong password of your choice (min 8 chars)<br>
-            5. Click "Add user" — done! Use these credentials to log in here.<br><br>
-            <strong style="color:var(--gold);">Forgot password?</strong> Use the "Forgot password?" link on the login screen — Firebase will email you a reset link instantly.
+            3. Enter your email and a strong password (min 8 chars)<br>
+            4. Click "Add user" — use these credentials to log in here.<br><br>
+            <strong style="color:var(--gold);">Forgot password?</strong> Use the "Forgot password?" link on the login screen.
           </div>
         </div>
 
-        <!-- Step 2: Firestore Rules -->
         <div class="card settings-card">
           <div class="card-header"><span class="card-title">Step 2 — Secure Firestore Rules</span><span class="pill pill-clay">Required</span></div>
           <div class="card-body">
             <p style="font-size:12px;color:var(--text-muted);margin-bottom:1rem;line-height:1.7;">Go to <a href="https://console.firebase.google.com/project/thesamrpan/firestore/rules" target="_blank" style="color:var(--clay);">Firebase Console → Firestore → Rules</a> and paste these rules:</p>
-            <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1rem;font-size:10.5px;color:var(--text-muted);overflow-x:auto;line-height:1.7;white-space:pre-wrap;">rules_version = '2';
+            <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:1rem;font-size:10.5px;color:var(--text-muted);overflow-x:auto;line-height:1.7;white-space:pre-wrap;" id="rules-pre">rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // ── ADMIN-ONLY COLLECTIONS (read + write) ──────────────────────────
-    // Only signed-in admin (Firebase Auth) can read or update these
     match /homepage_leads/{docId} {
       allow create: if isValidLead();
       allow read, update, delete: if isAdmin();
@@ -845,13 +835,9 @@ service cloud.firestore {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
-
-    // ── DENY EVERYTHING ELSE ──────────────────────────────────────────
     match /{document=**} {
       allow read, write: if false;
     }
-
-    // ── HELPER FUNCTIONS ──────────────────────────────────────────────
     function isAdmin() {
       return request.auth != null
         && request.auth.token.email_verified == true;
@@ -875,46 +861,32 @@ service cloud.firestore {
           </div>
         </div>
 
-        <!-- Step 3: Email Notifications -->
         <div class="card settings-card">
-          <div class="card-header"><span class="card-title">Step 3 — Email Notifications (New Lead Alerts)</span><span class="pill pill-gold">Recommended</span></div>
+          <div class="card-header"><span class="card-title">Step 3 — Enable Email Authentication in Firebase</span><span class="pill pill-clay">Required</span></div>
           <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
-            <strong style="color:var(--gold);">Option A — Firebase Extensions (Easiest, Free):</strong><br>
-            1. Go to <a href="https://console.firebase.google.com/project/thesamrpan/extensions" target="_blank" style="color:var(--clay);">Firebase Console → Extensions</a><br>
-            2. Search and install: <strong style="color:var(--text);">"Trigger Email from Firestore"</strong><br>
-            3. Configure with your Gmail SMTP (use an App Password from Google Account → Security)<br>
-            4. It will auto-send an email every time a new document is added to <code style="background:var(--bg3);padding:2px 5px;border-radius:4px;">homepage_leads</code><br><br>
-            <strong style="color:var(--gold);">Option B — EmailJS (No backend needed):</strong><br>
-            Already integrated below — configure your EmailJS keys in Settings and new leads will trigger an email to you automatically.<br><br>
-            <strong style="color:var(--gold);">Option C — Make.com / Zapier:</strong><br>
-            Connect Firebase Firestore → Gmail/Email in 5 minutes, no code. Free tier supports 1000 tasks/month.
+            1. Go to <a href="https://console.firebase.google.com/project/thesamrpan/authentication/providers" target="_blank" style="color:var(--clay);">Firebase Console → Authentication → Sign-in method</a><br>
+            2. Click <strong style="color:var(--text);">Email/Password</strong><br>
+            3. Toggle <strong style="color:var(--text);">"Enable"</strong> → Save<br>
+            4. Then go to Users tab → Add user → enter your email + password<br>
+            5. After creating your account, <strong style="color:var(--green);">verify your email</strong> (check inbox for Firebase verification email)<br><br>
+            <strong style="color:var(--gold);">⚠️ Important:</strong> The Firestore rules use <code style="background:var(--bg3);padding:2px 5px;border-radius:4px;">email_verified == true</code>. You must verify your email to access data.
           </div>
         </div>
 
-        <!-- Step 4: Phone Installation -->
         <div class="card settings-card">
-          <div class="card-header"><span class="card-title">Step 4 — Install on Your Phone (Access Anywhere)</span><span class="pill pill-sage">PWA</span></div>
+          <div class="card-header"><span class="card-title">Step 4 — Email Notifications (New Lead Alerts)</span><span class="pill pill-gold">Recommended</span></div>
           <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
-            This admin panel is a Progressive Web App (PWA) — you can install it on your phone like a native app:<br><br>
+            Configure EmailJS in Settings → EmailJS section to get email alerts when new leads arrive. Get free keys at <a href="https://emailjs.com" target="_blank" style="color:var(--clay);">emailjs.com</a> (200 emails/month free).
+          </div>
+        </div>
+
+        <div class="card settings-card">
+          <div class="card-header"><span class="card-title">Step 5 — Install on Your Phone (PWA)</span><span class="pill pill-sage">PWA</span></div>
+          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
             <strong style="color:var(--gold);">📱 Android (Chrome):</strong><br>
-            1. Open this page in Chrome on your Android phone<br>
-            2. Tap the <strong style="color:var(--text);">⋮ menu → "Add to Home screen"</strong><br>
-            3. It will appear as an app icon — tap to open, works like an app<br>
-            4. You'll stay logged in via Firebase Auth between sessions<br><br>
+            Tap ⋮ menu → "Add to Home screen"<br><br>
             <strong style="color:var(--gold);">🍎 iPhone (Safari):</strong><br>
-            1. Open this page in Safari on iPhone<br>
-            2. Tap the <strong style="color:var(--text);">Share button (box with arrow) → "Add to Home Screen"</strong><br>
-            3. Tap "Add" — it appears on your home screen<br>
-            4. Opens full screen like a native app<br><br>
-            <strong style="color:var(--green);">The panel auto-syncs data in real-time — check leads anywhere, anytime!</strong>
-          </div>
-        </div>
-
-        <!-- Step 5: Real-time -->
-        <div class="card">
-          <div class="card-header"><span class="card-title">Step 5 — Real-time Listeners Active</span><span class="pill pill-sage">✓ Done</span></div>
-          <div class="card-body" style="font-size:12.5px;color:var(--text-muted);line-height:2;">
-            This v7 panel uses Firebase <code style="background:var(--bg3);padding:2px 5px;border-radius:4px;">onSnapshot()</code> real-time listeners. Your dashboard updates <strong style="color:var(--text);">instantly</strong> the moment a new lead comes in — no refresh needed. The old 60-second polling has been replaced by true real-time sync.
+            Tap Share button → "Add to Home Screen"
           </div>
         </div>
       </div>
@@ -951,7 +923,7 @@ service cloud.firestore {
           <div class="card-header"><span class="card-title">Change Password</span><span class="pill pill-sage">Via Firebase</span></div>
           <div class="card-body">
             <div class="sec-warn" style="background:rgba(106,173,118,.05);border-color:rgba(106,173,118,.2);">
-              💡 Password changes are handled securely by Firebase. Click below to receive a password reset email — Firebase will let you set a new one. No passwords are stored in this app.
+              💡 Password changes are handled securely by Firebase. Click below to receive a password reset email.
             </div>
             <button class="btn btn-primary" onclick="sendChangePasswordEmail()"><i data-lucide="mail"></i>Send Password Reset Email</button>
           </div>
@@ -966,7 +938,7 @@ service cloud.firestore {
               <div class="form-group"><label class="form-label">EmailJS Template ID</label><input class="form-input" type="text" id="ejs-template" placeholder="template_xxxxxxx"></div>
             </div>
             <div class="form-group"><label class="form-label">EmailJS Public Key</label><input class="form-input" type="text" id="ejs-key" placeholder="your_public_key"></div>
-            <div class="form-group"><label class="form-label">Notify Email (your inbox)</label><input class="form-input" type="email" id="ejs-to" placeholder="justtheself@gmail.com"></div>
+            <div class="form-group"><label class="form-label">Notify Email (your inbox)</label><input class="form-input" type="email" id="ejs-to" placeholder="you@gmail.com"></div>
             <div style="display:flex;gap:.75rem;flex-wrap:wrap;">
               <button class="btn btn-primary" onclick="saveEmailJSSettings()"><i data-lucide="save"></i>Save EmailJS Config</button>
               <button class="btn btn-outline" onclick="testEmailNotification()"><i data-lucide="send"></i>Send Test Email</button>
@@ -1008,10 +980,12 @@ service cloud.firestore {
           <div class="card-header"><span class="card-title">About</span></div>
           <div class="card-body" style="font-size:12px;color:var(--text-muted);line-height:1.95;">
             <strong style="color:var(--text);">Samarpan Admin Panel v7</strong><br>
+            Project ID: thesamrpan<br>
+            App ID: 1:510287005957:web:978533c6dbca0f4969cf6c<br>
             Auth: Firebase Authentication (Email/Password)<br>
             Database: Firestore with real-time onSnapshot()<br>
             Website: <a href="https://thesamarpan.co.in/" target="_blank" style="color:var(--clay);">thesamarpan.co.in</a><br>
-            <span style="color:var(--text-dim);font-size:10px;">v7 — Firebase Auth login, real-time listeners, secure Firestore rules, PWA install, email notifications, forgot password, no credentials in source code.</span>
+            <span style="color:var(--text-dim);font-size:10px;">v7 — Firebase Auth login, real-time listeners, secure Firestore rules, PWA install, email notifications.</span>
           </div>
         </div>
       </div>
@@ -1109,15 +1083,16 @@ service cloud.firestore {
 
 <script>
 // ============================================================
-// FIREBASE CONFIG
+// FIREBASE CONFIG — FIXED with correct appId
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
   authDomain: "thesamrpan.firebaseapp.com",
   projectId: "thesamrpan",
-  storageBucket: "thesamrpan.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  storageBucket: "thesamrpan.firebasestorage.app",
+  messagingSenderId: "510287005957",
+  appId: "1:510287005957:web:978533c6dbca0f4969cf6c",
+  measurementId: "G-ML1QLKGR3K"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -1129,7 +1104,7 @@ const db = firebase.firestore();
 // ============================================================
 let allLeads=[], allNewsletter=[], allReferrals=[], allQuiz=[], allYoga=[], allVisitors=[], allJournalPosts=[];
 let currentUser = null;
-let unsubscribers = []; // real-time listener cleanup
+let unsubscribers = [];
 let notifLastSeen = sessionStorage.getItem('notif_last_seen') || '2020-01-01T00:00:00Z';
 let deferredPWAPrompt = null;
 
@@ -1146,7 +1121,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPWA();
   setupModalCloseOnBackdrop();
 
-  // Firebase Auth state listener — the single source of truth
   auth.onAuthStateChanged(user => {
     if (user) {
       currentUser = user;
@@ -1178,7 +1152,6 @@ function setupModalCloseOnBackdrop() {
 // PWA SETUP
 // ============================================================
 function setupPWA() {
-  // Inject manifest dynamically
   const manifest = {
     name: "Samarpan Admin",
     short_name: "Samarpan",
@@ -1284,6 +1257,7 @@ async function doFirebaseLogin() {
       'auth/invalid-email': 'Invalid email address.',
       'auth/too-many-requests': 'Too many failed attempts. Please wait or reset your password.',
       'auth/invalid-credential': 'Incorrect email or password.',
+      'auth/user-disabled': 'This account has been disabled.',
     };
     document.getElementById('login-error-msg').textContent = msgs[e.code] || e.message;
     errEl.classList.add('show');
@@ -1335,7 +1309,6 @@ function grantAccess(user) {
   s.classList.add('hidden');
   setTimeout(() => s.style.display = 'none', 500);
 
-  // Update UI with user info
   const name = user.displayName || localStorage.getItem('admin_name') || 'Admin';
   const email = user.email || '';
   const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) || 'SA';
@@ -1354,68 +1327,50 @@ function grantAccess(user) {
 
 function doLogout() {
   if(!confirm('Sign out of Samarpan Admin?')) return;
-  // Detach all listeners
   unsubscribers.forEach(u => u());
   unsubscribers = [];
   auth.signOut();
 }
 
 // ============================================================
-// REAL-TIME FIRESTORE LISTENERS (onSnapshot)
+// REAL-TIME FIRESTORE LISTENERS
 // ============================================================
 function attachRealTimeListeners() {
-  // Detach any existing
   unsubscribers.forEach(u => u());
   unsubscribers = [];
 
   const collections = [
-    { name:'homepage_leads', state:'allLeads' },
-    { name:'homepage_newsletter', state:'allNewsletter' },
-    { name:'homepage_referrals', state:'allReferrals' },
-    { name:'homepage_quiz_results', state:'allQuiz' },
-    { name:'homepage_yoga_sessions', state:'allYoga' },
-    { name:'homepage_visitors', state:'allVisitors' },
-    { name:'samarpan_journal_posts', state:'allJournalPosts' },
+    { name:'homepage_leads', setState: docs => { const prev=allLeads.length; allLeads=docs; if(prev>0&&docs.length>prev){const n=docs[0];showToast(`🔔 New lead: ${n.name||'Someone'} — ${n.service||'enquiry'}`);sendEmailNotification(n);updateNotifications();} } },
+    { name:'homepage_newsletter', setState: docs => { allNewsletter=docs; } },
+    { name:'homepage_referrals', setState: docs => { allReferrals=docs; } },
+    { name:'homepage_quiz_results', setState: docs => { allQuiz=docs; } },
+    { name:'homepage_yoga_sessions', setState: docs => { allYoga=docs; } },
+    { name:'homepage_visitors', setState: docs => { allVisitors=docs; } },
+    { name:'samarpan_journal_posts', setState: docs => { allJournalPosts=docs; } },
   ];
 
   let loadedCount = 0;
-  const total = collections.length;
 
-  collections.forEach(({ name, state }) => {
+  collections.forEach(({ name, setState }) => {
     const unsub = db.collection(name)
       .orderBy('timestamp', 'desc')
       .limit(500)
       .onSnapshot(snapshot => {
         const docs = snapshot.docs.map(doc => ({ _id: doc.id, ...doc.data() }));
-        if(state === 'allLeads') {
-          // Check for new lead notification
-          const prev = allLeads.length;
-          allLeads = docs;
-          if(prev > 0 && docs.length > prev) {
-            const newest = docs[0];
-            showToast(`🔔 New lead: ${newest.name || 'Someone'} — ${newest.service || 'enquiry'}`);
-            sendEmailNotification(newest);
-            updateNotifications();
-          }
-        } else if(state === 'allNewsletter') allNewsletter = docs;
-        else if(state === 'allReferrals') allReferrals = docs;
-        else if(state === 'allQuiz') allQuiz = docs;
-        else if(state === 'allYoga') allYoga = docs;
-        else if(state === 'allVisitors') allVisitors = docs;
-        else if(state === 'allJournalPosts') allJournalPosts = docs;
-
+        setState(docs);
         loadedCount++;
-        if(loadedCount >= total) {
+        if(loadedCount >= collections.length) {
           renderAll();
         } else {
-          // Partial render as data comes in
           renderPartial();
         }
-
         updateRTStatus();
       }, err => {
         console.error('Listener error:', name, err);
-        showToast('⚠️ Firebase listener error: ' + name, true);
+        // Don't show toast for permission errors during initial load
+        if(err.code !== 'permission-denied') {
+          showToast('⚠️ Sync error: ' + name, true);
+        }
       });
 
     unsubscribers.push(unsub);
@@ -1424,8 +1379,6 @@ function attachRealTimeListeners() {
 
 function updateRTStatus() {
   document.getElementById('last-sync-time').textContent = nowIST().time + ' IST';
-  const el = document.getElementById('rt-status');
-  if(el) { el.className = 'rt-indicator'; }
 }
 
 function refreshData() {
@@ -1453,7 +1406,7 @@ async function sendEmailNotification(lead) {
       lead_date: lead.date || nowIST().date,
       lead_time: lead.time || nowIST().time,
     };
-    await fetch(`https://api.emailjs.com/api/v1.0/email/send`, {
+    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({service_id:svc, template_id:tpl, user_id:key, template_params:params})
@@ -1475,7 +1428,7 @@ function saveEmailJSSettings() {
 }
 
 // ============================================================
-// FIRESTORE WRITE HELPERS
+// FIRESTORE HELPERS
 // ============================================================
 function nowIST() {
   const ist = getISTDate();
@@ -2030,7 +1983,6 @@ function saveProfileSettings() {
   const ini=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   document.getElementById('sb-av-init').textContent=ini;
   document.getElementById('sb-admin-name').textContent=name;
-  // Update Firebase display name
   if(currentUser) currentUser.updateProfile({displayName:name}).catch(()=>{});
   showToast('✅ Profile saved!');
 }
@@ -2088,13 +2040,21 @@ service cloud.firestore {
       allow read, write: if false;
     }
     function isAdmin() {
-      return request.auth != null && request.auth.token.email_verified == true;
+      return request.auth != null
+        && request.auth.token.email_verified == true;
     }
     function isValidEmail() {
-      return request.resource.data.keys().hasAny(['email']) && request.resource.data.email is string && request.resource.data.email.size() > 4 && request.resource.data.email.size() < 200;
+      return request.resource.data.keys().hasAny(['email'])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 4
+        && request.resource.data.email.size() < 200;
     }
     function isValidLead() {
-      return request.resource.data.keys().hasAll(['email', 'name']) && request.resource.data.email is string && request.resource.data.name is string && request.resource.data.email.size() > 4 && request.resource.data.name.size() > 0;
+      return request.resource.data.keys().hasAll(['email', 'name'])
+        && request.resource.data.email is string
+        && request.resource.data.name is string
+        && request.resource.data.email.size() > 4
+        && request.resource.data.name.size() > 0;
     }
   }
 }`;
