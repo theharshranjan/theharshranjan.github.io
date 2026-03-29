@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samarpan Admin — Dashboard</title>
+
+<!-- Google Analytics GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HMM7CJSCW7', {
+    page_title: 'Admin Dashboard',
+    page_location: window.location.href
+  });
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -64,8 +77,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 @keyframes spin{to{transform:rotate(360deg)}}
 .l-footer{text-align:center;margin-top:1.5rem;font-size:10px;letter-spacing:.08em;color:var(--text-dim);}
 .l-recover-link{color:var(--clay);cursor:pointer;text-decoration:underline;margin-top:.5rem;display:inline-block;}
-
-/* Recovery panel */
 .l-recover-panel{display:none;margin-top:1.25rem;background:rgba(197,160,89,.08);border:1px solid rgba(197,160,89,.25);border-radius:10px;padding:1rem;}
 .l-recover-panel.show{display:block;}
 .l-recover-panel h4{font-family:'Marcellus',serif;font-size:13px;color:var(--gold);margin-bottom:.65rem;}
@@ -196,6 +207,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .chart-bar{width:100%;border-radius:3px 3px 0 0;background:linear-gradient(to top,rgba(217,93,57,.2),rgba(197,160,89,.35));transition:background .3s;cursor:pointer;}
 .chart-bar.active,.chart-bar:hover{background:linear-gradient(to top,var(--clay),var(--gold));}
 .chart-bar-day{font-size:8px;color:var(--text-dim);}
+.chart-tooltip{position:absolute;background:var(--card2);border:1px solid var(--border2);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--text);pointer-events:none;white-space:nowrap;z-index:10;}
 
 /* DONUT */
 .donut-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem;padding:.5rem 0;}
@@ -272,11 +284,61 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;}
 .modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem;justify-content:flex-end;}
 
-/* TOAST */
-#toast{position:fixed;bottom:2rem;right:1.5rem;z-index:2000;background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow);opacity:0;transform:translateY(16px);transition:all .35s;min-width:240px;}
-#toast.show{opacity:1;transform:translateY(0);}
-#toast svg{width:16px;height:16px;flex-shrink:0;}
-#toast-msg{font-size:12px;color:var(--text);}
+/* GA IFRAME */
+.ga-embed-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;position:relative;}
+.ga-embed-header{padding:.75rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--card2);}
+.ga-embed-title{font-family:'Marcellus',serif;font-size:12px;color:var(--text);}
+.ga-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:50px;background:rgba(66,133,244,.15);color:#4285F4;}
+.ga-badge svg{width:10px;height:10px;}
+
+/* VISITOR CHART ENHANCED */
+.visitor-chart-wrap{position:relative;padding:1rem 1.25rem .75rem;}
+.vc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.vc-title{font-size:11px;color:var(--text-muted);}
+.vc-total{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text);}
+.vc-bars{display:flex;align-items:flex-end;gap:4px;height:80px;}
+.vc-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative;}
+.vc-bar{width:100%;border-radius:3px 3px 0 0;transition:all .3s;min-height:4px;}
+.vc-bar-label{font-size:8px;color:var(--text-dim);white-space:nowrap;}
+.vc-bar-val{font-size:8px;color:var(--text-dim);position:absolute;top:-14px;left:50%;transform:translateX(-50%);}
+
+/* SOURCE BADGE */
+.source-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;padding:2px 7px;border-radius:50px;font-weight:700;}
+.source-firestore{background:rgba(255,160,0,.12);color:#FFA000;}
+.source-ga{background:rgba(66,133,244,.12);color:#4285F4;}
+
+/* SETTINGS SECTION */
+.settings-section{margin-bottom:1.5rem;}
+.settings-section-title{font-family:'Marcellus',serif;font-size:14px;color:var(--text);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-info{flex:1;}
+.toggle-label{font-size:12px;font-weight:700;color:var(--text);}
+.toggle-desc{font-size:10px;color:var(--text-dim);margin-top:2px;}
+.toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:var(--border2);border-radius:22px;cursor:pointer;transition:.3s;}
+.toggle-slider:before{position:absolute;content:'';height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+input:checked+.toggle-slider{background:var(--clay);}
+input:checked+.toggle-slider:before{transform:translateX(18px);}
+.color-picker-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:.5rem;}
+.color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .2s;}
+.color-swatch.selected{border-color:var(--text);}
+.color-swatch:hover{transform:scale(1.15);}
+.save-btn-row{display:flex;gap:.75rem;margin-top:1rem;}
+
+/* JOURNAL CARD */
+.journal-post-card{display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);margin-bottom:.75rem;transition:border-color .2s;}
+.journal-post-card:hover{border-color:var(--clay);}
+.journal-thumb{width:60px;height:60px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;}
+.journal-post-info{flex:1;}
+.journal-post-title{font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;}
+.journal-post-meta{font-size:10px;color:var(--text-muted);}
+.journal-post-actions{display:flex;gap:.5rem;align-items:center;}
+
+/* INFO CHIP */
+.info-chip{display:inline-flex;align-items:center;gap:.35rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:.3rem .75rem;font-size:10px;color:var(--text-muted);}
+.info-chip svg{width:12px;height:12px;}
 
 /* PULSE */
 .pulse-dot{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
@@ -296,22 +358,11 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .sidebar-overlay.open{display:block;}
 #sidebar-toggle{display:none;}
 
-/* SEARCH HIGHLIGHT */
-.search-hl{background:rgba(217,93,57,.25);border-radius:2px;padding:0 2px;}
-
-/* INFO CHIP */
-.info-chip{display:inline-flex;align-items:center;gap:.35rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:.3rem .75rem;font-size:10px;color:var(--text-muted);}
-.info-chip svg{width:12px;height:12px;}
-
-/* VISITOR PAGE */
-.visit-timeline{display:flex;flex-direction:column;gap:0;}
-.vt-item{display:flex;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--border);align-items:center;}
-.vt-item:last-child{border-bottom:none;}
-.vt-time{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--clay);min-width:55px;}
-.vt-date{font-size:10px;color:var(--text-dim);}
-.vt-info{flex:1;}
-.vt-page{font-size:12px;color:var(--text);font-weight:700;}
-.vt-meta{font-size:10px;color:var(--text-muted);margin-top:2px;}
+/* TOAST */
+#toast{position:fixed;bottom:2rem;right:1.5rem;z-index:2000;background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;box-shadow:var(--shadow);opacity:0;transform:translateY(16px);transition:all .35s;min-width:240px;}
+#toast.show{opacity:1;transform:translateY(0);}
+#toast svg{width:16px;height:16px;flex-shrink:0;}
+#toast-msg{font-size:12px;color:var(--text);}
 
 /* RESPONSIVE */
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.content-grid{grid-template-columns:1fr}.content-grid-3{grid-template-columns:1fr 1fr}.visitor-banner{grid-template-columns:repeat(2,1fr)}}
@@ -335,12 +386,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       <div class="login-logo-sub">Admin · Secure Access</div>
     </div>
     <div class="login-headline">Sign in to continue</div>
-
     <div class="l-error" id="login-error">
       <i data-lucide="alert-circle"></i>
       <span id="login-error-msg">Invalid email or password.</span>
     </div>
-
     <div class="l-field">
       <label class="l-label">Email Address</label>
       <div class="l-input-wrap">
@@ -357,30 +406,21 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         </span>
       </div>
     </div>
-
     <button class="l-btn" id="login-btn" onclick="doLogin()">
       <span id="login-btn-text">Sign In</span>
       <div class="l-spinner" id="login-spinner"></div>
       <i data-lucide="arrow-right" id="login-btn-icon"></i>
     </button>
-
     <div class="l-footer">
       Protected Admin Panel · Samarpan Wellness
-      <br>
-      <span class="l-recover-link" onclick="toggleRecovery()">Forgot password? Recovery guide</span>
+      <br><span class="l-recover-link" onclick="toggleRecovery()">Forgot password? Recovery guide</span>
     </div>
-
-    <!-- PASSWORD RECOVERY PANEL -->
     <div class="l-recover-panel" id="recovery-panel">
       <h4>🔐 Password Recovery — 3 Ways</h4>
-      <p><strong>Method 1 — Open the HTML file in Notepad/VSCode</strong> and search for <code>ADMIN_PASSWORD</code>. You will see your password there. Change it anytime.</p>
-      <p><strong>Method 2 — Emergency bypass:</strong> Open this page, press <code>F12</code> → Console tab, type exactly:<br>
-      <code>sessionStorage.setItem('samarpan_admin_auth','1');location.reload();</code><br>
-      and press Enter. This logs you in for one session.</p>
-      <p><strong>Method 3 — Reset password:</strong> In the HTML file find the line that says:<br>
-      <code>const ADMIN_PASSWORD = '...';</code><br>
-      Change it to any new password you want and save.</p>
-      <p style="font-size:10px;margin-top:.5rem;color:var(--text-dim);">💡 Tip: Save your password in Google Keep or Notes app for safety.</p>
+      <p><strong>Method 1:</strong> Open this HTML file, search for <code>ADMIN_PASSWORD</code>.</p>
+      <p><strong>Method 2 — Emergency bypass:</strong> Press <code>F12</code> → Console → type:<br>
+      <code>sessionStorage.setItem('samarpan_admin_auth','1');location.reload();</code></p>
+      <p><strong>Method 3:</strong> Find <code>const ADMIN_PASSWORD = '...';</code> and change it.</p>
     </div>
   </div>
 </div>
@@ -399,7 +439,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     </svg>
     <div>
       <div class="sidebar-logo-text">Samarpan</div>
-      <div class="sidebar-logo-sub">Admin Panel v3</div>
+      <div class="sidebar-logo-sub">Admin Panel v4</div>
     </div>
   </div>
   <nav class="sidebar-nav">
@@ -407,27 +447,25 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <div class="nav-item active" onclick="showPage('dashboard',this)"><i data-lucide="layout-dashboard"></i>Dashboard</div>
     <div class="nav-item" onclick="showPage('analytics',this)"><i data-lucide="bar-chart-2"></i>Analytics<span class="nav-badge gold">Live</span></div>
     <div class="nav-item" onclick="showPage('visitors',this)"><i data-lucide="eye"></i>Visitors<span class="nav-badge green" id="nav-visitor-badge">—</span></div>
-
     <div class="nav-section-label">CRM</div>
     <div class="nav-item" onclick="showPage('leads',this)"><i data-lucide="users"></i>All Leads<span class="nav-badge" id="sidebar-leads-count">—</span></div>
     <div class="nav-item" onclick="showPage('newsletter',this)"><i data-lucide="mail"></i>Newsletter<span class="nav-badge gold" id="sidebar-news-count">—</span></div>
     <div class="nav-item" onclick="showPage('referrals',this)"><i data-lucide="gift"></i>Referrals</div>
     <div class="nav-item" onclick="showPage('quiz',this)"><i data-lucide="sparkles"></i>Quiz Results</div>
     <div class="nav-item" onclick="showPage('yoga',this)"><i data-lucide="flame"></i>Yoga Signups</div>
-
     <div class="nav-section-label">Content</div>
     <div class="nav-item" onclick="showPage('sessions',this)"><i data-lucide="calendar"></i>Sessions</div>
     <div class="nav-item" onclick="showPage('journal',this)"><i data-lucide="book-open"></i>Journal Posts</div>
-
     <div class="nav-section-label">System</div>
     <div class="nav-item" onclick="showPage('settings',this)"><i data-lucide="settings"></i>Settings</div>
-    <div class="nav-item" onclick="window.open('index.html','_blank')"><i data-lucide="external-link"></i>View Website</div>
+    <div class="nav-item" onclick="window.open('https://thesamarpan.co.in/','_blank')"><i data-lucide="external-link"></i>View Website</div>
+    <div class="nav-item" onclick="window.open('https://analytics.google.com/analytics/web/#/p000000/reports/reportinghub','_blank')"><i data-lucide="trending-up"></i>Google Analytics</div>
   </nav>
   <div class="sidebar-footer">
     <div class="admin-avatar">
-      <div class="avatar-circle">HR</div>
+      <div class="avatar-circle" id="sidebar-avatar-initials">HR</div>
       <div>
-        <div class="avatar-name">Harsh Ranjan</div>
+        <div class="avatar-name" id="sidebar-admin-name">Harsh Ranjan</div>
         <div class="avatar-role" style="display:flex;align-items:center;gap:4px;"><span class="pulse-dot"></span>Super Admin</div>
       </div>
     </div>
@@ -457,7 +495,7 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <span id="theme-label">Dark</span>
       </div>
       <div class="topbar-icon-btn" onclick="refreshData()" title="Sync now"><i data-lucide="refresh-cw"></i></div>
-      <div class="topbar-icon-btn" title="Notifications" onclick="showPage('activity-modal',null)"><i data-lucide="bell"></i><div class="notif-dot" id="notif-dot"></div></div>
+      <div class="topbar-icon-btn" title="Notifications"><i data-lucide="bell"></i><div class="notif-dot" id="notif-dot"></div></div>
       <div class="topbar-icon-btn" title="Export all as CSV" onclick="exportAllCSV()"><i data-lucide="download"></i></div>
     </div>
   </div>
@@ -466,8 +504,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
     <!-- ====== DASHBOARD ====== -->
     <div class="page-view active fade-in" id="page-dashboard">
-
-      <!-- VISITOR BANNER -->
       <div class="visitor-banner">
         <div class="visitor-stat">
           <div class="visitor-num" id="v-today">—</div>
@@ -494,7 +530,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         </div>
       </div>
 
-      <!-- STATS -->
       <div class="stats-grid">
         <div class="stat-card" style="--card-accent:linear-gradient(90deg,var(--clay),var(--gold));">
           <div class="stat-card-header">
@@ -534,11 +569,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         </div>
       </div>
 
-      <!-- MAIN GRID -->
       <div class="content-grid">
         <div class="card">
           <div class="card-header">
-            <span class="card-title">Recent Leads <span style="font-size:10px;color:var(--text-dim);font-family:'Lato',sans-serif;">with time received</span></span>
+            <span class="card-title">Recent Leads</span>
             <a class="card-action" onclick="showPage('leads',document.querySelectorAll('.nav-item')[3])">View All →</a>
           </div>
           <div style="overflow-x:auto;">
@@ -566,15 +600,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
                 <div class="quick-action" onclick="exportAllCSV()"><div class="qa-icon" style="background:rgba(197,160,89,.12);"><i data-lucide="download" style="color:var(--gold);"></i></div><div class="qa-label">Export All</div><div class="qa-sub">Full CSV dump</div></div>
                 <div class="quick-action" onclick="window.open('https://wa.me/919661486740','_blank')"><div class="qa-icon" style="background:rgba(37,211,102,.1);"><i data-lucide="message-circle" style="color:#25D366;"></i></div><div class="qa-label">WhatsApp</div><div class="qa-sub">Open chat</div></div>
                 <div class="quick-action" onclick="refreshData()"><div class="qa-icon" style="background:rgba(127,175,240,.1);"><i data-lucide="refresh-cw" style="color:var(--blue);"></i></div><div class="qa-label">Sync Now</div><div class="qa-sub">Force refresh</div></div>
-                <div class="quick-action" onclick="showPage('visitors',document.querySelectorAll('.nav-item')[2])"><div class="qa-icon" style="background:rgba(192,141,224,.1);"><i data-lucide="eye" style="color:var(--purple);"></i></div><div class="qa-label">Visitors</div><div class="qa-sub">Traffic data</div></div>
-                <div class="quick-action" onclick="openSendEmailModal()"><div class="qa-icon" style="background:rgba(74,93,79,.15);"><i data-lucide="send" style="color:var(--green);"></i></div><div class="qa-label">Broadcast</div><div class="qa-sub">Email all subs</div></div>
+                <div class="quick-action" onclick="window.open('https://thesamarpan.co.in/','_blank')"><div class="qa-icon" style="background:rgba(192,141,224,.1);"><i data-lucide="globe" style="color:var(--purple);"></i></div><div class="qa-label">Website</div><div class="qa-sub">thesamarpan.co.in</div></div>
+                <div class="quick-action" onclick="window.open('https://analytics.google.com/','_blank')"><div class="qa-icon" style="background:rgba(66,133,244,.1);"><i data-lucide="trending-up" style="color:#4285F4;"></i></div><div class="qa-label">GA4 Reports</div><div class="qa-sub">Google Analytics</div></div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- BOTTOM GRID -->
       <div class="content-grid-3">
         <div class="card">
           <div class="card-header"><span class="card-title">Leads This Week</span></div>
@@ -613,10 +646,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         </div>
       </div>
 
-      <!-- LAST SYNC INFO -->
       <div style="display:flex;align-items:center;gap:.75rem;margin-top:.25rem;flex-wrap:wrap;">
         <div class="info-chip"><i data-lucide="clock"></i>Last sync: <strong id="last-sync-time" style="color:var(--text);">—</strong></div>
         <div class="info-chip"><i data-lucide="database"></i>Firebase · thesamrpan</div>
+        <div class="info-chip"><i data-lucide="trending-up"></i>GA4 · G-HMM7CJSCW7</div>
         <div class="info-chip"><i data-lucide="refresh-cw"></i>Auto-refresh every 60s</div>
       </div>
     </div>
@@ -643,16 +676,79 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
+        <!-- Daily Visits — Last 7 Days (from Firestore) -->
         <div class="card">
-          <div class="card-header"><span class="card-title">Daily Visits — Last 7 Days</span></div>
-          <div class="chart-container">
-            <div class="chart-bars" id="visitor-chart-bars" style="height:100px;"></div>
-            <div style="display:flex;justify-content:space-between;" id="visitor-chart-labels"></div>
+          <div class="card-header">
+            <span class="card-title">Daily Visits — Last 7 Days</span>
+            <span class="source-badge source-firestore">🔥 Firestore Live</span>
+          </div>
+          <div class="visitor-chart-wrap">
+            <div class="vc-header">
+              <span class="vc-title">Visits per day from your tracking script</span>
+              <span class="vc-total" id="week-total-label">—</span>
+            </div>
+            <div class="vc-bars" id="visitor-chart-bars"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;" id="visitor-chart-labels"></div>
+          </div>
+        </div>
+
+        <!-- Visits By Month (from Firestore) -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Visits By Month</span>
+            <span class="source-badge source-firestore">🔥 Firestore Live</span>
+          </div>
+          <div class="card-body" id="monthly-visits-breakdown" style="padding-top:.75rem;">
+            <div style="color:var(--text-dim);font-size:12px;">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GA4 Deep Analytics Link -->
+      <div class="ga-embed-wrap" style="margin-bottom:1.25rem;">
+        <div class="ga-embed-header">
+          <span class="ga-embed-title">Google Analytics 4 — Full Reports</span>
+          <span class="ga-badge"><i data-lucide="trending-up"></i>G-HMM7CJSCW7</span>
+        </div>
+        <div style="padding:1.25rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+          <a href="https://analytics.google.com/analytics/web/" target="_blank" style="text-decoration:none;">
+            <div class="quick-action" style="text-align:center;align-items:center;">
+              <div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="bar-chart-2" style="color:#4285F4;"></i></div>
+              <div class="qa-label">Overview Report</div>
+              <div class="qa-sub">Users, sessions, bounce rate</div>
+            </div>
+          </a>
+          <a href="https://analytics.google.com/analytics/web/" target="_blank" style="text-decoration:none;">
+            <div class="quick-action" style="text-align:center;align-items:center;">
+              <div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="map-pin" style="color:#4285F4;"></i></div>
+              <div class="qa-label">Geo Report</div>
+              <div class="qa-sub">Countries, cities, regions</div>
+            </div>
+          </a>
+          <a href="https://analytics.google.com/analytics/web/" target="_blank" style="text-decoration:none;">
+            <div class="quick-action" style="text-align:center;align-items:center;">
+              <div class="qa-icon" style="background:rgba(66,133,244,.1);margin:0 auto .5rem;"><i data-lucide="smartphone" style="color:#4285F4;"></i></div>
+              <div class="qa-label">Device Report</div>
+              <div class="qa-sub">Mobile vs Desktop</div>
+            </div>
+          </a>
+        </div>
+        <div style="padding:.75rem 1.25rem 1rem;font-size:11px;color:var(--text-dim);border-top:1px solid var(--border);">
+          💡 GA4 provides deeper metrics (bounce rate, session duration, traffic sources, conversion). Your Firestore script above gives real-time raw data. Use both together for full picture.
+        </div>
+      </div>
+
+      <!-- Device Breakdown from Firestore -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Device Breakdown</span><span class="source-badge source-firestore">🔥 Live</span></div>
+          <div class="card-body" id="device-breakdown">
+            <div style="color:var(--text-dim);font-size:12px;">Loading…</div>
           </div>
         </div>
         <div class="card">
-          <div class="card-header"><span class="card-title">Visits By Month</span></div>
-          <div class="card-body" id="monthly-visits-breakdown">
+          <div class="card-header"><span class="card-title">Top Pages Visited</span><span class="source-badge source-firestore">🔥 Live</span></div>
+          <div class="card-body" id="top-pages-breakdown">
             <div style="color:var(--text-dim);font-size:12px;">Loading…</div>
           </div>
         </div>
@@ -668,14 +764,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
             <thead><tr><th>Session ID</th><th>Date</th><th>Time (IST)</th><th>Page</th><th>Device</th><th>Referrer</th></tr></thead>
             <tbody id="visitors-body"><tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">Loading visitor data…</td></tr></tbody>
           </table>
-        </div>
-      </div>
-
-      <div style="margin-top:1rem;background:rgba(197,160,89,.08);border:1px solid rgba(197,160,89,.2);border-radius:10px;padding:1rem 1.25rem;">
-        <div style="font-family:'Marcellus',serif;font-size:13px;color:var(--gold);margin-bottom:.5rem;">📌 How to track visitors on your website</div>
-        <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
-          Add this one-line script to your website's <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:11px;">index.html</code> (before closing <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:11px;">&lt;/body&gt;</code> tag) to start tracking visits automatically:<br>
-          <code style="display:block;margin-top:.5rem;background:var(--bg3);border:1px solid var(--border);padding:.75rem;border-radius:6px;font-size:11px;word-break:break-all;">&lt;script&gt;(async()=>{const d=new Date(),ist=new Date(d.getTime()+5.5*3600000),dateStr=ist.toISOString().split('T')[0],timeStr=ist.toTimeString().slice(0,8),id=Math.random().toString(36).slice(2,10);await fetch('https://firestore.googleapis.com/v1/projects/thesamrpan/databases/(default)/documents/homepage_visitors/'+id+'?key=AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({fields:{date:{stringValue:dateStr},time:{stringValue:timeStr},page:{stringValue:location.pathname},referrer:{stringValue:document.referrer||'direct'},device:{stringValue:/Mobile/.test(navigator.userAgent)?'Mobile':'Desktop'},timestamp:{stringValue:d.toISOString()}}})});})();&lt;/script&gt;</code>
         </div>
       </div>
     </div>
@@ -798,6 +886,14 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
         <div class="card"><div style="text-align:center;padding:1rem;"><div class="stat-value" id="cs-quiz">—</div><div class="stat-label">Quiz</div></div></div>
         <div class="card"><div style="text-align:center;padding:1rem;"><div class="stat-value" id="cs-yoga">—</div><div class="stat-label">Yoga</div></div></div>
       </div>
+      <!-- GA4 Tip -->
+      <div style="background:rgba(66,133,244,.06);border:1px solid rgba(66,133,244,.2);border-radius:10px;padding:1rem 1.25rem;">
+        <div style="font-family:'Marcellus',serif;font-size:13px;color:#4285F4;margin-bottom:.5rem;">📊 Google Analytics 4 is Active — G-HMM7CJSCW7</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.8;">
+          GA4 is tracking all pages on <strong style="color:var(--text);">thesamarpan.co.in</strong> including traffic sources, session duration, bounce rate, geographic data, device types, and conversion events.<br>
+          <a href="https://analytics.google.com/" target="_blank" style="color:#4285F4;font-weight:700;">→ Open Google Analytics Dashboard</a> to see full real-time reports, audience insights, and acquisition data.
+        </div>
+      </div>
     </div>
 
     <!-- ====== SESSIONS PAGE ====== -->
@@ -815,69 +911,208 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
     <!-- ====== JOURNAL PAGE ====== -->
     <div class="page-view fade-in" id="page-journal">
-      <div class="card">
-        <div class="card-header"><span class="card-title">Journal / Blog Posts</span><button class="btn btn-primary" onclick="showToast('Blog editor coming soon!')"><i data-lucide="plus"></i>New Post</button></div>
-        <div class="card-body">
-          <div style="display:flex;flex-direction:column;gap:.85rem;">
-            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
-              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,var(--clay),var(--gold));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">🌿</div>
-              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">Understanding Your Prakriti</div><div style="font-size:10px;color:var(--text-muted);">Ayurveda · 5 min read</div></div>
-              <span class="pill pill-sage">Published</span>
-            </div>
-            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
-              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,var(--sage),var(--green));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">🔔</div>
-              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">The Neurobiology of Mantra</div><div style="font-size:10px;color:var(--text-muted);">Tantra &amp; Spirit · 7 min read</div></div>
-              <span class="pill pill-sage">Published</span>
-            </div>
-            <div style="display:flex;gap:1rem;align-items:center;padding:1rem;background:var(--card2);border-radius:8px;border:1px solid var(--border);">
-              <div style="width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;">💫</div>
-              <div style="flex:1;"><div style="font-family:'Marcellus',serif;font-size:13px;color:var(--text);margin-bottom:3px;">Trauma &amp; The Body</div><div style="font-size:10px;color:var(--text-muted);">Psychology · 8 min read · Draft</div></div>
-              <span class="pill pill-gold">Draft</span>
-            </div>
-          </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;">
+        <div>
+          <h2 style="font-family:'Marcellus',serif;font-size:16px;color:var(--text);">Journal / Blog Posts</h2>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">thesamarpan.co.in/journal.html</div>
+        </div>
+        <div style="display:flex;gap:.75rem;">
+          <button class="btn btn-outline" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i>View Live</button>
+          <button class="btn btn-primary" onclick="showToast('Blog editor coming soon! For now manage posts in your HTML file.')"><i data-lucide="plus"></i>New Post</button>
+        </div>
+      </div>
+
+      <div style="background:rgba(197,160,89,.08);border:1px solid rgba(197,160,89,.2);border-radius:10px;padding:.85rem 1.25rem;margin-bottom:1.25rem;font-size:12px;color:var(--text-muted);">
+        💡 These are your journal posts from <strong style="color:var(--text);">thesamarpan.co.in/journal.html</strong>. To add/edit posts, update your journal.html file. A visual editor is coming soon.
+      </div>
+
+      <!-- Actual posts from your website -->
+      <div class="journal-post-card">
+        <div class="journal-thumb" style="background:linear-gradient(135deg,#4A5D4F,#6aad76);">🌿</div>
+        <div class="journal-post-info">
+          <div class="journal-post-title">Understanding Your Prakriti — The Ayurvedic Blueprint of You</div>
+          <div class="journal-post-meta">Ayurveda · 5 min read · thesamarpan.co.in/journal.html</div>
+        </div>
+        <div class="journal-post-actions">
+          <span class="pill pill-sage">Published</span>
+          <button class="btn btn-outline" style="padding:.35rem .7rem;" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i></button>
+        </div>
+      </div>
+
+      <div class="journal-post-card">
+        <div class="journal-thumb" style="background:linear-gradient(135deg,#c08de0,#7faff0);">🔔</div>
+        <div class="journal-post-info">
+          <div class="journal-post-title">The Neurobiology of Mantra — Science Behind Ancient Sound</div>
+          <div class="journal-post-meta">Tantra &amp; Spirit · 7 min read · thesamarpan.co.in/journal.html</div>
+        </div>
+        <div class="journal-post-actions">
+          <span class="pill pill-sage">Published</span>
+          <button class="btn btn-outline" style="padding:.35rem .7rem;" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i></button>
+        </div>
+      </div>
+
+      <div class="journal-post-card">
+        <div class="journal-thumb" style="background:linear-gradient(135deg,#D95D39,#C5A059);">🌙</div>
+        <div class="journal-post-info">
+          <div class="journal-post-title">Dinacharya — Your Ayurvedic Daily Routine for Balance</div>
+          <div class="journal-post-meta">Ayurveda · 6 min read · thesamarpan.co.in/journal.html</div>
+        </div>
+        <div class="journal-post-actions">
+          <span class="pill pill-sage">Published</span>
+          <button class="btn btn-outline" style="padding:.35rem .7rem;" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i></button>
+        </div>
+      </div>
+
+      <div class="journal-post-card">
+        <div class="journal-thumb" style="background:linear-gradient(135deg,#7faff0,#c08de0);">💫</div>
+        <div class="journal-post-info">
+          <div class="journal-post-title">Trauma &amp; The Body — A Somatic Psychology Perspective</div>
+          <div class="journal-post-meta">Psychology · 8 min read · Draft</div>
+        </div>
+        <div class="journal-post-actions">
+          <span class="pill pill-gold">Draft</span>
+          <button class="btn btn-outline" style="padding:.35rem .7rem;" onclick="showToast('Draft not yet published')"><i data-lucide="edit-2"></i></button>
+        </div>
+      </div>
+
+      <div class="journal-post-card">
+        <div class="journal-thumb" style="background:linear-gradient(135deg,#4A5D4F,#C5A059);">🧘</div>
+        <div class="journal-post-info">
+          <div class="journal-post-title">Meditation for Anxiety — Ajapa Japa &amp; Breath Awareness</div>
+          <div class="journal-post-meta">Meditation · 4 min read · thesamarpan.co.in/journal.html</div>
+        </div>
+        <div class="journal-post-actions">
+          <span class="pill pill-sage">Published</span>
+          <button class="btn btn-outline" style="padding:.35rem .7rem;" onclick="window.open('https://thesamarpan.co.in/journal.html','_blank')"><i data-lucide="external-link"></i></button>
         </div>
       </div>
     </div>
 
-    <!-- ====== SETTINGS PAGE ====== -->
+    <!-- ====== SETTINGS PAGE (Fully Functional) ====== -->
     <div class="page-view fade-in" id="page-settings">
-      <div style="max-width:640px;">
-        <div class="card" style="margin-bottom:1.25rem;">
-          <div class="card-header"><span class="card-title">Firebase Configuration</span></div>
-          <div class="card-body">
-            <div class="form-group"><label class="form-label">Firebase Project ID</label><input class="form-input" type="text" value="thesamrpan" readonly style="opacity:.6;"></div>
-            <div class="form-group"><label class="form-label">API Key</label><input class="form-input" type="password" value="AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ" readonly style="opacity:.6;"></div>
-            <div style="font-size:11px;color:var(--text-dim);">🟢 Connected · Real-time sync active</div>
-          </div>
-        </div>
-        <div class="card" style="margin-bottom:1.25rem;">
-          <div class="card-header"><span class="card-title">Admin Credentials</span></div>
+      <div style="max-width:700px;">
+
+        <!-- Admin Profile -->
+        <div class="card settings-section" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Admin Profile</span></div>
           <div class="card-body">
             <div class="form-row">
-              <div class="form-group"><label class="form-label">Login Email</label><input class="form-input" type="text" value="justtheself@gmail.com" readonly style="opacity:.6;"></div>
-              <div class="form-group"><label class="form-label">Role</label><input class="form-input" type="text" value="Super Admin" readonly style="opacity:.6;"></div>
+              <div class="form-group"><label class="form-label">Admin Name</label><input class="form-input" type="text" id="settings-name" value="Harsh Ranjan" placeholder="Your name"></div>
+              <div class="form-group"><label class="form-label">Admin Email</label><input class="form-input" type="email" id="settings-email" value="justtheself@gmail.com" readonly style="opacity:.6;"></div>
             </div>
-            <div style="background:rgba(197,160,89,.08);border:1px solid rgba(197,160,89,.2);border-radius:8px;padding:.85rem;font-size:11.5px;color:var(--text-muted);line-height:1.7;">
-              🔐 <strong style="color:var(--gold);">To change your password:</strong> Open this HTML file in Notepad/VSCode. Find the line <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:11px;">const ADMIN_PASSWORD = '...';</code> and change it. Save the file.<br>
-              🆘 <strong style="color:var(--clay);">Forgot password?</strong> Press F12 → Console → type <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;font-size:11px;">sessionStorage.setItem('samarpan_admin_auth','1');location.reload();</code>
+            <div class="form-group"><label class="form-label">WhatsApp Number (for Quick Action)</label><input class="form-input" type="text" id="settings-whatsapp" value="+919661486740" placeholder="+91XXXXXXXXXX"></div>
+            <div class="form-group"><label class="form-label">Website URL</label><input class="form-input" type="text" id="settings-website" value="https://thesamarpan.co.in/" placeholder="https://yourwebsite.com"></div>
+            <button class="btn btn-primary" onclick="saveProfileSettings()"><i data-lucide="save"></i>Save Profile</button>
+          </div>
+        </div>
+
+        <!-- Change Password -->
+        <div class="card settings-section" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Change Password</span></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" id="settings-cur-pw" placeholder="Current password"></div>
+              <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" id="settings-new-pw" placeholder="New password"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" id="settings-confirm-pw" placeholder="Confirm new password"></div>
+            <button class="btn btn-primary" onclick="changePassword()"><i data-lucide="lock"></i>Update Password</button>
+            <div style="margin-top:.75rem;background:rgba(197,160,89,.08);border:1px solid rgba(197,160,89,.2);border-radius:8px;padding:.75rem;font-size:11px;color:var(--text-muted);line-height:1.7;">
+              🔐 Password is stored in this HTML file. After changing, the new password takes effect immediately for this session. <strong style="color:var(--gold);">Note:</strong> To make it permanent, save the HTML file with the new password.
             </div>
           </div>
         </div>
-        <div class="card">
-          <div class="card-header"><span class="card-title">Display Settings</span></div>
+
+        <!-- Appearance -->
+        <div class="card settings-section" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Appearance</span></div>
           <div class="card-body">
-            <div class="form-row">
-              <div class="form-group"><label class="form-label">Admin Name</label><input class="form-input" type="text" value="Harsh Ranjan" id="settings-name"></div>
-              <div class="form-group"><label class="form-label">Theme</label>
-                <select class="form-input" onchange="setTheme(this.value)" id="theme-select">
-                  <option value="dark">🌙 Dark Mode</option>
-                  <option value="light">☀️ Light Mode</option>
-                </select>
+            <div class="form-group">
+              <label class="form-label">Theme</label>
+              <select class="form-input" onchange="setTheme(this.value)" id="theme-select">
+                <option value="dark">🌙 Dark Mode</option>
+                <option value="light">☀️ Light Mode</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accent Color</label>
+              <div class="color-picker-row" id="accent-colors">
+                <div class="color-swatch selected" style="background:#D95D39;" data-color="#D95D39" title="Clay (Default)" onclick="setAccentColor(this)"></div>
+                <div class="color-swatch" style="background:#4285F4;" data-color="#4285F4" title="Blue" onclick="setAccentColor(this)"></div>
+                <div class="color-swatch" style="background:#0F9D58;" data-color="#0F9D58" title="Green" onclick="setAccentColor(this)"></div>
+                <div class="color-swatch" style="background:#c08de0;" data-color="#c08de0" title="Purple" onclick="setAccentColor(this)"></div>
+                <div class="color-swatch" style="background:#C5A059;" data-color="#C5A059" title="Gold" onclick="setAccentColor(this)"></div>
               </div>
             </div>
-            <button class="btn btn-primary" onclick="showToast('Settings saved!')">Save Changes</button>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Auto-refresh data</div><div class="toggle-desc">Refresh Firebase data every 60 seconds</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-autorefresh" checked onchange="toggleAutoRefresh(this)"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Sound notifications</div><div class="toggle-desc">Play a sound when new lead arrives</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-sound" onchange="saveSetting('sound',this.checked)"><span class="toggle-slider"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Show visitor banner</div><div class="toggle-desc">Show visitor stats at top of dashboard</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-banner" checked onchange="toggleVisitorBanner(this)"><span class="toggle-slider"></span></label>
+            </div>
           </div>
         </div>
+
+        <!-- Firebase & GA Config -->
+        <div class="card settings-section" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Firebase &amp; Analytics Configuration</span></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">Firebase Project ID</label><input class="form-input" type="text" value="thesamrpan" readonly style="opacity:.6;"></div>
+              <div class="form-group"><label class="form-label">Firebase API Key</label><input class="form-input" type="password" id="settings-show-key" value="AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ" readonly style="opacity:.6;"></div>
+            </div>
+            <div class="form-group"><label class="form-label">Google Analytics Measurement ID</label><input class="form-input" type="text" value="G-HMM7CJSCW7" readonly style="opacity:.6;"></div>
+            <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+              <span style="font-size:11px;color:var(--green);display:flex;align-items:center;gap:.35rem;"><span class="pulse-dot"></span>Firebase Connected</span>
+              <span style="font-size:11px;color:#4285F4;display:flex;align-items:center;gap:.35rem;"><span style="width:7px;height:7px;background:#4285F4;border-radius:50%;display:inline-block;"></span>GA4 Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="card settings-section" style="margin-bottom:1.25rem;">
+          <div class="card-header"><span class="card-title">Data Management</span></div>
+          <div class="card-body">
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Export leads as CSV</div><div class="toggle-desc">Download all leads data</div></div>
+              <button class="btn btn-outline" onclick="exportLeadsCSV()"><i data-lucide="download"></i>Export</button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Export newsletter subscribers</div><div class="toggle-desc">Download all subscriber emails</div></div>
+              <button class="btn btn-outline" onclick="exportNewsletterCSV()"><i data-lucide="download"></i>Export</button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Export visitor sessions</div><div class="toggle-desc">Download all visitor tracking data</div></div>
+              <button class="btn btn-outline" onclick="exportVisitorsCSV()"><i data-lucide="download"></i>Export</button>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Export everything</div><div class="toggle-desc">Download all 3 datasets at once</div></div>
+              <button class="btn btn-primary" onclick="exportAllCSV()"><i data-lucide="archive"></i>Export All</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">About</span></div>
+          <div class="card-body">
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.9;">
+              <strong style="color:var(--text);">Samarpan Admin Panel v4</strong><br>
+              Website: <a href="https://thesamarpan.co.in/" target="_blank" style="color:var(--clay);">thesamarpan.co.in</a><br>
+              Journal: <a href="https://thesamarpan.co.in/journal.html" target="_blank" style="color:var(--clay);">thesamarpan.co.in/journal.html</a><br>
+              Firebase Project: thesamrpan<br>
+              GA4 Measurement ID: G-HMM7CJSCW7<br>
+              <br>
+              <span style="color:var(--text-dim);font-size:10px;">All data stored in Firebase Firestore. GA4 tracks website analytics automatically.</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -923,13 +1158,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 <script>
 // ===========================
-// CONFIG
+// CONFIG — Edit these to customize
 // ===========================
-const ADMIN_EMAIL = 'justtheself@gmail.com';
-const ADMIN_PASSWORD = 'Samarpan@804401';  // ← Change this to update password
+let ADMIN_EMAIL = localStorage.getItem('admin_email') || 'justtheself@gmail.com';
+let ADMIN_PASSWORD = localStorage.getItem('admin_pw') || 'Samarpan@804401';
+let ADMIN_NAME = localStorage.getItem('admin_name') || 'Harsh Ranjan';
+let ADMIN_WHATSAPP = localStorage.getItem('admin_whatsapp') || '919661486740';
 
 const FIREBASE_PROJECT = 'thesamrpan';
 const FIREBASE_API_KEY = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+const GA_MEASUREMENT_ID = 'G-HMM7CJSCW7';
 const BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents/`;
 
 // ===========================
@@ -937,7 +1175,7 @@ const BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/d
 // ===========================
 let allLeads=[], allNewsletter=[], allReferrals=[], allQuiz=[], allYoga=[], allVisitors=[];
 let isLoggedIn=false, refreshTimer, countdownInterval, countdownVal=60;
-let lastSyncTime = null;
+let autoRefreshEnabled = true;
 
 // ===========================
 // INIT
@@ -945,11 +1183,10 @@ let lastSyncTime = null;
 document.addEventListener('DOMContentLoaded',()=>{
   lucide.createIcons();
   applyThemeFromStorage();
+  loadSettingsFromStorage();
   updateClockAndDate();
   setInterval(updateClockAndDate, 1000);
-
   if(sessionStorage.getItem('samarpan_admin_auth')==='1') grantAccess();
-
   ['login-password','login-email'].forEach((id,i)=>{
     document.getElementById(id).addEventListener('keydown', e=>{
       if(e.key==='Enter'){
@@ -960,17 +1197,30 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
+function loadSettingsFromStorage(){
+  const name = localStorage.getItem('admin_name') || 'Harsh Ranjan';
+  ADMIN_NAME = name;
+  const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const avatarEl = document.getElementById('sidebar-avatar-initials');
+  const nameEl = document.getElementById('sidebar-admin-name');
+  if(avatarEl) avatarEl.textContent = ini;
+  if(nameEl) nameEl.textContent = name;
+  const toggleBanner = localStorage.getItem('setting_banner');
+  if(toggleBanner==='false'){
+    const banner = document.querySelector('.visitor-banner');
+    if(banner) banner.style.display='none';
+  }
+  const toggleBannerEl = document.getElementById('toggle-banner');
+  if(toggleBannerEl && toggleBanner==='false') toggleBannerEl.checked=false;
+}
+
 // ===========================
-// CLOCK — auto updates every second
+// CLOCK
 // ===========================
 function updateClockAndDate(){
   const now = new Date();
   const ist = new Date(now.getTime() + 5.5*3600000);
-
-  // Date — always current
   document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-
-  // Time IST
   const h = ist.getHours().toString().padStart(2,'0');
   const m = ist.getMinutes().toString().padStart(2,'0');
   const s = ist.getSeconds().toString().padStart(2,'0');
@@ -991,11 +1241,7 @@ function getIST(ts){
 function nowIST(){
   const d = new Date();
   const ist = new Date(d.getTime()+5.5*3600000);
-  return {
-    date: ist.toISOString().split('T')[0],
-    time: ist.toTimeString().slice(0,8),
-    iso: d.toISOString()
-  };
+  return { date: ist.toISOString().split('T')[0], time: ist.toTimeString().slice(0,8), iso: d.toISOString() };
 }
 
 // ===========================
@@ -1007,11 +1253,7 @@ function togglePw(){
   eye.setAttribute('data-lucide', inp.type==='password'?'eye':'eye-off');
   lucide.createIcons();
 }
-
-function toggleRecovery(){
-  const p=document.getElementById('recovery-panel');
-  p.classList.toggle('show');
-}
+function toggleRecovery(){ document.getElementById('recovery-panel').classList.toggle('show'); }
 
 async function doLogin(){
   const email=document.getElementById('login-email').value.trim();
@@ -1019,13 +1261,10 @@ async function doLogin(){
   const errEl=document.getElementById('login-error'), errMsg=document.getElementById('login-error-msg');
   const btn=document.getElementById('login-btn');
   const spinner=document.getElementById('login-spinner'), btnText=document.getElementById('login-btn-text'), btnIcon=document.getElementById('login-btn-icon');
-
   errEl.classList.remove('show');
   if(!email||!pwd){errMsg.textContent='Please enter email and password.'; errEl.classList.add('show'); lucide.createIcons(); return;}
-
   btn.disabled=true; spinner.classList.add('show'); btnText.textContent='Signing in…'; btnIcon.style.display='none';
   await new Promise(r=>setTimeout(r,800));
-
   if(email.toLowerCase()===ADMIN_EMAIL.toLowerCase() && pwd===ADMIN_PASSWORD){
     sessionStorage.setItem('samarpan_admin_auth','1');
     grantAccess();
@@ -1047,6 +1286,8 @@ function grantAccess(){
   loadAllData();
   buildWeeklyChart();
   startAutoRefresh();
+  // Send GA4 event for admin login
+  if(typeof gtag!=='undefined') gtag('event','admin_login',{event_category:'admin',event_label:'login_success'});
 }
 
 function doLogout(){
@@ -1067,10 +1308,16 @@ function startAutoRefresh(){
     document.getElementById('refresh-countdown').textContent=countdownVal;
     if(countdownVal<=0) countdownVal=60;
   },1000);
-  refreshTimer=setInterval(()=>{loadAllData(); countdownVal=60;},60000);
+  refreshTimer=setInterval(()=>{ if(autoRefreshEnabled){ loadAllData(); countdownVal=60; } },60000);
 }
 
 function refreshData(){ showToast('Syncing with Firebase…'); loadAllData(); countdownVal=60; }
+
+function toggleAutoRefresh(el){
+  autoRefreshEnabled = el.checked;
+  saveSetting('autorefresh', el.checked);
+  showToast(el.checked ? 'Auto-refresh enabled' : 'Auto-refresh paused');
+}
 
 // ===========================
 // THEME
@@ -1092,6 +1339,72 @@ function setTheme(t){
   const sel=document.getElementById('theme-select');
   if(sel) sel.value=t;
   lucide.createIcons();
+}
+
+function setAccentColor(el){
+  const color = el.dataset.color;
+  document.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+  document.documentElement.style.setProperty('--clay', color);
+  localStorage.setItem('accent_color', color);
+  showToast('Accent color updated!');
+}
+
+// Apply saved accent color
+const savedAccent = localStorage.getItem('accent_color');
+if(savedAccent){
+  document.documentElement.style.setProperty('--clay', savedAccent);
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('.color-swatch').forEach(s=>{
+      if(s.dataset.color===savedAccent){ s.classList.add('selected'); }
+      else s.classList.remove('selected');
+    });
+  });
+}
+
+// ===========================
+// SETTINGS — Fully Functional
+// ===========================
+function saveProfileSettings(){
+  const name = document.getElementById('settings-name').value.trim();
+  const whatsapp = document.getElementById('settings-whatsapp').value.trim().replace(/[^0-9]/g,'');
+  const website = document.getElementById('settings-website').value.trim();
+  if(!name){ showToast('Please enter your name', true); return; }
+  localStorage.setItem('admin_name', name);
+  localStorage.setItem('admin_whatsapp', whatsapp);
+  localStorage.setItem('admin_website', website);
+  ADMIN_NAME = name;
+  const ini = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('sidebar-avatar-initials').textContent = ini;
+  document.getElementById('sidebar-admin-name').textContent = name;
+  showToast('✅ Profile saved successfully!');
+}
+
+function changePassword(){
+  const cur = document.getElementById('settings-cur-pw').value;
+  const newPw = document.getElementById('settings-new-pw').value;
+  const confirm = document.getElementById('settings-confirm-pw').value;
+  if(!cur || !newPw || !confirm){ showToast('Please fill all password fields', true); return; }
+  if(cur !== ADMIN_PASSWORD){ showToast('❌ Current password is incorrect', true); return; }
+  if(newPw !== confirm){ showToast('❌ New passwords do not match', true); return; }
+  if(newPw.length < 6){ showToast('❌ Password must be at least 6 characters', true); return; }
+  ADMIN_PASSWORD = newPw;
+  localStorage.setItem('admin_pw', newPw);
+  document.getElementById('settings-cur-pw').value='';
+  document.getElementById('settings-new-pw').value='';
+  document.getElementById('settings-confirm-pw').value='';
+  showToast('✅ Password updated! Active for this session. Edit HTML to make permanent.');
+}
+
+function saveSetting(key, val){
+  localStorage.setItem('setting_'+key, val);
+}
+
+function toggleVisitorBanner(el){
+  const banner = document.querySelector('.visitor-banner');
+  if(banner) banner.style.display = el.checked ? '' : 'none';
+  saveSetting('banner', el.checked);
+  showToast(el.checked ? 'Visitor banner shown' : 'Visitor banner hidden');
 }
 
 // ===========================
@@ -1138,7 +1451,6 @@ async function loadAllData(){
   allLeads=leads; allNewsletter=news; allReferrals=refs;
   allQuiz=quiz; allYoga=yoga; allVisitors=visitors;
 
-  lastSyncTime=new Date();
   const t=nowIST();
   document.getElementById('last-sync-time').textContent=t.time+' IST';
 
@@ -1155,6 +1467,7 @@ async function loadAllData(){
   renderYoga();
   renderAnalytics();
   renderVisitors();
+  renderVisitorCharts(); // <-- NEW functional charts
 
   document.getElementById('sidebar-leads-count').textContent=allLeads.length||'0';
   document.getElementById('sidebar-news-count').textContent=allNewsletter.length||'0';
@@ -1165,12 +1478,8 @@ async function loadAllData(){
 // ===========================
 // VISITOR HELPERS
 // ===========================
-function getTodayDate(){
-  return nowIST().date;
-}
-function getMonthStr(){
-  const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-}
+function getTodayDate(){ return nowIST().date; }
+function getMonthStr(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
 function getTodayVisitors(){ return allVisitors.filter(v=>v.date===getTodayDate()); }
 function getMonthVisitors(){ const m=getMonthStr(); return allVisitors.filter(v=>v.date&&v.date.startsWith(m)); }
 
@@ -1188,7 +1497,6 @@ function renderVisitorBanner(){
   document.getElementById('v-today-sub').textContent=todaySub;
   const mn=new Date().toLocaleString('en-IN',{month:'long',year:'numeric'});
   document.getElementById('v-month-sub').textContent=mn;
-  // visitor page stats too
   const pvToday=document.getElementById('pv-today');
   if(pvToday){
     pvToday.textContent=todayV.length;
@@ -1197,6 +1505,113 @@ function renderVisitorBanner(){
     document.getElementById('pv-unique').textContent=unique;
     document.getElementById('pv-today-sub').textContent=todaySub;
     document.getElementById('pv-month-name').textContent=mn;
+  }
+}
+
+// ===========================
+// FUNCTIONAL VISITOR CHARTS (from Firestore data)
+// ===========================
+function renderVisitorCharts(){
+  // --- Daily Visits — Last 7 Days ---
+  const days=[];
+  let weekTotal=0;
+  for(let i=6;i>=0;i--){
+    const d=new Date();
+    d.setDate(d.getDate()-i);
+    const dStr=d.toISOString().split('T')[0];
+    const count=allVisitors.filter(v=>v.date===dStr).length;
+    weekTotal+=count;
+    days.push({
+      label:d.toLocaleDateString('en-IN',{weekday:'short'}),
+      date:dStr,
+      count,
+      isToday:i===0
+    });
+  }
+
+  const weekLabel = document.getElementById('week-total-label');
+  if(weekLabel) weekLabel.textContent = weekTotal+' visits';
+
+  const maxV=Math.max(...days.map(d=>d.count),1);
+  const barsEl=document.getElementById('visitor-chart-bars');
+  const labsEl=document.getElementById('visitor-chart-labels');
+  if(barsEl){
+    barsEl.innerHTML=days.map((d,i)=>`
+      <div class="vc-bar-wrap" title="${d.label} ${d.date}: ${d.count} visits">
+        ${d.count>0?`<div class="vc-bar-val">${d.count}</div>`:''}
+        <div class="vc-bar" style="height:${Math.max((d.count/maxV)*76,d.count>0?8:2)}px;background:${d.isToday?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top,rgba(217,93,57,.25),rgba(197,160,89,.4))'};"></div>
+      </div>`).join('');
+    labsEl.innerHTML=days.map(d=>`<div class="chart-bar-day" style="font-size:8px;color:${d.isToday?'var(--clay)':'var(--text-dim)'};">${d.label}</div>`).join('');
+  }
+
+  // --- Visits By Month ---
+  const mBreakdown=document.getElementById('monthly-visits-breakdown');
+  if(mBreakdown){
+    const mMap={};
+    allVisitors.forEach(v=>{if(v.date){const m=v.date.slice(0,7);mMap[m]=(mMap[m]||0)+1;}});
+    const mSorted=Object.entries(mMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,8);
+    if(!mSorted.length){
+      mBreakdown.innerHTML='<div style="color:var(--text-dim);font-size:12px;text-align:center;padding:1rem 0;">No visitor data yet.<br>Add the tracking script to your website.</div>';
+      return;
+    }
+    const mMax=mSorted[0][1]||1;
+    mBreakdown.innerHTML=mSorted.map(([m,c])=>{
+      const [yr,mo]=m.split('-');
+      const monthName=new Date(yr,parseInt(mo)-1).toLocaleString('en-IN',{month:'long',year:'numeric'});
+      return `<div style="margin-bottom:.85rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem;">
+          <span style="font-size:11px;color:var(--text-muted);">${monthName}</span>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">${c} <span style="font-size:9px;color:var(--text-dim);">visits</span></span>
+        </div>
+        <div style="height:5px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+          <div style="height:100%;width:${(c/mMax)*100}%;background:linear-gradient(90deg,var(--clay),var(--gold));border-radius:4px;transition:width .8s ease;"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // --- Device Breakdown ---
+  const deviceEl = document.getElementById('device-breakdown');
+  if(deviceEl){
+    const mobile = allVisitors.filter(v=>v.device==='Mobile').length;
+    const desktop = allVisitors.filter(v=>v.device==='Desktop' || !v.device).length;
+    const total = allVisitors.length || 1;
+    deviceEl.innerHTML=`
+      <div style="margin-bottom:1rem;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.35rem;">
+          <span style="font-size:12px;color:var(--text-muted);">📱 Mobile</span>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">${mobile} <span style="font-size:9px;color:var(--text-dim);">(${Math.round((mobile/total)*100)}%)</span></span>
+        </div>
+        <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(mobile/total)*100}%;background:var(--gold);border-radius:4px;"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:.35rem;">
+          <span style="font-size:12px;color:var(--text-muted);">🖥 Desktop</span>
+          <span style="font-size:12px;font-weight:700;color:var(--text);">${desktop} <span style="font-size:9px;color:var(--text-dim);">(${Math.round((desktop/total)*100)}%)</span></span>
+        </div>
+        <div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(desktop/total)*100}%;background:var(--blue);border-radius:4px;"></div></div>
+      </div>
+    `;
+  }
+
+  // --- Top Pages ---
+  const pagesEl = document.getElementById('top-pages-breakdown');
+  if(pagesEl){
+    const pMap={};
+    allVisitors.forEach(v=>{const p=v.page||'/';pMap[p]=(pMap[p]||0)+1;});
+    const pSorted=Object.entries(pMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const pMax=pSorted[0]?.[1]||1;
+    if(!pSorted.length){ pagesEl.innerHTML='<div style="color:var(--text-dim);font-size:12px;">No data yet.</div>'; return; }
+    pagesEl.innerHTML=pSorted.map(([page,count])=>`
+      <div style="margin-bottom:.75rem;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;">
+          <span style="font-size:11px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;" title="${esc(page)}">${esc(page)}</span>
+          <span style="font-size:11px;font-weight:700;color:var(--text);">${count}</span>
+        </div>
+        <div style="height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+          <div style="height:100%;width:${(count/pMax)*100}%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:4px;"></div>
+        </div>
+      </div>`).join('');
   }
 }
 
@@ -1228,7 +1643,7 @@ function updateStats(){
 function renderRecentLeads(){
   const tbody=document.getElementById('recent-leads-body');
   const recent=[...allLeads].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||'')).slice(0,8);
-  if(!recent.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No leads yet. Submit a form on the website.</td></tr>`;return;}
+  if(!recent.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text-dim);padding:2rem;font-size:12px;">No leads yet.</td></tr>`;return;}
   tbody.innerHTML=recent.map(l=>{
     const ist=getIST(l.timestamp||l.date);
     return `<tr>
@@ -1256,8 +1671,7 @@ function renderFullLeads(f={}){
     const ist=getIST(l.timestamp||l.date);
     const priority=l.priority==='high'?'<span class="pill pill-clay" style="font-size:8px;">HIGH</span> ':l.priority==='vip'?'<span class="pill pill-purple" style="font-size:8px;">VIP</span> ':'';
     return `<tr>
-      <td><div class="lead-name">${priority}${esc(l.name||'Unknown')}</div><div class="lead-email">${esc(l.email||'—')}</div>${l.location?`<div class="lead-email">📍 ${esc(l.location)}</div>`:''}
-      </td>
+      <td><div class="lead-name">${priority}${esc(l.name||'Unknown')}</div><div class="lead-email">${esc(l.email||'—')}</div>${l.location?`<div class="lead-email">📍 ${esc(l.location)}</div>`:''}</td>
       <td>${esc(l.phone||'—')}</td>
       <td style="font-size:11px;">${esc(l.service||'—')}</td>
       <td>${typePill(l.lead_type)}</td>
@@ -1374,39 +1788,6 @@ function renderVisitors(){
       <td style="font-size:11px;color:var(--text-dim);">${esc(v.referrer||'direct')}</td>
     </tr>`;
   }).join('');
-
-  // 7-day chart
-  const days=[];
-  for(let i=6;i>=0;i--){
-    const d=new Date(); d.setDate(d.getDate()-i);
-    const dStr=d.toISOString().split('T')[0];
-    days.push({label:d.toLocaleDateString('en-IN',{weekday:'short'}), date:dStr, count:allVisitors.filter(v=>v.date===dStr).length});
-  }
-  const maxV=Math.max(...days.map(d=>d.count),1);
-  const barsEl=document.getElementById('visitor-chart-bars'), labsEl=document.getElementById('visitor-chart-labels');
-  if(barsEl){
-    barsEl.innerHTML=days.map((d,i)=>`<div class="chart-bar-wrap"><div class="chart-bar${i===6?' active':''}" style="height:${Math.max((d.count/maxV)*100,4)}px;" title="${d.label}: ${d.count} visits"></div></div>`).join('');
-    labsEl.innerHTML=days.map(d=>`<div class="chart-bar-day">${d.label}</div>`).join('');
-  }
-
-  // Monthly breakdown
-  const mBreakdown=document.getElementById('monthly-visits-breakdown');
-  if(mBreakdown){
-    const mMap={};
-    allVisitors.forEach(v=>{if(v.date){const m=v.date.slice(0,7);mMap[m]=(mMap[m]||0)+1;}});
-    const mSorted=Object.entries(mMap).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,6);
-    const mMax=mSorted[0]?.[1]||1;
-    mBreakdown.innerHTML=mSorted.map(([m,c])=>`
-      <div style="margin-bottom:.75rem;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:.3rem;">
-          <span style="font-size:11px;color:var(--text-muted);">${m}</span>
-          <span style="font-size:11px;font-weight:700;color:var(--text);">${c}</span>
-        </div>
-        <div style="height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;">
-          <div style="height:100%;width:${(c/mMax)*100}%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:4px;"></div>
-        </div>
-      </div>`).join('')||'<div style="color:var(--text-dim);font-size:12px;">No data yet.</div>';
-  }
 }
 
 // ===========================
@@ -1480,26 +1861,34 @@ function renderTopServices(){
 }
 
 // ===========================
-// WEEKLY CHART
+// WEEKLY CHART (Leads)
 // ===========================
 function buildWeeklyChart(){
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const todayDay=new Date().getDay();
+  const dayIdx=todayDay===0?6:todayDay-1;
   const h=[28,52,40,68,62,45,32];
   document.getElementById('chart-bars').innerHTML=h.map((v,i)=>
-    `<div class="chart-bar-wrap"><div class="chart-bar${i===new Date().getDay()-1?' active':''}" style="height:${v}px;"></div></div>`
+    `<div class="chart-bar-wrap"><div class="chart-bar${i===dayIdx?' active':''}" style="height:${v}px;"></div></div>`
   ).join('');
   document.getElementById('chart-day-labels').innerHTML=days.map(d=>`<div class="chart-bar-day">${d}</div>`).join('');
 }
 
 // ===========================
-// ANALYTICS
+// ANALYTICS PAGE
 // ===========================
 function renderAnalytics(){
+  // Build real 30-day lead chart from actual data
   const barsEl=document.getElementById('analytics-bars');
-  const barData=Array.from({length:30},()=>Math.floor(Math.random()*8));
-  const maxBar=Math.max(...barData,1);
-  barsEl.innerHTML=barData.map((v,i)=>
-    `<div style="flex:1;height:${Math.round((v/maxBar)*140)}px;background:${i===29?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top,rgba(217,93,57,.18),rgba(197,160,89,.32))'};border-radius:3px 3px 0 0;" title="Day ${i+1}: ${v}"></div>`
+  const dailyCounts=[];
+  for(let i=29;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const dStr=d.toISOString().split('T')[0];
+    dailyCounts.push(allLeads.filter(l=>l.date===dStr).length);
+  }
+  const maxBar=Math.max(...dailyCounts,1);
+  barsEl.innerHTML=dailyCounts.map((v,i)=>
+    `<div style="flex:1;height:${Math.round((v/maxBar)*140)||2}px;background:${i===29?'linear-gradient(to top,var(--clay),var(--gold))':'linear-gradient(to top,rgba(217,93,57,.18),rgba(197,160,89,.32))'};border-radius:3px 3px 0 0;min-height:2px;" title="Day ${i+1}: ${v} lead${v!==1?'s':''}"></div>`
   ).join('');
 
   const sb=document.getElementById('service-breakdown');
@@ -1556,12 +1945,9 @@ async function submitAddLead(){
     showToast('✅ Lead added successfully!');
     closeModal();
     ['modal-name','modal-email','modal-phone','modal-location','modal-message'].forEach(id=>document.getElementById(id).value='');
+    if(typeof gtag!=='undefined') gtag('event','lead_added',{event_category:'admin',event_label:service});
     setTimeout(loadAllData,600);
   }catch(e){showToast('❌ Error saving lead',true);}
-}
-
-function openSendEmailModal(){
-  showToast('📧 Broadcast email feature coming soon! (Will send to all '+allNewsletter.length+' subscribers)');
 }
 
 // ===========================
