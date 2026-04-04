@@ -1069,6 +1069,21 @@
   </div>
 </section>
 
+<section id="latest-updates" class="py-20 px-4 sm:px-6 border-t" style="background:var(--bg); border-color:var(--border);">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-sage block mb-2">What's New</span>
+      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Latest Announcements &amp; Updates</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div id="dynamic-updates-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
+      <div class="col-span-3 text-center py-10" style="color:var(--text-muted);">
+        <span class="btn-spinner" style="border-color:var(--text-muted); border-top-color:transparent;"></span> Loading updates...
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="referral-section" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-5xl mx-auto fade-up">
     <div class="referral-banner overflow-hidden rounded-lg" style="position:relative;">
@@ -1101,6 +1116,17 @@
           <p class="font-sans text-xs text-white/40">No strings attached · All programmes</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-10 border-y" style="background:var(--bg3); border-color:var(--border);">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10 fade-up">
+    <span class="font-serif text-xl sm:text-2xl" style="color:var(--text);">Join the Samarpan Mission</span>
+    <div class="hidden sm:block w-px h-10 bg-[var(--border)]"></div>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="booking.html" class="cta-btn px-8 py-3 bg-clay text-white text-[10px] font-bold uppercase tracking-widest rounded-sm">Become a Volunteer</a>
+      <a href="booking.html" class="px-8 py-3 border text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-brand-gold hover:text-brand-gold" style="border-color:var(--border);color:var(--text-muted);">Partner with Us</a>
     </div>
   </div>
 </section>
@@ -1274,7 +1300,10 @@
       <ul class="space-y-3 text-sm">
         <li><a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i>info@thesamarpan.co.in</a></li>
         <li><a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>WhatsApp Us</a></li>
-        <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2"><i data-lucide="instagram" class="w-4 h-4"></i> Samarpan Wellness</a></li>
+        <li><a href="https://instagram.com/justtheself" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 flex-shrink-0"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          Samarpan Wellness
+        </a></li>
         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4"></i>New Delhi, India</li>
       </ul>
     </div>
@@ -1342,23 +1371,73 @@
   }
 
   /* ══════════════════════════════════════════════
+     DYNAMIC UPDATES (FIREBASE)
+     Reads from: samarpan_updates collection
+     Fields: active (boolean), type (string: Video, Event, Session), title (string), description (string), image_url (string), link (string)
+     ══════════════════════════════════════════════ */
+  async function loadDynamicUpdates() {
+    try {
+      var url = FIRESTORE_BASE + 'samarpan_updates?key=' + FIREBASE_API_KEY;
+      var resp = await fetch(url);
+      var container = document.getElementById('dynamic-updates-container');
+      if (!resp.ok) {
+        if(container) container.innerHTML = '<div class="col-span-3 text-center text-xs" style="color:var(--text-muted);">No new updates at the moment.</div>';
+        return;
+      }
+      var data = await resp.json();
+      if (!container || !data.documents) {
+        if(container) container.innerHTML = '<div class="col-span-3 text-center text-xs" style="color:var(--text-muted);">No new updates at the moment.</div>';
+        return;
+      }
+
+      // Filter active and get top 3
+      var docs = data.documents.filter(function(doc) {
+        var f = doc.fields || {};
+        return f.active && f.active.booleanValue === true;
+      }).slice(0, 3);
+
+      if (docs.length === 0) {
+        container.innerHTML = '<div class="col-span-3 text-center text-xs" style="color:var(--text-muted);">No new updates at the moment.</div>';
+        return;
+      }
+
+      var html = '';
+      docs.forEach(function(doc) {
+        var f = doc.fields;
+        var type = (f.type && f.type.stringValue) || 'Update';
+        var title = (f.title && f.title.stringValue) || 'New Announcement';
+        var desc = (f.description && f.description.stringValue) || '';
+        var img = (f.image_url && f.image_url.stringValue) || 'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=600';
+        var link = (f.link && f.link.stringValue) || '#';
+        
+        var badgeClass = 'text-brand-black';
+        if(type.toLowerCase() === 'video') badgeClass = 'text-clay';
+        else if(type.toLowerCase() === 'event') badgeClass = 'text-brand-gold';
+        else if(type.toLowerCase() === 'session') badgeClass = 'text-sage';
+
+        html += `
+          <div class="journal-card rounded flex flex-col overflow-hidden" style="background:var(--card-bg);">
+            <div class="h-48 overflow-hidden relative">
+              <img src="${img}" alt="${title}" loading="lazy" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+              <span class="absolute top-3 left-3 text-[9px] uppercase tracking-widest font-bold px-2.5 py-1 rounded shadow-sm backdrop-blur-md bg-white/90 ${badgeClass}">${type}</span>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+              <h4 class="font-serif text-xl mb-2" style="color:var(--text); line-height:1.3;">${title}</h4>
+              <p class="font-sans text-xs leading-relaxed mb-5 flex-1" style="color:var(--text-muted);">${desc}</p>
+              <a href="${link}" target="${link !== '#' ? '_blank' : '_self'}" class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-auto block w-fit hover:text-clay transition">Explore →</a>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    } catch(e) {
+      var container = document.getElementById('dynamic-updates-container');
+      if(container) container.innerHTML = '<div class="col-span-3 text-center text-xs" style="color:var(--text-muted);">Could not load updates.</div>';
+    }
+  }
+
+  /* ══════════════════════════════════════════════
      FLASH CARD SYSTEM
-     Reads from: samarpan_flash_cards collection
-     Doc structure: {
-       active: true,
-       text: "New Rishikesh Retreat — only 4 spots left!",
-       badge: "🔥 New Event",
-       badge_color: "#D95D39",         // bg colour for badge
-       badge_text_color: "#fff",
-       bar_bg: "#1C1C1C",              // whole bar background
-       bar_text_color: "#fff",
-       cta_text: "Book Now",           // optional CTA button text
-       cta_url: "booking.html",        // optional CTA link
-       cta_bg: "#D95D39",
-       cta_text_color: "#fff",
-       expires_at: "2026-12-31T23:59:59Z",  // ISO — blank = never expires
-       created_at: ...
-     }
      ══════════════════════════════════════════════ */
   async function loadFlashCards() {
     try {
@@ -1380,7 +1459,6 @@
         return true;
       });
       if (cards.length === 0) return;
-      // Show the first active card (or rotate if you want)
       var card = cards[0];
       var f = card.fields || {};
       var docId = card.name.split('/').pop();
@@ -1398,12 +1476,8 @@
       bar.style.background = barBg;
       bar.style.color = barTxtColor;
 
-      var ctaHtml = ctaText
-        ? '<a href="'+ctaUrl+'" class="flash-card-cta" style="background:'+ctaBg+';color:'+ctaTxtColor+';">'+ctaText+'</a>'
-        : '';
-      var badgeHtml = badge
-        ? '<span class="flash-card-badge" style="background:'+badgeBg+';color:'+badgeTxt+';">'+badge+'</span>'
-        : '';
+      var ctaHtml = ctaText ? '<a href="'+ctaUrl+'" class="flash-card-cta" style="background:'+ctaBg+';color:'+ctaTxtColor+';">'+ctaText+'</a>' : '';
+      var badgeHtml = badge ? '<span class="flash-card-badge" style="background:'+badgeBg+';color:'+badgeTxt+';">'+badge+'</span>' : '';
 
       bar.innerHTML =
         '<div class="flash-card-inner">' +
@@ -1417,7 +1491,6 @@
       bar.classList.add('active');
       syncNavbarTop();
 
-      // Animate the timer bar shrinking (visual countdown — purely decorative)
       var timerEl = document.getElementById('flash-timer');
       if (timerEl) {
         timerEl.style.transition = 'none';
@@ -1438,17 +1511,12 @@
 
   /* ══════════════════════════════════════════════
      STAGGERED POPUP ORCHESTRATION
-     Gap = 60 seconds between each popup.
-     Order: Gift(30s) → Yoga(on scroll) → Referral(150s) → Exit(mouseleave or 210s)
-     Session-storage prevents repeats per tab.
      ══════════════════════════════════════════════ */
-  var popupQueue = [];   // stack of {fn, delay} pairs
+  var popupQueue = [];
   var lastPopupAt = 0;
-  var MIN_GAP = 60000;   // 60 seconds minimum between popups
+  var MIN_GAP = 60000;
 
-  function schedulePopup(fn, delay) {
-    popupQueue.push({fn:fn, delay:delay});
-  }
+  function schedulePopup(fn, delay) { popupQueue.push({fn:fn, delay:delay}); }
 
   function tryNextPopup() {
     if (!popupQueue.length) return;
@@ -1460,24 +1528,21 @@
     }
     var item = popupQueue.shift();
     setTimeout(function() {
-      // Don't show if another popup is already open
       var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup'].some(function(id){
         return document.getElementById(id).classList.contains('open');
       });
       if (anyOpen) {
-        popupQueue.unshift(item); // re-queue
+        popupQueue.unshift(item);
         setTimeout(tryNextPopup, 15000);
         return;
       }
       lastPopupAt = Date.now();
       item.fn();
-      // Schedule next after MIN_GAP
       setTimeout(tryNextPopup, MIN_GAP + 2000);
     }, item.delay);
   }
 
   window.addEventListener('load', function() {
-    // Popup 1 — Gift / Dosha Assessment — 30s after load
     if (!sessionStorage.getItem('sp_gift_shown')) {
       schedulePopup(function(){
         if (!sessionStorage.getItem('sp_gift_shown')) {
@@ -1487,8 +1552,6 @@
         }
       }, 30000);
     }
-
-    // Popup 3 — Referral — 150s after load
     if (!sessionStorage.getItem('sp_referral_shown')) {
       schedulePopup(function(){
         if (!sessionStorage.getItem('sp_referral_shown')) {
@@ -1498,8 +1561,9 @@
         }
       }, 150000);
     }
-
     tryNextPopup();
+    // Load dynamic updates from Firebase
+    loadDynamicUpdates();
   });
 
   /* ── Yoga popup — triggers when testimonials section enters view ── */
@@ -1510,7 +1574,6 @@
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting && !yogaShown) {
-          // Wait for minimum gap before showing
           var waitMs = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
           setTimeout(function(){
             if (!yogaShown && !sessionStorage.getItem('sp_yoga_shown')) {
@@ -1556,7 +1619,6 @@
   document.addEventListener('mouseleave', function(e) {
     if (e.clientY <= 0) maybeShowExitPopup();
   });
-  // Fallback exit timer — 210s
   setTimeout(maybeShowExitPopup, 210000);
 
   /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
@@ -1568,7 +1630,6 @@
   function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Referral Popup'); }
   function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); document.body.style.overflow=''; }
 
-  // Close on backdrop click
   ['gift-popup','exit-popup','yoga-popup','referral-popup'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener('click', function(e) {
@@ -1813,7 +1874,6 @@
       document.getElementById('referral-section')?.scrollIntoView({behavior:'smooth'});
       setTimeout(openReferralPopup, 600);
     }
-    // Load flash cards on DOM ready
     loadFlashCards();
   });
 </script>
