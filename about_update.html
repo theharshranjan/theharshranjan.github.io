@@ -1491,13 +1491,13 @@
 
   /* ══════════════════════════════════════════════
      STAGGERED POPUP ORCHESTRATION
-     Gap = 60 seconds between each popup.
-     Order: Gift(30s) → Yoga(on scroll) → Referral(150s) → Exit(mouseleave or 210s)
+     Gap = 120 seconds between each popup.
+     Order: Gift(120s) → Yoga(on scroll) → Referral(320s) → Exit(mouseleave or 410s)
      Session-storage prevents repeats per tab.
      ══════════════════════════════════════════════ */
-  var popupQueue = [];   // stack of {fn, delay} pairs
+  var popupQueue = [];
   var lastPopupAt = 0;
-  var MIN_GAP = 60000;   // 60 seconds minimum between popups
+  var MIN_GAP = 120000;   // 120 seconds minimum between popups
 
   function schedulePopup(fn, delay) {
     popupQueue.push({fn:fn, delay:delay});
@@ -1513,24 +1513,22 @@
     }
     var item = popupQueue.shift();
     setTimeout(function() {
-      // Don't show if another popup is already open
       var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup'].some(function(id){
         return document.getElementById(id).classList.contains('open');
       });
       if (anyOpen) {
-        popupQueue.unshift(item); // re-queue
+        popupQueue.unshift(item);
         setTimeout(tryNextPopup, 15000);
         return;
       }
       lastPopupAt = Date.now();
       item.fn();
-      // Schedule next after MIN_GAP
       setTimeout(tryNextPopup, MIN_GAP + 2000);
     }, item.delay);
   }
 
   window.addEventListener('load', function() {
-    // Popup 1 — Gift / Dosha Assessment — 30s after load
+    // Popup 1 — Gift / Dosha Assessment — 120s after load
     if (!sessionStorage.getItem('sp_gift_shown')) {
       schedulePopup(function(){
         if (!sessionStorage.getItem('sp_gift_shown')) {
@@ -1538,10 +1536,10 @@
           openGiftPopup();
           gaEvent('auto_show','Popup','Gift Popup Auto');
         }
-      }, 30000);
+      }, 120000);   // 120 seconds
     }
 
-    // Popup 3 — Referral — 150s after load
+    // Popup 3 — Referral — 320s after load
     if (!sessionStorage.getItem('sp_referral_shown')) {
       schedulePopup(function(){
         if (!sessionStorage.getItem('sp_referral_shown')) {
@@ -1549,7 +1547,7 @@
           openReferralPopup();
           gaEvent('auto_show','Popup','Referral Popup Auto');
         }
-      }, 150000);
+      }, 320000);   // 320 seconds
     }
 
     tryNextPopup();
@@ -1563,7 +1561,6 @@
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting && !yogaShown) {
-          // Wait for minimum gap before showing
           var waitMs = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
           setTimeout(function(){
             if (!yogaShown && !sessionStorage.getItem('sp_yoga_shown')) {
@@ -1609,8 +1606,8 @@
   document.addEventListener('mouseleave', function(e) {
     if (e.clientY <= 0) maybeShowExitPopup();
   });
-  // Fallback exit timer — 210s
-  setTimeout(maybeShowExitPopup, 210000);
+  // Fallback exit timer — 410s
+  setTimeout(maybeShowExitPopup, 410000);   // 410 seconds
 
   /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
   function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; }
