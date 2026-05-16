@@ -12,7 +12,7 @@
   <link rel="icon" href="favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <meta name="theme-color" content="#D95D39">
+  <meta name="theme-color" content="#1C1C1C">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Samarpan — Holistic Wellbeing">
@@ -29,37 +29,47 @@
     function gaEvent(a,c,l){try{gtag('event',a,{event_category:c,event_label:l});}catch(e){}}
   </script>
 
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <script>
-    tailwind.config={
-      darkMode:['attribute','[data-theme="dark"]'],
-      theme:{extend:{
-        colors:{clay:'#D95D39','brand-black':'#1C1C1C','brand-gold':'#C5A059','brand-cream':'#FDFBF7',paper:'#FDFBF7',sage:'#4A5D4F'},
-        fontFamily:{sans:['Lato','sans-serif'],serif:['Cormorant Garamond','serif'],display:['Marcellus','serif']}
-      }}
-    }
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            clay: '#D95D39', 'brand-black': '#1C1C1C', 'brand-gray': '#666666',
+            'brand-gold': '#C5A059', 'brand-cream': '#FDFBF7', paper: '#FDFBF7', sage: '#4A5D4F'
+          },
+          fontFamily: {
+            sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif']
+          },
+          letterSpacing: { 'widest-xl': '0.25em' }
+        }
+      }
+    };
   </script>
 
   <style>
-    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
-    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--input-bg:#FAFAF8;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--input-bg:#252520;--shadow:0 2px 24px rgba(0,0,0,0.4);}
     *,*::before,*::after{box-sizing:border-box;}
     html{scroll-behavior:smooth;}
     body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
 
-    /* ══ NAVBAR ══ */
+    /* ── NAVBAR (identical to index) ── */
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
     [data-theme="dark"] #navbar{background:rgba(20,20,16,0.97);border-bottom-color:#2E2E28;}
     .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:var(--text-muted);text-decoration:none;}
-    .nav-link:hover,.nav-link.active-page{color:#D95D39!important;}
+    .nav-link:hover{color:#D95D39!important;}
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-    .nav-link:hover::after,.nav-link.active-page::after{transform:scaleX(1);}
+    .nav-link:hover::after{transform:scaleX(1);}
     .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;}
     .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
     .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
@@ -67,57 +77,84 @@
     .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
     #hamburger-icon{color:var(--text);}
 
-    /* ══ MOBILE MENU ══ */
+    /* ── MOBILE MENU ── */
     #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
     [data-theme="dark"] #mobile-menu{background:#141410;}
 
-    /* ══ PAGE HERO ══ */
-    .page-hero{padding:7rem 1.5rem 3.5rem;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border);}
-    .page-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(217,93,57,.04) 0%,rgba(197,160,89,.03) 50%,transparent 100%);pointer-events:none;}
-    .page-hero-ornament{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.04;pointer-events:none;}
+    /* ── PAGE HERO ── */
+    .page-hero{padding:8rem 1.5rem 4rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+    .page-hero-mandala{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;opacity:.035;}
 
-    /* ══ PROSE CONTENT ══ */
-    .prose-wrap{max-width:780px;margin:0 auto;padding:3.5rem 1.5rem 5rem;}
+    /* ── LAYOUT ── */
+    .layout-grid{max-width:1140px;margin:0 auto;padding:4rem 1.5rem 6rem;display:grid;grid-template-columns:1fr;gap:3rem;}
+    @media(min-width:1024px){.layout-grid{grid-template-columns:220px 1fr;gap:5rem;align-items:start;}}
 
-    .toc-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border);text-decoration:none;transition:color .2s,padding-left .2s;}
-    .toc-item:last-child{border-bottom:none;}
-    .toc-item:hover{color:#D95D39;padding-left:.5rem;}
-    .toc-num{font-family:'Marcellus',serif;font-size:.75rem;color:#D95D39;min-width:1.5rem;}
+    /* ── STICKY TOC ── */
+    .toc-sticky{position:sticky;top:90px;}
+    .toc-label{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#D95D39;margin-bottom:1.25rem;display:block;}
+    .toc-link{display:flex;align-items:center;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--text-muted);font-family:'Lato',sans-serif;font-size:11px;transition:color .25s,padding-left .25s;letter-spacing:.02em;}
+    .toc-link:last-child{border-bottom:none;}
+    .toc-link:hover,.toc-link.active{color:#D95D39;padding-left:.4rem;}
+    .toc-num{font-family:'Marcellus',serif;font-size:.7rem;color:#D95D39;min-width:1.4rem;flex-shrink:0;}
 
-    .policy-section{margin-bottom:3rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
+    /* ── POLICY BLOCKS ── */
+    .policy-section{margin-bottom:3.5rem;padding-bottom:3.5rem;border-bottom:1px solid var(--border);}
     .policy-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
 
-    .policy-h2{font-family:'Marcellus',serif;font-size:1.6rem;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
-    .policy-h2-num{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.15em;color:#D95D39;background:rgba(217,93,57,.08);border:1px solid rgba(217,93,57,.2);border-radius:2px;padding:.2rem .55rem;flex-shrink:0;}
+    .section-tag{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#D95D39;background:rgba(217,93,57,.08);border:1px solid rgba(217,93,57,.18);border-radius:2px;padding:.2rem .6rem;display:inline-block;margin-bottom:.75rem;}
+    .policy-h2{font-family:'Marcellus',serif;font-size:clamp(1.4rem,3vw,1.75rem);color:var(--text);margin-bottom:1.1rem;line-height:1.2;}
 
-    .policy-p{font-family:'Lato',sans-serif;font-size:.875rem;line-height:1.9;color:var(--text-muted);margin-bottom:1rem;}
+    .policy-p{font-family:'Lato',sans-serif;font-size:.875rem;line-height:1.95;color:var(--text-muted);margin-bottom:1rem;}
     .policy-p:last-child{margin-bottom:0;}
+    .policy-p strong{color:var(--text);font-weight:700;}
+    .policy-p a{color:#D95D39;text-decoration:underline;}
 
-    .policy-ul{list-style:none;padding:0;margin:0 0 1rem;display:flex;flex-direction:column;gap:.5rem;}
-    .policy-ul li{font-family:'Lato',sans-serif;font-size:.875rem;line-height:1.8;color:var(--text-muted);display:flex;align-items:flex-start;gap:.65rem;}
-    .policy-ul li::before{content:'—';color:#D95D39;font-weight:700;flex-shrink:0;margin-top:.05rem;}
+    .policy-ul{list-style:none;padding:0;margin:0 0 1.25rem;display:flex;flex-direction:column;gap:.6rem;}
+    .policy-ul li{font-family:'Lato',sans-serif;font-size:.875rem;line-height:1.8;color:var(--text-muted);display:flex;align-items:flex-start;gap:.75rem;}
+    .policy-ul li::before{content:'';width:5px;height:5px;background:#D95D39;border-radius:50%;flex-shrink:0;margin-top:.55rem;}
+    .policy-ul li strong{color:var(--text);font-weight:700;}
 
-    .policy-highlight{background:linear-gradient(135deg,rgba(197,160,89,.08),rgba(217,93,57,.04));border:1px solid rgba(197,160,89,.25);border-left:3px solid #C5A059;border-radius:0 4px 4px 0;padding:1rem 1.5rem;margin:1.25rem 0;}
-    .policy-highlight p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text);margin:0;line-height:1.7;}
+    .policy-callout{background:linear-gradient(135deg,rgba(197,160,89,.07),rgba(217,93,57,.04));border:1px solid rgba(197,160,89,.22);border-left:3px solid #C5A059;border-radius:0 4px 4px 0;padding:1.1rem 1.5rem;margin:1.5rem 0;}
+    .policy-callout p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--text);margin:0;line-height:1.75;}
+    .policy-callout strong{color:#D95D39;}
 
-    .policy-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-family:'Lato',sans-serif;font-size:.8rem;border-radius:4px;overflow:hidden;border:1px solid var(--border);}
-    .policy-table thead{background:linear-gradient(135deg,rgba(217,93,57,.08),rgba(197,160,89,.06));}
-    .policy-table th{color:#D95D39;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 1rem;text-align:left;border-bottom:2px solid var(--border);}
-    .policy-table td{padding:.65rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);}
+    .policy-table{width:100%;border-collapse:collapse;margin:1.25rem 0;font-family:'Lato',sans-serif;font-size:.8rem;border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+    .policy-table thead{background:linear-gradient(135deg,rgba(217,93,57,.06),rgba(197,160,89,.04));}
+    .policy-table th{color:#D95D39;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1rem;text-align:left;border-bottom:2px solid var(--border);font-size:.75rem;}
+    .policy-table td{padding:.7rem 1rem;border-bottom:1px solid var(--border);color:var(--text-muted);}
     .policy-table td:first-child{font-weight:700;color:var(--text);}
     .policy-table tr:last-child td{border-bottom:none;}
-    .policy-table tr:hover td{background:rgba(197,160,89,.03);}
+    .policy-table tr:hover td{background:rgba(197,160,89,.025);}
 
-    .contact-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:1.75rem;display:flex;gap:1rem;align-items:flex-start;margin-top:1rem;transition:border-color .3s;}
-    .contact-card:hover{border-color:#C5A059;}
+    /* ── CONTACT CARDS (matching index contact section style) ── */
+    .contact-info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:2px;overflow:hidden;margin-top:.75rem;}
+    .contact-info-row{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.25rem;border-bottom:1px solid var(--border);transition:background .2s;text-decoration:none;}
+    .contact-info-row:last-child{border-bottom:none;}
+    .contact-info-row:hover{background:rgba(217,93,57,.03);}
+    .contact-icon-wrap{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 
-    /* ══ TOC SIDEBAR STICKY ══ */
-    .layout-grid{max-width:1100px;margin:0 auto;padding:3.5rem 1.5rem 5rem;display:grid;grid-template-columns:1fr;gap:3rem;}
-    @media(min-width:1024px){.layout-grid{grid-template-columns:240px 1fr;gap:4rem;align-items:start;}}
-    .toc-sticky{position:sticky;top:92px;}
+    /* ── GRIEVANCE BOX ── */
+    .grievance-box{background:var(--bg2);border:1px solid var(--border);border-radius:2px;padding:1.25rem 1.5rem;margin-top:1.25rem;}
 
-    /* ══ FLOATING BUTTONS ══ */
+    /* ── TOC SIDEBAR CARD ── */
+    .toc-question-card{background:var(--card-bg);border:1px solid var(--border);border-radius:2px;padding:1.25rem;margin-top:1.75rem;}
+
+    /* ── DIVIDERS ── */
+    .divider-line{width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;}
+    .ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1.5rem 0;}
+    .ornament::before,.ornament::after{content:'';flex:1;max-width:80px;height:1px;}
+    .ornament::before{background:linear-gradient(to right,transparent,#C5A059);}
+    .ornament::after{background:linear-gradient(to left,transparent,#C5A059);}
+
+    /* ── CTA BUTTON ── */
+    .cta-btn{position:relative;overflow:hidden;transition:background .4s,box-shadow .4s,transform .2s;}
+    .cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
+    .cta-btn:hover::before{left:120%;}
+    .cta-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(217,93,57,.3);}
+
+    /* ── FLOATING ── */
     #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;}
     #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
     #whatsapp-fab a:hover{transform:scale(1.1);}
@@ -125,15 +162,26 @@
     #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
     #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
 
-    .fade-up{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+    /* ── FADE ANIMATION ── */
+    .fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
     .fade-up.visible{opacity:1;transform:translateY(0);}
 
+    /* ── SCROLLBAR ── */
     ::-webkit-scrollbar{width:5px;}
     ::-webkit-scrollbar-track{background:var(--bg);}
     ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
     *{-webkit-tap-highlight-color:transparent;}
+
+    /* ── INTRO HERO CARD ── */
+    .intro-card{background:var(--card-bg);border:1px solid var(--border);border-radius:2px;padding:2rem 2.5rem;position:relative;overflow:hidden;margin-bottom:3.5rem;}
+    .intro-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);}
+
+    /* ── SUBSECTION LABEL ── */
+    .sub-label{font-family:'Lato',sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text);margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:.5rem;}
+    .sub-label::before{content:'';width:20px;height:1px;background:#D95D39;}
   </style>
 </head>
+
 <body class="antialiased selection:bg-clay selection:text-white">
 <div id="scroll-progress"></div>
 
@@ -191,68 +239,77 @@
 </div>
 
 <!-- ══ PAGE HERO ══ -->
-<div class="page-hero">
-  <!-- Background mandala -->
-  <div class="page-hero-ornament">
-    <svg width="520" height="520" viewBox="0 0 520 520" fill="none" stroke="#D95D39" stroke-width="0.6">
-      <circle cx="260" cy="260" r="240"/><circle cx="260" cy="260" r="180"/><circle cx="260" cy="260" r="120"/><circle cx="260" cy="260" r="60"/>
-      <line x1="260" y1="20" x2="260" y2="500"/><line x1="20" y1="260" x2="500" y2="260"/>
-      <line x1="90" y1="90" x2="430" y2="430"/><line x1="430" y1="90" x2="90" y2="430"/>
+<header class="page-hero" role="banner">
+  <!-- Mandala background -->
+  <div class="page-hero-mandala">
+    <svg width="600" height="600" viewBox="0 0 600 600" fill="none" stroke="#D95D39" stroke-width="0.8">
+      <circle cx="300" cy="300" r="280"/><circle cx="300" cy="300" r="220"/><circle cx="300" cy="300" r="160"/><circle cx="300" cy="300" r="100"/><circle cx="300" cy="300" r="40"/>
+      <line x1="300" y1="20" x2="300" y2="580"/><line x1="20" y1="300" x2="580" y2="300"/>
+      <line x1="102" y1="102" x2="498" y2="498"/><line x1="498" y1="102" x2="102" y2="498"/>
+      <line x1="300" y1="20" x2="102" y2="498"/><line x1="300" y1="20" x2="498" y2="498"/>
+      <line x1="20" y1="300" x2="498" y2="102"/><line x1="20" y1="300" x2="498" y2="498"/>
     </svg>
   </div>
   <div class="relative z-10">
-    <span class="font-sans text-[9px] uppercase tracking-[.3em] text-clay block mb-4">Legal</span>
-    <h1 class="font-display text-4xl md:text-6xl mb-4" style="color:var(--text);">Privacy Policy</h1>
-    <p class="font-serif italic text-xl text-brand-gold mb-5">Your trust is sacred to us.</p>
-    <div style="width:52px;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);border-radius:1px;margin:0 auto 1.5rem;"></div>
-    <p class="font-sans text-xs text-center" style="color:var(--text-muted);">
+    <span class="font-sans text-[9px] uppercase tracking-[.3em] text-clay block mb-4">Legal · Transparency</span>
+    <h1 class="font-display mb-5" style="font-size:clamp(2.5rem,7vw,4.5rem);color:var(--text);">Privacy Policy</h1>
+    <div class="ornament">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#C5A059"><circle cx="12" cy="12" r="10"/></svg>
+    </div>
+    <p class="font-serif italic text-xl text-brand-gold mb-6">Your trust is sacred to us.</p>
+    <p class="font-sans text-xs" style="color:var(--text-muted);">
       Last updated: <strong style="color:var(--text);">1 January 2026</strong>
       &nbsp;·&nbsp;
       Effective: <strong style="color:var(--text);">1 January 2026</strong>
     </p>
   </div>
-</div>
+</header>
 
 <!-- ══ MAIN LAYOUT ══ -->
 <div class="layout-grid">
 
   <!-- ══ SIDEBAR TOC ══ -->
-  <aside class="toc-sticky fade-up hidden lg:block">
-    <p class="font-sans text-[9px] uppercase tracking-widest font-bold text-clay mb-4">Contents</p>
-    <nav aria-label="Table of contents">
-      <a href="#s1"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">01</span><span class="font-sans text-xs">Who We Are</span></a>
-      <a href="#s2"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">02</span><span class="font-sans text-xs">Information We Collect</span></a>
-      <a href="#s3"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">03</span><span class="font-sans text-xs">How We Use It</span></a>
-      <a href="#s4"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">04</span><span class="font-sans text-xs">Legal Basis</span></a>
-      <a href="#s5"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">05</span><span class="font-sans text-xs">Sharing &amp; Disclosure</span></a>
-      <a href="#s6"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">06</span><span class="font-sans text-xs">Cookies &amp; Tracking</span></a>
-      <a href="#s7"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">07</span><span class="font-sans text-xs">Data Retention</span></a>
-      <a href="#s8"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">08</span><span class="font-sans text-xs">Your Rights</span></a>
-      <a href="#s9"  class="toc-item" style="color:var(--text-muted);"><span class="toc-num">09</span><span class="font-sans text-xs">Data Security</span></a>
-      <a href="#s10" class="toc-item" style="color:var(--text-muted);"><span class="toc-num">10</span><span class="font-sans text-xs">Children's Privacy</span></a>
-      <a href="#s11" class="toc-item" style="color:var(--text-muted);"><span class="toc-num">11</span><span class="font-sans text-xs">Third-Party Links</span></a>
-      <a href="#s12" class="toc-item" style="color:var(--text-muted);"><span class="toc-num">12</span><span class="font-sans text-xs">Changes to Policy</span></a>
-      <a href="#s13" class="toc-item" style="color:var(--text-muted);"><span class="toc-num">13</span><span class="font-sans text-xs">Contact Us</span></a>
+  <aside class="toc-sticky hidden lg:block fade-up" aria-label="Table of contents">
+    <span class="toc-label">Contents</span>
+    <nav>
+      <a href="#s1"  class="toc-link"><span class="toc-num">01</span>Who We Are</a>
+      <a href="#s2"  class="toc-link"><span class="toc-num">02</span>What We Collect</a>
+      <a href="#s3"  class="toc-link"><span class="toc-num">03</span>How We Use It</a>
+      <a href="#s4"  class="toc-link"><span class="toc-num">04</span>Legal Basis</a>
+      <a href="#s5"  class="toc-link"><span class="toc-num">05</span>Sharing &amp; Disclosure</a>
+      <a href="#s6"  class="toc-link"><span class="toc-num">06</span>Cookies &amp; Tracking</a>
+      <a href="#s7"  class="toc-link"><span class="toc-num">07</span>Data Retention</a>
+      <a href="#s8"  class="toc-link"><span class="toc-num">08</span>Your Rights</a>
+      <a href="#s9"  class="toc-link"><span class="toc-num">09</span>Data Security</a>
+      <a href="#s10" class="toc-link"><span class="toc-num">10</span>Children's Privacy</a>
+      <a href="#s11" class="toc-link"><span class="toc-num">11</span>Third-Party Links</a>
+      <a href="#s12" class="toc-link"><span class="toc-num">12</span>Policy Changes</a>
+      <a href="#s13" class="toc-link"><span class="toc-num">13</span>Contact Us</a>
     </nav>
-
-    <div class="mt-8 p-4 rounded-lg" style="background:linear-gradient(135deg,rgba(217,93,57,.06),rgba(197,160,89,.04));border:1px solid rgba(197,160,89,.2);">
+    <div class="toc-question-card">
       <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-2">Questions?</p>
       <p class="font-sans text-xs leading-relaxed mb-3" style="color:var(--text-muted);">We're happy to clarify anything in this policy.</p>
-      <a href="mailto:info@thesamarpan.co.in" class="font-sans text-xs text-clay hover:underline flex items-center gap-1.5"><i data-lucide="mail" class="w-3 h-3"></i> info@thesamarpan.co.in</a>
+      <a href="mailto:info@thesamarpan.co.in" class="font-sans text-xs text-clay hover:underline flex items-center gap-1.5">
+        <i data-lucide="mail" class="w-3 h-3 flex-shrink-0"></i>info@thesamarpan.co.in
+      </a>
     </div>
   </aside>
 
   <!-- ══ POLICY BODY ══ -->
   <main>
-    <!-- Intro box -->
-    <div class="policy-highlight mb-10 fade-up">
-      <p>This Privacy Policy explains how Samarpan ("we", "us", or "our"), operated by Harsh Ranjan, collects, uses, stores, and protects information when you visit our website <strong>thesamarpan.co.in</strong> or engage with our services. By using our website you agree to the practices described here. Please read this carefully.</p>
+
+    <!-- Intro -->
+    <div class="intro-card fade-up">
+      <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-2">Overview</span>
+      <p class="font-serif text-lg leading-relaxed" style="color:var(--text);">This Privacy Policy explains how Samarpan ("we", "us", or "our"), operated by <strong>Harsh Ranjan</strong>, collects, uses, stores, and protects information when you visit <strong>thesamarpan.co.in</strong> or engage with our services.</p>
+      <p class="font-sans text-sm mt-3 leading-relaxed" style="color:var(--text-muted);">By using our website you agree to the practices described here. Please read this carefully before proceeding.</p>
     </div>
 
-    <!-- 1. WHO WE ARE -->
+    <!-- ── 1. WHO WE ARE ── -->
     <div class="policy-section fade-up" id="s1">
-      <h2 class="policy-h2"><span class="policy-h2-num">01</span>Who We Are</h2>
-      <p class="policy-p">Samarpan is a holistic wellbeing practice founded and operated by <strong>Harsh Ranjan</strong>, based in New Delhi, India. We offer Ayurvedic consultations, Yoga therapy, integrative psychology sessions, and wellness education through our website and in-person or online sessions.</p>
+      <span class="section-tag">01</span>
+      <h2 class="policy-h2">Who We Are</h2>
+      <p class="policy-p">Samarpan is a holistic wellbeing practice founded and operated by <strong>Harsh Ranjan</strong>, based in New Delhi, India. We offer Ayurvedic consultations, Yoga therapy, integrative psychology sessions, and wellness education through our website and online or in-person sessions.</p>
       <p class="policy-p">We are the data controller for all personal information collected through this website and our services.</p>
       <table class="policy-table">
         <thead><tr><th>Detail</th><th>Information</th></tr></thead>
@@ -267,113 +324,125 @@
       </table>
     </div>
 
-    <!-- 2. INFORMATION WE COLLECT -->
+    <!-- ── 2. INFORMATION WE COLLECT ── -->
     <div class="policy-section fade-up" id="s2">
-      <h2 class="policy-h2"><span class="policy-h2-num">02</span>Information We Collect</h2>
-      <p class="policy-p">We collect information in three ways: information you provide directly, information collected automatically, and information from third-party services.</p>
+      <span class="section-tag">02</span>
+      <h2 class="policy-h2">Information We Collect</h2>
+      <p class="policy-p">We collect information in three ways: directly from you, automatically through your use of the site, and occasionally from third-party services.</p>
 
-      <p class="font-sans text-sm font-bold mb-3" style="color:var(--text);">A. Information You Provide Directly</p>
-      <ul class="policy-ul mb-5">
-        <li><strong>Contact &amp; Booking Forms:</strong> Name, email address, phone number, and health concern details when you fill out our consultation request, booking, or contact forms.</li>
-        <li><strong>Newsletter Subscription:</strong> Name (optional) and email address when you subscribe to our Inner Circle newsletter.</li>
-        <li><strong>Session Information:</strong> Health history, dosha-related details, and wellness goals shared during consultations. This is sensitive health information and is handled with the highest care.</li>
+      <div class="sub-label">A. Information You Provide Directly</div>
+      <ul class="policy-ul">
+        <li><strong>Contact &amp; Booking Forms:</strong> Name, email address, phone number, and health concern details when you fill out our consultation or contact forms.</li>
+        <li><strong>Newsletter Subscription:</strong> Email address (and optional name) when you subscribe to our Inner Circle newsletter.</li>
+        <li><strong>Session Information:</strong> Health history, dosha-related details, and wellness goals shared during consultations. This is sensitive health data handled with the highest care and confidentiality.</li>
         <li><strong>Community Applications:</strong> Name, credentials, area of practice, and professional background when applying to join the Samarpan Community.</li>
         <li><strong>Communications:</strong> Messages, emails, or WhatsApp conversations you initiate with us.</li>
+        <li><strong>Prakriti Quiz:</strong> Responses to our on-site Dosha quiz if you choose to share your name and email for your personalised report.</li>
       </ul>
 
-      <p class="font-sans text-sm font-bold mb-3" style="color:var(--text);">B. Information Collected Automatically</p>
-      <ul class="policy-ul mb-5">
+      <div class="sub-label">B. Information Collected Automatically</div>
+      <ul class="policy-ul">
         <li><strong>Usage Data:</strong> Pages visited, time spent, referring URLs, and navigation patterns via Google Analytics (GA4).</li>
         <li><strong>Device &amp; Technical Data:</strong> IP address, browser type, operating system, screen resolution, and language settings.</li>
-        <li><strong>Cookies &amp; Local Storage:</strong> Session preferences such as dark/light mode settings stored locally in your browser.</li>
+        <li><strong>Browser Storage:</strong> Dark/light mode preference stored locally in your browser — not transmitted to any server.</li>
+        <li><strong>Session Storage:</strong> Popup display history (to prevent repetitive popups) stored locally per browser session only.</li>
       </ul>
 
-      <p class="font-sans text-sm font-bold mb-3" style="color:var(--text);">C. Information from Third Parties</p>
+      <div class="sub-label">C. Information from Third Parties</div>
       <ul class="policy-ul">
         <li><strong>Google Analytics:</strong> Aggregated, anonymised website usage statistics.</li>
-        <li><strong>Firebase / Firestore:</strong> Form submission data stored securely in Google's Firebase infrastructure.</li>
+        <li><strong>Firebase / Firestore:</strong> Form submission data stored securely in Google's Firebase cloud infrastructure.</li>
         <li><strong>Social Media:</strong> If you interact with us on Instagram or YouTube, those platforms may share basic engagement data per their own privacy policies.</li>
       </ul>
     </div>
 
-    <!-- 3. HOW WE USE IT -->
+    <!-- ── 3. HOW WE USE IT ── -->
     <div class="policy-section fade-up" id="s3">
-      <h2 class="policy-h2"><span class="policy-h2-num">03</span>How We Use Your Information</h2>
+      <span class="section-tag">03</span>
+      <h2 class="policy-h2">How We Use Your Information</h2>
       <p class="policy-p">We use the information we collect only for legitimate purposes directly related to the services we provide:</p>
       <table class="policy-table">
         <thead><tr><th>Purpose</th><th>Data Used</th></tr></thead>
         <tbody>
           <tr><td>Respond to consultation enquiries</td><td>Name, email, phone, health concern</td></tr>
-          <tr><td>Schedule &amp; conduct healing sessions</td><td>Name, contact, health history</td></tr>
-          <tr><td>Send the Inner Circle newsletter</td><td>Name (opt.), email address</td></tr>
+          <tr><td>Schedule &amp; conduct healing sessions</td><td>Name, contact details, health history</td></tr>
+          <tr><td>Send the Inner Circle newsletter</td><td>Name (optional), email address</td></tr>
           <tr><td>Improve website performance</td><td>Analytics &amp; usage data</td></tr>
           <tr><td>Process community applications</td><td>Professional credentials &amp; bio</td></tr>
           <tr><td>Respond to your messages</td><td>Communication content</td></tr>
+          <tr><td>Deliver Prakriti quiz results</td><td>Quiz answers, name &amp; email (if provided)</td></tr>
           <tr><td>Comply with legal obligations</td><td>As required by applicable law</td></tr>
         </tbody>
       </table>
-      <div class="policy-highlight mt-5">
+      <div class="policy-callout mt-5">
         <p>We do not sell, rent, or trade your personal information to any third party. We do not use your data for targeted advertising on other platforms.</p>
       </div>
     </div>
 
-    <!-- 4. LEGAL BASIS -->
+    <!-- ── 4. LEGAL BASIS ── -->
     <div class="policy-section fade-up" id="s4">
-      <h2 class="policy-h2"><span class="policy-h2-num">04</span>Legal Basis for Processing</h2>
-      <p class="policy-p">We process your personal information under the following legal bases, consistent with applicable Indian data protection law (the Digital Personal Data Protection Act, 2023) and, where applicable, GDPR principles:</p>
+      <span class="section-tag">04</span>
+      <h2 class="policy-h2">Legal Basis for Processing</h2>
+      <p class="policy-p">We process your personal information under the following legal bases, consistent with the Digital Personal Data Protection Act, 2023 (India) and, where applicable, GDPR principles for our international clients:</p>
       <ul class="policy-ul">
-        <li><strong>Consent:</strong> For newsletter subscriptions and non-essential cookies. You may withdraw consent at any time.</li>
+        <li><strong>Consent:</strong> For newsletter subscriptions and non-essential cookies. You may withdraw consent at any time without affecting the lawfulness of prior processing.</li>
         <li><strong>Contractual Necessity:</strong> For processing enquiries and delivering consultation services you have requested.</li>
         <li><strong>Legitimate Interests:</strong> For website analytics, security monitoring, and improving our services — where these interests do not override your fundamental rights.</li>
         <li><strong>Legal Obligation:</strong> Where required to comply with applicable laws, regulations, or court orders.</li>
       </ul>
     </div>
 
-    <!-- 5. SHARING -->
+    <!-- ── 5. SHARING ── -->
     <div class="policy-section fade-up" id="s5">
-      <h2 class="policy-h2"><span class="policy-h2-num">05</span>Sharing &amp; Disclosure</h2>
+      <span class="section-tag">05</span>
+      <h2 class="policy-h2">Sharing &amp; Disclosure</h2>
       <p class="policy-p">We share your data only in the following limited circumstances:</p>
       <ul class="policy-ul">
-        <li><strong>Service Providers:</strong> Google Firebase (database &amp; hosting), Google Analytics (website analytics), and Google Workspace (email). These providers are bound by data processing agreements and may not use your data for their own purposes.</li>
+        <li><strong>Service Providers:</strong> Google Firebase (database), Google Analytics (analytics), and Google Workspace (email). These providers operate under data processing agreements and are prohibited from using your data for their own purposes.</li>
         <li><strong>WhatsApp (Meta):</strong> When you choose to contact us via WhatsApp, your messages are processed by Meta under their own privacy policy.</li>
-        <li><strong>Legal Requirements:</strong> If required by law, court order, or governmental authority, we may disclose your information to the extent legally required.</li>
-        <li><strong>Business Transfer:</strong> In the unlikely event of a business sale or merger, personal data may be transferred to the acquiring party, subject to equivalent privacy protections.</li>
+        <li><strong>Legal Requirements:</strong> If required by law, court order, or governmental authority, we may disclose your information to the extent legally required and will notify you where permitted.</li>
+        <li><strong>Business Transfer:</strong> In the unlikely event of a business sale or merger, personal data may be transferred to the acquiring party subject to equivalent privacy protections.</li>
       </ul>
       <p class="policy-p">We never sell, rent, or share your personal data with marketers, advertisers, or data brokers.</p>
     </div>
 
-    <!-- 6. COOKIES -->
+    <!-- ── 6. COOKIES ── -->
     <div class="policy-section fade-up" id="s6">
-      <h2 class="policy-h2"><span class="policy-h2-num">06</span>Cookies &amp; Tracking Technologies</h2>
-      <p class="policy-p">We use the following types of cookies and local storage on our website:</p>
+      <span class="section-tag">06</span>
+      <h2 class="policy-h2">Cookies &amp; Tracking Technologies</h2>
+      <p class="policy-p">We use the following types of cookies and browser storage on our website:</p>
       <table class="policy-table">
         <thead><tr><th>Type</th><th>Purpose</th><th>Duration</th></tr></thead>
         <tbody>
-          <tr><td>Preference (Local Storage)</td><td>Remember dark/light mode setting</td><td>Persistent (until cleared)</td></tr>
+          <tr><td>Preference (Local Storage)</td><td>Remember dark/light mode setting</td><td>Persistent until cleared</td></tr>
+          <tr><td>Session Storage</td><td>Track which popups have been shown this session</td><td>Session only (clears on tab close)</td></tr>
           <tr><td>Analytics (Google Analytics)</td><td>Understand how visitors use the site</td><td>Up to 2 years</td></tr>
           <tr><td>Performance</td><td>Page load &amp; session data</td><td>Session</td></tr>
         </tbody>
       </table>
-      <p class="policy-p">You can control or disable cookies through your browser settings at any time. Disabling analytics cookies will not affect your ability to use the website. Our dark/light mode preference is stored in your browser's local storage and is not transmitted to any server.</p>
+      <p class="policy-p">You can control or disable cookies through your browser settings at any time. Disabling analytics cookies will not affect your ability to use the website. When you click "Decline" on our cookie banner, analytics cookies are not set.</p>
     </div>
 
-    <!-- 7. DATA RETENTION -->
+    <!-- ── 7. DATA RETENTION ── -->
     <div class="policy-section fade-up" id="s7">
-      <h2 class="policy-h2"><span class="policy-h2-num">07</span>Data Retention</h2>
-      <p class="policy-p">We retain your personal data only for as long as is necessary to fulfil the purposes for which it was collected:</p>
+      <span class="section-tag">07</span>
+      <h2 class="policy-h2">Data Retention</h2>
+      <p class="policy-p">We retain your personal data only for as long as necessary to fulfil the purposes for which it was collected:</p>
       <ul class="policy-ul">
         <li><strong>Consultation &amp; Session Records:</strong> Retained for a minimum of 5 years after your last session, as required for health records and potential follow-up care.</li>
-        <li><strong>Newsletter Subscriptions:</strong> Retained until you unsubscribe. You can unsubscribe at any time by clicking the link in any newsletter email or contacting us directly.</li>
-        <li><strong>General Enquiries:</strong> Retained for 2 years from the date of last contact.</li>
-        <li><strong>Analytics Data:</strong> Google Analytics retains anonymised data per their own retention settings (typically 14 months for standard properties).</li>
-        <li><strong>Community Applications:</strong> Retained for 1 year if not accepted; indefinitely for accepted members (as part of the community directory).</li>
+        <li><strong>Newsletter Subscriptions:</strong> Retained until you unsubscribe. You may unsubscribe at any time via the link in any newsletter or by contacting us directly.</li>
+        <li><strong>General Enquiries &amp; Form Submissions:</strong> Retained for 2 years from the date of last contact.</li>
+        <li><strong>Analytics Data:</strong> Google Analytics retains anonymised data per their own retention settings (typically 14 months).</li>
+        <li><strong>Community Applications:</strong> Retained for 1 year if not accepted; indefinitely for accepted members as part of the community directory.</li>
+        <li><strong>Quiz Results:</strong> Retained for 1 year for service improvement purposes; anonymised thereafter.</li>
       </ul>
-      <p class="policy-p">When data is no longer required, we securely delete or anonymise it.</p>
+      <p class="policy-p">When data is no longer required, we securely delete or irreversibly anonymise it.</p>
     </div>
 
-    <!-- 8. YOUR RIGHTS -->
+    <!-- ── 8. YOUR RIGHTS ── -->
     <div class="policy-section fade-up" id="s8">
-      <h2 class="policy-h2"><span class="policy-h2-num">08</span>Your Rights</h2>
+      <span class="section-tag">08</span>
+      <h2 class="policy-h2">Your Rights</h2>
       <p class="policy-p">Depending on your jurisdiction, you have some or all of the following rights regarding your personal data:</p>
       <ul class="policy-ul">
         <li><strong>Right of Access:</strong> Request a copy of the personal data we hold about you.</li>
@@ -381,103 +450,121 @@
         <li><strong>Right to Erasure:</strong> Request deletion of your personal data, subject to legal retention obligations.</li>
         <li><strong>Right to Restrict Processing:</strong> Ask us to limit how we use your data in certain circumstances.</li>
         <li><strong>Right to Data Portability:</strong> Receive your data in a structured, commonly used format.</li>
-        <li><strong>Right to Withdraw Consent:</strong> Where processing is based on consent, withdraw it at any time without affecting the lawfulness of prior processing.</li>
+        <li><strong>Right to Withdraw Consent:</strong> Where processing is consent-based, withdraw it at any time.</li>
         <li><strong>Right to Object:</strong> Object to processing based on legitimate interests.</li>
       </ul>
-      <p class="policy-p">To exercise any of these rights, contact us at <a href="mailto:info@thesamarpan.co.in" class="text-clay hover:underline">info@thesamarpan.co.in</a>. We will respond within 30 days. We may need to verify your identity before fulfilling your request.</p>
-      <div class="policy-highlight">
-        <p>We respect every request with seriousness and care. Your wellbeing — including your data privacy — is part of our healing intention.</p>
+      <p class="policy-p">To exercise any of these rights, contact us at <a href="mailto:info@thesamarpan.co.in">info@thesamarpan.co.in</a>. We will respond within 30 days and may need to verify your identity before fulfilling your request.</p>
+      <div class="policy-callout">
+        <p>We treat every privacy request with the same care and intention as our healing work. Your wellbeing — including your data privacy — matters deeply to us.</p>
       </div>
     </div>
 
-    <!-- 9. SECURITY -->
+    <!-- ── 9. SECURITY ── -->
     <div class="policy-section fade-up" id="s9">
-      <h2 class="policy-h2"><span class="policy-h2-num">09</span>Data Security</h2>
-      <p class="policy-p">We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, disclosure, alteration, or destruction. These include:</p>
+      <span class="section-tag">09</span>
+      <h2 class="policy-h2">Data Security</h2>
+      <p class="policy-p">We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, disclosure, alteration, or destruction:</p>
       <ul class="policy-ul">
-        <li>HTTPS encryption on all website pages and form submissions.</li>
+        <li>HTTPS encryption across all website pages and form submissions.</li>
         <li>Google Firebase Firestore with security rules restricting access to authorised systems only.</li>
-        <li>Limited internal access to personal data on a need-to-know basis.</li>
+        <li>Limited internal access to personal data on a strict need-to-know basis.</li>
         <li>Regular review of our data handling practices and third-party service configurations.</li>
       </ul>
-      <p class="policy-p">While we take all reasonable precautions, no system is 100% secure. If you become aware of any security concern related to our website, please contact us immediately at <a href="mailto:info@thesamarpan.co.in" class="text-clay hover:underline">info@thesamarpan.co.in</a>.</p>
+      <p class="policy-p">While we take all reasonable precautions, no system is 100% secure. If you become aware of any security concern related to our website, please contact us immediately at <a href="mailto:info@thesamarpan.co.in">info@thesamarpan.co.in</a>.</p>
     </div>
 
-    <!-- 10. CHILDREN -->
+    <!-- ── 10. CHILDREN ── -->
     <div class="policy-section fade-up" id="s10">
-      <h2 class="policy-h2"><span class="policy-h2-num">10</span>Children's Privacy</h2>
+      <span class="section-tag">10</span>
+      <h2 class="policy-h2">Children's Privacy</h2>
       <p class="policy-p">Our website and services are not directed to children under the age of 18. We do not knowingly collect personal data from children. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately and we will promptly delete such data.</p>
-      <p class="policy-p">Wellness consultations for minors are only conducted with the explicit written consent of a parent or guardian who must be present during the session.</p>
+      <p class="policy-p">Wellness consultations for minors are conducted only with the explicit written consent of a parent or guardian who must remain present throughout the session.</p>
     </div>
 
-    <!-- 11. THIRD PARTY LINKS -->
+    <!-- ── 11. THIRD PARTY LINKS ── -->
     <div class="policy-section fade-up" id="s11">
-      <h2 class="policy-h2"><span class="policy-h2-num">11</span>Third-Party Links</h2>
-      <p class="policy-p">Our website may contain links to external websites including Instagram, YouTube, and WhatsApp. These links are provided for your convenience. We have no control over the content or privacy practices of these third-party sites and are not responsible for their policies. We encourage you to review the privacy policy of every website you visit.</p>
-      <p class="policy-p">Embedded content (such as Google Fonts, Tailwind CDN, and Lucide icons) may result in your browser making requests to third-party servers. This is standard for modern web pages and involves minimal data exchange (typically only your IP address and browser type).</p>
+      <span class="section-tag">11</span>
+      <h2 class="policy-h2">Third-Party Links</h2>
+      <p class="policy-p">Our website contains links to external platforms including Instagram, YouTube, and WhatsApp. These are provided for your convenience. We have no control over the content or privacy practices of these third-party sites and are not responsible for their policies.</p>
+      <p class="policy-p">Embedded resources such as Google Fonts, Tailwind CDN, and Lucide icons may result in your browser making requests to third-party servers. This is standard for modern websites and typically involves only minimal data exchange (your IP address and browser type).</p>
     </div>
 
-    <!-- 12. CHANGES -->
+    <!-- ── 12. CHANGES ── -->
     <div class="policy-section fade-up" id="s12">
-      <h2 class="policy-h2"><span class="policy-h2-num">12</span>Changes to This Policy</h2>
+      <span class="section-tag">12</span>
+      <h2 class="policy-h2">Changes to This Policy</h2>
       <p class="policy-p">We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or legal requirements. When we make significant changes, we will:</p>
       <ul class="policy-ul">
         <li>Update the "Last updated" date at the top of this page.</li>
         <li>Notify newsletter subscribers via email for material changes.</li>
-        <li>Post a notice on the website for a reasonable period.</li>
+        <li>Post a notice on the website homepage for a reasonable period.</li>
       </ul>
-      <p class="policy-p">We encourage you to review this page periodically. Your continued use of our website after any changes constitutes your acceptance of the updated policy.</p>
+      <p class="policy-p">Your continued use of our website after any changes constitutes your acceptance of the updated policy. We encourage you to review this page periodically.</p>
     </div>
 
-    <!-- 13. CONTACT -->
+    <!-- ── 13. CONTACT ── -->
     <div class="policy-section fade-up" id="s13">
-      <h2 class="policy-h2"><span class="policy-h2-num">13</span>Contact Us</h2>
-      <p class="policy-p">If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please reach out to us through any of the following channels. We are committed to responding thoughtfully and promptly.</p>
+      <span class="section-tag">13</span>
+      <h2 class="policy-h2">Contact Us</h2>
+      <p class="policy-p">If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please reach out through any of the channels below. We are committed to responding thoughtfully and promptly.</p>
 
-      <div class="contact-card">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(217,93,57,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i data-lucide="mail" class="w-5 h-5 text-clay"></i>
-        </div>
-        <div>
-          <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-0.5">Email</p>
-          <a href="mailto:info@thesamarpan.co.in" class="font-sans text-sm text-clay hover:underline">info@thesamarpan.co.in</a>
-          <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">We aim to respond within 2 business days.</p>
+      <!-- Contact cards matching index.html contact section exactly -->
+      <div class="contact-info-card">
+        <a href="mailto:info@thesamarpan.co.in" onclick="gaEvent('click','Contact','Privacy Email Click')" class="contact-info-row">
+          <div class="contact-icon-wrap" style="background:linear-gradient(135deg,#D95D39,#C5A059);">
+            <i data-lucide="mail" class="w-4 h-4 text-white"></i>
+          </div>
+          <div>
+            <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p>
+            <p class="font-serif text-sm" style="color:var(--text);">info@thesamarpan.co.in</p>
+            <p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">We respond within 2 business days.</p>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
+        </a>
+        <a href="https://wa.me/919661486740?text=Namaste%20Samarpan%2C%20I%20have%20a%20privacy%20query." target="_blank" rel="noopener" onclick="gaEvent('click','Contact','Privacy WhatsApp Click')" class="contact-info-row">
+          <div class="contact-icon-wrap" style="background:#25D366;">
+            <i data-lucide="message-circle" class="w-4 h-4 text-white"></i>
+          </div>
+          <div>
+            <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">WhatsApp</p>
+            <p class="font-serif text-sm" style="color:var(--text);">+91 96614 86740</p>
+            <p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">For quick privacy questions or data requests.</p>
+          </div>
+          <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
+        </a>
+        <div class="contact-info-row">
+          <div class="contact-icon-wrap" style="background:#4A5D4F;">
+            <i data-lucide="map-pin" class="w-4 h-4 text-white"></i>
+          </div>
+          <div>
+            <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Location</p>
+            <p class="font-serif text-sm" style="color:var(--text);">New Delhi, India (IST)</p>
+          </div>
         </div>
       </div>
 
-      <div class="contact-card">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(37,211,102,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg class="w-5 h-5" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </div>
-        <div>
-          <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:#25D366;">WhatsApp</p>
-          <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="font-sans text-sm hover:underline" style="color:#25D366;">+91 96614 86740</a>
-          <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">For quick privacy questions or data requests.</p>
-        </div>
+      <!-- Grievance Officer note -->
+      <div class="grievance-box mt-6">
+        <p class="font-sans text-[9px] uppercase tracking-widest font-bold text-clay mb-1.5">Grievance Officer</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">In accordance with the Information Technology Act, 2000 and rules made thereunder, the Grievance Officer is: <strong style="color:var(--text);">Harsh Ranjan</strong> — <a href="mailto:info@thesamarpan.co.in" class="text-clay hover:underline">info@thesamarpan.co.in</a>. Grievances will be acknowledged within 48 hours and resolved within 30 days of receipt.</p>
       </div>
 
-      <div class="contact-card">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(197,160,89,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <i data-lucide="map-pin" class="w-5 h-5 text-brand-gold"></i>
-        </div>
-        <div>
-          <p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold mb-0.5">Postal Address</p>
-          <p class="font-sans text-sm" style="color:var(--text);">Samarpan — Holistic Wellbeing</p>
-          <p class="font-sans text-xs mt-0.5" style="color:var(--text-muted);">New Delhi, India</p>
-        </div>
-      </div>
-
-      <!-- Grievance officer note -->
-      <div class="mt-6 p-4 rounded" style="background:var(--bg2);border:1px solid var(--border);">
-        <p class="font-sans text-[9px] uppercase tracking-widest font-bold text-clay mb-1">Grievance Officer</p>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">In accordance with the Information Technology Act, 2000 and the rules made thereunder, the name and contact details of the Grievance Officer are: <strong style="color:var(--text);">Harsh Ranjan</strong>, email: <a href="mailto:info@thesamarpan.co.in" class="text-clay hover:underline">info@thesamarpan.co.in</a>. Grievances will be acknowledged within 48 hours and resolved within 30 days of receipt.</p>
+      <!-- CTA back to homepage -->
+      <div class="mt-10 text-center">
+        <p class="font-serif italic text-brand-gold text-lg mb-4">Ready to begin your healing journey?</p>
+        <a href="booking.html" onclick="gaEvent('click','CTA','Privacy Page - Book Session')" class="cta-btn inline-block px-10 py-4 bg-clay text-white font-sans text-xs font-bold uppercase tracking-[.2em] rounded-sm shadow-lg">Book a Free Consultation</a>
+        <p class="font-sans text-xs mt-4" style="color:var(--text-muted);">
+          <a href="index.html" class="hover:text-clay transition">← Back to Home</a>
+          &nbsp;·&nbsp;
+          <a href="terms-of-service.html" class="hover:text-clay transition">Terms of Service →</a>
+        </p>
       </div>
     </div>
 
   </main>
 </div>
 
-<!-- ══ FOOTER ══ -->
+<!-- ══ FOOTER (exact match with index.html) ══ -->
 <footer class="bg-brand-black text-white/60 py-16 px-4 sm:px-6 border-t border-white/10">
   <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
     <div class="sm:col-span-2">
@@ -491,15 +578,15 @@
       <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">Holistic Wellbeing</p>
       <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
       <div class="flex gap-4 mt-6">
-      <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" onclick="gaEvent('click','Social','Instagram')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-</a>
-<a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" onclick="gaEvent('click','Social','YouTube')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.8 12 2.8 12 2.8s-4.2 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.8 12 21.8 12 21.8s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.3l8.1 3.6-8.1 3.6z"/></svg>
-</a>
-<a href="https://wa.me/919661486740" target="_blank" rel="noopener" onclick="gaEvent('click','Social','WhatsApp')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+        <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" onclick="gaEvent('click','Social','Instagram')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" onclick="gaEvent('click','Social','YouTube')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.8 12 2.8 12 2.8s-4.2 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.8 12 21.8 12 21.8s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.3l8.1 3.6-8.1 3.6z"/></svg>
+        </a>
+        <a href="https://wa.me/919661486740" target="_blank" rel="noopener" onclick="gaEvent('click','Social','WhatsApp')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
       </div>
     </div>
     <div>
@@ -517,28 +604,27 @@
       <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
         <li>
-  <a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-    info@thesamarpan.co.in
-  </a>
-</li>
-<li>
-  <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    WhatsApp Us
-  </a>
-</li>
-<li>
-  <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    Samarpan Wellness
-  </a>
-</li>
-<li class="flex items-center gap-2">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-  New Delhi, India
-</li>
-        
+          <a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            info@thesamarpan.co.in
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Us
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Samarpan Wellness
+          </a>
+        </li>
+        <li class="flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          New Delhi, India
+        </li>
       </ul>
     </div>
   </div>
@@ -551,9 +637,9 @@
   </div>
 </footer>
 
-<!-- ══ FLOATING BUTTONS ══ -->
+<!-- ══ FLOATING BUTTONS (identical to index) ══ -->
 <div id="whatsapp-fab">
-  <a href="https://wa.me/919661486740" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20have%20a%20question%20about%20your%20privacy%20policy." target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB - Privacy')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 </div>
@@ -564,65 +650,67 @@
 </div>
 
 <script>
-lucide.createIcons();
-
-/* ── Scroll progress ── */
-window.addEventListener('scroll', function() {
-  var sp = document.getElementById('scroll-progress');
-  if (sp) sp.style.width = Math.min((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100) + '%';
-}, {passive:true});
-
-/* ── Mobile Menu ── */
-var menuOpen = false;
-function toggleMenu() {
-  menuOpen = !menuOpen;
-  document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
-  document.body.style.overflow = menuOpen ? 'hidden' : '';
-  document.getElementById('hamburger-btn').setAttribute('aria-expanded', String(menuOpen));
-  var icon = document.getElementById('hamburger-icon');
-  icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
   lucide.createIcons();
-}
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && menuOpen) toggleMenu(); });
 
-/* ── Theme ── */
-window.addEventListener('DOMContentLoaded', function() {
-  var stored = localStorage.getItem('samarpan-theme') || 'light';
-  document.documentElement.setAttribute('data-theme', stored);
-  var ti = document.getElementById('themeIcon');
-  if (ti) { ti.setAttribute('data-lucide', stored === 'dark' ? 'sun' : 'moon'); lucide.createIcons(); }
+  /* ── Scroll progress ── */
+  window.addEventListener('scroll', function() {
+    var sp = document.getElementById('scroll-progress');
+    if (sp) sp.style.width = Math.min((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100) + '%';
+  }, {passive:true});
 
-  /* Fade-up observer */
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, {threshold: 0.06});
-  document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+  /* ── Mobile Menu ── */
+  var menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    document.getElementById('hamburger-btn').setAttribute('aria-expanded', String(menuOpen));
+    var icon = document.getElementById('hamburger-icon');
+    icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu');
+    lucide.createIcons();
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && menuOpen) toggleMenu(); });
 
-  lucide.createIcons();
-});
+  /* ── Theme (identical to index) ── */
+  (function() {
+    var stored = localStorage.getItem('samarpan-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', stored);
+    var ti = document.getElementById('themeIcon');
+    if (ti) { ti.setAttribute('data-lucide', stored === 'dark' ? 'sun' : 'moon'); lucide.createIcons(); }
+  })();
 
-function toggleTheme() {
-  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
-  document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
-  lucide.createIcons();
-}
+  function toggleTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+    lucide.createIcons();
+  }
 
-/* ── Active TOC highlight on scroll ── */
-window.addEventListener('scroll', function() {
+  /* ── Fade-up observer ── */
+  window.addEventListener('DOMContentLoaded', function() {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, {threshold: 0.07});
+    document.querySelectorAll('.fade-up').forEach(function(el) { obs.observe(el); });
+    lucide.createIcons();
+  });
+
+  /* ── Active TOC highlight on scroll ── */
   var sections = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13'];
-  var current = '';
-  sections.forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top <= 120) current = id;
-  });
-  document.querySelectorAll('.toc-item').forEach(function(a) {
-    var active = a.getAttribute('href') === '#' + current;
-    a.style.color = active ? '#D95D39' : '';
-    a.style.paddingLeft = active ? '.35rem' : '';
-  });
-}, {passive:true});
+  window.addEventListener('scroll', function() {
+    var current = '';
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 100) current = id;
+    });
+    document.querySelectorAll('.toc-link').forEach(function(a) {
+      var isActive = a.getAttribute('href') === '#' + current;
+      a.classList.toggle('active', isActive);
+    });
+  }, {passive:true});
 </script>
 </body>
 </html>
