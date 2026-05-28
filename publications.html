@@ -97,23 +97,34 @@
 
     .tag-pill{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:20px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
 
-    /* PDF READER MODAL */
+    /* ─────────────────────────────────────────
+       PDF READER MODAL
+       Copy/select is blocked ONLY inside the
+       reader via .reader-no-select on the panel.
+       The rest of the page remains selectable.
+    ───────────────────────────────────────── */
     #reader-modal{position:fixed;inset:0;z-index:5000;display:flex;align-items:stretch;justify-content:stretch;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .4s ease,visibility .4s ease;}
     #reader-modal.active{opacity:1;visibility:visible;pointer-events:auto;}
     #reader-overlay{position:absolute;inset:0;background:rgba(20,20,16,.92);backdrop-filter:blur(8px);}
     #reader-panel{position:relative;z-index:1;width:100%;display:flex;flex-direction:column;background:var(--bg2);}
+
+    /* Block selection ONLY inside the reader panel */
+    #reader-panel, #reader-panel *{
+      user-select:none !important;
+      -webkit-user-select:none !important;
+      -moz-user-select:none !important;
+      -ms-user-select:none !important;
+    }
+
     #reader-header{height:60px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;flex-shrink:0;}
     #reader-iframe-wrap{flex:1;position:relative;overflow:hidden;}
-
-    /* SECURITY: prevent right-click, selection, print on iframe area */
-    #reader-iframe-wrap *{user-select:none !important;-webkit-user-select:none !important;}
     #reader-shield{position:absolute;inset:0;z-index:10;pointer-events:none;}
     #reader-iframe{width:100%;height:100%;border:none;display:block;}
 
     /* Prevent print */
     @media print{body{display:none !important;}}
 
-    /* No screenshot overlay (visual deterrent) */
+    /* Watermark overlay */
     #reader-watermark{position:absolute;inset:0;z-index:8;pointer-events:none;display:flex;align-items:center;justify-content:center;opacity:.03;}
 
     .reader-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;transition:all .25s;border:none;}
@@ -137,13 +148,11 @@
     ::-webkit-scrollbar-thumb{background:#D95D39;border-radius:4px;}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
     *{-webkit-tap-highlight-color:transparent;}
-
-    /* No copy CSS */
-    .no-select{user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;}
   </style>
 </head>
 
-<body class="antialiased selection:bg-clay selection:text-white no-select">
+<!-- NOTE: no `no-select` class on body — site content is freely selectable -->
+<body class="antialiased selection:bg-clay selection:text-white">
 
 <div id="scroll-progress"></div>
 
@@ -201,7 +210,6 @@
 
 <!-- HERO -->
 <header class="relative w-full overflow-hidden flex items-end pt-[72px]" style="min-height:52vh;background:linear-gradient(160deg,#141410 0%,#1f1209 60%,#1C1C1C 100%);">
-  <!-- Decorative mandala -->
   <div class="absolute inset-0 flex items-center justify-center opacity-[0.04]" style="pointer-events:none;">
     <svg width="700" height="700" viewBox="0 0 700 700" fill="none">
       <circle cx="350" cy="350" r="340" stroke="#D95D39" stroke-width="1"/>
@@ -215,9 +223,7 @@
       <line x1="590" y1="110" x2="110" y2="590" stroke="#D95D39" stroke-width="0.5"/>
     </svg>
   </div>
-  <!-- Gold gradient line bottom -->
   <div class="absolute bottom-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,#C5A059,transparent);"></div>
-
   <div class="relative z-10 w-full max-w-5xl mx-auto px-6 pb-18 pt-14 md:pb-24 text-center">
     <div class="ha mb-4 flex justify-center">
       <span class="font-sans text-[9px] uppercase tracking-[.3em] text-brand-gold flex items-center gap-3">
@@ -254,16 +260,11 @@
 
     <!-- BOOK 1 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-28 fade-up">
-      <!-- Book Visual -->
       <div class="flex justify-center">
         <div class="relative">
-          <!-- Shadow / table effect -->
           <div style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:160px;height:16px;background:radial-gradient(ellipse,rgba(0,0,0,.22) 0%,transparent 70%);border-radius:50%;"></div>
-          <!-- Book cover -->
           <div class="book-cover-inner book-1-bg" style="width:210px;height:295px;cursor:pointer;border-radius:3px 6px 6px 3px;" onclick="openReader('book1')">
-            <!-- Spine line -->
             <div style="position:absolute;left:14px;top:0;bottom:0;width:1px;background:rgba(197,160,89,.25);"></div>
-            <!-- Top ornament -->
             <div style="margin-bottom:1rem;">
               <svg width="36" height="36" viewBox="0 0 100 100" fill="none" style="color:#C5A059;opacity:.8;">
                 <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
@@ -271,7 +272,6 @@
                 <circle cx="50" cy="85" r="3" fill="currentColor"/>
               </svg>
             </div>
-            <!-- Title -->
             <div style="text-align:center;padding:0 .75rem;">
               <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.65rem;color:rgba(197,160,89,.7);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.4rem;">Psychology of the</p>
               <p style="font-family:'Marcellus',serif;font-size:1rem;color:#fff;line-height:1.3;margin-bottom:.5rem;">Sleepless Sleep</p>
@@ -279,14 +279,12 @@
               <p style="font-family:'Lato',sans-serif;font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);">Harsh Ranjan</p>
               <p style="font-family:'Lato',sans-serif;font-size:.45rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(197,160,89,.55);margin-top:.25rem;">Samarpan</p>
             </div>
-            <!-- Read indicator -->
             <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);background:rgba(217,93,57,.85);border-radius:2px;padding:.2rem .6rem;">
               <span style="font-family:'Lato',sans-serif;font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#fff;">Read Now</span>
             </div>
           </div>
         </div>
       </div>
-      <!-- Book Info -->
       <div>
         <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin-bottom:1.5rem;"></div>
         <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-2">Publication 01</span>
@@ -316,7 +314,6 @@
 
     <!-- BOOK 2 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-28 fade-up">
-      <!-- Book Info first on desktop (right-aligned layout) -->
       <div class="lg:order-1 order-2">
         <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin-bottom:1.5rem;"></div>
         <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-2">Publication 02</span>
@@ -335,7 +332,6 @@
           <i data-lucide="book-open" class="w-4 h-4"></i>Read This Book
         </button>
       </div>
-      <!-- Book Visual -->
       <div class="flex justify-center lg:order-2 order-1">
         <div class="relative">
           <div style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:160px;height:16px;background:radial-gradient(ellipse,rgba(0,0,0,.22) 0%,transparent 70%);border-radius:50%;"></div>
@@ -372,7 +368,6 @@
 
     <!-- BOOK 3 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up">
-      <!-- Book Visual -->
       <div class="flex justify-center">
         <div class="relative">
           <div style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);width:160px;height:16px;background:radial-gradient(ellipse,rgba(0,0,0,.22) 0%,transparent 70%);border-radius:50%;"></div>
@@ -399,7 +394,6 @@
           </div>
         </div>
       </div>
-      <!-- Book Info -->
       <div>
         <div style="width:1px;height:48px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin-bottom:1.5rem;"></div>
         <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-2">Publication 03</span>
@@ -468,15 +462,15 @@
       <p class="font-sans text-[10px] uppercase tracking-widest text-clay mb-4">Holistic Wellbeing</p>
       <p class="text-sm leading-relaxed max-w-sm">Bridging ancient wisdom with modern science for holistic well-being.</p>
       <div class="flex gap-4 mt-6">
-       <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" onclick="gaEvent('click','Social','Instagram')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-</a>
-<a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" onclick="gaEvent('click','Social','YouTube')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.8 12 2.8 12 2.8s-4.2 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.8 12 21.8 12 21.8s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.3l8.1 3.6-8.1 3.6z"/></svg>
-</a>
-<a href="https://wa.me/919661486740" target="_blank" rel="noopener" onclick="gaEvent('click','Social','WhatsApp')" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+        <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-clay hover:border-clay transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.8 12 2.8 12 2.8s-4.2 0-6.8.1c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.3.3 4.3s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.8 12 21.8 12 21.8s4.2 0 6.8-.2c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.3v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.3l8.1 3.6-8.1 3.6z"/></svg>
+        </a>
+        <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="w-9 h-9 border border-white/20 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:border-[#25D366] transition">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
       </div>
     </div>
     <div>
@@ -493,29 +487,28 @@
     <div>
       <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Contact</h5>
       <ul class="space-y-3 text-sm">
-        
-    <li>
-  <a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-    info@thesamarpan.co.in
-  </a>
-</li>
-<li>
-  <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    WhatsApp Us
-  </a>
-</li>
-<li>
-  <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-    Samarpan Wellness
-  </a>
-</li>
-<li class="flex items-center gap-2">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-  New Delhi, India
-</li>
+        <li>
+          <a href="mailto:info@thesamarpan.co.in" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            info@thesamarpan.co.in
+          </a>
+        </li>
+        <li>
+          <a href="https://wa.me/919661486740" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="flex-shrink-0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Us
+          </a>
+        </li>
+        <li>
+          <a href="https://instagram.com/thesamarpan.in" target="_blank" rel="noopener" class="hover:text-white transition flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Samarpan Wellness
+          </a>
+        </li>
+        <li class="flex items-center gap-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          New Delhi, India
+        </li>
       </ul>
     </div>
   </div>
@@ -566,7 +559,7 @@
       </div>
     </div>
     <div id="reader-iframe-wrap">
-      <!-- Transparent shield prevents right-click interaction -->
+      <!-- Transparent shield prevents right-click interaction on iframe -->
       <div id="reader-shield" oncontextmenu="return false;"></div>
       <!-- Diagonal watermark for screenshot deterrence -->
       <div id="reader-watermark" aria-hidden="true">
@@ -578,7 +571,6 @@
           </text>
         </svg>
       </div>
-      <!-- PDF iframe — point #src to your GitHub raw PDF URL -->
       <iframe
         id="reader-iframe"
         title="Book Reader"
@@ -591,43 +583,40 @@
 
 <script>
   // ─────────────────────────────────────────────
-  // BOOK CONFIG — replace github_pdf_url with
-  // your actual GitHub raw PDF links, e.g.:
-  // https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/books/book1.pdf
+  // BOOK CONFIG — PDF files served from your domain
+  // Upload as: /books/psychology-of-the-sleepless-sleep.pdf etc.
   // ─────────────────────────────────────────────
   var BOOKS = {
     book1: {
       title: 'Psychology of the Sleepless Sleep',
-      // Replace the URL below with your actual GitHub raw PDF URL:
-      github_pdf_url: 'https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/books/psychology-of-the-sleepless-sleep.pdf'
+      pdf_url: 'https://thesamarpan.co.in/books/psychology-of-the-sleepless-sleep.pdf'
     },
     book2: {
       title: 'De-Conditioning the Mind',
-      github_pdf_url: 'https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/books/de-conditioning-the-mind.pdf'
+      pdf_url: 'https://thesamarpan.co.in/books/de-conditioning-the-mind.pdf'
     },
     book3: {
       title: 'Cultivating Physical & Neurochemical Sovereignty Through the Gut',
-      github_pdf_url: 'https://raw.githubusercontent.com/YOUR_USER/YOUR_REPO/main/books/cultivating-sovereignty-through-the-gut.pdf'
+      pdf_url: 'https://thesamarpan.co.in/books/cultivating-sovereignty-through-the-gut.pdf'
     }
   };
 
   // ─────────────────────────────────────────────
-  // READER — uses Google Docs Viewer to embed PDF
-  // with no download toolbar exposed to the user
+  // READER — Google Docs Viewer embeds PDF
+  // without exposing a direct download toolbar
   // ─────────────────────────────────────────────
   function openReader(bookId) {
     var book = BOOKS[bookId];
     if (!book) return;
-    var modal = document.getElementById('reader-modal');
-    var iframe = document.getElementById('reader-iframe');
+    var modal   = document.getElementById('reader-modal');
+    var iframe  = document.getElementById('reader-iframe');
     var titleEl = document.getElementById('reader-title');
 
     titleEl.textContent = book.title;
 
-    // Google Docs viewer: embeds PDF, removes toolbar download button
-    // &embedded=true removes most UI chrome
+    // Google Docs viewer hides the PDF download/toolbar UI
     var viewerUrl = 'https://docs.google.com/viewer?url='
-      + encodeURIComponent(book.github_pdf_url)
+      + encodeURIComponent(book.pdf_url)
       + '&embedded=true';
 
     iframe.src = viewerUrl;
@@ -636,53 +625,59 @@
   }
 
   function closeReader() {
-    var modal = document.getElementById('reader-modal');
+    var modal  = document.getElementById('reader-modal');
     var iframe = document.getElementById('reader-iframe');
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    // Small delay to avoid flash
     setTimeout(function(){ iframe.src = ''; }, 420);
   }
 
   // ─────────────────────────────────────────────
-  // SECURITY MEASURES (client-side deterrents)
+  // SECURITY: block right-click & keyboard
+  // shortcuts ONLY while the reader is open.
+  // Normal page behaviour is fully preserved.
   // ─────────────────────────────────────────────
-  document.addEventListener('contextmenu', function(e){
+  document.addEventListener('contextmenu', function(e) {
     if (document.getElementById('reader-modal').classList.contains('active')) {
       e.preventDefault();
     }
+    // Outside the reader: default browser context menu works normally
   });
 
   document.addEventListener('keydown', function(e) {
     var readerOpen = document.getElementById('reader-modal').classList.contains('active');
-    if (e.key === 'Escape') { if (readerOpen) closeReader(); }
-    // Block Ctrl+S, Ctrl+P, Ctrl+U in reader
+    if (e.key === 'Escape') { if (readerOpen) closeReader(); return; }
     if (readerOpen && (e.ctrlKey || e.metaKey)) {
       if (['s','p','u','a'].includes(e.key.toLowerCase())) {
         e.preventDefault();
       }
     }
-    // Block Print Screen key (best-effort)
-    if (e.key === 'PrintScreen') {
+    if (readerOpen && e.key === 'PrintScreen') {
       e.preventDefault();
     }
+    // All other keys work normally on the page
   });
 
   // ─────────────────────────────────────────────
-  // NAVBAR / THEME / ANIMATIONS (match Samarpan)
+  // THEME (restored from localStorage)
   // ─────────────────────────────────────────────
   (function(){
     var t = localStorage.getItem('samarpan-theme') || 'light';
     document.documentElement.setAttribute('data-theme', t);
     if (t === 'dark') {
       var ti = document.getElementById('themeIcon');
-      if (ti) { ti.setAttribute('data-lucide','sun'); }
+      if (ti) ti.setAttribute('data-lucide','sun');
     }
   })();
 
+  // ─────────────────────────────────────────────
+  // SCROLL PROGRESS + FAB VISIBILITY
+  // ─────────────────────────────────────────────
   window.addEventListener('scroll', function() {
     var sp = document.getElementById('scroll-progress');
-    if (sp) sp.style.width = Math.min((window.scrollY/(document.body.scrollHeight-window.innerHeight))*100,100)+'%';
+    if (sp) sp.style.width = Math.min(
+      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100, 100
+    ) + '%';
   }, {passive:true});
 
   window.addEventListener('scroll', function() {
@@ -693,6 +688,9 @@
     });
   }, {passive:true});
 
+  // ─────────────────────────────────────────────
+  // MOBILE MENU
+  // ─────────────────────────────────────────────
   var menuOpen = false;
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -703,8 +701,11 @@
     if (icon) { icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu'); lucide.createIcons(); }
   }
 
+  // ─────────────────────────────────────────────
+  // THEME TOGGLE
+  // ─────────────────────────────────────────────
   function toggleTheme() {
-    var html = document.documentElement;
+    var html  = document.documentElement;
     var isDark = html.getAttribute('data-theme') === 'dark';
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
@@ -712,23 +713,29 @@
     if (ti) { ti.setAttribute('data-lucide', isDark ? 'moon' : 'sun'); lucide.createIcons(); }
   }
 
+  // ─────────────────────────────────────────────
+  // SCROLL ANIMATIONS
+  // ─────────────────────────────────────────────
   var obs = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+      if (e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
     });
   }, {threshold:0.08});
   document.querySelectorAll('.fade-up,.fade-left,.fade-right').forEach(function(el){ obs.observe(el); });
 
-  // Hero entrance
+  // Hero entrance stagger
   document.querySelectorAll('.ha').forEach(function(el, i){
     el.style.transform = 'translateY(22px)';
     setTimeout(function(){
       el.style.transition = 'opacity .85s ease, transform .85s ease';
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+      el.style.opacity    = '1';
+      el.style.transform  = 'none';
     }, 280 + i * 155);
   });
 
+  // ─────────────────────────────────────────────
+  // LUCIDE ICONS
+  // ─────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', function(){ lucide.createIcons(); });
   lucide.createIcons();
 </script>
