@@ -22,7 +22,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- Pinned to a fixed version (not @latest) so a future Lucide release can't silently change/break icons on this page -->
+  <script src="https://unpkg.com/lucide@1.22.0/dist/umd/lucide.min.js"></script>
+
+  <!-- Theme set BEFORE first paint to avoid a light-mode flash for returning dark-mode visitors -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('samarpan-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { /* localStorage unavailable (private mode etc.) — default theme stands */ }
+    })();
+  </script>
+
+  <!-- Structured data: helps Google show Harsh as a recognised Person/practitioner in search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Harsh Ranjan",
+    "jobTitle": "Ayurveda Biologist, Yoga Therapist & Psycho-Spiritual Guide",
+    "url": "https://www.thesamarpan.co.in/harsh_ranjan.html",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Samarpan",
+      "url": "https://www.thesamarpan.co.in/"
+    },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "Jawaharlal Nehru University" },
+      { "@type": "EducationalOrganization", "name": "Bihar School of Yoga, Munger" }
+    ],
+    "sameAs": [
+      "https://instagram.com/thesamarpan.in",
+      "https://www.youtube.com/@Samarpan_Wellbeing"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "New Delhi",
+      "addressCountry": "IN"
+    }
+  }
+  </script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
@@ -150,6 +190,8 @@
 
 <body class="antialiased selection:bg-clay selection:text-white">
 
+<a href="#story" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[10001] focus:bg-clay focus:text-white focus:px-4 focus:py-2 focus:rounded-sm font-sans text-xs uppercase tracking-widest">Skip to main content</a>
+
 <div id="scroll-progress"></div>
 
 <!-- NAVBAR -->
@@ -270,7 +312,7 @@
           <!-- Badge -->
           <div class="absolute top-5 left-5" style="z-index:2;">
             <div style="background:rgba(197,160,89,.9);border-radius:2px;padding:.3rem .75rem;display:inline-block;">
-              <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#1C1C1C;font-weight:700;">Since 2018 · New Delhi</span>
+              <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#1C1C1C;font-weight:700;">Since 2020 · New Delhi</span>
             </div>
           </div>
         </div>
@@ -285,7 +327,7 @@
         <div class="space-y-4 font-sans font-light leading-relaxed text-sm mt-6" style="color:var(--text-muted);">
           <p>Harsh Ranjan's relationship with spirituality began not in adulthood, but in childhood — a deep, quiet pull toward the inner world that never left him. Raised with an innate curiosity about consciousness, breath, and the nature of the self, he began walking the path long before formal training began.</p>
           <p>In his early twenties, facing physical imbalances and an anxious mind, he turned to the ancient sciences of Ayurveda and Yoga — not from curiosity, but from genuine seeking. This led him across India: to the <em>Bihar School of Yoga</em> in Munger and deep into the teachings of the Rikhiapeeth tradition.</p>
-          <p>He formally studied Ayurveda Biology at <em>Jawaharlal Nehru University (JNU), New Delhi</em>. A lifelong traveller across sacred India, he has sat with masters in Mysore, Kedarnath, and beyond — weaving Ayurvedic science, Yoga therapy, mantra, and depth psychology into a coherent healing methodology.</p>
+          <p>He is currently furthering his formal studies in Ayurveda Biology at <em>Jawaharlal Nehru University (JNU), New Delhi</em>. A lifelong traveller across sacred India, he has sat with masters in Mysore, Kedarnath, and beyond — weaving Ayurvedic science, Yoga therapy, mantra, and depth psychology into a coherent healing methodology.</p>
           <p>This entire journey of surrender — <em style="color:var(--text);">Samarpan</em> — became not just his practice, but his offering to the world.</p>
         </div>
 
@@ -402,9 +444,9 @@
         <div class="w-11 h-11 rounded-full flex items-center justify-center mb-4" style="background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(74,93,79,.06));">
           <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         </div>
-        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Ayurveda Biology · JNU</h3>
-        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Formal Ayurveda Biology studies at Jawaharlal Nehru University, New Delhi — grounding decades of lived practice in rigorous academic study of classical Ayurvedic texts.</p>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold">JNU New Delhi · Academic</span>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Ayurveda Biology · JNU <span class="font-sans text-[9px] align-middle font-normal normal-case" style="color:var(--text-muted);">(In Progress)</span></h3>
+        <p class="font-sans text-xs mb-3 leading-relaxed" style="color:var(--text-muted);">Currently pursuing formal Ayurveda Biology studies at Jawaharlal Nehru University, New Delhi — grounding decades of lived practice in rigorous academic study of classical Ayurvedic texts.</p>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold">JNU New Delhi · 2024–Present</span>
       </div>
 
     </div>
@@ -570,6 +612,11 @@
           </button>
         </div>
         <div id="form-fields" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Honeypot: invisible to humans, but bots that auto-fill every field will trip it. submitForm() checks this and silently drops the submission. -->
+          <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" type="text" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <div>
             <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Full Name *</label>
             <input id="f-name" type="text" placeholder="Your full name" class="form-field" autocomplete="name">
@@ -600,12 +647,18 @@
             <label class="block font-sans text-[10px] uppercase tracking-widest mb-2" style="color:var(--text-muted);">Message (optional)</label>
             <textarea id="f-msg" placeholder="Tell Harsh a little about what you're seeking…" class="form-field" rows="3" style="resize:vertical;min-height:80px;"></textarea>
           </div>
+          <div class="sm:col-span-2">
+            <label class="flex items-start gap-2.5 cursor-pointer">
+              <input id="f-newsletter" type="checkbox" class="mt-0.5" style="width:16px;height:16px;accent-color:#D95D39;flex-shrink:0;">
+              <span class="font-sans text-xs" style="color:var(--text-muted);">Also send me occasional updates and journal posts from Samarpan.</span>
+            </label>
+          </div>
           <div class="sm:col-span-2 flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-1">
             <button id="submit-btn" onclick="submitForm(event)" class="cta-btn inline-flex items-center justify-center gap-2 px-9 py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm shadow-md w-full sm:w-auto">
               <span id="submit-text">Submit Request</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
-            <p class="font-sans text-[10px]" style="color:var(--text-muted);">🔒 Your data is private and never shared.</p>
+            <p class="font-sans text-[10px]" style="color:var(--text-muted);">🔒 Your booking details are private and only used to schedule your session.</p>
           </div>
         </div>
         <div id="form-ok" class="hidden text-center py-10">
@@ -789,11 +842,23 @@
     var btn       = document.getElementById('submit-btn');
     var statusDiv = document.getElementById('form-err');
     var origHTML  = btn ? btn.innerHTML : '';
-    var name    = (document.getElementById('f-name')?.value || '').trim();
-    var email   = (document.getElementById('f-email')?.value || '').trim();
-    var phone   = (document.getElementById('f-phone')?.value || '').trim();
-    var concern = (document.getElementById('f-concern')?.value || 'General Inquiry');
-    var message = (document.getElementById('f-msg')?.value || '').trim();
+
+    // Honeypot check — a real visitor never sees or fills this field. If it has a value, it was a bot.
+    var honeypot = (document.getElementById('f-website')?.value || '').trim();
+    if (honeypot) {
+      // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't write to Firestore.
+      document.getElementById('form-fields').classList.add('hidden');
+      document.getElementById('form-ok').classList.remove('hidden');
+      return;
+    }
+
+    var name        = (document.getElementById('f-name')?.value || '').trim();
+    var email       = (document.getElementById('f-email')?.value || '').trim();
+    var phone       = (document.getElementById('f-phone')?.value || '').trim();
+    var concern     = (document.getElementById('f-concern')?.value || 'General Inquiry');
+    var message     = (document.getElementById('f-msg')?.value || '').trim();
+    var wantsNews   = !!document.getElementById('f-newsletter')?.checked;
+
     if (!name || !isValidEmail(email)) {
       if (statusDiv) statusDiv.classList.remove('hidden');
       document.getElementById('err-text').textContent = '✗ Please enter your name and a valid email address.';
@@ -807,24 +872,30 @@
         concern: concern, message: message || 'No message provided',
         lead_type: 'harsh_ranjan_session_booking',
         lead_source: 'harsh_ranjan_page_cta_form',
-        booking_status: 'pending_confirmation'
+        booking_status: 'pending_confirmation',
+        newsletter_opt_in: wantsNews
       });
-      await saveToFirestore('homepage_newsletter', {
-        name: name, email: email, opted_in: 'true',
-        subscribed_via: 'harsh_ranjan_page_form',
-        subscription_type: 'session_booking_request'
-      });
+      // Only write to the newsletter list if the visitor actually checked the box.
+      if (wantsNews) {
+        await saveToFirestore('homepage_newsletter', {
+          name: name, email: email, opted_in: 'true',
+          subscribed_via: 'harsh_ranjan_page_form',
+          subscription_type: 'session_booking_request'
+        });
+      }
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
       if (typeof gtag === 'function') {
         gtag('event', 'submit', { event_category: 'Lead', event_label: 'Harsh Ranjan Page - ' + concern });
       }
     } catch (error) {
+      // Log the real error for debugging, but never show raw backend error text to the visitor —
+      // it can leak implementation details and just looks broken/unprofessional.
       console.error('Firebase Error:', error);
       if (statusDiv) {
         statusDiv.classList.remove('hidden');
         document.getElementById('err-text').textContent =
-          '✗ Error saving your request (' + error.message + '). Please try WhatsApp or email us directly.';
+          '✗ Something went wrong saving your request. Please try WhatsApp or email us directly.';
       }
     } finally {
       if (btn) { btn.disabled = false; btn.innerHTML = origHTML; }
@@ -835,10 +906,9 @@
 <script>
   lucide.createIcons();
 
-  // Theme init
+  // Sync the moon/sun icon with the theme that was already applied in <head> (before paint)
   (function(){
-    var t = localStorage.getItem('samarpan-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', t);
+    var t = document.documentElement.getAttribute('data-theme') || 'light';
     if (t === 'dark') {
       var ti = document.getElementById('themeIcon');
       if (ti) { ti.setAttribute('data-lucide','sun'); lucide.createIcons(); }
@@ -869,6 +939,27 @@
 
   // Mobile menu
   var menuOpen = false;
+  var lastFocusedEl = null;
+
+  function getMenuFocusable() {
+    var menu = document.getElementById('mobile-menu');
+    return Array.prototype.slice.call(
+      menu.querySelectorAll('a[href], button:not([disabled])')
+    );
+  }
+
+  function trapMenuFocus(e) {
+    if (!menuOpen || e.key !== 'Tab') return;
+    var focusable = getMenuFocusable();
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
   function toggleMenu() {
     menuOpen = !menuOpen;
     document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
@@ -876,6 +967,16 @@
     document.getElementById('hamburger-btn').setAttribute('aria-expanded', menuOpen);
     var icon = document.getElementById('hamburger-icon');
     if (icon) { icon.setAttribute('data-lucide', menuOpen ? 'x' : 'menu'); lucide.createIcons(); }
+
+    if (menuOpen) {
+      lastFocusedEl = document.activeElement;
+      var focusable = getMenuFocusable();
+      if (focusable.length) focusable[0].focus();
+      document.addEventListener('keydown', trapMenuFocus);
+    } else {
+      document.removeEventListener('keydown', trapMenuFocus);
+      if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+    }
   }
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { if (menuOpen) toggleMenu(); closeForm(); }
@@ -930,9 +1031,11 @@
       var btn = document.getElementById('submit-btn');
       if (btn) btn.disabled = false;
       document.getElementById('submit-text').innerHTML = 'Submit Request';
-      ['f-name','f-email','f-phone','f-concern','f-msg'].forEach(function(id){
+      ['f-name','f-email','f-phone','f-concern','f-msg','f-website'].forEach(function(id){
         var el = document.getElementById(id); if (el) el.value = '';
       });
+      var nl = document.getElementById('f-newsletter');
+      if (nl) nl.checked = false;
     }, 400);
   }
 
