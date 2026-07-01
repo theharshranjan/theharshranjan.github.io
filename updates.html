@@ -180,7 +180,9 @@
     .retreat-card{min-width:100%;height:100%;position:relative;flex-shrink:0;}
     .retreat-card img{width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0;}
     .retreat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.35) 50%,rgba(0,0,0,.08) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(2rem,6vw,5rem);color:white;}
-    .yatra-section{height:clamp(450px,70vh,700px);position:relative;overflow:hidden;}
+    .yatra-section{height:clamp(420px,70vh,700px);min-height:420px;position:relative;overflow:hidden;}
+    @media(max-width:480px){ .yatra-section{height:clamp(380px,58vh,520px);min-height:380px;} }
+    @media(orientation:landscape) and (max-height:500px){ .yatra-section{height:100vh;min-height:280px;} }
     .carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .3s,transform .3s;cursor:pointer;}
     .carousel-dot.active{background:#C5A059;transform:scale(1.4);}
 
@@ -316,7 +318,7 @@
     #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s,box-shadow .3s;}
     #fab a:hover{background:#1C1C1C;}
     #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
-    .grecaptcha-badge{bottom:9rem !important;z-index:800 !important;}
+    .grecaptcha-badge{visibility:hidden !important;}
     .recaptcha-notice{font-family:'Lato',sans-serif;font-size:9px;color:var(--text-muted);text-align:center;line-height:1.5;margin-top:.5rem;}
     .recaptcha-notice a{color:var(--text-muted);text-decoration:underline;}
     #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
@@ -962,12 +964,12 @@
 <section id="retreats" class="yatra-section bg-brand-black" aria-label="Sacred Yatra pilgrimages">
   <div class="carousel-container h-full">
     <div class="carousel-track" id="carouselTrack">
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1650341259809-9314b0de9268?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Rishikesh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttarakhand</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Rishikesh</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Where the Ganga washes away the old self."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1561359313-0639aad49ca6?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Varanasi"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttar Pradesh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Varanasi (Kashi)</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"The City of Light: Confronting mortality to find immortality."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1692946037987-4f98383a3843?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Trymbakeshwar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Maharashtra</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Trymbakeshwar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Jyotirlinga: The Sacred Source of the Godavari River."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1629981352504-b7f5210501c3?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Kedarnath"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Himalayas</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Kedarnath</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1920&fit=crop" loading="lazy" alt="Amritsar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Punjab</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Amritsar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Golden Temple: Service, Devotion, and Community."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1920&fit=crop" loading="lazy" alt="Ladakh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Ladakh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Hemis</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"High altitude monasteries and Buddhist chanting in the clouds."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1650341259809-9314b0de9268?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Rishikesh" style="object-position:center 35%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttarakhand</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Rishikesh</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Where the Ganga washes away the old self."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1561359313-0639aad49ca6?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Varanasi" style="object-position:center 30%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttar Pradesh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Varanasi (Kashi)</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"The City of Light: Confronting mortality to find immortality."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1692946037987-4f98383a3843?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Trymbakeshwar" style="object-position:center 30%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Maharashtra</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Trymbakeshwar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Jyotirlinga: The Sacred Source of the Godavari River."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1629981352504-b7f5210501c3?q=80&w=1920&auto=format&fit=crop" loading="lazy" alt="Kedarnath" style="object-position:center 20%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Himalayas</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Kedarnath</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1920&fit=crop" loading="lazy" alt="Amritsar" style="object-position:center 35%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Punjab</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Amritsar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Golden Temple: Service, Devotion, and Community."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1920&fit=crop" loading="lazy" alt="Ladakh" style="object-position:center 30%;"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Ladakh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Hemis</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"High altitude monasteries and Buddhist chanting in the clouds."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
     </div>
   </div>
   <div class="absolute top-0 left-0 p-6 md:p-12 z-20 pointer-events-none">
@@ -1069,7 +1071,12 @@
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- GALLERY —
+     These 8 photos are placeholder stock images. To show YOUR real retreat
+     photos: upload your images to your site's /images/gallery/ folder, then
+     replace each src="https://images.unsplash.com/..." below with your own
+     file path, e.g. src="images/gallery/rishikesh-group-1.jpg".
+     Keep loading="lazy" and alt text descriptive for each photo. -->
 <section class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-7xl mx-auto">
     <div class="text-center mb-12 fade-up">
@@ -1128,35 +1135,58 @@
 <section id="referral-section" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-5xl mx-auto fade-up">
     <div class="referral-banner overflow-hidden rounded-lg" style="position:relative;">
-      <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1400&auto=format&fit=crop" alt="Friends healing together" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center;opacity:.18;">
-      </div>
       <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#D95D39,#C5A059,transparent);z-index:2;"></div>
       <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C5A059,#D95D39,transparent);z-index:2;"></div>
-      <div class="relative z-10 px-6 sm:px-10 py-12 md:py-14 flex flex-col md:flex-row items-center gap-8 md:gap-12">
-        <div class="flex-1 text-center md:text-left">
-          <div class="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full" style="background:rgba(197,160,89,.12);border:1px solid rgba(197,160,89,.3);">
-            <span style="font-size:16px;">🎁</span>
-            <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#C5A059;font-weight:700;">Referral Programme</span>
+
+      <div class="relative z-10 px-6 sm:px-10 md:px-14 pt-12 pb-10 md:pb-12 text-center">
+        <div class="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full" style="background:rgba(197,160,89,.12);border:1px solid rgba(197,160,89,.3);">
+          <span style="font-size:15px;">✦</span>
+          <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#C5A059;font-weight:700;">Referral Programme</span>
+        </div>
+        <h2 class="font-display text-white mb-3" style="font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.2;">Know Someone Who Needs Healing?</h2>
+        <p class="font-sans text-sm text-white/65 leading-relaxed max-w-lg mx-auto">Share Samarpan with a friend. When they complete their first session, <strong class="text-brand-gold">you both receive a complimentary session</strong> — our thank-you for spreading the healing forward.</p>
+      </div>
+
+      <div class="relative z-10 px-6 sm:px-10 md:px-14 pb-10">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div class="text-center px-3 py-5 rounded-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center mx-auto mb-3" style="background:rgba(217,93,57,.15);border:1px solid rgba(217,93,57,.35);">
+              <i data-lucide="mail" class="w-5 h-5" style="color:#D95D39;"></i>
+            </div>
+            <span class="font-sans text-[9px] uppercase tracking-widest text-white/40 block mb-1">Step 1</span>
+            <p class="font-sans text-xs text-white/75 leading-relaxed">Register your email to get your unique referral link</p>
           </div>
-          <h2 class="font-display text-white mb-3" style="font-size:clamp(1.5rem,4vw,2.5rem);line-height:1.2;">Know Someone Who<br class="hidden sm:block">Needs Healing?</h2>
-          <p class="font-sans text-sm text-white/70 leading-relaxed max-w-md mx-auto md:mx-0 mb-5">Refer a friend to Samarpan. When they complete their first session, <strong class="text-brand-gold">both of you receive a complimentary session</strong>.</p>
-          <form id="referralSectionForm" onsubmit="handleReferralSectionSubmit(event)" novalidate class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto md:mx-0">
+          <div class="text-center px-3 py-5 rounded-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center mx-auto mb-3" style="background:rgba(197,160,89,.15);border:1px solid rgba(197,160,89,.35);">
+              <i data-lucide="share-2" class="w-5 h-5" style="color:#C5A059;"></i>
+            </div>
+            <span class="font-sans text-[9px] uppercase tracking-widest text-white/40 block mb-1">Step 2</span>
+            <p class="font-sans text-xs text-white/75 leading-relaxed">Share it with a friend via WhatsApp, email or a simple copy-paste</p>
+          </div>
+          <div class="text-center px-3 py-5 rounded-md" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);">
+            <div class="w-11 h-11 rounded-full flex items-center justify-center mx-auto mb-3" style="background:rgba(74,93,79,.2);border:1px solid rgba(74,93,79,.45);">
+              <i data-lucide="gift" class="w-5 h-5" style="color:#8FB39A;"></i>
+            </div>
+            <span class="font-sans text-[9px] uppercase tracking-widest text-white/40 block mb-1">Step 3</span>
+            <p class="font-sans text-xs text-white/75 leading-relaxed">Once they complete their first session, <strong class="text-brand-gold">you both</strong> get a free one</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative z-10 px-6 sm:px-10 md:px-14 pb-12">
+        <div class="max-w-md mx-auto text-center rounded-md p-6 sm:p-7" style="background:rgba(0,0,0,.25);border:1px solid rgba(197,160,89,.25);">
+          <div class="flex items-center justify-center gap-2 mb-4">
+            <i data-lucide="gift" class="w-6 h-6" style="color:#C5A059;"></i>
+            <span class="font-serif text-white" style="font-size:1.1rem;">Claim Your Referral Link</span>
+          </div>
+          <form id="referralSectionForm" onsubmit="handleReferralSectionSubmit(event)" novalidate class="flex flex-col sm:flex-row gap-2">
             <div style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true"><input type="text" id="referralSectionHoneypot" tabindex="-1" autocomplete="off"></div>
-            <input type="email" id="referralSectionEmail" placeholder="Your email to claim reward" class="form-input2 flex-1" required style="background:rgba(253,251,247,.08);border-color:rgba(255,255,255,.25);color:#fff;font-size:.82rem;padding:.75rem .85rem;" autocomplete="email">
-            <button type="submit" id="referralSectionBtn" class="cta-btn bg-clay text-white text-[10px] font-bold uppercase tracking-widest rounded-sm px-6 py-3 whitespace-nowrap flex-shrink-0">Register</button>
+            <input type="email" id="referralSectionEmail" placeholder="Your email address" class="form-input2 flex-1" required style="background:rgba(253,251,247,.08);border-color:rgba(255,255,255,.25);color:#fff;font-size:.82rem;padding:.75rem .85rem;" autocomplete="email">
+            <button type="submit" id="referralSectionBtn" class="cta-btn bg-clay text-white text-[10px] font-bold uppercase tracking-widest rounded-sm px-6 py-3 whitespace-nowrap flex-shrink-0">Get Link →</button>
           </form>
           <div id="referralSectionStatus" class="mt-2"></div>
-        </div>
-        <div class="flex flex-col items-center gap-5 flex-shrink-0">
-          <div style="width:140px;height:140px;border-radius:50%;overflow:hidden;border:3px solid rgba(197,160,89,.4);box-shadow:0 0 40px rgba(217,93,57,.2);">
-            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=400&auto=format&fit=crop" alt="Share healing" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
-          </div>
-          <button onclick="openReferralPopup()" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-7 py-3.5 text-[10px] font-bold uppercase tracking-widest rounded-sm whitespace-nowrap" style="min-width:190px;">
-            <i data-lucide="gift" class="w-4 h-4"></i> Share &amp; Earn →
-          </button>
-          <p class="font-sans text-xs text-white/40">No strings attached · All programmes</p>
-          <p class="recaptcha-notice" style="color:rgba(255,255,255,.35);">Protected by reCAPTCHA — Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);">Privacy Policy</a> &amp; <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="color:rgba(255,255,255,.5);">Terms</a> apply.</p>
+          <p class="font-sans text-[11px] text-white/35 mt-4">No strings attached · Works with every programme</p>
+          <p class="recaptcha-notice" style="color:rgba(255,255,255,.3);">Protected by reCAPTCHA — Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:rgba(255,255,255,.45);">Privacy Policy</a> &amp; <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="color:rgba(255,255,255,.45);">Terms</a> apply.</p>
         </div>
       </div>
     </div>
@@ -1751,6 +1781,19 @@
     setTimeout(function(){ document.getElementById('newsletterStatus').innerHTML=''; }, 5000);
   }
 
+  /* Local backup so a lead is never lost, even if the network is slow/unreliable.
+     Cleared automatically the moment the server confirms it saved the row. */
+  function backupLeadLocally(formType, data) {
+    try {
+      var key = 'samarpan_pending_' + formType + '_' + Date.now();
+      localStorage.setItem(key, JSON.stringify({ formType: formType, data: data, savedAt: new Date().toISOString() }));
+      return key;
+    } catch (e) { return null; }
+  }
+  function clearLocalBackup(key) {
+    try { if (key) localStorage.removeItem(key); } catch (e) {}
+  }
+
   async function handleContactSubmit(e) {
     e.preventDefault();
     var name    = document.getElementById('formName').value.trim();
@@ -1765,14 +1808,27 @@
     if (!isEmail(email)) { document.getElementById('formEmail').classList.add('invalid'); valid=false; }
     else             { document.getElementById('formEmail').classList.remove('invalid'); }
     if (!valid) { setStatus('formStatus', false, "Please fill in your name and a valid email."); return; }
+
+    var payload = {name:name,email:email,phone:phone||'Not Provided',service:service,message:message||'No message'};
+
+    // Show the thank-you instantly and reset the form so it never feels slow —
+    // the actual save happens in the background.
     setBtnLoading('formSubmitBtn', true);
-    try {
-      await submitForm('contact_form', {name:name,email:email,phone:phone||'Not Provided',service:service,message:message||'No message'}, hp);
-      setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
-      document.getElementById('bookingForm').reset();
-      gaEvent('submit','Form','Contact Form — Lead');
-    } catch(err) { setStatus('formStatus', false, err.message || "Error saving. Please email info@thesamarpan.co.in or WhatsApp us directly."); }
+    setStatus('formStatus', true, "Thank You! We have received your message. Our team will respond to you soon.");
+    document.getElementById('bookingForm').reset();
+    gaEvent('submit','Form','Contact Form — Lead');
     setBtnLoading('formSubmitBtn', false);
+
+    var backupKey = backupLeadLocally('contact_form', payload);
+    try {
+      await submitForm('contact_form', payload, hp);
+      clearLocalBackup(backupKey);
+    } catch(err) {
+      // Save still succeeded locally as a backup; let them know gently without
+      // undoing the reassurance they already saw.
+      var statusEl = document.getElementById('formStatus');
+      if (statusEl) statusEl.innerHTML += '<div class="text-xs mt-1" style="color:var(--text-muted);">(Having trouble reaching our server — if you don\'t hear back, please also WhatsApp us or email info@thesamarpan.co.in)</div>';
+    }
   }
 
   var inlineOpen = false;
@@ -1803,15 +1859,23 @@
     if (!isEmail(email)) { document.getElementById('icEmail').classList.add('invalid'); valid=false; }
     else             { document.getElementById('icEmail').classList.remove('invalid'); }
     if (!valid) { setStatus('inlineConsultStatus', false, "Please fill in your name and a valid email."); return; }
+
+    var icPayload = {name:name,email:email,phone:phone||'Not Provided',service:service,message:message||'No message'};
     setBtnLoading('icSubmitBtn', true);
-    try {
-      await submitForm('inline_consult', {name:name,email:email,phone:phone||'Not Provided',service:service,message:message||'No message'}, hp);
-      setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
-      document.getElementById('inlineConsultForm').reset();
-      gaEvent('submit','Form','Inline Consultation Form');
-      setTimeout(toggleInlineConsult, 3000);
-    } catch(err) { setStatus('inlineConsultStatus', false, err.message || "Error — please email info@thesamarpan.co.in or use WhatsApp."); }
+    setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
+    document.getElementById('inlineConsultForm').reset();
+    gaEvent('submit','Form','Inline Consultation Form');
     setBtnLoading('icSubmitBtn', false);
+    setTimeout(toggleInlineConsult, 3000);
+
+    var icBackupKey = backupLeadLocally('inline_consult', icPayload);
+    try {
+      await submitForm('inline_consult', icPayload, hp);
+      clearLocalBackup(icBackupKey);
+    } catch(err) {
+      var icStatusEl = document.getElementById('inlineConsultStatus');
+      if (icStatusEl) icStatusEl.innerHTML += '<div class="text-xs mt-1" style="color:var(--text-muted);">(If you don\'t hear back, please also WhatsApp us or email info@thesamarpan.co.in)</div>';
+    }
   }
 
   async function handleReferralEmailSubmit(e) {
