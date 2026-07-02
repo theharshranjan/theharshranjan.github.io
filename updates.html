@@ -87,6 +87,10 @@
     body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+    /* Hide the reCAPTCHA badge (logo). Google's terms require the "protected by reCAPTCHA" notice to be shown somewhere if the badge is hidden — added near forms via .grecaptcha-notice below. */
+    .grecaptcha-badge{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+    .grecaptcha-notice{font-size:11px;color:var(--text-muted);opacity:.75;margin-top:.5rem;line-height:1.4;}
+    .grecaptcha-notice a{color:inherit;text-decoration:underline;}
 
     /* ── FLASH CARD ── */
     #flash-card-bar{position:relative;z-index:150;overflow:hidden;max-height:0;opacity:0;transition:max-height .6s ease,opacity .5s ease,padding .5s ease;}
@@ -1448,6 +1452,31 @@
     });
   }
 
+  /* SPEED: pre-fetch reCAPTCHA tokens ahead of submit time. grecaptcha.execute()
+     normally costs a few hundred ms; instead of paying that after the user clicks
+     Submit, we kick it off as soon as a form/popup becomes visible (or on page
+     load for always-visible forms), cache the pending promise per action, and
+     just await the (usually already-resolved) promise at submit time. Tokens are
+     valid ~2 min, well within any realistic fill time. */
+  var _tokenCache = {};
+  function prefetchToken(action) {
+    _tokenCache[action] = { promise: getRecaptchaToken(action), ts: Date.now() };
+  }
+  function getTokenFast(action) {
+    var c = _tokenCache[action];
+    if (c && (Date.now() - c.ts) < 100000) {
+      delete _tokenCache[action];
+      return c.promise;
+    }
+    return getRecaptchaToken(action);
+  }
+  try { grecaptcha.ready(function(){}); } catch(err) {}
+  window.addEventListener('load', function() {
+    prefetchToken('contact_form');
+    prefetchToken('newsletter');
+    prefetchToken('referral_email');
+  });
+
   /** Posts a lead/booking payload to the Apps Script backend, which re-verifies the honeypot, timing, and reCAPTCHA token server-side before logging to the Sheet and emailing a notification. */
   async function submitToBackend(payload) {
     var resp = await fetch(APPS_SCRIPT_URL, {
@@ -1689,14 +1718,14 @@
   setTimeout(maybeShowExitPopup, 820000);   // 820 seconds
 
   /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
-  function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; }
+  function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('gift_popup'); }
   function closeGiftPopup()     { document.getElementById('gift-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openBookingPopup()   { document.getElementById('booking-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Booking Popup'); }
+  function openBookingPopup()   { document.getElementById('booking-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Booking Popup'); prefetchToken('booking'); }
   function closeBookingPopup()  { document.getElementById('booking-popup').classList.remove('open'); document.body.style.overflow=''; }
   function closeExitPopup()     { document.getElementById('exit-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openYogaPopup()      { document.getElementById('yoga-popup').classList.add('open'); document.body.style.overflow='hidden'; }
+  function openYogaPopup()      { document.getElementById('yoga-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('yoga_popup'); }
   function closeYogaPopup()     { document.getElementById('yoga-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Referral Popup'); }
+  function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Referral Popup'); prefetchToken('referral_email'); }
   function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); document.body.style.overflow=''; }
 
   // Close on backdrop click
@@ -1723,7 +1752,7 @@
     setBtnLoading('giftSubmitBtn', true);
     try {
       var website = document.getElementById('giftWebsite').value;
-      var token = await getRecaptchaToken('gift_popup');
+      var token = await getTokenFast('gift_popup');
       await submitToBackend({formType:'gift_popup', name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('giftStatus', true, "Claimed! Our team will contact you within 24h to schedule your session.");
       gaEvent('submit','Form','Gift Popup — Dosha Assessment');
@@ -1751,7 +1780,7 @@
     setBtnLoading('bpSubmitBtn', true);
     try {
       var website = document.getElementById('bpWebsite').value;
-      var token = await getRecaptchaToken('booking');
+      var token = await getTokenFast('booking');
       await submitToBackend({formType:'booking', name:name, email:email, phone:phone, service:service||'Not specified', preferredDate:prefDate||'Not specified', preferredTime:prefTime||'Not specified', message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('bookingPopupStatus', true, "Request received! We will confirm your session within 24 hours.");
       gaEvent('submit','Form','Booking Popup — FAB');
@@ -1775,7 +1804,7 @@
     setBtnLoading('yogaSubmitBtn', true);
     try {
       var website = document.getElementById('yogaWebsite').value;
-      var token = await getRecaptchaToken('yoga_popup');
+      var token = await getTokenFast('yoga_popup');
       await submitToBackend({formType:'yoga_popup', name:name, email:email, phone:mobile||'Not Provided', service:'Free Hatha & Pranayama (Zoom)', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('yogaStatus', true, "Spot reserved! Check your inbox for the Zoom link.");
       gaEvent('submit','Form','Yoga Popup — Free Class');
@@ -1794,7 +1823,7 @@
     setBtnLoading('newsSubmitBtn', true);
     try {
       var website = document.getElementById('newsWebsite').value;
-      var token = await getRecaptchaToken('newsletter');
+      var token = await getTokenFast('newsletter');
       await submitToBackend({formType:'newsletter', email:email, message:'Inner Circle Monthly opt-in', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('newsletterStatus').innerHTML = '<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle!</p>';
       document.getElementById('newsEmail').value = '';
@@ -1820,7 +1849,7 @@
     setBtnLoading('formSubmitBtn', true);
     try {
       var website = document.getElementById('formWebsite').value;
-      var token = await getRecaptchaToken('contact_form');
+      var token = await getTokenFast('contact_form');
       await submitToBackend({formType:'contact_form', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
       document.getElementById('bookingForm').reset();
@@ -1841,6 +1870,7 @@
     if (label) label.textContent = inlineOpen ? 'Close Form' : 'Claim Free Consultation';
     if (icon) { icon.setAttribute('data-lucide', inlineOpen ? 'x' : 'calendar-plus'); lucide.createIcons(); }
     if (inlineOpen) setTimeout(function(){ wrap.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+    if (inlineOpen) prefetchToken('inline_consult');
   }
 
   async function handleInlineConsult(e) {
@@ -1859,7 +1889,7 @@
     setBtnLoading('icSubmitBtn', true);
     try {
       var website = document.getElementById('icWebsite').value;
-      var token = await getRecaptchaToken('inline_consult');
+      var token = await getTokenFast('inline_consult');
       await submitToBackend({formType:'inline_consult', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
       document.getElementById('inlineConsultForm').reset();
@@ -1877,7 +1907,7 @@
     setBtnLoading('referralEmailBtn', true);
     try {
       var website = document.getElementById('refWebsite').value;
-      var token = await getRecaptchaToken('referral_email');
+      var token = await getTokenFast('referral_email');
       await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_popup', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('referralEmailStatus').innerHTML='<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Registered! Now share your link below.</p>';
       document.getElementById('referralEmail').value = '';
@@ -1894,7 +1924,7 @@
     setBtnLoading('referralSectionBtn', true);
     try {
       var website = document.getElementById('refSectionWebsite').value;
-      var token = await getRecaptchaToken('referral_email');
+      var token = await getTokenFast('referral_email');
       await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_section', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('referralSectionStatus').innerHTML='<p class="text-xs font-bold" style="color:#C5A059;">✓ Registered! Opening share options…</p>';
       document.getElementById('referralSectionEmail').value = '';
