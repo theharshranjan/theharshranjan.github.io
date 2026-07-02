@@ -1003,17 +1003,25 @@
       await submitToBackend(bookingData);
 
       /* Newsletter signup if opted in — logged as its own lead so it lands
-         alongside your other newsletter signups in "All Leads" */
+         alongside your other newsletter signups in "All Leads".
+         This runs in its own try/catch with its OWN reCAPTCHA token (tokens
+         are single-use, so reusing the booking token here would always fail)
+         and never blocks the success screen if it happens to fail. */
       if (newsletter) {
-        await submitToBackend({
-          formType: 'newsletter',
-          name: name,
-          email: email,
-          message: 'Subscribed via booking form',
-          website: website,
-          pageLoadedAt: bLoadedAt,
-          recaptchaToken: recaptchaToken
-        });
+        try {
+          var newsletterToken = await getRecaptchaToken('newsletter');
+          await submitToBackend({
+            formType: 'newsletter',
+            name: name,
+            email: email,
+            message: 'Subscribed via booking form',
+            website: website,
+            pageLoadedAt: bLoadedAt,
+            recaptchaToken: newsletterToken
+          });
+        } catch (newsletterErr) {
+          console.error('Newsletter signup failed (booking still succeeded):', newsletterErr);
+        }
       }
 
       gaEvent('submit','Booking','Booking Form - '+_selectedProgramme);
