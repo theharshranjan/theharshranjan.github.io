@@ -1503,6 +1503,71 @@
   }
 
   /* ══════════════════════════════════════════════
+     VISITOR TRACKING
+     Writes a page-view document to: homepage_visitors collection
+     Powers the admin panel's Visitor Analytics + "Live Visitors Online" banner.
+     Best-effort IP/geo lookup via ipapi.co — this never blocks page render,
+     and silently no-ops if the geo lookup or the Firestore write fails.
+     Doc structure written: {
+       page, device, referrer, session_id, date, time, timestamp,
+       ip, city, region, country   // ip/geo fields omitted if lookup fails
+     }
+     ══════════════════════════════════════════════ */
+  function fsStr(v) { return { stringValue: String(v == null ? '' : v) }; }
+  function getVisitorSessionId() {
+    var key = 'sp_visitor_sid';
+    var sid = sessionStorage.getItem(key);
+    if (!sid) {
+      sid = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+      sessionStorage.setItem(key, sid);
+    }
+    return sid;
+  }
+  async function trackVisitor() {
+    try {
+      if (navigator.webdriver) return; // skip obvious bots
+      var device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+      var now = new Date();
+      var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      var p2 = function (n) { return String(n).padStart(2, '0'); };
+      var date = ist.getFullYear() + '-' + p2(ist.getMonth() + 1) + '-' + p2(ist.getDate());
+      var time = p2(ist.getHours()) + ':' + p2(ist.getMinutes()) + ':' + p2(ist.getSeconds());
+      var fields = {
+        page: fsStr(window.location.pathname || '/'),
+        device: fsStr(device),
+        referrer: fsStr(document.referrer ? document.referrer : 'direct'),
+        session_id: fsStr(getVisitorSessionId()),
+        date: fsStr(date),
+        time: fsStr(time),
+        timestamp: fsStr(now.toISOString()),
+        source: fsStr('index_page')
+      };
+      // Best-effort IP + geolocation lookup — times out fast, never breaks tracking if it fails
+      try {
+        var geoResp = await Promise.race([
+          fetch('https://ipapi.co/json/'),
+          new Promise(function (_, reject) { setTimeout(function () { reject(new Error('timeout')); }, 2500); })
+        ]);
+        if (geoResp && geoResp.ok) {
+          var geo = await geoResp.json();
+          if (geo && !geo.error) {
+            fields.ip = fsStr(geo.ip);
+            fields.city = fsStr(geo.city);
+            fields.region = fsStr(geo.region);
+            fields.country = fsStr(geo.country_name);
+          }
+        }
+      } catch (geoErr) { /* geo lookup failed — still log the page view without it */ }
+
+      await fetch(FIRESTORE_BASE + 'homepage_visitors?key=' + FIREBASE_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fields })
+      });
+    } catch (e) { /* tracking must never break the page */ }
+  }
+
+  /* ══════════════════════════════════════════════
      FLASH CARD SYSTEM
      Reads from: samarpan_flash_cards collection
      Doc structure: {
@@ -2023,6 +2088,8 @@
     }
     // Load flash cards on DOM ready
     loadFlashCards();
+    // Log this page view for the admin panel's Visitor Analytics / Live Visitors
+    trackVisitor();
   });
 </script>
 
