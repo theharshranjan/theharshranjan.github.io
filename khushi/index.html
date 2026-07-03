@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Khushi — Home</title>
+<meta name="description" content="A story told in five chapters, made for Khushi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A4%8D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Parisienne&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="home">
+
+<div id="loader">
+  <p id="loader-text"></p>
+  <button class="loader-skip" id="skipBtn">Skip</button>
+</div>
+
+<div class="stars-layer"></div>
+<div id="thread-track"><div id="thread-fill"></div><div id="thread-star"></div></div>
+
+<nav id="site-nav">
+  <a href="index.html" class="nav-mark">Khushi &amp; Harsh</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" data-page="home">Home</a></li>
+    <li><a href="our-story.html" data-page="story">Our Story</a></li>
+    <li><a href="gallery.html" data-page="gallery">Gallery</a></li>
+    <li><a href="letter.html" data-page="letter">The Letter</a></li>
+    <li><a href="proposal.html" data-page="moment">The Moment</a></li>
+  </ul>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu">☰</button>
+</nav>
+
+<main>
+  <section id="hero">
+    <p class="hero-kicker">A story in five chapters</p>
+    <h1 class="hero-name">For Khushi</h1>
+    <p class="hero-sub script" style="font-size:34px;">every year, every reason, one page</p>
+    <div class="scroll-hint"><span>Begin</span><span class="line"></span></div>
+  </section>
+
+  <section id="chapters">
+    <div class="wrap">
+      <div class="section-head reveal" data-r>
+        <p class="eyebrow">Where to start</p>
+        <h2 class="section-title">Choose a chapter</h2>
+      </div>
+
+      <div class="chapter-grid">
+        <div class="chapter-card reveal" data-r>
+          <p class="chapter-num">Chapter II</p>
+          <h3 class="chapter-name">Our Story</h3>
+          <p class="chapter-desc">Every year that led here, laid out along one golden thread.</p>
+          <a class="chapter-link" href="our-story.html">Read the timeline <span class="arrow">→</span></a>
+        </div>
+        <div class="chapter-card reveal" data-r>
+          <p class="chapter-num">Chapter III</p>
+          <h3 class="chapter-name">Gallery</h3>
+          <p class="chapter-desc">The photos and moments worth keeping, all in one place.</p>
+          <a class="chapter-link" href="gallery.html">Open the gallery <span class="arrow">→</span></a>
+        </div>
+        <div class="chapter-card reveal" data-r>
+          <p class="chapter-num">Chapter IV</p>
+          <h3 class="chapter-name">The Letter</h3>
+          <p class="chapter-desc">Something written just for you. Open the envelope when ready.</p>
+          <a class="chapter-link" href="letter.html">Open the letter <span class="arrow">→</span></a>
+        </div>
+        <div class="chapter-card reveal" data-r>
+          <p class="chapter-num">Chapter V</p>
+          <h3 class="chapter-name">The Moment</h3>
+          <p class="chapter-desc">One last question, saved for the very end.</p>
+          <a class="chapter-link" href="proposal.html">Continue <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="teaser">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-r>A little preview</p>
+      <h2 class="section-title reveal" data-r>Watch, before you read on</h2>
+      <div class="video-frame reveal" data-r>
+        <!-- Replace with your own clip: assets/video/teaser.mp4 -->
+        <video id="teaser-video" poster="" playsinline muted loop>
+          <source src="assets/video/teaser.mp4" type="video/mp4">
+        </video>
+        <div class="video-placeholder" id="video-placeholder">
+          <div class="play-btn" id="play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p>Add your video at <strong>assets/video/teaser.mp4</strong><br>and this frame will play it automatically.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer">
+  <div class="foot-mark script">Khushi</div>
+  <div class="chapter-nav">
+    <a href="index.html" data-page="home">I. Home</a>
+    <a href="our-story.html" data-page="story">II. Our Story</a>
+    <a href="gallery.html" data-page="gallery">III. Gallery</a>
+    <a href="letter.html" data-page="letter">IV. The Letter</a>
+    <a href="proposal.html" data-page="moment">V. The Moment</a>
+  </div>
+  <p>Made with love, for Khushi</p>
+</footer>
+
+<audio id="bg-music" loop>
+  <!-- Add your song: drop an mp3 into assets/audio/ and set the src below -->
+  <source src="assets/audio/theme.mp3" type="audio/mpeg">
+</audio>
+<div id="music-toggle" title="Play music">
+  <div class="bars"><span></span><span></span><span></span></div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+  const loaderLines = [
+    "Once, on an ordinary day...",
+    "...two lives quietly began to overlap.",
+    "This is that story."
+  ];
+  const loader = document.getElementById('loader');
+  const loaderTextEl = document.getElementById('loader-text');
+
+  function finishLoader(){
+    loader.classList.add('hide');
+    setTimeout(()=>{ loader.style.display = 'none'; }, 1500);
+  }
+  typeLines(loaderLines, loaderTextEl, ()=> setTimeout(finishLoader, 500));
+  document.getElementById('skipBtn').addEventListener('click', finishLoader);
+  setTimeout(finishLoader, 9000);
+
+  // teaser video: show real video if it loads, otherwise keep the placeholder
+  const teaserVideo = document.getElementById('teaser-video');
+  const videoPlaceholder = document.getElementById('video-placeholder');
+  const playBtn = document.getElementById('play-btn');
+  teaserVideo.addEventListener('loadeddata', ()=>{
+    videoPlaceholder.style.display = 'none';
+  });
+  playBtn.addEventListener('click', ()=>{
+    teaserVideo.play().catch(()=>{});
+  });
+</script>
+</body>
+</html>
