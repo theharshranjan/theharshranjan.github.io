@@ -1233,7 +1233,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         </div>
 
         <div class="card">
-          <div class="card-head"><span class="card-title">Firestore Rules (Updated with Flash Cards)</span><span class="pill pill-brand">Updated</span></div>
+          <div class="card-head"><span class="card-title">Firestore Rules (Updated — all collections)</span><span class="pill pill-brand">Updated</span></div>
           <div class="card-body">
             <p style="font-size:11.5px;color:var(--text2);margin-bottom:.75rem;">Paste in <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--brand);">Firebase → Firestore → Rules</a></p>
             <pre class="code-block">rules_version = '2';
@@ -1275,10 +1275,36 @@ service cloud.firestore {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
-    // Flash Cards — public READ, admin WRITE
     match /samarpan_flash_cards/{docId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
+    }
+    match /samarpan_faqs/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /samarpan_testimonials/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /samarpan_site_content/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /samarpan_videos/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+    match /samarpan_community_posts/{docId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+    match /samarpan_admin_notes/{docId} {
+      allow read, write: if isAdmin();
+    }
+    match /samarpan_admin_users/{docId} {
+      allow read, write: if isAdmin();
     }
     match /{document=**} {
       allow read, write: if false;
