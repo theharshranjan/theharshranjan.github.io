@@ -318,12 +318,9 @@
     #fab a,#fab button{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;border:none;cursor:pointer;transition:background .3s,box-shadow .3s;}
     #fab a:hover,#fab button:hover{background:#1C1C1C;}
 
-    /* ── BOOKING POPUP (unified size with Gift popup) ── */
-    .booking-popup-box{background:var(--bg);max-width:480px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;}
-    .booking-popup-photo{position:relative;height:150px;overflow:hidden;}
-    .booking-popup-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
-    .booking-popup-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,28,28,.2) 0%,rgba(28,28,28,.75) 100%);}
-    .booking-popup-photo-content{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1rem 1.5rem;}
+    /* ── BOOKING POPUP (compact floating quick-form — deliberately smaller than the other popups) ── */
+    .booking-popup-box{background:var(--bg);max-width:360px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;}
+    .booking-popup-head{padding:1.1rem 1.35rem .25rem;}
     #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
     #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
     #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
@@ -621,22 +618,19 @@
      ══════════════════════════════════════════ -->
 <div id="booking-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingPopupTitle">
   <div class="booking-popup-box">
-    <button class="popup-close-btn" onclick="closeBookingPopup()" aria-label="Close">✕</button>
-    <div class="booking-popup-photo">
-      <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=800&auto=format&fit=crop" alt="Book a session with Samarpan" loading="lazy">
-      <div class="booking-popup-photo-content">
-        <div class="popup-brand-logo">
-          <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-            <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-            <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-          </svg>
-          <span class="popup-brand-logo-name">Samarpan</span>
-        </div>
+    <button class="popup-close-btn popup-close-dark" onclick="closeBookingPopup()" aria-label="Close">✕</button>
+    <div class="booking-popup-head">
+      <div class="popup-brand-logo">
+        <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3">
+          <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
+          <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".8"/>
+        </svg>
+        <span class="popup-brand-logo-name" style="color:var(--text);">Samarpan</span>
       </div>
+      <h3 id="bookingPopupTitle" class="font-serif mb-1" style="font-size:1.15rem;color:var(--text);">Quick Connect</h3>
+      <p class="font-sans text-xs" style="color:var(--text-muted);line-height:1.5;">Share your details and we'll reach out within 24 hours.</p>
     </div>
-    <div style="padding:clamp(1.25rem,4vw,1.75rem) clamp(1.25rem,5vw,2rem);">
-      <h3 id="bookingPopupTitle" class="font-serif mb-2" style="font-size:clamp(1.25rem,4vw,1.6rem);color:var(--text);">Book a Session</h3>
-      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Tell us a little about you and we'll confirm your slot within 24 hours.</p>
+    <div style="padding:.85rem 1.35rem 1.35rem;">
       <form id="bookingPopupForm" onsubmit="handleBookingPopupSubmit(event)" class="space-y-3" novalidate>
         <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
           <label for="bpWebsite">Website</label>
@@ -649,18 +643,13 @@
         </div>
         <input type="tel" name="phone" id="bpPhone" placeholder="WhatsApp / phone number *" class="form-input2 w-full" required autocomplete="tel">
         <select id="bpService" class="form-select2 w-full">
-          <option value="">Which programme are you interested in?</option>
+          <option value="">Purpose to connect *</option>
           <option value="Ayurveda Consultation">Ayurveda Consultation</option>
           <option value="Yoga & Pranayama">Yoga &amp; Pranayama</option>
           <option value="Psychology / Counselling">Psychology / Counselling</option>
           <option value="Meditation & Mantra">Meditation &amp; Mantra</option>
           <option value="Not sure yet">Not sure yet</option>
         </select>
-        <div class="grid grid-cols-2 gap-3">
-          <input type="date" name="preferredDate" id="bpDate" class="form-input2 w-full" style="color-scheme:light dark;" aria-label="Preferred date">
-          <input type="time" name="preferredTime" id="bpTime" class="form-input2 w-full" style="color-scheme:light dark;" aria-label="Preferred time">
-        </div>
-        <textarea name="message" id="bpMessage" placeholder="Anything you'd like us to know? (optional)" class="form-textarea2 w-full" style="height:4.5rem;"></textarea>
         <button type="submit" id="bpSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Request My Session →</button>
       </form>
       <div id="bookingPopupStatus" class="mt-2"></div>
@@ -1490,6 +1479,46 @@
   }
 
   function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+  /* ══════════════════════════════════════════════
+     DIRECT-TO-FIRESTORE LEAD WRITES
+     The Apps Script backend (submitToBackend) logs every form to the
+     Google Sheet + sends the email notification. That path never touches
+     Firestore, so the admin panel (which only listens to Firestore
+     collections) would never see these leads live. writeLeadToFirestore()
+     fires a lightweight parallel write straight into the same Firestore
+     collections the admin panel already listens to, using the public
+     REST API + Firebase API key (same pattern as trackVisitor() below).
+     It's fire-and-forget: if it fails, the Sheet/email path (already
+     awaited separately) still succeeds, so a form submission is never
+     blocked or shown as failed because of this.
+     ══════════════════════════════════════════════ */
+  function fsFieldsFrom(obj) {
+    var out = {};
+    Object.keys(obj).forEach(function (k) { if (obj[k] !== undefined && obj[k] !== null) out[k] = fsStr(obj[k]); });
+    return out;
+  }
+  function istStamp() {
+    var now = new Date();
+    var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    var p2 = function (n) { return String(n).padStart(2, '0'); };
+    return {
+      date: ist.getFullYear() + '-' + p2(ist.getMonth() + 1) + '-' + p2(ist.getDate()),
+      time: p2(ist.getHours()) + ':' + p2(ist.getMinutes()) + ':' + p2(ist.getSeconds()),
+      timestamp: now.toISOString()
+    };
+  }
+  function writeLeadToFirestore(collection, data) {
+    try {
+      var stamp = istStamp();
+      var fields = fsFieldsFrom(Object.assign({}, data, { date: stamp.date, time: stamp.time, timestamp: stamp.timestamp, source: 'website' }));
+      fetch(FIRESTORE_BASE + collection + '?key=' + FIREBASE_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fields })
+      }).catch(function () {});
+    } catch (e) { /* never block the form submit UX */ }
+  }
   function setStatus(id, ok, msg) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
@@ -1500,6 +1529,71 @@
     btn.disabled = loading;
     if (loading) { btn.setAttribute('data-orig',btn.innerHTML); btn.innerHTML='<span class="btn-spinner"></span>Please wait…'; }
     else { var o=btn.getAttribute('data-orig'); if(o) btn.innerHTML=o; }
+  }
+
+  /* ══════════════════════════════════════════════
+     VISITOR TRACKING
+     Writes a page-view document to: homepage_visitors collection
+     Powers the admin panel's Visitor Analytics + "Live Visitors Online" banner.
+     Best-effort IP/geo lookup via ipapi.co — this never blocks page render,
+     and silently no-ops if the geo lookup or the Firestore write fails.
+     Doc structure written: {
+       page, device, referrer, session_id, date, time, timestamp,
+       ip, city, region, country   // ip/geo fields omitted if lookup fails
+     }
+     ══════════════════════════════════════════════ */
+  function fsStr(v) { return { stringValue: String(v == null ? '' : v) }; }
+  function getVisitorSessionId() {
+    var key = 'sp_visitor_sid';
+    var sid = sessionStorage.getItem(key);
+    if (!sid) {
+      sid = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+      sessionStorage.setItem(key, sid);
+    }
+    return sid;
+  }
+  async function trackVisitor() {
+    try {
+      if (navigator.webdriver) return; // skip obvious bots
+      var device = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+      var now = new Date();
+      var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      var p2 = function (n) { return String(n).padStart(2, '0'); };
+      var date = ist.getFullYear() + '-' + p2(ist.getMonth() + 1) + '-' + p2(ist.getDate());
+      var time = p2(ist.getHours()) + ':' + p2(ist.getMinutes()) + ':' + p2(ist.getSeconds());
+      var fields = {
+        page: fsStr(window.location.pathname || '/'),
+        device: fsStr(device),
+        referrer: fsStr(document.referrer ? document.referrer : 'direct'),
+        session_id: fsStr(getVisitorSessionId()),
+        date: fsStr(date),
+        time: fsStr(time),
+        timestamp: fsStr(now.toISOString()),
+        source: fsStr('index_page')
+      };
+      // Best-effort IP + geolocation lookup — times out fast, never breaks tracking if it fails
+      try {
+        var geoResp = await Promise.race([
+          fetch('https://ipapi.co/json/'),
+          new Promise(function (_, reject) { setTimeout(function () { reject(new Error('timeout')); }, 2500); })
+        ]);
+        if (geoResp && geoResp.ok) {
+          var geo = await geoResp.json();
+          if (geo && !geo.error) {
+            fields.ip = fsStr(geo.ip);
+            fields.city = fsStr(geo.city);
+            fields.region = fsStr(geo.region);
+            fields.country = fsStr(geo.country_name);
+          }
+        }
+      } catch (geoErr) { /* geo lookup failed — still log the page view without it */ }
+
+      await fetch(FIRESTORE_BASE + 'homepage_visitors?key=' + FIREBASE_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fields })
+      });
+    } catch (e) { /* tracking must never break the page */ }
   }
 
   /* ══════════════════════════════════════════════
@@ -1753,6 +1847,7 @@
     try {
       var website = document.getElementById('giftWebsite').value;
       var token = await getTokenFast('gift_popup');
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', message:'Free Dosha Assessment claim', lead_type:'free_assessment_claim'});
       await submitToBackend({formType:'gift_popup', name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('giftStatus', true, "Claimed! Our team will contact you within 24h to schedule your session.");
       gaEvent('submit','Form','Gift Popup — Dosha Assessment');
@@ -1768,9 +1863,6 @@
     var email   = document.getElementById('bpEmail').value.trim();
     var phone   = document.getElementById('bpPhone').value.trim();
     var service = document.getElementById('bpService').value;
-    var prefDate = document.getElementById('bpDate').value;
-    var prefTime = document.getElementById('bpTime').value;
-    var message = document.getElementById('bpMessage').value.trim();
     document.getElementById('bpEmailErr').classList.add('hidden');
     var valid = true;
     if (!name)  { document.getElementById('bpName').classList.add('invalid'); valid=false; } else { document.getElementById('bpName').classList.remove('invalid'); }
@@ -1781,7 +1873,9 @@
     try {
       var website = document.getElementById('bpWebsite').value;
       var token = await getTokenFast('booking');
-      await submitToBackend({formType:'booking', name:name, email:email, phone:phone, service:service||'Not specified', preferredDate:prefDate||'Not specified', preferredTime:prefTime||'Not specified', message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
+      var payload = {formType:'booking', name:name, email:email, phone:phone, service:service||'Not specified', preferredDate:'Not specified', preferredTime:'Not specified', message:'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token};
+      writeLeadToFirestore('homepage_bookings', {name:name, email:email, phone:phone, service:service||'Not specified', message:'Quick connect (floating form)', status:'pending'});
+      await submitToBackend(payload);
       setStatus('bookingPopupStatus', true, "Request received! We will confirm your session within 24 hours.");
       gaEvent('submit','Form','Booking Popup — FAB');
       document.getElementById('bookingPopupForm').reset();
@@ -1805,6 +1899,7 @@
     try {
       var website = document.getElementById('yogaWebsite').value;
       var token = await getTokenFast('yoga_popup');
+      writeLeadToFirestore('homepage_yoga_sessions', {name:name, email:email, mobile:mobile||'Not Provided', type:'Free Hatha & Pranayama (Zoom)'});
       await submitToBackend({formType:'yoga_popup', name:name, email:email, phone:mobile||'Not Provided', service:'Free Hatha & Pranayama (Zoom)', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('yogaStatus', true, "Spot reserved! Check your inbox for the Zoom link.");
       gaEvent('submit','Form','Yoga Popup — Free Class');
@@ -1824,6 +1919,7 @@
     try {
       var website = document.getElementById('newsWebsite').value;
       var token = await getTokenFast('newsletter');
+      writeLeadToFirestore('homepage_newsletter', {email:email});
       await submitToBackend({formType:'newsletter', email:email, message:'Inner Circle Monthly opt-in', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('newsletterStatus').innerHTML = '<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle!</p>';
       document.getElementById('newsEmail').value = '';
@@ -1850,6 +1946,7 @@
     try {
       var website = document.getElementById('formWebsite').value;
       var token = await getTokenFast('contact_form');
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', lead_type:'contact_form'});
       await submitToBackend({formType:'contact_form', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
       document.getElementById('bookingForm').reset();
@@ -1890,6 +1987,7 @@
     try {
       var website = document.getElementById('icWebsite').value;
       var token = await getTokenFast('inline_consult');
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', lead_type:'inline_free_consultation'});
       await submitToBackend({formType:'inline_consult', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
       document.getElementById('inlineConsultForm').reset();
@@ -1908,6 +2006,7 @@
     try {
       var website = document.getElementById('refWebsite').value;
       var token = await getTokenFast('referral_email');
+      writeLeadToFirestore('homepage_referrals', {email:email, channel:'referral_popup', action:'email_registered_popup'});
       await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_popup', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('referralEmailStatus').innerHTML='<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Registered! Now share your link below.</p>';
       document.getElementById('referralEmail').value = '';
@@ -1925,6 +2024,7 @@
     try {
       var website = document.getElementById('refSectionWebsite').value;
       var token = await getTokenFast('referral_email');
+      writeLeadToFirestore('homepage_referrals', {email:email, channel:'referral_section', action:'email_registered_section'});
       await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_section', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       document.getElementById('referralSectionStatus').innerHTML='<p class="text-xs font-bold" style="color:#C5A059;">✓ Registered! Opening share options…</p>';
       document.getElementById('referralSectionEmail').value = '';
@@ -2006,6 +2106,7 @@
     document.getElementById('quiz-content').innerHTML='<div class="text-center mb-6"><div class="text-5xl mb-3">'+info.emoji+'</div><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-2">Your Primary Prakriti is</span><h2 class="font-display text-4xl mb-1" style="color:'+info.colour+';">'+info.name+'</h2><p class="font-sans text-xs uppercase tracking-widest" style="color:var(--text-muted);">'+info.element+' · '+info.quality+'</p><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Secondary: <strong>'+secInfo.name+'</strong> · Score: V'+tally.V+' P'+tally.P+' K'+tally.K+'</p></div><div class="dosha-'+dominant.toLowerCase()+' dosha-card mb-4"><p class="font-sans text-sm leading-relaxed" style="color:var(--text);">'+info.desc+'</p></div><div class="mb-4 p-4 rounded border" style="background:var(--bg2);border-color:var(--border);"><p class="font-sans text-[10px] uppercase tracking-widest text-clay font-bold mb-2">Your Healing Protocol</p><p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">'+info.protocol+'</p></div><div class="mb-6"><p class="font-sans text-[10px] uppercase tracking-widest font-bold mb-3" style="color:var(--text);">Recommended for You</p><div class="space-y-2">'+info.programmes.map(function(p){return '<div class="flex items-center gap-2 text-sm font-sans" style="color:var(--text);"><i data-lucide="check-circle" class="w-4 h-4 text-clay flex-shrink-0"></i>'+p+'</div>';}).join('')+'</div></div><div class="flex flex-col sm:flex-row gap-3"><a href="booking.html" class="cta-btn flex-1 text-center py-3 bg-clay text-white text-xs font-bold uppercase tracking-widest rounded-sm">Book a Session →</a><button onclick="closeQuizModal()" class="flex-1 py-3 border text-xs font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Close</button></div>';
     lucide.createIcons();
     if (qEmail && isEmail(qEmail)) {
+      writeLeadToFirestore('homepage_quiz_results', {email:qEmail, name:qName||'Anonymous', dosha:info.name});
       getRecaptchaToken('quiz_result').then(function(token) {
         submitToBackend({formType:'quiz_result', email:qEmail, name:qName||'Anonymous', dosha:info.name, website:qWebsite, pageLoadedAt:xLoadedAt, recaptchaToken:token}).catch(function(){});
       });
@@ -2023,6 +2124,8 @@
     }
     // Load flash cards on DOM ready
     loadFlashCards();
+    // Log this page view for the admin panel's Visitor Analytics / Live Visitors
+    trackVisitor();
   });
 </script>
 
