@@ -436,6 +436,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
 #toast{position:fixed;bottom:1.5rem;right:1.2rem;z-index:9999;background:var(--card3);border:1px solid var(--border2);border-radius:var(--r2);padding:.75rem 1rem;display:flex;align-items:center;gap:.6rem;box-shadow:0 10px 40px rgba(0,0,0,.35);opacity:0;transform:translateY(14px);transition:all .3s cubic-bezier(.34,1.4,.64,1);min-width:200px;max-width:300px;pointer-events:none;}
 #toast.show{opacity:1;transform:translateY(0);pointer-events:auto;}
 #toast-msg{font-size:12.5px;color:var(--text);font-weight:500;}
+@keyframes slideInErrBanner{from{opacity:0;transform:translateX(24px);}to{opacity:1;transform:translateX(0);}}
 
 /* ═══════════════════════════════════════
    SIDEBAR OVERLAY
@@ -1512,6 +1513,9 @@ service cloud.firestore {
 <!-- TOAST -->
 <div id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" width="15" height="15"><polyline points="20 6 9 17 4 12"/></svg><span id="toast-msg">Done!</span></div>
 
+<!-- CRITICAL ERROR BANNER STACK (immediate, persistent, dismissible — stays until acknowledged or 12s pass) -->
+<div id="error-banner-stack" style="position:fixed;top:1rem;right:1rem;z-index:10050;display:flex;flex-direction:column;gap:.5rem;max-width:340px;pointer-events:none;"></div>
+
 <script>
 'use strict';
 // ════════════════════════════════════════════════
@@ -1685,10 +1689,10 @@ function attachListeners(){
     {col:'homepage_quiz_results',set:d=>{allQuiz=d;}},
     {col:'homepage_yoga_sessions',set:d=>{allYoga=d;}},
     {col:'homepage_visitors',    set:d=>{allVisitors=d;}},
-    {col:'samarpan_journal_posts',set:d=>{allJournalPosts=d;}},
+    {col:'samarpan_journal_posts',set:d=>{const prevMap=new Map(allJournalPosts.map(p=>[p._id,p.status]));allJournalPosts=d;if(prevMap.size>0){d.forEach(p=>{const prevStatus=prevMap.get(p._id);if(prevStatus===undefined&&p.status==='published')showToast('📝 New journal post published: '+(p.title||'Untitled'));else if(prevStatus!==undefined&&prevStatus!=='published'&&p.status==='published')showToast('📝 Journal post now live: '+(p.title||'Untitled'));});}updateNotifications();}},
     {col:'homepage_bookings',    set:d=>{allBookings=d;}},
     {col:'samarpan_flash_cards', set:d=>{allFlashCards=d;}},
-    {col:'samarpan_community_posts',set:d=>{const prev=allCommunity.length;allCommunity=d;if(prev>0&&d.length>prev)updateNotifications();}},
+    {col:'samarpan_community_posts',set:d=>{const prev=allCommunity.length;const prevIds=new Set(allCommunity.map(c=>c._id));allCommunity=d;if(prev>0){d.forEach(c=>{if(!prevIds.has(c._id))showToast('🔔 New community post pending review');});updateNotifications();}}},
     {col:'samarpan_videos',      set:d=>{allVideos=d;}},
     {col:'samarpan_testimonials',set:d=>{allTestimonials=d;}},
     {col:'samarpan_faqs',        set:d=>{allFaqs=d;}},
@@ -1707,6 +1711,7 @@ function attachListeners(){
         renderAll();
       },err=>{
         if(ordered&&(err.code==='failed-precondition'||err.code==='unimplemented'))tryQ(false);
+        else showCriticalError(col+': '+err.message,'Sync error');
       });
       unsubscribers.push(u);
     };
@@ -1715,7 +1720,7 @@ function attachListeners(){
   const su=db.collection('samarpan_site_content').doc('main').onSnapshot(doc=>{
     siteContent=doc.exists?doc.data():{};
     fillSiteContentForm();
-  },err=>console.warn('site content:',err.message));
+  },err=>{console.warn('site content:',err.message);showCriticalError('site content: '+err.message,'Sync error');});
   unsubscribers.push(su);
 }
 
@@ -1734,7 +1739,7 @@ function updateClock(){const d=getIST();const te=document.getElementById('topbar
 // FIRESTORE WRITE HELPERS
 // ════════════════════════════════════════════════
 async function fsAdd(col,data){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));const t=nowIST();return db.collection(col).add({...data,date:t.date,time:t.time,timestamp:t.iso,source:'admin_panel',addedBy:currentUser?.email||'admin'});}
-async function fsUpdate(col,id,data){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));return db.collection(col).doc(id).update(data);}
+async function fsUpdate(col,id,data){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));return db.collection(col).doc(id).update({...data,updatedAt:new Date().toISOString()});}
 async function fsDelete(col,id){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));return db.collection(col).doc(id).delete();}
 
 // ════════════════════════════════════════════════
@@ -2265,17 +2270,20 @@ function renderDoshaChart(v,p,k){
 // NOTIFICATIONS
 // ════════════════════════════════════════════════
 function toggleNotif(){const p=document.getElementById('notif-panel');const was=p.classList.contains('open');p.classList.toggle('open');if(!was)renderNotifPanel();}
-function unseenItems(){return[...allLeads,...allNewsletter,...allBookings].filter(i=>i.timestamp&&i.timestamp>notifLastSeen);}
+function unseenItems(){return[...allLeads,...allNewsletter,...allBookings,...allJournalPosts,...allCommunity].filter(i=>(i.timestamp&&i.timestamp>notifLastSeen)||(i.updatedAt&&i.updatedAt>notifLastSeen));}
 function updateNotifications(){const u=unseenItems();const badge=document.getElementById('notif-count');if(u.length>0){badge.textContent=u.length>9?'9+':u.length;badge.classList.add('show');}else{badge.classList.remove('show');}}
 function renderNotifPanel(){
   const list=document.getElementById('notif-list');
-  const all=[...allLeads.map(l=>({...l,_t:'lead',_ts:l.timestamp})),...allNewsletter.map(n=>({...n,_t:'newsletter',_ts:n.timestamp})),...allBookings.map(b=>({...b,_t:'booking',_ts:b.timestamp}))].sort((a,b)=>(b._ts||'').localeCompare(a._ts||'')).slice(0,12);
+  const _latest=x=>(x.updatedAt&&x.updatedAt>(x.timestamp||''))?x.updatedAt:x.timestamp;
+  const all=[...allLeads.map(l=>({...l,_t:'lead',_ts:_latest(l)})),...allNewsletter.map(n=>({...n,_t:'newsletter',_ts:_latest(n)})),...allBookings.map(b=>({...b,_t:'booking',_ts:_latest(b)})),...allJournalPosts.map(p=>({...p,_t:'journal',_ts:_latest(p)})),...allCommunity.map(c=>({...c,_t:'community',_ts:_latest(c)}))].sort((a,b)=>(b._ts||'').localeCompare(a._ts||'')).slice(0,12);
   if(!all.length){list.innerHTML='<div class="np-empty">No notifications yet.</div>';return;}
   list.innerHTML=all.map(item=>{
     const ist=parseIST(item._ts||item.date);const ts=`${item.date||ist.date} · ${item.time||ist.time}`;const isU=item._ts&&item._ts>notifLastSeen;
     let title='',body='';
     if(item._t==='lead'){title='Lead';body=esc(item.name||'Someone')+' — '+esc(item.service||'enquiry');}
     else if(item._t==='newsletter'){title='Newsletter';body=esc(item.email||'Someone')+' subscribed';}
+    else if(item._t==='journal'){title='Journal';body=(item.status==='published'?'Published: ':item.status==='scheduled'?'Scheduled: ':'Draft saved: ')+esc(item.title||'Untitled');}
+    else if(item._t==='community'){title='Community';body='New post from '+esc(item.name||item.author||'Someone')+' — '+esc((item.status||'pending'));}
     else{title='Booking';body=esc(item.name||'Someone')+' — '+esc(item.service||'—');}
     return`<div class="np-item${isU?' unread':''}"><div><div class="np-body"><strong>${title}:</strong> ${body}</div><div class="np-time">${esc(ts)}</div></div></div>`;
   }).join('');
@@ -2485,7 +2493,26 @@ function showToast(msg,isErr=false){
   const t=document.getElementById('toast');set$('toast-msg',msg);
   const ic=t.querySelector('svg');if(ic)ic.setAttribute('stroke',isErr?'var(--red)':'var(--green)');
   t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),3500);
+  if(isErr)showCriticalError(msg); // errors also get a persistent, dismissible banner — a 3.5s toast alone is too easy to miss
 }
+
+// ════════════════════════════════════════════════
+// CRITICAL ERROR BANNER — immediate popup for sync/write/JS errors,
+// stays on screen until dismissed (or 12s) instead of a fleeting toast.
+// ════════════════════════════════════════════════
+function showCriticalError(msg,label){
+  const stack=document.getElementById('error-banner-stack');
+  if(!stack)return;
+  const id='err_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);
+  const el=document.createElement('div');
+  el.id=id;
+  el.style.cssText='background:var(--card);border:1.5px solid var(--red);border-radius:12px;padding:.8rem 1rem;box-shadow:0 12px 34px rgba(0,0,0,.45);font-size:12px;color:var(--text);display:flex;gap:.6rem;align-items:flex-start;animation:slideInErrBanner .3s cubic-bezier(.34,1.4,.64,1);pointer-events:auto;';
+  el.innerHTML=`<span style="font-size:15px;line-height:1;">⚠️</span><div style="flex:1;min-width:0;"><div style="font-weight:700;color:var(--red);margin-bottom:2px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;">${esc(label||'Error')}</div><div style="line-height:1.4;word-break:break-word;">${esc(msg)}</div></div><button onclick="document.getElementById('${id}')?.remove()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:15px;line-height:1;flex-shrink:0;">✕</button>`;
+  stack.appendChild(el);
+  setTimeout(()=>{document.getElementById(id)?.remove();},12000);
+}
+window.addEventListener('error',function(e){showCriticalError(e.message||'Something went wrong','Unexpected error');});
+window.addEventListener('unhandledrejection',function(e){const m=e.reason&&e.reason.message?e.reason.message:String(e.reason||'Something went wrong');showCriticalError(m,'Unexpected error');});
 
 // ════════════════════════════════════════════════
 // HELPERS
