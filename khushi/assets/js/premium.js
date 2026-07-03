@@ -53,13 +53,14 @@ if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
   });
 })();
 
-/* ---------- ambient floating particles (soft gold motes) ---------- */
+/* ---------- ambient floating particles (soft gold motes, hearts on romantic pages) ---------- */
 (function(){
   const canvas = document.createElement('canvas');
   canvas.id = 'particle-canvas';
   document.body.prepend(canvas);
   const ctx = canvas.getContext('2d');
   let w,h,particles;
+  const useHearts = ['letter','moment'].includes(document.body.dataset.page);
 
   function size(){
     w = canvas.width = window.innerWidth;
@@ -73,11 +74,25 @@ if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
       vy: 0.12 + Math.random()*0.28,
       vx: -0.15 + Math.random()*0.3,
       a: 0.15 + Math.random()*0.4,
-      tw: Math.random()*Math.PI*2
+      tw: Math.random()*Math.PI*2,
+      heart: useHearts && Math.random() < 0.22
     }));
   }
   size(); makeParticles();
   window.addEventListener('resize', ()=>{ size(); makeParticles(); });
+
+  function drawHeart(x, y, s, alpha){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    ctx.beginPath();
+    ctx.moveTo(0, 3);
+    ctx.bezierCurveTo(-4, -2, -8, 1, 0, 7);
+    ctx.bezierCurveTo(8, 1, 4, -2, 0, 3);
+    ctx.fillStyle = `rgba(217,154,149,${alpha})`;
+    ctx.fill();
+    ctx.restore();
+  }
 
   function tick(){
     ctx.clearRect(0,0,w,h);
@@ -85,10 +100,14 @@ if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
       p.y -= p.vy; p.x += p.vx; p.tw += 0.02;
       if(p.y < -10){ p.y = h+10; p.x = Math.random()*w; }
       const flicker = p.a * (0.6 + 0.4*Math.sin(p.tw));
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(231,207,159,${flicker})`;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fill();
+      if(p.heart){
+        drawHeart(p.x, p.y, p.r * 1.4, flicker);
+      } else {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(231,207,159,${flicker})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      }
     });
     requestAnimationFrame(tick);
   }
