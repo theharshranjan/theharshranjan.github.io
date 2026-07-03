@@ -9,9 +9,11 @@
 <meta name="apple-mobile-web-app-title" content="Samarpan Admin">
 <meta name="application-name" content="Samarpan Admin">
 <link rel="manifest" href="manifest-admin.json">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Samarpan Admin</title>
 
-<!-- PWA manifest inline creation via JS below -->
+<!-- PWA manifest + service worker registration below -->
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -704,6 +706,9 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       </div>
     </div>
     <div class="tb-right">
+      <div class="tb-icon pwa-install-btn" onclick="triggerPwaInstall()" title="Install App" style="display:none;color:var(--brand);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/><path d="M9 9l3 3 3-3" stroke-width="1.6"/></svg>
+      </div>
       <div class="tb-icon" onclick="toggleTheme()" title="Theme">
         <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -1179,13 +1184,13 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         </div>
 
         <div class="card mb">
-          <div class="card-head"><span class="card-title">PWA — Install on Home Screen</span><span class="pill pill-green">Recommended</span></div>
+          <div class="card-head"><span class="card-title">PWA — Install as App</span><span class="pill pill-green">Recommended</span></div>
           <div class="card-body">
-            <div class="warn-box">📱 To install this admin panel on your phone home screen with the Samarpan logo:<br>
-            <strong>iOS Safari:</strong> Tap Share → "Add to Home Screen"<br>
-            <strong>Android Chrome:</strong> Tap menu (⋮) → "Add to Home Screen" / "Install App"<br><br>
+            <button class="btn btn-primary pwa-install-btn" onclick="triggerPwaInstall()" style="display:none;margin-bottom:.75rem;">📲 Install Samarpan Admin</button>
+            <div class="warn-box">📱 On Android Chrome / Desktop Chrome &amp; Edge, an <strong>"Install"</strong> button will appear above (and in the top toolbar) once the app is installable — one tap and it's on your home screen / app list, no browser bar.<br><br>
+            <strong>iOS Safari</strong> doesn't support the auto-install prompt: tap Share → "Add to Home Screen" instead.<br><br>
             For the <strong>main website</strong> (thesamarpan.co.in) the PWA install button appears automatically after scrolling — or via browser menu.</div>
-            <p style="font-size:11px;color:var(--text4);line-height:1.7;">The manifest file <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">manifest-admin.json</code> should be in the same folder as admin.html with your Samarpan logo icons. See the <strong>Firestore Rules</strong> section for the updated rules with flash card support.</p>
+            <p style="font-size:11px;color:var(--text4);line-height:1.7;">Three files must sit in the <strong>same folder as admin.html</strong>: <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">manifest-admin.json</code>, <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">sw-admin.js</code> (service worker — required for the install prompt to appear), and the icon files (<code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">favicon-192x192.png</code>, <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">favicon-512x512.png</code>, <code style="background:var(--bg3);padding:1px 5px;border-radius:3px;">apple-touch-icon.png</code>). See the <strong>Firestore Rules</strong> section for the updated rules with flash card support.</p>
           </div>
         </div>
 
@@ -1533,25 +1538,34 @@ firebase.initializeApp({
 const auth=firebase.auth(), db=firebase.firestore();
 
 // ════════════════════════════════════════════════
-// PWA MANIFEST — inject for admin panel
+// PWA — service worker registration + install prompt
+// (real manifest-admin.json + sw-admin.js must sit next to admin.html)
 // ════════════════════════════════════════════════
-(function(){
-  const manifest={
-    name:"Samarpan Admin",short_name:"Admin",
-    start_url:"/admin.html",display:"standalone",
-    background_color:"#0c0c12",theme_color:"#D95D39",
-    icons:[
-      {src:"favicon-192x192.png",sizes:"192x192",type:"image/png",purpose:"any maskable"},
-      {src:"favicon-512x512.png",sizes:"512x512",type:"image/png",purpose:"any maskable"},
-      {src:"apple-touch-icon.png",sizes:"180x180",type:"image/png"}
-    ]
-  };
-  const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  let link=document.querySelector('link[rel="manifest"]');
-  if(!link){link=document.createElement('link');link.rel='manifest';document.head.appendChild(link);}
-  link.href=url;
-})();
+let deferredInstallPrompt=null;
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw-admin.js').catch(e=>console.warn('SW registration failed:',e.message));
+  });
+}
+window.addEventListener('beforeinstallprompt',(e)=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='inline-flex');
+});
+window.addEventListener('appinstalled',()=>{
+  deferredInstallPrompt=null;
+  document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='none');
+});
+async function triggerPwaInstall(){
+  if(!deferredInstallPrompt){
+    alert('If you don\'t see an install popup:\n\nAndroid Chrome: tap ⋮ menu → "Add to Home Screen" / "Install App"\niOS Safari: tap Share → "Add to Home Screen"\nDesktop Chrome/Edge: click the install (⊕) icon in the address bar');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  const choice=await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+  if(choice.outcome==='accepted') document.querySelectorAll('.pwa-install-btn').forEach(b=>b.style.display='none');
+}
 
 // ════════════════════════════════════════════════
 // STATE
