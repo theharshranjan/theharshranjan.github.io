@@ -422,8 +422,8 @@
     try {
       var website = document.getElementById('formWebsite').value;
       var token = await getTokenFast('booking_page');
-      writeLeadToFirestore('booking_page_leads', {name:name, email:email, phone:phone||'Not Provided', reason:reason, message:message||'No message', lead_type:'booking_page'});
-      await submitToBackend({formType:'booking_page', name:name, email:email, phone:phone||'Not Provided', service:reason, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:reason, message:message||'No message', lead_type:'booking_page'});
+      await submitToBackend({formType:'contact_form', name:name, email:email, phone:phone||'Not Provided', service:reason, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
       setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
       document.getElementById('bookingForm').reset();
       gaEvent('submit','Form','Booking Page — Lead');
