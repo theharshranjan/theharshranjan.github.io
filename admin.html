@@ -623,6 +623,8 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>All Leads<span class="nav-badge" id="sb-leads-count">—</span></div>
     <div class="nav-item" onclick="showPage('bookings',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Bookings<span class="nav-badge cyan" id="sb-book-count">—</span></div>
+    <div class="nav-item" onclick="showPage('sheet',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>Spreadsheet</div>
     <div class="nav-item" onclick="showPage('newsletter',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Newsletter<span class="nav-badge gold" id="sb-news-count">—</span></div>
     <div class="nav-item" onclick="showPage('referrals',this)">
@@ -801,7 +803,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="card"><div class="card-head"><span class="card-title">Daily Visits — Last 14 Days</span></div><div class="card-body"><div class="chart-container"><canvas id="chart-visitors-14d"></canvas></div></div></div>
         <div class="card"><div class="card-head"><span class="card-title">Device Breakdown</span></div><div class="card-body" id="device-breakdown"><div style="color:var(--text4);font-size:12px;">Loading…</div></div></div>
       </div>
-      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div><div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>ID</th><th>Date</th><th>Time</th><th>Page</th><th>Device</th><th>Referrer</th></tr></thead><tbody id="visitors-body"><tr><td colspan="6" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div></div>
+      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div><div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>ID</th><th>Date</th><th>Time</th><th>Page</th><th>Device</th><th>IP Address</th><th>Location</th><th>Referrer</th></tr></thead><tbody id="visitors-body"><tr><td colspan="8" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div></div>
     </div>
 
     <!-- ══ LEADS ══ -->
@@ -826,6 +828,17 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="sc"><div class="sc-top"><div class="sc-icon" style="background:rgba(168,85,247,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" width="15" height="15"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="sc-tag" style="background:rgba(168,85,247,.1);color:var(--purple);">Services</span></div><div class="sc-num" id="bk-svc">—</div><div class="sc-label">Service Types</div></div>
       </div>
       <div class="card"><div class="card-head"><span class="card-title">All Bookings — from booking.html</span><button class="btn btn-outline btn-sm" onclick="exportBookingsCSV()">Export CSV</button></div><div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Message</th><th>Date</th><th>Time</th></tr></thead><tbody id="bookings-body"><tr><td colspan="7" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div></div>
+    </div>
+
+    <!-- ══ SPREADSHEET ══ -->
+    <div class="page-view" id="page-sheet">
+      <div class="card mb">
+        <div class="card-head"><span class="card-title">Booking Spreadsheet</span><a class="btn btn-outline btn-sm" href="https://docs.google.com/spreadsheets/d/1Sb4pAXbeIbLfRR6tDYK7GRIg_OE1nX3TF1s-wXfFRW8/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Sheets →</a></div>
+        <div class="card-body">
+          <div class="warn-box" style="margin-bottom:1rem;">💡 If this shows a "request access" screen instead of your data, open the sheet → <strong>Share</strong> → set general access to <strong>"Anyone with the link — Viewer"</strong>. Otherwise use "Open in Google Sheets" above.</div>
+          <iframe src="https://docs.google.com/spreadsheets/d/1Sb4pAXbeIbLfRR6tDYK7GRIg_OE1nX3TF1s-wXfFRW8/preview?gid=0" style="width:100%;height:72vh;border:1px solid var(--border2);border-radius:var(--r);background:var(--card2);" loading="lazy"></iframe>
+        </div>
+      </div>
     </div>
 
     <!-- ══ NEWSLETTER ══ -->
@@ -1764,8 +1777,8 @@ function renderVisitors(){
 
   const tb=document.getElementById('visitors-body');
   if(!tb)return;
-  if(!allVisitors.length){tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No visitor sessions yet.</td></tr>`;return;}
-  tb.innerHTML=allVisitors.slice(0,150).map(v=>{const ist=parseIST(v.timestamp||v.date);return`<tr><td style="font-size:9.5px;color:var(--text4);font-family:monospace;">${esc((v._id||'—').slice(0,12))}</td><td class="td-date">${esc(v.date||ist.date)}</td><td class="td-time">${esc(v.time||ist.time)}</td><td style="font-weight:600;color:var(--text);font-size:11.5px;">${esc(v.page||'/')}</td><td><span class="pill ${v.device==='Mobile'?'pill-gold':'pill-blue'}">${esc(v.device||'Desktop')}</span></td><td style="font-size:10.5px;color:var(--text3);">${esc(v.referrer||'direct')}</td></tr>`;}).join('');
+  if(!allVisitors.length){tb.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No visitor sessions yet.</td></tr>`;return;}
+  tb.innerHTML=allVisitors.slice(0,150).map(v=>{const ist=parseIST(v.timestamp||v.date);const loc=[v.city,v.region,v.country].filter(Boolean).join(', ')||'—';return`<tr><td style="font-size:9.5px;color:var(--text4);font-family:monospace;">${esc((v._id||'—').slice(0,12))}</td><td class="td-date">${esc(v.date||ist.date)}</td><td class="td-time">${esc(v.time||ist.time)}</td><td style="font-weight:600;color:var(--text);font-size:11.5px;">${esc(v.page||'/')}</td><td><span class="pill ${v.device==='Mobile'?'pill-gold':'pill-blue'}">${esc(v.device||'Desktop')}</span></td><td style="font-size:10.5px;color:var(--text3);font-family:monospace;">${esc(v.ip||'—')}</td><td style="font-size:10.5px;color:var(--text3);">${esc(loc)}</td><td style="font-size:10.5px;color:var(--text3);">${esc(v.referrer||'direct')}</td></tr>`;}).join('');
 }
 
 // ════════════════════════════════════════════════
@@ -1906,7 +1919,7 @@ function copyRules(){const txt=document.querySelector('.code-block')?.textConten
 function csvDown(rows,fn){const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=fn;a.click();showToast('📥 '+fn);}
 function exportLeadsCSV(){const rows=[['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST']];allLeads.forEach(l=>{const ist=parseIST(l.timestamp);rows.push([l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time]);});csvDown(rows,`leads-${nowIST().date}.csv`);}
 function exportNewsletterCSV(){const rows=[['Email','Date','Time IST']];allNewsletter.forEach(s=>{const ist=parseIST(s.timestamp);rows.push([s.email,s.date||ist.date,s.time||ist.time]);});csvDown(rows,`newsletter-${nowIST().date}.csv`);}
-function exportVisitorsCSV(){const rows=[['ID','Date','Time IST','Page','Device','Referrer']];allVisitors.forEach(v=>{const ist=parseIST(v.timestamp);rows.push([v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.referrer]);});csvDown(rows,`visitors-${nowIST().date}.csv`);}
+function exportVisitorsCSV(){const rows=[['ID','Date','Time IST','Page','Device','IP Address','City','Region','Country','Referrer']];allVisitors.forEach(v=>{const ist=parseIST(v.timestamp);rows.push([v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer]);});csvDown(rows,`visitors-${nowIST().date}.csv`);}
 function exportBookingsCSV(){const rows=[['Name','Email','Phone','Service','Message','Date','Time IST']];allBookings.forEach(b=>{const ist=parseIST(b.timestamp);rows.push([b.name,b.email,b.phone,b.service,b.message,b.date||ist.date,b.time||ist.time]);});csvDown(rows,`bookings-${nowIST().date}.csv`);}
 function exportReferralsCSV(){const rows=[['Email','Channel','Action','Date','Time IST']];allReferrals.forEach(r=>{const ist=parseIST(r.timestamp);rows.push([r.email,r.channel,r.action,r.date||ist.date,r.time||ist.time]);});csvDown(rows,`referrals-${nowIST().date}.csv`);}
 function exportQuizCSV(){const rows=[['Name','Email','Dosha','Date','Time IST']];allQuiz.forEach(q=>{const ist=parseIST(q.timestamp);rows.push([q.name,q.email,q.dosha,q.date||ist.date,q.time||ist.time]);});csvDown(rows,`quiz-${nowIST().date}.csv`);}
@@ -1942,7 +1955,7 @@ function showPage(id,el){
   const page=document.getElementById(`page-${id}`);if(page)page.classList.add('active');
   if(el)el.classList.add('active');
   else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});}
-  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards'};
   set$('topbar-title',titles[id]||'Dashboard');
   closeSidebar();
   // Trigger chart renders when switching to analytics/visitor pages
