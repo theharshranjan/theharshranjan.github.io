@@ -820,6 +820,14 @@
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-7HHS4_aeb5dyCPsvwMhyPfajPIK6j8uB7XLaaB-YCA8bkLlTICXRYhd35RQPhenj/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
 
+  /* Direct-to-Firestore config — same project as the admin panel & index.html.
+     The Apps Script above only logs to the Google Sheet + sends email; it
+     never touches Firestore. Without this, bookings made on this page would
+     never appear in the admin panel (which only listens to Firestore). */
+  var FIREBASE_PROJECT  = 'thesamrpan';
+  var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
+  var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
+
   var bLoadedAt = Date.now(); // timestamp used by the backend's bot-timing check
 
   function getRecaptchaToken(action) {
@@ -845,6 +853,41 @@
   }
 
   function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());}
+
+  /* ══════════════════════════════════════════════
+     DIRECT-TO-FIRESTORE WRITE — mirrors index.html.
+     Fire-and-forget parallel write straight into the Firestore collection
+     the admin panel listens to. Never blocks or fails the visible booking
+     submission — the Apps Script call above is the one the success/error
+     screen depends on.
+     ══════════════════════════════════════════════ */
+  function fsStr(v) { return { stringValue: String(v == null ? '' : v) }; }
+  function fsFieldsFrom(obj) {
+    var out = {};
+    Object.keys(obj).forEach(function (k) { if (obj[k] !== undefined && obj[k] !== null) out[k] = fsStr(obj[k]); });
+    return out;
+  }
+  function istStamp() {
+    var now = new Date();
+    var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    var p2 = function (n) { return String(n).padStart(2, '0'); };
+    return {
+      date: ist.getFullYear() + '-' + p2(ist.getMonth() + 1) + '-' + p2(ist.getDate()),
+      time: p2(ist.getHours()) + ':' + p2(ist.getMinutes()) + ':' + p2(ist.getSeconds()),
+      timestamp: now.toISOString()
+    };
+  }
+  function writeLeadToFirestore(collection, data) {
+    try {
+      var stamp = istStamp();
+      var fields = fsFieldsFrom(Object.assign({}, data, { date: stamp.date, time: stamp.time, timestamp: stamp.timestamp, source: 'booking_page' }));
+      fetch(FIRESTORE_BASE + collection + '?key=' + FIREBASE_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fields })
+      }).catch(function () {});
+    } catch (e) { /* never block the form submit UX */ }
+  }
 
   /* ── PROGRAMME DATA ── */
   var programmes = [
@@ -1017,6 +1060,17 @@
       bookingData.recaptchaToken = recaptchaToken;
       await submitToBackend(bookingData);
 
+      /* Parallel direct write so this booking shows up live in the admin
+         panel (Apps Script above never touches Firestore — see comment). */
+      writeLeadToFirestore('homepage_bookings', {
+        name: name,
+        email: email,
+        phone: phone || 'Not provided',
+        service: _selectedProgramme + ' — ' + _selectedSessionType,
+        message: bookingMessage,
+        status: 'pending'
+      });
+
       /* Newsletter signup if opted in — logged as its own lead so it lands
          alongside your other newsletter signups in "All Leads".
          This runs in its own try/catch with its OWN reCAPTCHA token (tokens
@@ -1034,6 +1088,7 @@
             pageLoadedAt: bLoadedAt,
             recaptchaToken: newsletterToken
           });
+          writeLeadToFirestore('homepage_newsletter', { email: email });
         } catch (newsletterErr) {
           console.error('Newsletter signup failed (booking still succeeded):', newsletterErr);
         }
