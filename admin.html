@@ -16,11 +16,16 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 <!-- Chart.js for embedded GA4-style charts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- Export Center: Excel + PDF -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
 <style>
 /* ═══════════════════════════════════════
@@ -639,8 +644,26 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Flash Cards<span class="nav-badge" style="background:var(--gold);color:#000;" id="sb-fc-count">—</span></div>
     <div class="nav-item" onclick="showPage('journal',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Journal<span class="nav-badge gold" id="sb-journal-count">—</span></div>
+    <div class="nav-item" onclick="showPage('community',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Community<span class="nav-badge" id="sb-community-count">—</span></div>
+    <div class="nav-item" onclick="showPage('videos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Videos<span class="nav-badge" id="sb-videos-count">—</span></div>
+    <div class="nav-item" onclick="showPage('media',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Media Library</div>
+    <div class="nav-item" onclick="showPage('sitecontent',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Website Content</div>
     <div class="nav-item" onclick="showPage('sessions',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sessions</div>
+
+    <div class="sb-section">Tools</div>
+    <div class="nav-item" onclick="showPage('search',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Global Search</div>
+    <div class="nav-item" onclick="showPage('notes',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Admin Notes</div>
+    <div class="nav-item" onclick="showPage('backup',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Backup Center</div>
+    <div class="nav-item" onclick="showPage('status',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>System Status</div>
 
     <div class="sb-section">System</div>
     <div class="nav-item" onclick="showPage('settings',this)">
@@ -654,7 +677,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <div class="admin-av" id="sb-av-init">SA</div>
       <div>
         <div class="admin-name" id="sb-admin-name">Admin</div>
-        <div class="admin-status"><span class="pulse-dot"></span>Online</div>
+        <div class="admin-status"><span class="pulse-dot"></span>Online <span class="pill pill-gold" id="sb-role-badge" style="margin-left:4px;font-size:8px;padding:1px 5px;">Owner</span></div>
       </div>
     </div>
     <button class="logout-btn" onclick="doLogout()">
@@ -729,6 +752,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       </div>
 
       <div class="info-row">
+        <div class="info-chip" style="border-color:rgba(34,197,94,.3);"><span class="pulse-dot"></span>&nbsp;<span id="dash-live-count">—</span>&nbsp;online now</div>
         <div class="info-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Last sync: <strong id="last-sync-time" style="color:var(--text);">—</strong></div>
         <div class="info-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Firebase Firestore</div>
         <div class="info-chip">GA4 · G-HMM7CJSCW7</div>
@@ -793,6 +817,18 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
 
     <!-- ══ VISITORS ══ -->
     <div class="page-view" id="page-visitors">
+      <div class="card mb" style="border-color:rgba(34,197,94,.3);">
+        <div class="card-body" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding:.9rem 1.1rem;">
+          <div style="display:flex;align-items:center;gap:.6rem;">
+            <span class="pulse-dot" style="width:9px;height:9px;"></span>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--green);line-height:1.1;" id="pv-live-count">—</div>
+              <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;">Visitors Online Now</div>
+            </div>
+          </div>
+          <div id="pv-live-pages" style="font-size:11px;color:var(--text3);text-align:right;">Active in the last 5 minutes</div>
+        </div>
+      </div>
       <div class="vis-stats">
         <div class="sc"><div class="sc-glow" style="background:var(--brand);"></div><div class="sc-top"><div class="sc-icon" style="background:var(--brand-glow);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="2" width="15" height="15"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/></svg></div><span class="sc-tag" style="background:var(--brand-glow);color:var(--brand);">Today</span></div><div class="sc-num" id="pv-today">—</div><div class="sc-label">Today's Visits</div><div class="sc-sub" id="pv-today-sub">—</div></div>
         <div class="sc"><div class="sc-glow" style="background:var(--gold);"></div><div class="sc-top"><div class="sc-icon" style="background:var(--gold-glow);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="15" height="15"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="sc-tag" style="background:var(--gold-glow);color:var(--gold);">Month</span></div><div class="sc-num" id="pv-month">—</div><div class="sc-label">This Month</div><div class="sc-sub" id="pv-month-name">—</div></div>
@@ -827,7 +863,18 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="sc"><div class="sc-top"><div class="sc-icon" style="background:var(--gold-glow);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="15" height="15"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="sc-tag" style="background:var(--gold-glow);color:var(--gold);">Month</span></div><div class="sc-num" id="bk-month">—</div><div class="sc-label">This Month</div></div>
         <div class="sc"><div class="sc-top"><div class="sc-icon" style="background:rgba(168,85,247,.1);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" width="15" height="15"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="sc-tag" style="background:rgba(168,85,247,.1);color:var(--purple);">Services</span></div><div class="sc-num" id="bk-svc">—</div><div class="sc-label">Service Types</div></div>
       </div>
-      <div class="card"><div class="card-head"><span class="card-title">All Bookings — from booking.html</span><button class="btn btn-outline btn-sm" onclick="exportBookingsCSV()">Export CSV</button></div><div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Message</th><th>Date</th><th>Time</th></tr></thead><tbody id="bookings-body"><tr><td colspan="7" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div></div>
+      <div class="card"><div class="card-head"><span class="card-title">All Bookings — from booking.html</span><div style="display:flex;gap:.4rem;"><button class="btn btn-outline btn-sm" id="bk-view-list-btn" onclick="setBookingView('list')">📋 List</button><button class="btn btn-outline btn-sm" id="bk-view-cal-btn" onclick="setBookingView('calendar')">📅 Calendar</button><button class="btn btn-outline btn-sm" onclick="exportBookingsCSV()">Export CSV</button></div></div>
+        <div id="bookings-list-view" style="overflow-x:auto;"><table class="tbl"><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Service</th><th>Message</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead><tbody id="bookings-body"><tr><td colspan="9" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div>
+        <div id="bookings-calendar-view" style="display:none;padding:1rem;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+            <button class="btn btn-outline btn-sm" onclick="shiftBookingMonth(-1)">← Prev</button>
+            <div id="bk-cal-month-label" style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);"></div>
+            <button class="btn btn-outline btn-sm" onclick="shiftBookingMonth(1)">Next →</button>
+          </div>
+          <div id="bk-cal-grid"></div>
+          <div id="bk-cal-day-detail" style="margin-top:1rem;"></div>
+        </div>
+      </div>
     </div>
 
     <!-- ══ SPREADSHEET ══ -->
@@ -1000,6 +1047,95 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <div id="journal-posts-list"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Loading posts…</div></div>
     </div>
 
+    <!-- ══ COMMUNITY ══ -->
+    <div class="page-view" id="page-community">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Community Posts</h2>
+          <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Moderate posts submitted from the community wall</div>
+        </div>
+        <select class="filter-select" id="community-filter" onchange="renderCommunity()"><option value="">All Posts</option><option value="pending">Pending Approval</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
+      </div>
+      <div id="community-list"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+    </div>
+
+    <!-- ══ VIDEOS ══ -->
+    <div class="page-view" id="page-videos">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Video Manager</h2>
+          <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">YouTube videos shown on the website</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openAddVideoModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Video</button>
+      </div>
+      <div id="videos-list" class="g3"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+    </div>
+
+    <!-- ══ MEDIA LIBRARY ══ -->
+    <div class="page-view" id="page-media">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Media Library</h2>
+          <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Files stored in Firebase Storage</div>
+        </div>
+        <label class="btn btn-primary btn-sm" style="cursor:pointer;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Upload File
+          <input type="file" id="media-upload-input" style="display:none;" onchange="uploadMediaFile(event)">
+        </label>
+      </div>
+      <div id="media-upload-progress" style="display:none;font-size:11px;color:var(--text3);margin-bottom:.6rem;">Uploading…</div>
+      <div id="media-grid" class="g3"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+    </div>
+
+    <!-- ══ WEBSITE CONTENT ══ -->
+    <div class="page-view" id="page-sitecontent">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Website Content Manager</h2>
+          <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Edit homepage sections without touching HTML</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveSiteContent()">Save Changes</button>
+      </div>
+
+      <div class="sec-panel mb">
+        <div class="sec-title">Hero Section</div>
+        <div class="form-group"><label class="form-label">Hero Title</label><input class="form-input" id="sc-hero-title" placeholder="e.g. Rediscover Your Balance"></div>
+        <div class="form-group"><label class="form-label">Hero Subtitle</label><textarea class="form-input" id="sc-hero-subtitle" rows="2" style="resize:none;min-height:55px;"></textarea></div>
+        <div class="form-group"><label class="form-label">Hero Image URL</label><input class="form-input" id="sc-hero-image" placeholder="https://…"></div>
+      </div>
+
+      <div class="sec-panel mb">
+        <div class="sec-title">About / Mission / Vision</div>
+        <div class="form-group"><label class="form-label">About</label><textarea class="form-input" id="sc-about" rows="3" style="min-height:70px;"></textarea></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Mission</label><textarea class="form-input" id="sc-mission" rows="2" style="resize:none;min-height:55px;"></textarea></div><div class="form-group"><label class="form-label">Vision</label><textarea class="form-input" id="sc-vision" rows="2" style="resize:none;min-height:55px;"></textarea></div></div>
+      </div>
+
+      <div class="sec-panel mb">
+        <div class="sec-title">Contact & Footer</div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Contact Email</label><input class="form-input" id="sc-contact-email"></div><div class="form-group"><label class="form-label">Contact Phone</label><input class="form-input" id="sc-contact-phone"></div></div>
+        <div class="form-group"><label class="form-label">Footer Text</label><input class="form-input" id="sc-footer"></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Instagram</label><input class="form-input" id="sc-social-instagram"></div><div class="form-group"><label class="form-label">Facebook</label><input class="form-input" id="sc-social-facebook"></div></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">YouTube</label><input class="form-input" id="sc-social-youtube"></div><div class="form-group"><label class="form-label">WhatsApp</label><input class="form-input" id="sc-social-whatsapp"></div></div>
+      </div>
+
+      <div class="sec-panel mb">
+        <div class="sec-title">Homepage Quote</div>
+        <div class="form-group"><textarea class="form-input" id="sc-quote" rows="2" style="resize:none;min-height:55px;" placeholder="A quote shown on the homepage banner…"></textarea></div>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="card mb">
+        <div class="card-head"><span class="card-title">Testimonials</span><button class="btn btn-outline btn-sm" onclick="openTestimonialModal()">+ Add</button></div>
+        <div class="card-body" id="testimonials-list"><div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+      </div>
+
+      <!-- FAQs -->
+      <div class="card">
+        <div class="card-head"><span class="card-title">FAQs</span><button class="btn btn-outline btn-sm" onclick="openFaqModal()">+ Add</button></div>
+        <div class="card-body" id="faqs-list"><div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+      </div>
+    </div>
+
     <!-- ══ SESSIONS ══ -->
     <div class="page-view" id="page-sessions">
       <div class="card"><div class="card-head"><span class="card-title">Upcoming Sessions</span><button class="btn btn-primary btn-sm" onclick="showToast('Session scheduling coming soon!')">Schedule</button></div><div class="card-body">
@@ -1165,6 +1301,92 @@ service cloud.firestore {
       </div>
     </div>
 
+    <!-- ══ GLOBAL SEARCH ══ -->
+    <div class="page-view" id="page-search">
+      <div class="card mb"><div class="card-body">
+        <input class="form-input" type="text" id="global-search-input" placeholder="Search bookings, leads, newsletter, quiz, journals, community, videos, flash cards…" oninput="runGlobalSearch()" style="font-size:14px;padding:.9rem 1rem;">
+        <div style="font-size:10px;color:var(--text4);margin-top:.5rem;">Tip: press <strong>Ctrl/Cmd + K</strong> anywhere in the panel to jump here.</div>
+      </div></div>
+      <div id="global-search-results"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Start typing to search across every section…</div></div>
+    </div>
+
+    <!-- ══ ADMIN NOTES ══ -->
+    <div class="page-view" id="page-notes">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Admin Notes</h2>
+          <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Private reminders — visible only inside this admin panel</div>
+        </div>
+      </div>
+      <div class="card mb"><div class="card-body">
+        <div class="form-group"><textarea class="form-input" id="note-input" rows="2" style="resize:none;min-height:60px;" placeholder="Write a note or reminder…"></textarea></div>
+        <button class="btn btn-primary btn-sm" onclick="addAdminNote()">Add Note</button>
+      </div></div>
+      <div id="notes-list"><div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+    </div>
+
+    <!-- ══ BACKUP CENTER ══ -->
+    <div class="page-view" id="page-backup">
+      <div style="margin-bottom:.9rem;">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">Export Center & Backup</h2>
+        <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Download your data as CSV, Excel, PDF, or full JSON — all generated locally in your browser</div>
+      </div>
+
+      <div class="card mb">
+        <div class="card-head"><span class="card-title">Export Center — CSV / Excel / PDF / JSON</span></div>
+        <div class="card-body">
+          <div style="overflow-x:auto;"><table class="tbl">
+            <thead><tr><th>Section</th><th>CSV</th><th>Excel</th><th>PDF</th><th>JSON</th></tr></thead>
+            <tbody>
+              <tr><td>Leads</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('leads','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('leads','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('leads','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('leads','json')">JSON</button></td></tr>
+              <tr><td>Bookings</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('bookings','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('bookings','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('bookings','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('bookings','json')">JSON</button></td></tr>
+              <tr><td>Newsletter</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('newsletter','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('newsletter','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('newsletter','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('newsletter','json')">JSON</button></td></tr>
+              <tr><td>Visitors</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('visitors','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('visitors','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('visitors','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('visitors','json')">JSON</button></td></tr>
+              <tr><td>Referrals</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('referrals','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('referrals','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('referrals','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('referrals','json')">JSON</button></td></tr>
+              <tr><td>Quiz Results</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('quiz','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('quiz','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('quiz','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('quiz','json')">JSON</button></td></tr>
+              <tr><td>Yoga Signups</td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('yoga','csv')">CSV</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('yoga','excel')">Excel</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('yoga','pdf')">PDF</button></td><td><button class="btn btn-outline btn-sm" onclick="exportCenterRun('yoga','json')">JSON</button></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title">Full JSON Backup</span></div>
+        <div class="card-body">
+          <div class="warn-box mb">💡 JSON preserves full structure and is best for restoring data. Downloads run locally in your browser — nothing is uploaded anywhere.</div>
+          <div class="qa-grid">
+            <div class="qa" onclick="backupCollectionJSON('homepage_leads','leads')"><div class="qa-icon" style="background:var(--brand-glow);color:var(--brand);">📥</div><div class="qa-label">Leads</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('homepage_bookings','bookings')"><div class="qa-icon" style="background:rgba(6,182,212,.1);color:var(--cyan);">📥</div><div class="qa-label">Bookings</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('homepage_newsletter','newsletter')"><div class="qa-icon" style="background:var(--gold-glow);color:var(--gold);">📥</div><div class="qa-label">Newsletter</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('homepage_quiz_results','quiz')"><div class="qa-icon" style="background:rgba(168,85,247,.1);color:var(--purple);">📥</div><div class="qa-label">Quiz Results</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('homepage_yoga_sessions','yoga')"><div class="qa-icon" style="background:rgba(34,197,94,.1);color:var(--green);">📥</div><div class="qa-label">Yoga</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('homepage_referrals','referrals')"><div class="qa-icon" style="background:rgba(217,93,57,.1);color:var(--brand);">📥</div><div class="qa-label">Referrals</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('samarpan_journal_posts','journal')"><div class="qa-icon" style="background:rgba(168,85,247,.1);color:var(--purple);">📥</div><div class="qa-label">Journal</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('samarpan_community_posts','community')"><div class="qa-icon" style="background:rgba(6,182,212,.1);color:var(--cyan);">📥</div><div class="qa-label">Community</div><div class="qa-sub">JSON</div></div>
+            <div class="qa" onclick="backupCollectionJSON('samarpan_flash_cards','flashcards')"><div class="qa-icon" style="background:var(--gold-glow);color:var(--gold);">📥</div><div class="qa-label">Flash Cards</div><div class="qa-sub">JSON</div></div>
+          </div>
+          <button class="btn btn-primary" style="margin-top:1rem;" onclick="backupAllJSON()">Backup Everything (all collections → JSON)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SYSTEM STATUS ══ -->
+    <div class="page-view" id="page-status">
+      <div style="margin-bottom:.9rem;">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--text);">System Status</h2>
+        <div style="font-size:10.5px;color:var(--text4);margin-top:2px;">Live health of connected services</div>
+      </div>
+      <div class="g3" id="status-grid">
+        <div class="sc"><div class="sc-top"><div class="sc-icon" id="status-icon-auth" style="background:rgba(120,120,120,.12);">●</div><span class="sc-tag" id="status-tag-auth">Checking…</span></div><div class="sc-label">Firebase Auth</div></div>
+        <div class="sc"><div class="sc-top"><div class="sc-icon" id="status-icon-firestore" style="background:rgba(120,120,120,.12);">●</div><span class="sc-tag" id="status-tag-firestore">Checking…</span></div><div class="sc-label">Firestore</div></div>
+        <div class="sc"><div class="sc-top"><div class="sc-icon" id="status-icon-storage" style="background:rgba(120,120,120,.12);">●</div><span class="sc-tag" id="status-tag-storage">Checking…</span></div><div class="sc-label">Storage</div></div>
+        <div class="sc"><div class="sc-top"><div class="sc-icon" id="status-icon-sheet" style="background:rgba(120,120,120,.12);">●</div><span class="sc-tag" id="status-tag-sheet">Linked</span></div><div class="sc-label">Google Sheet</div></div>
+        <div class="sc"><div class="sc-top"><div class="sc-icon" id="status-icon-analytics" style="background:rgba(120,120,120,.12);">●</div><span class="sc-tag" id="status-tag-analytics">Active</span></div><div class="sc-label">Visitor Analytics</div></div>
+        <div class="sc"><div class="sc-top"><div class="sc-icon" style="background:rgba(120,120,120,.12);">🕐</div><span class="sc-tag" id="status-lastsync">—</span></div><div class="sc-label">Last Sync</div></div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:1rem;" onclick="runStatusCheck()">Re-check Now</button>
+    </div>
+
   </div><!-- /content -->
 </div><!-- /main -->
 
@@ -1189,13 +1411,92 @@ service cloud.firestore {
     <div class="modal-body">
       <div class="form-group"><label class="form-label">Post Title *</label><input class="form-input" type="text" id="pm-title" placeholder="e.g. Understanding Your Prakriti"></div>
       <div class="form-row"><div class="form-group"><label class="form-label">Category</label><select class="form-input form-select" id="pm-category"><option>Ayurveda</option><option>Psychology</option><option>Yoga</option><option>Meditation</option><option>Nutrition</option><option>Spirit & Tantra</option><option>General Wellness</option></select></div><div class="form-group"><label class="form-label">Emoji</label><input class="form-input" type="text" id="pm-emoji" placeholder="🌿" maxlength="4" style="font-size:1.2rem;"></div></div>
-      <div class="form-row"><div class="form-group"><label class="form-label">Read Time</label><input class="form-input" type="text" id="pm-readtime" placeholder="5 min read"></div><div class="form-group"><label class="form-label">Status</label><select class="form-input form-select" id="pm-status"><option value="published">✅ Published</option><option value="draft">📝 Draft</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Read Time</label><input class="form-input" type="text" id="pm-readtime" placeholder="5 min read"></div><div class="form-group"><label class="form-label">Status</label><select class="form-input form-select" id="pm-status" onchange="toggleScheduleField()"><option value="published">✅ Published</option><option value="draft">📝 Draft</option><option value="scheduled">🕒 Scheduled</option></select></div></div>
+      <div class="form-group" id="pm-schedule-row" style="display:none;"><label class="form-label">Publish Date &amp; Time</label><input class="form-input" type="datetime-local" id="pm-schedule-date"><div style="font-size:10px;color:var(--text4);margin-top:.3rem;">Post stays as a draft until this time, then goes live automatically next time the admin panel is open.</div></div>
       <div class="form-group"><label class="form-label">Short Excerpt</label><textarea class="form-input" id="pm-excerpt" rows="2" placeholder="2–3 sentence summary…" style="resize:none;min-height:60px;"></textarea></div>
       <div class="form-group"><label class="form-label">Full Content</label><textarea class="form-input form-textarea" id="pm-content" rows="6" placeholder="Write the full post content here…" style="min-height:130px;"></textarea></div>
-      <div class="form-group"><label class="form-label">Gradient (e.g. #4A5D4F, #6aad76)</label><input class="form-input" type="text" id="pm-gradient" placeholder="#4A5D4F, #6aad76"></div>
+      <div class="form-group">
+        <label class="form-label">Cover Image</label>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+          <div id="pm-cover-preview" style="width:72px;height:72px;border-radius:12px;background:var(--bg3);border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;color:var(--text4);font-size:10px;text-align:center;">No image</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem;">
+            <label class="btn btn-outline btn-sm" style="cursor:pointer;">Upload Image<input type="file" accept="image/*" id="pm-cover-file" style="display:none;" onchange="uploadJournalCover(event)"></label>
+            <span id="pm-cover-status" style="font-size:10px;color:var(--text4);"></span>
+          </div>
+        </div>
+        <input type="hidden" id="pm-cover-url" value="">
+      </div>
+      <div class="form-group"><label class="form-label">Gradient Fallback (e.g. #4A5D4F, #6aad76)</label><input class="form-input" type="text" id="pm-gradient" placeholder="#4A5D4F, #6aad76"></div>
       <input type="hidden" id="pm-edit-id" value="">
     </div>
-    <div class="modal-foot"><button class="btn btn-outline" onclick="closePostModal()">Cancel</button><button class="btn btn-primary" onclick="saveJournalPost()"><span id="pm-save-label">Publish Post</span></button></div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="previewPost()">👀 Live Preview</button><button class="btn btn-outline" onclick="closePostModal()">Cancel</button><button class="btn btn-primary" onclick="saveJournalPost()"><span id="pm-save-label">Publish Post</span></button></div>
+  </div>
+</div>
+
+<!-- ════════════ JOURNAL LIVE PREVIEW MODAL ════════════ -->
+<div class="modal-overlay" id="post-preview-modal-overlay">
+  <div class="modal modal-lg">
+    <div class="modal-head"><span class="modal-title">Live Preview</span><button class="modal-close" onclick="document.getElementById('post-preview-modal-overlay').classList.remove('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" id="post-preview-body"></div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="document.getElementById('post-preview-modal-overlay').classList.remove('open')">Close</button></div>
+  </div>
+</div>
+
+<!-- ════════════ BOOKING EDIT MODAL ════════════ -->
+<div class="modal-overlay" id="booking-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title">Edit Booking</span><button class="modal-close" onclick="document.getElementById('booking-modal-overlay').classList.remove('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Name</label><input class="form-input" type="text" id="bm-name"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Email</label><input class="form-input" type="text" id="bm-email"></div><div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="text" id="bm-phone"></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Service</label><input class="form-input" type="text" id="bm-service"></div><div class="form-group"><label class="form-label">Status</label><select class="form-input form-select" id="bm-status"><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Date</label><input class="form-input" type="date" id="bm-date"></div><div class="form-group"><label class="form-label">Time</label><input class="form-input" type="text" id="bm-time" placeholder="10:00"></div></div>
+      <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" id="bm-message" rows="3" style="min-height:70px;"></textarea></div>
+      <input type="hidden" id="bm-edit-id" value="">
+    </div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="document.getElementById('booking-modal-overlay').classList.remove('open')">Cancel</button><button class="btn btn-primary" onclick="saveBooking()">Save Changes</button></div>
+  </div>
+</div>
+
+<!-- ════════════ VIDEO MODAL ════════════ -->
+<div class="modal-overlay" id="video-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title" id="video-modal-title">Add Video</span><button class="modal-close" onclick="closeVideoModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Title *</label><input class="form-input" type="text" id="vm-title" placeholder="e.g. 5-Minute Morning Pranayama"></div>
+      <div class="form-group"><label class="form-label">YouTube URL *</label><input class="form-input" type="text" id="vm-url" placeholder="https://youtube.com/watch?v=…"></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Category</label><select class="form-input form-select" id="vm-category"><option>Ayurveda</option><option>Yoga</option><option>Meditation</option><option>Psychology</option><option>Nutrition</option><option>General</option></select></div><div class="form-group"><label class="form-label">Featured</label><select class="form-input form-select" id="vm-featured"><option value="false">No</option><option value="true">Yes — show on homepage</option></select></div></div>
+      <input type="hidden" id="vm-edit-id" value="">
+    </div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="closeVideoModal()">Cancel</button><button class="btn btn-primary" onclick="saveVideo()"><span id="vm-save-label">Add Video</span></button></div>
+  </div>
+</div>
+
+<!-- ════════════ TESTIMONIAL MODAL ════════════ -->
+<div class="modal-overlay" id="testimonial-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title" id="testimonial-modal-title">Add Testimonial</span><button class="modal-close" onclick="closeTestimonialModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="form-group"><label class="form-label">Name *</label><input class="form-input" type="text" id="tm-name"></div><div class="form-group"><label class="form-label">Role / Location</label><input class="form-input" type="text" id="tm-role" placeholder="e.g. Delhi, India"></div></div>
+      <div class="form-group"><label class="form-label">Testimonial *</label><textarea class="form-input" id="tm-content" rows="3" style="min-height:75px;"></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">Rating</label><select class="form-input form-select" id="tm-rating"><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option></select></div><div class="form-group"><label class="form-label">Featured</label><select class="form-input form-select" id="tm-featured"><option value="true">Yes</option><option value="false">No</option></select></div></div>
+      <input type="hidden" id="tm-edit-id" value="">
+    </div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="closeTestimonialModal()">Cancel</button><button class="btn btn-primary" onclick="saveTestimonial()"><span id="tm-save-label">Add Testimonial</span></button></div>
+  </div>
+</div>
+
+<!-- ════════════ FAQ MODAL ════════════ -->
+<div class="modal-overlay" id="faq-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title" id="faq-modal-title">Add FAQ</span><button class="modal-close" onclick="closeFaqModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Question *</label><input class="form-input" type="text" id="fm-question"></div>
+      <div class="form-group"><label class="form-label">Answer *</label><textarea class="form-input" id="fm-answer" rows="3" style="min-height:75px;"></textarea></div>
+      <div class="form-group"><label class="form-label">Category</label><input class="form-input" type="text" id="fm-category" placeholder="e.g. Bookings"></div>
+      <input type="hidden" id="fm-edit-id" value="">
+    </div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="closeFaqModal()">Cancel</button><button class="btn btn-primary" onclick="saveFaq()"><span id="fm-save-label">Add FAQ</span></button></div>
   </div>
 </div>
 
@@ -1252,6 +1553,13 @@ const auth=firebase.auth(), db=firebase.firestore();
 // STATE
 // ════════════════════════════════════════════════
 let allLeads=[],allNewsletter=[],allReferrals=[],allQuiz=[],allYoga=[],allVisitors=[],allJournalPosts=[],allBookings=[],allFlashCards=[];
+let allCommunity=[],allVideos=[],allTestimonials=[],allFaqs=[],allNotes=[],allAdminUsers=[];
+let siteContent={};
+let adminRole='owner'; // resolved after login via loadAdminRole()
+function isOwner(){return adminRole==='owner';}
+function canEdit(){return adminRole==='owner'||adminRole==='editor';}
+let storage=null;
+try{storage=firebase.storage();}catch(e){console.warn('Storage unavailable:',e.message);}
 let currentUser=null,unsubscribers=[];
 let notifLastSeen=sessionStorage.getItem('notif_ls')||'2020-01-01T00:00:00Z';
 let charts={};
@@ -1262,6 +1570,13 @@ let charts={};
 document.addEventListener('DOMContentLoaded',()=>{
   applyThemeStorage();applyAccentStorage();
   setInterval(updateClock,1000);updateClock();
+  startLiveVisitorTicker();
+  document.addEventListener('keydown',e=>{
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){
+      e.preventDefault();showPage('search');
+      setTimeout(()=>document.getElementById('global-search-input')?.focus(),50);
+    }
+  });
 
   auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
   auth.onAuthStateChanged(user=>{
@@ -1280,7 +1595,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   // Modal backdrop
-  ['lead-modal-overlay','post-modal-overlay','confirm-modal-overlay'].forEach(id=>{
+  ['lead-modal-overlay','post-modal-overlay','post-preview-modal-overlay','confirm-modal-overlay','video-modal-overlay','booking-modal-overlay','testimonial-modal-overlay','faq-modal-overlay'].forEach(id=>{
     const el=document.getElementById(id);
     if(el)el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
   });
@@ -1350,7 +1665,7 @@ function grantAccess(user){
   set$('sb-av-init',ini);set$('sb-admin-name',name);
   const ne=document.getElementById('settings-name');if(ne)ne.value=name;
   const ee=document.getElementById('settings-email');if(ee)ee.value=user.email||'';
-  loadSettingsStorage();attachListeners();buildWeeklyChart();
+  loadSettingsStorage();attachListeners();buildWeeklyChart();loadAdminRole();
 }
 function doLogout(){
   if(!confirm('Sign out of Samarpan Admin?'))return;
@@ -1373,6 +1688,12 @@ function attachListeners(){
     {col:'samarpan_journal_posts',set:d=>{allJournalPosts=d;}},
     {col:'homepage_bookings',    set:d=>{allBookings=d;}},
     {col:'samarpan_flash_cards', set:d=>{allFlashCards=d;}},
+    {col:'samarpan_community_posts',set:d=>{const prev=allCommunity.length;allCommunity=d;if(prev>0&&d.length>prev)updateNotifications();}},
+    {col:'samarpan_videos',      set:d=>{allVideos=d;}},
+    {col:'samarpan_testimonials',set:d=>{allTestimonials=d;}},
+    {col:'samarpan_faqs',        set:d=>{allFaqs=d;}},
+    {col:'samarpan_admin_notes', set:d=>{allNotes=d;}},
+    {col:'samarpan_admin_users', set:d=>{allAdminUsers=d;renderTeam();}},
   ];
   cols.forEach(({col,set})=>{
     const tryQ=ordered=>{
@@ -1391,6 +1712,11 @@ function attachListeners(){
     };
     tryQ(true);
   });
+  const su=db.collection('samarpan_site_content').doc('main').onSnapshot(doc=>{
+    siteContent=doc.exists?doc.data():{};
+    fillSiteContentForm();
+  },err=>console.warn('site content:',err.message));
+  unsubscribers.push(su);
 }
 
 // ════════════════════════════════════════════════
@@ -1407,9 +1733,9 @@ function updateClock(){const d=getIST();const te=document.getElementById('topbar
 // ════════════════════════════════════════════════
 // FIRESTORE WRITE HELPERS
 // ════════════════════════════════════════════════
-async function fsAdd(col,data){const t=nowIST();return db.collection(col).add({...data,date:t.date,time:t.time,timestamp:t.iso,source:'admin_panel',addedBy:currentUser?.email||'admin'});}
-async function fsUpdate(col,id,data){return db.collection(col).doc(id).update(data);}
-async function fsDelete(col,id){return db.collection(col).doc(id).delete();}
+async function fsAdd(col,data){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));const t=nowIST();return db.collection(col).add({...data,date:t.date,time:t.time,timestamp:t.iso,source:'admin_panel',addedBy:currentUser?.email||'admin'});}
+async function fsUpdate(col,id,data){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));return db.collection(col).doc(id).update(data);}
+async function fsDelete(col,id){if(!canEdit())return Promise.reject(new Error('View-only access — ask an Owner or Editor'));return db.collection(col).doc(id).delete();}
 
 // ════════════════════════════════════════════════
 // RENDER ALL
@@ -1420,6 +1746,7 @@ function renderAll(){
   renderQuiz();renderYoga();renderBookings();renderFlashCards();
   renderVisitorBanner();renderVisitors();renderDonut();
   renderTopServices();renderAnalytics();renderJournalPosts();
+  renderCommunity();renderVideos();renderTestimonials();renderFaqs();renderNotes();
   updateNotifications();
   // Sidebar badges
   set$('sb-leads-count',allLeads.length||'0');
@@ -1428,6 +1755,8 @@ function renderAll(){
   set$('sb-book-count',allBookings.length||'0');
   set$('sb-fc-count',allFlashCards.filter(f=>f.active).length||'0');
   set$('nav-vis-badge',allVisitors.filter(v=>v.date===todayStr()).length||'0');
+  set$('sb-community-count',allCommunity.filter(c=>(c.status||'pending')==='pending').length||'0');
+  set$('sb-videos-count',allVideos.length||'0');
 }
 function set$(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
 
@@ -1500,8 +1829,76 @@ function renderBookings(){
   const svcTypes=new Set(allBookings.map(b=>b.service)).size;
   set$('bk-total',allBookings.length);set$('bk-today',todBk.length);set$('bk-month',monBk.length);set$('bk-svc',svcTypes);
   const tb=document.getElementById('bookings-body');
-  if(!allBookings.length){tb.innerHTML=`<tr><td colspan="7" style="text-align:center;color:var(--text4);padding:2rem;font-size:12px;">No bookings yet.</td></tr>`;return;}
-  tb.innerHTML=allBookings.map(b=>{const ist=parseIST(b.timestamp||b.date);const msg=(b.message||'—').slice(0,35)+((b.message||'').length>35?'…':'');return`<tr><td class="td-name">${esc(b.name||'Unknown')}</td><td style="font-size:11px;">${esc(b.email||'—')}</td><td style="font-size:11px;">${esc(b.phone||'—')}</td><td style="font-size:10.5px;">${esc(b.service||'—')}</td><td style="font-size:10.5px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(msg)}</td><td class="td-date">${esc(b.date||ist.date)}</td><td class="td-time">${esc(b.time||ist.time)}</td></tr>`;}).join('');
+  if(!allBookings.length){tb.innerHTML=`<tr><td colspan="9" style="text-align:center;color:var(--text4);padding:2rem;font-size:12px;">No bookings yet.</td></tr>`;return;}
+  const statusPillClass={pending:'pill-gold',confirmed:'pill-blue',completed:'pill-green',cancelled:'pill-red'};
+  tb.innerHTML=allBookings.map(b=>{
+    const ist=parseIST(b.timestamp||b.date);
+    const msg=(b.message||'—').slice(0,35)+((b.message||'').length>35?'…':'');
+    const status=b.status||'pending';
+    return`<tr><td class="td-name">${esc(b.name||'Unknown')}</td><td style="font-size:11px;">${esc(b.email||'—')}</td><td style="font-size:11px;">${esc(b.phone||'—')}</td><td style="font-size:10.5px;">${esc(b.service||'—')}</td><td style="font-size:10.5px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(msg)}</td><td class="td-date">${esc(b.date||ist.date)}</td><td class="td-time">${esc(b.time||ist.time)}</td><td><select class="filter-select" style="font-size:10px;padding:.25rem .5rem;" onchange="updateBookingStatus('${esc(b._id)}',this.value)">${['pending','confirmed','completed','cancelled'].map(s=>`<option value="${s}" ${s===status?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select></td><td style="display:flex;gap:.3rem;"><button class="btn btn-ghost btn-sm" onclick="openEditBookingModal('${esc(b._id)}')">✏️</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteBooking('${esc(b._id)}')">🗑</button></td></tr>`;
+  }).join('');
+  if(document.getElementById('bookings-calendar-view').style.display!=='none')renderBookingCalendar();
+}
+async function updateBookingStatus(id,status){try{await fsUpdate('homepage_bookings',id,{status});showToast('✅ Status updated');}catch(e){showToast('❌ '+e.message,true);}}
+function openEditBookingModal(id){
+  const b=allBookings.find(x=>x._id===id);if(!b){showToast('Booking not found',true);return;}
+  document.getElementById('bm-name').value=b.name||'';document.getElementById('bm-email').value=b.email||'';document.getElementById('bm-phone').value=b.phone||'';
+  document.getElementById('bm-service').value=b.service||'';document.getElementById('bm-status').value=b.status||'pending';
+  document.getElementById('bm-date').value=b.date||'';document.getElementById('bm-time').value=b.time||'';document.getElementById('bm-message').value=b.message||'';
+  document.getElementById('bm-edit-id').value=id;
+  document.getElementById('booking-modal-overlay').classList.add('open');
+}
+async function saveBooking(){
+  const id=document.getElementById('bm-edit-id').value;if(!id)return;
+  const data={name:document.getElementById('bm-name').value.trim(),email:document.getElementById('bm-email').value.trim(),phone:document.getElementById('bm-phone').value.trim(),service:document.getElementById('bm-service').value.trim(),status:document.getElementById('bm-status').value,date:document.getElementById('bm-date').value,time:document.getElementById('bm-time').value.trim(),message:document.getElementById('bm-message').value.trim()};
+  try{await fsUpdate('homepage_bookings',id,data);showToast('✅ Booking updated');document.getElementById('booking-modal-overlay').classList.remove('open');}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function confirmDeleteBooking(id){
+  document.getElementById('confirm-modal-msg').textContent='Delete this booking permanently?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{try{await fsDelete('homepage_bookings',id);closeConfirmModal();showToast('✅ Booking deleted');}catch(e){showToast('❌ '+e.message,true);}};
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// BOOKING CALENDAR
+// ════════════════════════════════════════════════
+let bkCalDate=new Date();
+function setBookingView(mode){
+  document.getElementById('bookings-list-view').style.display=mode==='list'?'':'none';
+  document.getElementById('bookings-calendar-view').style.display=mode==='calendar'?'':'none';
+  document.getElementById('bk-view-list-btn').classList.toggle('btn-primary',mode==='list');
+  document.getElementById('bk-view-cal-btn').classList.toggle('btn-primary',mode==='calendar');
+  if(mode==='calendar')renderBookingCalendar();
+}
+function shiftBookingMonth(delta){bkCalDate.setMonth(bkCalDate.getMonth()+delta);renderBookingCalendar();}
+function renderBookingCalendar(){
+  const year=bkCalDate.getFullYear(),month=bkCalDate.getMonth();
+  const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  set$('bk-cal-month-label',`${monthNames[month]} ${year}`);
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const counts={};
+  allBookings.forEach(b=>{if(b.date)counts[b.date]=(counts[b.date]||0)+1;});
+  let cells=`<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:10px;color:var(--text4);text-align:center;margin-bottom:4px;">${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div>${d}</div>`).join('')}</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">`;
+  for(let i=0;i<firstDay;i++)cells+=`<div></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${year}-${p2(month+1)}-${p2(d)}`;
+    const cnt=counts[dateStr]||0;
+    const isToday=dateStr===todayStr();
+    cells+=`<div onclick="showBookingsForDate('${dateStr}')" style="cursor:pointer;min-height:52px;padding:5px;border-radius:8px;border:1px solid ${isToday?'var(--brand)':'var(--border)'};background:${cnt?'var(--brand-glow)':'var(--card2)'};display:flex;flex-direction:column;align-items:center;gap:3px;">
+      <span style="font-size:11px;color:${isToday?'var(--brand)':'var(--text2)'};font-weight:${isToday?'800':'500'};">${d}</span>
+      ${cnt?`<span class="pill pill-brand" style="font-size:9px;padding:1px 6px;">${cnt}</span>`:''}
+    </div>`;
+  }
+  cells+=`</div>`;
+  document.getElementById('bk-cal-grid').innerHTML=cells;
+}
+function showBookingsForDate(dateStr){
+  const items=allBookings.filter(b=>b.date===dateStr);
+  const cont=document.getElementById('bk-cal-day-detail');
+  if(!items.length){cont.innerHTML=`<div class="warn-box">No bookings on ${esc(dateStr)}.</div>`;return;}
+  cont.innerHTML=`<div class="card"><div class="card-head"><span class="card-title">Bookings on ${esc(dateStr)} (${items.length})</span></div><div class="card-body">${items.map(b=>`<div style="padding:.5rem 0;border-bottom:1px solid var(--border);"><strong style="font-size:12.5px;color:var(--text);">${esc(b.name||'Unknown')}</strong> — ${esc(b.service||'—')} <span style="font-size:10.5px;color:var(--text4);">· ${esc(b.time||'')}</span><div style="font-size:11px;color:var(--text3);">${esc(b.email||'')} ${b.phone?'· '+esc(b.phone):''}</div></div>`).join('')}</div></div>`;
 }
 
 // ════════════════════════════════════════════════
@@ -1761,6 +2158,34 @@ function renderVisitorBanner(){
   const last=[...tv].sort((a,b)=>(b.timestamp||'').localeCompare(a.timestamp||''))[0];
   set$('pv-today-sub',tv.length===0?'No visits yet':'Last: '+(last?.time||'—'));
   set$('pv-month-name',getIST().toLocaleString('en-IN',{month:'long',year:'numeric'}));
+  renderLiveVisitors();
+}
+const LIVE_WINDOW_MS=5*60*1000;
+function renderLiveVisitors(){
+  const now=Date.now();
+  const live=allVisitors.filter(v=>{
+    if(!v.timestamp)return false;
+    const t=new Date(v.timestamp).getTime();
+    return !isNaN(t)&&(now-t)<=LIVE_WINDOW_MS;
+  });
+  // De-dupe by session/id so one visitor browsing multiple pages counts once
+  const uniqueLive=[...new Map(live.map(v=>[v._id||v.session_id||v.ip||v.timestamp,v])).values()];
+  const count=uniqueLive.length;
+  set$('pv-live-count',count);
+  set$('dash-live-count',count);
+  const pagesEl=document.getElementById('pv-live-pages');
+  if(pagesEl){
+    if(!count)pagesEl.textContent='Active in the last 5 minutes';
+    else{
+      const pages=uniqueLive.slice(0,4).map(v=>v.page||'/').join(', ');
+      pagesEl.textContent=`On: ${pages}${count>4?` +${count-4} more`:''}`;
+    }
+  }
+}
+let _liveTickInterval=null;
+function startLiveVisitorTicker(){
+  if(_liveTickInterval)return;
+  _liveTickInterval=setInterval(renderLiveVisitors,20000);
 }
 function renderVisitors(){
   renderVisitorBanner();
@@ -1863,22 +2288,78 @@ function markAllRead(){notifLastSeen=new Date().toISOString();sessionStorage.set
 function renderJournalPosts(){
   const cont=document.getElementById('journal-posts-list');
   if(!allJournalPosts.length){cont.innerHTML='<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12.5px;">No posts yet. Click New Post to create one.</div>';return;}
-  cont.innerHTML=allJournalPosts.map(p=>`<div class="post-card"><div class="post-thumb" style="background:${esc(p.gradient||'linear-gradient(135deg,var(--brand),var(--gold))')};">${esc(p.emoji||'📝')}</div><div class="post-info"><div class="post-title">${esc(p.title||'Untitled')}</div><div class="post-meta">${esc(p.category||'—')} · ${esc(p.read_time||'—')}${p.date?' · '+esc(p.date):''}</div>${p.excerpt?`<div class="post-excerpt">${esc(p.excerpt.slice(0,80)+(p.excerpt.length>80?'…':''))}</div>`:''}</div><div class="post-actions"><span class="pill ${p.status==='published'?'pill-green':'pill-gold'}">${p.status==='published'?'Published':'Draft'}</span><button class="btn btn-ghost btn-sm" onclick="openEditPost('${esc(p._id)}')">✏️</button><button class="btn btn-danger btn-sm" onclick="confirmDelPost('${esc(p._id)}')">🗑</button></div></div>`).join('');
+  cont.innerHTML=allJournalPosts.map(p=>{
+    const thumb=p.coverImage?`<img src="${esc(p.coverImage)}" style="width:100%;height:100%;object-fit:cover;" alt="">`:esc(p.emoji||'📝');
+    const statusPill=p.status==='published'?'<span class="pill pill-green">Published</span>':p.status==='scheduled'?`<span class="pill pill-blue">🕒 ${esc(formatScheduleLabel(p.scheduledAt))}</span>`:'<span class="pill pill-gold">Draft</span>';
+    return `<div class="post-card"><div class="post-thumb" style="background:${esc(p.gradient||'linear-gradient(135deg,var(--brand),var(--gold))')};overflow:hidden;">${thumb}</div><div class="post-info"><div class="post-title">${esc(p.title||'Untitled')}</div><div class="post-meta">${esc(p.category||'—')} · ${esc(p.read_time||'—')}${p.date?' · '+esc(p.date):''}</div>${p.excerpt?`<div class="post-excerpt">${esc(p.excerpt.slice(0,80)+(p.excerpt.length>80?'…':''))}</div>`:''}</div><div class="post-actions">${statusPill}<button class="btn btn-ghost btn-sm" title="Live Preview" onclick="previewPost('${esc(p._id)}')">👀</button><button class="btn btn-ghost btn-sm" onclick="openEditPost('${esc(p._id)}')">✏️</button><button class="btn btn-danger btn-sm" onclick="confirmDelPost('${esc(p._id)}')">🗑</button></div></div>`;
+  }).join('');
+  checkScheduledPosts();
 }
-function openAddPostModal(){['pm-title','pm-excerpt','pm-content'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('pm-category').value='Ayurveda';document.getElementById('pm-emoji').value='🌿';document.getElementById('pm-readtime').value='5 min read';document.getElementById('pm-status').value='published';document.getElementById('pm-gradient').value='#4A5D4F, #6aad76';document.getElementById('pm-edit-id').value='';document.getElementById('post-modal-title').textContent='New Journal Post';document.getElementById('pm-save-label').textContent='Publish Post';document.getElementById('post-modal-overlay').classList.add('open');}
-function openEditPost(id){const post=allJournalPosts.find(p=>p._id===id);if(!post){showToast('Post not found',true);return;}document.getElementById('pm-title').value=post.title||'';document.getElementById('pm-category').value=post.category||'Ayurveda';document.getElementById('pm-emoji').value=post.emoji||'🌿';document.getElementById('pm-readtime').value=post.read_time||'5 min read';document.getElementById('pm-status').value=post.status||'published';document.getElementById('pm-excerpt').value=post.excerpt||'';document.getElementById('pm-content').value=post.content||'';document.getElementById('pm-gradient').value=(post.gradient||'').replace(/linear-gradient\([^,]+,\s*/,'').replace(')','').trim();document.getElementById('pm-edit-id').value=id;document.getElementById('post-modal-title').textContent='Edit Post';document.getElementById('pm-save-label').textContent='Save Changes';document.getElementById('post-modal-overlay').classList.add('open');}
+function formatScheduleLabel(iso){
+  if(!iso)return'Scheduled';
+  try{const d=new Date(iso);return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+  catch{return'Scheduled';}
+}
+function toggleScheduleField(){
+  const isSched=document.getElementById('pm-status').value==='scheduled';
+  document.getElementById('pm-schedule-row').style.display=isSched?'block':'none';
+}
+async function uploadJournalCover(evt){
+  const file=evt.target.files[0];if(!file)return;
+  if(!storage){showToast('Storage unavailable',true);return;}
+  if(!canEdit()){showToast('View-only access — ask an Owner or Editor',true);evt.target.value='';return;}
+  const statusEl=document.getElementById('pm-cover-status');statusEl.textContent='Uploading…';
+  try{
+    const ref=storage.ref('journal-covers/'+Date.now()+'_'+file.name);
+    await ref.put(file);
+    const url=await ref.getDownloadURL();
+    document.getElementById('pm-cover-url').value=url;
+    document.getElementById('pm-cover-preview').innerHTML=`<img src="${esc(url)}" style="width:100%;height:100%;object-fit:cover;" alt="">`;
+    statusEl.textContent='✅ Uploaded';
+  }catch(e){statusEl.textContent='';showToast('❌ '+e.message,true);}
+}
+function openAddPostModal(){['pm-title','pm-excerpt','pm-content'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('pm-category').value='Ayurveda';document.getElementById('pm-emoji').value='🌿';document.getElementById('pm-readtime').value='5 min read';document.getElementById('pm-status').value='published';document.getElementById('pm-gradient').value='#4A5D4F, #6aad76';document.getElementById('pm-edit-id').value='';document.getElementById('pm-cover-url').value='';document.getElementById('pm-cover-preview').innerHTML='No image';document.getElementById('pm-cover-status').textContent='';document.getElementById('pm-schedule-date').value='';toggleScheduleField();document.getElementById('post-modal-title').textContent='New Journal Post';document.getElementById('pm-save-label').textContent='Publish Post';document.getElementById('post-modal-overlay').classList.add('open');}
+function openEditPost(id){const post=allJournalPosts.find(p=>p._id===id);if(!post){showToast('Post not found',true);return;}document.getElementById('pm-title').value=post.title||'';document.getElementById('pm-category').value=post.category||'Ayurveda';document.getElementById('pm-emoji').value=post.emoji||'🌿';document.getElementById('pm-readtime').value=post.read_time||'5 min read';document.getElementById('pm-status').value=post.status||'published';document.getElementById('pm-excerpt').value=post.excerpt||'';document.getElementById('pm-content').value=post.content||'';document.getElementById('pm-gradient').value=(post.gradient||'').replace(/linear-gradient\([^,]+,\s*/,'').replace(')','').trim();document.getElementById('pm-edit-id').value=id;document.getElementById('pm-cover-url').value=post.coverImage||'';document.getElementById('pm-cover-preview').innerHTML=post.coverImage?`<img src="${esc(post.coverImage)}" style="width:100%;height:100%;object-fit:cover;" alt="">`:'No image';document.getElementById('pm-cover-status').textContent='';document.getElementById('pm-schedule-date').value=post.scheduledAt?new Date(post.scheduledAt).toISOString().slice(0,16):'';toggleScheduleField();document.getElementById('post-modal-title').textContent='Edit Post';document.getElementById('pm-save-label').textContent='Save Changes';document.getElementById('post-modal-overlay').classList.add('open');}
 async function saveJournalPost(){
   const title=document.getElementById('pm-title').value.trim();if(!title){showToast('Enter a post title',true);return;}
   const editId=document.getElementById('pm-edit-id').value;
   const gradRaw=document.getElementById('pm-gradient').value.trim();
   const gradient=gradRaw.includes('linear-gradient')?gradRaw:`linear-gradient(135deg,${gradRaw||'var(--brand),var(--gold)'})`;
-  const data={title,category:document.getElementById('pm-category').value,emoji:document.getElementById('pm-emoji').value||'📝',read_time:document.getElementById('pm-readtime').value||'5 min read',status:document.getElementById('pm-status').value,excerpt:document.getElementById('pm-excerpt').value.trim(),content:document.getElementById('pm-content').value.trim(),gradient,author:currentUser?.displayName||localStorage.getItem('admin_name')||'Admin'};
+  const status=document.getElementById('pm-status').value;
+  let scheduledAt=null;
+  if(status==='scheduled'){
+    const raw=document.getElementById('pm-schedule-date').value;
+    if(!raw){showToast('Pick a publish date & time for a scheduled post',true);return;}
+    scheduledAt=new Date(raw).toISOString();
+  }
+  const data={title,category:document.getElementById('pm-category').value,emoji:document.getElementById('pm-emoji').value||'📝',read_time:document.getElementById('pm-readtime').value||'5 min read',status,scheduledAt,coverImage:document.getElementById('pm-cover-url').value||'',excerpt:document.getElementById('pm-excerpt').value.trim(),content:document.getElementById('pm-content').value.trim(),gradient,author:currentUser?.displayName||localStorage.getItem('admin_name')||'Admin'};
   const lbl=document.getElementById('pm-save-label');
-  try{lbl.textContent='Saving…';if(editId)await fsUpdate('samarpan_journal_posts',editId,data);else await fsAdd('samarpan_journal_posts',data);showToast(editId?'✅ Post updated!':'✅ Post published!');closePostModal();}
+  try{lbl.textContent='Saving…';if(editId)await fsUpdate('samarpan_journal_posts',editId,data);else await fsAdd('samarpan_journal_posts',data);showToast(editId?'✅ Post updated!':status==='scheduled'?'✅ Post scheduled!':'✅ Post published!');closePostModal();}
   catch(e){showToast('❌ '+e.message,true);lbl.textContent=editId?'Save Changes':'Publish Post';}
 }
 function confirmDelPost(id){document.getElementById('confirm-modal-msg').textContent='Delete this post permanently?';document.getElementById('confirm-modal-btn').onclick=()=>deletePost(id);document.getElementById('confirm-modal-overlay').classList.add('open');}
 async function deletePost(id){try{await fsDelete('samarpan_journal_posts',id);closeConfirmModal();showToast('✅ Post deleted');}catch(e){showToast('❌ '+e.message,true);}}
+let _scheduleCheckRunning=false;
+async function checkScheduledPosts(){
+  if(_scheduleCheckRunning||!canEdit())return;
+  const due=allJournalPosts.filter(p=>p.status==='scheduled'&&p.scheduledAt&&new Date(p.scheduledAt).getTime()<=Date.now());
+  if(!due.length)return;
+  _scheduleCheckRunning=true;
+  try{for(const p of due){await fsUpdate('samarpan_journal_posts',p._id,{status:'published'});showToast('✅ Scheduled post published: '+(p.title||'Untitled'));}}
+  catch(e){/* silent — will retry next render */}
+  finally{_scheduleCheckRunning=false;}
+}
+function previewPost(id){
+  let p;
+  if(id){p=allJournalPosts.find(x=>x._id===id);if(!p){showToast('Post not found',true);return;}}
+  else{
+    p={title:document.getElementById('pm-title').value.trim()||'Untitled Post',category:document.getElementById('pm-category').value,emoji:document.getElementById('pm-emoji').value||'📝',read_time:document.getElementById('pm-readtime').value||'5 min read',excerpt:document.getElementById('pm-excerpt').value.trim(),content:document.getElementById('pm-content').value.trim(),coverImage:document.getElementById('pm-cover-url').value,gradient:(()=>{const g=document.getElementById('pm-gradient').value.trim();return g.includes('linear-gradient')?g:`linear-gradient(135deg,${g||'var(--brand),var(--gold)'})`;})(),author:currentUser?.displayName||localStorage.getItem('admin_name')||'Admin'};
+  }
+  const body=document.getElementById('post-preview-body');
+  const hero=p.coverImage?`<img src="${esc(p.coverImage)}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;margin-bottom:1rem;" alt="">`:`<div style="width:100%;height:180px;border-radius:14px;margin-bottom:1rem;background:${esc(p.gradient||'linear-gradient(135deg,var(--brand),var(--gold))')};display:flex;align-items:center;justify-content:center;font-size:3rem;">${esc(p.emoji||'📝')}</div>`;
+  body.innerHTML=`${hero}<div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem;"><span class="pill pill-brand">${esc(p.category||'—')}</span><span style="font-size:11px;color:var(--text4);">${esc(p.read_time||'')}</span></div><h2 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--text);margin-bottom:.5rem;">${esc(p.title)}</h2><div style="font-size:11px;color:var(--text3);margin-bottom:1rem;">By ${esc(p.author||'Admin')}</div>${p.excerpt?`<div style="font-size:13.5px;color:var(--text2);font-style:italic;margin-bottom:1rem;border-left:3px solid var(--brand);padding-left:.8rem;">${esc(p.excerpt)}</div>`:''}<div style="font-size:13.5px;color:var(--text2);line-height:1.75;white-space:pre-wrap;">${esc(p.content||'No content yet.')}</div>`;
+  document.getElementById('post-preview-modal-overlay').classList.add('open');
+}
 function closePostModal(){document.getElementById('post-modal-overlay').classList.remove('open');}
 function closeConfirmModal(){document.getElementById('confirm-modal-overlay').classList.remove('open');}
 
@@ -1917,14 +2398,43 @@ function copyRules(){const txt=document.querySelector('.code-block')?.textConten
 // EXPORTS
 // ════════════════════════════════════════════════
 function csvDown(rows,fn){const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=fn;a.click();showToast('📥 '+fn);}
-function exportLeadsCSV(){const rows=[['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST']];allLeads.forEach(l=>{const ist=parseIST(l.timestamp);rows.push([l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time]);});csvDown(rows,`leads-${nowIST().date}.csv`);}
-function exportNewsletterCSV(){const rows=[['Email','Date','Time IST']];allNewsletter.forEach(s=>{const ist=parseIST(s.timestamp);rows.push([s.email,s.date||ist.date,s.time||ist.time]);});csvDown(rows,`newsletter-${nowIST().date}.csv`);}
-function exportVisitorsCSV(){const rows=[['ID','Date','Time IST','Page','Device','IP Address','City','Region','Country','Referrer']];allVisitors.forEach(v=>{const ist=parseIST(v.timestamp);rows.push([v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer]);});csvDown(rows,`visitors-${nowIST().date}.csv`);}
-function exportBookingsCSV(){const rows=[['Name','Email','Phone','Service','Message','Date','Time IST']];allBookings.forEach(b=>{const ist=parseIST(b.timestamp);rows.push([b.name,b.email,b.phone,b.service,b.message,b.date||ist.date,b.time||ist.time]);});csvDown(rows,`bookings-${nowIST().date}.csv`);}
-function exportReferralsCSV(){const rows=[['Email','Channel','Action','Date','Time IST']];allReferrals.forEach(r=>{const ist=parseIST(r.timestamp);rows.push([r.email,r.channel,r.action,r.date||ist.date,r.time||ist.time]);});csvDown(rows,`referrals-${nowIST().date}.csv`);}
-function exportQuizCSV(){const rows=[['Name','Email','Dosha','Date','Time IST']];allQuiz.forEach(q=>{const ist=parseIST(q.timestamp);rows.push([q.name,q.email,q.dosha,q.date||ist.date,q.time||ist.time]);});csvDown(rows,`quiz-${nowIST().date}.csv`);}
-function exportYogaCSV(){const rows=[['Name','Email','Mobile','Type','Date','Time IST']];allYoga.forEach(y=>{const ist=parseIST(y.timestamp);rows.push([y.name,y.email,y.mobile,y.type,y.date||ist.date,y.time||ist.time]);});csvDown(rows,`yoga-${nowIST().date}.csv`);}
+function excelDown(headers,rows,fn){
+  try{const ws=XLSX.utils.aoa_to_sheet([headers,...rows]);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Data');XLSX.writeFile(wb,fn);showToast('📥 '+fn);}
+  catch(e){showToast('❌ Excel export failed: '+e.message,true);}
+}
+function pdfDown(headers,rows,fn,title){
+  try{const {jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFontSize(13);doc.text(title,14,15);doc.setFontSize(8);doc.text('Samarpan · '+nowIST().date,14,21);doc.autoTable({head:[headers],body:rows,startY:26,styles:{fontSize:7,cellPadding:2},headStyles:{fillColor:[217,93,57]}});doc.save(fn);showToast('📥 '+fn);}
+  catch(e){showToast('❌ PDF export failed: '+e.message,true);}
+}
+// Row builders — single source of truth reused by CSV / Excel / PDF
+function leadsRows(){return{headers:['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST'],rows:allLeads.map(l=>{const ist=parseIST(l.timestamp);return[l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time];})};}
+function newsletterRows(){return{headers:['Email','Date','Time IST'],rows:allNewsletter.map(s=>{const ist=parseIST(s.timestamp);return[s.email,s.date||ist.date,s.time||ist.time];})};}
+function visitorsRows(){return{headers:['ID','Date','Time IST','Page','Device','IP Address','City','Region','Country','Referrer'],rows:allVisitors.map(v=>{const ist=parseIST(v.timestamp);return[v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer];})};}
+function bookingsRows(){return{headers:['Name','Email','Phone','Service','Message','Date','Time IST'],rows:allBookings.map(b=>{const ist=parseIST(b.timestamp);return[b.name,b.email,b.phone,b.service,b.message,b.date||ist.date,b.time||ist.time];})};}
+function referralsRows(){return{headers:['Email','Channel','Action','Date','Time IST'],rows:allReferrals.map(r=>{const ist=parseIST(r.timestamp);return[r.email,r.channel,r.action,r.date||ist.date,r.time||ist.time];})};}
+function quizRows(){return{headers:['Name','Email','Dosha','Date','Time IST'],rows:allQuiz.map(q=>{const ist=parseIST(q.timestamp);return[q.name,q.email,q.dosha,q.date||ist.date,q.time||ist.time];})};}
+function yogaRows(){return{headers:['Name','Email','Mobile','Type','Date','Time IST'],rows:allYoga.map(y=>{const ist=parseIST(y.timestamp);return[y.name,y.email,y.mobile,y.type,y.date||ist.date,y.time||ist.time];})};}
+// CSV (kept for existing per-page Export buttons)
+function exportLeadsCSV(){const {headers,rows}=leadsRows();csvDown([headers,...rows],`leads-${nowIST().date}.csv`);}
+function exportNewsletterCSV(){const {headers,rows}=newsletterRows();csvDown([headers,...rows],`newsletter-${nowIST().date}.csv`);}
+function exportVisitorsCSV(){const {headers,rows}=visitorsRows();csvDown([headers,...rows],`visitors-${nowIST().date}.csv`);}
+function exportBookingsCSV(){const {headers,rows}=bookingsRows();csvDown([headers,...rows],`bookings-${nowIST().date}.csv`);}
+function exportReferralsCSV(){const {headers,rows}=referralsRows();csvDown([headers,...rows],`referrals-${nowIST().date}.csv`);}
+function exportQuizCSV(){const {headers,rows}=quizRows();csvDown([headers,...rows],`quiz-${nowIST().date}.csv`);}
+function exportYogaCSV(){const {headers,rows}=yogaRows();csvDown([headers,...rows],`yoga-${nowIST().date}.csv`);}
 function exportAllCSV(){exportLeadsCSV();setTimeout(exportNewsletterCSV,350);setTimeout(exportVisitorsCSV,700);setTimeout(exportBookingsCSV,1050);setTimeout(exportReferralsCSV,1400);}
+// Excel + PDF — driven from the Export Center (Backup Center page)
+const EXPORT_BUILDERS={leads:leadsRows,bookings:bookingsRows,newsletter:newsletterRows,visitors:visitorsRows,referrals:referralsRows,quiz:quizRows,yoga:yogaRows};
+function exportCenterRun(kind,format){
+  const builder=EXPORT_BUILDERS[kind];if(!builder){showToast('Unknown export section',true);return;}
+  const {headers,rows}=builder();
+  const fn=`${kind}-${nowIST().date}`;
+  const title=kind.charAt(0).toUpperCase()+kind.slice(1)+' Report';
+  if(format==='csv')csvDown([headers,...rows],fn+'.csv');
+  else if(format==='excel')excelDown(headers,rows,fn+'.xlsx');
+  else if(format==='pdf')pdfDown(headers,rows,fn+'.pdf',title);
+  else if(format==='json'){const objs=rows.map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]])));jsonDown(objs,fn+'.json');}
+}
 
 // ════════════════════════════════════════════════
 // THEME
@@ -1955,13 +2465,15 @@ function showPage(id,el){
   const page=document.getElementById(`page-${id}`);if(page)page.classList.add('active');
   if(el)el.classList.add('active');
   else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});}
-  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status'};
   set$('topbar-title',titles[id]||'Dashboard');
   closeSidebar();
   // Trigger chart renders when switching to analytics/visitor pages
   if(id==='analytics')renderAnalytics();
   if(id==='visitors')renderVisitors();
   if(id==='quiz')renderQuiz();
+  if(id==='media')loadMediaLibrary();
+  if(id==='status')runStatusCheck();
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
@@ -1981,6 +2493,394 @@ function showToast(msg,isErr=false){
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function typePill(t){if(!t)return`<span class="pill pill-gray">Unknown</span>`;const m={'contact_form':'pill-brand','free_assessment_claim':'pill-gold','inline_free_consultation':'pill-green','admin_entry':'pill-blue'};return`<span class="pill ${m[t]||'pill-gray'}">${esc(t.replace(/_/g,' '))}</span>`;}
 function doshaPill(d){if(d==='Vata')return`<span class="pill pill-sage">🌬️ Vata</span>`;if(d==='Pitta')return`<span class="pill pill-brand">🔥 Pitta</span>`;if(d==='Kapha')return`<span class="pill pill-blue">🌊 Kapha</span>`;return`<span class="pill pill-gray">${esc(d||'—')}</span>`;}
+
+// ════════════════════════════════════════════════
+// COMMUNITY MANAGER
+// ════════════════════════════════════════════════
+function renderCommunity(){
+  const cont=document.getElementById('community-list');if(!cont)return;
+  const filter=document.getElementById('community-filter')?.value||'';
+  let list=allCommunity.slice();
+  if(filter)list=list.filter(p=>(p.status||'pending')===filter);
+  if(!list.length){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">No community posts${filter?' for this filter':''}.</div>`;return;}
+  cont.innerHTML=list.map(p=>{
+    const statusPill=p.status==='approved'?'<span class="pill pill-green">Approved</span>':p.status==='rejected'?'<span class="pill pill-red">Rejected</span>':'<span class="pill pill-gray">Pending</span>';
+    return `
+    <div class="card mb"><div class="card-body" style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.35rem;">
+          <strong style="font-size:13px;color:var(--text);">${esc(p.name||'Anonymous')}</strong>
+          ${p.pinned?'<span class="pill pill-gold">📌 Pinned</span>':''}
+          ${statusPill}
+          <span style="font-size:10px;color:var(--text4);">${esc(p.date||'')} ${esc(p.time||'')}</span>
+        </div>
+        <div style="font-size:12.5px;color:var(--text2);line-height:1.6;">${esc(p.content||'')}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:flex-start;">
+        ${p.status!=='approved'?`<button class="btn btn-primary btn-sm" onclick="approveCommunityPost('${p._id}')">Approve</button>`:''}
+        ${p.status!=='rejected'?`<button class="btn btn-danger btn-sm" onclick="rejectCommunityPost('${p._id}')">Reject</button>`:`<button class="btn btn-outline btn-sm" onclick="approveCommunityPost('${p._id}')">Restore</button>`}
+        <button class="btn btn-outline btn-sm" onclick="togglePinCommunityPost('${p._id}',${!p.pinned})">${p.pinned?'Unpin':'Pin'}</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDeleteCommunity('${p._id}')">Delete</button>
+      </div>
+    </div></div>`;
+  }).join('');
+}
+async function approveCommunityPost(id){try{await fsUpdate('samarpan_community_posts',id,{status:'approved'});showToast('✅ Post approved');}catch(e){showToast('❌ '+e.message,true);}}
+async function rejectCommunityPost(id){try{await fsUpdate('samarpan_community_posts',id,{status:'rejected',pinned:false});showToast('🚫 Post rejected');}catch(e){showToast('❌ '+e.message,true);}}
+async function togglePinCommunityPost(id,pin){try{await fsUpdate('samarpan_community_posts',id,{pinned:pin});showToast(pin?'📌 Pinned':'Unpinned');}catch(e){showToast('❌ '+e.message,true);}}
+function confirmDeleteCommunity(id){
+  document.getElementById('confirm-modal-msg').textContent='Delete this community post permanently?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{try{await fsDelete('samarpan_community_posts',id);closeConfirmModal();showToast('✅ Post deleted');}catch(e){showToast('❌ '+e.message,true);}};
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// VIDEO MANAGER
+// ════════════════════════════════════════════════
+function ytThumb(url){const m=(url||'').match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{6,})/);return m?`https://img.youtube.com/vi/${m[1]}/mqdefault.jpg`:'';}
+function renderVideos(){
+  const cont=document.getElementById('videos-list');if(!cont)return;
+  if(!allVideos.length){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;grid-column:1/-1;">No videos yet. Click "Add Video" to get started.</div>`;return;}
+  cont.innerHTML=allVideos.map(v=>`
+    <div class="card">
+      <div style="height:120px;background:var(--bg3) url('${esc(ytThumb(v.youtube_url))}') center/cover;border-radius:var(--r) var(--r) 0 0;position:relative;cursor:pointer;" onclick="window.open('${esc(v.youtube_url)}','_blank')">
+        ${v.featured?'<span class="pill pill-gold" style="position:absolute;top:8px;right:8px;">Featured</span>':''}
+      </div>
+      <div class="card-body">
+        <div style="font-weight:700;font-size:12.5px;color:var(--text);margin-bottom:.3rem;">${esc(v.title||'Untitled')}</div>
+        <div style="font-size:10.5px;color:var(--text4);margin-bottom:.6rem;">${esc(v.category||'General')}</div>
+        <div style="display:flex;gap:.4rem;">
+          <button class="btn btn-outline btn-sm" onclick="openEditVideoModal('${v._id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDeleteVideo('${v._id}')">Delete</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function openAddVideoModal(){['vm-title','vm-url'].forEach(id=>document.getElementById(id).value='');document.getElementById('vm-category').value='Ayurveda';document.getElementById('vm-featured').value='false';document.getElementById('vm-edit-id').value='';document.getElementById('video-modal-title').textContent='Add Video';document.getElementById('vm-save-label').textContent='Add Video';document.getElementById('video-modal-overlay').classList.add('open');}
+function openEditVideoModal(id){const v=allVideos.find(x=>x._id===id);if(!v)return;document.getElementById('vm-title').value=v.title||'';document.getElementById('vm-url').value=v.youtube_url||'';document.getElementById('vm-category').value=v.category||'Ayurveda';document.getElementById('vm-featured').value=v.featured?'true':'false';document.getElementById('vm-edit-id').value=id;document.getElementById('video-modal-title').textContent='Edit Video';document.getElementById('vm-save-label').textContent='Save Changes';document.getElementById('video-modal-overlay').classList.add('open');}
+function closeVideoModal(){document.getElementById('video-modal-overlay').classList.remove('open');}
+async function saveVideo(){
+  const title=document.getElementById('vm-title').value.trim(),url=document.getElementById('vm-url').value.trim();
+  if(!title||!url){showToast('Title and YouTube URL are required',true);return;}
+  const editId=document.getElementById('vm-edit-id').value;
+  const data={title,youtube_url:url,category:document.getElementById('vm-category').value,featured:document.getElementById('vm-featured').value==='true'};
+  try{if(editId)await fsUpdate('samarpan_videos',editId,data);else await fsAdd('samarpan_videos',data);showToast(editId?'✅ Video updated':'✅ Video added');closeVideoModal();}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function confirmDeleteVideo(id){
+  document.getElementById('confirm-modal-msg').textContent='Delete this video?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{try{await fsDelete('samarpan_videos',id);closeConfirmModal();showToast('✅ Video deleted');}catch(e){showToast('❌ '+e.message,true);}};
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// MEDIA LIBRARY (Firebase Storage)
+// ════════════════════════════════════════════════
+async function loadMediaLibrary(){
+  const cont=document.getElementById('media-grid');if(!cont)return;
+  if(!storage){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;grid-column:1/-1;">Firebase Storage not available in this project.</div>`;return;}
+  cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;grid-column:1/-1;">Loading…</div>`;
+  try{
+    const res=await storage.ref('media').listAll();
+    if(!res.items.length){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;grid-column:1/-1;">No files uploaded yet.</div>`;return;}
+    const items=await Promise.all(res.items.map(async ref=>{
+      try{const url=await ref.getDownloadURL();return{name:ref.name,url,path:ref.fullPath};}catch{return null;}
+    }));
+    cont.innerHTML=items.filter(Boolean).map(it=>{
+      const isImg=/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(it.name);
+      return `<div class="card"><div style="height:110px;background:var(--bg3) ${isImg?`url('${esc(it.url)}') center/cover`:''};border-radius:var(--r) var(--r) 0 0;display:flex;align-items:center;justify-content:center;font-size:28px;">${isImg?'':'📄'}</div><div class="card-body"><div style="font-size:11px;color:var(--text2);word-break:break-all;margin-bottom:.5rem;">${esc(it.name)}</div><div style="display:flex;gap:.4rem;"><a class="btn btn-outline btn-sm" href="${esc(it.url)}" target="_blank">View</a><button class="btn btn-danger btn-sm" onclick="deleteMediaFile('${esc(it.path)}')">Delete</button></div></div></div>`;
+    }).join('');
+  }catch(e){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--red);font-size:12px;grid-column:1/-1;">Error loading media: ${esc(e.message)}</div>`;}
+}
+async function uploadMediaFile(evt){
+  const file=evt.target.files[0];if(!file||!storage)return;
+  if(!canEdit()){showToast('View-only access — ask an Owner or Editor',true);evt.target.value='';return;}
+  const prog=document.getElementById('media-upload-progress');prog.style.display='block';prog.textContent='Uploading '+file.name+'…';
+  try{
+    const ref=storage.ref('media/'+Date.now()+'_'+file.name);
+    await ref.put(file);
+    showToast('✅ File uploaded');
+    loadMediaLibrary();
+  }catch(e){showToast('❌ '+e.message,true);}
+  finally{prog.style.display='none';evt.target.value='';}
+}
+function deleteMediaFile(path){
+  if(!canEdit()){showToast('View-only access — ask an Owner or Editor',true);return;}
+  document.getElementById('confirm-modal-msg').textContent='Delete this file from storage permanently?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{
+    try{await storage.ref(path).delete();closeConfirmModal();showToast('✅ File deleted');loadMediaLibrary();}
+    catch(e){showToast('❌ '+e.message,true);}
+  };
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// WEBSITE CONTENT MANAGER
+// ════════════════════════════════════════════════
+function fillSiteContentForm(){
+  const c=siteContent||{};
+  const map={'sc-hero-title':c.heroTitle,'sc-hero-subtitle':c.heroSubtitle,'sc-hero-image':c.heroImage,'sc-about':c.about,'sc-mission':c.mission,'sc-vision':c.vision,'sc-contact-email':c.contactEmail,'sc-contact-phone':c.contactPhone,'sc-footer':c.footerText,'sc-quote':c.quote,'sc-social-instagram':c.social?.instagram,'sc-social-facebook':c.social?.facebook,'sc-social-youtube':c.social?.youtube,'sc-social-whatsapp':c.social?.whatsapp};
+  Object.entries(map).forEach(([id,val])=>{const el=document.getElementById(id);if(el&&!el._dirty)el.value=val||'';});
+}
+async function saveSiteContent(){
+  if(!canEdit()){showToast('View-only access — ask an Owner or Editor',true);return;}
+  const data={
+    heroTitle:document.getElementById('sc-hero-title').value.trim(),
+    heroSubtitle:document.getElementById('sc-hero-subtitle').value.trim(),
+    heroImage:document.getElementById('sc-hero-image').value.trim(),
+    about:document.getElementById('sc-about').value.trim(),
+    mission:document.getElementById('sc-mission').value.trim(),
+    vision:document.getElementById('sc-vision').value.trim(),
+    contactEmail:document.getElementById('sc-contact-email').value.trim(),
+    contactPhone:document.getElementById('sc-contact-phone').value.trim(),
+    footerText:document.getElementById('sc-footer').value.trim(),
+    quote:document.getElementById('sc-quote').value.trim(),
+    social:{
+      instagram:document.getElementById('sc-social-instagram').value.trim(),
+      facebook:document.getElementById('sc-social-facebook').value.trim(),
+      youtube:document.getElementById('sc-social-youtube').value.trim(),
+      whatsapp:document.getElementById('sc-social-whatsapp').value.trim(),
+    },
+    updatedAt:new Date().toISOString(),updatedBy:currentUser?.email||'admin'
+  };
+  try{await db.collection('samarpan_site_content').doc('main').set(data,{merge:true});showToast('✅ Website content saved!');}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+// Testimonials
+function renderTestimonials(){
+  const cont=document.getElementById('testimonials-list');if(!cont)return;
+  if(!allTestimonials.length){cont.innerHTML=`<div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">No testimonials yet.</div>`;return;}
+  cont.innerHTML=allTestimonials.map(t=>`
+    <div style="padding:.7rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="font-weight:700;font-size:12.5px;color:var(--text);">${esc(t.name)} <span style="color:var(--gold);font-size:11px;">${'★'.repeat(Number(t.rating)||5)}</span> ${t.featured?'<span class="pill pill-gold">Featured</span>':''}</div>
+        <div style="font-size:10.5px;color:var(--text4);margin-bottom:.25rem;">${esc(t.role||'')}</div>
+        <div style="font-size:12px;color:var(--text2);">${esc(t.content||'')}</div>
+      </div>
+      <div style="display:flex;gap:.35rem;align-items:flex-start;">
+        <button class="btn btn-outline btn-sm" onclick="openTestimonialModal('${t._id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDeleteTestimonial('${t._id}')">Delete</button>
+      </div>
+    </div>`).join('');
+}
+function openTestimonialModal(id){
+  if(id){const t=allTestimonials.find(x=>x._id===id);if(!t)return;document.getElementById('tm-name').value=t.name||'';document.getElementById('tm-role').value=t.role||'';document.getElementById('tm-content').value=t.content||'';document.getElementById('tm-rating').value=t.rating||5;document.getElementById('tm-featured').value=t.featured?'true':'false';document.getElementById('tm-edit-id').value=id;document.getElementById('testimonial-modal-title').textContent='Edit Testimonial';document.getElementById('tm-save-label').textContent='Save Changes';}
+  else{['tm-name','tm-role','tm-content'].forEach(i=>document.getElementById(i).value='');document.getElementById('tm-rating').value='5';document.getElementById('tm-featured').value='true';document.getElementById('tm-edit-id').value='';document.getElementById('testimonial-modal-title').textContent='Add Testimonial';document.getElementById('tm-save-label').textContent='Add Testimonial';}
+  document.getElementById('testimonial-modal-overlay').classList.add('open');
+}
+function closeTestimonialModal(){document.getElementById('testimonial-modal-overlay').classList.remove('open');}
+async function saveTestimonial(){
+  const name=document.getElementById('tm-name').value.trim(),content=document.getElementById('tm-content').value.trim();
+  if(!name||!content){showToast('Name and testimonial text are required',true);return;}
+  const editId=document.getElementById('tm-edit-id').value;
+  const data={name,role:document.getElementById('tm-role').value.trim(),content,rating:Number(document.getElementById('tm-rating').value),featured:document.getElementById('tm-featured').value==='true'};
+  try{if(editId)await fsUpdate('samarpan_testimonials',editId,data);else await fsAdd('samarpan_testimonials',data);showToast(editId?'✅ Testimonial updated':'✅ Testimonial added');closeTestimonialModal();}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function confirmDeleteTestimonial(id){
+  document.getElementById('confirm-modal-msg').textContent='Delete this testimonial?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{try{await fsDelete('samarpan_testimonials',id);closeConfirmModal();showToast('✅ Deleted');}catch(e){showToast('❌ '+e.message,true);}};
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+// FAQs
+function renderFaqs(){
+  const cont=document.getElementById('faqs-list');if(!cont)return;
+  if(!allFaqs.length){cont.innerHTML=`<div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">No FAQs yet.</div>`;return;}
+  cont.innerHTML=allFaqs.map(f=>`
+    <div style="padding:.7rem 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <div style="font-weight:700;font-size:12.5px;color:var(--text);">${esc(f.question)} ${f.category?`<span class="pill pill-gray">${esc(f.category)}</span>`:''}</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:.2rem;">${esc(f.answer||'')}</div>
+      </div>
+      <div style="display:flex;gap:.35rem;align-items:flex-start;">
+        <button class="btn btn-outline btn-sm" onclick="openFaqModal('${f._id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmDeleteFaq('${f._id}')">Delete</button>
+      </div>
+    </div>`).join('');
+}
+function openFaqModal(id){
+  if(id){const f=allFaqs.find(x=>x._id===id);if(!f)return;document.getElementById('fm-question').value=f.question||'';document.getElementById('fm-answer').value=f.answer||'';document.getElementById('fm-category').value=f.category||'';document.getElementById('fm-edit-id').value=id;document.getElementById('faq-modal-title').textContent='Edit FAQ';document.getElementById('fm-save-label').textContent='Save Changes';}
+  else{['fm-question','fm-answer','fm-category'].forEach(i=>document.getElementById(i).value='');document.getElementById('fm-edit-id').value='';document.getElementById('faq-modal-title').textContent='Add FAQ';document.getElementById('fm-save-label').textContent='Add FAQ';}
+  document.getElementById('faq-modal-overlay').classList.add('open');
+}
+function closeFaqModal(){document.getElementById('faq-modal-overlay').classList.remove('open');}
+async function saveFaq(){
+  const question=document.getElementById('fm-question').value.trim(),answer=document.getElementById('fm-answer').value.trim();
+  if(!question||!answer){showToast('Question and answer are required',true);return;}
+  const editId=document.getElementById('fm-edit-id').value;
+  const data={question,answer,category:document.getElementById('fm-category').value.trim()};
+  try{if(editId)await fsUpdate('samarpan_faqs',editId,data);else await fsAdd('samarpan_faqs',data);showToast(editId?'✅ FAQ updated':'✅ FAQ added');closeFaqModal();}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function confirmDeleteFaq(id){
+  document.getElementById('confirm-modal-msg').textContent='Delete this FAQ?';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{try{await fsDelete('samarpan_faqs',id);closeConfirmModal();showToast('✅ Deleted');}catch(e){showToast('❌ '+e.message,true);}};
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// ADMIN NOTES
+// ════════════════════════════════════════════════
+function renderNotes(){
+  const cont=document.getElementById('notes-list');if(!cont)return;
+  if(!allNotes.length){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">No notes yet.</div>`;return;}
+  cont.innerHTML=allNotes.map(n=>`
+    <div class="card mb"><div class="card-body" style="display:flex;justify-content:space-between;gap:.75rem;align-items:flex-start;">
+      <div style="flex:1;"><div style="font-size:12.5px;color:var(--text2);white-space:pre-wrap;">${esc(n.text||'')}</div><div style="font-size:10px;color:var(--text4);margin-top:.35rem;">${esc(n.date||'')} ${esc(n.time||'')}</div></div>
+      <button class="btn btn-danger btn-sm" onclick="deleteAdminNote('${n._id}')">Delete</button>
+    </div></div>`).join('');
+}
+async function addAdminNote(){
+  const el=document.getElementById('note-input'),text=el.value.trim();
+  if(!text){showToast('Write something first',true);return;}
+  try{await fsAdd('samarpan_admin_notes',{text});el.value='';showToast('✅ Note added');}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+async function deleteAdminNote(id){try{await fsDelete('samarpan_admin_notes',id);showToast('✅ Note deleted');}catch(e){showToast('❌ '+e.message,true);}}
+
+// ════════════════════════════════════════════════
+// ════════════════════════════════════════════════
+// GLOBAL SEARCH
+// ════════════════════════════════════════════════
+function hiMark(text,q){
+  const s=esc(text||'—');
+  if(!q)return s;
+  try{const re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','ig');return s.replace(re,'<mark style="background:var(--brand-glow);color:var(--brand);border-radius:3px;padding:0 2px;">$1</mark>');}
+  catch{return s;}
+}
+function runGlobalSearch(){
+  const q=(document.getElementById('global-search-input').value||'').trim().toLowerCase();
+  const cont=document.getElementById('global-search-results');
+  if(!q){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">Start typing to search across every section…</div>`;return;}
+  const groups=[
+    {label:'Leads',page:'leads',items:allLeads.filter(x=>[x.name,x.email,x.message].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'} · ${x.email||'—'}`)},
+    {label:'Bookings',page:'bookings',items:allBookings.filter(x=>[x.name,x.email,x.service].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'} · ${x.service||'—'}`)},
+    {label:'Newsletter',page:'newsletter',items:allNewsletter.filter(x=>(x.email||'').toLowerCase().includes(q)).map(x=>x.email)},
+    {label:'Referrals',page:'referrals',items:allReferrals.filter(x=>[x.name,x.email,x.referredBy].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'} · ${x.email||'—'}`)},
+    {label:'Quiz Results',page:'quiz',items:allQuiz.filter(x=>[x.name,x.email,x.dosha].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'} · ${x.dosha||'—'}`)},
+    {label:'Yoga Signups',page:'yoga',items:allYoga.filter(x=>[x.name,x.email].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'} · ${x.email||'—'}`)},
+    {label:'Journal Posts',page:'journal',items:allJournalPosts.filter(x=>[x.title,x.excerpt].join(' ').toLowerCase().includes(q)).map(x=>x.title)},
+    {label:'Community',page:'community',items:allCommunity.filter(x=>[x.name,x.content].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'}: ${(x.content||'').slice(0,60)}`)},
+    {label:'Videos',page:'videos',items:allVideos.filter(x=>[x.title,x.category].join(' ').toLowerCase().includes(q)).map(x=>x.title)},
+    {label:'Flash Cards',page:'flashcards',items:allFlashCards.filter(x=>[x.text,x.badge].join(' ').toLowerCase().includes(q)).map(x=>x.text)},
+    {label:'Testimonials',page:'sitecontent',items:allTestimonials.filter(x=>[x.name,x.text].join(' ').toLowerCase().includes(q)).map(x=>`${x.name||'—'}: ${(x.text||'').slice(0,60)}`)},
+    {label:'FAQs',page:'sitecontent',items:allFaqs.filter(x=>[x.question,x.answer].join(' ').toLowerCase().includes(q)).map(x=>x.question)},
+    {label:'Admin Notes',page:'notes',items:allNotes.filter(x=>(x.text||'').toLowerCase().includes(q)).map(x=>(x.text||'').slice(0,80))},
+  ].filter(g=>g.items.length);
+  if(!groups.length){cont.innerHTML=`<div style="text-align:center;padding:2rem;color:var(--text4);font-size:12px;">No matches for "${esc(q)}".</div>`;return;}
+  const total=groups.reduce((n,g)=>n+g.items.length,0);
+  cont.innerHTML=`<div style="font-size:11px;color:var(--text3);margin-bottom:.75rem;">${total} result${total===1?'':'s'} across ${groups.length} section${groups.length===1?'':'s'}</div>`+
+    groups.map(g=>`<div class="card mb"><div class="card-head" style="display:flex;justify-content:space-between;align-items:center;"><span class="card-title">${esc(g.label)} (${g.items.length})</span><button class="btn btn-ghost btn-sm" onclick="showPage('${g.page}')">Open section →</button></div><div class="card-body">${g.items.slice(0,20).map(i=>`<div style="font-size:12px;color:var(--text2);padding:.5rem .2rem;border-bottom:1px solid var(--border);cursor:pointer;" onclick="showPage('${g.page}')">${hiMark(i,q)}</div>`).join('')}${g.items.length>20?`<div style="font-size:10.5px;color:var(--text4);padding:.4rem .2rem;">+${g.items.length-20} more — open section to see all</div>`:''}</div></div>`).join('');
+}
+
+// ════════════════════════════════════════════════
+// BACKUP CENTER
+// ════════════════════════════════════════════════
+function jsonDown(obj,fn){const blob=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click();showToast('📥 '+fn);}
+async function backupCollectionJSON(col,label){
+  try{const snap=await db.collection(col).limit(2000).get();const docs=snap.docs.map(d=>({_id:d.id,...d.data()}));jsonDown(docs,`${label}-backup-${nowIST().date}.json`);}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+async function backupAllJSON(){
+  const cols=['homepage_leads','homepage_bookings','homepage_newsletter','homepage_quiz_results','homepage_yoga_sessions','homepage_referrals','samarpan_journal_posts','samarpan_community_posts','samarpan_flash_cards','samarpan_videos','samarpan_testimonials','samarpan_faqs','samarpan_admin_notes'];
+  const out={};
+  try{
+    for(const c of cols){const snap=await db.collection(c).limit(2000).get();out[c]=snap.docs.map(d=>({_id:d.id,...d.data()}));}
+    jsonDown(out,`samarpan-full-backup-${nowIST().date}.json`);
+  }catch(e){showToast('❌ '+e.message,true);}
+}
+
+// ════════════════════════════════════════════════
+// SYSTEM STATUS
+// ════════════════════════════════════════════════
+function setStatusPill(key,ok,label){
+  const icon=document.getElementById('status-icon-'+key),tag=document.getElementById('status-tag-'+key);
+  if(icon){icon.style.background=ok?'rgba(34,197,94,.15)':'rgba(239,68,68,.15)';icon.style.color=ok?'var(--green)':'var(--red)';}
+  if(tag){tag.textContent=label;tag.style.background=ok?'rgba(34,197,94,.12)':'rgba(239,68,68,.12)';tag.style.color=ok?'var(--green)':'var(--red)';}
+}
+async function runStatusCheck(){
+  setStatusPill('auth',!!currentUser,currentUser?'Online':'Offline');
+  try{await db.collection('homepage_leads').limit(1).get();setStatusPill('firestore',true,'Online');}
+  catch(e){setStatusPill('firestore',false,'Error');}
+  if(storage){try{await storage.ref('media').listAll();setStatusPill('storage',true,'Online');}catch(e){setStatusPill('storage',false,'Error');}}
+  else setStatusPill('storage',false,'Unavailable');
+  set$('status-lastsync',nowIST().time+' IST');
+}
+
+// ════════════════════════════════════════════════
+// MULTI-ADMIN ROLES
+// ════════════════════════════════════════════════
+async function loadAdminRole(){
+  if(!currentUser)return;
+  try{
+    const snap=await db.collection('samarpan_admin_users').get();
+    if(snap.empty){
+      // Bootstrap: first person to ever log in becomes Owner automatically
+      adminRole='owner';
+      await db.collection('samarpan_admin_users').doc(currentUser.email).set({email:currentUser.email,role:'owner',addedAt:new Date().toISOString(),addedBy:currentUser.email});
+    }else{
+      const doc=snap.docs.find(d=>d.id===currentUser.email);
+      adminRole=doc?(doc.data().role||'viewer'):'viewer';
+    }
+  }catch(e){console.warn('loadAdminRole:',e.message);adminRole='owner';}
+  applyRoleUI();
+}
+function applyRoleUI(){
+  set$('sb-role-badge',adminRole.charAt(0).toUpperCase()+adminRole.slice(1));
+  const badge=document.getElementById('sb-role-badge');
+  if(badge){badge.className='pill '+(adminRole==='owner'?'pill-gold':adminRole==='editor'?'pill-brand':'pill-gray');}
+  document.querySelectorAll('.owner-only').forEach(el=>{el.style.display=isOwner()?'':'none';});
+  const banner=document.getElementById('viewonly-banner');
+  if(banner)banner.style.display=canEdit()?'none':'';
+}
+function renderTeam(){
+  const cont=document.getElementById('team-list');if(!cont)return;
+  if(!allAdminUsers.length){cont.innerHTML=`<div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">No team members yet.</div>`;return;}
+  cont.innerHTML=allAdminUsers.map(a=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+      <div>
+        <div style="font-size:12.5px;font-weight:700;color:var(--text);">${esc(a.email)}${a.email===currentUser?.email?' <span style="color:var(--text4);font-weight:400;">(you)</span>':''}</div>
+        <div style="font-size:10px;color:var(--text4);">Added ${esc((a.addedAt||'').split('T')[0]||'')} by ${esc(a.addedBy||'—')}</div>
+      </div>
+      <div style="display:flex;gap:.4rem;align-items:center;">
+        ${isOwner()?`<select class="form-input form-select" style="width:110px;padding:.4rem .6rem;font-size:11px;" onchange="changeAdminRole('${esc(a._id)}',this.value)">
+          <option value="owner" ${a.role==='owner'?'selected':''}>Owner</option>
+          <option value="editor" ${a.role==='editor'?'selected':''}>Editor</option>
+          <option value="viewer" ${a.role==='viewer'?'selected':''}>Viewer</option>
+        </select><button class="btn btn-danger btn-sm" onclick="removeAdmin('${esc(a._id)}')" ${a.email===currentUser?.email?'disabled title="Cannot remove yourself"':''}>Remove</button>`
+        :`<span class="pill ${a.role==='owner'?'pill-gold':a.role==='editor'?'pill-brand':'pill-gray'}">${esc(a.role)}</span>`}
+      </div>
+    </div>`).join('');
+}
+async function inviteAdmin(){
+  if(!isOwner()){showToast('Only Owners can invite team members',true);return;}
+  const email=document.getElementById('team-invite-email').value.trim();
+  const password=document.getElementById('team-invite-password').value;
+  const role=document.getElementById('team-invite-role').value;
+  if(!email||!password||password.length<6){showToast('Enter an email and a password (6+ chars)',true);return;}
+  try{
+    const secondary=firebase.apps.find(a=>a.name==='secondary')||firebase.initializeApp(firebase.app().options,'secondary');
+    await secondary.auth().createUserWithEmailAndPassword(email,password);
+    await secondary.auth().signOut();
+    await db.collection('samarpan_admin_users').doc(email).set({email,role,addedAt:new Date().toISOString(),addedBy:currentUser.email});
+    showToast('✅ '+email+' added as '+role);
+    document.getElementById('team-invite-email').value='';document.getElementById('team-invite-password').value='';
+  }catch(e){showToast('❌ '+e.message,true);}
+}
+async function changeAdminRole(docId,role){
+  if(!isOwner()){showToast('Only Owners can change roles',true);return;}
+  try{await db.collection('samarpan_admin_users').doc(docId).update({role});showToast('✅ Role updated');}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function removeAdmin(docId){
+  if(!isOwner()){showToast('Only Owners can remove team members',true);return;}
+  document.getElementById('confirm-modal-msg').textContent='Remove '+docId+' from the admin panel? Their Firebase login will still exist — revoke it in the Firebase Console if needed.';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{
+    try{await db.collection('samarpan_admin_users').doc(docId).delete();closeConfirmModal();showToast('✅ Removed from team');}
+    catch(e){showToast('❌ '+e.message,true);}
+  };
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
 </script>
 </body>
 </html>
