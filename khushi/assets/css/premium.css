@@ -76,6 +76,16 @@
 .gal-item{ transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease, border-color .4s ease; }
 .gal-item:hover{ box-shadow:0 22px 50px rgba(0,0,0,.5), 0 0 30px rgba(201,167,105,.15); border-color:var(--gold); }
 
+/* ---------- staggered nav entrance ---------- */
+.nav-links > li{ opacity:0; animation:navIn .7s ease forwards; }
+.nav-links > li:nth-child(1){ animation-delay:.15s; }
+.nav-links > li:nth-child(2){ animation-delay:.25s; }
+.nav-links > li:nth-child(3){ animation-delay:.35s; }
+.nav-links > li:nth-child(4){ animation-delay:.45s; }
+.nav-links > li:nth-child(5){ animation-delay:.55s; }
+.nav-mark{ opacity:0; animation:navIn .7s ease forwards; }
+@keyframes navIn{ from{ opacity:0; transform:translateY(-8px); } to{ opacity:1; transform:translateY(0); } }
+
 @media (prefers-reduced-motion: reduce){
   #page-veil, #cursor-glow, #cursor-dot, #particle-canvas{ display:none !important; }
 }
