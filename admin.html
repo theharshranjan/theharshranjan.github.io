@@ -852,7 +852,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
     <div class="page-view" id="page-leads">
       <div class="filters-row">
         <select class="filter-select" id="filter-service" onchange="filterLeads()"><option value="">All Services</option><option>Ayurveda Consultation</option><option>Psychology Session</option><option>Yoga Session</option><option>Meditation / Mindfulness</option><option>Nutrition Planning</option><option>Mantra Chanting Session</option><option>General Wellness</option></select>
-        <select class="filter-select" id="filter-type" onchange="filterLeads()"><option value="">All Types</option><option value="contact_form">Contact Form</option><option value="free_assessment_claim">Free Assessment</option><option value="inline_free_consultation">Inline Form</option><option value="admin_entry">Admin Entry</option></select>
+        <select class="filter-select" id="filter-type" onchange="filterLeads()"><option value="">All Types</option><option value="contact_form">Contact Form</option><option value="free_assessment_claim">Free Assessment</option><option value="inline_free_consultation">Inline Form</option><option value="booking_page">Booking Page</option><option value="admin_entry">Admin Entry</option></select>
         <input class="filter-select" type="text" placeholder="Search name / email…" id="lead-search" oninput="filterLeads()" style="width:160px;">
         <button class="btn btn-primary btn-sm" onclick="openAddLeadModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Lead</button>
         <button class="btn btn-outline btn-sm" onclick="exportLeadsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
@@ -1490,19 +1490,6 @@ service cloud.firestore {
   </div>
 </div>
 
-<!-- ════════════ BOOKING DETAILS MODAL ════════════ -->
-<div class="modal-overlay" id="booking-details-modal-overlay">
-  <div class="modal">
-    <div class="modal-head"><span class="modal-title">Booking Details</span><button class="modal-close" onclick="document.getElementById('booking-details-modal-overlay').classList.remove('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-    <div class="modal-body" id="bd-body" style="display:flex;flex-direction:column;gap:.65rem;"></div>
-    <div class="modal-foot">
-      <button class="btn btn-outline" onclick="document.getElementById('booking-details-modal-overlay').classList.remove('open')">Close</button>
-      <button class="btn btn-primary" id="bd-edit-btn">Edit Booking</button>
-    </div>
-  </div>
-</div>
-
-
 <!-- ════════════ VIDEO MODAL ════════════ -->
 <div class="modal-overlay" id="video-modal-overlay">
   <div class="modal">
@@ -1551,6 +1538,15 @@ service cloud.firestore {
     <div class="modal-head"><span class="modal-title">Confirm Delete</span><button class="modal-close" onclick="closeConfirmModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
     <div class="modal-body"><p style="font-size:12.5px;color:var(--text2);line-height:1.7;" id="confirm-modal-msg">Are you sure?</p></div>
     <div class="modal-foot"><button class="btn btn-outline" onclick="closeConfirmModal()">Cancel</button><button class="btn btn-danger" id="confirm-modal-btn">Delete</button></div>
+  </div>
+</div>
+
+<!-- RECORD DETAIL MODAL (Leads / Bookings — click a row to expand) -->
+<div class="modal-overlay" id="detail-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><span class="modal-title" id="detail-modal-title">Details</span><button class="modal-close" onclick="closeDetailModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="modal-body" id="detail-modal-body"></div>
+    <div class="modal-foot"><button class="btn btn-outline" onclick="closeDetailModal()">Close</button></div>
   </div>
 </div>
 
@@ -1652,7 +1648,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   // Modal backdrop
-  ['lead-modal-overlay','post-modal-overlay','post-preview-modal-overlay','confirm-modal-overlay','video-modal-overlay','booking-modal-overlay','booking-details-modal-overlay','testimonial-modal-overlay','faq-modal-overlay'].forEach(id=>{
+  ['lead-modal-overlay','post-modal-overlay','post-preview-modal-overlay','confirm-modal-overlay','video-modal-overlay','booking-modal-overlay','testimonial-modal-overlay','faq-modal-overlay','detail-modal-overlay'].forEach(id=>{
     const el=document.getElementById(id);
     if(el)el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
   });
@@ -1843,7 +1839,7 @@ function renderRecentLeads(){
   if(!data.length){tb.innerHTML=`<tr><td colspan="4" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No leads yet.</td></tr>`;return;}
   tb.innerHTML=data.map(l=>{
     const ist=parseIST(l.timestamp||l.date);
-    return`<tr><td><div class="td-name">${esc(l.name||'Unknown')}</div><div class="td-sub">${esc(l.email||'—')}</div></td><td style="font-size:11px;">${esc(l.service||'—')}</td><td>${typePill(l.lead_type)}</td><td><div class="td-date">${esc(l.date||ist.date)}</div><div class="td-time">${esc(l.time||ist.time)}</div></td></tr>`;
+    return`<tr onclick="openLeadDetail('${esc(l._id)}')" style="cursor:pointer;"><td><div class="td-name">${esc(l.name||'Unknown')}</div><div class="td-sub">${esc(l.email||'—')}</div></td><td style="font-size:11px;">${esc(l.service||'—')}</td><td>${typePill(l.lead_type)}</td><td><div class="td-date">${esc(l.date||ist.date)}</div><div class="td-time">${esc(l.time||ist.time)}</div></td></tr>`;
   }).join('');
 }
 
@@ -1862,7 +1858,7 @@ function renderFullLeads(f={}){
     const ist=parseIST(l.timestamp||l.date);
     const pri=l.priority==='vip'?'<span class="pill pill-purple" style="font-size:8px;margin-right:3px;">VIP</span>':l.priority==='high'?'<span class="pill pill-brand" style="font-size:8px;margin-right:3px;">HIGH</span>':'';
     const msg=(l.message||'—').slice(0,35)+((l.message||'').length>35?'…':'');
-    return`<tr>
+    return`<tr onclick="openLeadDetail('${esc(l._id)}')" style="cursor:pointer;">
       <td><div class="td-name">${pri}${esc(l.name||'Unknown')}</div>${l.location?`<div class="td-sub">📍${esc(l.location)}</div>`:''}</td>
       <td style="font-size:11px;word-break:break-all;">${esc(l.email||'—')}</td>
       <td style="font-size:11px;">${esc(l.phone||'—')}</td>
@@ -1871,12 +1867,39 @@ function renderFullLeads(f={}){
       <td style="font-size:10.5px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${esc(l.message||'')}">${esc(msg)}</td>
       <td class="td-date">${esc(l.date||ist.date)}</td>
       <td class="td-time">${esc(l.time||ist.time)}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="openWA('${esc(l.phone||'')}')"><svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" width="13" height="13"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button></td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openWA('${esc(l.phone||'')}')"><svg viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" width="13" height="13"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button></td>
     </tr>`;
   }).join('');
 }
 function filterLeads(){renderFullLeads({service:document.getElementById('filter-service').value,type:document.getElementById('filter-type').value,search:document.getElementById('lead-search').value});}
 function openWA(phone){if(!phone||phone==='—'){showToast('No phone number',true);return;}window.open(`https://wa.me/${phone.replace(/\D/g,'')}`);}
+
+// ════════════════════════════════════════════════
+// RECORD DETAIL MODAL (click a Lead or Booking row to expand)
+// ════════════════════════════════════════════════
+function detailRow(label,value){
+  if(value===undefined||value===null||value==='')return'';
+  return`<div class="dl-row" style="padding:.55rem 0;border-bottom:1px solid var(--border);"><span class="dl-name">${esc(label)}</span><span class="dl-val" style="text-align:right;max-width:65%;word-break:break-word;">${esc(String(value))}</span></div>`;
+}
+function openDetailModal(title,rowsHtml){
+  document.getElementById('detail-modal-title').textContent=title;
+  document.getElementById('detail-modal-body').innerHTML=rowsHtml||'<p style="font-size:12px;color:var(--text4);">No details available.</p>';
+  document.getElementById('detail-modal-overlay').classList.add('open');
+}
+function closeDetailModal(){document.getElementById('detail-modal-overlay').classList.remove('open');}
+function openLeadDetail(id){
+  const l=allLeads.find(x=>x._id===id);if(!l){showToast('Lead not found',true);return;}
+  const ist=parseIST(l.timestamp||l.date);
+  const rows=detailRow('Name',l.name)+detailRow('Email',l.email)+detailRow('Phone',l.phone)
+    +detailRow('Service / Reason',l.service)+detailRow('Type',(l.lead_type||'').replace(/_/g,' '))
+    +detailRow('Priority',l.priority)+detailRow('Location',l.location)
+    +detailRow('Message',l.message)+detailRow('Date',l.date||ist.date)+detailRow('Time (IST)',l.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+        ${l.phone?`<button class="btn btn-outline btn-sm" onclick="openWA('${esc(l.phone)}')">💬 WhatsApp</button>`:''}
+        ${l.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(l.email)}">✉️ Email</a>`:''}
+      </div>`;
+  openDetailModal('Lead Details',rows);
+}
 
 // ════════════════════════════════════════════════
 // BOOKINGS
@@ -1893,32 +1916,26 @@ function renderBookings(){
     const ist=parseIST(b.timestamp||b.date);
     const msg=(b.message||'—').slice(0,35)+((b.message||'').length>35?'…':'');
     const status=b.status||'pending';
-    return`<tr class="tr-clickable" onclick="openBookingDetailsModal('${esc(b._id)}')" style="cursor:pointer;"><td class="td-name">${esc(b.name||'Unknown')}</td><td style="font-size:11px;">${esc(b.email||'—')}</td><td style="font-size:11px;">${esc(b.phone||'—')}</td><td style="font-size:10.5px;">${esc(b.service||'—')}</td><td style="font-size:10.5px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(msg)}</td><td class="td-date">${esc(b.date||ist.date)}</td><td class="td-time">${esc(b.time||ist.time)}</td><td><select class="filter-select" style="font-size:10px;padding:.25rem .5rem;" onclick="event.stopPropagation()" onchange="updateBookingStatus('${esc(b._id)}',this.value)">${['pending','confirmed','completed','cancelled'].map(s=>`<option value="${s}" ${s===status?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select></td><td style="display:flex;gap:.3rem;" onclick="event.stopPropagation()"><button class="btn btn-ghost btn-sm" onclick="openEditBookingModal('${esc(b._id)}')">✏️</button><button class="btn btn-danger btn-sm" onclick="confirmDeleteBooking('${esc(b._id)}')">🗑</button></td></tr>`;
+    return`<tr onclick="openBookingDetail('${esc(b._id)}')" style="cursor:pointer;"><td class="td-name">${esc(b.name||'Unknown')}</td><td style="font-size:11px;">${esc(b.email||'—')}</td><td style="font-size:11px;">${esc(b.phone||'—')}</td><td style="font-size:10.5px;">${esc(b.service||'—')}</td><td style="font-size:10.5px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(msg)}</td><td class="td-date">${esc(b.date||ist.date)}</td><td class="td-time">${esc(b.time||ist.time)}</td><td><select class="filter-select" style="font-size:10px;padding:.25rem .5rem;" onclick="event.stopPropagation();" onchange="updateBookingStatus('${esc(b._id)}',this.value)">${['pending','confirmed','completed','cancelled'].map(s=>`<option value="${s}" ${s===status?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}</select></td><td style="display:flex;gap:.3rem;"><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditBookingModal('${esc(b._id)}')">✏️</button><button class="btn btn-danger btn-sm" onclick="event.stopPropagation();confirmDeleteBooking('${esc(b._id)}')">🗑</button></td></tr>`;
   }).join('');
   if(document.getElementById('bookings-calendar-view').style.display!=='none')renderBookingCalendar();
 }
-async function updateBookingStatus(id,status){try{await fsUpdate('homepage_bookings',id,{status});showToast('✅ Status updated');}catch(e){showToast('❌ '+e.message,true);}}
-function openBookingDetailsModal(id){
+function openBookingDetail(id){
   const b=allBookings.find(x=>x._id===id);if(!b){showToast('Booking not found',true);return;}
   const ist=parseIST(b.timestamp||b.date);
-  const status=b.status||'pending';
   const statusPillClass={pending:'pill-gold',confirmed:'pill-blue',completed:'pill-green',cancelled:'pill-red'};
-  const row=(label,val,opts)=>`<div style="display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text3);white-space:nowrap;">${label}</span><span style="font-size:12.5px;color:var(--text);text-align:right;word-break:break-word;${opts||''}">${val}</span></div>`;
-  document.getElementById('bd-body').innerHTML=
-    row('Name',esc(b.name||'Unknown'))+
-    row('Email',b.email?`<a href="mailto:${esc(b.email)}" style="color:var(--brand);">${esc(b.email)}</a>`:'—')+
-    row('Phone',b.phone?`<a href="tel:${esc(b.phone)}" style="color:var(--brand);">${esc(b.phone)}</a>`:'—')+
-    row('Service',esc(b.service||'—'))+
-    row('Status',`<span class="pill ${statusPillClass[status]}">${status.charAt(0).toUpperCase()+status.slice(1)}</span>`)+
-    row('Date',esc(b.date||ist.date))+
-    row('Time',esc(b.time||ist.time))+
-    row('Submitted',esc(ist.date+' '+ist.time))+
-    (b.source?row('Source',esc(b.source)):'')+
-    (b.addedBy?row('Added By',esc(b.addedBy)):'')+
-    `<div style="padding-top:.4rem;"><div style="font-size:11px;color:var(--text3);margin-bottom:.35rem;">Message</div><div style="font-size:12.5px;color:var(--text);background:var(--bg3);border-radius:var(--r);padding:.7rem .8rem;line-height:1.6;white-space:pre-wrap;">${esc(b.message||'No message provided.')}</div></div>`;
-  document.getElementById('bd-edit-btn').onclick=()=>{document.getElementById('booking-details-modal-overlay').classList.remove('open');openEditBookingModal(id);};
-  document.getElementById('booking-details-modal-overlay').classList.add('open');
+  const status=b.status||'pending';
+  const rows=detailRow('Name',b.name)+detailRow('Email',b.email)+detailRow('Phone',b.phone)
+    +detailRow('Service',b.service)+`<div class="dl-row" style="padding:.55rem 0;border-bottom:1px solid var(--border);"><span class="dl-name">Status</span><span class="pill ${statusPillClass[status]||'pill-gray'}">${esc(status)}</span></div>`
+    +detailRow('Message',b.message)+detailRow('Date',b.date||ist.date)+detailRow('Time (IST)',b.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+        ${b.phone?`<button class="btn btn-outline btn-sm" onclick="openWA('${esc(b.phone)}')">💬 WhatsApp</button>`:''}
+        ${b.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(b.email)}">✉️ Email</a>`:''}
+        <button class="btn btn-outline btn-sm" onclick="closeDetailModal();openEditBookingModal('${esc(b._id)}')">✏️ Edit</button>
+      </div>`;
+  openDetailModal('Booking Details',rows);
 }
+async function updateBookingStatus(id,status){try{await fsUpdate('homepage_bookings',id,{status});showToast('✅ Status updated');}catch(e){showToast('❌ '+e.message,true);}}
 function openEditBookingModal(id){
   const b=allBookings.find(x=>x._id===id);if(!b){showToast('Booking not found',true);return;}
   document.getElementById('bm-name').value=b.name||'';document.getElementById('bm-email').value=b.email||'';document.getElementById('bm-phone').value=b.phone||'';
@@ -2592,7 +2609,7 @@ window.addEventListener('unhandledrejection',function(e){const m=e.reason&&e.rea
 // HELPERS
 // ════════════════════════════════════════════════
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function typePill(t){if(!t)return`<span class="pill pill-gray">Unknown</span>`;const m={'contact_form':'pill-brand','free_assessment_claim':'pill-gold','inline_free_consultation':'pill-green','admin_entry':'pill-blue'};return`<span class="pill ${m[t]||'pill-gray'}">${esc(t.replace(/_/g,' '))}</span>`;}
+function typePill(t){if(!t)return`<span class="pill pill-gray">Unknown</span>`;const m={'contact_form':'pill-brand','free_assessment_claim':'pill-gold','inline_free_consultation':'pill-green','booking_page':'pill-purple','admin_entry':'pill-blue'};return`<span class="pill ${m[t]||'pill-gray'}">${esc(t.replace(/_/g,' '))}</span>`;}
 function doshaPill(d){if(d==='Vata')return`<span class="pill pill-sage">🌬️ Vata</span>`;if(d==='Pitta')return`<span class="pill pill-brand">🔥 Pitta</span>`;if(d==='Kapha')return`<span class="pill pill-blue">🌊 Kapha</span>`;return`<span class="pill pill-gray">${esc(d||'—')}</span>`;}
 
 // ════════════════════════════════════════════════
