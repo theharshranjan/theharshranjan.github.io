@@ -38,6 +38,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Pinned to a fixed version (not @latest) so a future Lucide release can't silently change/break icons on this page -->
   <script src="https://unpkg.com/lucide@1.22.0/dist/umd/lucide.min.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
   <!-- Theme set BEFORE first paint to avoid a light-mode flash for returning dark-mode visitors -->
   <script>
@@ -114,6 +115,11 @@
     body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+    /* Hide the reCAPTCHA badge (logo); Google's terms require the "protected by reCAPTCHA" notice
+       to be shown near the form instead — see .grecaptcha-notice below the submit button. */
+    .grecaptcha-badge{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+    .grecaptcha-notice{font-size:10px;color:var(--text-muted);opacity:.75;margin-top:.5rem;line-height:1.4;}
+    .grecaptcha-notice a{color:inherit;text-decoration:underline;}
 
     /* NAVBAR */
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s;}
@@ -692,6 +698,7 @@
             </button>
             <p class="font-sans text-[10px]" style="color:var(--text-muted);">🔒 Your booking details are private and only used to schedule your session.</p>
           </div>
+          <p class="grecaptcha-notice sm:col-span-2">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
         </div>
         <div id="form-ok" class="hidden text-center py-10">
           <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.1));">
@@ -808,64 +815,78 @@
   </button>
 </div>
 
-<!-- FIREBASE -->
+<!-- FORM BACKEND: Google Apps Script (Sheet + email) + reCAPTCHA v3 + Firestore (admin panel feed) -->
 <script>
+  /* Same config as the homepage — this is the real backend that logs to the Google Sheet
+     and sends the email notification. reCAPTCHA verification happens server-side in the
+     Apps Script itself. */
+  var APPS_SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbx-7HHS4_aeb5dyCPsvwMhyPfajPIK6j8uB7XLaaB-YCA8bkLlTICXRYhd35RQPhenj/exec';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+  var xLoadedAt           = Date.now(); // server-side timing check rejects bot submits <2s after load
+
   var FIREBASE_PROJECT = 'thesamrpan';
   var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
   var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
 
-  function toFirestoreFields(data) {
-    var fields = {};
-    Object.keys(data).forEach(function(k) {
-      var v = data[k];
-      if (v === null || v === undefined || v === '') return;
-      if (typeof v === 'boolean')     fields[k] = { booleanValue: v };
-      else if (typeof v === 'number') fields[k] = { integerValue: String(v) };
-      else                            fields[k] = { stringValue: String(v) };
+  /** Gets a fresh reCAPTCHA v3 token scoped to a named action. */
+  function getRecaptchaToken(action) {
+    return new Promise(function(resolve) {
+      try {
+        grecaptcha.ready(function() {
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+        });
+      } catch (err) { resolve(''); }
     });
-    return fields;
+  }
+  var _tokenCache = {};
+  function prefetchToken(action) { _tokenCache[action] = { promise: getRecaptchaToken(action), ts: Date.now() }; }
+  function getTokenFast(action) {
+    var c = _tokenCache[action];
+    if (c && (Date.now() - c.ts) < 100000) { delete _tokenCache[action]; return c.promise; }
+    return getRecaptchaToken(action);
+  }
+  try { grecaptcha.ready(function(){}); } catch(err) {}
+  window.addEventListener('load', function() { prefetchToken('harsh_ranjan_booking'); });
+
+  /** Posts the lead to the Apps Script backend, which re-verifies honeypot, timing, and the
+      reCAPTCHA token server-side before logging to the Google Sheet and emailing a notification.
+      This is the authoritative save — if this throws, the visitor sees an error. */
+  async function submitToBackend(payload) {
+    var resp = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight against Apps Script
+      body: JSON.stringify(payload)
+    });
+    var data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Submission failed');
+    return data;
   }
 
-  function makeDocId(email) {
-    var now = new Date(Date.now() + 5.5 * 3600000);
-    var pad = function(n, w){ return String(n).padStart(w || 2, '0'); };
-    var datePart = now.getUTCFullYear() + pad(now.getUTCMonth()+1) + pad(now.getUTCDate());
-    var timePart = pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds());
-    var msPart   = pad(now.getUTCMilliseconds(), 3);
-    var emailPart = (email || 'anonymous').toLowerCase()
-                      .replace(/@/g,'_').replace(/\./g,'_')
-                      .replace(/[^a-z0-9_]/g,'').slice(0, 40);
-    return emailPart + '__' + datePart + '_' + timePart + '_' + msPart;
+  function fsStr(v) { return { stringValue: String(v == null ? '' : v) }; }
+  function fsFieldsFrom(obj) {
+    var out = {};
+    Object.keys(obj).forEach(function (k) { if (obj[k] !== undefined && obj[k] !== null) out[k] = fsStr(obj[k]); });
+    return out;
   }
-
-  async function saveToFirestore(collectionName, data) {
-    var nowUTC = new Date();
-    var nowIST = new Date(nowUTC.getTime() + 5.5 * 3600000);
-    var pad    = function(n){ return String(n).padStart(2,'0'); };
-    var dateIST = nowIST.getUTCFullYear() + '-' + pad(nowIST.getUTCMonth()+1) + '-' + pad(nowIST.getUTCDate());
-    var timeIST = pad(nowIST.getUTCHours()) + ':' + pad(nowIST.getUTCMinutes()) + ':' + pad(nowIST.getUTCSeconds());
-    var docId   = makeDocId(data.email || '');
-    var payload = {
-      fields: toFirestoreFields(Object.assign({}, data, {
-        date:           dateIST,
-        time_ist:       timeIST,
-        datetime_ist:   dateIST + ' ' + timeIST + ' IST',
-        timestamp_utc:  nowUTC.toISOString(),
-        page_source:    'harsh_ranjan_page',
-        page_url:       window.location.href
-      }))
-    };
-    var url  = FIRESTORE_BASE + collectionName + '/' + docId + '?key=' + FIREBASE_API_KEY;
-    var resp = await fetch(url, {
-      method:  'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload)
-    });
-    if (!resp.ok) {
-      var errText = await resp.text();
-      throw new Error('Firestore ' + resp.status + ': ' + errText);
-    }
-    return resp.json();
+  function istStamp() {
+    var now = new Date();
+    var ist = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+    var p2 = function (n) { return String(n).padStart(2, '0'); };
+    return { date: ist.getFullYear()+'-'+p2(ist.getMonth()+1)+'-'+p2(ist.getDate()), time: p2(ist.getHours())+':'+p2(ist.getMinutes())+':'+p2(ist.getSeconds()), timestamp: now.toISOString() };
+  }
+  /** Fire-and-forget parallel write straight into Firestore so the admin panel (which listens
+      only to Firestore) sees the lead live. Never blocks or fails the visible form submit — if
+      this fails, the Sheet/email path above has already succeeded independently. */
+  function writeLeadToFirestore(collection, data) {
+    try {
+      var stamp = istStamp();
+      var fields = fsFieldsFrom(Object.assign({}, data, { date: stamp.date, time: stamp.time, timestamp: stamp.timestamp, source: 'website', page_source: 'harsh_ranjan_page' }));
+      fetch(FIRESTORE_BASE + collection + '?key=' + FIREBASE_API_KEY, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: fields })
+      }).catch(function () {});
+    } catch (e) { /* never block the form submit UX */ }
   }
 
   function isValidEmail(v) {
@@ -881,7 +902,7 @@
     // Honeypot check — a real visitor never sees or fills this field. If it has a value, it was a bot.
     var honeypot = (document.getElementById('f-website')?.value || '').trim();
     if (honeypot) {
-      // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't write to Firestore.
+      // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't submit anywhere.
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
       document.getElementById('form-wrap').classList.add('compact');
@@ -894,6 +915,7 @@
     var concern     = (document.getElementById('f-concern')?.value || 'General Inquiry');
     var message     = (document.getElementById('f-msg')?.value || '').trim();
     var wantsNews   = !!document.getElementById('f-newsletter')?.checked;
+    var website     = honeypot;
 
     if (!name || !isValidEmail(email)) {
       if (statusDiv) statusDiv.classList.remove('hidden');
@@ -903,22 +925,29 @@
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span><span>Sending…</span>'; }
     if (statusDiv) statusDiv.classList.add('hidden');
     try {
-      await saveToFirestore('harsh_ranjan_leads', {
+      var token = await getTokenFast('harsh_ranjan_booking');
+
+      // Fire-and-forget: keeps the admin panel's live Firestore feed in sync. Never awaited on its own.
+      writeLeadToFirestore('harsh_ranjan_leads', {
         name: name, email: email, phone: phone || 'Not provided',
         concern: concern, message: message || 'No message provided',
-        lead_type: 'harsh_ranjan_session_booking',
-        lead_source: 'harsh_ranjan_page_cta_form',
-        booking_status: 'pending_confirmation',
-        newsletter_opt_in: wantsNews
+        lead_type: 'harsh_ranjan_session_booking', lead_source: 'harsh_ranjan_page_cta_form',
+        booking_status: 'pending_confirmation', newsletter_opt_in: wantsNews
       });
-      // Only write to the newsletter list if the visitor actually checked the box.
+
+      // Authoritative save: Google Sheet + email notification, reCAPTCHA-verified server-side.
+      await submitToBackend({
+        formType: 'harsh_ranjan_booking', name: name, email: email, phone: phone || 'Not provided',
+        service: concern, message: message || 'No message provided', website: website,
+        pageLoadedAt: xLoadedAt, recaptchaToken: token
+      });
+
+      // Only submit to the newsletter list if the visitor actually checked the box.
       if (wantsNews) {
-        await saveToFirestore('homepage_newsletter', {
-          name: name, email: email, opted_in: 'true',
-          subscribed_via: 'harsh_ranjan_page_form',
-          subscription_type: 'session_booking_request'
-        });
+        writeLeadToFirestore('homepage_newsletter', { name: name, email: email, opted_in: 'true', subscribed_via: 'harsh_ranjan_page_form', subscription_type: 'session_booking_request' });
+        submitToBackend({ formType: 'newsletter', email: email, message: 'Opted in via Harsh Ranjan page booking form', website: website, pageLoadedAt: xLoadedAt, recaptchaToken: token }).catch(function(){});
       }
+
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
       document.getElementById('form-wrap').classList.add('compact');
@@ -928,7 +957,7 @@
     } catch (error) {
       // Log the real error for debugging, but never show raw backend error text to the visitor —
       // it can leak implementation details and just looks broken/unprofessional.
-      console.error('Firebase Error:', error);
+      console.error('Submission Error:', error);
       if (statusDiv) {
         statusDiv.classList.remove('hidden');
         document.getElementById('err-text').textContent =
