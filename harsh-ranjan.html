@@ -115,20 +115,20 @@
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s;}
     #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
     [data-theme="dark"] #navbar.scrolled{background:rgba(20,20,16,0.96);border-bottom:1px solid #2E2E28;}
-    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:rgba(255,255,255,0.90);text-decoration:none;}
-    #navbar.scrolled .nav-link{color:var(--text-muted);}
+    .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:#ffffff;text-decoration:none;text-shadow:0 1px 4px rgba(0,0,0,.55);}
+    #navbar.scrolled .nav-link{color:var(--text-muted);text-shadow:none;}
     .nav-link:hover{color:#D95D39 !important;}
     .nav-link.active-page{color:#D95D39 !important;}
     .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:#D95D39;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
     .nav-link:hover::after,.nav-link.active-page::after{transform:scaleX(1);}
-    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;}
-    #navbar.scrolled .nav-logo-text{color:#D95D39;}
-    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#ffffff;text-shadow:0 1px 4px rgba(0,0,0,.55);}
+    #navbar.scrolled .nav-logo-text{color:#D95D39;text-shadow:none;}
+    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.25);}
     .nav-cta-btn::before{content:'';position:absolute;top:0;left:-100%;width:80%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transition:left .55s ease;}
     .nav-cta-btn:hover::before{left:120%;}
     .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
-    #hamburger-icon{transition:color .3s;color:#ffffff;}
-    #navbar.scrolled #hamburger-icon{color:var(--text);}
+    #hamburger-icon{transition:color .3s;color:#ffffff;filter:drop-shadow(0 1px 3px rgba(0,0,0,.55));}
+    #navbar.scrolled #hamburger-icon{color:var(--text);filter:none;}
 
     /* MOBILE MENU */
     #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
@@ -165,6 +165,11 @@
     .divider-line{width:48px;height:1px;background:#D95D39;margin:1.25rem auto 0;}
     .ir{overflow:hidden;border-radius:4px;}
     .ir img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
+    /* Gallery tiles: aspect-ratio based sizing so photos scale cleanly on phones, tablets and desktops
+       instead of a single fixed pixel height */
+    .gallery-tile{width:100%;aspect-ratio:1/1;}
+    @media(min-width:640px){.gallery-tile{aspect-ratio:4/3;}}
+    @media(min-width:1024px){.gallery-tile{aspect-ratio:1/1;}}
     /* Hero image — auto-crops to fill the banner on every device while keeping Harsh centred in frame */
     .hero-img{width:100%;height:100%;object-fit:cover;object-position:65% 12%;}
     @media(min-width:640px){.hero-img{object-position:62% 18%;}}
@@ -175,17 +180,12 @@
     .form-field::placeholder{color:var(--text-muted);}
     #form-wrap{max-height:0;overflow:hidden;opacity:0;transition:max-height .65s cubic-bezier(.4,0,.2,1),opacity .45s ease;}
     #form-wrap.open{max-height:720px;opacity:1;}
+    /* After a successful submission the form fields are hidden and only a short thank-you message remains,
+       so shrink the panel down to a small size instead of leaving a tall, mostly-empty box */
+    #form-wrap.open.compact{max-height:260px;}
     .lineage-badge{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,rgba(217,93,57,.07),rgba(197,160,89,.07));border:1px solid rgba(197,160,89,.28);border-radius:4px;padding:.7rem 1.1rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--text);}
 
     /* FLOATING BUTTONS */
-    #fab{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
-    #fab.visible{opacity:1;transform:translateY(0);}
-    #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s;}
-    #fab a:hover{background:#1C1C1C;}
-    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
-    #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
-    #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
-    #whatsapp-fab a:hover{transform:scale(1.1);}
     #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .15s,transform .4s .15s;}
     #theme-toggle.visible{opacity:1;transform:translateY(0);}
     #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
@@ -270,7 +270,7 @@
       loading="eager" fetchpriority="high"
       class="w-full h-full hero-img">
   </div>
-  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,20,16,.10) 0%,rgba(20,20,16,.22) 30%,rgba(20,20,16,.60) 62%,rgba(20,20,16,.95) 100%);z-index:1;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,20,16,.50) 0%,rgba(20,20,16,.28) 14%,rgba(20,20,16,.22) 30%,rgba(20,20,16,.60) 62%,rgba(20,20,16,.95) 100%);z-index:1;"></div>
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 md:pb-28">
     <div class="max-w-2xl">
       <p class="ha font-sans text-[9px] uppercase tracking-[.3em] text-brand-gold mb-4">Founder &amp; Lead Practitioner</p>
@@ -587,25 +587,32 @@
       <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Glimpses of the Journey</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 fade-up">
-      <div class="ir" style="height:230px;"><img src="harsh13.png" loading="lazy" alt="Yoga practice"></div>
-      <div class="ir" style="height:230px;"><img src="harsh14.png" loading="lazy" alt="Rishikesh"></div>
-      <div class="ir" style="height:230px;"><img src="harsh15.png" loading="lazy" alt="Mantra practice"></div>
-      <div class="ir" style="height:230px;"><img src="harsh16.png" loading="lazy" alt="Meditation"></div>
-      <div class="ir" style="height:230px;"><img src="harsh17.png" loading="lazy" alt="Ayurveda herbs"></div>
-      <div class="ir" style="height:230px;"><img src="harsh18.png" loading="lazy" alt="Himalayan temple"></div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 fade-up">
+      <div class="ir gallery-tile"><img src="harsh13.png" loading="lazy" alt="Yoga practice"></div>
+      <div class="ir gallery-tile"><img src="harsh14.png" loading="lazy" alt="Rishikesh"></div>
+      <div class="ir gallery-tile"><img src="harsh15.png" loading="lazy" alt="Mantra practice"></div>
+      <div class="ir gallery-tile"><img src="harsh16.png" loading="lazy" alt="Meditation"></div>
+      <div class="ir gallery-tile"><img src="harsh17.png" loading="lazy" alt="Ayurveda herbs"></div>
+      <div class="ir gallery-tile"><img src="harsh18.png" loading="lazy" alt="Himalayan temple"></div>
       <!-- New: quote tile, sits inside the gallery grid like a photo but carries a line in his own words -->
-      <div class="ir flex items-center justify-center text-center p-6" style="height:230px;background:linear-gradient(135deg,rgba(217,93,57,.08),rgba(197,160,89,.08));border:1px solid var(--border);">
+      <div class="ir gallery-tile flex items-center justify-center text-center p-6" style="background:linear-gradient(135deg,rgba(217,93,57,.08),rgba(197,160,89,.08));border:1px solid var(--border);">
         <p class="font-serif italic leading-relaxed" style="color:var(--text);font-size:.95rem;">"Every mile walked — from Munger to the Himalayas — was a step back toward the self."</p>
       </div>
       <!-- New: video CTA tile linking to his YouTube channel -->
-      <a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" class="ir relative flex items-center justify-center group" style="height:230px;">
+      <a href="https://www.youtube.com/@Samarpan_Wellbeing" target="_blank" rel="noopener" class="ir gallery-tile relative flex items-center justify-center group">
         <img src="harsh12.png" loading="lazy" alt="Watch Harsh Ranjan on YouTube" style="filter:brightness(.55);">
         <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white">
           <svg width="34" height="34" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
           <span class="font-sans text-[10px] uppercase tracking-widest">Watch the Journey</span>
         </div>
       </a>
+      <!-- Newly added photos -->
+      <div class="ir gallery-tile"><img src="g1.png" loading="lazy" alt="Yoga practice"></div>
+      <div class="ir gallery-tile"><img src="g2.png" loading="lazy" alt="Yoga session"></div>
+      <div class="ir gallery-tile"><img src="g4.png" loading="lazy" alt="Yoga"></div>
+      <div class="ir gallery-tile"><img src="g5.png" loading="lazy" alt="Practice moment"></div>
+      <div class="ir gallery-tile"><img src="g6.png" loading="lazy" alt="Wellness journey"></div>
+      <div class="ir gallery-tile"><img src="harsh11.png" loading="lazy" alt="Harsh Ranjan"></div>
     </div>
   </div>
 </section>
@@ -623,6 +630,9 @@
       </button>
       <a href="https://wa.me/919661486740" target="_blank" rel="noopener" onclick="gaEvent('click','CTA','Harsh WA')" class="inline-flex items-center justify-center gap-2 px-10 py-4 border font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text-muted);">
         <i data-lucide="message-circle" class="w-4 h-4"></i> Send a Message
+      </a>
+      <a href="mailto:harsh@thesamarpa.co.in" onclick="gaEvent('click','CTA','Harsh Email')" class="inline-flex items-center justify-center gap-2 px-10 py-4 border font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text-muted);">
+        <i data-lucide="mail" class="w-4 h-4"></i> Email Harsh
       </a>
     </div>
 
@@ -797,16 +807,6 @@
 </div>
 
 <!-- FLOATING BUTTONS -->
-<div id="fab">
-  <a href="booking.html" onclick="gaEvent('click','CTA','FAB Book Now')">
-    <i data-lucide="calendar" class="w-4 h-4"></i>Book Now
-  </a>
-</div>
-<div id="whatsapp-fab">
-  <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20came%20across%20Harsh%20Ranjan%27s%20profile%20and%20would%20love%20to%20book%20a%20session.%20Could%20you%20please%20guide%20me%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-</div>
 <div id="theme-toggle">
   <button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
     <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
@@ -889,6 +889,7 @@
       // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't write to Firestore.
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
+      document.getElementById('form-wrap').classList.add('compact');
       return;
     }
 
@@ -925,6 +926,7 @@
       }
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
+      document.getElementById('form-wrap').classList.add('compact');
       if (typeof gtag === 'function') {
         gtag('event', 'submit', { event_category: 'Lead', event_label: 'Harsh Ranjan Page - ' + concern });
       }
@@ -971,7 +973,7 @@
   // FABs
   window.addEventListener('scroll', function() {
     var show = window.scrollY > 400;
-    ['fab','whatsapp-fab','theme-toggle'].forEach(function(id){
+    ['theme-toggle'].forEach(function(id){
       var el = document.getElementById(id);
       if (el) el.classList.toggle('visible', show);
     });
@@ -1095,6 +1097,7 @@
   function closeForm() {
     formOpen = false;
     document.getElementById('form-wrap').classList.remove('open');
+    document.getElementById('form-wrap').classList.remove('compact');
     document.getElementById('open-form-btn').style.display = '';
     setTimeout(function(){
       document.getElementById('form-fields').classList.remove('hidden');
