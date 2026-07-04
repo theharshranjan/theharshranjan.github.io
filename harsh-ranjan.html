@@ -34,6 +34,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Pinned to a fixed version (not @latest) so a future Lucide release can't silently change/break icons on this page -->
   <script src="https://unpkg.com/lucide@1.22.0/dist/umd/lucide.min.js"></script>
+  <!-- reCAPTCHA v3 — same site key used sitewide (index.html) so this page's form gets the same spam scoring -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
   <!-- Theme set BEFORE first paint to avoid a light-mode flash for returning dark-mode visitors -->
   <script>
@@ -110,6 +112,10 @@
     body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
     body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:.45;}
     #scroll-progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#D95D39,#C5A059);z-index:10000;transition:width .1s linear;width:0%;}
+    /* Hide the reCAPTCHA badge (logo). Google's terms require the "protected by reCAPTCHA" notice to be shown somewhere if the badge is hidden — shown via .grecaptcha-notice below the form. */
+    .grecaptcha-badge{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+    .grecaptcha-notice{font-size:11px;color:var(--text-muted);opacity:.75;margin-top:.5rem;line-height:1.4;}
+    .grecaptcha-notice a{color:inherit;text-decoration:underline;}
 
     /* NAVBAR */
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s;}
@@ -178,14 +184,6 @@
     .lineage-badge{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(135deg,rgba(217,93,57,.07),rgba(197,160,89,.07));border:1px solid rgba(197,160,89,.28);border-radius:4px;padding:.7rem 1.1rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--text);}
 
     /* FLOATING BUTTONS */
-    #fab{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s,transform .4s;}
-    #fab.visible{opacity:1;transform:translateY(0);}
-    #fab a{display:flex;align-items:center;gap:.4rem;background:#D95D39;color:#fff;padding:.7rem 1.1rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;box-shadow:0 6px 24px rgba(217,93,57,.4);text-decoration:none;transition:background .3s;}
-    #fab a:hover{background:#1C1C1C;}
-    #whatsapp-fab{position:fixed;bottom:2rem;right:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .1s,transform .4s .1s;}
-    #whatsapp-fab.visible{opacity:1;transform:translateY(0);}
-    #whatsapp-fab a{display:flex;align-items:center;justify-content:center;width:48px;height:48px;background:#25D366;color:#fff;border-radius:50%;box-shadow:0 6px 24px rgba(37,211,102,.45);text-decoration:none;transition:transform .3s;}
-    #whatsapp-fab a:hover{transform:scale(1.1);}
     #theme-toggle{position:fixed;bottom:2rem;left:1.5rem;z-index:900;opacity:0;transform:translateY(20px);transition:opacity .4s .15s,transform .4s .15s;}
     #theme-toggle.visible{opacity:1;transform:translateY(0);}
     #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
@@ -273,10 +271,9 @@
   <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,20,16,.10) 0%,rgba(20,20,16,.22) 30%,rgba(20,20,16,.60) 62%,rgba(20,20,16,.95) 100%);z-index:1;"></div>
   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pb-20 md:pb-28">
     <div class="max-w-2xl">
-      <p class="ha font-sans text-[9px] uppercase tracking-[.3em] text-brand-gold mb-4">Founder &amp; Lead Practitioner</p>
+      <p class="ha font-sans text-[9px] font-bold uppercase tracking-[.3em] text-brand-gold mb-4" style="text-shadow:0 1px 6px rgba(0,0,0,.55);">Founder &amp; Lead Practitioner</p>
       <h1 class="ha font-display text-white mb-4 leading-tight" style="font-size:clamp(2.8rem,7vw,5.2rem);">Harsh Ranjan</h1>
-      <p class="ha font-serif italic text-white/80 mb-3" style="font-size:clamp(1rem,2.5vw,1.4rem);">Ayurveda Biologist · Researcher · Psychologist</p>
-      <p class="ha font-sans text-[10px] uppercase tracking-[.2em] mb-8" style="color:rgba(197,160,89,.85);">Bihar School of Yoga, Munger · Rikhiapeeth Tradition</p>
+      <p class="ha font-serif italic text-white/80 mb-8" style="font-size:clamp(1rem,2.5vw,1.4rem);">Ayurveda Biologist · Researcher · Psychologist</p>
       <div class="ha flex flex-wrap gap-3">
         <a href="#story" class="border border-white/50 px-7 py-3 font-sans text-[10px] uppercase tracking-widest text-white hover:bg-white hover:text-brand-black transition duration-300 rounded-sm">Read His Story</a>
         <a href="booking.html" onclick="gaEvent('click','CTA','Harsh Hero Book')" class="cta-btn bg-clay text-white px-7 py-3 font-sans text-[10px] uppercase tracking-widest rounded-sm shadow-lg">Book a Session</a>
@@ -635,9 +632,6 @@
         <i data-lucide="mail" class="w-4 h-4"></i> Email Harsh
       </a>
     </div>
-    <p class="font-sans text-xs mb-2" style="color:var(--text-muted);">
-      <a href="mailto:harsh@thesamarpan.co.in" class="hover:text-clay transition" style="text-decoration:underline;text-underline-offset:3px;">harsh@thesamarpan.co.in</a>
-    </p>
 
     <!-- FORM -->
     <div id="form-wrap">
@@ -712,6 +706,7 @@
         <div id="form-err" class="hidden mt-4 p-4 rounded-sm" style="background:rgba(217,93,57,.07);border:1px solid rgba(217,93,57,.22);">
           <p class="font-sans text-xs text-clay" id="err-text">Something went wrong. Please try WhatsApp or email us directly.</p>
         </div>
+        <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
       </div>
     </div>
 
@@ -810,16 +805,6 @@
 </div>
 
 <!-- FLOATING BUTTONS -->
-<div id="fab">
-  <a href="booking.html" onclick="gaEvent('click','CTA','FAB Book Now')">
-    <i data-lucide="calendar" class="w-4 h-4"></i>Book Now
-  </a>
-</div>
-<div id="whatsapp-fab">
-  <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20came%20across%20Harsh%20Ranjan%27s%20profile%20and%20would%20love%20to%20book%20a%20session.%20Could%20you%20please%20guide%20me%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
-</div>
 <div id="theme-toggle">
   <button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
     <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
@@ -831,6 +816,47 @@
   var FIREBASE_PROJECT = 'thesamrpan';
   var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
   var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
+
+  /* ── FORM BACKEND (Google Apps Script → Sheet + email) + reCAPTCHA v3 ──
+     Same Apps Script deployment and site key as index.html, so this page's
+     submissions land in the same Sheet/inbox and get the same spam scoring. */
+  var APPS_SCRIPT_URL    = 'https://script.google.com/macros/s/AKfycbx-7HHS4_aeb5dyCPsvwMhyPfajPIK6j8uB7XLaaB-YCA8bkLlTICXRYhd35RQPhenj/exec';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+  var xLoadedAt = Date.now(); // server-side timing check rejects bot submits <2s after page load
+
+  function getRecaptchaToken(action) {
+    return new Promise(function(resolve) {
+      try {
+        grecaptcha.ready(function() {
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+        });
+      } catch (err) { resolve(''); }
+    });
+  }
+
+  // SPEED: fetch the reCAPTCHA token as soon as the page loads (not at submit time),
+  // so submitForm() just awaits an already-resolved promise. Tokens are valid ~2 min.
+  var _tokenCache = null;
+  function prefetchToken() { _tokenCache = { promise: getRecaptchaToken('harsh_ranjan_form'), ts: Date.now() }; }
+  function getTokenFast() {
+    if (_tokenCache && (Date.now() - _tokenCache.ts) < 100000) return _tokenCache.promise;
+    return getRecaptchaToken('harsh_ranjan_form');
+  }
+  try { grecaptcha.ready(function(){}); } catch (err) {}
+  window.addEventListener('load', prefetchToken);
+
+  /** Posts the lead to the Apps Script backend, which re-verifies the honeypot, timing,
+      and reCAPTCHA token server-side before logging to the Sheet and emailing Harsh. */
+  async function submitToBackend(payload) {
+    var resp = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids a CORS preflight against Apps Script
+      body: JSON.stringify(payload)
+    });
+    var data = await resp.json();
+    if (!data.ok) throw new Error(data.error || 'Submission failed');
+    return data;
+  }
 
   function toFirestoreFields(data) {
     var fields = {};
@@ -899,7 +925,7 @@
     // Honeypot check — a real visitor never sees or fills this field. If it has a value, it was a bot.
     var honeypot = (document.getElementById('f-website')?.value || '').trim();
     if (honeypot) {
-      // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't write to Firestore.
+      // Pretend it worked so the bot doesn't learn anything about our spam defenses, but don't save anything.
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
       return;
@@ -920,22 +946,47 @@
     if (btn) { btn.disabled = true; btn.innerHTML = '<span class="btn-spinner"></span><span>Sending…</span>'; }
     if (statusDiv) statusDiv.classList.add('hidden');
     try {
-      await saveToFirestore('harsh_ranjan_leads', {
+      var token = await getTokenFast();
+
+      // SPEED: the Apps Script call (Sheet + email to Harsh) is the one thing we actually
+      // wait on, since that's what notifies him. The Firestore writes are fire-and-forget —
+      // they feed the admin panel but should never make the visitor wait or see a failure
+      // if only one of several parallel writes has a hiccup.
+      saveToFirestore('harsh_ranjan_leads', {
         name: name, email: email, phone: phone || 'Not provided',
         concern: concern, message: message || 'No message provided',
         lead_type: 'harsh_ranjan_session_booking',
         lead_source: 'harsh_ranjan_page_cta_form',
         booking_status: 'pending_confirmation',
         newsletter_opt_in: wantsNews
-      });
+      }).catch(function(err){ console.error('Firestore (harsh_ranjan_leads) error:', err); });
+
+      // Also write to homepage_leads so this shows up in the main admin.html dashboard,
+      // not just in a collection only this page knows about.
+      saveToFirestore('homepage_leads', {
+        name: name, email: email, phone: phone || 'Not provided',
+        service: concern, message: message || 'No message provided',
+        lead_type: 'harsh_ranjan_session_booking',
+        lead_source: 'harsh_ranjan_page'
+      }).catch(function(err){ console.error('Firestore (homepage_leads) error:', err); });
+
       // Only write to the newsletter list if the visitor actually checked the box.
       if (wantsNews) {
-        await saveToFirestore('homepage_newsletter', {
+        saveToFirestore('homepage_newsletter', {
           name: name, email: email, opted_in: 'true',
           subscribed_via: 'harsh_ranjan_page_form',
           subscription_type: 'session_booking_request'
-        });
+        }).catch(function(err){ console.error('Firestore (homepage_newsletter) error:', err); });
       }
+
+      // Sheet + email notification — this one we wait for, and it's what the visitor's
+      // success/error message actually reflects.
+      await submitToBackend({
+        formType: 'harsh_ranjan_form', name: name, email: email, phone: phone || 'Not provided',
+        service: concern, message: message || 'No message provided',
+        website: honeypot, pageLoadedAt: xLoadedAt, recaptchaToken: token
+      });
+
       document.getElementById('form-fields').classList.add('hidden');
       document.getElementById('form-ok').classList.remove('hidden');
       if (typeof gtag === 'function') {
@@ -944,7 +995,7 @@
     } catch (error) {
       // Log the real error for debugging, but never show raw backend error text to the visitor —
       // it can leak implementation details and just looks broken/unprofessional.
-      console.error('Firebase Error:', error);
+      console.error('Form submission error:', error);
       if (statusDiv) {
         statusDiv.classList.remove('hidden');
         document.getElementById('err-text').textContent =
@@ -984,7 +1035,7 @@
   // FABs
   window.addEventListener('scroll', function() {
     var show = window.scrollY > 400;
-    ['fab','whatsapp-fab','theme-toggle'].forEach(function(id){
+    ['theme-toggle'].forEach(function(id){
       var el = document.getElementById(id);
       if (el) el.classList.toggle('visible', show);
     });
