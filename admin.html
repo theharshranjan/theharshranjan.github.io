@@ -520,6 +520,65 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
   .btn{min-height:40px;}
   .tbl td{padding:.7rem .7rem;}
 }
+
+/* ═══════════════════════════════════════
+   OWNER / ADMIN AVATAR PHOTO UPLOAD
+═══════════════════════════════════════ */
+.admin-av-wrap{position:relative;width:38px;height:38px;flex-shrink:0;cursor:pointer;}
+.admin-av-wrap img{width:38px;height:38px;border-radius:50%;object-fit:cover;display:block;border:1px solid var(--border2);}
+.admin-av-wrap .admin-av{width:38px;height:38px;}
+.admin-av-edit{position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;border:1.5px solid var(--card);}
+.owner-photo-lg{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);}
+.owner-photo-placeholder{width:84px;height:84px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text4);font-size:11px;text-align:center;border:2px dashed var(--border2);}
+
+/* ═══════════════════════════════════════
+   SECURITY / LOGIN HISTORY
+═══════════════════════════════════════ */
+.sess-device-row{display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.7rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.sess-device-row:last-child{border-bottom:none;}
+.sess-device-icon{width:34px;height:34px;border-radius:10px;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text2);}
+.sess-device-info{flex:1;min-width:0;}
+.sess-device-name{font-size:12.5px;font-weight:700;color:var(--text);}
+.sess-device-meta{font-size:10.5px;color:var(--text4);margin-top:1px;}
+.sess-current-tag{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green);background:rgba(34,197,94,.12);padding:2px 7px;border-radius:20px;}
+
+/* ═══════════════════════════════════════
+   VISITOR SESSIONS — DAY GROUPS
+═══════════════════════════════════════ */
+.vday-group{margin-bottom:.9rem;border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;}
+.vday-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.7rem .95rem;background:var(--card2);flex-wrap:wrap;}
+.vday-head-left{display:flex;align-items:center;gap:.6rem;}
+.vday-date{font-size:12.5px;font-weight:800;color:var(--text);}
+.vday-stats{font-size:10.5px;color:var(--text3);}
+.vday-loadmore{display:block;width:100%;text-align:center;padding:.55rem;font-size:11px;font-weight:700;color:var(--brand);background:var(--brand-glow);border:none;cursor:pointer;}
+.vday-loadmore:hover{opacity:.85;}
+
+/* ═══════════════════════════════════════
+   MOBILE APP-LIKE BOTTOM NAV
+═══════════════════════════════════════ */
+#mobile-tabbar{display:none;}
+@media(max-width:768px){
+  #mobile-tabbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:250;
+    background:var(--card);border-top:1px solid var(--border2);
+    padding:.35rem .2rem calc(.35rem + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -8px 24px rgba(0,0,0,.25);
+  }
+  #mobile-tabbar .mtab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.3rem 0;color:var(--text4);font-size:9px;font-weight:600;cursor:pointer;background:none;border:none;font-family:var(--font);}
+  #mobile-tabbar .mtab svg{width:19px;height:19px;}
+  #mobile-tabbar .mtab.active{color:var(--brand);}
+  #main{padding-bottom:64px;}
+  #content{padding-bottom:1.5rem;}
+}
+@media(min-width:769px){#mobile-tabbar{display:none !important;}}
+
+/* Responsive table -> stacked cards on very small screens (applies to every .tbl automatically) */
+@media(max-width:560px){
+  .tbl thead{display:none;}
+  .tbl tr{display:block;border-bottom:1px solid var(--border2);padding:.6rem 0;}
+  .tbl td{display:flex;justify-content:space-between;gap:.6rem;padding:.28rem .3rem;font-size:11px;border:none !important;text-align:right;white-space:normal !important;max-width:none !important;}
+  .tbl td[data-label]::before{content:attr(data-label);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text4);text-align:left;flex-shrink:0;margin-right:.5rem;}
+}
 </style>
 </head>
 <body>
@@ -657,6 +716,8 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Website Content</div>
     <div class="nav-item" onclick="showPage('sessions',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Sessions</div>
+    <div class="nav-item" onclick="showPage('security',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Security<span class="nav-badge" id="sb-sec-count">—</span></div>
 
     <div class="sb-section">Tools</div>
     <div class="nav-item" onclick="showPage('search',this)">
@@ -677,10 +738,15 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
 
   <div class="sb-foot">
     <div class="admin-row">
-      <div class="admin-av" id="sb-av-init">SA</div>
+      <div class="admin-av-wrap" onclick="document.getElementById('owner-photo-input').click()" title="Click to change photo">
+        <div class="admin-av" id="sb-av-init">SA</div>
+        <div class="admin-av-edit">✎</div>
+      </div>
+      <input type="file" id="owner-photo-input" accept="image/*" style="display:none;" onchange="uploadOwnerPhoto(this.files[0])">
       <div>
         <div class="admin-name" id="sb-admin-name">Admin</div>
         <div class="admin-status"><span class="pulse-dot"></span>Online <span class="pill pill-gold" id="sb-role-badge" style="margin-left:4px;font-size:8px;padding:1px 5px;">Owner</span></div>
+        <div style="font-size:9px;color:var(--text4);margin-top:1px;" id="sb-last-login">Last login: —</div>
       </div>
     </div>
     <button class="logout-btn" onclick="doLogout()">
@@ -688,6 +754,30 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
     </button>
   </div>
 </aside>
+
+<!-- MOBILE APP-STYLE BOTTOM TAB BAR -->
+<nav id="mobile-tabbar">
+  <button class="mtab active" id="mtab-dashboard" onclick="showPage('dashboard',null);setMobileTab('dashboard')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="mtab" id="mtab-leads" onclick="showPage('leads',null);setMobileTab('leads')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    <span>Leads</span>
+  </button>
+  <button class="mtab" id="mtab-bookings" onclick="showPage('bookings',null);setMobileTab('bookings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Bookings</span>
+  </button>
+  <button class="mtab" id="mtab-visitors" onclick="showPage('visitors',null);setMobileTab('visitors')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    <span>Visitors</span>
+  </button>
+  <button class="mtab" id="mtab-more" onclick="toggleSidebar();setMobileTab('more')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <span>More</span>
+  </button>
+</nav>
 
 <!-- ════════════════════════════
      MAIN
@@ -845,7 +935,11 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="card"><div class="card-head"><span class="card-title">Daily Visits — Last 14 Days</span></div><div class="card-body"><div class="chart-container"><canvas id="chart-visitors-14d"></canvas></div></div></div>
         <div class="card"><div class="card-head"><span class="card-title">Device Breakdown</span></div><div class="card-body" id="device-breakdown"><div style="color:var(--text4);font-size:12px;">Loading…</div></div></div>
       </div>
-      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div><div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>ID</th><th>Date</th><th>Time</th><th>Page</th><th>Device</th><th>IP Address</th><th>Location</th><th>Referrer</th></tr></thead><tbody id="visitors-body"><tr><td colspan="8" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</td></tr></tbody></table></div></div>
+      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><div style="display:flex;gap:.5rem;"><button class="btn btn-outline btn-sm owner-only" onclick="purgeOldVisitors()" title="Delete visitor logs older than 90 days to keep Firestore storage small">🧹 Cleanup 90+ days</button><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div></div>
+        <div class="card-body" id="visitors-daygroups" style="padding:.9rem;">
+          <div style="color:var(--text4);font-size:12px;text-align:center;padding:1.5rem;">Loading…</div>
+        </div>
+      </div>
     </div>
 
     <!-- ══ LEADS ══ -->
@@ -1151,6 +1245,29 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       </div></div>
     </div>
 
+    <!-- ══ SECURITY ══ -->
+    <div class="page-view" id="page-security">
+      <div class="warn-box mb">🔒 This shows every successful admin sign-in, with device, approximate location and time — so you always know who accessed the panel and from where. "Sign out" here revokes that browser's access on its next check (within ~60s); it does not physically lock the device.</div>
+      <div class="card mb">
+        <div class="card-head"><span class="card-title">This Device</span></div>
+        <div class="card-body" id="security-current-device">
+          <div style="color:var(--text4);font-size:12px;">Loading…</div>
+        </div>
+      </div>
+      <div class="card mb">
+        <div class="card-head"><span class="card-title">Your Login History</span><button class="btn btn-outline btn-sm" onclick="exportLoginHistoryCSV()">Export CSV</button></div>
+        <div class="card-body" id="security-history-list" style="max-height:480px;overflow-y:auto;">
+          <div style="color:var(--text4);font-size:12px;">Loading…</div>
+        </div>
+      </div>
+      <div class="card owner-only" id="security-team-card">
+        <div class="card-head"><span class="card-title">All Admin Logins (Owner view)</span></div>
+        <div class="card-body" id="security-team-history-list">
+          <div style="color:var(--text4);font-size:12px;">Loading…</div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ SETTINGS ══ -->
     <div class="page-view" id="page-settings">
       <div style="max-width:640px;">
@@ -1167,6 +1284,15 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="card mb">
           <div class="card-head"><span class="card-title">Admin Profile</span></div>
           <div class="card-body">
+            <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
+              <img id="owner-photo-preview" class="owner-photo-lg" style="display:none;" alt="Owner photo">
+              <div class="owner-photo-placeholder" id="owner-photo-placeholder">No Photo</div>
+              <div>
+                <button class="btn btn-outline btn-sm" onclick="document.getElementById('owner-photo-input-settings').click()">📷 Upload Photo</button>
+                <input type="file" id="owner-photo-input-settings" accept="image/*" style="display:none;" onchange="uploadOwnerPhoto(this.files[0])">
+                <div style="font-size:10px;color:var(--text4);margin-top:.4rem;">Shows on the sidebar &amp; anywhere the Samarpan owner is displayed. JPG/PNG, under 3MB.</div>
+              </div>
+            </div>
             <div class="form-row">
               <div class="form-group"><label class="form-label">Display Name</label><input class="form-input" type="text" id="settings-name" placeholder="Your name"></div>
               <div class="form-group"><label class="form-label">Firebase Email (read-only)</label><input class="form-input" type="email" id="settings-email" readonly style="opacity:.45;cursor:not-allowed;"></div>
@@ -1210,6 +1336,40 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
               <button class="btn btn-primary" onclick="saveEmailJSSettings()">Save Config</button>
               <button class="btn btn-outline" onclick="testEmailNotification()">Send Test</button>
             </div>
+          </div>
+        </div>
+
+        <div class="card mb">
+          <div class="card-head"><span class="card-title">Google Sheets Sync — Visitor Log</span><span class="pill pill-gray" id="sheets-sync-status-pill">Off</span></div>
+          <div class="card-body">
+            <div class="warn-box">📄 Every visitor session already saved to Firestore also gets pushed into a Google Sheet, batched every 60 seconds — so you always have a plain-spreadsheet copy of the data with zero storage worries on Firestore's side. Requires a small (free) Google Apps Script Web App — steps below.</div>
+            <ol style="font-size:11.5px;color:var(--text2);line-height:1.9;margin:0 0 .9rem 1.1rem;padding:0;">
+              <li>Create a new Google Sheet (any name).</li>
+              <li>In it: <strong>Extensions → Apps Script</strong>, delete the sample code, paste the script from the "Apps Script Code" box below.</li>
+              <li><strong>Deploy → New deployment → Web app</strong>. Execute as: <strong>Me</strong>. Who has access: <strong>Anyone</strong>.</li>
+              <li>Copy the Web App URL it gives you and paste it below.</li>
+            </ol>
+            <div class="form-group"><label class="form-label">Apps Script Web App URL</label><input class="form-input" type="text" id="sheets-sync-url" placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"></div>
+            <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.9rem;">
+              <button class="btn btn-primary" onclick="saveSheetsSyncSettings()">Save &amp; Enable</button>
+              <button class="btn btn-outline" onclick="disableSheetsSync()">Disable</button>
+              <button class="btn btn-outline" onclick="syncVisitorsToSheet(true)">Sync Now</button>
+            </div>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:.9rem;" id="sheets-sync-info">Not configured yet.</div>
+            <details>
+              <summary style="cursor:pointer;font-size:11.5px;color:var(--brand);font-weight:700;">Apps Script Code (click to expand, then copy)</summary>
+              <pre class="code-block" style="margin-top:.6rem;">function doPost(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName('Visitors') || ss.insertSheet('Visitors');
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['ID','Date','Time','Page','Device','IP Address','City','Region','Country','Referrer','Duration (sec)']);
+  }
+  var data = JSON.parse(e.postData.contents);
+  (data.rows || []).forEach(function(r){ sheet.appendRow(r); });
+  return ContentService.createTextOutput(JSON.stringify({status:'ok', added: (data.rows||[]).length}))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+            </details>
           </div>
         </div>
 
@@ -1306,6 +1466,9 @@ service cloud.firestore {
     match /samarpan_admin_users/{docId} {
       allow read, write: if isAdmin();
     }
+    match /samarpan_login_history/{docId} {
+      allow read, write: if isAdmin();
+    }
     match /{document=**} {
       allow read, write: if false;
     }
@@ -1328,6 +1491,28 @@ service cloud.firestore {
   }
 }</pre>
             <button class="btn btn-primary" onclick="copyRules()" style="margin-top:.75rem;">Copy Rules</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span class="card-title">Storage Rules (Owner Photo Upload)</span><span class="pill pill-brand">New</span></div>
+          <div class="card-body">
+            <p style="font-size:11.5px;color:var(--text2);margin-bottom:.75rem;">Paste in <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--brand);">Firebase → Storage → Rules</a> so the photo-upload button above works.</p>
+            <pre class="code-block">rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /owner-photos/{fileName} {
+      allow read: if true;
+      allow write: if request.auth != null
+        && request.resource.size < 3 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+    match /media/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}</pre>
           </div>
         </div>
       </div>
@@ -1689,7 +1874,8 @@ async function doFirebaseLogin(){
   const btn=document.getElementById('login-btn'),sp=document.getElementById('lspinner'),bt=document.getElementById('lbtn-text');
   btn.disabled=true;sp.classList.add('show');bt.textContent='Signing in…';
   try{
-    await auth.signInWithEmailAndPassword(email,pwd);
+    const cred=await auth.signInWithEmailAndPassword(email,pwd);
+    recordLoginHistory(cred.user);
   }catch(e){
     sp.classList.remove('show');btn.disabled=false;bt.textContent='Sign In';
     const msgs={'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-email':'Enter a valid email.','auth/too-many-requests':'Too many attempts. Reset your password.','auth/invalid-credential':'Invalid email or password.','auth/user-disabled':'Account disabled.'};
@@ -1718,12 +1904,166 @@ function grantAccess(user){
   set$('sb-av-init',ini);set$('sb-admin-name',name);
   const ne=document.getElementById('settings-name');if(ne)ne.value=name;
   const ee=document.getElementById('settings-email');if(ee)ee.value=user.email||'';
+  showLastLoginFromCache(user);
+  const cachedPhoto=localStorage.getItem('owner_photo_'+user.email);
+  if(cachedPhoto)applyOwnerPhoto(cachedPhoto);
+  if(sessionStorage.getItem('login_doc_id'))startSessionRevokeCheck();
   loadSettingsStorage();attachListeners();buildWeeklyChart();loadAdminRole();
 }
 function doLogout(){
   if(!confirm('Sign out of Samarpan Admin?'))return;
   unsubscribers.forEach(u=>u());unsubscribers=[];
+  if(sessionRevokeCheckTimer)clearInterval(sessionRevokeCheckTimer);
   auth.signOut();
+}
+
+// ════════════════════════════════════════════════
+// SECURITY — LOGIN HISTORY, DEVICE TRACKING, OWNER PHOTO
+// ════════════════════════════════════════════════
+let allLoginHistory=[],sessionRevokeCheckTimer=null;
+async function fetchClientGeo(){
+  try{
+    const r=await fetch('https://ipapi.co/json/');
+    if(!r.ok)throw new Error('geo lookup failed');
+    const j=await r.json();
+    return{ip:j.ip||'',city:j.city||'',region:j.region||'',country:j.country_name||''};
+  }catch(e){return{ip:'',city:'',region:'',country:''};}
+}
+function detectDeviceInfo(){
+  const ua=navigator.userAgent;
+  const isMobile=/Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+  let browser='Browser';
+  if(/Edg\//.test(ua))browser='Edge';
+  else if(/Chrome\//.test(ua)&&!/Chromium/.test(ua)&&!/OPR\//.test(ua))browser='Chrome';
+  else if(/Firefox\//.test(ua))browser='Firefox';
+  else if(/Safari\//.test(ua)&&!/Chrome/.test(ua))browser='Safari';
+  else if(/OPR\//.test(ua))browser='Opera';
+  let os='Unknown OS';
+  if(/Windows/.test(ua))os='Windows';
+  else if(/Mac OS X/.test(ua))os='macOS';
+  else if(/Android/.test(ua))os='Android';
+  else if(/iPhone|iPad|iPod/.test(ua))os='iOS';
+  else if(/Linux/.test(ua))os='Linux';
+  return{device:isMobile?'Mobile':'Desktop',browser,os};
+}
+async function recordLoginHistory(user){
+  try{
+    const geo=await fetchClientGeo();
+    const{device,browser,os}=detectDeviceInfo();
+    const sessionId='sess_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
+    sessionStorage.setItem('login_session_id',sessionId);
+    const t=nowIST();
+    const ref=await db.collection('samarpan_login_history').add({
+      email:user.email,sessionId,device,browser,os,
+      ip:geo.ip,city:geo.city,region:geo.region,country:geo.country,
+      revoked:false,date:t.date,time:t.time,timestamp:t.iso
+    });
+    sessionStorage.setItem('login_doc_id',ref.id);
+    localStorage.setItem('last_login_'+user.email,t.date+' at '+t.time+' IST');
+    set$('sb-last-login','Last login: '+t.date+' · '+t.time);
+    startSessionRevokeCheck();
+  }catch(e){console.warn('recordLoginHistory:',e.message);}
+}
+function showLastLoginFromCache(user){
+  const cached=localStorage.getItem('last_login_'+(user?.email||''));
+  set$('sb-last-login',cached?('Last login: '+cached):'Last login: this session');
+}
+function startSessionRevokeCheck(){
+  if(sessionRevokeCheckTimer)clearInterval(sessionRevokeCheckTimer);
+  const docId=sessionStorage.getItem('login_doc_id');
+  if(!docId)return;
+  sessionRevokeCheckTimer=setInterval(async()=>{
+    try{
+      const doc=await db.collection('samarpan_login_history').doc(docId).get();
+      if(doc.exists&&doc.data().revoked){
+        clearInterval(sessionRevokeCheckTimer);
+        alert('This session was signed out remotely from the Security page.');
+        auth.signOut();
+      }
+    }catch(e){}
+  },60000);
+}
+function renderSecurityPage(){
+  if(!currentUser)return;
+  const myDocId=sessionStorage.getItem('login_doc_id');
+  const {device,browser,os}=detectDeviceInfo();
+  const curCard=document.getElementById('security-current-device');
+  if(curCard){
+    curCard.innerHTML=`<div class="sess-device-row">
+      <div class="sess-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17">${device==='Mobile'?'<rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/>':'<rect x="2" y="4" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/>'}</svg></div>
+      <div class="sess-device-info"><div class="sess-device-name">${esc(browser)} on ${esc(os)}</div><div class="sess-device-meta">${esc(currentUser.email)} · Signed in this browser session</div></div>
+      <span class="sess-current-tag">This Device</span>
+    </div>`;
+  }
+  const list=document.getElementById('security-history-list');
+  const mine=allLoginHistory.filter(h=>h.email===currentUser.email);
+  if(list){
+    if(!mine.length){list.innerHTML=`<div style="color:var(--text4);font-size:12px;text-align:center;padding:1rem;">No recorded logins yet — this will populate after your next sign-in.</div>`;}
+    else{
+      list.innerHTML=mine.slice(0,50).map(h=>{
+        const loc=[h.city,h.region,h.country].filter(Boolean).join(', ')||'Location unavailable';
+        const isThis=h._id===myDocId;
+        return `<div class="sess-device-row">
+          <div class="sess-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17">${h.device==='Mobile'?'<rect x="7" y="2" width="10" height="20" rx="2"/>':'<rect x="2" y="4" width="20" height="14" rx="2"/>'}</svg></div>
+          <div class="sess-device-info"><div class="sess-device-name">${esc(h.browser||'Browser')} on ${esc(h.os||'Unknown OS')}</div><div class="sess-device-meta">${esc(loc)} · ${esc(h.ip||'IP unknown')} · ${esc(h.date)} ${esc(h.time)}</div></div>
+          ${isThis?'<span class="sess-current-tag">This Device</span>':h.revoked?'<span class="pill pill-red">Signed Out</span>':`<button class="btn btn-ghost btn-sm" onclick="revokeLoginSession('${esc(h._id)}')">Sign out</button>`}
+        </div>`;
+      }).join('');
+    }
+  }
+  const teamCard=document.getElementById('security-team-card'),teamList=document.getElementById('security-team-history-list');
+  if(teamCard)teamCard.style.display=isOwner()?'':'none';
+  if(teamList&&isOwner()){
+    if(!allLoginHistory.length){teamList.innerHTML=`<div style="color:var(--text4);font-size:12px;text-align:center;padding:1rem;">No login activity recorded yet.</div>`;}
+    else{
+      teamList.innerHTML=allLoginHistory.slice(0,80).map(h=>{
+        const loc=[h.city,h.region,h.country].filter(Boolean).join(', ')||'Location unavailable';
+        return `<div class="sess-device-row">
+          <div class="sess-device-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/></svg></div>
+          <div class="sess-device-info"><div class="sess-device-name">${esc(h.email)}</div><div class="sess-device-meta">${esc(h.browser||'')} on ${esc(h.os||'')} · ${esc(loc)} · ${esc(h.date)} ${esc(h.time)}</div></div>
+          ${h.revoked?'<span class="pill pill-red">Signed Out</span>':`<button class="btn btn-ghost btn-sm" onclick="revokeLoginSession('${esc(h._id)}')">Sign out</button>`}
+        </div>`;
+      }).join('');
+    }
+  }
+  set$('sb-sec-count',mine.length||'0');
+}
+async function revokeLoginSession(docId){
+  if(!confirm('Sign out this device? It will be logged out within ~60 seconds.'))return;
+  try{await db.collection('samarpan_login_history').doc(docId).update({revoked:true});showToast('✅ That session will be signed out shortly');}
+  catch(e){showToast('❌ '+e.message,true);}
+}
+function exportLoginHistoryCSV(){
+  const rows=allLoginHistory.filter(h=>isOwner()||h.email===currentUser?.email).map(h=>[h.email,h.browser,h.os,h.device,h.ip,h.city,h.region,h.country,h.date,h.time,h.revoked?'Signed Out':'Active']);
+  csvDown([['Email','Browser','OS','Device','IP','City','Region','Country','Date','Time','Status'],...rows],`login-history-${nowIST().date}.csv`);
+}
+
+// Owner / admin profile photo — stored in Firebase Storage under owner-photos/{email}
+async function uploadOwnerPhoto(file){
+  if(!file||!currentUser)return;
+  if(!storage){showToast('Storage not available — check Firebase config',true);return;}
+  if(file.size>3*1024*1024){showToast('Photo must be under 3MB',true);return;}
+  if(!file.type.startsWith('image/')){showToast('Please choose an image file',true);return;}
+  showToast('Uploading photo…');
+  try{
+    const safeEmail=currentUser.email.replace(/[^a-zA-Z0-9]/g,'_');
+    const ref=storage.ref('owner-photos/'+safeEmail);
+    await ref.put(file);
+    const url=await ref.getDownloadURL();
+    await db.collection('samarpan_admin_users').doc(currentUser.email).set({photoURL:url},{merge:true});
+    localStorage.setItem('owner_photo_'+currentUser.email,url);
+    applyOwnerPhoto(url);
+    showToast('✅ Photo updated');
+  }catch(e){showToast('❌ '+e.message,true);}
+}
+function applyOwnerPhoto(url){
+  if(!url)return;
+  document.querySelectorAll('#sb-av-init').forEach(el=>{
+    el.innerHTML=`<img src="${esc(url)}" alt="Admin photo" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+  });
+  const prev=document.getElementById('owner-photo-preview'),ph=document.getElementById('owner-photo-placeholder');
+  if(prev){prev.src=url;prev.style.display='';}
+  if(ph)ph.style.display='none';
 }
 
 // ════════════════════════════════════════════════
@@ -1746,7 +2086,8 @@ function attachListeners(){
     {col:'samarpan_testimonials',set:d=>{allTestimonials=d;}},
     {col:'samarpan_faqs',        set:d=>{allFaqs=d;}},
     {col:'samarpan_admin_notes', set:d=>{allNotes=d;}},
-    {col:'samarpan_admin_users', set:d=>{allAdminUsers=d;renderTeam();}},
+    {col:'samarpan_admin_users', set:d=>{allAdminUsers=d;renderTeam();const me=d.find(a=>a.email===currentUser?.email);if(me&&me.photoURL)applyOwnerPhoto(me.photoURL);}},
+    {col:'samarpan_login_history',set:d=>{allLoginHistory=d;set$('sb-sec-count',d.filter(h=>h.email===currentUser?.email).length||'0');if(document.getElementById('page-security')?.classList.contains('active'))renderSecurityPage();}},
   ];
   cols.forEach(({col,set})=>{
     const tryQ=ordered=>{
@@ -2006,7 +2347,14 @@ function renderNewsletter(){
   set$('ns-total',allNewsletter.length);set$('ns-today',tod);set$('ns-month',mon);
   const tb=document.getElementById('newsletter-body');
   if(!allNewsletter.length){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No subscribers yet.</td></tr>`;return;}
-  tb.innerHTML=allNewsletter.map((s,i)=>{const ist=parseIST(s.timestamp||s.date);return`<tr><td style="color:var(--text4);font-size:11px;">${i+1}</td><td style="font-weight:700;color:var(--text);">${esc(s.email)}</td><td><span class="pill pill-green">Yes</span></td><td class="td-date">${esc(s.date||ist.date)}</td><td class="td-time">${esc(s.time||ist.time)}</td></tr>`;}).join('');
+  tb.innerHTML=allNewsletter.map((s,i)=>{const ist=parseIST(s.timestamp||s.date);return`<tr onclick="openNewsletterDetail('${esc(s._id)}')" style="cursor:pointer;"><td style="color:var(--text4);font-size:11px;">${i+1}</td><td style="font-weight:700;color:var(--text);">${esc(s.email)}</td><td><span class="pill pill-green">Yes</span></td><td class="td-date">${esc(s.date||ist.date)}</td><td class="td-time">${esc(s.time||ist.time)}</td></tr>`;}).join('');
+}
+function openNewsletterDetail(id){
+  const s=allNewsletter.find(x=>x._id===id);if(!s){showToast('Record not found',true);return;}
+  const ist=parseIST(s.timestamp||s.date);
+  const rows=detailRow('Email',s.email)+detailRow('Opted In','Yes')+detailRow('Date',s.date||ist.date)+detailRow('Time (IST)',s.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">${s.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(s.email)}">✉️ Email</a>`:''}</div>`;
+  openDetailModal('Newsletter Subscriber',rows);
 }
 
 // ════════════════════════════════════════════════
@@ -2018,7 +2366,14 @@ function renderReferrals(){
   set$('rs-section',allReferrals.filter(r=>r.channel==='referral_section').length);
   const tb=document.getElementById('referrals-body');
   if(!allReferrals.length){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No referrals yet.</td></tr>`;return;}
-  tb.innerHTML=allReferrals.map(r=>{const ist=parseIST(r.timestamp||r.date);return`<tr><td style="font-weight:600;color:var(--text);">${esc(r.email||'—')}</td><td>${esc(r.channel||'—')}</td><td>${esc(r.action||'—')}</td><td class="td-date">${esc(r.date||ist.date)}</td><td class="td-time">${esc(r.time||ist.time)}</td></tr>`;}).join('');
+  tb.innerHTML=allReferrals.map(r=>{const ist=parseIST(r.timestamp||r.date);return`<tr onclick="openReferralDetail('${esc(r._id)}')" style="cursor:pointer;"><td style="font-weight:600;color:var(--text);">${esc(r.email||'—')}</td><td>${esc(r.channel||'—')}</td><td>${esc(r.action||'—')}</td><td class="td-date">${esc(r.date||ist.date)}</td><td class="td-time">${esc(r.time||ist.time)}</td></tr>`;}).join('');
+}
+function openReferralDetail(id){
+  const r=allReferrals.find(x=>x._id===id);if(!r){showToast('Record not found',true);return;}
+  const ist=parseIST(r.timestamp||r.date);
+  const rows=detailRow('Email',r.email)+detailRow('Channel',r.channel)+detailRow('Action',r.action)+detailRow('Date',r.date||ist.date)+detailRow('Time (IST)',r.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">${r.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(r.email)}">✉️ Email</a>`:''}</div>`;
+  openDetailModal('Referral Details',rows);
 }
 
 // ════════════════════════════════════════════════
@@ -2033,7 +2388,14 @@ function renderQuiz(){
   renderDoshaChart(vata,pitta,kapha);
   const tb=document.getElementById('quiz-body');
   if(!allQuiz.length){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No quiz results yet.</td></tr>`;return;}
-  tb.innerHTML=allQuiz.map(q=>{const ist=parseIST(q.timestamp||q.date);return`<tr><td class="td-name">${esc(q.name||'Anonymous')}</td><td>${esc(q.email||'—')}</td><td>${doshaPill(q.dosha)}</td><td class="td-date">${esc(q.date||ist.date)}</td><td class="td-time">${esc(q.time||ist.time)}</td></tr>`;}).join('');
+  tb.innerHTML=allQuiz.map(q=>{const ist=parseIST(q.timestamp||q.date);return`<tr onclick="openQuizDetail('${esc(q._id)}')" style="cursor:pointer;"><td class="td-name">${esc(q.name||'Anonymous')}</td><td>${esc(q.email||'—')}</td><td>${doshaPill(q.dosha)}</td><td class="td-date">${esc(q.date||ist.date)}</td><td class="td-time">${esc(q.time||ist.time)}</td></tr>`;}).join('');
+}
+function openQuizDetail(id){
+  const q=allQuiz.find(x=>x._id===id);if(!q){showToast('Record not found',true);return;}
+  const ist=parseIST(q.timestamp||q.date);
+  const rows=detailRow('Name',q.name)+detailRow('Email',q.email)+detailRow('Dosha',q.dosha)+detailRow('Date',q.date||ist.date)+detailRow('Time (IST)',q.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">${q.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(q.email)}">✉️ Email</a>`:''}</div>`;
+  openDetailModal('Quiz Result',rows);
 }
 
 // ════════════════════════════════════════════════
@@ -2045,7 +2407,17 @@ function renderYoga(){
   set$('yg-month',allYoga.filter(y=>y.date&&y.date.startsWith(monthStr())).length);
   const tb=document.getElementById('yoga-body');
   if(!allYoga.length){tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No yoga signups yet.</td></tr>`;return;}
-  tb.innerHTML=allYoga.map(y=>{const ist=parseIST(y.timestamp||y.date);return`<tr><td class="td-name">${esc(y.name||'—')}</td><td>${esc(y.email||'—')}</td><td>${esc(y.mobile||'—')}</td><td><span class="pill pill-sage">Free</span></td><td class="td-date">${esc(y.date||ist.date)}</td><td class="td-time">${esc(y.time||ist.time)}</td></tr>`;}).join('');
+  tb.innerHTML=allYoga.map(y=>{const ist=parseIST(y.timestamp||y.date);return`<tr onclick="openYogaDetail('${esc(y._id)}')" style="cursor:pointer;"><td class="td-name">${esc(y.name||'—')}</td><td>${esc(y.email||'—')}</td><td>${esc(y.mobile||'—')}</td><td><span class="pill pill-sage">Free</span></td><td class="td-date">${esc(y.date||ist.date)}</td><td class="td-time">${esc(y.time||ist.time)}</td></tr>`;}).join('');
+}
+function openYogaDetail(id){
+  const y=allYoga.find(x=>x._id===id);if(!y){showToast('Record not found',true);return;}
+  const ist=parseIST(y.timestamp||y.date);
+  const rows=detailRow('Name',y.name)+detailRow('Email',y.email)+detailRow('Mobile',y.mobile)+detailRow('Type','Free Session')+detailRow('Date',y.date||ist.date)+detailRow('Time (IST)',y.time||ist.time)
+    +`<div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap;">
+        ${y.mobile?`<button class="btn btn-outline btn-sm" onclick="openWA('${esc(y.mobile)}')">💬 WhatsApp</button>`:''}
+        ${y.email?`<a class="btn btn-outline btn-sm" href="mailto:${esc(y.email)}">✉️ Email</a>`:''}
+      </div>`;
+  openDetailModal('Yoga Signup',rows);
 }
 
 // ════════════════════════════════════════════════
@@ -2296,14 +2668,142 @@ function renderVisitors(){
   const devEl=document.getElementById('device-breakdown');
   if(devEl){const mobile=allVisitors.filter(v=>v.device==='Mobile').length;const desktop=allVisitors.length-mobile;const total=allVisitors.length||1;devEl.innerHTML=`<div style="margin-bottom:1rem;"><div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span style="font-size:12px;color:var(--text2);">📱 Mobile</span><span style="font-size:12px;font-weight:700;color:var(--text);">${mobile} (${Math.round((mobile/total)*100)}%)</span></div><div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(mobile/total)*100}%;background:var(--gold);border-radius:4px;"></div></div></div><div><div style="display:flex;justify-content:space-between;margin-bottom:.3rem;"><span style="font-size:12px;color:var(--text2);">🖥️ Desktop</span><span style="font-size:12px;font-weight:700;color:var(--text);">${desktop} (${Math.round((desktop/total)*100)}%)</span></div><div style="height:6px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="height:100%;width:${(desktop/total)*100}%;background:var(--blue);border-radius:4px;"></div></div></div>`;}
 
-  const tb=document.getElementById('visitors-body');
-  if(!tb)return;
-  if(!allVisitors.length){tb.innerHTML=`<tr><td colspan="8" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No visitor sessions yet.</td></tr>`;return;}
-  tb.innerHTML=allVisitors.slice(0,150).map(v=>{const ist=parseIST(v.timestamp||v.date);const loc=[v.city,v.region,v.country].filter(Boolean).join(', ')||'—';return`<tr><td style="font-size:9.5px;color:var(--text4);font-family:monospace;">${esc((v._id||'—').slice(0,12))}</td><td class="td-date">${esc(v.date||ist.date)}</td><td class="td-time">${esc(v.time||ist.time)}</td><td style="font-weight:600;color:var(--text);font-size:11.5px;">${esc(v.page||'/')}</td><td><span class="pill ${v.device==='Mobile'?'pill-gold':'pill-blue'}">${esc(v.device||'Desktop')}</span></td><td style="font-size:10.5px;color:var(--text3);font-family:monospace;">${esc(v.ip||'—')}</td><td style="font-size:10.5px;color:var(--text3);">${esc(loc)}</td><td style="font-size:10.5px;color:var(--text3);">${esc(v.referrer||'direct')}</td></tr>`;}).join('');
+  renderVisitorDayGroups();
 }
 
 // ════════════════════════════════════════════════
-// WEEKLY CHART
+// VISITOR SESSIONS — grouped by day, load more per day
+// ════════════════════════════════════════════════
+let visitorDayShown={}; // {dateStr: howManyRowsShown}
+const VIS_PAGE_SIZE=15;
+function fmtDuration(sec){
+  if(sec===undefined||sec===null||sec==='')return'—';
+  sec=Number(sec);if(isNaN(sec)||sec<=0)return'—';
+  if(sec<60)return sec+'s';
+  const m=Math.floor(sec/60),s=Math.round(sec%60);
+  return m+'m '+s+'s';
+}
+function renderVisitorDayGroups(){
+  const cont=document.getElementById('visitors-daygroups');
+  if(!cont)return;
+  if(!allVisitors.length){cont.innerHTML=`<div style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No visitor sessions yet. Add the tracking snippet to your site's pages to start collecting data.</div>`;return;}
+  // Group by date
+  const byDate={};
+  allVisitors.forEach(v=>{const ist=parseIST(v.timestamp||v.date);const d=v.date||ist.date||'Unknown';(byDate[d]=byDate[d]||[]).push(v);});
+  const dates=Object.keys(byDate).sort((a,b)=>b.localeCompare(a)); // newest day first
+  cont.innerHTML=dates.map(dateStr=>{
+    const rows=byDate[dateStr];
+    // newest first within the day
+    rows.sort((a,b)=>(b.time||'').localeCompare(a.time||''));
+    const shown=visitorDayShown[dateStr]||VIS_PAGE_SIZE;
+    const visible=rows.slice(0,shown);
+    const uniqueIps=new Set(rows.map(r=>r.ip).filter(Boolean)).size;
+    const durations=rows.map(r=>Number(r.duration)).filter(n=>!isNaN(n)&&n>0);
+    const avgDur=durations.length?Math.round(durations.reduce((a,b)=>a+b,0)/durations.length):null;
+    const isToday=dateStr===todayStr();
+    return `<div class="vday-group">
+      <div class="vday-head">
+        <div class="vday-head-left">
+          <span class="vday-date">${isToday?'Today · ':''}${esc(dateStr)}</span>
+          <span class="pill ${isToday?'pill-green':'pill-gray'}">${rows.length} visit${rows.length===1?'':'s'}</span>
+        </div>
+        <div class="vday-stats">${uniqueIps} unique · avg time on site ${avgDur?fmtDuration(avgDur):'—'}</div>
+      </div>
+      <div style="overflow-x:auto;"><table class="tbl"><thead><tr><th>ID</th><th>Time</th><th>Page</th><th>Device</th><th>IP Address</th><th>Location</th><th>Referrer</th><th>Time Spent</th></tr></thead><tbody>
+        ${visible.map(v=>{const loc=[v.city,v.region,v.country].filter(Boolean).join(', ')||'—';return`<tr><td data-label="ID" style="font-size:9.5px;color:var(--text4);font-family:monospace;">${esc((v._id||'—').slice(0,10))}</td><td data-label="Time" class="td-time">${esc(v.time||'—')}</td><td data-label="Page" style="font-weight:600;color:var(--text);font-size:11.5px;">${esc(v.page||'/')}</td><td data-label="Device"><span class="pill ${v.device==='Mobile'?'pill-gold':'pill-blue'}">${esc(v.device||'Desktop')}</span></td><td data-label="IP" style="font-size:10.5px;color:var(--text3);font-family:monospace;">${esc(v.ip||'—')}</td><td data-label="Location" style="font-size:10.5px;color:var(--text3);">${esc(loc)}</td><td data-label="Referrer" style="font-size:10.5px;color:var(--text3);">${esc(v.referrer||'direct')}</td><td data-label="Duration" style="font-size:10.5px;color:var(--text3);">${fmtDuration(v.duration)}</td></tr>`;}).join('')}
+      </tbody></table></div>
+      ${rows.length>shown?`<button class="vday-loadmore" onclick="loadMoreVisitorDay('${esc(dateStr)}')">Load more (${rows.length-shown} remaining) ↓</button>`:''}
+    </div>`;
+  }).join('');
+}
+function loadMoreVisitorDay(dateStr){visitorDayShown[dateStr]=(visitorDayShown[dateStr]||VIS_PAGE_SIZE)+VIS_PAGE_SIZE;renderVisitorDayGroups();}
+async function purgeOldVisitors(){
+  if(!isOwner()){showToast('Only Owners can run cleanup',true);return;}
+  document.getElementById('confirm-modal-msg').textContent='Permanently delete visitor session logs older than 90 days? This frees up Firestore storage and cannot be undone. (Export CSV first if you want a backup.)';
+  document.getElementById('confirm-modal-btn').onclick=async()=>{
+    closeConfirmModal();
+    const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
+    const cutoffStr=cutoff.toISOString().split('T')[0];
+    const old=allVisitors.filter(v=>(v.date||'')<cutoffStr);
+    if(!old.length){showToast('Nothing older than 90 days to clean up');return;}
+    showToast('Cleaning up '+old.length+' old records…');
+    try{
+      let batch=db.batch(),count=0;
+      for(const v of old){
+        batch.delete(db.collection('homepage_visitors').doc(v._id));
+        count++;
+        if(count%400===0){await batch.commit();batch=db.batch();}
+      }
+      await batch.commit();
+      showToast('✅ Cleaned up '+old.length+' old visitor records');
+    }catch(e){showToast('❌ '+e.message,true);}
+  };
+  document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// ════════════════════════════════════════════════
+// GOOGLE SHEETS SYNC — pushes visitor sessions to a Sheet every 60s
+// ════════════════════════════════════════════════
+let sheetsSyncUrl='',sheetsSyncEnabled=false,sheetsSyncTimer=null,sheetsSyncBusy=false;
+function loadSheetsSyncStorage(){
+  sheetsSyncUrl=localStorage.getItem('sheets_sync_url')||'';
+  sheetsSyncEnabled=localStorage.getItem('sheets_sync_enabled')==='1';
+  const urlEl=document.getElementById('sheets-sync-url');if(urlEl)urlEl.value=sheetsSyncUrl;
+  updateSheetsSyncUI();
+  if(sheetsSyncEnabled&&sheetsSyncUrl)startSheetsSync();
+}
+function updateSheetsSyncUI(){
+  const pill=document.getElementById('sheets-sync-status-pill');
+  if(pill){pill.textContent=sheetsSyncEnabled?'Active':'Off';pill.className='pill '+(sheetsSyncEnabled?'pill-green':'pill-gray');}
+  const info=document.getElementById('sheets-sync-info');
+  if(info){
+    const last=localStorage.getItem('sheets_sync_last');
+    info.textContent=sheetsSyncEnabled
+      ?('Syncing every 60s. '+(last?('Last synced: '+last):'Waiting for first sync…'))
+      :'Not configured yet.';
+  }
+}
+function saveSheetsSyncSettings(){
+  const url=document.getElementById('sheets-sync-url').value.trim();
+  if(!url||!url.startsWith('https://script.google.com/')){showToast('Paste a valid Apps Script Web App URL (starts with https://script.google.com/)',true);return;}
+  sheetsSyncUrl=url;sheetsSyncEnabled=true;
+  localStorage.setItem('sheets_sync_url',url);localStorage.setItem('sheets_sync_enabled','1');
+  updateSheetsSyncUI();showToast('✅ Sheets sync enabled — first batch will run within a minute');
+  startSheetsSync();
+}
+function disableSheetsSync(){
+  sheetsSyncEnabled=false;localStorage.setItem('sheets_sync_enabled','0');
+  if(sheetsSyncTimer){clearInterval(sheetsSyncTimer);sheetsSyncTimer=null;}
+  updateSheetsSyncUI();showToast('Sheets sync disabled');
+}
+function startSheetsSync(){
+  if(sheetsSyncTimer)clearInterval(sheetsSyncTimer);
+  syncVisitorsToSheet();
+  sheetsSyncTimer=setInterval(syncVisitorsToSheet,60000);
+}
+async function syncVisitorsToSheet(manual){
+  if(!sheetsSyncEnabled||!sheetsSyncUrl||sheetsSyncBusy)return;
+  const unsynced=allVisitors.filter(v=>!v.sheetSynced);
+  if(!unsynced.length){if(manual)showToast('Nothing new to sync — already up to date');return;}
+  sheetsSyncBusy=true;
+  try{
+    const rows=unsynced.map(v=>{const ist=parseIST(v.timestamp||v.date);return[v._id,v.date||ist.date,v.time||ist.time,v.page||'',v.device||'',v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer||'',v.duration||''];});
+    await fetch(sheetsSyncUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({rows})});
+    let batch=db.batch(),count=0;
+    for(const v of unsynced){
+      batch.update(db.collection('homepage_visitors').doc(v._id),{sheetSynced:true});
+      count++;
+      if(count%400===0){await batch.commit();batch=db.batch();}
+    }
+    await batch.commit();
+    localStorage.setItem('sheets_sync_last',nowIST().date+' '+nowIST().time);
+    updateSheetsSyncUI();
+    if(manual)showToast('✅ Synced '+unsynced.length+' record(s) to Google Sheets');
+  }catch(e){
+    console.warn('Sheets sync failed:',e.message);
+    if(manual)showToast('❌ Sync failed: '+e.message,true);
+  }finally{sheetsSyncBusy=false;}
+}
 // ════════════════════════════════════════════════
 function buildWeeklyChart(){
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -2489,7 +2989,7 @@ function saveEmailJSSettings(){[['ejs_service','ejs-service'],['ejs_template','e
 // ════════════════════════════════════════════════
 // SETTINGS
 // ════════════════════════════════════════════════
-function loadSettingsStorage(){[['ejs_service','ejs-service'],['ejs_template','ejs-template'],['ejs_key','ejs-key'],['ejs_to','ejs-to']].forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.value=localStorage.getItem(k)||'';});}
+function loadSettingsStorage(){[['ejs_service','ejs-service'],['ejs_template','ejs-template'],['ejs_key','ejs-key'],['ejs_to','ejs-to']].forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.value=localStorage.getItem(k)||'';});loadSheetsSyncStorage();}
 function saveProfileSettings(){const name=document.getElementById('settings-name').value.trim();if(!name){showToast('Enter your name',true);return;}localStorage.setItem('admin_name',name);set$('sb-av-init',name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2));set$('sb-admin-name',name);if(currentUser)currentUser.updateProfile({displayName:name}).catch(()=>{});showToast('✅ Profile saved!');}
 function copyRules(){const txt=document.querySelector('.code-block')?.textContent||'';navigator.clipboard.writeText(txt).then(()=>showToast('✅ Rules copied!')).catch(()=>showToast('Select and copy manually',true));}
 
@@ -2508,7 +3008,7 @@ function pdfDown(headers,rows,fn,title){
 // Row builders — single source of truth reused by CSV / Excel / PDF
 function leadsRows(){return{headers:['Name','Email','Phone','Location','Service','Priority','Type','Message','Date','Time IST'],rows:allLeads.map(l=>{const ist=parseIST(l.timestamp);return[l.name,l.email,l.phone,l.location,l.service,l.priority,l.lead_type,l.message,l.date||ist.date,l.time||ist.time];})};}
 function newsletterRows(){return{headers:['Email','Date','Time IST'],rows:allNewsletter.map(s=>{const ist=parseIST(s.timestamp);return[s.email,s.date||ist.date,s.time||ist.time];})};}
-function visitorsRows(){return{headers:['ID','Date','Time IST','Page','Device','IP Address','City','Region','Country','Referrer'],rows:allVisitors.map(v=>{const ist=parseIST(v.timestamp);return[v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer];})};}
+function visitorsRows(){return{headers:['ID','Date','Time IST','Page','Device','IP Address','City','Region','Country','Referrer','Duration (sec)'],rows:allVisitors.map(v=>{const ist=parseIST(v.timestamp);return[v._id,v.date||ist.date,v.time||ist.time,v.page,v.device,v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer,v.duration||''];})};}
 function bookingsRows(){return{headers:['Name','Email','Phone','Service','Message','Date','Time IST'],rows:allBookings.map(b=>{const ist=parseIST(b.timestamp);return[b.name,b.email,b.phone,b.service,b.message,b.date||ist.date,b.time||ist.time];})};}
 function referralsRows(){return{headers:['Email','Channel','Action','Date','Time IST'],rows:allReferrals.map(r=>{const ist=parseIST(r.timestamp);return[r.email,r.channel,r.action,r.date||ist.date,r.time||ist.time];})};}
 function quizRows(){return{headers:['Name','Email','Dosha','Date','Time IST'],rows:allQuiz.map(q=>{const ist=parseIST(q.timestamp);return[q.name,q.email,q.dosha,q.date||ist.date,q.time||ist.time];})};}
@@ -2564,7 +3064,7 @@ function showPage(id,el){
   const page=document.getElementById(`page-${id}`);if(page)page.classList.add('active');
   if(el)el.classList.add('active');
   else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});}
-  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',security:'Security',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status'};
   set$('topbar-title',titles[id]||'Dashboard');
   closeSidebar();
   // Trigger chart renders when switching to analytics/visitor pages
@@ -2573,6 +3073,12 @@ function showPage(id,el){
   if(id==='quiz')renderQuiz();
   if(id==='media')loadMediaLibrary();
   if(id==='status')runStatusCheck();
+  if(id==='security')renderSecurityPage();
+  setMobileTab(['dashboard','leads','bookings','visitors'].includes(id)?id:'more');
+}
+function setMobileTab(key){
+  document.querySelectorAll('#mobile-tabbar .mtab').forEach(b=>b.classList.remove('active'));
+  const btn=document.getElementById('mtab-'+key);if(btn)btn.classList.add('active');
 }
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarOverlay').classList.toggle('open');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');}
