@@ -45,7 +45,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@1.22.0"></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
@@ -1405,7 +1405,7 @@
     </div>
   </div>
   <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
-    <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
+    <span>&copy; <span id="copyrightYear">2026</span> Samarpan. All Rights Reserved.</span>
     <div class="flex gap-6">
       <a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
       <a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
@@ -2134,6 +2134,9 @@
 <!-- MAIN UI SCRIPTS -->
 <script>
   lucide.createIcons();
+
+  /* Keep footer copyright year current automatically, no manual edits needed */
+  (function(){ var y=document.getElementById('copyrightYear'); if(y) y.textContent=new Date().getFullYear(); })();
 
   /* Loader */
   window.addEventListener('load', function() {
