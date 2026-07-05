@@ -67,7 +67,7 @@
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "Do I need to be flexible to start yoga?", "acceptedAnswer": { "@type": "Answer", "text": "No — flexibility is a result of practice, not a requirement to begin. Every asana can be modified with props or gentler variations, and our practitioners tailor sessions to your current body and goals." } },
-      { "@type": "Question", "name": "Is yoga backed by scientific research?", "acceptedAnswer": { "@type": "Answer", "text": "A growing body of research studies yoga's effects on stress, flexibility, cardiovascular markers and mental wellbeing. Evidence quality varies by outcome — our Research Center shares studies alongside their limitations so you can weigh them for yourself." } },
+      { "@type": "Question", "name": "Is yoga backed by scientific research?", "acceptedAnswer": { "@type": "Answer", "text": "A growing body of research studies yoga's effects on stress, flexibility, cardiovascular markers and mental wellbeing. Evidence quality varies by outcome, and we're happy to share relevant studies and their limitations if you'd like to look deeper." } },
       { "@type": "Question", "name": "Can yoga be practised alongside medical treatment?", "acceptedAnswer": { "@type": "Answer", "text": "Often yes, as a complement to conventional care — but always inform your practitioner of any medical conditions, injuries or pregnancy, and never stop or change a prescribed treatment without speaking to your doctor first." } },
       { "@type": "Question", "name": "Which yoga style is right for me?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on your goals and energy — calming styles like Yin or Restorative suit stress and sleep concerns, while dynamic styles like Vinyasa or Ashtanga build strength and stamina. Our quick check-in and a personal consultation can help you choose." } }
     ]
@@ -154,8 +154,11 @@
 
     /* SECTION PHOTOS */
     .section-photo{position:relative;overflow:hidden;border-radius:6px;}
-    .section-photo img{width:100%;height:100%;object-fit:cover;transition:transform 6s ease;display:block;}
-    .section-photo:hover img{transform:scale(1.05);}
+    .section-photo img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.14);filter:blur(9px);transition:transform 1.5s cubic-bezier(.22,1,.36,1),filter 1.2s ease;}
+    .section-photo.visible img{transform:scale(1);filter:blur(0);}
+    .section-photo:hover img{transform:scale(1.06);}
+    .photo-caption{opacity:0;transform:translateY(12px);transition:opacity .7s ease .35s,transform .7s ease .35s;}
+    .section-photo.visible .photo-caption{opacity:1;transform:translateY(0);}
     .photo-caption{position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.4rem;background:linear-gradient(to top,rgba(0,0,0,.55),transparent);}
     .photo-caption span{font-family:'Lato',sans-serif;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#fff;font-weight:700;}
 
@@ -222,6 +225,31 @@
     .herb-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:1.5rem;transition:border-color .3s,transform .3s;}
     .herb-card:hover{border-color:#C5A059;transform:translateY(-3px);}
     .herb-tag{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:.2rem .55rem;border-radius:3px;background:rgba(74,93,79,.1);color:var(--sage,#4A5D4F);margin:0 .3rem .3rem 0;}
+
+    /* EIGHT LIMBS PATH */
+    .limb-path{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem;}
+    @media(max-width:900px){.limb-path{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:520px){.limb-path{grid-template-columns:1fr;}}
+    .limb-card{position:relative;background:var(--card-bg);border:1px solid var(--border);border-left:3px solid #D95D39;border-radius:6px;padding:1.6rem 1.4rem 1.4rem;transition:transform .3s,box-shadow .3s;overflow:hidden;}
+    .limb-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.08);}
+    .limb-num{position:absolute;top:.6rem;right:.9rem;font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;color:var(--border);line-height:1;opacity:.7;}
+
+    /* YOGA STYLES — grouped by intensity */
+    .style-group-head{display:flex;align-items:center;gap:.6rem;margin-bottom:1.1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border);}
+    .style-group-head .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+    .style-group-head h4{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--text);}
+    .style-card{position:relative;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:1.3rem 1.2rem;margin-bottom:.85rem;transition:transform .3s,border-color .3s,box-shadow .3s;overflow:hidden;}
+    .style-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--style-accent,#D95D39);transform:scaleY(0);transform-origin:top;transition:transform .35s ease;}
+    .style-card:hover{transform:translateX(4px);box-shadow:0 10px 26px rgba(0,0,0,.07);}
+    .style-card:hover::before{transform:scaleY(1);}
+    .style-card .icon-wrap{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--style-accent-soft,rgba(217,93,57,.1));color:var(--style-accent,#D95D39);}
+
+    /* SPECTRUM ITEM — replaces plain text value-card in Practice Spectrum */
+    .spectrum-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;text-align:center;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:1.4rem 1rem;transition:transform .3s,border-color .3s;}
+    .spectrum-item:hover{transform:translateY(-3px);border-color:#D95D39;}
+    .spectrum-item .icon-wrap{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(217,93,57,.1);color:#D95D39;}
+    .spectrum-item h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
+
     .faq-item{border-bottom:1px solid var(--border);}
     .faq-question{width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;text-align:left;padding:1.3rem 0;background:none;border:none;cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);}
     .faq-question .chev{transition:transform .3s;color:#D95D39;flex-shrink:0;}
@@ -299,7 +327,7 @@
 <!-- HERO -->
 <header class="relative w-full overflow-hidden flex items-center" style="min-height:88vh;" role="banner">
   <div class="absolute inset-0 z-0">
-    <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=2064&auto=format&fit=crop"
+    <img src="images/yoga/hero.webp"
          alt="Yoga asana practice at sunrise" loading="eager" fetchpriority="high"
          class="w-full h-full object-cover hero-img">
   </div>
@@ -319,8 +347,8 @@
         <a href="#booking" onclick="openForm();gaEvent('click','CTA','Hero Book Session')" class="cta-btn inline-flex items-center gap-2 px-8 py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm shadow-lg">
           <i data-lucide="calendar" class="w-4 h-4"></i> Book a Session
         </a>
-        <a href="#research" class="inline-flex items-center gap-2 px-8 py-3.5 border border-white/25 text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay">
-          Explore Research
+        <a href="#eight-limbs" class="inline-flex items-center gap-2 px-8 py-3.5 border border-white/25 text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay">
+          Eight Limbs of Yoga
         </a>
         <a href="#dosha" class="inline-flex items-center gap-2 px-8 py-3.5 border border-white/25 text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay">
           Find Your Practice
@@ -352,7 +380,7 @@
       </p>
     </div>
     <div class="section-photo fade-up mb-14 mx-auto" style="height:380px;max-width:1000px;">
-      <img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1800&auto=format&fit=crop" alt="Guided yoga asana practice in a studio" loading="lazy">
+      <img src="images/yoga/about-yoga.webp" alt="Guided yoga asana practice in a studio" loading="lazy">
       <div class="photo-caption"><span>Guided Practice &middot; Asana Alignment</span></div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up">
@@ -416,78 +444,78 @@
     <div class="fade-up">
       <div class="spectrum-card active" data-panel="flexibility">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Tight Hips &amp; Hamstrings</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Reduced Range of Motion</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Postural Imbalance</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Sedentary Stiffness</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="activity" class="w-4 h-4"></i></div><h4>Tight Hips &amp; Hamstrings</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="activity" class="w-4 h-4"></i></div><h4>Reduced Range of Motion</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="activity" class="w-4 h-4"></i></div><h4>Postural Imbalance</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="activity" class="w-4 h-4"></i></div><h4>Sedentary Stiffness</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="joint">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Lower Back Pain</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Cervical &amp; Neck Stiffness</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Knee &amp; Joint Support</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Sciatica</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="bone" class="w-4 h-4"></i></div><h4>Lower Back Pain</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="bone" class="w-4 h-4"></i></div><h4>Cervical &amp; Neck Stiffness</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="bone" class="w-4 h-4"></i></div><h4>Knee &amp; Joint Support</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="bone" class="w-4 h-4"></i></div><h4>Sciatica</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="mental">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Chronic Stress</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Anxiety</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Burnout</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Emotional Overwhelm</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="brain" class="w-4 h-4"></i></div><h4>Chronic Stress</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="brain" class="w-4 h-4"></i></div><h4>Anxiety</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="brain" class="w-4 h-4"></i></div><h4>Burnout</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="brain" class="w-4 h-4"></i></div><h4>Emotional Overwhelm</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="women">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">PCOS Support</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Menstrual Discomfort</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Menopause Transition</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Hormonal Balance</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="heart" class="w-4 h-4"></i></div><h4>PCOS Support</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="heart" class="w-4 h-4"></i></div><h4>Menstrual Discomfort</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="heart" class="w-4 h-4"></i></div><h4>Menopause Transition</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="heart" class="w-4 h-4"></i></div><h4>Hormonal Balance</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="metabolic">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Weight Management</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Sluggish Metabolism</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Blood Sugar Support</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Digestive Sluggishness</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="flame" class="w-4 h-4"></i></div><h4>Weight Management</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="flame" class="w-4 h-4"></i></div><h4>Sluggish Metabolism</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="flame" class="w-4 h-4"></i></div><h4>Blood Sugar Support</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="flame" class="w-4 h-4"></i></div><h4>Digestive Sluggishness</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="sleep">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Insomnia</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Restless Sleep</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Fatigue</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Nervous System Recovery</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="moon" class="w-4 h-4"></i></div><h4>Insomnia</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="moon" class="w-4 h-4"></i></div><h4>Restless Sleep</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="moon" class="w-4 h-4"></i></div><h4>Fatigue</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="moon" class="w-4 h-4"></i></div><h4>Nervous System Recovery</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="respiratory">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Shallow Breathing</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Asthma Support</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Lung Capacity</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="wind" class="w-4 h-4"></i></div><h4>Shallow Breathing</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="wind" class="w-4 h-4"></i></div><h4>Asthma Support</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="wind" class="w-4 h-4"></i></div><h4>Lung Capacity</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="focus">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Poor Concentration</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Mental Fog</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Overstimulation</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="target" class="w-4 h-4"></i></div><h4>Poor Concentration</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="target" class="w-4 h-4"></i></div><h4>Mental Fog</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="target" class="w-4 h-4"></i></div><h4>Overstimulation</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="prenatal">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Pregnancy Comfort</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Postnatal Recovery</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Pelvic Floor Health</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="baby" class="w-4 h-4"></i></div><h4>Pregnancy Comfort</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="baby" class="w-4 h-4"></i></div><h4>Postnatal Recovery</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="baby" class="w-4 h-4"></i></div><h4>Pelvic Floor Health</h4></div>
         </div>
       </div>
       <div class="spectrum-card" data-panel="preventive">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">General Fitness</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Healthy Aging</h4></div>
-          <div class="value-card"><h4 class="font-serif text-lg" style="color:var(--text);">Immunity</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="shield" class="w-4 h-4"></i></div><h4>General Fitness</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="shield" class="w-4 h-4"></i></div><h4>Healthy Aging</h4></div>
+          <div class="spectrum-item"><div class="icon-wrap"><i data-lucide="shield" class="w-4 h-4"></i></div><h4>Immunity</h4></div>
         </div>
       </div>
     </div>
@@ -502,32 +530,42 @@
       <span class="eyebrow">Yoga Styles &amp; Practices</span>
       <h2 class="section-title text-3xl md:text-4xl mb-4">A Style For Every Body</h2>
       <div class="divider-line"></div>
-      <p class="font-sans text-sm leading-relaxed mt-5" style="color:var(--text-muted);">Every practice plan is built after a full intake — never prescribed generically — and guided by qualified instructors.</p>
+      <p class="font-sans text-sm leading-relaxed mt-5" style="color:var(--text-muted);">Every practice plan is built after a full intake — never prescribed generically — and guided by qualified instructors. Styles are grouped by the energy they bring to your body and mind.</p>
     </div>
     <div class="section-photo fade-up mb-14 mx-auto" style="height:380px;max-width:1000px;">
-      <img src="https://images.unsplash.com/photo-1598555230959-195971556d1d?q=80&w=1800&auto=format&fit=crop" alt="Group yoga practice session" loading="lazy">
+      <img src="images/yoga/styles-practices.webp" alt="Group yoga practice session" loading="lazy">
       <div class="photo-caption"><span>Group Practice &middot; Guided Sessions</span></div>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 fade-up">
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Hatha Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Foundational postures held with steady breath</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Vinyasa Flow</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Breath-synchronised, dynamic sequences</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Ashtanga Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Rigorous, structured six-series practice</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Yin Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Long-held, passive postures for deep tissue</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Restorative Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Fully supported poses for deep rest</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Iyengar Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Precision alignment, often prop-assisted</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Kundalini Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Breath, chanting and movement for energy flow</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Pranayama</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Structured breathing practices</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Meditation</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Guided focus and mindfulness training</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Yoga Nidra</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Guided deep-relaxation lying practice</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Chair Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Seated adaptations for limited mobility</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Prenatal Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Safe practice through each trimester</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Therapeutic Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Injury and condition-specific sequencing</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Surya Namaskar</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Sun salutation sequences for warm-up</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Mantra Chanting</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Sound-based practice for focus and calm</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Corporate Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Desk-friendly sequences for workplaces</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Kids' Yoga</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Playful, age-appropriate introductions</p></div>
-      <div class="credential-card"><h4 class="font-serif text-lg mb-1" style="color:var(--text);">Lifestyle Counselling</h4><p class="font-sans text-xs" style="color:var(--text-muted);">Daily &amp; seasonal practice guidance</p></div>
+
+    <div class="grid md:grid-cols-3 gap-8 fade-up">
+      <div style="--style-accent:#8FA6B2;--style-accent-soft:rgba(143,166,178,.14);">
+        <div class="style-group-head"><span class="dot" style="background:#8FA6B2;"></span><h4>Calming</h4></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="moon" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Yin Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Long-held, passive postures for deep tissue</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="feather" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Restorative Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Fully supported poses for deep rest</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="cloud" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Yoga Nidra</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Guided deep-relaxation lying practice</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="armchair" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Chair Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Seated adaptations for limited mobility</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="brain" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Meditation</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Guided focus and mindfulness training</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="music" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Mantra Chanting</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Sound-based practice for focus and calm</p></div></div></div>
+      </div>
+      <div style="--style-accent:#D95D39;--style-accent-soft:rgba(217,93,57,.1);">
+        <div class="style-group-head"><span class="dot" style="background:#D95D39;"></span><h4>Balancing</h4></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="sun" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Hatha Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Foundational postures held with steady breath</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="target" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Iyengar Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Precision alignment, often prop-assisted</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="wind" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Pranayama</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Structured breathing practices</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="shield" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Prenatal Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Safe practice through each trimester</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="plus-circle" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Therapeutic Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Injury and condition-specific sequencing</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="briefcase" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Corporate Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Desk-friendly sequences for workplaces</p></div></div></div>
+      </div>
+      <div style="--style-accent:#4A5D4F;--style-accent-soft:rgba(74,93,79,.12);">
+        <div class="style-group-head"><span class="dot" style="background:#4A5D4F;"></span><h4>Energizing</h4></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="zap" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Vinyasa Flow</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Breath-synchronised, dynamic sequences</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="flame" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Ashtanga Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Rigorous, structured six-series practice</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="sparkles" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Kundalini Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Breath, chanting and movement for energy flow</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="sunrise" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Surya Namaskar</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Sun salutation sequences for warm-up</p></div></div></div>
+        <div class="style-card"><div class="flex items-start gap-3"><div class="icon-wrap"><i data-lucide="star" class="w-4 h-4"></i></div><div><h5 class="font-serif text-base mb-0.5" style="color:var(--text);">Kids' Yoga</h5><p class="font-sans text-xs" style="color:var(--text-muted);">Playful, age-appropriate introductions</p></div></div></div>
+      </div>
     </div>
+    <p class="text-center font-sans text-xs mt-8 fade-up" style="color:var(--text-muted);">Alongside any style, our instructors offer <span style="color:var(--text);">Lifestyle Counselling</span> — daily and seasonal practice guidance tailored to you.</p>
   </div>
 </section>
 
@@ -541,7 +579,7 @@
       <p class="font-sans text-sm leading-relaxed mt-5" style="color:var(--text-muted);">Every style falls somewhere on a spectrum from calming to energizing. Understanding where you need to be is the starting point for a personalised practice plan.</p>
     </div>
     <div class="section-photo fade-up mb-14 mx-auto" style="height:340px;max-width:1000px;">
-      <img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1800&auto=format&fit=crop" alt="Calm seated meditation practice" loading="lazy">
+      <img src="images/yoga/find-your-practice.webp" alt="Calm seated meditation practice" loading="lazy">
       <div class="photo-caption"><span>Calming &middot; Balancing &middot; Energizing</span></div>
     </div>
 
@@ -591,53 +629,71 @@
   </div>
 </section>
 
-<!-- RESEARCH CENTER -->
-<section id="research" class="py-24 px-6" style="background:var(--bg);">
+<!-- EIGHT LIMBS OF ASHTANGA YOGA -->
+<section id="eight-limbs" class="py-24 px-6" style="background:var(--bg);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 fade-up max-w-2xl mx-auto">
-      <span class="eyebrow">Research Center</span>
-      <h2 class="section-title text-3xl md:text-4xl mb-4">Evidence-Based Yoga</h2>
+      <span class="eyebrow">Ashtanga &middot; The Eightfold Path</span>
+      <h2 class="section-title text-3xl md:text-4xl mb-4">The Eight Limbs of Yoga</h2>
       <div class="divider-line"></div>
-      <p class="font-sans text-sm leading-relaxed mt-5" style="color:var(--text-muted);">We hold classical practice and modern research side by side — sharing what studies show, what remains uncertain, and where more work is needed. We do not overstate outcomes.</p>
+      <p class="font-sans text-sm leading-relaxed mt-5" style="color:var(--text-muted);">Long before yoga meant a physical practice, Patanjali's Yoga Sutras described it as an eight-limbed path — a gradual progression from ethical conduct to physical postures, breath and, ultimately, absorption. Asana is just one step.</p>
+    </div>
+    <div class="section-photo fade-up mb-14 mx-auto" style="height:340px;max-width:1000px;">
+      <img src="images/yoga/eight-limbs.webp" alt="Meditative practice representing the eightfold path of yoga" loading="lazy">
+      <div class="photo-caption"><span>Ashtanga &middot; The Eightfold Path</span></div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5 mb-14 fade-up">
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Clinical Research</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Published studies, case reports, clinical trials and evidence reviews relevant to yoga practice.</p>
+    <div class="limb-path fade-up">
+      <div class="limb-card" style="border-left-color:#8FA6B2;">
+        <span class="limb-num" style="color:#8FA6B2;opacity:.35;">01</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Yama</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Ethical Restraints</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Non-violence, truthfulness, non-stealing, moderation and non-attachment — how we relate to the world around us.</p>
       </div>
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Research Library</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Organised by goal — stress, flexibility, cardiovascular health, sleep, mental health, women's health — each with summary, key findings, limitations and citation.</p>
+      <div class="limb-card" style="border-left-color:#8FA6B2;">
+        <span class="limb-num" style="color:#8FA6B2;opacity:.35;">02</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Niyama</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Personal Observances</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Cleanliness, contentment, discipline, self-study and surrender — how we relate to ourselves.</p>
       </div>
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Publications</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Journal papers, conference papers, books and reviews from our clinical and research team.</p>
+      <div class="limb-card" style="border-left-color:#D95D39;">
+        <span class="limb-num" style="color:#D95D39;opacity:.35;">03</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Asana</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Posture</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">A steady, comfortable seat or posture — the physical practice most people associate with "yoga" today.</p>
       </div>
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Ongoing Research</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Current projects, collaborations, ethics approach, and recruitment information where applicable.</p>
+      <div class="limb-card" style="border-left-color:#D95D39;">
+        <span class="limb-num" style="color:#D95D39;opacity:.35;">04</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Pranayama</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Breath Control</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Extending and regulating the breath to steady the mind and direct vital energy.</p>
       </div>
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">Research Team</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Certified yoga teachers, physiotherapists, exercise scientists and mental health professionals working together.</p>
+      <div class="limb-card" style="border-left-color:#C5A059;">
+        <span class="limb-num" style="color:#C5A059;opacity:.35;">05</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Pratyahara</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Withdrawal of the Senses</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Turning attention inward, away from external distraction — the bridge to meditation.</p>
       </div>
-      <div class="value-card">
-        <h4 class="font-serif text-lg mb-2" style="color:var(--text);">White Papers</h4>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Free downloadable summaries of research themes, written for both practitioners and curious readers.</p>
+      <div class="limb-card" style="border-left-color:#C5A059;">
+        <span class="limb-num" style="color:#C5A059;opacity:.35;">06</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Dharana</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Concentration</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Fixing attention on a single point — a breath, a mantra, a candle flame — without wavering.</p>
+      </div>
+      <div class="limb-card" style="border-left-color:#4A5D4F;">
+        <span class="limb-num" style="color:#4A5D4F;opacity:.35;">07</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Dhyana</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Meditation</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Sustained, uninterrupted awareness — concentration that has settled into effortless flow.</p>
+      </div>
+      <div class="limb-card" style="border-left-color:#4A5D4F;">
+        <span class="limb-num" style="color:#4A5D4F;opacity:.35;">08</span>
+        <h4 class="font-display text-lg mb-1" style="color:var(--text);">Samadhi</h4>
+        <p class="font-serif italic text-xs mb-2" style="color:var(--text-muted);">Absorption</p>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">A state of deep union and stillness — the traditional goal of the entire eight-limbed path.</p>
       </div>
     </div>
-
-    <div class="p-8 sm:p-10 rounded-sm fade-up" style="background:var(--bg2);border:1px solid var(--border);">
-      <h4 class="font-display text-xl mb-6 text-center" style="color:var(--text);">Practice Outcomes (Anonymised)</h4>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="stat-box"><div class="stat-num">1,800+</div><div class="stat-label">Students Guided</div></div>
-        <div class="stat-box"><div class="stat-num">6–12</div><div class="stat-label">Weeks Typical Follow-Up</div></div>
-        <div class="stat-box"><div class="stat-num">High</div><div class="stat-label">Reported Satisfaction</div></div>
-        <div class="stat-box"><div class="stat-num">Varies</div><div class="stat-label">Improvement by Goal</div></div>
-      </div>
-      <p class="font-sans text-[11px] text-center mt-6" style="color:var(--text-muted);">Individual results vary by goal, consistency and adherence. These figures describe our own session records, not controlled trial outcomes.</p>
-    </div>
+    <p class="text-center font-sans text-xs mt-10 fade-up" style="color:var(--text-muted);">These eight limbs are not strict sequential steps but interwoven aspects of one practice, cultivated together over a lifetime.</p>
   </div>
 </section>
 
@@ -650,7 +706,7 @@
       <div class="divider-line"></div>
     </div>
     <div class="section-photo fade-up mb-14 mx-auto" style="height:340px;max-width:1000px;">
-      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1800&auto=format&fit=crop" alt="Yoga asana and breathing technique practice" loading="lazy">
+      <img src="images/yoga/asana-library.webp" alt="Yoga asana and breathing technique practice" loading="lazy">
       <div class="photo-caption"><span>Asana Library &middot; Techniques &amp; Benefits</span></div>
     </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
@@ -749,7 +805,7 @@
         <span class="pill-tab">Autumn</span><span class="pill-tab">Winter</span>
       </div>
       <div class="section-photo" style="height:280px;">
-        <img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1400&auto=format&fit=crop" alt="Calm morning practice setting" loading="lazy">
+        <img src="images/yoga/daily-routine.webp" alt="Calm morning practice setting" loading="lazy">
         <div class="photo-caption"><span>Dinacharya &middot; A Mindful Morning</span></div>
       </div>
     </div>
@@ -796,7 +852,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Is yoga backed by scientific research?<i data-lucide="chevron-down" class="chev w-5 h-5"></i></button>
-        <div class="faq-answer"><p>A growing body of research studies yoga's effects on stress, flexibility, cardiovascular markers and mental wellbeing. Evidence quality differs by outcome — our Research Center shares studies alongside their limitations.</p></div>
+        <div class="faq-answer"><p>A growing body of research studies yoga's effects on stress, flexibility, cardiovascular markers and mental wellbeing. Evidence quality differs by outcome, and our team is happy to point you to relevant studies and their limitations.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Can yoga be practised alongside medical treatment?<i data-lucide="chevron-down" class="chev w-5 h-5"></i></button>
