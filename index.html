@@ -269,6 +269,13 @@
     .referral-popup-img img{width:100%;height:100%;object-fit:cover;display:block;object-position:center 35%;}
     .referral-popup-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,28,28,.2) 0%,rgba(28,28,28,.8) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.25rem 1.5rem;gap:.4rem;}
     .referral-popup-body{padding:clamp(1.25rem,4vw,1.75rem) clamp(1.25rem,5vw,2rem);flex:1;min-width:0;}
+    /* Referral popup — small side panel, click-only, no full-screen backdrop */
+    .side-popup-overlay{position:fixed;inset:auto;right:1rem;bottom:1rem;left:auto;top:auto;z-index:10001;display:none;background:transparent;padding:0;justify-content:flex-end;align-items:flex-end;backdrop-filter:none;max-width:340px;width:calc(100% - 2rem);}
+    .side-popup-overlay.open{display:flex;}
+    .side-popup-overlay .referral-popup-inner{max-width:340px;box-shadow:0 12px 40px rgba(0,0,0,.28);animation:slideInSide .35s cubic-bezier(.34,1.56,.64,1);max-height:80vh;}
+    .side-popup-overlay .referral-popup-img{height:110px;}
+    @keyframes slideInSide{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+    @media(max-width:640px){.side-popup-overlay{right:.6rem;bottom:.6rem;max-width:300px;}}
     .share-btn{display:flex;align-items:center;gap:.6rem;width:100%;padding:.7rem 1rem;border-radius:6px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-family:'Lato',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.05em;color:var(--text);transition:border-color .25s,background .25s,color .25s;}
     .share-btn:hover{border-color:#D95D39;background:rgba(217,93,57,.05);color:#D95D39;}
     .share-btn-wa:hover{border-color:#25D366;background:rgba(37,211,102,.05);color:#25D366;}
@@ -404,8 +411,8 @@
      ══════════════════════════════════════════ -->
 <div id="flash-card-bar" role="alert" aria-live="polite"></div>
 
-<!-- TOP PROMO BANNER -->
-<div id="top-banner">
+<!-- TOP PROMO BANNER (disabled) -->
+<div id="top-banner" style="display:none;">
   <span>🎁 </span>
   <span class="gift">FREE 20-min Dosha Assessment</span>
   <span class="hidden sm:inline"> — Limited spots this week.</span>
@@ -568,7 +575,7 @@
      POPUP 4 — REFERRAL
      Timer: 150s after page load
      ══════════════════════════════════════════ -->
-<div id="referral-popup" class="popup-overlay" role="dialog" aria-modal="true">
+<div id="referral-popup" class="side-popup-overlay" role="dialog" aria-modal="true">
   <div class="referral-popup-inner">
     <div class="referral-popup-img">
       <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop" alt="Friends healing together" loading="lazy">
@@ -842,7 +849,7 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mb-1 fade-up">
       <div class="prog-card-large h-[280px] md:h-[380px]" onclick="window.location.href='ayurveda.html'" role="button" tabindex="0">
-        <img src="ayurveda_consl.jpg" loading="lazy" alt="Ayurveda">
+        <img src="g1.webp" loading="lazy" alt="Ayurveda">
         <div class="overlay"></div>
         <div class="card-content">
           <span class="card-num">01</span>
@@ -853,7 +860,7 @@
         </div>
       </div>
       <div class="prog-card-large h-[280px] md:h-[380px]" onclick="window.location.href='psychology.html'" role="button" tabindex="0">
-        <img src="psychology.png" loading="lazy" alt="Psychology">
+        <img src="psychology.webp" loading="lazy" alt="Psychology">
         <div class="overlay"></div>
         <div class="card-content">
           <span class="card-num">02</span>
@@ -866,19 +873,19 @@
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-1 mb-10 fade-up">
       <div class="prog-card-small" onclick="window.location.href='diet.html'" role="button" tabindex="0">
-        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="dieting.png" loading="lazy" alt="Nutrition"><div class="overlay"></div></div>
+        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="diet.webp" loading="lazy" alt="Nutrition"><div class="overlay"></div></div>
         <div class="card-info"><span class="card-num">03</span><h3 class="card-title">Nutrition Planning</h3><span class="card-sub">Weight • Digestion</span><span class="explore-link">Explore</span></div>
       </div>
       <div class="prog-card-small" onclick="window.location.href='yoga.html'" role="button" tabindex="0">
-        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="yogaasana.jpg" loading="lazy" alt="Yoga"><div class="overlay"></div></div>
+        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="yogaasana.webp" loading="lazy" alt="Yoga"><div class="overlay"></div></div>
         <div class="card-info"><span class="card-num">04</span><h3 class="card-title">Yoga Sessions</h3><span class="card-sub">Hatha • Pranayama</span><span class="explore-link">Explore</span></div>
       </div>
       <div class="prog-card-small" onclick="window.location.href='meditation.html'" role="button" tabindex="0">
-        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="meditation.jpg" loading="lazy" alt="Meditation"><div class="overlay"></div></div>
+        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="hero.webp" loading="lazy" alt="Meditation"><div class="overlay"></div></div>
         <div class="card-info"><span class="card-num">05</span><h3 class="card-title">Meditation &amp; Ajapa Jap</h3><span class="card-sub">Mindfulness • Clarity</span><span class="explore-link">Explore</span></div>
       </div>
       <div class="prog-card-small" onclick="window.location.href='mantra.html'" role="button" tabindex="0">
-        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="kirtan.png" loading="lazy" alt="Mantra"><div class="overlay"></div></div>
+        <div style="height:clamp(120px,18vw,200px);position:relative;overflow:hidden;"><img src="kirtan.webp" loading="lazy" alt="Mantra"><div class="overlay"></div></div>
         <div class="card-info"><span class="card-num">06</span><h3 class="card-title">Kirtan & Mantra Chanting</h3><span class="card-sub">Sound • Vibration</span><span class="explore-link">Explore</span></div>
       </div>
     </div>
@@ -1055,10 +1062,10 @@
 <section id="retreats" class="yatra-section bg-brand-black" aria-label="Sacred Yatra pilgrimages">
   <div class="carousel-container h-full">
     <div class="carousel-track" id="carouselTrack">
-      <div class="retreat-card"><img src="rishikesh_latest.jpg" loading="lazy" alt="Rishikesh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttarakhand</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Rishikesh</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Where the Ganga washes away the old self."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="varanasi.jpg" loading="lazy" alt="Varanasi"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttar Pradesh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Varanasi (Kashi)</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"The City of Light: Confronting mortality to find immortality."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="trymbakeshwar1.png.jpeg" loading="lazy" alt="Trymbakeshwar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Maharashtra</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Trymbakeshwar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Jyotirlinga: The Sacred Source of the Godavari River."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="Kedarnath.jpg" loading="lazy" alt="Kedarnath"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Himalayas</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Kedarnath</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="rishikesh_latest.webp" loading="lazy" alt="Rishikesh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttarakhand</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Rishikesh</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Where the Ganga washes away the old self."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="varanasi.webp" loading="lazy" alt="Varanasi"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttar Pradesh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Varanasi (Kashi)</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"The City of Light: Confronting mortality to find immortality."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="trymbakeshwar1.webp" loading="lazy" alt="Trymbakeshwar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Maharashtra</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Trymbakeshwar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Jyotirlinga: The Sacred Source of the Godavari River."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+      <div class="retreat-card"><img src="Kedarnath.webp" loading="lazy" alt="Kedarnath"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Himalayas</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Kedarnath</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
       <div class="retreat-card"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1920&fit=crop" loading="lazy" alt="Amritsar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Punjab</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Amritsar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Golden Temple: Service, Devotion, and Community."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
       <div class="retreat-card"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1920&fit=crop" loading="lazy" alt="Ladakh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Ladakh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Hemis</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"High altitude monasteries and Buddhist chanting in the clouds."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
     </div>
@@ -1171,14 +1178,14 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 fade-up">
-      <div class="gallery-item rounded-sm" onclick="openLightbox(0)" role="button" tabindex="0"><img src="g1.png"loading="lazy" alt=Retreat 1"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(1)" role="button" tabindex="0"><img src="g2.png"loading="lazy" alt="Retreat 2"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(2)" role="button" tabindex="0"><img src="g3.png" loading="lazy" alt="Retreat 3"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(3)" role="button" tabindex="0"><img src="g4.png" loading="lazy" alt="Retreat 4"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(4)" role="button" tabindex="0"><img src="yogaasana.jpg" loading="lazy" alt="Retreat 5"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(5)" role="button" tabindex="0"><img src="g7.png" loading="lazy" alt="Retreat 6"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(6)" role="button" tabindex="0"><img src="g6.png" loading="lazy" alt="Retreat 7"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
-      <div class="gallery-item rounded-sm" onclick="openLightbox(7)" role="button" tabindex="0"><img src="g5.png" loading="lazy" alt="Retreat 8"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(0)" role="button" tabindex="0"><img src="g2.webp" loading="lazy" alt="Retreat 1"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(1)" role="button" tabindex="0"><img src="g3.webp" loading="lazy" alt="Retreat 2"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(2)" role="button" tabindex="0"><img src="g4.webp" loading="lazy" alt="Retreat 3"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(3)" role="button" tabindex="0"><img src="g5.webp" loading="lazy" alt="Retreat 4"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(4)" role="button" tabindex="0"><img src="g6.webp" loading="lazy" alt="Retreat 5"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(5)" role="button" tabindex="0"><img src="g7.webp" loading="lazy" alt="Retreat 6"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(6)" role="button" tabindex="0"><img src="mantra.webp" loading="lazy" alt="Retreat 7"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
+      <div class="gallery-item rounded-sm" onclick="openLightbox(7)" role="button" tabindex="0"><img src="hero.webp" loading="lazy" alt="Retreat 8"><div class="gallery-overlay"><i data-lucide="zoom-in" class="gallery-icon w-7 h-7"></i></div></div>
     </div>
   </div>
 </section>
@@ -1208,8 +1215,8 @@
         </div>
       </div>
       <div class="lg:col-span-3 grid grid-cols-1 gap-4">
-        <a href="journal.html" class="journal-card rounded flex gap-4 overflow-hidden"><div class="w-24 sm:w-28 flex-shrink-0" style="overflow:hidden;"><img src="https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=300" loading="lazy" alt="Prakriti" class="w-full h-full object-cover transition duration-500"></div><div class="p-3 sm:p-4"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Ayurveda</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Understanding Your Prakriti</h4><p class="font-sans text-xs mt-1.5 leading-relaxed hidden sm:block" style="color:var(--text-muted);">How your biological constitution shapes your reality and health journey.</p><span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-2 block">Read Article →</span></div></a>
-        <a href="journal.html" class="journal-card rounded flex gap-4 overflow-hidden"><div class="w-24 sm:w-28 flex-shrink-0" style="overflow:hidden;"><img src="https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=300" loading="lazy" alt="Mantra" class="w-full h-full object-cover transition duration-500"></div><div class="p-3 sm:p-4"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Tantra &amp; Spirit</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">The Neurobiology of Mantra</h4><p class="font-sans text-xs mt-1.5 leading-relaxed hidden sm:block" style="color:var(--text-muted);">How sound vibrations restructure neural pathways and reduce anxiety.</p><span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-2 block">Read Article →</span></div></a>
+        <a href="journal.html" class="journal-card rounded flex gap-4 overflow-hidden"><div class="w-24 sm:w-28 flex-shrink-0" style="overflow:hidden;"><img src="prakriti.webp" loading="lazy" alt="Prakriti" class="w-full h-full object-cover transition duration-500"></div><div class="p-3 sm:p-4"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Ayurveda</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Understanding Your Prakriti</h4><p class="font-sans text-xs mt-1.5 leading-relaxed hidden sm:block" style="color:var(--text-muted);">How your biological constitution shapes your reality and health journey.</p><span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-2 block">Read Article →</span></div></a>
+        <a href="journal.html" class="journal-card rounded flex gap-4 overflow-hidden"><div class="w-24 sm:w-28 flex-shrink-0" style="overflow:hidden;"><img src="mantra.webp" loading="lazy" alt="Mantra" class="w-full h-full object-cover transition duration-500"></div><div class="p-3 sm:p-4"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Tantra &amp; Spirit</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">The Neurobiology of Mantra</h4><p class="font-sans text-xs mt-1.5 leading-relaxed hidden sm:block" style="color:var(--text-muted);">How sound vibrations restructure neural pathways and reduce anxiety.</p><span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-2 block">Read Article →</span></div></a>
         <a href="journal.html" class="journal-card rounded flex gap-4 overflow-hidden"><div class="w-24 sm:w-28 flex-shrink-0" style="overflow:hidden;"><img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=300" loading="lazy" alt="Trauma" class="w-full h-full object-cover transition duration-500"></div><div class="p-3 sm:p-4"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Psychology</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Trauma &amp; The Body</h4><p class="font-sans text-xs mt-1.5 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Why talk therapy isn't enough and how somatic practices heal at the root.</p><span class="text-[9px] uppercase tracking-widest text-brand-gold font-bold mt-2 block">Read Article →</span></div></a>
         <div class="pt-2"><a href="journal.html" class="inline-block px-8 py-3 border border-brand-gold text-brand-gold font-sans text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-white transition duration-300 rounded-sm">View All Journals →</a></div>
       </div>
@@ -1424,7 +1431,7 @@
     </div>
   </div>
   <div class="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
-    <span>&copy; 2026 Samarpan. All Rights Reserved.</span>
+    <span>&copy; <span id="copyrightYear">2026</span> Samarpan. All Rights Reserved.</span>
     <div class="flex gap-6">
       <a href="privacy-policy.html" class="hover:text-white/60 transition">Privacy Policy</a>
       <a href="terms-of-service.html" class="hover:text-white/60 transition">Terms of Service</a>
@@ -1715,7 +1722,7 @@
   /* ══════════════════════════════════════════════
      STAGGERED POPUP ORCHESTRATION
      Gap = 240 seconds (4 minutes) between each popup.
-     Order: Gift(4min) → Yoga(on scroll, respecting gap) → Referral(4min after Gift) → Exit(mouseleave or fallback)
+     Gift, Yoga, Exit auto-triggers disabled. Referral opens on click only.
      Session-storage prevents repeats per tab.
      ══════════════════════════════════════════════ */
   var popupQueue = [];
@@ -1751,86 +1758,14 @@
   }
 
   window.addEventListener('load', function() {
-    // Popup 1 — Gift / Dosha Assessment — 240s (4 min) after load
-    if (!sessionStorage.getItem('sp_gift_shown')) {
-      schedulePopup(function(){
-        if (!sessionStorage.getItem('sp_gift_shown')) {
-          sessionStorage.setItem('sp_gift_shown','1');
-          openGiftPopup();
-          gaEvent('auto_show','Popup','Gift Popup Auto');
-        }
-      }, 240000);   // 240 seconds (4 minutes)
-    }
-
-    // Popup 3 — Referral — fires as soon as the 4-minute gap since Gift is satisfied
-    if (!sessionStorage.getItem('sp_referral_shown')) {
-      schedulePopup(function(){
-        if (!sessionStorage.getItem('sp_referral_shown')) {
-          sessionStorage.setItem('sp_referral_shown','1');
-          openReferralPopup();
-          gaEvent('auto_show','Popup','Referral Popup Auto');
-        }
-      }, 0);   // gap enforcement (MIN_GAP) handles the 4-minute spacing after Gift
-    }
-
+    // Popup 1 — Gift / Dosha Assessment — DISABLED (no auto-trigger)
+    // Popup 3 — Referral — DISABLED (opens on click only, e.g. nav link / referral section)
     tryNextPopup();
   });
 
-  /* ── Yoga popup — triggers when testimonials section enters view ── */
-  var yogaShown = !!sessionStorage.getItem('sp_yoga_shown');
-  (function() {
-    var sec = document.getElementById('testimonials-section');
-    if (!sec || yogaShown) return;
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting && !yogaShown) {
-          var waitMs = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
-          setTimeout(function(){
-            if (!yogaShown && !sessionStorage.getItem('sp_yoga_shown')) {
-              var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-                return document.getElementById(id).classList.contains('open');
-              });
-              if (!anyOpen) {
-                yogaShown = true;
-                sessionStorage.setItem('sp_yoga_shown','1');
-                lastPopupAt = Date.now();
-                openYogaPopup();
-                gaEvent('auto_show','Popup','Yoga Popup Auto');
-              }
-            }
-          }, waitMs + 2000);
-          obs.unobserve(sec);
-        }
-      });
-    }, {threshold:0.4});
-    obs.observe(sec);
-  })();
+  /* ── Yoga popup — DISABLED (no auto-trigger) ── */
 
-  /* ── Exit popup — mouse leave top of viewport ── */
-  var exitShown = false;
-  function maybeShowExitPopup() {
-    if (exitShown || localStorage.getItem('sp_exit_shown')) return;
-    var anyOpen = ['gift-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-      return document.getElementById(id).classList.contains('open');
-    });
-    if (anyOpen) return;
-    var wait = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
-    setTimeout(function(){
-      if (!exitShown && !localStorage.getItem('sp_exit_shown')) {
-        exitShown = true;
-        localStorage.setItem('sp_exit_shown','1');
-        lastPopupAt = Date.now();
-        document.getElementById('exit-popup').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        gaEvent('auto_show','Popup','Exit Popup');
-      }
-    }, wait + 500);
-  }
-  document.addEventListener('mouseleave', function(e) {
-    if (e.clientY <= 0) maybeShowExitPopup();
-  });
-  // Fallback exit timer — ~820s (roughly 4 min after the Referral popup)
-  setTimeout(maybeShowExitPopup, 820000);   // 820 seconds
+  /* ── Exit popup — DISABLED (no auto-trigger) ── */
 
   /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
   function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('gift_popup'); }
@@ -1840,8 +1775,8 @@
   function closeExitPopup()     { document.getElementById('exit-popup').classList.remove('open'); document.body.style.overflow=''; }
   function openYogaPopup()      { document.getElementById('yoga-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('yoga_popup'); }
   function closeYogaPopup()     { document.getElementById('yoga-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Referral Popup'); prefetchToken('referral_email'); }
-  function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); document.body.style.overflow=''; }
+  function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); gaEvent('view','Popup','Referral Popup'); prefetchToken('referral_email'); }
+  function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); }
 
   // Close on backdrop click
   ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].forEach(function(id) {
@@ -2292,14 +2227,14 @@
 
   /* Gallery lightbox */
   var galleryImages = [
-    'https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=1600',
-    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600',
-    'https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1600',
-    'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1600',
-    'https://images.unsplash.com/photo-1598555230959-195971556d1d?q=80&w=1600',
-    'https://images.unsplash.com/photo-1528319725582-ddc096101511?q=80&w=1600',
-    'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1600',
-    'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1600',
+    'g2.webp',
+    'g3.webp',
+    'g4.webp',
+    'g5.webp',
+    'g6.webp',
+    'g7.webp',
+    'mantra.webp',
+    'hero.webp',
   ];
   var lbIdx=0;
   function openLightbox(idx){ lbIdx=idx; document.getElementById('lightbox-img').src=galleryImages[idx]; document.getElementById('lightbox').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -2366,6 +2301,9 @@
   });
 
   window.addEventListener('DOMContentLoaded',function(){lucide.createIcons();});
+
+  /* Keep footer copyright year current automatically, no manual edits needed */
+  (function(){ var y=document.getElementById('copyrightYear'); if(y) y.textContent=new Date().getFullYear(); })();
 </script>
 <!-- Live visitor tracking (feeds admin.html → Visitors / Live Activity) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
