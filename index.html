@@ -111,11 +111,11 @@
     #top-banner-close{position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:16px;line-height:1;padding:4px;}
 
     #loader{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#FDFBF7 0%,#F5F0E8 100%);transition:opacity .6s ease-out;}
-    .hero-img{will-change:transform;}
+    .hero-img{will-change:transform;object-position:50% 28%;}
     @media(min-width:769px){.hero-img{animation:pan 30s ease-in-out infinite alternate;}}
-    .hero-video{display:none;object-fit:cover;}
+    .hero-video{display:none;object-fit:cover;object-position:50% 40%;}
     .hero-desktop-fallback{display:none;}
-    .hero-mobile-img{display:block;}
+    .hero-mobile-img{display:block;object-position:50% 20%;}
     @media(min-width:769px){
       .hero-video{display:block;}
       .hero-mobile-img{display:none;}
@@ -125,7 +125,18 @@
       .hero-mobile-img{display:none !important;}
       .hero-desktop-fallback{display:block !important;}
     }
+    /* Different phone screen lengths crop the same portrait image differently —
+       nudge the focal point up/down so the subject stays in frame on very tall
+       phones (e.g. 19.5:9) vs shorter/older phones (e.g. 16:9). */
+    @media(max-width:768px) and (max-aspect-ratio:9/19){
+      .hero-mobile-img{object-position:50% 14%;}
+    }
+    @media(max-width:768px) and (min-aspect-ratio:9/16.5){
+      .hero-mobile-img{object-position:50% 32%;}
+    }
     @keyframes pan{0%{transform:scale(1);}100%{transform:scale(1.08) translateY(-2%);}}
+    #hero-header{height:100vh;}
+    @supports (height:100dvh){#hero-header{height:100dvh;}}
 
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s,top 0.45s;}
     #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
@@ -762,7 +773,7 @@
 </div>
 
 <!-- HERO -->
-<header class="relative w-full overflow-hidden flex items-end justify-center" style="height:clamp(70vh,100vh,100vh);" role="banner">
+<header id="hero-header" class="relative w-full overflow-hidden flex items-end justify-center" role="banner">
   <div class="absolute inset-0 z-0">
     <video class="w-full h-full hero-video" autoplay muted loop playsinline preload="auto" poster="hero-desktop.webp"
            onerror="this.style.display='none';document.querySelector('.hero-desktop-fallback').style.display='block';">
