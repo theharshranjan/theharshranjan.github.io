@@ -2,13 +2,16 @@
  * Samarpan — site-tracker.js
  * Lightweight visitor tracker that feeds the "Visitors" / "Live Activity"
  * panels in admin.html. Writes ONE document per page view to the Firestore
- * collection `homepage_visitors`.
+ * collection `homepage_visitors`, then patches a `duration` (seconds on
+ * page) field back onto that same document when the visitor leaves.
  *
- * Security note: Firestore rules for this collection already allow
+ * Security note: Firestore rules for this collection must allow:
  *   allow create: if true;
- *   allow read, update, delete: if isAdmin();
- * so this script can only ADD documents — it can never read, edit, or
- * delete visitor data, and it never touches leads/bookings/forms.
+ *   allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['duration']);
+ *   allow read, delete: if isAdmin();
+ * The update rule is scoped so a visitor can ONLY ever touch the `duration`
+ * field of their own just-created doc — they can never read, delete, or
+ * modify anything else.
  *
  * HOW TO INSTALL ON A PAGE (once per HTML file, right before </body>):
  *
@@ -19,6 +22,10 @@
  * If a page already loads the Firebase compat SDK for another reason,
  * just add the single <script src="site-tracker.js"></script> line —
  * this file re-uses whatever `firebase` app is already initialised.
+ *
+ * IMPORTANT: only ever include this ONE tracker per page. Do not also run
+ * a separate inline visitor-tracking function on the same page — that
+ * causes every visit to be logged twice.
  */
 (function () {
   'use strict';
@@ -90,6 +97,25 @@
       .catch(function () { cb({ ip: '', city: '', region: '', country: '' }); });
   }
 
+  // Patches `duration` (seconds spent on page) back onto the visitor doc when
+  // the visitor leaves. Uses a raw Firestore REST PATCH with keepalive:true
+  // instead of the SDK's update() — SDK writes can get silently cancelled
+  // mid-flight when the tab closes, while a keepalive fetch survives it.
+  function saveDuration(docId, seconds) {
+    if (!docId || !seconds || seconds < 1) return;
+    var url = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_CONFIG.projectId +
+      '/databases/(default)/documents/homepage_visitors/' + docId +
+      '?updateMask.fieldPaths=duration&key=' + FIREBASE_CONFIG.apiKey;
+    try {
+      fetch(url, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({ fields: { duration: { integerValue: String(seconds) } } })
+      }).catch(function () {});
+    } catch (e) { /* never let this break unload */ }
+  }
+
   function track() {
     var db = getDb();
     if (!db) return; // Firebase SDK not present on this page — skip silently
@@ -105,10 +131,34 @@
       timestamp: new Date().toISOString()
     };
 
+    var startTime = Date.now();
+    var docId = null;
+    var durationSent = false;
+
+    function sendDurationOnce() {
+      if (durationSent || !docId) return;
+      durationSent = true;
+      var seconds = Math.round((Date.now() - startTime) / 1000);
+      saveDuration(docId, seconds);
+    }
+
     getGeo(function (geo) {
       db.collection('homepage_visitors').add(Object.assign({}, base, geo))
+        .then(function (ref) {
+          docId = ref.id;
+          // If the visitor already left before this write resolved, save now.
+          if (document.visibilityState === 'hidden') sendDurationOnce();
+        })
         .catch(function () { /* never block the page for analytics */ });
     });
+
+    // 'visibilitychange' fires reliably on both desktop and mobile (including
+    // when a mobile browser is backgrounded, which 'beforeunload' often misses).
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') sendDurationOnce();
+    });
+    // Fallback for browsers/cases where visibilitychange doesn't fire before close.
+    window.addEventListener('pagehide', sendDurationOnce);
   }
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
