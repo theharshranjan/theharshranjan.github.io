@@ -40,7 +40,7 @@
   <link rel="dns-prefetch" href="https://www.youtube.com">
   <link rel="dns-prefetch" href="https://unpkg.com">
 
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=2064&auto=format&fit=crop" fetchpriority="high">
+  <link rel="preload" as="image" href="hero-desktop.webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
@@ -104,24 +104,11 @@
     .flash-card-close:hover{opacity:1;}
     .flash-card-timer{position:absolute;bottom:0;left:0;height:2px;transition:width 1s linear;}
 
-    #top-banner{background:linear-gradient(90deg,#1C1C1C 0%,#2d1f1a 50%,#1C1C1C 100%);color:#fff;text-align:center;padding:.6rem 3rem;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:.15em;position:relative;z-index:200;transition:max-height .5s ease,padding .5s ease,opacity .5s ease;overflow:hidden;max-height:60px;}
-    #top-banner.dismissed,#top-banner.scroll-hidden{max-height:0;padding:0;opacity:0;pointer-events:none;}
-    #top-banner span.gift{color:#C5A059;font-weight:700;}
-    #top-banner a.claim-link{color:#D95D39;font-weight:700;text-decoration:underline;margin-left:.5rem;cursor:pointer;}
-    #top-banner-close{position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:16px;line-height:1;padding:4px;}
 
     #loader{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#FDFBF7 0%,#F5F0E8 100%);transition:opacity .6s ease-out;}
     .hero-img{will-change:transform;}
     @media(min-width:769px){.hero-img{animation:pan 30s ease-in-out infinite alternate;}}
-    .hero-video{display:none;object-fit:cover;}
-    @media(min-width:769px){
-      .hero-video{display:block;}
-      .hero-video + img{display:none;}
-    }
-    @media(prefers-reduced-motion:reduce){
-      .hero-video{display:none !important;}
-      .hero-video + img{display:block !important;}
-    }
+    @media(prefers-reduced-motion:reduce){.hero-img{animation:none;}}
     @keyframes pan{0%{transform:scale(1);}100%{transform:scale(1.08) translateY(-2%);}}
 
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s,top 0.45s;}
@@ -237,15 +224,6 @@
     @keyframes popIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
 
     /* ── GIFT POPUP ── */
-    .gift-popup-box{background:var(--bg);max-width:480px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;}
-    .gift-popup-photo{position:relative;height:200px;overflow:hidden;}
-    .gift-popup-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;}
-    .gift-popup-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,28,28,.2) 0%,rgba(28,28,28,.75) 100%);}
-    .gift-popup-photo-content{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.4rem;}
-    .gift-popup-logo-svg{width:40px;height:40px;color:#D95D39;}
-    .gift-popup-logo-name{font-family:'Marcellus',serif;letter-spacing:.32em;text-transform:uppercase;font-size:12px;color:#ffffff;}
-    .gift-popup-badge{background:rgba(197,160,89,.25);border:1px solid rgba(197,160,89,.5);border-radius:50px;padding:.3rem .9rem;width:fit-content;}
-    .gift-popup-badge span{font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#C5A059;font-weight:700;}
     .popup-close-btn{position:absolute;top:.65rem;right:.65rem;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.15);border:none;cursor:pointer;color:rgba(255,255,255,.8);font-size:15px;line-height:1;transition:background .2s,color .2s;z-index:10;}
     .popup-close-btn:hover{background:rgba(255,255,255,.3);color:#fff;}
     .popup-close-dark{background:rgba(0,0,0,.08);color:var(--text-muted);}
@@ -273,11 +251,6 @@
     .referral-link-box{background:var(--bg2);border:1.5px solid var(--border);border-radius:6px;padding:.6rem .85rem;font-family:'Lato',sans-serif;font-size:11px;color:var(--text-muted);letter-spacing:.02em;word-break:break-all;margin:.6rem 0;}
 
     /* ── EXIT POPUP ── */
-    .exit-popup-inner{background:var(--bg);max-width:480px;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.35);position:relative;animation:popIn .4s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto;}
-    .exit-popup-photo{position:relative;height:200px;overflow:hidden;}
-    .exit-popup-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;}
-    .exit-popup-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15),rgba(0,0,0,.65));}
-    .exit-popup-photo-text{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:1.25rem 1.5rem;}
 
     /* ── SHARED POPUP BRAND LOGO (lotus mark + wordmark, used across every popup) ── */
     .popup-brand-logo{display:flex;align-items:center;gap:.4rem;margin-bottom:.35rem;}
@@ -401,15 +374,6 @@
      ══════════════════════════════════════════ -->
 <div id="flash-card-bar" role="alert" aria-live="polite"></div>
 
-<!-- TOP PROMO BANNER -->
-<div id="top-banner">
-  <span>🎁 </span>
-  <span class="gift">FREE 20-min Dosha Assessment</span>
-  <span class="hidden sm:inline"> — Limited spots this week.</span>
-  <a class="claim-link" onclick="openGiftPopup()" role="button">Claim Yours →</a>
-  <button id="top-banner-close" onclick="dismissBanner()" aria-label="Dismiss">✕</button>
-</div>
-
 <!-- LOADER -->
 <div id="loader">
   <div class="flex flex-col items-center relative">
@@ -440,80 +404,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     POPUP 1 — FREE DOSHA ASSESSMENT
-     Timer: 30s after page load
-     ══════════════════════════════════════════ -->
-<div id="gift-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="giftPopupTitle">
-  <div class="gift-popup-box">
-    <button class="popup-close-btn" onclick="closeGiftPopup()" aria-label="Close">✕</button>
-    <div class="gift-popup-photo">
-      <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=800&auto=format&fit=crop" alt="Ayurveda Healing" loading="eager">
-      <div class="gift-popup-photo-content">
-        <svg class="gift-popup-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-          <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-          <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-        </svg>
-        <span class="gift-popup-logo-name">Samarpan</span>
-        <div class="gift-popup-badge"><span>🎁 A Sacred Gift For You</span></div>
-      </div>
-    </div>
-    <div style="padding:clamp(1.25rem,4vw,1.75rem) clamp(1.25rem,5vw,2rem);">
-      <h3 id="giftPopupTitle" class="font-serif mb-2" style="font-size:clamp(1.25rem,4vw,1.6rem);color:var(--text);">FREE 20-min Dosha Assessment</h3>
-      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Discover your Ayurvedic constitution and the single biggest change that could <strong class="text-clay">transform your health</strong>. Limited spots this week.</p>
-      <form id="giftForm" onsubmit="handleGiftSubmit(event)" class="space-y-3" novalidate>
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="giftWebsite">Website</label>
-          <input type="text" id="giftWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="text" name="name" id="giftName" placeholder="Your full name *" class="form-input2 w-full" required autocomplete="name">
-        <div>
-          <input type="email" name="email" id="giftEmail" placeholder="Your email address *" class="form-input2 w-full" required autocomplete="email">
-          <span class="text-xs text-red-500 hidden" id="giftEmailErr">Please enter a valid email address.</span>
-        </div>
-        <input type="tel" name="phone" id="giftPhone" placeholder="WhatsApp number (optional)" class="form-input2 w-full" autocomplete="tel">
-        <button type="submit" id="giftSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Claim My Free Session →</button>
-      </form>
-      <div id="giftStatus" class="mt-2"></div>
-      <p class="text-[10px] mt-3 text-center" style="color:var(--text-muted);">Unsubscribe anytime. We reply within 24h.</p>
-    </div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════════════
-     POPUP 2 — EXIT INTENT
-     Timer: 90s after page load OR on mouse-leave
-     ══════════════════════════════════════════ -->
-<div id="exit-popup" class="popup-overlay" role="dialog" aria-modal="true">
-  <div class="exit-popup-inner">
-    <button onclick="closeExitPopup()" class="popup-close-btn popup-close-dark" style="position:absolute;top:.65rem;right:.65rem;z-index:20;" aria-label="Close">✕</button>
-    <div class="exit-popup-photo">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop" alt="Healing Journey" loading="lazy">
-      <div class="exit-popup-photo-text">
-        <div class="popup-brand-logo">
-          <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-            <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-            <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-          </svg>
-          <span class="popup-brand-logo-name">Samarpan</span>
-        </div>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-1">Spread Healing</span>
-        <span class="font-display text-white" style="font-size:1.5rem;">Know Someone Who Needs This?</span>
-      </div>
-    </div>
-    <div class="p-6 sm:p-8">
-      <h3 class="font-serif text-2xl mb-2" style="color:var(--text);">Refer a Friend</h3>
-      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Refer a friend and <strong class="text-clay">both of you get a free session</strong> as a gift from Samarpan.</p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="closeExitPopup();openReferralPopup();" class="cta-btn flex-1 text-center bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Refer a Friend →</button>
-        <button onclick="closeExitPopup()" class="flex-1 py-3 border text-[10px] font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Maybe Later</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP 3 — FREE YOGA SESSION
      Timer: on testimonials section scroll
      ══════════════════════════════════════════ -->
 <div id="yoga-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="yogaPopupTitle">
@@ -754,14 +645,13 @@
 <!-- HERO -->
 <header class="relative w-full overflow-hidden flex items-end justify-center" style="height:clamp(70vh,100vh,100vh);" role="banner">
   <div class="absolute inset-0 z-0">
-    <video class="w-full h-full hero-video" autoplay muted loop playsinline preload="auto" poster="hero-poster.webp">
-      <source src="hero-bg.webm" type="video/webm">
-      <source src="hero-bg.mp4" type="video/mp4">
-    </video>
-    <img src="hero-ayurveda-yoga-books.webp"
-         alt="Ayurveda and yoga texts with meditation practice at sunrise — Samarpan" loading="eager" fetchpriority="high"
-         width="1000" height="1333"
-         class="w-full h-full object-cover hero-img">
+    <picture>
+      <source media="(max-width:768px)" srcset="hero-mobile.webp">
+      <img src="hero-desktop.webp"
+           alt="Meditation practice amid Ayurveda and yoga texts at sunrise — Samarpan" loading="eager" fetchpriority="high"
+           width="1128" height="720"
+           class="w-full h-full object-cover hero-img">
+    </picture>
   </div>
   <div class="hero-bg-overlay"></div>
   <div class="relative z-10 text-center text-white px-4 pb-20 md:pb-32">
@@ -1706,92 +1596,53 @@
   }
 
   /* ══════════════════════════════════════════════
-     STAGGERED POPUP ORCHESTRATION
-     Gap = 240 seconds (4 minutes) between each popup.
-     Order: Gift(4min) → Yoga(on scroll, respecting gap) → Referral(4min after Gift) → Exit(mouseleave or fallback)
+     POPUP TIMING
+     Yoga popup   → fires once BOTH are true: 4 minutes have passed
+                    since page load AND the visitor has scrolled past
+                    the testimonials section.
+     Referral popup → fires automatically 10 minutes after page load.
      Session-storage prevents repeats per tab.
      ══════════════════════════════════════════════ */
-  var popupQueue = [];
   var lastPopupAt = 0;
-  var MIN_GAP = 240000;   // 240 seconds (4 minutes) minimum gap between popups
+  var MIN_GAP = 240000;   // 4 minutes, kept only to space the two popups apart if they'd otherwise collide
 
-  function schedulePopup(fn, delay) {
-    popupQueue.push({fn:fn, delay:delay});
+  function anyPopupOpen() {
+    return ['yoga-popup','referral-popup','booking-popup'].some(function(id){
+      var el = document.getElementById(id);
+      return el && el.classList.contains('open');
+    });
   }
 
-  function tryNextPopup() {
-    if (!popupQueue.length) return;
-    var now = Date.now();
-    var gap = now - lastPopupAt;
-    if (lastPopupAt && gap < MIN_GAP) {
-      setTimeout(tryNextPopup, MIN_GAP - gap + 500);
-      return;
-    }
-    var item = popupQueue.shift();
-    setTimeout(function() {
-      var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-        return document.getElementById(id).classList.contains('open');
-      });
-      if (anyOpen) {
-        popupQueue.unshift(item);
-        setTimeout(tryNextPopup, 15000);
-        return;
-      }
-      lastPopupAt = Date.now();
-      item.fn();
-      setTimeout(tryNextPopup, MIN_GAP + 2000);
-    }, item.delay);
-  }
-
-  window.addEventListener('load', function() {
-    // Popup 1 — Gift / Dosha Assessment — 240s (4 min) after load
-    if (!sessionStorage.getItem('sp_gift_shown')) {
-      schedulePopup(function(){
-        if (!sessionStorage.getItem('sp_gift_shown')) {
-          sessionStorage.setItem('sp_gift_shown','1');
-          openGiftPopup();
-          gaEvent('auto_show','Popup','Gift Popup Auto');
-        }
-      }, 240000);   // 240 seconds (4 minutes)
-    }
-
-    // Popup 3 — Referral — fires as soon as the 4-minute gap since Gift is satisfied
-    if (!sessionStorage.getItem('sp_referral_shown')) {
-      schedulePopup(function(){
-        if (!sessionStorage.getItem('sp_referral_shown')) {
-          sessionStorage.setItem('sp_referral_shown','1');
-          openReferralPopup();
-          gaEvent('auto_show','Popup','Referral Popup Auto');
-        }
-      }, 0);   // gap enforcement (MIN_GAP) handles the 4-minute spacing after Gift
-    }
-
-    tryNextPopup();
-  });
-
-  /* ── Yoga popup — triggers when testimonials section enters view ── */
+  /* ── Yoga popup — 4 minutes AND past the testimonials section ── */
   var yogaShown = !!sessionStorage.getItem('sp_yoga_shown');
   (function() {
     var sec = document.getElementById('testimonials-section');
     if (!sec || yogaShown) return;
+    var YOGA_MIN_DELAY = 240000; // 4 minutes
+    var pageLoadTime = Date.now();
+    var scrolledPast = false;
+
+    function tryShowYoga() {
+      if (yogaShown || sessionStorage.getItem('sp_yoga_shown')) return;
+      if (!scrolledPast) return;
+      var elapsed = Date.now() - pageLoadTime;
+      if (elapsed < YOGA_MIN_DELAY) {
+        setTimeout(tryShowYoga, YOGA_MIN_DELAY - elapsed + 500);
+        return;
+      }
+      if (anyPopupOpen()) { setTimeout(tryShowYoga, 15000); return; }
+      yogaShown = true;
+      sessionStorage.setItem('sp_yoga_shown','1');
+      lastPopupAt = Date.now();
+      openYogaPopup();
+      gaEvent('auto_show','Popup','Yoga Popup Auto');
+    }
+
     var obs = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (entry.isIntersecting && !yogaShown) {
-          var waitMs = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
-          setTimeout(function(){
-            if (!yogaShown && !sessionStorage.getItem('sp_yoga_shown')) {
-              var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-                return document.getElementById(id).classList.contains('open');
-              });
-              if (!anyOpen) {
-                yogaShown = true;
-                sessionStorage.setItem('sp_yoga_shown','1');
-                lastPopupAt = Date.now();
-                openYogaPopup();
-                gaEvent('auto_show','Popup','Yoga Popup Auto');
-              }
-            }
-          }, waitMs + 2000);
+        if (entry.isIntersecting && !scrolledPast) {
+          scrolledPast = true;
+          tryShowYoga();
           obs.unobserve(sec);
         }
       });
@@ -1799,45 +1650,33 @@
     obs.observe(sec);
   })();
 
-  /* ── Exit popup — mouse leave top of viewport ── */
-  var exitShown = false;
-  function maybeShowExitPopup() {
-    if (exitShown || localStorage.getItem('sp_exit_shown')) return;
-    var anyOpen = ['gift-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-      return document.getElementById(id).classList.contains('open');
-    });
-    if (anyOpen) return;
-    var wait = Math.max(0, MIN_GAP - (Date.now() - lastPopupAt));
-    setTimeout(function(){
-      if (!exitShown && !localStorage.getItem('sp_exit_shown')) {
-        exitShown = true;
-        localStorage.setItem('sp_exit_shown','1');
+  /* ── Referral popup — automatically 10 minutes after page load ── */
+  window.addEventListener('load', function() {
+    if (sessionStorage.getItem('sp_referral_shown')) return;
+    setTimeout(function() {
+      if (sessionStorage.getItem('sp_referral_shown')) return;
+      function tryShowReferral() {
+        if (sessionStorage.getItem('sp_referral_shown')) return;
+        if (anyPopupOpen()) { setTimeout(tryShowReferral, 15000); return; }
+        sessionStorage.setItem('sp_referral_shown','1');
         lastPopupAt = Date.now();
-        document.getElementById('exit-popup').classList.add('open');
-        document.body.style.overflow = 'hidden';
-        gaEvent('auto_show','Popup','Exit Popup');
+        openReferralPopup();
+        gaEvent('auto_show','Popup','Referral Popup Auto');
       }
-    }, wait + 500);
-  }
-  document.addEventListener('mouseleave', function(e) {
-    if (e.clientY <= 0) maybeShowExitPopup();
+      tryShowReferral();
+    }, 600000); // 10 minutes
   });
-  // Fallback exit timer — ~820s (roughly 4 min after the Referral popup)
-  setTimeout(maybeShowExitPopup, 820000);   // 820 seconds
 
   /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
-  function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('gift_popup'); }
-  function closeGiftPopup()     { document.getElementById('gift-popup').classList.remove('open'); document.body.style.overflow=''; }
   function openBookingPopup()   { document.getElementById('booking-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Booking Popup'); prefetchToken('booking'); }
   function closeBookingPopup()  { document.getElementById('booking-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function closeExitPopup()     { document.getElementById('exit-popup').classList.remove('open'); document.body.style.overflow=''; }
   function openYogaPopup()      { document.getElementById('yoga-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('yoga_popup'); }
   function closeYogaPopup()     { document.getElementById('yoga-popup').classList.remove('open'); document.body.style.overflow=''; }
   function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); document.body.style.overflow='hidden'; gaEvent('view','Popup','Referral Popup'); prefetchToken('referral_email'); }
   function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); document.body.style.overflow=''; }
 
   // Close on backdrop click
-  ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].forEach(function(id) {
+  ['yoga-popup','referral-popup','booking-popup'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener('click', function(e) {
       if (e.target === el) { el.classList.remove('open'); document.body.style.overflow=''; }
@@ -1847,30 +1686,6 @@
   /* ══════════════════════════════════════════════
      FORM HANDLERS
      ══════════════════════════════════════════════ */
-  async function handleGiftSubmit(e) {
-    e.preventDefault();
-    var name  = document.getElementById('giftName').value.trim();
-    var email = document.getElementById('giftEmail').value.trim();
-    var phone = document.getElementById('giftPhone').value.trim();
-    document.getElementById('giftEmailErr').classList.add('hidden');
-    if (!name)  { document.getElementById('giftName').classList.add('invalid'); return; }
-    if (!isEmail(email)) { document.getElementById('giftEmail').classList.add('invalid'); document.getElementById('giftEmailErr').classList.remove('hidden'); return; }
-    document.getElementById('giftName').classList.remove('invalid');
-    document.getElementById('giftEmail').classList.remove('invalid');
-    setBtnLoading('giftSubmitBtn', true);
-    try {
-      var website = document.getElementById('giftWebsite').value;
-      var token = await getTokenFast('gift_popup');
-      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', message:'Free Dosha Assessment claim', lead_type:'free_assessment_claim'});
-      await submitToBackend({formType:'gift_popup', name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      setStatus('giftStatus', true, "Claimed! Our team will contact you within 24h to schedule your session.");
-      gaEvent('submit','Form','Gift Popup — Dosha Assessment');
-      document.getElementById('giftForm').reset();
-      setTimeout(closeGiftPopup, 2400);
-    } catch(err) { setStatus('giftStatus', false, "Something went wrong. Please WhatsApp us or email info@thesamarpan.co.in"); }
-    setBtnLoading('giftSubmitBtn', false);
-  }
-
   async function handleBookingPopupSubmit(e) {
     e.preventDefault();
     var name    = document.getElementById('bpName').value.trim();
@@ -2189,19 +2004,6 @@
   }
   ['DOMContentLoaded','load','resize'].forEach(function(ev){ window.addEventListener(ev, syncNavbarTop, {passive:true}); });
 
-  var bannerDismissed = false;
-  function dismissBanner() {
-    bannerDismissed = true;
-    document.getElementById('top-banner').classList.add('dismissed');
-    setTimeout(syncNavbarTop, 520);
-  }
-  window.addEventListener('scroll', function() {
-    var b=document.getElementById('top-banner');
-    if (!b||bannerDismissed) return;
-    b.classList.toggle('scroll-hidden', window.scrollY>120);
-    setTimeout(syncNavbarTop, 520);
-  },{passive:true});
-
   /* FAB visibility */
   window.addEventListener('scroll', function() {
     var show=window.scrollY>400;
@@ -2224,7 +2026,7 @@
     if (e.key==='Escape') {
       if (menuOpen) toggleMenu();
       document.getElementById('quiz-modal').classList.remove('open');
-      ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].forEach(function(id){ document.getElementById(id).classList.remove('open'); });
+      ['yoga-popup','referral-popup','booking-popup'].forEach(function(id){ var el=document.getElementById(id); if(el) el.classList.remove('open'); });
       document.body.style.overflow='';
       var lb=document.getElementById('lightbox'); if(lb) lb.classList.remove('open');
     }
