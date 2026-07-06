@@ -935,7 +935,7 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="card"><div class="card-head"><span class="card-title">Daily Visits — Last 14 Days</span></div><div class="card-body"><div class="chart-container"><canvas id="chart-visitors-14d"></canvas></div></div></div>
         <div class="card"><div class="card-head"><span class="card-title">Device Breakdown</span></div><div class="card-body" id="device-breakdown"><div style="color:var(--text4);font-size:12px;">Loading…</div></div></div>
       </div>
-      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><div style="display:flex;gap:.5rem;"><button class="btn btn-outline btn-sm owner-only" onclick="purgeOldVisitors()" title="Delete visitor logs older than 90 days to keep Firestore storage small">🧹 Cleanup 90+ days</button><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div></div>
+      <div class="card mb"><div class="card-head"><span class="card-title">All Visitor Sessions</span><div style="display:flex;gap:.5rem;"><button class="btn btn-outline btn-sm owner-only" onclick="purgeOldVisitors()" title="Delete visitor logs older than 7 days to keep Firestore storage small">🧹 Cleanup 7+ days</button><button class="btn btn-outline btn-sm" onclick="exportVisitorsCSV()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button></div></div>
         <div class="card-body" id="visitors-daygroups" style="padding:.9rem;">
           <div style="color:var(--text4);font-size:12px;text-align:center;padding:1.5rem;">Loading…</div>
         </div>
@@ -2077,7 +2077,7 @@ function attachListeners(){
     {col:'homepage_referrals',   set:d=>{allReferrals=d;}},
     {col:'homepage_quiz_results',set:d=>{allQuiz=d;}},
     {col:'homepage_yoga_sessions',set:d=>{allYoga=d;}},
-    {col:'homepage_visitors',    set:d=>{allVisitors=d;}},
+    {col:'homepage_visitors',    set:d=>{allVisitors=d;autoPurgeOldVisitors();}},
     {col:'samarpan_journal_posts',set:d=>{const prevMap=new Map(allJournalPosts.map(p=>[p._id,p.status]));allJournalPosts=d;if(prevMap.size>0){d.forEach(p=>{const prevStatus=prevMap.get(p._id);if(prevStatus===undefined&&p.status==='published')showToast('📝 New journal post published: '+(p.title||'Untitled'));else if(prevStatus!==undefined&&prevStatus!=='published'&&p.status==='published')showToast('📝 Journal post now live: '+(p.title||'Untitled'));});}updateNotifications();}},
     {col:'homepage_bookings',    set:d=>{allBookings=d;}},
     {col:'samarpan_flash_cards', set:d=>{allFlashCards=d;}},
@@ -2719,13 +2719,13 @@ function renderVisitorDayGroups(){
 function loadMoreVisitorDay(dateStr){visitorDayShown[dateStr]=(visitorDayShown[dateStr]||VIS_PAGE_SIZE)+VIS_PAGE_SIZE;renderVisitorDayGroups();}
 async function purgeOldVisitors(){
   if(!isOwner()){showToast('Only Owners can run cleanup',true);return;}
-  document.getElementById('confirm-modal-msg').textContent='Permanently delete visitor session logs older than 90 days? This frees up Firestore storage and cannot be undone. (Export CSV first if you want a backup.)';
+  document.getElementById('confirm-modal-msg').textContent='Permanently delete visitor session logs older than 7 days? This frees up Firestore storage and cannot be undone. (Export CSV first if you want a backup.)';
   document.getElementById('confirm-modal-btn').onclick=async()=>{
     closeConfirmModal();
-    const cutoff=new Date();cutoff.setDate(cutoff.getDate()-90);
+    const cutoff=new Date();cutoff.setDate(cutoff.getDate()-7);
     const cutoffStr=cutoff.toISOString().split('T')[0];
     const old=allVisitors.filter(v=>(v.date||'')<cutoffStr);
-    if(!old.length){showToast('Nothing older than 90 days to clean up');return;}
+    if(!old.length){showToast('Nothing older than 7 days to clean up');return;}
     showToast('Cleaning up '+old.length+' old records…');
     try{
       let batch=db.batch(),count=0;
@@ -2739,6 +2739,33 @@ async function purgeOldVisitors(){
     }catch(e){showToast('❌ '+e.message,true);}
   };
   document.getElementById('confirm-modal-overlay').classList.add('open');
+}
+
+// Auto-cleanup: silently deletes visitor logs older than 7 days, at most once per day,
+// so Owners don't have to remember to click the manual cleanup button.
+let autoPurgeRanThisSession=false;
+async function autoPurgeOldVisitors(){
+  if(autoPurgeRanThisSession)return;
+  if(!isOwner())return;
+  const lastRun=localStorage.getItem('sp_auto_purge_last');
+  const today=nowIST().date;
+  if(lastRun===today)return; // already ran today
+  autoPurgeRanThisSession=true;
+  try{
+    const cutoff=new Date();cutoff.setDate(cutoff.getDate()-7);
+    const cutoffStr=cutoff.toISOString().split('T')[0];
+    const old=allVisitors.filter(v=>(v.date||'')<cutoffStr);
+    localStorage.setItem('sp_auto_purge_last',today);
+    if(!old.length)return;
+    let batch=db.batch(),count=0;
+    for(const v of old){
+      batch.delete(db.collection('homepage_visitors').doc(v._id));
+      count++;
+      if(count%400===0){await batch.commit();batch=db.batch();}
+    }
+    await batch.commit();
+    showToast('🧹 Auto-cleanup: removed '+old.length+' visitor records older than 7 days');
+  }catch(e){/* fail silently — manual cleanup button still available */}
 }
 
 // ════════════════════════════════════════════════
