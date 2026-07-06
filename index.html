@@ -114,13 +114,16 @@
     .hero-img{will-change:transform;}
     @media(min-width:769px){.hero-img{animation:pan 30s ease-in-out infinite alternate;}}
     .hero-video{display:none;object-fit:cover;}
+    .hero-desktop-fallback{display:none;}
+    .hero-mobile-img{display:block;}
     @media(min-width:769px){
       .hero-video{display:block;}
-      .hero-video + img{display:none;}
+      .hero-mobile-img{display:none;}
     }
     @media(prefers-reduced-motion:reduce){
       .hero-video{display:none !important;}
-      .hero-video + img{display:block !important;}
+      .hero-mobile-img{display:none !important;}
+      .hero-desktop-fallback{display:block !important;}
     }
     @keyframes pan{0%{transform:scale(1);}100%{transform:scale(1.08) translateY(-2%);}}
 
@@ -754,14 +757,18 @@
 <!-- HERO -->
 <header class="relative w-full overflow-hidden flex items-end justify-center" style="height:clamp(70vh,100vh,100vh);" role="banner">
   <div class="absolute inset-0 z-0">
-    <video class="w-full h-full hero-video" autoplay muted loop playsinline preload="auto" poster="hero-poster.webp">
-      <source src="hero-bg.webm" type="video/webm">
+    <video class="w-full h-full hero-video" autoplay muted loop playsinline preload="auto" poster="hero-desktop.webp"
+           onerror="this.style.display='none';document.querySelector('.hero-desktop-fallback').style.display='block';">
       <source src="hero-bg.mp4" type="video/mp4">
     </video>
-    <img src="hero-ayurveda-yoga-books.webp"
+    <img src="hero-desktop.webp"
+         alt="Ayurveda and yoga texts with meditation practice at sunrise — Samarpan" loading="eager" fetchpriority="high"
+         width="1920" height="960"
+         class="w-full h-full object-cover hero-img hero-desktop-fallback">
+    <img src="hero-mobile.webp"
          alt="Ayurveda and yoga texts with meditation practice at sunrise — Samarpan" loading="eager" fetchpriority="high"
          width="1000" height="1333"
-         class="w-full h-full object-cover hero-img">
+         class="w-full h-full object-cover hero-img hero-mobile-img">
   </div>
   <div class="hero-bg-overlay"></div>
   <div class="relative z-10 text-center text-white px-4 pb-20 md:pb-32">
