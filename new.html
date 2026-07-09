@@ -156,8 +156,8 @@
     #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
     [data-theme="dark"] #mobile-menu{background:#141410;}
-    #hamburger-icon{transition:color .3s;color:#ffffff;}
-    #navbar.scrolled #hamburger-icon{color:var(--text);}
+    .hamburger-icon{transition:color .3s;color:#ffffff;}
+    #navbar.scrolled .hamburger-icon{color:var(--text);}
 
     .stat-card-premium{position:relative;overflow:hidden;background:var(--card-bg);transition:transform .3s,box-shadow .3s;}
     .stat-card-premium::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 70%,rgba(217,93,57,.04));pointer-events:none;}
@@ -260,9 +260,12 @@
     .mission-cta-title{font-family:'Lato',sans-serif;font-size:.85rem;font-weight:700;}
     .mission-cta-sub{font-family:'Lato',sans-serif;font-size:.78rem;opacity:.85;}
 
-    .event-card{background:var(--card-bg);border:1px solid var(--border);padding:1.6rem 1.3rem;transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .event-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;overflow:hidden;padding:0 0 1.5rem;transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .event-card-img{position:relative;height:120px;overflow:hidden;}
+    .event-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    .event-card-body{padding:1.2rem 1.3rem 0;}
     .event-card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.08);border-color:#C5A059;}
-    .event-tag{font-family:'Lato',sans-serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#D95D39;font-weight:700;}
+    .event-tag{position:absolute;top:.7rem;left:.7rem;z-index:2;background:rgba(28,28,28,.75);backdrop-filter:blur(2px);font-family:'Lato',sans-serif;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:#fff;font-weight:700;padding:.3rem .6rem;border-radius:3px;}
     .event-card h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);margin:.5rem 0 .3rem;}
     .event-date{font-family:'Lato',sans-serif;font-size:.72rem;color:var(--text-muted);margin-bottom:.7rem;}
     .event-card a{font-family:'Lato',sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:#C5A059;text-decoration:none;font-weight:700;}
@@ -325,6 +328,14 @@
     .expert-avatar-btn img{width:100%;height:100%;object-fit:cover;display:block;}
 
     .download-card{background:var(--card-bg);border:1px solid var(--border);padding:1.7rem 1.4rem;text-align:center;transition:transform .3s,box-shadow .3s,border-color .3s;}
+    .resource-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;text-align:center;transition:transform .35s,box-shadow .35s,border-color .35s;}
+    .resource-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(217,93,57,.12);border-color:#C5A059;}
+    .resource-card-img{position:relative;height:150px;overflow:hidden;background:var(--bg2);}
+    .resource-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+    .resource-card-badge{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:-23px auto 0;position:relative;z-index:2;border:3px solid var(--card-bg);}
+    .resource-card-body{padding:.6rem 1.25rem 1.5rem;}
+    .resource-pill{display:inline-flex;align-items:center;gap:.35rem;padding:.55rem 1.15rem;border-radius:50px;font-family:'Lato',sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-top:.9rem;transition:transform .2s,box-shadow .2s;text-decoration:none;}
+    .resource-pill:hover{transform:translateY(-2px);}
     .download-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(217,93,57,.08);border-color:#C5A059;}
 
     .research-card{background:var(--card-bg);border:1px solid var(--border);border-top:3px solid #C5A059;padding:1.8rem 1.6rem;transition:transform .3s,box-shadow .3s;}
@@ -555,10 +566,10 @@
     .impact-bar-intro{flex:0 0 260px;}
     .impact-items{display:flex;flex-wrap:wrap;gap:2rem 2.75rem;flex:1;}
     .impact-item{display:flex;align-items:center;gap:.85rem;}
-    .impact-item .impact-icon{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s;}
+    .impact-item .impact-icon{width:46px;height:46px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s;}
     .impact-item:hover .impact-icon{transform:scale(1.08);border-color:rgba(197,160,89,.7);}
-    .impact-item .impact-num{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:#fff;line-height:1;font-weight:400;}
-    .impact-item .impact-label{font-family:'Lato',sans-serif;font-size:10px;letter-spacing:.04em;color:rgba(255,255,255,.55);margin-top:.2rem;line-height:1.3;}
+    .impact-item .impact-num{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--text);line-height:1;font-weight:400;}
+    .impact-item .impact-label{font-family:'Lato',sans-serif;font-size:10px;letter-spacing:.04em;color:var(--text-muted);margin-top:.2rem;line-height:1.3;}
 
     /* PHOTO CARDS — Ecosystem / Get Involved */
     .photo-card{position:relative;overflow:hidden;border-radius:8px;display:block;text-decoration:none;background:#111;height:340px;}
@@ -656,6 +667,29 @@
     .ai-input-mock{display:flex;gap:.5rem;margin-top:.5rem;}
     .ai-input-mock input{flex:1;padding:.7rem 1rem;border-radius:999px;border:1px solid var(--border);background:var(--input-bg);font-family:'Lato',sans-serif;font-size:.8rem;color:var(--text-muted);}
     .ai-input-mock button{width:38px;height:38px;border-radius:50%;background:var(--border);color:var(--text-muted);display:flex;align-items:center;justify-content:center;border:none;flex-shrink:0;}
+
+    /* ---- PUBLIC HEALTH hero card ---- */
+    .ph-hero-card{display:grid;grid-template-columns:1fr;gap:0;background:var(--card-bg);border:1px solid var(--border);border-radius:28px;overflow:hidden;box-shadow:var(--shadow);}
+    @media(min-width:900px){.ph-hero-card{grid-template-columns:1fr 1fr;align-items:stretch;}}
+    .ph-hero-text{padding:2.75rem 1.75rem;}
+    @media(min-width:900px){.ph-hero-text{padding:3.5rem 3.25rem;}}
+    .ph-hero-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg2);margin-bottom:1.5rem;}
+    .ph-hero-rule{width:38px;height:2px;background:#D95D39;margin:1.1rem 0 1.4rem;}
+    .ph-icon-row{display:flex;flex-wrap:wrap;gap:1.6rem 1.5rem;margin:2rem 0 2.25rem;}
+    .ph-icon-item{display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;min-width:90px;}
+    .ph-icon-item .ph-icon-circle{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;}
+    .ph-icon-item span{font-family:'Lato',sans-serif;font-size:.72rem;line-height:1.35;color:var(--text);}
+    .ph-cta-btn{display:inline-flex;align-items:center;gap:.65rem;background:#4A5D4F;color:#fff;padding:.95rem 1.9rem;border-radius:999px;font-family:'Lato',sans-serif;font-size:.75rem;font-weight:700;text-transform:none;letter-spacing:.01em;transition:background .3s;}
+    .ph-cta-btn:hover{background:#3b4b3f;}
+    .ph-hero-media{position:relative;min-height:280px;background:linear-gradient(160deg,#dfe3d3 0%,#c9d0b9 100%);}
+    @media(min-width:900px){.ph-hero-media{min-height:100%;}}
+    .ph-hero-media-shape{position:absolute;inset:1.25rem 1.25rem 1.25rem 2.25rem;border-radius:200px 24px 24px 24px;overflow:hidden;border:1px solid rgba(217,93,57,.35);}
+    @media(min-width:900px){.ph-hero-media-shape{inset:2rem 2rem 2rem 3.5rem;}}
+    .ph-hero-media-shape img{width:100%;height:100%;object-fit:cover;display:block;}
+    .ph-hero-leaf{position:absolute;top:1.25rem;right:1.25rem;width:34px;height:34px;color:#D95D39;opacity:.9;}
+    .ph-hero-badge{position:absolute;right:1.5rem;bottom:1.5rem;left:1.5rem;max-width:320px;margin-left:auto;background:rgba(28,38,20,.88);color:#fff;border-radius:14px;padding:1rem 1.15rem;display:flex;gap:.8rem;align-items:flex-start;backdrop-filter:blur(2px);}
+    .ph-hero-badge-icon{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#D95D39;}
+    .ph-hero-badge p{font-family:'Lato',sans-serif;font-size:.72rem;line-height:1.45;color:rgba(255,255,255,.92);}
   </style>
 </head>
 
@@ -686,7 +720,7 @@
   <span>🎁 </span>
   <span class="gift">FREE 20-min Dosha Assessment</span>
   <span class="hidden sm:inline"> — Limited spots this week.</span>
-  <a class="claim-link" onclick="openGiftPopup()" role="button">Claim Yours →</a>
+  <a class="claim-link" href="#contact" role="button">Claim Yours →</a>
   <button id="top-banner-close" onclick="dismissBanner()" aria-label="Dismiss">✕</button>
 </div>
 
@@ -716,265 +750,6 @@
     <div class="flex gap-2 flex-shrink-0">
       <button onclick="acceptCookies()" class="cta-btn px-4 py-2 bg-clay text-white text-[9px] font-bold uppercase tracking-widest rounded-sm">Accept</button>
       <button onclick="declineCookies()" class="px-4 py-2 border text-[9px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text-muted);">Decline</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP 1 — FREE DOSHA ASSESSMENT
-     Timer: 30s after page load
-     ══════════════════════════════════════════ -->
-<div id="gift-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="giftPopupTitle">
-  <div class="gift-popup-box">
-    <button class="popup-close-btn" onclick="closeGiftPopup()" aria-label="Close">✕</button>
-    <div class="gift-popup-photo">
-      <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=800&auto=format&fit=crop" alt="Ayurveda Healing" loading="eager">
-      <div class="gift-popup-photo-content">
-        <svg class="gift-popup-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-          <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-          <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-        </svg>
-        <span class="gift-popup-logo-name">Samarpan</span>
-        <div class="gift-popup-badge"><span>🎁 A Sacred Gift For You</span></div>
-      </div>
-    </div>
-    <div style="padding:clamp(1.25rem,4vw,1.75rem) clamp(1.25rem,5vw,2rem);">
-      <h3 id="giftPopupTitle" class="font-serif mb-2" style="font-size:clamp(1.25rem,4vw,1.6rem);color:var(--text);">FREE 20-min Dosha Assessment</h3>
-      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Discover your Ayurvedic constitution and the single biggest change that could <strong class="text-clay">transform your health</strong>. Limited spots this week.</p>
-      <form id="giftForm" onsubmit="handleGiftSubmit(event)" class="space-y-3" novalidate>
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="giftWebsite">Website</label>
-          <input type="text" id="giftWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="text" name="name" id="giftName" placeholder="Your full name *" class="form-input2 w-full" required autocomplete="name">
-        <div>
-          <input type="email" name="email" id="giftEmail" placeholder="Your email address *" class="form-input2 w-full" required autocomplete="email">
-          <span class="text-xs text-red-500 hidden" id="giftEmailErr">Please enter a valid email address.</span>
-        </div>
-        <input type="tel" name="phone" id="giftPhone" placeholder="WhatsApp number (optional)" class="form-input2 w-full" autocomplete="tel">
-        <button type="submit" id="giftSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Claim My Free Session →</button>
-      </form>
-      <div id="giftStatus" class="mt-2"></div>
-      <p class="text-[10px] mt-3 text-center" style="color:var(--text-muted);">Unsubscribe anytime. We reply within 24h.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP 2 — EXIT INTENT
-     Timer: 90s after page load OR on mouse-leave
-     ══════════════════════════════════════════ -->
-<div id="download-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="downloadPopupTitle">
-  <div class="booking-popup-box">
-    <button class="popup-close-btn popup-close-dark" onclick="closeDownloadPopup()" aria-label="Close">✕</button>
-    <div class="booking-popup-head">
-      <div class="popup-brand-logo">
-        <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3">
-          <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-          <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".8"/>
-        </svg>
-        <span class="popup-brand-logo-name" style="color:var(--text);">Samarpan</span>
-      </div>
-      <h3 id="downloadPopupTitle" class="font-serif mb-1" style="font-size:1.15rem;color:var(--text);">Get Your Free Guide</h3>
-      <p class="font-sans text-xs" style="color:var(--text-muted);line-height:1.5;">Sending <strong id="downloadResourceName" style="color:var(--text);">this guide</strong> straight to your inbox.</p>
-    </div>
-    <div style="padding:.85rem 1.35rem 1.35rem;">
-      <form id="downloadForm" onsubmit="handleDownloadSubmit(event)" class="space-y-3" novalidate>
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="dlWebsite">Website</label>
-          <input type="text" id="dlWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="text" id="dlName" placeholder="Your full name *" class="form-input2 w-full" required autocomplete="name">
-        <div>
-          <input type="email" id="dlEmail" placeholder="Your email address *" class="form-input2 w-full" required autocomplete="email">
-          <span class="text-xs text-red-500 hidden" id="dlEmailErr">Please enter a valid email address.</span>
-        </div>
-        <button type="submit" id="dlSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Send Me the Guide →</button>
-      </form>
-      <div id="downloadStatus" class="mt-2"></div>
-    </div>
-  </div>
-</div>
-
-<div id="exit-popup" class="popup-overlay" role="dialog" aria-modal="true">
-  <div class="exit-popup-inner">
-    <button onclick="closeExitPopup()" class="popup-close-btn popup-close-dark" style="position:absolute;top:.65rem;right:.65rem;z-index:20;" aria-label="Close">✕</button>
-    <div class="exit-popup-photo">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=800&auto=format&fit=crop" alt="Healing Journey" loading="lazy">
-      <div class="exit-popup-photo-text">
-        <div class="popup-brand-logo">
-          <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-            <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-            <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-          </svg>
-          <span class="popup-brand-logo-name">Samarpan</span>
-        </div>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-1">Spread Healing</span>
-        <span class="font-display text-white" style="font-size:1.5rem;">Know Someone Who Needs This?</span>
-      </div>
-    </div>
-    <div class="p-6 sm:p-8">
-      <h3 class="font-serif text-2xl mb-2" style="color:var(--text);">Refer a Friend</h3>
-      <p class="font-sans text-sm mb-5" style="color:var(--text-muted);line-height:1.7;">Refer a friend and <strong class="text-clay">both of you get a free session</strong> as a gift from Samarpan.</p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="closeExitPopup();openReferralPopup();" class="cta-btn flex-1 text-center bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Refer a Friend →</button>
-        <button onclick="closeExitPopup()" class="flex-1 py-3 border text-[10px] font-bold uppercase tracking-widest rounded-sm" style="border-color:var(--border);color:var(--text-muted);">Maybe Later</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP 3 — FREE YOGA SESSION
-     Timer: on testimonials section scroll
-     ══════════════════════════════════════════ -->
-<div id="yoga-popup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="yogaPopupTitle">
-  <div class="yoga-popup-inner">
-    <button class="popup-close-btn popup-close-dark" style="position:absolute;top:.6rem;right:.6rem;z-index:20;" onclick="closeYogaPopup()" aria-label="Close">✕</button>
-    <div class="yoga-popup-photo">
-      <img src="https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&w=800&auto=format&fit=crop" alt="Yoga Sunrise Practice" loading="lazy">
-      <div class="yoga-popup-photo-content">
-        <div class="popup-brand-logo">
-          <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-            <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-            <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-          </svg>
-          <span class="popup-brand-logo-name">Samarpan</span>
-        </div>
-        <div class="yoga-popup-badge"><span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#fff;font-weight:700;">Limited Spots</span></div>
-      </div>
-    </div>
-    <div class="yoga-popup-body">
-      <div style="display:inline-block;background:rgba(74,93,79,.1);border:1px solid rgba(74,93,79,.3);border-radius:50px;padding:.25rem .75rem;margin-bottom:.75rem;">
-        <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#4A5D4F;font-weight:700;">Free Yoga Session</span>
-      </div>
-      <h3 id="yogaPopupTitle" style="font-family:'Marcellus',serif;font-size:clamp(1.1rem,3vw,1.3rem);color:var(--text);margin-bottom:.35rem;">Join a Free Class</h3>
-      <p style="font-family:'Lato',sans-serif;font-size:11px;color:var(--text-muted);line-height:1.6;margin-bottom:.5rem;">Hatha Yoga &amp; Pranayama — Live on Zoom.</p>
-      <p style="font-family:'Lato',sans-serif;font-size:11px;color:var(--text-muted);line-height:1.6;margin-bottom:1rem;">Worldwide. No prior experience needed.</p>
-      <form id="yogaForm" onsubmit="handleYogaSubmit(event)" novalidate style="display:flex;flex-direction:column;gap:.6rem;">
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="yogaWebsite">Website</label>
-          <input type="text" id="yogaWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <div>
-          <input type="text" id="yogaName" placeholder="Full Name *" class="form-input2" required autocomplete="name" style="padding:.7rem .75rem;">
-          <span class="text-xs text-red-500 hidden" id="yogaNameErr">Please enter your name.</span>
-        </div>
-        <div>
-          <input type="email" id="yogaEmail" placeholder="Email Address *" class="form-input2" required autocomplete="email" style="padding:.7rem .75rem;">
-          <span class="text-xs text-red-500 hidden" id="yogaEmailErr">Please enter a valid email.</span>
-        </div>
-        <input type="tel" id="yogaMobile" placeholder="Mobile / WhatsApp (Optional)" class="form-input2" autocomplete="tel" style="padding:.7rem .75rem;">
-        <button type="submit" id="yogaSubmitBtn" class="cta-btn w-full text-white py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-sm mt-1" style="background:#4A5D4F;">Reserve My Free Spot →</button>
-      </form>
-      <div id="yogaStatus" style="margin-top:.5rem;"></div>
-      <p style="font-family:'Lato',sans-serif;font-size:9px;text-align:center;margin-top:.6rem;color:var(--text-muted);">No commitment · Instant confirmation</p>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP 4 — REFERRAL
-     Timer: 150s after page load
-     ══════════════════════════════════════════ -->
-<div id="referral-popup" class="side-popup-overlay" role="dialog" aria-modal="true">
-  <div class="referral-popup-inner">
-    <div class="referral-popup-img">
-      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800&auto=format&fit=crop" alt="Friends healing together" loading="lazy">
-      <div class="referral-popup-img-overlay">
-        <div class="popup-brand-logo">
-          <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-            <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-            <circle cx="50" cy="85" r="3" fill="currentColor"/><path d="M20 50H80" stroke-opacity=".8"/>
-          </svg>
-          <span class="popup-brand-logo-name">Samarpan</span>
-        </div>
-        <span style="font-family:'Marcellus',serif;font-size:clamp(1rem,3vw,1.35rem);color:#fff;line-height:1.3;">Spread the Light of Healing</span>
-      </div>
-      <button class="popup-close-btn" style="position:absolute;top:.7rem;right:.7rem;z-index:30;" onclick="closeReferralPopup()" aria-label="Close">✕</button>
-    </div>
-    <div class="referral-popup-body">
-      <div style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(197,160,89,.1);border:1px solid rgba(197,160,89,.3);border-radius:50px;padding:.25rem .85rem;margin-bottom:.75rem;">
-        <span style="font-size:14px;">🎁</span>
-        <span style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#C5A059;font-weight:700;">Free Session for Both</span>
-      </div>
-      <h3 style="font-family:'Marcellus',serif;font-size:clamp(1.2rem,3.5vw,1.45rem);color:var(--text);margin-bottom:.4rem;line-height:1.25;">Know Someone Who<br>Needs Healing?</h3>
-      <p style="font-family:'Lato',sans-serif;font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:.85rem;">When your friend completes their first session, <strong style="color:var(--text);">both of you receive a complimentary session</strong> — our gift for spreading healing.</p>
-      <form id="referralEmailForm" onsubmit="handleReferralEmailSubmit(event)" novalidate style="margin-bottom:.85rem;">
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="refWebsite">Website</label>
-          <input type="text" id="refWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <p style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.4rem;font-weight:700;">Your Email (to activate reward)</p>
-        <div style="display:flex;gap:.5rem;">
-          <input type="email" id="referralEmail" placeholder="your@email.com" class="form-input2" required style="flex:1;padding:.7rem .75rem;font-size:.8rem;" autocomplete="email">
-          <button type="submit" id="referralEmailBtn" class="cta-btn bg-clay text-white text-[9px] font-bold uppercase tracking-widest rounded-sm px-4 whitespace-nowrap" style="flex-shrink:0;">Save</button>
-        </div>
-        <div id="referralEmailStatus" style="margin-top:.35rem;"></div>
-      </form>
-      <p style="font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.3rem;font-weight:700;">Your Referral Link</p>
-      <div class="referral-link-box" id="referralLinkDisplay">https://thesamarpan.co.in/?ref=friend</div>
-      <div style="display:flex;flex-direction:column;gap:.45rem;margin-bottom:.85rem;">
-        <button class="share-btn share-btn-wa" onclick="shareReferralWhatsApp()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Share on WhatsApp
-        </button>
-        <button class="share-btn" onclick="shareReferralEmail()">
-          <i data-lucide="mail" style="width:16px;height:16px;flex-shrink:0;"></i>
-          Share via Email
-        </button>
-        <button class="share-btn share-btn-copy" id="copyReferralBtn" onclick="copyReferralLink()">
-          <i data-lucide="link" style="width:16px;height:16px;flex-shrink:0;" id="copyIcon"></i>
-          <span id="copyBtnText">Copy Referral Link</span>
-        </button>
-      </div>
-      <p style="font-family:'Lato',sans-serif;font-size:10px;color:var(--text-muted);line-height:1.6;">Valid for all programmes · No expiry · Your friend must complete their first paid session for both rewards to activate.</p>
-      <div id="referralStatus" style="margin-top:.5rem;"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     POPUP — BOOK A SESSION (opened from the floating "Book Now" button)
-     ══════════════════════════════════════════ -->
-<div id="booking-popup" class="side-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="bookingPopupTitle">
-  <div class="booking-popup-box">
-    <button class="popup-close-btn popup-close-dark" onclick="closeBookingPopup()" aria-label="Close">✕</button>
-    <div class="booking-popup-head">
-      <div class="popup-brand-logo">
-        <svg class="popup-brand-logo-svg" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="3">
-          <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-          <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".8"/>
-        </svg>
-        <span class="popup-brand-logo-name" style="color:var(--text);">Samarpan</span>
-      </div>
-      <h3 id="bookingPopupTitle" class="font-serif mb-1" style="font-size:1.15rem;color:var(--text);">Quick Connect</h3>
-      <p class="font-sans text-xs" style="color:var(--text-muted);line-height:1.5;">Share your details and we'll reach out within 24 hours.</p>
-    </div>
-    <div style="padding:.85rem 1.35rem 1.35rem;">
-      <form id="bookingPopupForm" onsubmit="handleBookingPopupSubmit(event)" class="space-y-3" novalidate>
-        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-          <label for="bpWebsite">Website</label>
-          <input type="text" id="bpWebsite" name="website" tabindex="-1" autocomplete="off">
-        </div>
-        <input type="text" name="name" id="bpName" placeholder="Your full name *" class="form-input2 w-full" required autocomplete="name">
-        <div>
-          <input type="email" name="email" id="bpEmail" placeholder="Your email address *" class="form-input2 w-full" required autocomplete="email">
-          <span class="text-xs text-red-500 hidden" id="bpEmailErr">Please enter a valid email address.</span>
-        </div>
-        <input type="tel" name="phone" id="bpPhone" placeholder="WhatsApp / phone number *" class="form-input2 w-full" required autocomplete="tel">
-        <select id="bpService" class="form-select2 w-full">
-          <option value="">Purpose to connect *</option>
-          <option value="Ayurveda Consultation">Ayurveda Consultation</option>
-          <option value="Yoga & Pranayama">Yoga &amp; Pranayama</option>
-          <option value="Psychology / Counselling">Psychology / Counselling</option>
-          <option value="Meditation & Mantra">Meditation &amp; Mantra</option>
-          <option value="Not sure yet">Not sure yet</option>
-        </select>
-        <button type="submit" id="bpSubmitBtn" class="cta-btn w-full bg-clay text-white py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm">Request My Session →</button>
-      </form>
-      <div id="bookingPopupStatus" class="mt-2"></div>
-      <p class="text-[10px] mt-3 text-center" style="color:var(--text-muted);">By booking, you agree to our <a href="terms-of-service.html" target="_blank" rel="noopener" style="text-decoration:underline;color:var(--text-muted);">Terms of Service</a>.</p>
     </div>
   </div>
 </div>
@@ -1046,7 +821,8 @@
     </div>
     <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
       <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
-        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon"></i>
+        <i data-lucide="menu" class="w-6 h-6 hamburger-icon" id="hamburger-icon-menu"></i>
+        <i data-lucide="x" class="w-6 h-6 hamburger-icon hidden" id="hamburger-icon-close"></i>
       </button>
     </div>
   </div>
@@ -1071,7 +847,7 @@
   <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
   <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
   <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community</a>
-  <a href="#referral-section" onclick="toggleMenu();setTimeout(openReferralPopup,400);" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
+  <a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
   <a href="booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
 </div>
 
@@ -1108,21 +884,21 @@
 
 <!-- SAMARPAN IMPACT (institutional stats) — moved directly under Hero so trust signals land first -->
 <!-- TODO(Nisha): placeholder counts below — confirm real figures before publishing. -->
-<section id="impact" class="py-14 md:py-16 px-4 sm:px-6" style="background:linear-gradient(135deg,#16220F 0%,#1D2B14 100%);">
+<section id="impact" class="py-14 md:py-16 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
     <div class="impact-bar-wrap fade-up">
       <div class="impact-bar-intro">
         <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Our Impact</span>
-        <h2 class="font-display text-xl md:text-2xl text-white leading-tight">Growing together<br>every day.</h2>
-        <p class="font-sans text-xs mt-3" style="color:rgba(255,255,255,.5);">Real people. Real impact.<br>Lasting change.</p>
+        <h2 class="font-display text-xl md:text-2xl leading-tight" style="color:var(--text);">Growing together<br>every day.</h2>
+        <p class="font-sans text-xs mt-3" style="color:var(--text-muted);">Real people. Real impact.<br>Lasting change.</p>
       </div>
       <div class="impact-items">
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="users" class="w-4 h-4 text-white"></i></div><div><div class="impact-num"><span class="counter" data-target="25">0</span>+</div><div class="impact-label">Healthcare<br>Professionals</div></div></div>
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="microscope" class="w-4 h-4 text-white"></i></div><div><div class="impact-num"><span class="counter" data-target="15">0</span>+</div><div class="impact-label">Research<br>Contributors</div></div></div>
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="book-open" class="w-4 h-4 text-white"></i></div><div><div class="impact-num"><span class="counter" data-target="120">0</span>+</div><div class="impact-label">Educational<br>Resources</div></div></div>
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="globe" class="w-4 h-4 text-white"></i></div><div><div class="impact-num"><span class="counter" data-target="6">0</span>+</div><div class="impact-label">Health<br>Disciplines</div></div></div>
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="users-round" class="w-4 h-4 text-white"></i></div><div><div class="impact-num"><span class="counter" data-target="5000">0</span>+</div><div class="impact-label">Community<br>Members</div></div></div>
-        <div class="impact-item"><div class="impact-icon"><i data-lucide="infinity" class="w-4 h-4 text-white"></i></div><div><div class="impact-num">∞</div><div class="impact-label">Commitment to<br>Your Wellbeing</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="users" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="25">0</span>+</div><div class="impact-label">Healthcare<br>Professionals</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="microscope" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="15">0</span>+</div><div class="impact-label">Research<br>Contributors</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="book-open" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="120">0</span>+</div><div class="impact-label">Educational<br>Resources</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="globe" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="6">0</span>+</div><div class="impact-label">Health<br>Disciplines</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="users-round" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="5000">0</span>+</div><div class="impact-label">Community<br>Members</div></div></div>
+        <div class="impact-item"><div class="impact-icon"><i data-lucide="infinity" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num">∞</div><div class="impact-label">Commitment to<br>Your Wellbeing</div></div></div>
       </div>
     </div>
   </div>
@@ -1134,8 +910,10 @@
     <div class="divider-gold mb-8"></div>
     <h2 class="font-display text-3xl md:text-4xl mb-6" style="color:var(--text);">A Sanctuary for the Self</h2>
     <div class="ornament"><svg width="16" height="16" viewBox="0 0 24 24" fill="#C5A059"><circle cx="12" cy="12" r="10"/></svg></div>
-    <p class="font-serif text-xl md:text-2xl text-brand-gold italic mb-8">"Ayurveda heals the body, Yoga transforms the being,<br class="hidden sm:block">and Psychology awakens consciousness."</p>
-    <p class="font-sans font-light leading-loose text-sm md:text-base" style="color:var(--text-muted);">Samarpan is not just a service; it is a sacred offering. Grounded in the conviction that true healing is multidimensional, we bridge the gap between 5,000-year-old Vedic wisdom and modern science. Whether you seek to balance your Agni (metabolic fire), rewire anxious neural pathways, or find stillness through Yoga, your journey begins here.</p>
+    <p class="font-serif text-xl md:text-2xl text-brand-gold italic mb-8">"Healing individuals. Strengthening communities.<br class="hidden sm:block">Advancing holistic health."</p>
+    <p class="font-sans font-light leading-loose text-sm md:text-base" style="color:var(--text-muted);">Samarpan is a research-driven integrative health initiative committed to bridging the timeless wisdom of Ayurveda with the insights of modern science. By bringing together Ayurveda, Yoga, Psychology, Nutrition, Clinical Practice, Research, Education, and Public Health, we work to make holistic, evidence-informed healthcare accessible, meaningful, and sustainable for individuals and communities alike.</p>
+    <p class="font-sans font-light leading-loose text-sm md:text-base mt-4" style="color:var(--text-muted);">Whether you are seeking better health, deeper understanding, professional learning, or research collaboration, Samarpan offers a space where ancient knowledge and scientific inquiry come together in service of human wellbeing. Every journey begins with understanding. Every step moves toward lasting wellbeing.</p>
+    <p class="font-serif italic text-base md:text-lg mt-6" style="color:var(--text);">Healing individuals. Empowering communities. Inspiring the future of integrative health.</p>
     <div class="mt-12 flex justify-center gap-2">
       <span class="w-2 h-2 rounded-full bg-brand-gold/30"></span>
       <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
@@ -1164,35 +942,6 @@
       <div class="mission-node"><div class="mission-icon"><i data-lucide="users" class="w-6 h-6 text-brand-gold"></i></div><h3>Community</h3></div>
     </div>
     <p class="font-sans text-sm mt-12 max-w-2xl mx-auto fade-up" style="color:var(--text-muted);">We turn evidence into education, education into care, and care into a healthier public — one community at a time.</p>
-  </div>
-</section>
-
-<!-- FOUNDER VISION -->
-<!-- TODO(Nisha): swap in your actual founder photo (founder.webp) and replace this draft copy with your own words before publishing. -->
-<section id="founder-letter" class="py-24 px-4 sm:px-6" style="background:var(--bg);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">From the Founder</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">A Letter from the Founder</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-start fade-up">
-      <div class="md:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 mb-4" style="border-color:var(--border);background:var(--bg2);">
-          <img src="about3.png" loading="lazy" alt="Founder of Samarpan" class="w-full h-full object-cover">
-        </div>
-        <h3 class="font-serif text-lg" style="color:var(--text);">Founder, Samarpan</h3>
-        <p class="font-sans text-xs uppercase tracking-widest mt-1" style="color:var(--text-muted);">Ayurveda &amp; Integrative Health</p>
-      </div>
-      <div class="md:col-span-3 font-serif text-base leading-relaxed space-y-4" style="color:var(--text-muted);">
-        <p class="text-brand-gold italic text-lg" style="color:#C5A059;">"Why Samarpan? Because healing deserves better than a choice between ancient wisdom and modern rigor — it deserves both."</p>
-        <p><strong style="color:var(--text);">Why Ayurveda.</strong> It was the first system that taught me to treat a person, not a diagnosis — to look for the root, not just the symptom.</p>
-        <p><strong style="color:var(--text);">Why Psychology.</strong> No body heals in isolation from the mind that carries it. Every protocol we build now asks what the nervous system needs, not just the body.</p>
-        <p><strong style="color:var(--text);">Why Research.</strong> Tradition earns trust when it's willing to be examined. That's why every claim we make points back to a study, a text, or both.</p>
-        <p><strong style="color:var(--text);">Why Public Health.</strong> One-to-one healing changes one life at a time. Reaching schools, villages and workplaces changes thousands.</p>
-        <p>Samarpan began as one person's practice. It is becoming a community of researchers, clinicians and volunteers working toward the same idea — that wellbeing is a right, not a luxury. Thank you for being part of it.</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1540,22 +1289,31 @@
 <!-- PUBLIC HEALTH -->
 <section id="public-health" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Beyond the Individual</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Public Health</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">Very few Ayurveda organisations work here. It's one of the things that sets Samarpan apart.</p>
-      <div class="divider-line"></div>
-    </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 fade-up">
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="school" class="w-5 h-5 text-clay"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Healthy Schools</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.1);"><i data-lucide="home" class="w-5 h-5 text-brand-gold"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Healthy Villages</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="heart" class="w-5 h-5 text-sage"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Healthy Families</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="briefcase" class="w-5 h-5 text-clay"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Workplace Wellness</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.1);"><i data-lucide="apple" class="w-5 h-5 text-brand-gold"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Community Nutrition</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><div class="w-11 h-11 mx-auto mb-3 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="flask-conical" class="w-5 h-5 text-sage"></i></div><h3 class="font-serif text-sm" style="color:var(--text);">Research Projects</h3></div>
-    </div>
-    <div class="text-center mt-10 fade-up">
-      <a href="community.html" class="inline-block px-8 py-3 border border-brand-gold text-brand-gold font-sans text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-white transition duration-300 rounded-sm">See Our Public Health Work →</a>
+    <div class="ph-hero-card fade-up">
+      <div class="ph-hero-text">
+        <div class="ph-hero-icon"><i data-lucide="globe-2" class="w-7 h-7 text-sage"></i></div>
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Beyond the Individual</span>
+        <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Public Health</h2>
+        <div class="ph-hero-rule"></div>
+        <p class="font-sans text-sm md:text-base leading-relaxed" style="color:var(--text-muted);max-width:26rem;">Very few Ayurveda organisations work here. It's one of the things that sets Samarpan apart.</p>
+        <div class="ph-icon-row">
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="users" class="w-4 h-4 text-sage"></i></div><span>Community<br>Wellbeing</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="heart-pulse" class="w-4 h-4 text-sage"></i></div><span>Preventive<br>Care</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="leaf" class="w-4 h-4 text-sage"></i></div><span>Holistic<br>Interventions</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="bar-chart-3" class="w-4 h-4 text-sage"></i></div><span>Awareness &amp;<br>Education</span></div>
+        </div>
+        <a href="community.html" class="ph-cta-btn">Explore Our Initiatives <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="ph-hero-media">
+        <i data-lucide="leaf" class="ph-hero-leaf"></i>
+        <div class="ph-hero-media-shape">
+          <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Public health community outreach">
+        </div>
+        <div class="ph-hero-badge">
+          <div class="ph-hero-badge-icon"><i data-lucide="users-round" class="w-4 h-4"></i></div>
+          <p>Building healthier communities through awareness, education and compassionate action.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1741,42 +1499,37 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">How It Works</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up stagger-grid how-timeline">
-      <div class="step-card fade-up rounded-sm p-6 md:p-8 relative" style="background:var(--card-bg);z-index:1;">
-        <div class="step-num">01</div>
-        <div class="w-14 h-14 mb-6 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="search" class="w-6 h-6 text-clay"></i></div>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-3">Step One</span>
-        <h3 class="font-serif text-2xl mb-3" style="color:var(--text);">Free Consultation</h3>
-        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Begin with a complimentary 20-minute Dosha Assessment. We listen deeply, assess your constitution, and understand your unique health goals.</p>
-        <div class="mt-6 pt-6 border-t" style="border-color:var(--border);">
-          <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-clay flex-shrink-0"></i> Completely free, no commitment</div>
-          <div class="flex items-center gap-2 text-xs font-sans mt-2" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-clay flex-shrink-0"></i> Available online worldwide</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-up stagger-grid how-timeline">
+      <div class="step-card fade-up rounded-sm p-6 relative" style="background:var(--card-bg);z-index:1;">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 flex items-center justify-center rounded-full flex-shrink-0" style="background:rgba(217,93,57,.1);"><i data-lucide="search" class="w-5 h-5 text-clay"></i></div>
+          <span class="font-display text-3xl" style="color:var(--border);">01</span>
         </div>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-clay block mb-1.5">Step One</span>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Free Consultation</h3>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">A complimentary 20-minute Dosha Assessment to understand your constitution and goals.</p>
       </div>
-      <div class="step-card fade-up rounded-sm p-6 md:p-8 relative" style="border-color:#D95D39;background:var(--card-bg);z-index:1;">
-        <div class="step-num">02</div>
-        <div class="absolute top-6 right-14 bg-clay text-white font-sans text-[9px] uppercase tracking-widest px-2 py-1 rounded">Most Popular</div>
-        <div class="w-14 h-14 mb-6 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.1);"><i data-lucide="clipboard-list" class="w-6 h-6 text-brand-gold"></i></div>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-3">Step Two</span>
-        <h3 class="font-serif text-2xl mb-3" style="color:var(--text);">Personalised Plan</h3>
-        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Receive a custom protocol — combining Ayurvedic diet, yoga practice, psychological tools, and mantra — tailored entirely to you.</p>
-        <div class="mt-6 pt-6 border-t" style="border-color:var(--border);">
-          <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-brand-gold flex-shrink-0"></i> Multi-modal integrative approach</div>
-          <div class="flex items-center gap-2 text-xs font-sans mt-2" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-brand-gold flex-shrink-0"></i> Written protocol in 48h</div>
+      <div class="step-card fade-up rounded-sm p-6 relative" style="border-color:#D95D39;background:var(--card-bg);z-index:1;">
+        <div class="absolute top-5 right-5 bg-clay text-white font-sans text-[8px] uppercase tracking-widest px-2 py-1 rounded">Popular</div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 flex items-center justify-center rounded-full flex-shrink-0" style="background:rgba(197,160,89,.1);"><i data-lucide="clipboard-list" class="w-5 h-5 text-brand-gold"></i></div>
+          <span class="font-display text-3xl" style="color:var(--border);">02</span>
         </div>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-1.5">Step Two</span>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Personalised Plan</h3>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">A custom protocol — Ayurvedic diet, yoga, psychology and mantra — tailored to you.</p>
       </div>
-      <div class="step-card fade-up rounded-sm p-6 md:p-8 relative" style="background:var(--card-bg);z-index:1;">
-        <div class="step-num">03</div>
-        <div class="w-14 h-14 mb-6 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="sparkles" class="w-6 h-6 text-sage"></i></div>
-        <span class="font-sans text-[9px] uppercase tracking-widest text-sage block mb-3">Step Three</span>
-        <h3 class="font-serif text-2xl mb-3" style="color:var(--text);">Transform &amp; Thrive</h3>
-        <p class="font-sans text-sm leading-relaxed" style="color:var(--text-muted);">Through consistent guided sessions, track your transformation. We support you at every step with accountability, adjustments, and care.</p>
-        <div class="mt-6 pt-6 border-t" style="border-color:var(--border);">
-          <div class="flex items-center gap-2 text-xs font-sans" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-sage flex-shrink-0"></i> Monthly progress reviews</div>
-          <div class="flex items-center gap-2 text-xs font-sans mt-2" style="color:var(--text-muted);"><i data-lucide="check-circle" class="w-4 h-4 text-sage flex-shrink-0"></i> Lifetime community access</div>
+      <div class="step-card fade-up rounded-sm p-6 relative" style="background:var(--card-bg);z-index:1;">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 flex items-center justify-center rounded-full flex-shrink-0" style="background:rgba(74,93,79,.1);"><i data-lucide="sparkles" class="w-5 h-5 text-sage"></i></div>
+          <span class="font-display text-3xl" style="color:var(--border);">03</span>
         </div>
+        <span class="font-sans text-[9px] uppercase tracking-widest text-sage block mb-1.5">Step Three</span>
+        <h3 class="font-serif text-xl mb-2" style="color:var(--text);">Transform &amp; Thrive</h3>
+        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Guided sessions with ongoing accountability, adjustments and care.</p>
       </div>
     </div>
+
 
     <!-- INLINE CONSULTATION FORM -->
     <div class="text-center mt-10 fade-up">
@@ -2062,30 +1815,6 @@
   </div>
 </section>
 
-<!-- CONTENT STATS -->
-<!-- TODO(Nisha): confirm these are your real current counts (250 Articles / 50 Research Reviews / 1000 Community Members) before this goes live — displaying inflated numbers is a trust and compliance risk. -->
-<section class="py-14" style="background:var(--bg);">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-px bg-[var(--border)] fade-up" style="max-width:820px;margin:0 auto;">
-      <div class="stat-card-premium p-6 md:p-8 text-center">
-        <div class="stat-number"><span class="counter" data-target="250">0</span>+</div>
-        <div class="stat-label">Educational Articles</div>
-        <div class="stat-bar"></div>
-      </div>
-      <div class="stat-card-premium p-6 md:p-8 text-center">
-        <div class="stat-number"><span class="counter" data-target="50">0</span>+</div>
-        <div class="stat-label">Research Reviews</div>
-        <div class="stat-bar"></div>
-      </div>
-      <div class="stat-card-premium p-6 md:p-8 text-center">
-        <div class="stat-number"><span class="counter" data-target="1000">0</span>+</div>
-        <div class="stat-label">Community Members</div>
-        <div class="stat-bar"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- RESEARCH CORNER -->
 <!-- TODO(Nisha): these 3 cards are placeholder examples — swap in real studies each week and cite them properly on journal.html. -->
 <section id="research-corner" class="py-24 px-4 sm:px-6" style="background:var(--bg2);">
@@ -2136,44 +1865,36 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up">
-      <div class="download-card">
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 01</span>
-        <h3 class="font-serif text-base mt-2" style="color:var(--text);">Foundations of Agni</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Digestive fire, modern metabolism, and where the two meet.</p>
-        <button onclick="openDownloadPopup('Samarpan Journal — Issue 01')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download PDF →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Foundations of Agni"></div>
+        <div class="resource-card-badge" style="background:rgba(217,93,57,.12);"><i data-lucide="flame" class="w-5 h-5 text-clay"></i></div>
+        <div class="resource-card-body">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 01</span>
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Foundations of Agni</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Digestive fire, modern metabolism, and where the two meet.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2001" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 02</span>
-        <h3 class="font-serif text-base mt-2" style="color:var(--text);">The Nervous System Issue</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Trauma, Pranayama, and the science of feeling safe again.</p>
-        <button onclick="openDownloadPopup('Samarpan Journal — Issue 02')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download PDF →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="The Nervous System Issue"></div>
+        <div class="resource-card-badge" style="background:rgba(74,93,79,.12);"><i data-lucide="activity" class="w-5 h-5 text-sage"></i></div>
+        <div class="resource-card-body">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 02</span>
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">The Nervous System Issue</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Trauma, Pranayama, and the science of feeling safe again.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2002" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 03</span>
-        <h3 class="font-serif text-base mt-2" style="color:var(--text);">Women's Health, Reconsidered</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">PCOS, cycles, and an integrative approach to hormonal care.</p>
-        <button onclick="openDownloadPopup('Samarpan Journal — Issue 03')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download PDF →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Women's Health, Reconsidered"></div>
+        <div class="resource-card-badge" style="background:rgba(197,160,89,.15);"><i data-lucide="heart" class="w-5 h-5 text-brand-gold"></i></div>
+        <div class="resource-card-body">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 03</span>
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Women's Health, Reconsidered</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">PCOS, cycles, and an integrative approach to hormonal care.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2003" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESEARCH DASHBOARD -->
-<!-- TODO(Nisha): article counts below are placeholders — wire these up to real journal.html category counts when available. -->
-<section id="research-dashboard" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Explore by Topic</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Research Dashboard</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 fade-up">
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#D95D39;">12</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Women's Health</p></a>
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#4A5D4F;">9</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Child Health</p></a>
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#C5A059;">18</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Mental Health</p></a>
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#D95D39;">21</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Yoga</p></a>
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#4A5D4F;">16</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Nutrition</p></a>
-      <a href="journal.html" class="step-card rounded-sm p-5 text-center block"><div class="font-display text-2xl" style="color:#C5A059;">45</div><p class="font-sans text-[10px] uppercase tracking-widest mt-2" style="color:var(--text-muted);">Ayurveda</p></a>
     </div>
   </div>
 </section>
@@ -2215,35 +1936,50 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 fade-up">
-      <div class="download-card">
-        <i data-lucide="sunrise" class="w-7 h-7 text-clay mb-3" style="margin-left:auto;margin-right:auto;"></i>
-        <h3 class="font-serif text-base" style="color:var(--text);">Dinacharya Guide</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">A daily Ayurvedic routine to anchor your mornings and evenings.</p>
-        <button onclick="openDownloadPopup('Dinacharya Guide')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Dinacharya Guide"></div>
+        <div class="resource-card-badge" style="background:rgba(217,93,57,.12);"><i data-lucide="sunrise" class="w-5 h-5 text-clay"></i></div>
+        <div class="resource-card-body">
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Dinacharya Guide</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">A daily Ayurvedic routine to anchor your mornings and evenings.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Dinacharya%20Guide" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <i data-lucide="heart-pulse" class="w-7 h-7 text-clay mb-3" style="margin-left:auto;margin-right:auto;"></i>
-        <h3 class="font-serif text-base" style="color:var(--text);">PCOS Diet Guide</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Ayurvedic dietary guidance for hormonal and metabolic balance.</p>
-        <button onclick="openDownloadPopup('PCOS Diet Guide')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="PCOS Diet Guide"></div>
+        <div class="resource-card-badge" style="background:rgba(74,93,79,.12);"><i data-lucide="heart-pulse" class="w-5 h-5 text-sage"></i></div>
+        <div class="resource-card-body">
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">PCOS Diet Guide</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Ayurvedic dietary guidance for hormonal and metabolic balance.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20PCOS%20Diet%20Guide" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <i data-lucide="droplet" class="w-7 h-7 text-clay mb-3" style="margin-left:auto;margin-right:auto;"></i>
-        <h3 class="font-serif text-base" style="color:var(--text);">Diabetes Booklet</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Managing blood sugar through diet, routine and herbal support.</p>
-        <button onclick="openDownloadPopup('Diabetes Booklet')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Diabetes Booklet"></div>
+        <div class="resource-card-badge" style="background:rgba(197,160,89,.15);"><i data-lucide="droplet" class="w-5 h-5 text-brand-gold"></i></div>
+        <div class="resource-card-body">
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Diabetes Booklet</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Managing blood sugar through diet, routine and herbal support.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Diabetes%20Booklet" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <i data-lucide="flower-2" class="w-7 h-7 text-clay mb-3" style="margin-left:auto;margin-right:auto;"></i>
-        <h3 class="font-serif text-base" style="color:var(--text);">Beginner's Yoga Guide</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Foundational asanas and breathwork to start a home practice.</p>
-        <button onclick="openDownloadPopup('Beginner\'s Yoga Guide')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Beginner's Yoga Guide"></div>
+        <div class="resource-card-badge" style="background:rgba(74,93,79,.12);"><i data-lucide="flower-2" class="w-5 h-5 text-sage"></i></div>
+        <div class="resource-card-body">
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Beginner's Yoga Guide</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Foundational asanas and breathwork to start a home practice.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Beginner%27s%20Yoga%20Guide" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
-      <div class="download-card">
-        <i data-lucide="calendar-days" class="w-7 h-7 text-clay mb-3" style="margin-left:auto;margin-right:auto;"></i>
-        <h3 class="font-serif text-base" style="color:var(--text);">Seasonal Wellness Calendar</h3>
-        <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Ritucharya-aligned diet and lifestyle shifts across the year.</p>
-        <button onclick="openDownloadPopup('Seasonal Wellness Calendar')" class="explore-link" style="opacity:1;transform:none;color:#C5A059;margin-top:1rem;background:none;border:none;cursor:pointer;font:inherit;">Download →</button>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1495197359483-d092478c170a?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Seasonal Wellness Calendar"></div>
+        <div class="resource-card-badge" style="background:rgba(217,93,57,.12);"><i data-lucide="calendar-days" class="w-5 h-5 text-clay"></i></div>
+        <div class="resource-card-body">
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Seasonal Wellness Calendar</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Ritucharya-aligned diet and lifestyle shifts across the year.</p>
+          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Seasonal%20Wellness%20Calendar" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -2284,77 +2020,63 @@
   </div>
 </section>
 
-<!-- INTERNSHIP PROGRAM -->
-<section id="internship" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
+<!-- INTERNSHIP PROGRAM (compact) -->
+<section id="internship" class="py-14 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-14 fade-up">
+    <div class="text-center mb-8 fade-up">
       <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">For Students &amp; Researchers</span>
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">The Samarpan Internship</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">Clinical research · Medical writing · Digital health · Community outreach</p>
+      <p class="font-serif italic text-brand-gray mt-2 text-sm">Clinical research · Medical writing · Digital health · Community outreach</p>
       <div class="divider-line"></div>
     </div>
-    <div class="intern-steps-v2 fade-up">
-      <div class="intern-step-v2">
-        <div class="intern-num">1</div>
-        <div class="intern-icon-circle" style="background:rgba(217,93,57,.1);"><i data-lucide="clipboard-list" class="w-5 h-5 text-clay"></i></div>
-        <h3>Apply</h3>
-        <p>Share your background and area of interest</p>
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Apply">
+
+    <div class="grid grid-cols-5 gap-2 sm:gap-4 fade-up mb-8">
+      <div class="text-center">
+        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(217,93,57,.1);"><i data-lucide="clipboard-list" class="w-4 h-4 text-clay"></i></div>
+        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Apply</h3>
       </div>
-      <div class="intern-step-v2">
-        <div class="intern-num">2</div>
-        <div class="intern-icon-circle" style="background:rgba(197,160,89,.1);"><i data-lucide="user-round" class="w-5 h-5 text-brand-gold"></i></div>
-        <h3>Learn</h3>
-        <p>Shadow practitioners and study live case work</p>
-        <img src="https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Learn">
+      <div class="text-center">
+        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(197,160,89,.1);"><i data-lucide="user-round" class="w-4 h-4 text-brand-gold"></i></div>
+        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Learn</h3>
       </div>
-      <div class="intern-step-v2">
-        <div class="intern-num">3</div>
-        <div class="intern-icon-circle" style="background:rgba(74,93,79,.1);"><i data-lucide="search" class="w-5 h-5 text-sage"></i></div>
-        <h3>Research</h3>
-        <p>Contribute to reviews, booklets or field studies</p>
-        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Research">
+      <div class="text-center">
+        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(74,93,79,.1);"><i data-lucide="search" class="w-4 h-4 text-sage"></i></div>
+        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Research</h3>
       </div>
-      <div class="intern-step-v2">
-        <div class="intern-num">4</div>
-        <div class="intern-icon-circle" style="background:rgba(217,93,57,.1);"><i data-lucide="book-open" class="w-5 h-5 text-clay"></i></div>
-        <h3>Publish</h3>
-        <p>See your work featured in the Journal or Research Corner</p>
-        <img src="https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Publish">
+      <div class="text-center">
+        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(217,93,57,.1);"><i data-lucide="book-open" class="w-4 h-4 text-clay"></i></div>
+        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Publish</h3>
       </div>
-      <div class="intern-step-v2">
-        <div class="intern-num">5</div>
-        <div class="intern-icon-circle" style="background:rgba(197,160,89,.1);"><i data-lucide="award" class="w-5 h-5 text-brand-gold"></i></div>
-        <h3>Certificate</h3>
-        <p>Graduate with a recognised Samarpan certificate</p>
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Certificate">
+      <div class="text-center">
+        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(197,160,89,.1);"><i data-lucide="award" class="w-4 h-4 text-brand-gold"></i></div>
+        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Certificate</h3>
       </div>
     </div>
 
-    <div class="intern-banner fade-up">
+    <div class="intern-banner fade-up" style="margin:0 0 2rem;">
       <div class="intern-banner-icon"><i data-lucide="sprout" class="w-5 h-5 text-clay"></i></div>
       <div class="intern-banner-text">
         <p class="intern-banner-title">Hands-on learning. Real impact. Lasting growth.</p>
         <p class="intern-banner-sub">Be part of meaningful work that shapes the future of integrative health.</p>
       </div>
-      <a href="community.html" class="intern-banner-btn">Apply for Internship <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+      <a href="community.html" class="intern-banner-btn">Apply Now <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
     </div>
 
-    <div class="text-center mb-4 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Join the Mission</span>
-      <h3 class="font-serif italic text-lg" style="color:var(--text-muted);">However you'd like to contribute, there's a place for you</h3>
+    <div class="text-center mb-3 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-1">Join the Mission</span>
+      <h3 class="font-serif italic text-base" style="color:var(--text-muted);">However you'd like to contribute, there's a place for you</h3>
     </div>
-    <div class="mission-grid-v2 fade-up">
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(217,93,57,.1);"><i data-lucide="microscope" class="w-5 h-5 text-clay"></i></div><h3>Research Intern</h3><p>Work on studies, literature reviews and data analysis with expert guidance.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(74,93,79,.1);"><i data-lucide="hand-heart" class="w-5 h-5 text-sage"></i></div><h3>Volunteer</h3><p>Support community programs and drive health awareness.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(217,93,57,.1);"><i data-lucide="stethoscope" class="w-5 h-5 text-clay"></i></div><h3>Doctor</h3><p>Collaborate on clinical initiatives and integrative care programs.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(197,160,89,.1);"><i data-lucide="users-round" class="w-5 h-5 text-brand-gold"></i></div><h3>Research Collaborator</h3><p>Partner with us on research projects and academic publications.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(74,93,79,.1);"><i data-lucide="brain" class="w-5 h-5 text-sage"></i></div><h3>Psychologist</h3><p>Contribute to mental wellbeing programs and research initiatives.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(217,93,57,.1);"><i data-lucide="leaf" class="w-5 h-5 text-clay"></i></div><h3>Nutritionist</h3><p>Help build evidence-based nutrition resources and community programs.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(197,160,89,.1);"><i data-lucide="flower-2" class="w-5 h-5 text-brand-gold"></i></div><h3>Yoga Teacher</h3><p>Lead sessions, workshops and wellness education with us.</p></a>
-      <a href="community.html" class="mission-card-v2"><div class="mission-icon-circle" style="background:rgba(74,93,79,.1);"><i data-lucide="landmark" class="w-5 h-5 text-sage"></i></div><h3>University Partner</h3><p>Collaborate on academics, training, research and knowledge exchange.</p></a>
+    <div class="flex flex-wrap justify-center gap-2 fade-up mb-6">
+      <a href="community.html" class="lib-tag">Research Intern</a>
+      <a href="community.html" class="lib-tag">Volunteer</a>
+      <a href="community.html" class="lib-tag">Doctor</a>
+      <a href="community.html" class="lib-tag">Research Collaborator</a>
+      <a href="community.html" class="lib-tag">Psychologist</a>
+      <a href="community.html" class="lib-tag">Nutritionist</a>
+      <a href="community.html" class="lib-tag">Yoga Teacher</a>
+      <a href="community.html" class="lib-tag">University Partner</a>
     </div>
-    <a href="community.html" class="mission-cta-bar fade-up">
+    <a href="community.html" class="mission-cta-bar fade-up" style="margin-bottom:2.5rem;">
       <i data-lucide="send" class="w-4 h-4"></i>
       <span class="mission-cta-title">Apply for Internship</span>
       <span class="mission-cta-sub">Start your journey with Samarpan today.</span>
@@ -2363,15 +2085,12 @@
 
     <!-- CONTRIBUTOR WALL -->
     <!-- TODO(Nisha): these are the real names from your diary list. Confirm each one is happy to be named publicly (even without a phone number) before this goes live. -->
-    <div class="text-center mb-8 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Voices Behind Samarpan</span>
-      <h3 class="font-serif italic text-lg" style="color:var(--text-muted);">Students, writers &amp; volunteers who've contributed to our work</h3>
-    </div>
-    <div class="contrib-wrap mb-3 fade-up">
-      <div class="contrib-track" id="contribTrackA"></div>
+    <div class="text-center mb-5 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-1">Voices Behind Samarpan</span>
+      <h3 class="font-serif italic text-base" style="color:var(--text-muted);">Students, writers &amp; volunteers who've contributed to our work</h3>
     </div>
     <div class="contrib-wrap fade-up">
-      <div class="contrib-track reverse" id="contribTrackB"></div>
+      <div class="contrib-track" id="contribTrackA"></div>
     </div>
   </div>
 </section>
@@ -2387,28 +2106,48 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
       <div class="event-card">
-        <span class="event-tag">Webinar</span>
-        <h3>Understanding Your Prakriti</h3>
-        <p class="event-date">Date: TBA</p>
-        <a href="#contact" onclick="gaEvent('click','Event','Webinar Interest')">Get Notified →</a>
+        <div class="event-card-img">
+          <span class="event-tag">Webinar</span>
+          <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Understanding Your Prakriti">
+        </div>
+        <div class="event-card-body">
+          <h3>Understanding Your Prakriti</h3>
+          <p class="event-date">Date: TBA</p>
+          <a href="#contact" onclick="gaEvent('click','Event','Webinar Interest')">Get Notified →</a>
+        </div>
       </div>
       <div class="event-card">
-        <span class="event-tag">Health Camp</span>
-        <h3>Rural Wellness Drive</h3>
-        <p class="event-date">Date: TBA</p>
-        <a href="#contact" onclick="gaEvent('click','Event','Health Camp Interest')">Get Notified →</a>
+        <div class="event-card-img">
+          <span class="event-tag">Health Camp</span>
+          <img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Rural Wellness Drive">
+        </div>
+        <div class="event-card-body">
+          <h3>Rural Wellness Drive</h3>
+          <p class="event-date">Date: TBA</p>
+          <a href="#contact" onclick="gaEvent('click','Event','Health Camp Interest')">Get Notified →</a>
+        </div>
       </div>
       <div class="event-card">
-        <span class="event-tag">Yoga Session</span>
-        <h3>Monsoon Pranayama Circle</h3>
-        <p class="event-date">Date: TBA</p>
-        <a href="#contact" onclick="gaEvent('click','Event','Yoga Session Interest')">Get Notified →</a>
+        <div class="event-card-img">
+          <span class="event-tag">Yoga Session</span>
+          <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Monsoon Pranayama Circle">
+        </div>
+        <div class="event-card-body">
+          <h3>Monsoon Pranayama Circle</h3>
+          <p class="event-date">Date: TBA</p>
+          <a href="#contact" onclick="gaEvent('click','Event','Yoga Session Interest')">Get Notified →</a>
+        </div>
       </div>
       <div class="event-card">
-        <span class="event-tag">Internship</span>
-        <h3>Winter Cohort Opens</h3>
-        <p class="event-date">Date: TBA</p>
-        <a href="community.html" onclick="gaEvent('click','Event','Internship Opening')">Learn More →</a>
+        <div class="event-card-img">
+          <span class="event-tag">Internship</span>
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Winter Cohort Opens">
+        </div>
+        <div class="event-card-body">
+          <h3>Winter Cohort Opens</h3>
+          <p class="event-date">Date: TBA</p>
+          <a href="community.html" onclick="gaEvent('click','Event','Internship Opening')">Learn More →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2435,46 +2174,34 @@
   </div>
 </section>
 
-<!-- VISION 2045 -->
-<section id="vision-2045" class="py-24 px-4 sm:px-6" style="background:var(--bg);">
+<!-- SUPPORT SAMARPAN -->
+<section id="support-samarpan" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-5xl mx-auto text-center">
-    <div class="mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">The Long View</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Vision 2045</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base max-w-2xl mx-auto">Not a promise — a long-term vision that shapes every decision we make today. Picture a 10-acre campus where research, care and community share one home.</p>
+    <div class="mb-10 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Be Part of the Mission</span>
+      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Support Samarpan</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base max-w-xl mx-auto">Your support helps us reach more communities, fund research, and keep evidence-based healing accessible to all.</p>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 fade-up">
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="trees" class="w-6 h-6 mx-auto mb-2 text-clay"></i><h3 class="font-serif text-sm" style="color:var(--text);">10-Acre Campus</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="microscope" class="w-6 h-6 mx-auto mb-2 text-brand-gold"></i><h3 class="font-serif text-sm" style="color:var(--text);">Research Institute</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="cross" class="w-6 h-6 mx-auto mb-2 text-sage"></i><h3 class="font-serif text-sm" style="color:var(--text);">Hospital</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="graduation-cap" class="w-6 h-6 mx-auto mb-2 text-clay"></i><h3 class="font-serif text-sm" style="color:var(--text);">Academy</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="flower" class="w-6 h-6 mx-auto mb-2 text-brand-gold"></i><h3 class="font-serif text-sm" style="color:var(--text);">Herbal Gardens</h3></div>
-      <div class="step-card rounded-sm p-6 text-center"><i data-lucide="handshake" class="w-6 h-6 mx-auto mb-2 text-sage"></i><h3 class="font-serif text-sm" style="color:var(--text);">Global Collaborations</h3></div>
-    </div>
-    <p class="font-sans text-xs mt-10 max-w-xl mx-auto" style="color:var(--text-muted);">Built on today's foundation, expanded — not rebuilt — as the mission grows.</p>
-  </div>
-</section>
-
-<!-- ANNUAL REPORT -->
-<!-- TODO(Nisha): placeholder figures — replace with your actual year-end numbers before publishing. -->
-<section id="annual-report" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Every Year</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Annual Report</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-[var(--border)] fade-up">
-      <div class="stat-card-premium p-6 text-center"><div class="stat-number"><span class="counter" data-target="100">0</span>+</div><div class="stat-label">Articles Published</div></div>
-      <div class="stat-card-premium p-6 text-center"><div class="stat-number"><span class="counter" data-target="20">0</span>+</div><div class="stat-label">Research Reviews</div></div>
-      <div class="stat-card-premium p-6 text-center"><div class="stat-number"><span class="counter" data-target="300">0</span>+</div><div class="stat-label">People Reached</div></div>
-      <div class="stat-card-premium p-6 text-center"><div class="stat-number"><span class="counter" data-target="4">0</span></div><div class="stat-label">Events Hosted</div></div>
-      <div class="stat-card-premium p-6 text-center"><div class="stat-number"><span class="counter" data-target="20">0</span>+</div><div class="stat-label">Interns Mentored</div></div>
-      <div class="stat-card-premium p-6 text-center flex flex-col items-center justify-center"><i data-lucide="target" class="w-6 h-6 text-brand-gold mb-2"></i><div class="stat-label">Future Goals →</div></div>
-    </div>
-    <div class="text-center mt-10 fade-up">
-      <button onclick="openDownloadPopup('Samarpan Annual Report')" class="inline-block px-8 py-3 border border-brand-gold text-brand-gold font-sans text-xs uppercase tracking-widest hover:bg-brand-gold hover:text-white transition duration-300 rounded-sm" style="background:none;cursor:pointer;">Download Annual Report →</button>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 fade-up">
+      <div class="step-card rounded-sm p-6 text-center">
+        <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="heart-handshake" class="w-5 h-5 text-clay"></i></div>
+        <h3 class="font-serif text-base mb-2" style="color:var(--text);">Donate</h3>
+        <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Fund health camps, research and free resources for those who need them most.</p>
+        <a href="mailto:info@thesamarpan.co.in?subject=I%20want%20to%20support%20Samarpan" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Give Support <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+      </div>
+      <div class="step-card rounded-sm p-6 text-center">
+        <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="hand-heart" class="w-5 h-5 text-sage"></i></div>
+        <h3 class="font-serif text-base mb-2" style="color:var(--text);">Volunteer</h3>
+        <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Lend your time and skills to community programmes and outreach.</p>
+        <a href="community.html" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Get Involved <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+      </div>
+      <div class="step-card rounded-sm p-6 text-center">
+        <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.15);"><i data-lucide="megaphone" class="w-5 h-5 text-brand-gold"></i></div>
+        <h3 class="font-serif text-base mb-2" style="color:var(--text);">Spread the Word</h3>
+        <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Share our work with someone who could benefit from integrative care.</p>
+        <a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Refer a Friend <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+      </div>
     </div>
   </div>
 </section>
@@ -2563,11 +2290,14 @@
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="py-20 sm:py-28 px-4 sm:px-6" style="background:var(--bg);">
+<section id="contact" class="py-20 sm:py-28 px-4 sm:px-6" style="background:var(--bg);position:relative;overflow:hidden;">
   <div class="contact-glow contact-glow-1" aria-hidden="true"></div>
   <div class="contact-glow contact-glow-2" aria-hidden="true"></div>
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-6xl mx-auto" style="position:relative;z-index:1;">
     <div class="text-center mb-12 sm:mb-16 fade-up">
+      <div class="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));border:1px solid rgba(197,160,89,.3);">
+        <i data-lucide="sparkles" class="w-6 h-6" style="color:#C5A059;"></i>
+      </div>
       <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Get In Touch</span>
       <h2 class="font-display text-4xl sm:text-5xl md:text-6xl" style="color:var(--text);">Begin Your Journey</h2>
       <div class="flex items-center justify-center gap-4 mt-4 flex-wrap">
@@ -2578,32 +2308,36 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 fade-up">
       <div class="lg:col-span-2 flex flex-col gap-6">
-        <div class="contact-info-card">
-          <div class="px-5 pt-5 pb-3 border-b" style="border-color:var(--border);">
-            <p class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold mb-1">Connect Directly</p>
-            <h3 class="font-serif text-xl" style="color:var(--text);">We're Here For You</h3>
+        <div class="contact-info-card" style="border-radius:10px;">
+          <div class="relative" style="height:130px;overflow:hidden;">
+            <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=700&auto=format&fit=crop" alt="Samarpan" style="width:100%;height:100%;object-fit:cover;">
+            <div class="absolute inset-0" style="background:linear-gradient(to bottom,rgba(28,28,28,.15),rgba(28,28,28,.75));"></div>
+            <div class="absolute bottom-0 left-0 right-0 px-5 pb-4">
+              <p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-1" style="color:#C5A059;">Connect Directly</p>
+              <h3 class="font-serif text-xl text-white">We're Here For You</h3>
+            </div>
           </div>
           <a href="mailto:info@thesamarpan.co.in" onclick="gaEvent('click','Contact','Email Click')" class="contact-info-row">
-            <div class="contact-icon-wrap" style="background:linear-gradient(135deg,#D95D39,#C5A059);"><i data-lucide="mail" class="w-4 h-4 text-white"></i></div>
+            <div class="contact-icon-wrap" style="background:rgba(217,93,57,.1);"><i data-lucide="mail" class="w-4 h-4 text-clay"></i></div>
             <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Email</p><p class="font-serif text-sm" style="color:var(--text);">info@thesamarpan.co.in</p></div>
             <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
           </a>
           <a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20came%20across%20your%20holistic%20wellness%20programmes%20and%20feel%20deeply%20drawn%20to%20begin%20my%20healing%20journey.%20Could%20you%20please%20guide%20me%20on%20the%20right%20programme%20for%20my%20needs%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" onclick="gaEvent('click','Contact','WhatsApp Click')" class="contact-info-row">
-            <div class="contact-icon-wrap" style="background:#25D366;"><i data-lucide="message-circle" class="w-4 h-4 text-white"></i></div>
+            <div class="contact-icon-wrap" style="background:rgba(37,211,102,.12);"><i data-lucide="message-circle" class="w-4 h-4" style="color:#25D366;"></i></div>
             <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">WhatsApp</p><p class="font-serif text-sm" style="color:var(--text);">Quick reply within 2 hours</p></div>
             <i data-lucide="chevron-right" class="w-4 h-4 ml-auto" style="color:var(--text-muted);"></i>
           </a>
           <div class="contact-info-row">
-            <div class="contact-icon-wrap" style="background:#4A5D4F;"><i data-lucide="map-pin" class="w-4 h-4 text-white"></i></div>
+            <div class="contact-icon-wrap" style="background:rgba(74,93,79,.12);"><i data-lucide="map-pin" class="w-4 h-4 text-sage"></i></div>
             <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Location</p><p class="font-serif text-sm" style="color:var(--text);">New Delhi, India (IST)</p></div>
           </div>
           <div class="contact-info-row">
-            <div class="contact-icon-wrap" style="background:#C5A059;"><i data-lucide="video" class="w-4 h-4 text-white"></i></div>
+            <div class="contact-icon-wrap" style="background:rgba(197,160,89,.15);"><i data-lucide="video" class="w-4 h-4 text-brand-gold"></i></div>
             <div><p class="font-sans text-[9px] uppercase tracking-widest font-bold mb-0.5" style="color:var(--text-muted);">Sessions</p><p class="font-serif text-sm" style="color:var(--text);">Global Zoom — All time zones</p></div>
           </div>
         </div>
         <!-- NEWSLETTER -->
-        <div class="p-6 rounded-sm border" style="background:var(--card-bg);border-color:var(--border);">
+        <div class="p-6 rounded-sm border" style="background:var(--card-bg);border-color:var(--border);border-radius:10px;">
           <div class="flex items-center gap-3 mb-4">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,rgba(217,93,57,.12),rgba(197,160,89,.12));"><i data-lucide="rss" class="w-4 h-4 text-clay"></i></div>
             <div><p class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Inner Circle</p><h4 class="font-serif text-base" style="color:var(--text);">Monthly Wisdom Newsletter</h4></div>
@@ -2625,15 +2359,15 @@
 
       <!-- CONTACT FORM -->
       <div class="lg:col-span-3" id="send-request">
-        <div class="rounded-sm shadow-2xl overflow-hidden" style="background:var(--card-bg);">
-          <div class="px-6 sm:px-8 py-6 border-b relative" style="background:linear-gradient(135deg,#1C1C1C,#2d1a12);border-color:rgba(255,255,255,.08);">
+        <div class="rounded-sm shadow-2xl overflow-hidden" style="background:var(--card-bg);border-radius:10px;border:1px solid var(--border);">
+          <div class="px-6 sm:px-8 py-7 border-b relative" style="background:linear-gradient(135deg,rgba(217,93,57,.08),rgba(197,160,89,.1));border-color:var(--border);">
             <svg class="contact-form-watermark" width="72" height="72" viewBox="0 0 100 100" fill="none" style="color:#C5A059;">
               <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
               <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
             </svg>
-            <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-1">Send a Request</span>
-            <h3 class="font-display text-2xl text-white">How can we serve you?</h3>
-            <p class="font-sans text-xs mt-1 text-white/60">We respond to every inquiry personally within 24 hours.</p>
+            <span class="font-sans text-[9px] uppercase tracking-widest text-clay font-bold block mb-1">Send a Request</span>
+            <h3 class="font-display text-2xl" style="color:var(--text);">How can we serve you?</h3>
+            <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">We respond to every inquiry personally within 24 hours.</p>
           </div>
           <div class="p-6 sm:p-8 md:p-10">
             <form id="bookingForm" onsubmit="handleContactSubmit(event)" class="space-y-5" novalidate>
@@ -2718,7 +2452,7 @@
     <div>
       <h5 class="text-clay font-display text-xs tracking-widest uppercase mb-6">Organisation</h5>
       <ul class="space-y-3 text-sm">
-        <li><a href="#founder-letter" class="hover:text-white transition">Mission</a></li>
+        <li><a href="#mission" class="hover:text-white transition">Mission</a></li>
         <li><a href="#approach" class="hover:text-white transition">Values</a></li>
         <li><a href="#research-corner" class="hover:text-white transition">Research</a></li>
         <li><a href="community.html" class="hover:text-white transition">Careers</a></li>
@@ -2737,7 +2471,7 @@
         <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
         <li><a href="community.html" class="hover:text-white transition">Community</a></li>
         <li><a href="#contact" class="hover:text-white transition">Newsletter</a></li>
-        <li><a href="#referral-section" onclick="setTimeout(openReferralPopup,300);" class="hover:text-white transition">Refer a Friend 🎁</a></li>
+        <li><a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" class="hover:text-white transition">Refer a Friend 🎁</a></li>
       </ul>
     </div>
     <div>
@@ -2781,7 +2515,7 @@
 </footer>
 
 <!-- FLOATING BUTTONS -->
-<div id="fab"><button onclick="openBookingPopup();gaEvent('click','CTA','FAB Book Now')"><i data-lucide="calendar" class="w-4 h-4"></i>Book Now</button></div>
+<div id="fab"><a href="#contact" onclick="gaEvent('click','CTA','FAB Book Now')"><i data-lucide="calendar" class="w-4 h-4"></i>Book Now</a></div>
 <div id="whatsapp-fab"><a href="https://wa.me/919661486740?text=%F0%9F%99%8F%20Namaste%20Samarpan%2C%0A%0AI%20came%20across%20your%20holistic%20wellness%20programmes%20and%20feel%20deeply%20drawn%20to%20begin%20my%20healing%20journey.%20Could%20you%20please%20guide%20me%20on%20the%20right%20programme%20for%20my%20needs%3F%0A%0AThank%20you%20%F0%9F%8C%BF" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" onclick="gaEvent('click','CTA','WhatsApp FAB')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a></div>
 <div id="theme-toggle"><button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn"><i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i></button></div>
 
@@ -2832,7 +2566,6 @@
   window.addEventListener('load', function() {
     prefetchToken('contact_form');
     prefetchToken('newsletter');
-    prefetchToken('referral_email');
   });
 
   /** Posts a lead/booking payload to the Apps Script backend, which re-verifies the honeypot, timing, and reCAPTCHA token server-side before logging to the Sheet and emailing a notification. */
@@ -3004,185 +2737,6 @@
     setTimeout(syncNavbarTop, 620);
   }
 
-  /* ══════════════════════════════════════════════
-     STAGGERED POPUP ORCHESTRATION
-     Gap = 240 seconds (4 minutes) between each popup.
-     Gift, Yoga, Exit auto-triggers disabled. Referral opens on click only.
-     Session-storage prevents repeats per tab.
-     ══════════════════════════════════════════════ */
-  var popupQueue = [];
-  var lastPopupAt = 0;
-  var MIN_GAP = 240000;   // 240 seconds (4 minutes) minimum gap between popups
-
-  function schedulePopup(fn, delay) {
-    popupQueue.push({fn:fn, delay:delay});
-  }
-
-  function tryNextPopup() {
-    if (!popupQueue.length) return;
-    var now = Date.now();
-    var gap = now - lastPopupAt;
-    if (lastPopupAt && gap < MIN_GAP) {
-      setTimeout(tryNextPopup, MIN_GAP - gap + 500);
-      return;
-    }
-    var item = popupQueue.shift();
-    setTimeout(function() {
-      var anyOpen = ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].some(function(id){
-        return document.getElementById(id).classList.contains('open');
-      });
-      if (anyOpen) {
-        popupQueue.unshift(item);
-        setTimeout(tryNextPopup, 15000);
-        return;
-      }
-      lastPopupAt = Date.now();
-      item.fn();
-      setTimeout(tryNextPopup, MIN_GAP + 2000);
-    }, item.delay);
-  }
-
-  window.addEventListener('load', function() {
-    // Popup 1 — Gift / Dosha Assessment — DISABLED (no auto-trigger)
-    // Popup 3 — Referral — DISABLED (opens on click only, e.g. nav link / referral section)
-    tryNextPopup();
-  });
-
-  /* ── Yoga popup — DISABLED (no auto-trigger) ── */
-
-  /* ── Exit popup — DISABLED (no auto-trigger) ── */
-
-  /* ── POPUP OPEN / CLOSE FUNCTIONS ── */
-  function openGiftPopup()      { document.getElementById('gift-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('gift_popup'); }
-  function closeGiftPopup()     { document.getElementById('gift-popup').classList.remove('open'); document.body.style.overflow=''; }
-
-  var _dlResource = '';
-  function openDownloadPopup(resource) {
-    _dlResource = resource;
-    document.getElementById('downloadResourceName').textContent = resource;
-    document.getElementById('download-popup').classList.add('open');
-    document.body.style.overflow='hidden';
-    prefetchToken('free_download');
-    gaEvent('click','Lead Magnet','Open — '+resource);
-  }
-  function closeDownloadPopup()  { document.getElementById('download-popup').classList.remove('open'); document.body.style.overflow=''; }
-  async function handleDownloadSubmit(e) {
-    e.preventDefault();
-    var name  = document.getElementById('dlName').value.trim();
-    var email = document.getElementById('dlEmail').value.trim();
-    document.getElementById('dlEmailErr').classList.add('hidden');
-    if (!name)  { document.getElementById('dlName').classList.add('invalid'); return; }
-    if (!isEmail(email)) { document.getElementById('dlEmail').classList.add('invalid'); document.getElementById('dlEmailErr').classList.remove('hidden'); return; }
-    document.getElementById('dlName').classList.remove('invalid');
-    document.getElementById('dlEmail').classList.remove('invalid');
-    setBtnLoading('dlSubmitBtn', true);
-    try {
-      var website = document.getElementById('dlWebsite').value;
-      var token = await getTokenFast('free_download');
-      writeLeadToFirestore('homepage_leads', {name:name, email:email, resource:_dlResource, message:'Free guide download request', lead_type:'free_download'});
-      await submitToBackend({formType:'free_download', name:name, email:email, resource:_dlResource, website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      setStatus('downloadStatus', true, "On its way! Check your inbox in the next few minutes.");
-      gaEvent('submit','Form','Free Download — '+_dlResource);
-      document.getElementById('downloadForm').reset();
-      setTimeout(closeDownloadPopup, 2400);
-    } catch(err) { setStatus('downloadStatus', false, "Something went wrong. Please WhatsApp us or email info@thesamarpan.co.in"); }
-    setBtnLoading('dlSubmitBtn', false);
-  }
-  function openBookingPopup()   { document.getElementById('booking-popup').classList.add('open'); gaEvent('view','Popup','Booking Popup'); prefetchToken('booking'); }
-  function closeBookingPopup()  { document.getElementById('booking-popup').classList.remove('open'); }
-  function closeExitPopup()     { document.getElementById('exit-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openYogaPopup()      { document.getElementById('yoga-popup').classList.add('open'); document.body.style.overflow='hidden'; prefetchToken('yoga_popup'); }
-  function closeYogaPopup()     { document.getElementById('yoga-popup').classList.remove('open'); document.body.style.overflow=''; }
-  function openReferralPopup()  { document.getElementById('referral-popup').classList.add('open'); gaEvent('view','Popup','Referral Popup'); prefetchToken('referral_email'); }
-  function closeReferralPopup() { document.getElementById('referral-popup').classList.remove('open'); }
-
-  // Close on backdrop click
-  ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.addEventListener('click', function(e) {
-      if (e.target === el) { el.classList.remove('open'); document.body.style.overflow=''; }
-    });
-  });
-
-  /* ══════════════════════════════════════════════
-     FORM HANDLERS
-     ══════════════════════════════════════════════ */
-  async function handleGiftSubmit(e) {
-    e.preventDefault();
-    var name  = document.getElementById('giftName').value.trim();
-    var email = document.getElementById('giftEmail').value.trim();
-    var phone = document.getElementById('giftPhone').value.trim();
-    document.getElementById('giftEmailErr').classList.add('hidden');
-    if (!name)  { document.getElementById('giftName').classList.add('invalid'); return; }
-    if (!isEmail(email)) { document.getElementById('giftEmail').classList.add('invalid'); document.getElementById('giftEmailErr').classList.remove('hidden'); return; }
-    document.getElementById('giftName').classList.remove('invalid');
-    document.getElementById('giftEmail').classList.remove('invalid');
-    setBtnLoading('giftSubmitBtn', true);
-    try {
-      var website = document.getElementById('giftWebsite').value;
-      var token = await getTokenFast('gift_popup');
-      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', message:'Free Dosha Assessment claim', lead_type:'free_assessment_claim'});
-      await submitToBackend({formType:'gift_popup', name:name, email:email, phone:phone||'Not Provided', service:'Free 20-min Dosha Assessment', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      setStatus('giftStatus', true, "Claimed! Our team will contact you within 24h to schedule your session.");
-      gaEvent('submit','Form','Gift Popup — Dosha Assessment');
-      document.getElementById('giftForm').reset();
-      setTimeout(closeGiftPopup, 2400);
-    } catch(err) { setStatus('giftStatus', false, "Something went wrong. Please WhatsApp us or email info@thesamarpan.co.in"); }
-    setBtnLoading('giftSubmitBtn', false);
-  }
-
-  async function handleBookingPopupSubmit(e) {
-    e.preventDefault();
-    var name    = document.getElementById('bpName').value.trim();
-    var email   = document.getElementById('bpEmail').value.trim();
-    var phone   = document.getElementById('bpPhone').value.trim();
-    var service = document.getElementById('bpService').value;
-    document.getElementById('bpEmailErr').classList.add('hidden');
-    var valid = true;
-    if (!name)  { document.getElementById('bpName').classList.add('invalid'); valid=false; } else { document.getElementById('bpName').classList.remove('invalid'); }
-    if (!isEmail(email)) { document.getElementById('bpEmail').classList.add('invalid'); document.getElementById('bpEmailErr').classList.remove('hidden'); valid=false; } else { document.getElementById('bpEmail').classList.remove('invalid'); }
-    if (!phone) { document.getElementById('bpPhone').classList.add('invalid'); valid=false; } else { document.getElementById('bpPhone').classList.remove('invalid'); }
-    if (!valid) return;
-    setBtnLoading('bpSubmitBtn', true);
-    try {
-      var website = document.getElementById('bpWebsite').value;
-      var token = await getTokenFast('booking');
-      var payload = {formType:'booking', name:name, email:email, phone:phone, service:service||'Not specified', preferredDate:'Not specified', preferredTime:'Not specified', message:'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token};
-      writeLeadToFirestore('homepage_bookings', {name:name, email:email, phone:phone, service:service||'Not specified', message:'Quick connect (floating form)', status:'pending'});
-      await submitToBackend(payload);
-      setStatus('bookingPopupStatus', true, "Request received! We will confirm your session within 24 hours.");
-      gaEvent('submit','Form','Booking Popup — FAB');
-      document.getElementById('bookingPopupForm').reset();
-      setTimeout(closeBookingPopup, 2600);
-    } catch(err) { setStatus('bookingPopupStatus', false, "Something went wrong. Please WhatsApp us or email info@thesamarpan.co.in"); }
-    setBtnLoading('bpSubmitBtn', false);
-  }
-
-  async function handleYogaSubmit(e) {
-    e.preventDefault();
-    var name   = document.getElementById('yogaName').value.trim();
-    var email  = document.getElementById('yogaEmail').value.trim();
-    var mobile = document.getElementById('yogaMobile').value.trim();
-    var valid  = true;
-    if (!name)  { document.getElementById('yogaName').classList.add('invalid'); document.getElementById('yogaNameErr').classList.remove('hidden'); valid=false; }
-    else        { document.getElementById('yogaName').classList.remove('invalid'); document.getElementById('yogaNameErr').classList.add('hidden'); }
-    if (!isEmail(email)) { document.getElementById('yogaEmail').classList.add('invalid'); document.getElementById('yogaEmailErr').classList.remove('hidden'); valid=false; }
-    else        { document.getElementById('yogaEmail').classList.remove('invalid'); document.getElementById('yogaEmailErr').classList.add('hidden'); }
-    if (!valid) return;
-    setBtnLoading('yogaSubmitBtn', true);
-    try {
-      var website = document.getElementById('yogaWebsite').value;
-      var token = await getTokenFast('yoga_popup');
-      writeLeadToFirestore('homepage_yoga_sessions', {name:name, email:email, mobile:mobile||'Not Provided', type:'Free Hatha & Pranayama (Zoom)'});
-      await submitToBackend({formType:'yoga_popup', name:name, email:email, phone:mobile||'Not Provided', service:'Free Hatha & Pranayama (Zoom)', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      setStatus('yogaStatus', true, "Spot reserved! Check your inbox for the Zoom link.");
-      gaEvent('submit','Form','Yoga Popup — Free Class');
-      document.getElementById('yogaForm').reset();
-      setTimeout(closeYogaPopup, 2500);
-    } catch(err) { setStatus('yogaStatus', false, "Error — please WhatsApp us to register."); }
-    setBtnLoading('yogaSubmitBtn', false);
-  }
-
   async function handleNewsletterSubmit(e) {
     e.preventDefault();
     var email = document.getElementById('newsEmail').value.trim();
@@ -3271,63 +2825,6 @@
     setBtnLoading('icSubmitBtn', false);
   }
 
-  async function handleReferralEmailSubmit(e) {
-    e.preventDefault();
-    var email = document.getElementById('referralEmail').value.trim();
-    if (!isEmail(email)) { document.getElementById('referralEmail').classList.add('invalid'); document.getElementById('referralEmailStatus').innerHTML='<p class="text-xs" style="color:#D95D39;">Please enter a valid email.</p>'; return; }
-    document.getElementById('referralEmail').classList.remove('invalid');
-    setBtnLoading('referralEmailBtn', true);
-    try {
-      var website = document.getElementById('refWebsite').value;
-      var token = await getTokenFast('referral_email');
-      writeLeadToFirestore('homepage_referrals', {email:email, channel:'referral_popup', action:'email_registered_popup'});
-      await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_popup', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      document.getElementById('referralEmailStatus').innerHTML='<p class="text-xs font-bold" style="color:#4A5D4F;">✓ Registered! Now share your link below.</p>';
-      document.getElementById('referralEmail').value = '';
-      gaEvent('submit','Form','Referral Email — Popup');
-    } catch(err) { document.getElementById('referralEmailStatus').innerHTML='<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>'; }
-    setBtnLoading('referralEmailBtn', false);
-  }
-
-  async function handleReferralSectionSubmit(e) {
-    e.preventDefault();
-    var email = document.getElementById('referralSectionEmail').value.trim();
-    if (!isEmail(email)) { document.getElementById('referralSectionEmail').classList.add('invalid'); document.getElementById('referralSectionStatus').innerHTML='<p class="text-xs text-white/70">Please enter a valid email.</p>'; return; }
-    document.getElementById('referralSectionEmail').classList.remove('invalid');
-    setBtnLoading('referralSectionBtn', true);
-    try {
-      var website = document.getElementById('refSectionWebsite').value;
-      var token = await getTokenFast('referral_email');
-      writeLeadToFirestore('homepage_referrals', {email:email, channel:'referral_section', action:'email_registered_section'});
-      await submitToBackend({formType:'referral_email', email:email, referralAction:'email_registered_section', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      document.getElementById('referralSectionStatus').innerHTML='<p class="text-xs font-bold" style="color:#C5A059;">✓ Registered! Opening share options…</p>';
-      document.getElementById('referralSectionEmail').value = '';
-      gaEvent('submit','Form','Referral Section Email');
-      setTimeout(openReferralPopup, 1500);
-    } catch(err) { document.getElementById('referralSectionStatus').innerHTML='<p class="text-xs" style="color:#D95D39;">Error — please try again.</p>'; }
-    setBtnLoading('referralSectionBtn', false);
-  }
-
-  function shareReferralWhatsApp() {
-    var msg = encodeURIComponent("🙏 Heal with Samarpan — Ayurveda, Yoga & Psychology. Use my referral and we BOTH get a free session!\n\nhttps://thesamarpan.co.in/?ref=friend");
-    window.open('https://wa.me/?text='+msg,'_blank');
-    gaEvent('share','Referral','whatsapp');
-  }
-  function shareReferralEmail() {
-    var s = encodeURIComponent("Discover Holistic Healing — Samarpan Gift");
-    var b = encodeURIComponent("Hi,\n\nI've been healing with Samarpan — Ayurveda, Yoga & Psychology. Use my link and we both get a complimentary session:\nhttps://thesamarpan.co.in/?ref=friend\n\nWith love 🙏");
-    window.location.href='mailto:?subject='+s+'&body='+b;
-    gaEvent('share','Referral','email');
-  }
-  function copyReferralLink() {
-    var link='https://thesamarpan.co.in/?ref=friend';
-    var btn=document.getElementById('copyReferralBtn');
-    var txt=document.getElementById('copyBtnText');
-    function done(){ btn.classList.add('copied'); txt.textContent='✓ Link Copied!'; gaEvent('share','Referral','clipboard'); setTimeout(function(){ btn.classList.remove('copied'); txt.textContent='Copy Referral Link'; },2500); }
-    if (navigator.clipboard) { navigator.clipboard.writeText(link).then(done).catch(function(){ fallbackCopy(link,done); }); }
-    else { fallbackCopy(link,done); }
-  }
-  function fallbackCopy(text,cb){ var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);if(cb)cb(); }
 
   /* ══════════════════════════════════════════════
      PRAKRITI QUIZ
@@ -3388,14 +2885,7 @@
     gaEvent('complete','Quiz','Prakriti — '+info.name);
   }
 
-  /* ══════════════════════════════════════════════
-     HASH ROUTING — #referral-section
-     ══════════════════════════════════════════════ */
   window.addEventListener('DOMContentLoaded', function() {
-    if (window.location.hash==='#referral-section') {
-      document.getElementById('referral-section')?.scrollIntoView({behavior:'smooth'});
-      setTimeout(openReferralPopup, 600);
-    }
     // Load flash cards on DOM ready
     loadFlashCards();
     // Visitor tracking is now handled by site-tracker.js (loaded at the bottom
@@ -3475,8 +2965,9 @@
     document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
     document.body.style.overflow=menuOpen?'hidden':'';
     document.getElementById('hamburger-btn').setAttribute('aria-expanded',menuOpen);
-    var icon=document.getElementById('hamburger-icon');
-    if(icon){ icon.setAttribute('data-lucide', menuOpen?'x':'menu'); lucide.createIcons(); }
+    var menuIcon=document.getElementById('hamburger-icon-menu'), closeIcon=document.getElementById('hamburger-icon-close');
+    if(menuIcon) menuIcon.classList.toggle('hidden', menuOpen);
+    if(closeIcon) closeIcon.classList.toggle('hidden', !menuOpen);
   }
 
   /* Keyboard shortcuts */
@@ -3484,7 +2975,6 @@
     if (e.key==='Escape') {
       if (menuOpen) toggleMenu();
       document.getElementById('quiz-modal').classList.remove('open');
-      ['gift-popup','exit-popup','yoga-popup','referral-popup','booking-popup'].forEach(function(id){ document.getElementById(id).classList.remove('open'); });
       document.body.style.overflow='';
       var lb=document.getElementById('lightbox'); if(lb) lb.classList.remove('open');
     }
@@ -3711,11 +3201,8 @@
   }
   (function(){
     var enriched = contributors.map(function(name,i){ return {name:name, role:contribRoles[i%contribRoles.length], accent:contribAccents[i%contribAccents.length]}; });
-    var mid = Math.ceil(enriched.length/2);
-    var rowA = enriched.slice(0, mid), rowB = enriched.slice(mid);
-    var trackA = document.getElementById('contribTrackA'), trackB = document.getElementById('contribTrackB');
-    if(trackA) trackA.innerHTML = buildContribCards(rowA) + buildContribCards(rowA);
-    if(trackB) trackB.innerHTML = buildContribCards(rowB) + buildContribCards(rowB);
+    var trackA = document.getElementById('contribTrackA');
+    if(trackA) trackA.innerHTML = buildContribCards(enriched) + buildContribCards(enriched);
   })();
   function openContribModal(name, role){
     document.getElementById('contribModalAvatar').textContent = initials(name);
