@@ -169,6 +169,17 @@
 
     .step-card{background:var(--card-bg);border:1px solid var(--border);transition:border-color .3s,transform .3s,box-shadow .3s;}
     .step-card:hover{border-color:#D95D39;transform:translateY(-4px);box-shadow:0 16px 40px rgba(217,93,57,.08);}
+
+    .thread-card{position:relative;overflow:hidden;border-radius:10px;height:280px;display:block;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.1);transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;}
+    .thread-card:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(0,0,0,.18);}
+    .thread-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,.46,.45,.94);}
+    .thread-card:hover img{transform:scale(1.08);}
+    .thread-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.35) 55%,rgba(0,0,0,.1) 100%);}
+    .thread-card-icon{position:absolute;top:1rem;left:1rem;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;color:#fff;}
+    .thread-card-body{position:absolute;left:0;right:0;bottom:0;padding:1.1rem 1.2rem 1.3rem;color:#fff;}
+    .thread-card-body h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:.35rem;}
+    .thread-card-body p{font-family:'Lato',sans-serif;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.82);}
+    @media(max-width:640px){.thread-card{height:220px;}}
     .step-num{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;line-height:.8;color:#D95D39;opacity:.15;position:absolute;top:1rem;right:1.5rem;user-select:none;}
 
     .ba-container{position:relative;overflow:hidden;border-radius:4px;user-select:none;}
@@ -289,6 +300,13 @@
     .mission-line-fill{position:absolute;top:6px;left:4%;right:4%;height:1px;background:linear-gradient(90deg,#D95D39,#C5A059);transform:scaleX(0);transform-origin:left center;transition:transform 2.2s cubic-bezier(.4,0,.2,1);z-index:0;}
     .mission-timeline.in-view .mission-line-fill{transform:scaleX(1);}
     @media(max-width:640px){.mission-timeline::before{display:none;}.mission-line-fill{display:none;}}
+    .mission-timeline-compact{gap:1.25rem .5rem;}
+    .mission-timeline-compact .mission-node{flex:1 1 85px;}
+    .mission-timeline-compact .mission-dot{width:22px;height:22px;margin-bottom:.6rem;}
+    .mission-timeline-compact .mission-dot i{width:11px;height:11px;}
+    .mission-timeline-compact .mission-year{font-size:8px;margin-bottom:.2rem;}
+    .mission-timeline-compact .mission-node h3{font-size:.92rem;}
+    .mission-timeline-compact .mission-desc{font-size:.62rem;max-width:110px;margin-top:.2rem;}
 
     /* ── CONTRIBUTOR WALL ── */
     .contrib-wrap{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
@@ -502,6 +520,23 @@
     .topic-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s,transform .3s;cursor:pointer;}
     .topic-dot.active{background:#C5A059;transform:scale(1.4);}
     @media(max-width:640px){.topic-carousel-wrap{height:310px;} .topic-3d-card{width:158px;height:225px;margin:-112px 0 0 -79px;} .topic-nav-btn{width:36px;height:36px;}}
+    /* Explore by Topic — single line, no 3D animation, on every screen size */
+    .topic-row-desktop{display:flex;gap:.85rem;overflow-x:auto;padding:.25rem .25rem 1rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+    .topic-row-desktop::-webkit-scrollbar{height:5px;}
+    .topic-row-desktop::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+    .topic-row-card{position:relative;border-radius:10px;overflow:hidden;text-decoration:none;flex:0 0 150px;height:190px;background-size:cover;background-position:center;box-shadow:0 12px 28px rgba(0,0,0,.18);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s;scroll-snap-align:start;}
+    .topic-row-card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(0,0,0,.28);}
+    .topic-row-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.15) 55%, transparent 75%);}
+    .topic-row-label{position:absolute;bottom:0;left:0;right:0;padding:.9rem .8rem;z-index:1;color:#fff;}
+    .topic-row-label h3{font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.15;}
+    .topic-row-label span{font-family:'Lato',sans-serif;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.85;display:block;margin-top:.2rem;}
+    @media(min-width:641px){
+      .topic-row-desktop{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;overflow:visible;padding:0;}
+      .topic-row-card{flex:none;height:230px;}
+    }
+    .eco-carousel-wrap{position:relative;perspective:1400px;height:380px;margin:0 auto;max-width:100%;}
+    .eco-carousel{position:relative;width:100%;height:100%;transform-style:preserve-3d;}
+    @media(max-width:640px){.eco-carousel-wrap{height:310px;}}
 
     .divider-line{width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;}
     .ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1.5rem 0;}
@@ -555,15 +590,30 @@
 
     /* MEET THE COMMUNITY role cards */
     .role-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.75rem 1rem;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s,border-color .4s;}
+    a.role-card{display:block;text-decoration:none;}
     .role-card .role-ring{width:56px;height:56px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg2);border:1px solid var(--border);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s;}
     .role-card:hover{transform:translateY(-7px);box-shadow:0 18px 40px rgba(0,0,0,.10);border-color:transparent;}
     .role-card:hover .role-ring{transform:scale(1.1) rotate(6deg);border-color:#D95D39;}
     .role-card .role-hint{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);opacity:0;max-height:0;transition:opacity .3s,max-height .3s;}
     .role-card:hover .role-hint{opacity:1;max-height:20px;margin-top:.35rem;}
+    .roles-row-scroll{display:flex;gap:.85rem;overflow-x:auto;padding:.25rem .25rem 1rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+    .roles-row-scroll::-webkit-scrollbar{height:5px;}
+    .roles-row-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+    .roles-row-scroll .role-card{flex:0 0 128px;scroll-snap-align:start;padding:1.25rem .75rem;}
 
     /* IMPACT BAR (dark green, inline stats) */
-    .impact-bar-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:2.5rem 3rem;}
+    .impact-bar-wrap{display:flex;flex-wrap:wrap;align-items:center;gap:2.5rem 3rem;background:linear-gradient(135deg,rgba(197,160,89,.09),rgba(217,93,57,.06));border:1px solid rgba(197,160,89,.18);border-radius:14px;padding:2.25rem 2rem;}
+    @media(max-width:640px){.impact-bar-wrap{padding:1.5rem 1.25rem;gap:1.75rem;border-radius:12px;}}
     .impact-bar-intro{flex:0 0 260px;}
+    .impact-bar-caption{flex-basis:100%;order:99;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:.04em;color:var(--text-muted);border-top:1px solid rgba(197,160,89,.22);padding-top:1rem;margin-top:.25rem;}
+    @media (min-width:768px){
+      .impact-bar-intro{display:flex;align-items:baseline;flex-wrap:wrap;gap:.6rem .9rem;flex-basis:100%;}
+      .impact-bar-intro span{margin-bottom:0;}
+      .impact-bar-intro h2{font-size:1.15rem;}
+      .impact-bar-intro h2 br{display:none;}
+      .impact-bar-intro > p{display:none;}
+      .impact-bar-caption{text-align:center;}
+    }
     .impact-items{display:flex;flex-wrap:wrap;gap:2rem 2.75rem;flex:1;}
     .impact-item{display:flex;align-items:center;gap:.85rem;}
     .impact-item .impact-icon{width:46px;height:46px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s;}
@@ -653,6 +703,19 @@
     .herb-card-back p{font-family:'Lato',sans-serif;font-size:.7rem;line-height:1.5;color:var(--text-muted);margin-bottom:.5rem;}
     .herb-card-back p strong{color:var(--text);}
     .herb-card-back .herb-safety{color:#D95D39;font-size:.65rem;}
+    .pub-card{display:block;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;text-decoration:none;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s;}
+    .pub-card:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(0,0,0,.1);border-color:rgba(197,160,89,.5);}
+    .pub-card-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(197,160,89,.1);margin-bottom:1rem;}
+    .pub-card-tag{font-family:'Lato',sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-muted);}
+    .pub-card h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--text);margin:.4rem 0 .5rem;}
+    .pub-card p{font-family:'Lato',sans-serif;font-size:.72rem;line-height:1.55;color:var(--text-muted);margin-bottom:.9rem;}
+    .pub-card-link{font-family:'Lato',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#D95D39;display:inline-flex;align-items:center;gap:.3rem;}
+    .prakriti-info-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+    @media(min-width:640px){.prakriti-info-grid{grid-template-columns:repeat(3,1fr);}}
+    .prakriti-info-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:1.25rem;}
+    .prakriti-info-tag{font-family:'Lato',sans-serif;font-size:9px;text-transform:uppercase;letter-spacing:.14em;font-weight:700;}
+    .prakriti-info-card h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:#fff;margin:.35rem 0 .5rem;}
+    .prakriti-info-card p{font-family:'Lato',sans-serif;font-size:.72rem;line-height:1.6;color:rgba(255,255,255,.65);}
 
     .media-tab{padding:.55rem 1.2rem;font-family:'Lato',sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);border-radius:999px;cursor:pointer;transition:all .3s;}
     .media-tab:hover{border-color:#D95D39;}
@@ -873,8 +936,8 @@
     <h1 class="gsap-hero opacity-0 font-display font-light mb-6 tracking-wide drop-shadow-lg leading-tight" style="font-size:clamp(2.8rem,8vw,5.5rem);">Holistic<br/>Wellbeing</h1>
     <p class="gsap-hero opacity-0 font-sans text-[11px] sm:text-xs uppercase tracking-[.25em] text-white/70 mb-8">Ayurveda &middot; Psychology &middot; Yoga &middot; Nutrition &middot; Research &middot; Public Health</p>
     <div class="gsap-hero opacity-0 flex flex-col sm:flex-row gap-3 justify-center items-center">
-      <a href="#approach" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-brand-black transition duration-300 rounded-sm">Explore Samarpan</a>
-      <a href="community.html" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-white hover:text-brand-black transition duration-300 rounded-sm">Join Our Community</a>
+      <a href="#approach" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-clay hover:border-clay hover:text-white transition duration-300 rounded-sm">Explore Samarpan</a>
+      <a href="community.html" class="inline-block border border-white/50 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-clay hover:border-clay hover:text-white transition duration-300 rounded-sm">Join Our Community</a>
       <button onclick="openQuiz()" class="inline-flex items-center gap-2 bg-clay/90 hover:bg-clay px-8 py-3 text-[10px] uppercase tracking-widest transition duration-300 rounded-sm text-white">
         <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Discover Your Prakriti
       </button>
@@ -900,6 +963,7 @@
         <div class="impact-item"><div class="impact-icon"><i data-lucide="users-round" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num"><span class="counter" data-target="5000">0</span>+</div><div class="impact-label">Community<br>Members</div></div></div>
         <div class="impact-item"><div class="impact-icon"><i data-lucide="infinity" class="w-4 h-4 text-clay"></i></div><div><div class="impact-num">∞</div><div class="impact-label">Commitment to<br>Your Wellbeing</div></div></div>
       </div>
+      <p class="impact-bar-caption">Growing together every day. Real people. Real impact. Lasting change.</p>
     </div>
   </div>
 </section>
@@ -953,31 +1017,36 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Five Threads, One Fabric</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 fade-up">
-      <div class="step-card rounded-sm p-5 text-center">
-        <div class="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="scroll-text" class="w-5 h-5 text-clay"></i></div>
-        <h3 class="font-serif text-base mb-1.5" style="color:var(--text);">Ancient Wisdom</h3>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Rooted in 5,000 years of Vedic understanding.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 fade-up stagger-grid">
+      <div class="thread-card fade-up">
+        <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Ancient Wisdom">
+        <div class="thread-card-overlay"></div>
+        <div class="thread-card-icon"><i data-lucide="scroll-text" class="w-4 h-4"></i></div>
+        <div class="thread-card-body"><h3>Ancient Wisdom</h3><p>Rooted in 5,000 years of Vedic understanding.</p></div>
       </div>
-      <div class="step-card rounded-sm p-5 text-center">
-        <div class="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.1);"><i data-lucide="microscope" class="w-5 h-5 text-brand-gold"></i></div>
-        <h3 class="font-serif text-base mb-1.5" style="color:var(--text);">Modern Evidence</h3>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Validated wherever science and scripture meet.</p>
+      <div class="thread-card fade-up">
+        <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Modern Evidence">
+        <div class="thread-card-overlay"></div>
+        <div class="thread-card-icon"><i data-lucide="microscope" class="w-4 h-4"></i></div>
+        <div class="thread-card-body"><h3>Modern Evidence</h3><p>Validated wherever science and scripture meet.</p></div>
       </div>
-      <div class="step-card rounded-sm p-5 text-center">
-        <div class="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="sunrise" class="w-5 h-5 text-clay"></i></div>
-        <h3 class="font-serif text-base mb-1.5" style="color:var(--text);">Lifestyle Medicine</h3>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Daily rhythm as the first line of treatment.</p>
+      <div class="thread-card fade-up">
+        <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Lifestyle Medicine">
+        <div class="thread-card-overlay"></div>
+        <div class="thread-card-icon"><i data-lucide="sunrise" class="w-4 h-4"></i></div>
+        <div class="thread-card-body"><h3>Lifestyle Medicine</h3><p>Daily rhythm as the first line of treatment.</p></div>
       </div>
-      <div class="step-card rounded-sm p-5 text-center">
-        <div class="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="users" class="w-5 h-5 text-sage"></i></div>
-        <h3 class="font-serif text-base mb-1.5" style="color:var(--text);">Community Wellness</h3>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Healing that reaches beyond the individual.</p>
+      <div class="thread-card fade-up">
+        <img src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?q=80&w=600&auto=format&fit=crop" loading="lazy" alt="Community Wellness">
+        <div class="thread-card-overlay"></div>
+        <div class="thread-card-icon"><i data-lucide="users" class="w-4 h-4"></i></div>
+        <div class="thread-card-body"><h3>Community Wellness</h3><p>Healing that reaches beyond the individual.</p></div>
       </div>
-      <div class="step-card rounded-sm p-5 text-center">
-        <div class="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.1);"><i data-lucide="heart-handshake" class="w-5 h-5 text-brand-gold"></i></div>
-        <h3 class="font-serif text-base mb-1.5" style="color:var(--text);">Personalized Care</h3>
-        <p class="font-sans text-xs leading-relaxed" style="color:var(--text-muted);">Built around your Prakriti, not a template.</p>
+      <div class="thread-card fade-up" style="grid-column:span 2;">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Personalized Care">
+        <div class="thread-card-overlay"></div>
+        <div class="thread-card-icon"><i data-lucide="heart-handshake" class="w-4 h-4"></i></div>
+        <div class="thread-card-body"><h3>Personalized Care</h3><p>Built around your Prakriti, not a template.</p></div>
       </div>
     </div>
   </div>
@@ -986,11 +1055,16 @@
 <!-- WHAT MAKES SAMARPAN DIFFERENT -->
 <section id="different" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Our USP</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">What Makes Samarpan Different</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">Most Ayurveda websites don't have this.</p>
-      <div class="divider-line"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-12 fade-up">
+      <div class="text-center lg:text-left">
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Our USP</span>
+        <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">What Makes Samarpan Different</h2>
+        <p class="font-serif italic text-brand-gray mt-3 text-base">Most Ayurveda websites don't have this.</p>
+        <div class="divider-line mx-auto lg:mx-0"></div>
+      </div>
+      <div class="rounded-sm overflow-hidden" style="aspect-ratio:4/3;">
+        <img src="https://images.unsplash.com/photo-1591228127791-8e2eaef098d3?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Samarpan practitioners reviewing Ayurvedic research" class="w-full h-full object-cover">
+      </div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up stagger-grid">
       <div class="diff-card fade-up">
@@ -1012,46 +1086,19 @@
   </div>
 </section>
 
-<!-- STATS -->
-<section class="py-20" style="background:var(--bg);">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--border)] fade-up" id="statsGrid">
-      <div class="stat-card-premium p-6 md:p-10 text-center">
-        <div class="stat-number"><span class="counter" data-target="300">0</span>+</div>
-        <div class="stat-label">Clients Served</div>
-        <div class="stat-bar"></div>
-        <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Lives transformed across continents</p>
-      </div>
-      <div class="stat-card-premium p-6 md:p-10 text-center">
-        <div class="stat-number"><span class="counter" data-target="4">0</span>+</div>
-        <div class="stat-label">Years Experience</div>
-        <div class="stat-bar"></div>
-        <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Decade of practising Vedic sciences</p>
-      </div>
-      <div class="stat-card-premium p-6 md:p-10 text-center">
-        <div class="stat-number"><span class="counter" data-target="9">0</span></div>
-        <div class="stat-label">Countries Reached</div>
-        <div class="stat-bar"></div>
-        <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">UK, USA, UAE, Australia, Poland, Germany &amp; more</p>
-      </div>
-      <div class="stat-card-premium p-6 md:p-10 text-center">
-        <div class="stat-number"><span class="counter" data-target="98">0</span>%</div>
-        <div class="stat-label">Client Satisfaction</div>
-        <div class="stat-bar"></div>
-        <p class="font-sans text-[10px] mt-3 leading-relaxed hidden sm:block" style="color:var(--text-muted);">Verified through follow-up reviews</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- EVIDENCE-BASED AYURVEDA -->
 <section id="evidence-based" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Our Standard</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Evidence-Based Ayurveda</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">Every recommendation at Samarpan rests on three pillars</p>
-      <div class="divider-line"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-12 fade-up">
+      <div class="rounded-sm overflow-hidden order-2 lg:order-1" style="aspect-ratio:4/3;">
+        <img src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Classical Ayurvedic texts alongside clinical research" class="w-full h-full object-cover">
+      </div>
+      <div class="text-center lg:text-left order-1 lg:order-2">
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Our Standard</span>
+        <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Evidence-Based Ayurveda</h2>
+        <p class="font-serif italic text-brand-gray mt-3 text-base">Every recommendation at Samarpan rests on three pillars</p>
+        <div class="divider-line mx-auto lg:mx-0"></div>
+      </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-up">
       <div class="step-card rounded-sm p-6 md:p-8">
@@ -1073,59 +1120,50 @@
   </div>
 </section>
 
-<!-- EXPLORE OUR ECOSYSTEM (photo cards, replaces a plain "Services" grid) -->
+<!-- EXPLORE OUR ECOSYSTEM (3D rotating carousel) -->
 <section id="ecosystem" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
-    <div class="flex flex-wrap items-end justify-between gap-4 mb-8 fade-up">
-      <div>
-        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Explore Our Ecosystem</span>
-        <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Everything we do, with<br>one purpose: your <span style="color:#4A5D4F;">wellbeing</span>.</h2>
-      </div>
-      <a href="community.html" class="inline-flex items-center gap-2 px-6 py-2.5 border rounded-full font-sans text-[10px] uppercase tracking-widest transition hover:bg-clay hover:text-white hover:border-clay" style="border-color:var(--border);color:var(--text);">View All Initiatives <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    <div class="text-center mb-8 md:mb-10 fade-up" style="padding:0 .5rem;">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Explore Our Ecosystem</span>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 fade-up stagger-grid">
-      <a href="community.html" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Wellness">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="leaf" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Wellness</h3><p>Personalised holistic wellness programs rooted in Ayurveda, lifestyle &amp; evidence.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="journal.html?q=Research" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Research">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="microscope" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Research</h3><p>Advancing integrative health through scientific research, reviews &amp; publications.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="journal.html" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Education">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="book-open" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Education</h3><p>Evidence-based learning for students, practitioners &amp; lifelong learners.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="yoga.html" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Yoga">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="flower-2" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Yoga</h3><p>Authentic yogic practices for body, mind, breath &amp; conscious living.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="psychology.html" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Psychology">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="brain" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Psychology</h3><p>Mental wellbeing through mindful approaches and ancient wisdom.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="diet.html" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Nutrition">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="apple" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Nutrition</h3><p>Nourishing diets and seasonal guidance for vibrant health.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
-      <a href="journal.html?q=Public+Health" class="photo-card fade-up">
-        <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Public Health">
-        <div class="photo-card-overlay"></div>
-        <div class="photo-card-icon"><i data-lucide="heart-pulse" class="w-4 h-4"></i></div>
-        <div class="photo-card-body"><h3>Public Health</h3><p>Building healthier communities through awareness, education and action.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-      </a>
+    <div class="grid grid-cols-1 gap-4 fade-up">
+      <div class="eco-carousel-wrap fade-up">
+        <button class="topic-nav-btn prev" onclick="ecoNav(-1)" aria-label="Previous initiative"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+        <div class="eco-carousel" id="ecoCarousel">
+          <a href="community.html" class="topic-3d-card eco-3d-card" data-idx="0" onclick="return ecoCardClick(event,0)" style="background-image:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Wellness</h3><span>Holistic Programs</span></div>
+          </a>
+          <a href="journal.html?q=Research" class="topic-3d-card eco-3d-card" data-idx="1" onclick="return ecoCardClick(event,1)" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Research</h3><span>Studies &amp; Publications</span></div>
+          </a>
+          <a href="journal.html" class="topic-3d-card eco-3d-card" data-idx="2" onclick="return ecoCardClick(event,2)" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Education</h3><span>Learning &amp; Growth</span></div>
+          </a>
+          <a href="yoga.html" class="topic-3d-card eco-3d-card" data-idx="3" onclick="return ecoCardClick(event,3)" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Yoga</h3><span>Body, Breath &amp; Mind</span></div>
+          </a>
+          <a href="psychology.html" class="topic-3d-card eco-3d-card" data-idx="4" onclick="return ecoCardClick(event,4)" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Psychology</h3><span>Mindful Wellbeing</span></div>
+          </a>
+          <a href="diet.html" class="topic-3d-card eco-3d-card" data-idx="5" onclick="return ecoCardClick(event,5)" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Nutrition</h3><span>Seasonal Guidance</span></div>
+          </a>
+          <a href="journal.html?q=Public+Health" class="topic-3d-card eco-3d-card" data-idx="6" onclick="return ecoCardClick(event,6)" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+            <div class="topic-3d-label"><h3>Public Health</h3><span>Community Action</span></div>
+          </a>
+        </div>
+        <button class="topic-nav-btn next" onclick="ecoNav(1)" aria-label="Next initiative"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+      </div>
+      <div class="flex items-center justify-center gap-2 fade-up" id="ecoDots">
+        <div class="topic-dot active" onclick="ecoGoTo(0)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(1)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(2)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(3)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(4)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(5)"></div>
+        <div class="topic-dot" onclick="ecoGoTo(6)"></div>
+      </div>
+      <h2 class="font-display text-2xl md:text-3xl leading-snug md:leading-normal text-center mt-6" style="color:var(--text);max-width:640px;margin-left:auto;margin-right:auto;">Everything we do, with one purpose: your <span style="color:#4A5D4F;">wellbeing</span>.</h2>
     </div>
   </div>
 </section>
@@ -1182,39 +1220,26 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Explore by Topic</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 fade-up">
-      <div class="topic-carousel-wrap fade-up" style="grid-column:1/-1;">
-        <button class="topic-nav-btn prev" onclick="topicNav(-1)" aria-label="Previous topic"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
-        <div class="topic-carousel" id="topicCarousel">
-          <a href="ayurveda.html" class="topic-3d-card" data-idx="0" data-name="Women's Health" style="background-image:url('https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,0)">
-            <div class="topic-3d-label"><h3>Women's Health</h3><span>Hormonal &amp; Reproductive Care</span></div>
-          </a>
-          <a href="diet.html" class="topic-3d-card" data-idx="1" data-name="Digestive Health" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,1)">
-            <div class="topic-3d-label"><h3>Digestive Health</h3><span>Agni &amp; Gut Balance</span></div>
-          </a>
-          <a href="psychology.html" class="topic-3d-card" data-idx="2" data-name="Mental Wellness" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,2)">
-            <div class="topic-3d-label"><h3>Mental Wellness</h3><span>Trauma, Anxiety &amp; Clarity</span></div>
-          </a>
-          <a href="yoga.html" class="topic-3d-card" data-idx="3" data-name="Yoga &amp; Movement" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,3)">
-            <div class="topic-3d-label"><h3>Yoga &amp; Movement</h3><span>Hatha &amp; Pranayama</span></div>
-          </a>
-          <a href="journal.html" class="topic-3d-card" data-idx="4" data-name="Lifestyle Medicine" style="background-image:url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,4)">
-            <div class="topic-3d-label"><h3>Lifestyle Medicine</h3><span>Dinacharya &amp; Ritucharya</span></div>
-          </a>
-          <a href="journal.html" class="topic-3d-card" data-idx="5" data-name="Herbal Medicine" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');" onclick="return topicCardClick(event,5)">
-            <div class="topic-3d-label"><h3>Herbal Medicine</h3><span>Classical Formulations</span></div>
-          </a>
-        </div>
-        <button class="topic-nav-btn next" onclick="topicNav(1)" aria-label="Next topic"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
-      </div>
-      <div class="flex items-center justify-center gap-2 fade-up" style="grid-column:1/-1;margin-top:.5rem;" id="topicDots">
-        <div class="topic-dot active" onclick="topicGoTo(0)"></div>
-        <div class="topic-dot" onclick="topicGoTo(1)"></div>
-        <div class="topic-dot" onclick="topicGoTo(2)"></div>
-        <div class="topic-dot" onclick="topicGoTo(3)"></div>
-        <div class="topic-dot" onclick="topicGoTo(4)"></div>
-        <div class="topic-dot" onclick="topicGoTo(5)"></div>
-      </div>
+    <!-- Desktop: single-line row -->
+    <div class="topic-row-desktop fade-up">
+      <a href="ayurveda.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Women's Health</h3><span>Hormonal &amp; Reproductive Care</span></div>
+      </a>
+      <a href="diet.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Digestive Health</h3><span>Agni &amp; Gut Balance</span></div>
+      </a>
+      <a href="psychology.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Mental Wellness</h3><span>Trauma, Anxiety &amp; Clarity</span></div>
+      </a>
+      <a href="yoga.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Yoga &amp; Movement</h3><span>Hatha &amp; Pranayama</span></div>
+      </a>
+      <a href="journal.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Lifestyle Medicine</h3><span>Dinacharya &amp; Ritucharya</span></div>
+      </a>
+      <a href="journal.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Herbal Medicine</h3><span>Classical Formulations</span></div>
+      </a>
     </div>
   </div>
 </section>
@@ -1248,73 +1273,46 @@
   </div>
 </section>
 
-<!-- INTERACTIVE HERBAL GARDEN -->
-<section id="herbal-garden" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
+<!-- OUR LATEST PUBLICATIONS -->
+<section id="publications" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">The Herbal Garden</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Roots, Leaves &amp; Remedies</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">Tap a card to see the science behind the classical formulation</p>
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Research &amp; Publishing</span>
+      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Our Latest Publications</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base">Journals, handbooks and booklets — Ayurveda studied through scientific evidence.</p>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 fade-up">
-      <div class="herb-card" onclick="this.classList.toggle('flipped')">
-        <div class="herb-card-inner">
-          <div class="herb-card-front" style="background-image:url('https://images.unsplash.com/photo-1602928321679-560bb453f190?q=80&w=500');"><h3>Ashwagandha</h3><span>Tap to explore →</span></div>
-          <div class="herb-card-back"><h3>Ashwagandha</h3><p><strong>Benefit:</strong> Adaptogen — supports stress resilience and sleep.</p><p><strong>Classical text:</strong> Charaka Samhita, Rasayana chapter.</p><p><strong>Research:</strong> Studies link it to lowered cortisol markers.</p><p class="herb-safety"><strong>Safety:</strong> Avoid in pregnancy; consult before combining with thyroid medication.</p></div>
-        </div>
-      </div>
-      <div class="herb-card" onclick="this.classList.toggle('flipped')">
-        <div class="herb-card-inner">
-          <div class="herb-card-front" style="background-image:url('https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=500');"><h3>Tulsi</h3><span>Tap to explore →</span></div>
-          <div class="herb-card-back"><h3>Tulsi</h3><p><strong>Benefit:</strong> Respiratory support and everyday immune balance.</p><p><strong>Classical text:</strong> Referenced across Vedic household medicine.</p><p><strong>Research:</strong> Studied for antimicrobial and adaptogenic properties.</p><p class="herb-safety"><strong>Safety:</strong> Generally well tolerated as tea; check with a physician if on blood thinners.</p></div>
-        </div>
-      </div>
-      <div class="herb-card" onclick="this.classList.toggle('flipped')">
-        <div class="herb-card-inner">
-          <div class="herb-card-front" style="background-image:url('https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?q=80&w=500');"><h3>Guduchi</h3><span>Tap to explore →</span></div>
-          <div class="herb-card-back"><h3>Guduchi</h3><p><strong>Benefit:</strong> Traditionally used to support immunity and liver function.</p><p><strong>Classical text:</strong> Known as Amrita — "the root of immortality" — in classical texts.</p><p><strong>Research:</strong> Explored for immunomodulatory effects.</p><p class="herb-safety"><strong>Safety:</strong> Use under guidance in autoimmune conditions.</p></div>
-        </div>
-      </div>
-      <div class="herb-card" onclick="this.classList.toggle('flipped')">
-        <div class="herb-card-inner">
-          <div class="herb-card-front" style="background-image:url('https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?q=80&w=500');"><h3>Brahmi</h3><span>Tap to explore →</span></div>
-          <div class="herb-card-back"><h3>Brahmi</h3><p><strong>Benefit:</strong> Traditionally used to support memory and mental clarity.</p><p><strong>Classical text:</strong> Documented as a Medhya Rasayana (brain tonic) herb.</p><p><strong>Research:</strong> Studied for cognitive and anti-anxiety effects.</p><p class="herb-safety"><strong>Safety:</strong> Mild digestive upset possible; take with food.</p></div>
-        </div>
-      </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 fade-up stagger-grid">
+      <a href="journal.html" class="pub-card">
+        <div class="pub-card-icon"><i data-lucide="book-marked" class="w-5 h-5 text-clay"></i></div>
+        <span class="pub-card-tag">Journal</span>
+        <h3>The Samarpan Journal</h3>
+        <p>A curated digest of research, reflections and practice from our clinical and academic network.</p>
+        <span class="pub-card-link">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+      </a>
+      <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Dinacharya%20Guide" class="pub-card">
+        <div class="pub-card-icon"><i data-lucide="file-text" class="w-5 h-5 text-brand-gold"></i></div>
+        <span class="pub-card-tag">Handbook</span>
+        <h3>Dinacharya Guide</h3>
+        <p>A printable daily-rhythm handbook, grounded in classical routine and adapted for modern life.</p>
+        <span class="pub-card-link">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+      </a>
+      <a href="journal.html" class="pub-card">
+        <div class="pub-card-icon"><i data-lucide="stethoscope" class="w-5 h-5 text-sage"></i></div>
+        <span class="pub-card-tag">Booklet</span>
+        <h3>Patient Information Booklets</h3>
+        <p>Disease-specific educational booklets prepared by our research and medical writing teams.</p>
+        <span class="pub-card-link">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+      </a>
+      <a href="journal.html" class="pub-card">
+        <div class="pub-card-icon"><i data-lucide="microscope" class="w-5 h-5 text-clay"></i></div>
+        <span class="pub-card-tag">Research</span>
+        <h3>Evidence Summaries</h3>
+        <p>Literature reviews comparing Ayurveda with modern research, summarised for easy reading.</p>
+        <span class="pub-card-link">Read <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+      </a>
     </div>
-  </div>
-</section>
-
-<!-- PUBLIC HEALTH -->
-<section id="public-health" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
-  <div class="max-w-6xl mx-auto">
-    <div class="ph-hero-card fade-up">
-      <div class="ph-hero-text">
-        <div class="ph-hero-icon"><i data-lucide="globe-2" class="w-7 h-7 text-sage"></i></div>
-        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Beyond the Individual</span>
-        <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Public Health</h2>
-        <div class="ph-hero-rule"></div>
-        <p class="font-sans text-sm md:text-base leading-relaxed" style="color:var(--text-muted);max-width:26rem;">Very few Ayurveda organisations work here. It's one of the things that sets Samarpan apart.</p>
-        <div class="ph-icon-row">
-          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="users" class="w-4 h-4 text-sage"></i></div><span>Community<br>Wellbeing</span></div>
-          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="heart-pulse" class="w-4 h-4 text-sage"></i></div><span>Preventive<br>Care</span></div>
-          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="leaf" class="w-4 h-4 text-sage"></i></div><span>Holistic<br>Interventions</span></div>
-          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="bar-chart-3" class="w-4 h-4 text-sage"></i></div><span>Awareness &amp;<br>Education</span></div>
-        </div>
-        <a href="community.html" class="ph-cta-btn">Explore Our Initiatives <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
-      </div>
-      <div class="ph-hero-media">
-        <i data-lucide="leaf" class="ph-hero-leaf"></i>
-        <div class="ph-hero-media-shape">
-          <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Public health community outreach">
-        </div>
-        <div class="ph-hero-badge">
-          <div class="ph-hero-badge-icon"><i data-lucide="users-round" class="w-4 h-4"></i></div>
-          <p>Building healthier communities through awareness, education and compassionate action.</p>
-        </div>
-      </div>
-    </div>
+    <p class="text-center font-sans text-xs mt-10 fade-up" style="color:var(--text-muted);">More publications — plus a growing plant-by-plant Herbal Garden — are on the way.</p>
   </div>
 </section>
 
@@ -1432,15 +1430,26 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Meet the Community</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 fade-up stagger-grid">
-      <div class="role-card fade-up" onclick="openRoleModal('Founder','Sets the vision and clinical direction for Samarpan, and leads client-facing practice.')"><div class="role-ring"><i data-lucide="compass" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Founder</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Research Fellow','Reviews literature, drafts evidence summaries, and contributes to the Journal and Research Corner.')"><div class="role-ring"><i data-lucide="flask-conical" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Fellow</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Medical Advisor','Provides clinical oversight and reviews health content for accuracy.')"><div class="role-ring"><i data-lucide="stethoscope" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Medical Advisor</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Psychologist','Leads mind-body sessions and shapes our approach to trauma-informed care.')"><div class="role-ring"><i data-lucide="brain" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Psychologist</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Yoga Expert','Designs asana and Pranayama protocols tailored to individual constitution.')"><div class="role-ring"><i data-lucide="flower-2" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Yoga Expert</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Nutrition Expert','Builds Ritucharya-aligned dietary plans grounded in both tradition and science.')"><div class="role-ring"><i data-lucide="apple" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Nutrition Expert</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Intern','Learns hands-on through research, writing and outreach, and graduates with a certificate.')"><div class="role-ring"><i data-lucide="graduation-cap" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Intern</h3><span class="role-hint">View role →</span></div>
-      <div class="role-card fade-up" onclick="openRoleModal('Volunteer','Powers health camps, village outreach and community events on the ground.')"><div class="role-ring"><i data-lucide="hand-heart" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Volunteer</h3><span class="role-hint">View role →</span></div>
+  </div>
+  <div class="marquee-container fade-up">
+    <div class="marquee-content" id="roleMarqueeTrack" style="animation-duration:34s;">
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Founder','Sets the vision and clinical direction for Samarpan, and leads client-facing practice.')"><div class="role-ring"><i data-lucide="compass" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Founder</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Research Fellow','Reviews literature, drafts evidence summaries, and contributes to the Journal and Research Corner.')"><div class="role-ring"><i data-lucide="flask-conical" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Fellow</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Medical Advisor','Provides clinical oversight and reviews health content for accuracy.')"><div class="role-ring"><i data-lucide="stethoscope" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Medical Advisor</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Psychologist','Leads mind-body sessions and shapes our approach to trauma-informed care.')"><div class="role-ring"><i data-lucide="brain" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Psychologist</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Yoga Expert','Designs asana and Pranayama protocols tailored to individual constitution.')"><div class="role-ring"><i data-lucide="flower-2" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Yoga Expert</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Nutrition Expert','Builds Ritucharya-aligned dietary plans grounded in both tradition and science.')"><div class="role-ring"><i data-lucide="apple" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Nutrition Expert</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Intern','Learns hands-on through research, writing and outreach, and graduates with a certificate.')"><div class="role-ring"><i data-lucide="graduation-cap" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Intern</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Volunteer','Powers health camps, village outreach and community events on the ground.')"><div class="role-ring"><i data-lucide="hand-heart" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Volunteer</h3><span class="role-hint">View role →</span></div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Founder','Sets the vision and clinical direction for Samarpan, and leads client-facing practice.')"><div class="role-ring"><i data-lucide="compass" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Founder</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Research Fellow','Reviews literature, drafts evidence summaries, and contributes to the Journal and Research Corner.')"><div class="role-ring"><i data-lucide="flask-conical" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Fellow</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Medical Advisor','Provides clinical oversight and reviews health content for accuracy.')"><div class="role-ring"><i data-lucide="stethoscope" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Medical Advisor</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Psychologist','Leads mind-body sessions and shapes our approach to trauma-informed care.')"><div class="role-ring"><i data-lucide="brain" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Psychologist</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Yoga Expert','Designs asana and Pranayama protocols tailored to individual constitution.')"><div class="role-ring"><i data-lucide="flower-2" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Yoga Expert</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Nutrition Expert','Builds Ritucharya-aligned dietary plans grounded in both tradition and science.')"><div class="role-ring"><i data-lucide="apple" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Nutrition Expert</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Intern','Learns hands-on through research, writing and outreach, and graduates with a certificate.')"><div class="role-ring"><i data-lucide="graduation-cap" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Intern</h3><span class="role-hint">View role →</span></div>
+      <div class="role-card" style="min-width:150px;" onclick="openRoleModal('Volunteer','Powers health camps, village outreach and community events on the ground.')"><div class="role-ring"><i data-lucide="hand-heart" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Volunteer</h3><span class="role-hint">View role →</span></div>
     </div>
   </div>
 </section>
@@ -1455,7 +1464,7 @@
         <p class="font-sans text-xs leading-relaxed mb-5" style="color:var(--text-muted);">Together, we can create a healthier, more conscious world.</p>
         <a href="community.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-full font-sans text-[10px] uppercase tracking-widest text-white transition" style="background:#4A5D4F;">Join Our Community <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
       </div>
-      <div class="lg:col-span-3 grid grid-cols-2 lg:grid-cols-5 gap-4 stagger-grid">
+      <div class="lg:col-span-3 grid grid-cols-2 lg:grid-cols-4 gap-4 stagger-grid">
         <a href="community.html#internships" class="photo-card photo-card-sm fade-up">
           <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Internships">
           <div class="photo-card-overlay"></div>
@@ -1474,17 +1483,11 @@
           <div class="photo-card-icon"><i data-lucide="handshake" class="w-4 h-4"></i></div>
           <div class="photo-card-body"><h3>Collaborate</h3><p>Partner with us for research &amp; outreach.</p><span class="photo-card-link">Partner With Us <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
         </a>
-        <a href="journal.html" class="photo-card photo-card-sm fade-up">
-          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="For Students">
+        <a href="#internship" class="photo-card photo-card-sm fade-up">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="For Students &amp; Researchers">
           <div class="photo-card-overlay"></div>
           <div class="photo-card-icon"><i data-lucide="book-open" class="w-4 h-4"></i></div>
-          <div class="photo-card-body"><h3>For Students</h3><p>Resources, guidance and opportunities.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
-        </a>
-        <a href="booking.html" class="photo-card photo-card-sm fade-up">
-          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Support Us">
-          <div class="photo-card-overlay"></div>
-          <div class="photo-card-icon"><i data-lucide="heart" class="w-4 h-4"></i></div>
-          <div class="photo-card-body"><h3>Support Us</h3><p>Support our mission and initiatives.</p><span class="photo-card-link">Contribute <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
+          <div class="photo-card-body"><h3>For Students &amp; Researchers</h3><p>The Samarpan Internship — research, writing &amp; outreach.</p><span class="photo-card-link">Explore <i data-lucide="arrow-right" class="w-3 h-3"></i></span></div>
         </a>
       </div>
     </div>
@@ -1598,44 +1601,6 @@
   </div>
 </section>
 
-<!-- BEFORE / AFTER (hidden on mobile) -->
-<section class="py-20 px-4 sm:px-6 hidden sm:block" style="background:var(--bg);">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Client Transformations</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Before &amp; After</h2>
-      <div class="divider-line"></div>
-      <p class="font-sans text-sm mt-4" style="color:var(--text-muted);">Drag the slider to reveal the transformation. Results from 3-month holistic protocols.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 fade-up">
-      <div>
-        <div class="ba-container" id="ba1" style="height:280px;">
-          <div class="ba-before w-full h-full" style="background-image:url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&w=800');background-size:cover;background-position:center;"></div>
-          <div id="ba1-after" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800');background-size:cover;background-position:center;clip-path:inset(0 50% 0 0);"></div>
-          <div class="ba-slider" id="ba1-slider" style="left:50%;"><div class="ba-handle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D95D39" stroke-width="2.5"><path d="M21 12H3M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div></div>
-          <span class="ba-label ba-before-label">BEFORE</span><span class="ba-label ba-after-label">AFTER</span>
-        </div>
-        <div class="mt-3 px-1">
-          <p class="font-serif text-base" style="color:var(--text);">Ayurvedic Nutrition Protocol</p>
-          <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Weight management &amp; gut health — 12 weeks</p>
-        </div>
-      </div>
-      <div>
-        <div class="ba-container" id="ba2" style="height:280px;">
-          <div class="ba-before w-full h-full" style="background-image:url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800');background-size:cover;background-position:center;"></div>
-          <div id="ba2-after" style="position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800');background-size:cover;background-position:center;clip-path:inset(0 50% 0 0);"></div>
-          <div class="ba-slider" id="ba2-slider" style="left:50%;"><div class="ba-handle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D95D39" stroke-width="2.5"><path d="M21 12H3M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div></div>
-          <span class="ba-label ba-before-label">BEFORE</span><span class="ba-label ba-after-label">AFTER</span>
-        </div>
-        <div class="mt-3 px-1">
-          <p class="font-serif text-base" style="color:var(--text);">Yoga &amp; Meditation Protocol</p>
-          <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Stress, anxiety &amp; energy — 8 weeks transformation</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PRAKRITI QUIZ CTA -->
 <section class="py-16 px-4 sm:px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
   <div class="max-w-3xl mx-auto text-center fade-up">
@@ -1646,36 +1611,26 @@
       <i data-lucide="sparkles" class="w-4 h-4"></i> Start Free Prakriti Quiz
     </button>
     <p class="font-sans text-xs text-white/40 mt-4">Takes only 3 minutes · Completely free</p>
-  </div>
-</section>
 
-<!-- SACRED YATRA CAROUSEL -->
-<section id="retreats" class="yatra-section bg-brand-black" aria-label="Sacred Yatra pilgrimages">
-  <div class="carousel-container h-full">
-    <div class="carousel-track" id="carouselTrack">
-      <div class="retreat-card"><img src="rishikesh_latest.webp" loading="lazy" alt="Rishikesh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttarakhand</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Rishikesh</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Where the Ganga washes away the old self."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="varanasi.webp" loading="lazy" alt="Varanasi"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Uttar Pradesh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Varanasi (Kashi)</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"The City of Light: Confronting mortality to find immortality."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="trymbakeshwar1.webp" loading="lazy" alt="Trymbakeshwar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Maharashtra</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Trymbakeshwar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Jyotirlinga: The Sacred Source of the Godavari River."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="Kedarnath.webp" loading="lazy" alt="Kedarnath"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Himalayas</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Kedarnath</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"A journey to the highest seat of Lord Shiva amongst snow peaks."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=1920&fit=crop" loading="lazy" alt="Amritsar"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Punjab</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Amritsar</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"Golden Temple: Service, Devotion, and Community."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
-      <div class="retreat-card"><img src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?q=80&w=1920&fit=crop" loading="lazy" alt="Ladakh"><div class="retreat-overlay"><span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold mb-1 block">Ladakh</span><h3 class="font-serif mb-3 leading-tight text-white" style="font-size:clamp(1.75rem,5vw,3.5rem);">Hemis</h3><p class="font-sans font-light italic max-w-md mb-5 text-white/85 hidden sm:block" style="font-size:clamp(11px,1.5vw,14px);">"High altitude monasteries and Buddhist chanting in the clouds."</p><button class="border border-white/60 px-6 py-2.5 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition w-fit" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Inquire</button></div></div>
+    <div class="prakriti-info-grid mt-12 text-left">
+      <div class="prakriti-info-card">
+        <span class="prakriti-info-tag" style="color:#8FB5D9;">Vata</span>
+        <h3>Air &amp; Space</h3>
+        <p>Governs movement, creativity and the nervous system. In balance it brings energy and flexibility; out of balance it shows up as anxiety, dry skin or irregular digestion.</p>
+      </div>
+      <div class="prakriti-info-card">
+        <span class="prakriti-info-tag" style="color:#E39B6B;">Pitta</span>
+        <h3>Fire &amp; Water</h3>
+        <p>Governs metabolism, digestion and focus. In balance it brings clarity and drive; out of balance it shows up as irritability, acidity or inflammation.</p>
+      </div>
+      <div class="prakriti-info-card">
+        <span class="prakriti-info-tag" style="color:#8FBF9F;">Kapha</span>
+        <h3>Earth &amp; Water</h3>
+        <p>Governs structure, immunity and stability. In balance it brings calm and endurance; out of balance it shows up as sluggishness, weight gain or congestion.</p>
+      </div>
     </div>
-  </div>
-  <div class="absolute top-0 left-0 p-6 md:p-12 z-20 pointer-events-none">
-    <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold block mb-1">Sacred Yatra</span>
-    <h2 class="font-serif text-white" style="font-size:clamp(1.25rem,3.5vw,2.75rem);">Pilgrimages to Source</h2>
-  </div>
-  <div class="absolute bottom-6 right-4 md:right-12 flex items-center gap-3 z-20">
-    <div class="flex gap-1.5" id="carouselDots">
-      <div class="carousel-dot active" onclick="goToSlide(0)"></div>
-      <div class="carousel-dot" onclick="goToSlide(1)"></div>
-      <div class="carousel-dot" onclick="goToSlide(2)"></div>
-      <div class="carousel-dot" onclick="goToSlide(3)"></div>
-      <div class="carousel-dot" onclick="goToSlide(4)"></div>
-      <div class="carousel-dot" onclick="goToSlide(5)"></div>
-    </div>
-    <button class="w-9 h-9 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition text-xs text-white" onclick="moveSlide(-1)" aria-label="Previous">❮</button>
-    <button class="w-9 h-9 border border-white/30 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition text-xs text-white" onclick="moveSlide(1)" aria-label="Next">❯</button>
+    <p class="font-sans text-xs text-white/60 mt-8 leading-relaxed max-w-xl mx-auto">Ayurveda holds that everyone is a unique mix of all three doshas, usually with one or two more dominant. Your Prakriti — set at birth — shapes the diet, routine and therapies that work best for your body.</p>
+    <a href="ayurveda.html" class="inline-flex items-center gap-2 mt-5 font-sans text-[10px] uppercase tracking-widest text-brand-gold hover:text-white transition">Learn More About Ayurveda <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
   </div>
 </section>
 
@@ -1702,15 +1657,16 @@
   </div>
 </section>
 
-<!-- VIDEO TESTIMONIALS -->
-<section class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
+<!-- MEDIA CENTRE (merged with Video Testimonials) -->
+<section id="media-centre" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Voices of Healing</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Video Testimonials</h2>
+    <div class="text-center mb-10 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">In the Spotlight</span>
+      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Media Centre</h2>
+      <p class="font-serif italic text-brand-gray mt-3 text-base">Watch real stories of healing and everything else Samarpan is sharing with the world.</p>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 fade-up">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 fade-up mb-14">
       <div class="vid-testi-card">
   <div class="video-wrapper">
     <iframe 
@@ -1758,6 +1714,20 @@
     <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Understanding your Prakriti</p>
   </div>
   </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2 mb-10 fade-up" id="mediaTabs">
+      <button class="media-tab active" onclick="mediaTab(this,'videos')">Videos</button>
+      <button class="media-tab" onclick="mediaTab(this,'podcasts')">Podcasts</button>
+      <button class="media-tab" onclick="mediaTab(this,'interviews')">Interviews</button>
+      <button class="media-tab" onclick="mediaTab(this,'news')">News</button>
+      <button class="media-tab" onclick="mediaTab(this,'events')">Events</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up" id="mediaPane">
+      <a href="#hero-header" onclick="document.querySelector('.vid-testi-card').scrollIntoView({behavior:'smooth'});return false;" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Video</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Tatvidhya Sambhashana</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">Our ongoing series decoding Ayurveda for a modern audience — watch above.</p></div></a>
+      <a href="#journal" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Podcast</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Coming Soon</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">An audio series exploring integrative health, one conversation at a time.</p></div></a>
+      <a href="community.html" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Event</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Community Health Camps</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">See recent outreach and how to get involved.</p></div></a>
+    </div>
+  </div>
 </section>
 
 <!-- GALLERY -->
@@ -1784,12 +1754,7 @@
 <!-- WISDOM STREAM / JOURNAL -->
 <section id="journal" class="py-24 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-7xl mx-auto">
-    <div class="text-center mb-14 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">The Journal</span>
-      <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Wisdom Stream</h2>
-      <p class="font-sans text-sm mt-3 max-w-lg mx-auto" style="color:var(--text-muted);">Ancient knowledge distilled for the modern seeker</p>
-      <div class="divider-line"></div>
-    </div>
+    <div class="mb-10 fade-up"></div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 fade-up">
       <div class="lg:col-span-2">
         <div class="relative group">
@@ -1854,51 +1819,6 @@
   </div>
 </section>
 
-<!-- SAMARPAN JOURNAL (monthly issues) -->
-<!-- TODO(Nisha): link each issue to a real hosted PDF once available; these currently open the download popup as a placeholder. -->
-<section id="samarpan-journal" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Every Month</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">The Samarpan Journal</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">A curated digest of research, reflections and practice — issued monthly</p>
-      <div class="divider-line"></div>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up">
-      <div class="resource-card">
-        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Foundations of Agni"></div>
-        <div class="resource-card-badge" style="background:rgba(217,93,57,.12);"><i data-lucide="flame" class="w-5 h-5 text-clay"></i></div>
-        <div class="resource-card-body">
-          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 01</span>
-          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Foundations of Agni</h3>
-          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Digestive fire, modern metabolism, and where the two meet.</p>
-          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2001" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-        </div>
-      </div>
-      <div class="resource-card">
-        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="The Nervous System Issue"></div>
-        <div class="resource-card-badge" style="background:rgba(74,93,79,.12);"><i data-lucide="activity" class="w-5 h-5 text-sage"></i></div>
-        <div class="resource-card-body">
-          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 02</span>
-          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">The Nervous System Issue</h3>
-          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Trauma, Pranayama, and the science of feeling safe again.</p>
-          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2002" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-        </div>
-      </div>
-      <div class="resource-card">
-        <div class="resource-card-img"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Women's Health, Reconsidered"></div>
-        <div class="resource-card-badge" style="background:rgba(197,160,89,.15);"><i data-lucide="heart" class="w-5 h-5 text-brand-gold"></i></div>
-        <div class="resource-card-body">
-          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Issue 03</span>
-          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Women's Health, Reconsidered</h3>
-          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">PCOS, cycles, and an integrative approach to hormonal care.</p>
-          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Samarpan%20Journal%20-%20Issue%2003" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- KNOWLEDGE LIBRARY -->
 <section id="knowledge-library" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-3xl mx-auto text-center">
@@ -1942,7 +1862,7 @@
         <div class="resource-card-body">
           <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Dinacharya Guide</h3>
           <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">A daily Ayurvedic routine to anchor your mornings and evenings.</p>
-          <a href="mailto:info@thesamarpan.co.in?subject=Please%20send%20me%20the%20Dinacharya%20Guide" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Download <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+          <a href="journal.html?q=Dinacharya" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Read Guide <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
         </div>
       </div>
       <div class="resource-card">
@@ -2030,30 +1950,27 @@
       <div class="divider-line"></div>
     </div>
 
-    <div class="grid grid-cols-5 gap-2 sm:gap-4 fade-up mb-8">
-      <div class="text-center">
-        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(217,93,57,.1);"><i data-lucide="clipboard-list" class="w-4 h-4 text-clay"></i></div>
-        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Apply</h3>
+    <div class="text-center mb-3 fade-up">
+      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-1">Join the Mission</span>
+      <h3 class="font-serif italic text-base" style="color:var(--text-muted);">However you'd like to contribute, there's a place for you</h3>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-5 fade-up mb-8 items-center">
+      <div class="rounded-sm overflow-hidden hidden lg:block" style="aspect-ratio:3/4;">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Samarpan interns and volunteers" class="w-full h-full object-cover">
       </div>
-      <div class="text-center">
-        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(197,160,89,.1);"><i data-lucide="user-round" class="w-4 h-4 text-brand-gold"></i></div>
-        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Learn</h3>
-      </div>
-      <div class="text-center">
-        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(74,93,79,.1);"><i data-lucide="search" class="w-4 h-4 text-sage"></i></div>
-        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Research</h3>
-      </div>
-      <div class="text-center">
-        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(217,93,57,.1);"><i data-lucide="book-open" class="w-4 h-4 text-clay"></i></div>
-        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Publish</h3>
-      </div>
-      <div class="text-center">
-        <div class="intern-icon-circle mx-auto" style="width:44px;height:44px;background:rgba(197,160,89,.1);"><i data-lucide="award" class="w-4 h-4 text-brand-gold"></i></div>
-        <h3 class="font-serif text-sm mt-2" style="color:#D95D39;">Certificate</h3>
+      <div class="roles-row-scroll">
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="flask-conical" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Intern</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="hand-heart" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Volunteer</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="stethoscope" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Doctor</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="users" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Collaborator</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="brain" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Psychologist</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="apple" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Nutritionist</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="flower-2" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Yoga Teacher</h3><span class="role-hint">Apply →</span></a>
+        <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="graduation-cap" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">University Partner</h3><span class="role-hint">Apply →</span></a>
       </div>
     </div>
 
-    <div class="intern-banner fade-up" style="margin:0 0 2rem;">
+    <div class="intern-banner fade-up" style="margin:0 0 2.5rem;">
       <div class="intern-banner-icon"><i data-lucide="sprout" class="w-5 h-5 text-clay"></i></div>
       <div class="intern-banner-text">
         <p class="intern-banner-title">Hands-on learning. Real impact. Lasting growth.</p>
@@ -2061,27 +1978,6 @@
       </div>
       <a href="community.html" class="intern-banner-btn">Apply Now <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
     </div>
-
-    <div class="text-center mb-3 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-1">Join the Mission</span>
-      <h3 class="font-serif italic text-base" style="color:var(--text-muted);">However you'd like to contribute, there's a place for you</h3>
-    </div>
-    <div class="flex flex-wrap justify-center gap-2 fade-up mb-6">
-      <a href="community.html" class="lib-tag">Research Intern</a>
-      <a href="community.html" class="lib-tag">Volunteer</a>
-      <a href="community.html" class="lib-tag">Doctor</a>
-      <a href="community.html" class="lib-tag">Research Collaborator</a>
-      <a href="community.html" class="lib-tag">Psychologist</a>
-      <a href="community.html" class="lib-tag">Nutritionist</a>
-      <a href="community.html" class="lib-tag">Yoga Teacher</a>
-      <a href="community.html" class="lib-tag">University Partner</a>
-    </div>
-    <a href="community.html" class="mission-cta-bar fade-up" style="margin-bottom:2.5rem;">
-      <i data-lucide="send" class="w-4 h-4"></i>
-      <span class="mission-cta-title">Apply for Internship</span>
-      <span class="mission-cta-sub">Start your journey with Samarpan today.</span>
-      <i data-lucide="arrow-right" class="w-4 h-4"></i>
-    </a>
 
     <!-- CONTRIBUTOR WALL -->
     <!-- TODO(Nisha): these are the real names from your diary list. Confirm each one is happy to be named publicly (even without a phone number) before this goes live. -->
@@ -2153,23 +2049,34 @@
   </div>
 </section>
 
-<!-- MISSION TIMELINE -->
-<section class="py-20 px-4 sm:px-6" style="background:linear-gradient(135deg,#1C1C1C 0%,#2d1a12 100%);">
+<!-- PUBLIC HEALTH -->
+<section id="public-health" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-14 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-brand-gold block mb-2">Our Journey</span>
-      <h2 class="font-display text-2xl md:text-3xl text-white">From Founding to Global Impact</h2>
-    </div>
-    <div class="mission-timeline fade-up">
-      <div class="mission-line-fill"></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="sprout"></i></div><span class="mission-year">2022</span><h3>Vision Born</h3><p class="mission-desc">Samarpan begins in New Delhi</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="flask-conical"></i></div><span class="mission-year">2023</span><h3>Research</h3><p class="mission-desc">Vedic wisdom studied through modern review</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="users"></i></div><span class="mission-year">2024</span><h3>Community</h3><p class="mission-desc">Clients and contributors join us across India, then abroad</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="book-open"></i></div><span class="mission-year">2025</span><h3>Education</h3><p class="mission-desc">Internship &amp; learning programmes open</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="globe"></i></div><span class="mission-year">2026</span><h3>Digital Growth</h3><p class="mission-desc">Sessions now reach 9 countries and counting</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="microscope"></i></div><span class="mission-year">2030</span><h3>Research Institute</h3><p class="mission-desc">A dedicated arm for clinical research and publication</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="building-2"></i></div><span class="mission-year">2035</span><h3>Wellness Campus</h3><p class="mission-desc">A physical home for practice, teaching and healing</p></div>
-      <div class="mission-node"><div class="mission-dot"><i data-lucide="earth"></i></div><span class="mission-year">2040</span><h3>Global Impact</h3><p class="mission-desc">Integrative health, carried far beyond where we started</p></div>
+    <div class="ph-hero-card fade-up">
+      <div class="ph-hero-text">
+        <div class="ph-hero-icon"><i data-lucide="globe-2" class="w-7 h-7 text-sage"></i></div>
+        <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Beyond the Individual</span>
+        <h2 class="font-display text-3xl md:text-4xl" style="color:var(--text);">Public Health</h2>
+        <div class="ph-hero-rule"></div>
+        <p class="font-sans text-sm md:text-base leading-relaxed" style="color:var(--text-muted);max-width:26rem;">Very few Ayurveda organisations work here. It's one of the things that sets Samarpan apart.</p>
+        <div class="ph-icon-row">
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="users" class="w-4 h-4 text-sage"></i></div><span>Community<br>Wellbeing</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="heart-pulse" class="w-4 h-4 text-sage"></i></div><span>Preventive<br>Care</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="leaf" class="w-4 h-4 text-sage"></i></div><span>Holistic<br>Interventions</span></div>
+          <div class="ph-icon-item"><div class="ph-icon-circle"><i data-lucide="bar-chart-3" class="w-4 h-4 text-sage"></i></div><span>Awareness &amp;<br>Education</span></div>
+        </div>
+        <a href="community.html" class="ph-cta-btn">Explore Our Initiatives <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+      <div class="ph-hero-media">
+        <i data-lucide="leaf" class="ph-hero-leaf"></i>
+        <div class="ph-hero-media-shape">
+          <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=900&auto=format&fit=crop" loading="lazy" alt="Public health community outreach">
+        </div>
+        <div class="ph-hero-badge">
+          <div class="ph-hero-badge-icon"><i data-lucide="users-round" class="w-4 h-4"></i></div>
+          <p>Building healthier communities through awareness, education and compassionate action.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2206,29 +2113,6 @@
   </div>
 </section>
 
-<!-- MEDIA CENTRE -->
-<section id="media-centre" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-10 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">In the Spotlight</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Media Centre</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="flex flex-wrap justify-center gap-2 mb-10 fade-up" id="mediaTabs">
-      <button class="media-tab active" onclick="mediaTab(this,'videos')">Videos</button>
-      <button class="media-tab" onclick="mediaTab(this,'podcasts')">Podcasts</button>
-      <button class="media-tab" onclick="mediaTab(this,'interviews')">Interviews</button>
-      <button class="media-tab" onclick="mediaTab(this,'news')">News</button>
-      <button class="media-tab" onclick="mediaTab(this,'events')">Events</button>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up" id="mediaPane">
-      <a href="#journal" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Video</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Tatvidhya Sambhashana</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">Our ongoing series decoding Ayurveda for a modern audience.</p></div></a>
-      <a href="#journal" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Podcast</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Coming Soon</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">An audio series exploring integrative health, one conversation at a time.</p></div></a>
-      <a href="community.html" class="journal-card rounded flex flex-col overflow-hidden"><div class="p-5"><span class="text-[9px] uppercase tracking-widest text-clay font-bold">Event</span><h4 class="font-serif text-base mt-1" style="color:var(--text);">Community Health Camps</h4><p class="font-sans text-xs mt-1.5" style="color:var(--text-muted);">See recent outreach and how to get involved.</p></div></a>
-    </div>
-  </div>
-</section>
-
 <!-- WORLD MAP -->
 <section id="world-map" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-5xl mx-auto text-center">
@@ -2248,23 +2132,6 @@
         <span class="lib-tag" style="cursor:default;opacity:.4;">+ Future Countries</span>
       </div>
       <p class="font-sans text-xs mt-4" style="color:var(--text-muted);">Community members currently connect with us from 9 countries — India is home base, with the community growing every season.</p>
-    </div>
-  </div>
-</section>
-
-<!-- AI ASSISTANT TEASER -->
-<section id="ai-assistant" class="py-20 px-4 sm:px-6" style="background:var(--bg);">
-  <div class="max-w-3xl mx-auto">
-    <div class="text-center mb-8 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Coming Soon</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Ask Samarpan</h2>
-      <p class="font-serif italic text-brand-gray mt-3 text-base">An AI assistant trained on our own articles — ask it anything about Ayurveda, psychology or yoga.</p>
-    </div>
-    <div class="ai-mock fade-up">
-      <div class="ai-bubble ai-bubble-user">What is Panchakarma?</div>
-      <div class="ai-bubble ai-bubble-bot">Panchakarma is Ayurveda's five-fold detoxification protocol, used to clear accumulated toxins (Ama) and restore dosha balance. Ask me more once I launch →</div>
-      <div class="ai-bubble ai-bubble-user">Tell me about PCOS.</div>
-      <div class="ai-input-mock"><input type="text" placeholder="Ask a question…" disabled><button disabled><i data-lucide="send" class="w-4 h-4"></i></button></div>
     </div>
   </div>
 </section>
@@ -2989,8 +2856,8 @@
     var cards = document.querySelectorAll('.topic-3d-card');
     if (!cards.length) return;
     var isMobile = window.innerWidth < 640;
-    var stepX = isMobile ? 92 : 165;
-    var stepZ = isMobile ? 85 : 150;
+    var stepX = isMobile ? 68 : 165;
+    var stepZ = isMobile ? 70 : 150;
     var stepRot = 28;
     cards.forEach(function(card){
       var idx = parseInt(card.getAttribute('data-idx'), 10);
@@ -3013,6 +2880,39 @@
   function topicCardClick(e, idx){
     if (idx !== topicIdx) { e.preventDefault(); topicIdx = idx; renderTopicCarousel(); return false; }
     gaEvent('click','Topic', e.currentTarget.getAttribute('data-name') || '');
+    return true;
+  }
+
+  /* Explore Our Ecosystem — 3D coverflow carousel */
+  var ecoIdx = 0, ECO_TOTAL = 7;
+  function renderEcoCarousel(){
+    var cards = document.querySelectorAll('.eco-3d-card');
+    if (!cards.length) return;
+    var isMobile = window.innerWidth < 640;
+    var stepX = isMobile ? 68 : 165;
+    var stepZ = isMobile ? 70 : 150;
+    var stepRot = 28;
+    cards.forEach(function(card){
+      var idx = parseInt(card.getAttribute('data-idx'), 10);
+      var diff = idx - ecoIdx;
+      if (diff > ECO_TOTAL/2) diff -= ECO_TOTAL;
+      if (diff < -ECO_TOTAL/2) diff += ECO_TOTAL;
+      var a = Math.abs(diff);
+      var tx = diff * stepX, tz = -a * stepZ, rot = -diff * stepRot;
+      var scale = a===0 ? 1 : (a===1 ? .82 : .68);
+      var opacity = a===0 ? 1 : (a===1 ? .65 : (a===2 ? .28 : 0));
+      card.style.transform = 'translate(-50%,-50%) translateX('+tx+'px) translateZ('+tz+'px) rotateY('+rot+'deg) scale('+scale+')';
+      card.style.opacity = opacity;
+      card.style.zIndex = 10 - a;
+      card.style.pointerEvents = a > 2 ? 'none' : 'auto';
+    });
+    document.querySelectorAll('#ecoDots .topic-dot').forEach(function(d,i){ d.classList.toggle('active', i===ecoIdx); });
+  }
+  function ecoNav(dir){ ecoIdx = (ecoIdx + dir + ECO_TOTAL) % ECO_TOTAL; renderEcoCarousel(); }
+  function ecoGoTo(idx){ ecoIdx = idx; renderEcoCarousel(); }
+  function ecoCardClick(e, idx){
+    if (idx !== ecoIdx) { e.preventDefault(); ecoIdx = idx; renderEcoCarousel(); return false; }
+    gaEvent('click','Ecosystem', e.currentTarget.querySelector('h3') ? e.currentTarget.querySelector('h3').textContent : '');
     return true;
   }
   (function(){
@@ -3044,21 +2944,32 @@
     window.addEventListener('resize', function(){ clearTimeout(window._topicRTO); window._topicRTO = setTimeout(renderTopicCarousel, 150); });
   })();
 
-  var currentSlide=0, TOTAL_SLIDES=6, autoplayTimer;
-  function goToSlide(idx) {
-    currentSlide=idx;
-    var t=document.getElementById('carouselTrack');
-    if(t) t.style.transform='translateX(-'+currentSlide*100+'%)';
-    document.querySelectorAll('.carousel-dot').forEach(function(d,i){d.classList.toggle('active',i===currentSlide);});
-  }
-  function moveSlide(dir){ var n=currentSlide+dir; if(n>=TOTAL_SLIDES)n=0; if(n<0)n=TOTAL_SLIDES-1; goToSlide(n); resetAutoplay(); }
-  function resetAutoplay(){ clearInterval(autoplayTimer); autoplayTimer=setInterval(function(){moveSlide(1);},8000); }
-  resetAutoplay();
   (function(){
-    var s=document.querySelector('.yatra-section'); if(!s) return;
-    var sx=0;
-    s.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
-    s.addEventListener('touchend',function(e){var d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>40)moveSlide(d>0?1:-1);},{passive:true});
+    var wrap = document.querySelector('.eco-carousel-wrap');
+    var ecoAutoTimer = null;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function startEcoAuto(){
+      if (reduceMotion || ecoAutoTimer) return;
+      ecoAutoTimer = setInterval(function(){ ecoNav(1); }, 4200);
+    }
+    function stopEcoAuto(){ clearInterval(ecoAutoTimer); ecoAutoTimer = null; }
+    if (wrap) {
+      var esx = 0;
+      wrap.addEventListener('touchstart', function(e){ esx = e.touches[0].clientX; stopEcoAuto(); }, {passive:true});
+      wrap.addEventListener('touchend', function(e){
+        var dx = e.changedTouches[0].clientX - esx;
+        if (Math.abs(dx) > 40) ecoNav(dx < 0 ? 1 : -1);
+      }, {passive:true});
+      wrap.addEventListener('mouseenter', stopEcoAuto);
+      wrap.addEventListener('mouseleave', startEcoAuto);
+      document.addEventListener('visibilitychange', function(){ document.hidden ? stopEcoAuto() : startEcoAuto(); });
+      var ecoSectionObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ e.isIntersecting ? startEcoAuto() : stopEcoAuto(); });
+      }, {threshold:.4});
+      ecoSectionObs.observe(wrap);
+    }
+    renderEcoCarousel();
+    window.addEventListener('resize', function(){ clearTimeout(window._ecoRTO); window._ecoRTO = setTimeout(renderEcoCarousel, 150); });
   })();
 
   /* Fade-up observer */
@@ -3138,22 +3049,6 @@
   window.addEventListener('DOMContentLoaded', function() {
     if (!localStorage.getItem('samarpan-cookies')) setTimeout(function(){document.getElementById('cookie-banner').style.display='block';},2500);
   });
-
-  /* Before/After sliders */
-  function initBASlider(cId, aId, sId) {
-    var container=document.getElementById(cId), after=document.getElementById(aId), slider=document.getElementById(sId);
-    if(!container||!after||!slider) return;
-    var dragging=false;
-    function update(x){ var rect=container.getBoundingClientRect(), pct=Math.max(5,Math.min(95,((x-rect.left)/rect.width)*100)); slider.style.left=pct+'%'; after.style.clipPath='inset(0 '+(100-pct)+'% 0 0)'; }
-    slider.addEventListener('mousedown',function(e){dragging=true;e.preventDefault();});
-    container.addEventListener('touchstart',function(){dragging=true;},{passive:true});
-    document.addEventListener('mousemove',function(e){if(dragging)update(e.clientX);});
-    document.addEventListener('touchmove',function(e){if(dragging)update(e.touches[0].clientX);},{passive:true});
-    document.addEventListener('mouseup',function(){dragging=false;});
-    document.addEventListener('touchend',function(){dragging=false;});
-  }
-  initBASlider('ba1','ba1-after','ba1-slider');
-  initBASlider('ba2','ba2-after','ba2-slider');
 
   /* Live form validation */
   document.querySelectorAll('.form-input2, .form-textarea2').forEach(function(el){
