@@ -281,6 +281,11 @@
     .event-date{font-family:'Lato',sans-serif;font-size:.72rem;color:var(--text-muted);margin-bottom:.7rem;}
     .event-card a{font-family:'Lato',sans-serif;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:#C5A059;text-decoration:none;font-weight:700;}
     .event-card a:hover{text-decoration:underline;}
+    .event-row{display:flex;gap:1rem;overflow-x:auto;padding:.25rem .25rem 1rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
+    .event-row::-webkit-scrollbar{height:5px;}
+    .event-row::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
+    .event-row .event-card{flex:0 0 250px;scroll-snap-align:start;}
+    @media(max-width:640px){.event-row .event-card{flex:0 0 78%;}}
 
     .mission-timeline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem 1rem;position:relative;}
     .mission-timeline::before{content:'';position:absolute;top:6px;left:4%;right:4%;height:1px;background:rgba(197,160,89,.3);z-index:0;}
@@ -506,20 +511,24 @@
 
     #cookie-banner{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:10000;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.15);display:none;max-width:500px;width:90%;animation:slideUp .5s ease;}
     .divider-gold{width:1px;height:64px;background:linear-gradient(to bottom,transparent,#C5A059,transparent);margin:0 auto;}
-    .topic-carousel-wrap{position:relative;perspective:1400px;height:380px;margin:0 auto;max-width:100%;}
-    .topic-carousel{position:relative;width:100%;height:100%;transform-style:preserve-3d;}
-    .topic-3d-card{position:absolute;top:50%;left:50%;width:200px;height:290px;margin:-145px 0 0 -100px;border-radius:12px;background-size:cover;background-position:center;overflow:hidden;text-decoration:none;box-shadow:0 20px 45px rgba(0,0,0,.3);will-change:transform,opacity;transition:transform .6s cubic-bezier(.22,1,.36,1),opacity .6s ease;}
-    .topic-3d-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.15) 55%, transparent 75%);}
-    .topic-3d-label{position:absolute;bottom:0;left:0;right:0;padding:1.1rem 1rem;z-index:1;color:#fff;}
-    .topic-3d-label h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.15;}
-    .topic-3d-label span{font-family:'Lato',sans-serif;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;display:block;margin-top:.25rem;}
-    .topic-nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:var(--card-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;transition:border-color .3s,color .3s;color:var(--text);}
-    .topic-nav-btn:hover{border-color:#C5A059;color:#C5A059;}
-    .topic-nav-btn.prev{left:0;}
-    .topic-nav-btn.next{right:0;}
-    .topic-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s,transform .3s;cursor:pointer;}
-    .topic-dot.active{background:#C5A059;transform:scale(1.4);}
-    @media(max-width:640px){.topic-carousel-wrap{height:310px;} .topic-3d-card{width:158px;height:225px;margin:-112px 0 0 -79px;} .topic-nav-btn{width:36px;height:36px;}}
+    /* Explore Our Ecosystem — dedicated, self-contained row (straight line desktop, marquee mobile) */
+    .eco-row-clip{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+    .eco-row-track{display:flex;gap:.85rem;width:max-content;}
+    .eco-row-card{position:relative;border-radius:10px;overflow:hidden;text-decoration:none;flex:0 0 150px;height:190px;background-size:cover;background-position:center;box-shadow:0 12px 28px rgba(0,0,0,.18);}
+    .eco-row-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.15) 55%, transparent 75%);}
+    .eco-row-label{position:absolute;bottom:0;left:0;right:0;padding:.9rem .8rem;z-index:1;color:#fff;}
+    .eco-row-label h3{font-family:'Cormorant Garamond',serif;font-size:1.02rem;line-height:1.15;}
+    .eco-row-label span{font-family:'Lato',sans-serif;font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;opacity:.85;display:block;margin-top:.2rem;}
+    @media(min-width:641px){
+      .eco-row-card[aria-hidden="true"]{display:none;}
+      .eco-row-card{height:230px;}
+    }
+    @media(max-width:640px){
+      .eco-row-clip{overflow:hidden;}
+      .eco-row-track{animation:ecoRowMarquee 26s linear infinite;}
+      .eco-row-clip:active .eco-row-track,.eco-row-clip:hover .eco-row-track{animation-play-state:paused;}
+      @keyframes ecoRowMarquee{from{transform:translateX(-50%);}to{transform:translateX(0);}}
+    }
     /* Explore by Topic — single line, no 3D animation, on every screen size */
     .topic-row-desktop{display:flex;gap:.85rem;overflow-x:auto;padding:.25rem .25rem 1rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;}
     .topic-row-desktop::-webkit-scrollbar{height:5px;}
@@ -533,6 +542,14 @@
     @media(min-width:641px){
       .topic-row-desktop{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;overflow:visible;padding:0;}
       .topic-row-card{flex:none;height:230px;}
+      .topics-row-clip .topic-row-card[aria-hidden="true"]{display:none;}
+    }
+    .topics-row-clip{width:100%;}
+    @media(max-width:640px){
+      .topics-row-clip{overflow:hidden;}
+      .topics-row-clip .topic-row-desktop{width:max-content;overflow:visible;scroll-snap-type:none;animation:topicsRowMarquee 24s linear infinite;}
+      .topics-row-clip:hover .topic-row-desktop,.topics-row-clip:active .topic-row-desktop{animation-play-state:paused;}
+      @keyframes topicsRowMarquee{from{transform:translateX(-50%);}to{transform:translateX(0);}}
     }
     .divider-line{width:48px;height:1px;background:#D95D39;margin:1.5rem auto 0;}
     .ornament{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1.5rem 0;}
@@ -597,19 +614,22 @@
     .roles-row-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:10px;}
     .roles-row-scroll .role-card{flex:0 0 128px;scroll-snap-align:start;padding:1.25rem .75rem;}
     @media(min-width:641px){.roles-row-scroll .role-card[aria-hidden="true"]{display:none;}}
+    .roles-row-clip{width:100%;}
+    .country-row-clip{width:100%;}
     .country-row{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;}
     @media(max-width:640px){
-      .country-row{flex-wrap:nowrap;overflow:hidden;justify-content:flex-start;width:max-content;animation:countryMarquee 18s linear infinite;}
-      .country-row:hover,.country-row:active{animation-play-state:paused;}
+      .country-row-clip{overflow:hidden;}
+      .country-row{flex-wrap:nowrap;overflow:visible;justify-content:flex-start;width:max-content;animation:countryMarquee 18s linear infinite;}
+      .country-row-clip:hover .country-row,.country-row-clip:active .country-row{animation-play-state:paused;}
       .country-row .lib-tag{white-space:nowrap;}
-      @keyframes countryMarquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+      @keyframes countryMarquee{from{transform:translateX(-50%);}to{transform:translateX(0);}}
     }
     @media(min-width:641px){.country-row .lib-tag[aria-hidden="true"]{display:none;}}
     @media(max-width:640px){
-      .roles-row-scroll{overflow:hidden;scroll-snap-type:none;padding-bottom:.25rem;}
-      .roles-row-scroll.marquee-track{width:max-content;animation:rolesMarquee 22s linear infinite;}
-      .roles-row-scroll.marquee-track:hover,.roles-row-scroll.marquee-track:active{animation-play-state:paused;}
-      @keyframes rolesMarquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+      .roles-row-clip{overflow:hidden;padding-bottom:.25rem;}
+      .roles-row-scroll.marquee-track{width:max-content;overflow:visible;scroll-snap-type:none;animation:rolesMarquee 22s linear infinite;}
+      .roles-row-clip:hover .marquee-track,.roles-row-clip:active .marquee-track{animation-play-state:paused;}
+      @keyframes rolesMarquee{from{transform:translateX(-50%);}to{transform:translateX(0);}}
     }
 
     /* IMPACT BAR (dark green, inline stats) */
@@ -1070,34 +1090,58 @@
 </section>
 
 <!-- EXPLORE OUR ECOSYSTEM (straight-line, no 3D) -->
-<section id="ecosystem" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
+<section id="ecosystem" class="py-20 px-4 sm:px-6" style="background:var(--bg2);overflow:hidden;">
   <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-3 fade-up" style="padding:0 .5rem;">
+    <div class="text-center mb-3 fade-up">
       <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-3">Explore Our Ecosystem</span>
       <h2 class="font-display text-2xl md:text-3xl leading-snug md:leading-normal" style="color:var(--text);max-width:640px;margin-left:auto;margin-right:auto;">Everything we do, with one purpose: your <span style="color:#4A5D4F;">wellbeing</span>.</h2>
     </div>
-    <div class="topic-row-desktop fade-up" style="margin-top:1.75rem;display:flex;flex-wrap:nowrap;overflow-x:auto;">
-      <a href="community.html" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Wellness')" style="background-image:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Wellness</h3><span>Holistic Programs</span></div>
-      </a>
-      <a href="journal.html?q=Research" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Research')" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Research</h3><span>Studies &amp; Publications</span></div>
-      </a>
-      <a href="journal.html" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Education')" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Education</h3><span>Learning &amp; Growth</span></div>
-      </a>
-      <a href="yoga.html" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Yoga')" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Yoga</h3><span>Body, Breath &amp; Mind</span></div>
-      </a>
-      <a href="psychology.html" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Psychology')" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Psychology</h3><span>Mindful Wellbeing</span></div>
-      </a>
-      <a href="diet.html" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Nutrition')" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Nutrition</h3><span>Seasonal Guidance</span></div>
-      </a>
-      <a href="journal.html?q=Public+Health" class="topic-row-card" onclick="gaEvent('click','Ecosystem','Public Health')" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
-        <div class="topic-row-label"><h3>Public Health</h3><span>Community Action</span></div>
-      </a>
+    <div class="eco-row-clip fade-up">
+      <div class="eco-row-track">
+        <a href="community.html" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Wellness')" style="background-image:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Wellness</h3><span>Holistic Programs</span></div>
+        </a>
+        <a href="journal.html?q=Research" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Research')" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Research</h3><span>Studies &amp; Publications</span></div>
+        </a>
+        <a href="journal.html" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Education')" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Education</h3><span>Learning &amp; Growth</span></div>
+        </a>
+        <a href="yoga.html" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Yoga')" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Yoga</h3><span>Body, Breath &amp; Mind</span></div>
+        </a>
+        <a href="psychology.html" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Psychology')" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Psychology</h3><span>Mindful Wellbeing</span></div>
+        </a>
+        <a href="diet.html" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Nutrition')" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Nutrition</h3><span>Seasonal Guidance</span></div>
+        </a>
+        <a href="journal.html?q=Public+Health" class="eco-row-card" onclick="gaEvent('click','Ecosystem','Public Health')" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Public Health</h3><span>Community Action</span></div>
+        </a>
+        <!-- duplicate set, hidden on desktop, used only for the seamless mobile marquee loop -->
+        <a href="community.html" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Wellness</h3><span>Holistic Programs</span></div>
+        </a>
+        <a href="journal.html?q=Research" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Research</h3><span>Studies &amp; Publications</span></div>
+        </a>
+        <a href="journal.html" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Education</h3><span>Learning &amp; Growth</span></div>
+        </a>
+        <a href="yoga.html" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Yoga</h3><span>Body, Breath &amp; Mind</span></div>
+        </a>
+        <a href="psychology.html" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Psychology</h3><span>Mindful Wellbeing</span></div>
+        </a>
+        <a href="diet.html" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Nutrition</h3><span>Seasonal Guidance</span></div>
+        </a>
+        <a href="journal.html?q=Public+Health" class="eco-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+          <div class="eco-row-label"><h3>Public Health</h3><span>Community Action</span></div>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -1154,8 +1198,9 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Explore by Topic</h2>
       <div class="divider-line"></div>
     </div>
-    <!-- Desktop: single-line row -->
-    <div class="topic-row-desktop fade-up">
+    <!-- Desktop: single-line row; Mobile: slow auto-rotating marquee -->
+    <div class="topics-row-clip fade-up">
+    <div class="topic-row-desktop">
       <a href="ayurveda.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
         <div class="topic-row-label"><h3>Women's Health</h3><span>Hormonal &amp; Reproductive Care</span></div>
       </a>
@@ -1174,6 +1219,25 @@
       <a href="journal.html" class="topic-row-card" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
         <div class="topic-row-label"><h3>Herbal Medicine</h3><span>Classical Formulations</span></div>
       </a>
+      <a href="ayurveda.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1600618528240-fb9fc964b853?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Women's Health</h3><span>Hormonal &amp; Reproductive Care</span></div>
+      </a>
+      <a href="diet.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Digestive Health</h3><span>Agni &amp; Gut Balance</span></div>
+      </a>
+      <a href="psychology.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Mental Wellness</h3><span>Trauma, Anxiety &amp; Clarity</span></div>
+      </a>
+      <a href="yoga.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Yoga &amp; Movement</h3><span>Hatha &amp; Pranayama</span></div>
+      </a>
+      <a href="journal.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Lifestyle Medicine</h3><span>Dinacharya &amp; Ritucharya</span></div>
+      </a>
+      <a href="journal.html" class="topic-row-card" aria-hidden="true" style="background-image:url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&amp;w=600&amp;auto=format&amp;fit=crop');">
+        <div class="topic-row-label"><h3>Herbal Medicine</h3><span>Classical Formulations</span></div>
+      </a>
+    </div>
     </div>
   </div>
 </section>
@@ -1948,6 +2012,7 @@
       <div class="rounded-sm overflow-hidden hidden lg:block" style="aspect-ratio:3/4;">
         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=500&auto=format&fit=crop" loading="lazy" alt="Samarpan interns and volunteers" class="w-full h-full object-cover">
       </div>
+      <div class="roles-row-clip">
       <div class="roles-row-scroll marquee-track">
         <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="flask-conical" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Research Intern</h3><span class="role-hint">Apply →</span></a>
         <a href="community.html" class="role-card"><div class="role-ring"><i data-lucide="hand-heart" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Volunteer</h3><span class="role-hint">Apply →</span></a>
@@ -1965,6 +2030,7 @@
         <a href="community.html" class="role-card" aria-hidden="true"><div class="role-ring"><i data-lucide="apple" class="w-6 h-6 text-sage"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Nutritionist</h3><span class="role-hint">Apply →</span></a>
         <a href="community.html" class="role-card" aria-hidden="true"><div class="role-ring"><i data-lucide="flower-2" class="w-6 h-6 text-brand-gold"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">Yoga Teacher</h3><span class="role-hint">Apply →</span></a>
         <a href="community.html" class="role-card" aria-hidden="true"><div class="role-ring"><i data-lucide="graduation-cap" class="w-6 h-6 text-clay"></i></div><h3 class="font-serif text-sm mt-3" style="color:var(--text);">University Partner</h3><span class="role-hint">Apply →</span></a>
+      </div>
       </div>
     </div>
 
@@ -1998,7 +2064,7 @@
       <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Upcoming Events</h2>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
+    <div class="event-row fade-up">
       <div class="event-card">
         <div class="event-card-img">
           <span class="event-tag">Retreat</span>
@@ -2131,6 +2197,7 @@
     </div>
     <div class="world-map-wrap fade-up">
       <i data-lucide="map" class="w-10 h-10 mb-3" style="color:#C5A059;"></i>
+      <div class="country-row-clip">
       <div class="country-row" id="countryMarquee">
         <span class="lib-tag" style="cursor:default;">🇮🇳 India — Home Base</span>
         <span class="lib-tag" style="cursor:default;opacity:.6;">🇬🇧 UK — Growing</span>
@@ -2152,6 +2219,7 @@
         <span class="lib-tag" style="cursor:default;opacity:.6;" aria-hidden="true">🇩🇪 Germany — Growing</span>
         <span class="lib-tag" style="cursor:default;opacity:.6;" aria-hidden="true">🇶🇦 Qatar — Growing</span>
         <span class="lib-tag" style="cursor:default;opacity:.4;" aria-hidden="true">+ Future Countries</span>
+      </div>
       </div>
       <p class="font-sans text-xs mt-4" style="color:var(--text-muted);">Community members currently connect with us from 9+ countries — India is home base, with the community growing every season.</p>
     </div>
@@ -2870,69 +2938,6 @@
     if (e.key==='ArrowRight') lightboxNav(1);
     if (e.key==='ArrowLeft')  lightboxNav(-1);
   });
-
-  /* Carousel */
-  /* Explore by Topic — 3D coverflow carousel */
-  var topicIdx = 0, TOPIC_TOTAL = 6;
-  function renderTopicCarousel(){
-    var cards = document.querySelectorAll('.topic-3d-card');
-    if (!cards.length) return;
-    var isMobile = window.innerWidth < 640;
-    var stepX = isMobile ? 68 : 165;
-    var stepZ = isMobile ? 70 : 150;
-    var stepRot = 28;
-    cards.forEach(function(card){
-      var idx = parseInt(card.getAttribute('data-idx'), 10);
-      var diff = idx - topicIdx;
-      if (diff > TOPIC_TOTAL/2) diff -= TOPIC_TOTAL;
-      if (diff < -TOPIC_TOTAL/2) diff += TOPIC_TOTAL;
-      var a = Math.abs(diff);
-      var tx = diff * stepX, tz = -a * stepZ, rot = -diff * stepRot;
-      var scale = a===0 ? 1 : (a===1 ? .82 : .68);
-      var opacity = a===0 ? 1 : (a===1 ? .65 : (a===2 ? .28 : 0));
-      card.style.transform = 'translate(-50%,-50%) translateX('+tx+'px) translateZ('+tz+'px) rotateY('+rot+'deg) scale('+scale+')';
-      card.style.opacity = opacity;
-      card.style.zIndex = 10 - a;
-      card.style.pointerEvents = a > 2 ? 'none' : 'auto';
-    });
-    document.querySelectorAll('.topic-dot').forEach(function(d,i){ d.classList.toggle('active', i===topicIdx); });
-  }
-  function topicNav(dir){ topicIdx = (topicIdx + dir + TOPIC_TOTAL) % TOPIC_TOTAL; renderTopicCarousel(); }
-  function topicGoTo(idx){ topicIdx = idx; renderTopicCarousel(); }
-  function topicCardClick(e, idx){
-    if (idx !== topicIdx) { e.preventDefault(); topicIdx = idx; renderTopicCarousel(); return false; }
-    gaEvent('click','Topic', e.currentTarget.getAttribute('data-name') || '');
-    return true;
-  }
-
-  (function(){
-    var wrap = document.querySelector('.topic-carousel-wrap');
-    var topicAutoTimer = null;
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function startTopicAuto(){
-      if (reduceMotion || topicAutoTimer) return;
-      topicAutoTimer = setInterval(function(){ topicNav(1); }, 3800);
-    }
-    function stopTopicAuto(){ clearInterval(topicAutoTimer); topicAutoTimer = null; }
-    if (wrap) {
-      var tsx = 0;
-      wrap.addEventListener('touchstart', function(e){ tsx = e.touches[0].clientX; stopTopicAuto(); }, {passive:true});
-      wrap.addEventListener('touchend', function(e){
-        var dx = e.changedTouches[0].clientX - tsx;
-        if (Math.abs(dx) > 40) topicNav(dx < 0 ? 1 : -1);
-      }, {passive:true});
-      wrap.addEventListener('mouseenter', stopTopicAuto);
-      wrap.addEventListener('mouseleave', startTopicAuto);
-      /* pause the interval while the tab is hidden, so it never runs invisibly in the background */
-      document.addEventListener('visibilitychange', function(){ document.hidden ? stopTopicAuto() : startTopicAuto(); });
-      var topicSectionObs = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ e.isIntersecting ? startTopicAuto() : stopTopicAuto(); });
-      }, {threshold:.4});
-      topicSectionObs.observe(wrap);
-    }
-    renderTopicCarousel();
-    window.addEventListener('resize', function(){ clearTimeout(window._topicRTO); window._topicRTO = setTimeout(renderTopicCarousel, 150); });
-  })();
 
   /* Topics We Explore — auto-rotate pill row on mobile only, so every topic surfaces without manual side-scrolling */
   (function(){
