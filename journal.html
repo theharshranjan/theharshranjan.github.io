@@ -83,8 +83,6 @@
     .grecaptcha-badge{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
     .grecaptcha-notice{font-size:11px;color:var(--text-muted);opacity:.75;margin-top:.5rem;line-height:1.4;}
 
-    #loader{position:fixed;inset:0;z-index:9999;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#FDFBF7 0%,#F5F0E8 100%);transition:opacity .6s ease-out;}
-
     /* ── NAVBAR (shared) ── */
     #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:transparent;border-bottom:1px solid transparent;transition:background 0.45s cubic-bezier(.4,0,.2,1),border-color 0.45s,box-shadow 0.45s,top 0.45s;}
     #navbar.scrolled{background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;box-shadow:0 2px 20px rgba(0,0,0,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
@@ -98,7 +96,7 @@
     .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;transition:color .3s;color:#D95D39;}
     .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s,box-shadow .3s,transform .2s;text-decoration:none;border-radius:2px;white-space:nowrap;position:relative;overflow:hidden;}
     .nav-cta-btn:hover{background:#c24e2c;box-shadow:0 6px 20px rgba(217,93,57,.45);transform:translateY(-1px);}
-    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;}
+    #mobile-menu{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease;overflow-y:auto;padding:5rem 1.5rem 2.5rem;}
     #mobile-menu.active{opacity:1;visibility:visible;pointer-events:auto;}
     [data-theme="dark"] #mobile-menu{background:#141410;}
     .hamburger-icon{transition:color .3s;color:var(--text);}
@@ -189,9 +187,12 @@
     .article-tag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.02em;color:var(--text-muted);border:1px solid var(--border);padding:.15rem .5rem;border-radius:20px;}
 
     /* Category grid */
-    .category-tile{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1.75rem 1rem;border:1px solid var(--border);border-radius:6px;background:var(--card-bg);text-decoration:none;transition:border-color .3s,transform .3s,background .3s;text-align:center;}
+    .category-tile{display:flex;flex-direction:column;align-items:center;gap:.7rem;padding:1.5rem 1rem 1.75rem;border:1px solid var(--border);border-radius:6px;background:var(--card-bg);text-decoration:none;transition:border-color .3s,transform .3s,background .3s;text-align:center;}
     .category-tile:hover{border-color:#D95D39;transform:translateY(-3px);background:rgba(217,93,57,.03);}
-    .category-emoji{font-size:1.9rem;line-height:1;}
+    .category-tile:hover .category-photo img{transform:scale(1.08);}
+    .category-photo{width:56px;height:56px;border-radius:50%;overflow:hidden;border:2px solid var(--border);flex-shrink:0;transition:border-color .3s;}
+    .category-tile:hover .category-photo{border-color:#D95D39;}
+    .category-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
     .category-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
     .category-count{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);}
 
@@ -213,18 +214,11 @@
     .legend-row:last-child{border-bottom:none;}
     .legend-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
 
-    /* Timeline */
-    .jt-track{position:relative;padding-left:2rem;}
-    .jt-track::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1.5px;background:var(--border);}
-    .jt-item{position:relative;padding-bottom:2.25rem;}
-    .jt-item:last-child{padding-bottom:0;}
-    .jt-dot{position:absolute;left:-2rem;top:2px;width:13px;height:13px;border-radius:50%;background:#D95D39;border:3px solid var(--bg);box-shadow:0 0 0 1.5px #D95D39;}
-    .jt-item.jt-future .jt-dot{background:var(--bg);box-shadow:0 0 0 1.5px var(--border);}
-
     /* Contributors */
-    .contrib-card{text-align:center;padding:1.75rem 1.25rem;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;transition:transform .3s,border-color .3s;}
+    .contrib-card{text-align:center;padding:1.75rem 1.25rem;background:var(--card-bg);border:1px solid var(--border);border-radius:6px;transition:transform .3s,border-color .3s;text-decoration:none;display:block;}
     .contrib-card:hover{transform:translateY(-3px);border-color:#D95D39;}
-    .contrib-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto .9rem;background:linear-gradient(135deg,rgba(217,93,57,.18),rgba(74,93,79,.18));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#D95D39;}
+    .contrib-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto .9rem;overflow:hidden;background:linear-gradient(135deg,rgba(217,93,57,.18),rgba(74,93,79,.18));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#D95D39;}
+    .contrib-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
 
     /* For students */
     .student-chip{font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;padding:.55rem 1.1rem;border:1px solid var(--border);border-radius:30px;background:var(--card-bg);color:var(--text-muted);}
@@ -256,7 +250,7 @@
     /* Search bar */
     .journal-search{display:flex;align-items:center;gap:.6rem;background:var(--card-bg);border:1.5px solid var(--border);border-radius:30px;padding:.6rem .5rem .6rem 1.1rem;max-width:460px;margin:0 auto;transition:border-color .3s;}
     .journal-search:focus-within{border-color:#D95D39;}
-    .journal-search input{flex:1;background:transparent;border:none;outline:none;font-family:'Lato',sans-serif;font-size:14px;color:var(--text);}
+    .journal-search input{flex:1;min-width:0;background:transparent;border:none;outline:none;font-family:'Lato',sans-serif;font-size:16px;color:var(--text);}
     .journal-search button{background:#D95D39;color:#fff;border:none;border-radius:30px;padding:.55rem 1.1rem;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;}
 
     .article-hidden{display:none !important;}
@@ -265,24 +259,6 @@
 <body>
 
 <div id="scroll-progress"></div>
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="flex flex-col items-center relative">
-    <div class="absolute w-32 h-32 border-2 border-[#D95D39] rounded-full animate-ping opacity-20" style="animation-duration:2s;"></div>
-    <div class="absolute w-24 h-24 border border-[#C5A059] rounded-full animate-pulse" style="animation-duration:2.5s;"></div>
-    <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="#D95D39" stroke-width="2" class="mb-5 relative z-10 animate-pulse" style="animation-duration:3s;">
-      <circle cx="50" cy="50" r="45"/><path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z"/>
-      <circle cx="50" cy="85" r="3" fill="#D95D39"/><path d="M20 50H80" stroke-opacity=".6"/>
-    </svg>
-    <span class="font-display tracking-[.4em] text-base" style="background:linear-gradient(90deg,#D95D39,#C5A059);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SAMARPAN</span>
-    <div class="mt-4 flex gap-2">
-      <div class="w-1.5 h-1.5 bg-[#D95D39] rounded-full animate-bounce" style="animation-delay:0s;"></div>
-      <div class="w-1.5 h-1.5 bg-[#C5A059] rounded-full animate-bounce" style="animation-delay:.2s;"></div>
-      <div class="w-1.5 h-1.5 bg-[#4A5D4F] rounded-full animate-bounce" style="animation-delay:.4s;"></div>
-    </div>
-  </div>
-</div>
 
 <!-- NAVBAR -->
 <nav id="navbar" role="navigation" aria-label="Main navigation">
@@ -395,8 +371,8 @@
           <span class="mono-label border-l-2 pl-3" style="border-color:#666;">Student Contribution</span>
         </div>
         <div class="flex flex-col sm:flex-row gap-3">
-          <a href="#" onclick="gaEvent('click','Journal','Download Featured PDF');return false;" class="cta-btn inline-flex items-center justify-center gap-2 bg-brand-black text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-clay transition"><i data-lucide="download" class="w-3.5 h-3.5"></i>Download PDF</a>
-          <a href="#" onclick="gaEvent('click','Journal','Read Featured Online');return false;" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="book-open" class="w-3.5 h-3.5"></i>Read Online</a>
+          <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Vol%201%20Issue%2004%20PDF&body=Namaste%20Samarpan%2C%0A%0APlease%20send%20me%20the%20PDF%20of%20Issue%2004%20%E2%80%94%20Integrative%20Women%27s%20Health.%0A%0AThank%20you." onclick="gaEvent('click','Journal','Download Featured PDF')" class="cta-btn inline-flex items-center justify-center gap-2 bg-brand-black text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-clay transition"><i data-lucide="download" class="w-3.5 h-3.5"></i>Download PDF</a>
+          <a href="pcos-hormonal-health-ayurveda-women.html" onclick="gaEvent('click','Journal','Read Featured Online')" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="book-open" class="w-3.5 h-3.5"></i>Read Online</a>
         </div>
       </div>
     </div>
@@ -839,14 +815,14 @@
       <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Browse by Category</h2>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 fade-up stagger-grid">
-      <a href="#latest-articles" onclick="filterByTag('ayurveda')" class="category-tile fade-up"><span class="category-emoji">🌿</span><span class="category-name">Ayurveda</span><span class="category-count">12 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('psychology')" class="category-tile fade-up"><span class="category-emoji">🧠</span><span class="category-name">Psychology</span><span class="category-count">8 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('nutrition')" class="category-tile fade-up"><span class="category-emoji">🥗</span><span class="category-name">Nutrition</span><span class="category-count">3 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('yoga')" class="category-tile fade-up"><span class="category-emoji">🧘</span><span class="category-name">Yoga</span><span class="category-count">7 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('child health')" class="category-tile fade-up"><span class="category-emoji">👶</span><span class="category-name">Child Health</span><span class="category-count">0 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('public health')" class="category-tile fade-up"><span class="category-emoji">🌍</span><span class="category-name">Public Health</span><span class="category-count">1 article</span></a>
-      <a href="#latest-articles" onclick="filterByTag('research review')" class="category-tile fade-up"><span class="category-emoji">🧪</span><span class="category-name">Research Reviews</span><span class="category-count">8 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('medicinal plants')" class="category-tile fade-up"><span class="category-emoji">📖</span><span class="category-name">Medicinal Plants</span><span class="category-count">0 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('ayurveda')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1495461199391-8c39ab674295?q=80&w=200&auto=format&fit=crop" alt="Ayurveda" loading="lazy"></span><span class="category-name">Ayurveda</span><span class="category-count">12 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('psychology')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=200&auto=format&fit=crop" alt="Psychology" loading="lazy"></span><span class="category-name">Psychology</span><span class="category-count">8 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('nutrition')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=200&auto=format&fit=crop" alt="Nutrition" loading="lazy"></span><span class="category-name">Nutrition</span><span class="category-count">3 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('yoga')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1477840539360-4a1d23071046?q=80&w=200&auto=format&fit=crop" alt="Yoga" loading="lazy"></span><span class="category-name">Yoga</span><span class="category-count">7 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('child health')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1524863479829-916d8e77f114?q=80&w=200&auto=format&fit=crop" alt="Child Health" loading="lazy"></span><span class="category-name">Child Health</span><span class="category-count">0 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('public health')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=200&auto=format&fit=crop" alt="Public Health" loading="lazy"></span><span class="category-name">Public Health</span><span class="category-count">1 article</span></a>
+      <a href="#latest-articles" onclick="filterByTag('research review')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1521146250551-a5578dcc2e64?q=80&w=200&auto=format&fit=crop" alt="Research Reviews" loading="lazy"></span><span class="category-name">Research Reviews</span><span class="category-count">8 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('medicinal plants')" class="category-tile fade-up"><span class="category-photo"><img src="https://images.unsplash.com/photo-1726146198306-afe0a44b0073?q=80&w=200&auto=format&fit=crop" alt="Medicinal Plants" loading="lazy"></span><span class="category-name">Medicinal Plants</span><span class="category-count">0 articles</span></a>
     </div>
   </div>
 </section>
@@ -892,8 +868,8 @@
         <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">DOI</span><span class="mono-label" style="color:var(--text);">10.00000/samarpan.v1.i04</span></div>
         <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">Cite as</span><span class="mono-label text-right" style="color:var(--text);">Samarpan Journal, 1(4), 2026</span></div>
         <div class="flex flex-col sm:flex-row gap-3 mt-6">
-          <a href="#" onclick="gaEvent('click','Journal','Read Current Issue');return false;" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-[#c24e2c] transition"><i data-lucide="book-open" class="w-3.5 h-3.5"></i>Read Online</a>
-          <a href="#" onclick="gaEvent('click','Journal','Download Current Issue');return false;" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="download" class="w-3.5 h-3.5"></i>Download</a>
+          <a href="pcos-hormonal-health-ayurveda-women.html" onclick="gaEvent('click','Journal','Read Current Issue')" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-[#c24e2c] transition"><i data-lucide="book-open" class="w-3.5 h-3.5"></i>Read Online</a>
+          <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Vol%201%20Issue%2004%20PDF&body=Namaste%20Samarpan%2C%0A%0APlease%20send%20me%20the%20PDF%20of%20the%20current%20issue%20%E2%80%94%20Integrative%20Women%27s%20Health.%0A%0AThank%20you." onclick="gaEvent('click','Journal','Download Current Issue')" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="download" class="w-3.5 h-3.5"></i>Download</a>
         </div>
       </div>
     </div>
@@ -946,25 +922,6 @@
 </section>
 
 <!-- ══════════════════════════════════════════════
-     JOURNAL TIMELINE
-     ══════════════════════════════════════════════ -->
-<section class="py-16 md:py-20 px-4 sm:px-6">
-  <div class="max-w-2xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <p class="eyebrow mb-2">Our Journey</p>
-      <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Journal Timeline</h2>
-    </div>
-    <div class="jt-track fade-up">
-      <div class="jt-item"><span class="jt-dot"></span><p class="mono-label">2025</p><h3 class="font-serif text-lg mt-1" style="color:var(--text);">Issue 01 — Foundations of Integrative Wellness</h3></div>
-      <div class="jt-item"><span class="jt-dot"></span><p class="mono-label">2025</p><h3 class="font-serif text-lg mt-1" style="color:var(--text);">Issue 02 — Ayurveda in the Nervous System</h3></div>
-      <div class="jt-item"><span class="jt-dot"></span><p class="mono-label">2026</p><h3 class="font-serif text-lg mt-1" style="color:var(--text);">Issue 03 — Seasons of the Body</h3></div>
-      <div class="jt-item"><span class="jt-dot"></span><p class="mono-label">2026</p><h3 class="font-serif text-lg mt-1" style="color:var(--text);">Issue 04 — Integrative Women's Health <span class="text-clay">(current)</span></h3></div>
-      <div class="jt-item jt-future"><span class="jt-dot"></span><p class="mono-label">2026</p><h3 class="font-serif text-lg mt-1" style="color:var(--text-muted);">Issue 05 — In Progress</h3></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════
      MEET CONTRIBUTORS
      ══════════════════════════════════════════════ -->
 <section class="py-16 md:py-20 px-4 sm:px-6" style="background:var(--bg2);">
@@ -973,12 +930,12 @@
       <p class="eyebrow mb-2">Editorial Circle</p>
       <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Meet Our Contributors</h2>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-5 fade-up stagger-grid">
-      <div class="contrib-card fade-up"><div class="contrib-avatar">HR</div><h4 class="font-serif text-base" style="color:var(--text);">Harsh Ranjan</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">Lead Practitioner, Samarpan</p><p class="mono-label mt-2">6 articles</p></div>
-      <div class="contrib-card fade-up"><div class="contrib-avatar">LB</div><h4 class="font-serif text-base" style="color:var(--text);">Dr. Lella N. D. Bhavani</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">BAMS, Founding Member</p><p class="mono-label mt-2">9 articles</p></div>
-      <div class="contrib-card fade-up"><div class="contrib-avatar">PB</div><h4 class="font-serif text-base" style="color:var(--text);">Dr. P. Bhuvaneswari</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">BAMS, Core Member</p><p class="mono-label mt-2">7 articles</p></div>
-      <div class="contrib-card fade-up"><div class="contrib-avatar">MJ</div><h4 class="font-serif text-base" style="color:var(--text);">Dr. Mahek Jamadar</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">Research Intern</p><p class="mono-label mt-2">3 articles</p></div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto fade-up stagger-grid">
+      <a href="harsh-ranjan.html" onclick="gaEvent('click','Journal','Contributor Harsh Ranjan')" class="contrib-card fade-up"><div class="contrib-avatar"><img src="harsh12.png" alt="Harsh Ranjan" loading="lazy"></div><h4 class="font-serif text-base" style="color:var(--text);">Harsh Ranjan</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">Founder &amp; Lead Practitioner</p><p class="mono-label mt-2">6 articles</p></a>
+      <a href="lella_naga_durga_bhavani.html" onclick="gaEvent('click','Journal','Contributor Lella Bhavani')" class="contrib-card fade-up"><div class="contrib-avatar"><img src="drleela.png" alt="Dr. Lella Naga Durga Bhavani" loading="lazy"></div><h4 class="font-serif text-base" style="color:var(--text);">Dr. Lella N. D. Bhavani</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">BAMS, Founding Member</p><p class="mono-label mt-2">9 articles</p></a>
+      <a href="padigireddy_bhuvaneswari.html" onclick="gaEvent('click','Journal','Contributor Padigireddy Bhuvaneswari')" class="contrib-card fade-up"><div class="contrib-avatar"><img src="about3.png" alt="Dr. Padigireddy Bhuvaneswari" loading="lazy"></div><h4 class="font-serif text-base" style="color:var(--text);">Dr. P. Bhuvaneswari</h4><p class="font-sans text-[11px] mt-1" style="color:var(--text-muted);">BAMS, Core Member</p><p class="mono-label mt-2">7 articles</p></a>
     </div>
+    <p class="text-center mt-8 fade-up"><a href="about.html#team" onclick="gaEvent('click','Journal','View Full Team')" class="font-sans text-xs font-bold uppercase tracking-widest text-clay hover:underline">Meet the full team on About →</a></p>
   </div>
 </section>
 
@@ -1030,10 +987,10 @@
       <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Download Library</h2>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 fade-up stagger-grid max-w-2xl mx-auto">
-      <a href="#" onclick="gaEvent('click','Journal','Download Issue 1');return false;" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 01</span></div><span class="mono-label">PDF</span></a>
-      <a href="#" onclick="gaEvent('click','Journal','Download Issue 2');return false;" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 02</span></div><span class="mono-label">PDF</span></a>
-      <a href="#" onclick="gaEvent('click','Journal','Download Issue 3');return false;" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 03</span></div><span class="mono-label">PDF</span></a>
-      <a href="#" onclick="gaEvent('click','Journal','Download Issue 4');return false;" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 04</span></div><span class="mono-label">PDF</span></a>
+      <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Issue%2001%20PDF" onclick="gaEvent('click','Journal','Download Issue 1')" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 01</span></div><span class="mono-label">PDF</span></a>
+      <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Issue%2002%20PDF" onclick="gaEvent('click','Journal','Download Issue 2')" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 02</span></div><span class="mono-label">PDF</span></a>
+      <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Issue%2003%20PDF" onclick="gaEvent('click','Journal','Download Issue 3')" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 03</span></div><span class="mono-label">PDF</span></a>
+      <a href="pcos-hormonal-health-ayurveda-women.html" onclick="gaEvent('click','Journal','Download Issue 4')" class="fade-up text-center"><div class="lib-book mb-3"><span class="font-display text-sm" style="color:#F5F0E8;">Issue 04</span></div><span class="mono-label">PDF</span></a>
     </div>
   </div>
 </section>
@@ -1347,12 +1304,6 @@
   lucide.createIcons();
 
   /* Loader */
-  window.addEventListener('load', function() {
-    var l = document.getElementById('loader');
-    if (!l) return;
-    setTimeout(function(){ l.style.opacity='0'; setTimeout(function(){l.style.display='none';},600); },400);
-  });
-
   /* Navbar scroll state */
   (function(){
     var nav=document.getElementById('navbar');
