@@ -163,6 +163,10 @@
       background-size:400px 400px;}
     .hero-line-art{position:absolute;pointer-events:none;opacity:.5;}
     [data-theme="dark"] .manuscript-texture{opacity:.07;}
+    .hero-image-frame{position:relative;max-width:960px;margin-left:auto;margin-right:auto;aspect-ratio:5/2;border-radius:6px;overflow:hidden;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.12);}
+    .hero-image-frame img{display:block;transition:transform .8s ease;}
+    .hero-image-frame:hover img{transform:scale(1.03);}
+    @media(max-width:640px){.hero-image-frame{aspect-ratio:4/3;}}
 
     /* Featured issue magazine card */
     .feature-issue{display:grid;grid-template-columns:1fr;overflow:hidden;background:var(--card-bg);border:1px solid var(--border);border-radius:4px;box-shadow:0 24px 70px rgba(0,0,0,.08);}
@@ -347,6 +351,12 @@
       <a href="#current-issue" class="inline-block border-2 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-clay hover:border-clay hover:text-white transition duration-300 rounded-sm font-bold" style="border-color:var(--text);color:var(--text);">Browse Issues</a>
       <a href="#latest-articles" class="inline-block bg-clay px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-[#c24e2c] transition duration-300 rounded-sm font-bold text-white">Latest Research</a>
     </div>
+
+    <!-- Hero image: swap the src below for real photography (e.g. a manuscript, herbs, or a practitioner portrait) -->
+    <div class="hero-image-frame mt-12 fade-up visible">
+      <img src="https://images.unsplash.com/photo-1492552181161-62217fc3076d?q=80&w=1400&auto=format&fit=crop" alt="Ayurvedic manuscripts and herbs, representing the Samarpan Journal" loading="eager" class="w-full h-full object-cover">
+    </div>
+
     <div class="journal-search mt-10" role="search">
       <i data-lucide="search" class="w-4 h-4" style="color:var(--text-muted);"></i>
       <input type="text" id="journalSearchInput" placeholder="Search articles, topics, tags…" aria-label="Search journal articles">
@@ -408,108 +418,412 @@
 
     <div id="articleGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-grid">
 
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="ayurveda,inflammation,research review,turmeric" onclick="gaEvent('click','Journal','Article Turmeric');return false;">
-        <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?q=80&w=800&auto=format&fit=crop" alt="Turmeric root and powder" loading="lazy">
-        </div>
-        <div class="p-5 flex flex-col flex-1">
-          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Turmeric &amp; Inflammation: Ayurvedic Insight, Modern Evidence</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">How classical Deepana-Pachana principles converge with curcumin's anti-inflammatory pathways in current literature.</p>
-          <div class="flex flex-wrap gap-1.5 mb-4">
-            <span class="article-tag">Ayurveda</span><span class="article-tag">Nutrition</span>
-          </div>
-          <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Dr. L. N. D. Bhavani</span><span>8 min read</span>
-          </div>
-        </div>
-      </a>
+      <!-- ══════════════════════════════════════════════
+           HOW TO ADD A NEW ARTICLE
+           Copy one <a class="journal-card article-card ..."> block below,
+           paste it here (or anywhere in this grid), then edit:
+             1. href            -> the article's .html filename
+             2. data-tags       -> lowercase, comma-separated (used by search + category filters)
+             3. <img src>       -> thumbnail image URL (16:10 works best)
+             4. article-badge   -> badge-classical / badge-literature / badge-narrative /
+                                    badge-clinical / badge-student (see legend further down page)
+             5. <h3>            -> article title
+             6. <p>              -> 1-sentence excerpt
+             7. <span class="article-tag"> -> up to 2 tag pills shown on the card
+             8. author + read time in the last row
+           No other file needs to change - search and filtering read data-tags automatically.
+           ══════════════════════════════════════════════ -->
 
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="psychology,stress,narrative review" onclick="gaEvent('click','Journal','Article Stress');return false;">
+      <a href="advaita-self-vedanta-neuroscience.html" class="journal-card article-card fade-up rounded" data-tags="psychology,ayurveda,narrative review,vedanta" onclick="gaEvent('click','Journal','Article advaita-self-vedanta-neuroscience');">
         <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop" alt="Person meditating at sunrise" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Advaita and the Self: What Vedanta and Neuroscience Both Notice" loading="lazy">
         </div>
         <div class="p-5 flex flex-col flex-1">
           <span class="article-badge badge-narrative w-fit mb-3">Narrative Review</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Vata Imbalance and the Modern Stress Response</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Mapping Ayurvedic descriptions of Vata aggravation onto HPA-axis dysregulation in chronic stress.</p>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Advaita and the Self: What Vedanta and Neuroscience Both Notice</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">How the non-dual teachings of Advaita Vedanta echo findings on the neural sense of self and the default mode network.</p>
           <div class="flex flex-wrap gap-1.5 mb-4">
             <span class="article-tag">Psychology</span><span class="article-tag">Ayurveda</span>
           </div>
           <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Harsh Ranjan</span><span>11 min read</span>
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
           </div>
         </div>
       </a>
 
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="public health,nutrition,clinical perspective" onclick="gaEvent('click','Journal','Article Millets');return false;">
+      <a href="agni-sacred-fire-ayurvedic-health.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,classical review" onclick="gaEvent('click','Journal','Article agni-sacred-fire-ayurvedic-health');">
         <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=800&auto=format&fit=crop" alt="Bowl of millet grains" loading="lazy">
-        </div>
-        <div class="p-5 flex flex-col flex-1">
-          <span class="article-badge badge-clinical w-fit mb-3">Clinical Perspective</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Millets as Medicine: A Public Health Case for Ancient Grains</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Revisiting classical grain classifications through the lens of glycaemic response and rural nutrition policy.</p>
-          <div class="flex flex-wrap gap-1.5 mb-4">
-            <span class="article-tag">Nutrition</span><span class="article-tag">Public Health</span>
-          </div>
-          <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Dr. P. Bhuvaneswari</span><span>7 min read</span>
-          </div>
-        </div>
-      </a>
-
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="yoga,child health,classical review" onclick="gaEvent('click','Journal','Article Yoga Children');return false;">
-        <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" alt="Child practicing yoga outdoors" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1495461199391-8c39ab674295?q=80&w=800&auto=format&fit=crop" alt="Agni: The Sacred Fire at the Centre of Ayurvedic Health" loading="lazy">
         </div>
         <div class="p-5 flex flex-col flex-1">
           <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Yoga for Attention and Regulation in Middle Childhood</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Classical Balak Yoga sequences considered alongside emerging paediatric self-regulation research.</p>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Agni: The Sacred Fire at the Centre of Ayurvedic Health</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Revisiting the classical model of digestive and metabolic fire, and why Ayurveda treats Agni as the root of most disease.</p>
           <div class="flex flex-wrap gap-1.5 mb-4">
-            <span class="article-tag">Yoga</span><span class="article-tag">Child Health</span>
+            <span class="article-tag">Ayurveda</span>
           </div>
           <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Dr. Mahek Jamadar</span><span>6 min read</span>
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
           </div>
         </div>
       </a>
 
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="medicinal plants,ayurveda,research review" onclick="gaEvent('click','Journal','Article Ashwagandha');return false;">
+      <a href="ajapa-japa-mantra-breath-meditation.html" class="journal-card article-card fade-up rounded" data-tags="yoga,ayurveda,classical review,meditation" onclick="gaEvent('click','Journal','Article ajapa-japa-mantra-breath-meditation');">
         <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1611071536241-a1fb814675bd?q=80&w=800&auto=format&fit=crop" alt="Ashwagandha roots and leaves" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=800&auto=format&fit=crop" alt="Ajapa Japa: Mantra, Breath and Effortless Meditation" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Ajapa Japa: Mantra, Breath and Effortless Meditation</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A classical look at the spontaneous repetition of breath-linked mantra as a bridge between pranayama and dhyana.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Yoga</span><span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="dark-energy-samadhi-quantum-pranayama.html" class="journal-card article-card fade-up rounded" data-tags="yoga,research review,quantum,pranayama" onclick="gaEvent('click','Journal','Article dark-energy-samadhi-quantum-pranayama');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=800&auto=format&fit=crop" alt="Dark Energy, Samadhi and Quantum Pranayama" loading="lazy">
         </div>
         <div class="p-5 flex flex-col flex-1">
           <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Ashwagandha as Rasayana: A Systematic Look at the Adaptogen Literature</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Cross-referencing classical Rasayana indications with RCT evidence on cortisol and sleep outcomes.</p>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Dark Energy, Samadhi and Quantum Pranayama</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">An exploratory essay connecting contemplative accounts of samadhi with speculative parallels drawn from quantum physics and cosmology.</p>
           <div class="flex flex-wrap gap-1.5 mb-4">
-            <span class="article-tag">Medicinal Plants</span><span class="article-tag">Ayurveda</span>
+            <span class="article-tag">Yoga</span>
           </div>
           <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Gunjan Sheoran</span><span>9 min read</span>
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
           </div>
         </div>
       </a>
 
-      <a href="#" class="journal-card article-card fade-up rounded" data-tags="public health,disease review,student contribution" onclick="gaEvent('click','Journal','Article Diabetes');return false;">
+      <a href="dinacharya-ayurvedic-daily-routine.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,classical review,daily routine" onclick="gaEvent('click','Journal','Article dinacharya-ayurvedic-daily-routine');">
         <div class="article-thumb">
-          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop" alt="Blood glucose monitoring supplies" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1524863479829-916d8e77f114?q=80&w=800&auto=format&fit=crop" alt="Dinacharya: The Ayurvedic Case for a Structured Day" loading="lazy">
         </div>
         <div class="p-5 flex flex-col flex-1">
-          <span class="article-badge badge-student w-fit mb-3">Student Contribution</span>
-          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Prameha in the Community: A Field Note on Type 2 Diabetes</h3>
-          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A BAMS intern's field observations from Samarpan's community screening camps, read against Prameha nidana.</p>
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Dinacharya: The Ayurvedic Case for a Structured Day</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Why classical daily-routine prescriptions — waking time, oil massage, meals — line up with modern circadian science.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="four-states-consciousness-vedanta-neuroscience.html" class="journal-card article-card fade-up rounded" data-tags="psychology,research review,vedanta,consciousness" onclick="gaEvent('click','Journal','Article four-states-consciousness-vedanta-neuroscience');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=800&auto=format&fit=crop" alt="The Four States of Consciousness: Vedanta Meets Neuroscience" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Four States of Consciousness: Vedanta Meets Neuroscience</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Waking, dreaming, deep sleep and Turiya, read alongside EEG research on sleep architecture and pure awareness.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="gut-brain-axis-second-brain-mental-health.html" class="journal-card article-card fade-up rounded" data-tags="psychology,nutrition,research review,gut health" onclick="gaEvent('click','Journal','Article gut-brain-axis-second-brain-mental-health');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1521146250551-a5578dcc2e64?q=80&w=800&auto=format&fit=crop" alt="The Gut-Brain Axis: Our 'Second Brain' and Mental Health" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Gut-Brain Axis: Our 'Second Brain' and Mental Health</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Current research on the enteric nervous system and microbiome, considered alongside Ayurveda's long-standing gut-mind link.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span><span class="article-tag">Nutrition</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="neurobiology-of-mantra-sacred-sound.html" class="journal-card article-card fade-up rounded" data-tags="yoga,psychology,research review,mantra" onclick="gaEvent('click','Journal','Article neurobiology-of-mantra-sacred-sound');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=800&auto=format&fit=crop" alt="The Neurobiology of Mantra and Sacred Sound" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Neurobiology of Mantra and Sacred Sound</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">What vagal-tone and vibro-acoustic research suggests about why chanting and mantra repetition calm the nervous system.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Yoga</span><span class="article-tag">Psychology</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="ojas-vital-essence-immunity-longevity.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,classical review,immunity" onclick="gaEvent('click','Journal','Article ojas-vital-essence-immunity-longevity');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1569936906148-06de87cb0681?q=80&w=800&auto=format&fit=crop" alt="Ojas: Vital Essence, Immunity and Longevity" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Ojas: Vital Essence, Immunity and Longevity</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Unpacking the classical concept of Ojas as a marker of resilience, and where it overlaps with modern immunity and vitality research.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="panchakarma-ayurvedic-detox-explained.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,clinical perspective,detox" onclick="gaEvent('click','Journal','Article panchakarma-ayurvedic-detox-explained');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1492552085122-36706c238263?q=80&w=800&auto=format&fit=crop" alt="Panchakarma: Ayurvedic Detoxification, Explained" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-clinical w-fit mb-3">Clinical Perspective</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Panchakarma: Ayurvedic Detoxification, Explained</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A clinician's walkthrough of the five classical purification procedures — what each involves and who they're suited for.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="pcos-hormonal-health-ayurveda-women.html" class="journal-card article-card fade-up rounded" data-tags="public health,ayurveda,clinical perspective,women's health" onclick="gaEvent('click','Journal','Article pcos-hormonal-health-ayurveda-women');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1523459178261-028135da2714?q=80&w=800&auto=format&fit=crop" alt="PCOS and Hormonal Health: An Ayurvedic Approach for Women" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-clinical w-fit mb-3">Clinical Perspective</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">PCOS and Hormonal Health: An Ayurvedic Approach for Women</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Reframing polycystic ovary syndrome through Ayurvedic constitution and lifestyle medicine, alongside current clinical practice.</p>
           <div class="flex flex-wrap gap-1.5 mb-4">
             <span class="article-tag">Public Health</span><span class="article-tag">Ayurveda</span>
           </div>
           <div class="hairline pt-3 flex items-center justify-between mono-label">
-            <span>Intern Contributor</span><span>5 min read</span>
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
           </div>
         </div>
       </a>
 
+      <a href="pranayama-science-conscious-breathing.html" class="journal-card article-card fade-up rounded" data-tags="yoga,research review,pranayama,breathing" onclick="gaEvent('click','Journal','Article pranayama-science-conscious-breathing');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1447452001602-7090c7ab2db3?q=80&w=800&auto=format&fit=crop" alt="The Science of Pranayama: Conscious Breathing Explored" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Science of Pranayama: Conscious Breathing Explored</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Reviewing the physiological evidence behind slow, regulated breathing practices and their effect on the autonomic nervous system.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Yoga</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="quantum-physics-ayurveda-srishti-utpatti.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,narrative review,quantum,philosophy" onclick="gaEvent('click','Journal','Article quantum-physics-ayurveda-srishti-utpatti');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?q=80&w=800&auto=format&fit=crop" alt="Quantum Physics and Ayurveda: Reading Srishti Utpatti Anew" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-narrative w-fit mb-3">Narrative Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Quantum Physics and Ayurveda: Reading Srishti Utpatti Anew</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A narrative essay drawing loose parallels between the Samkhya account of creation and ideas from modern quantum theory.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="rewiring-anxiety-vagus-nerve-yoga.html" class="journal-card article-card fade-up rounded" data-tags="psychology,yoga,research review,anxiety" onclick="gaEvent('click','Journal','Article rewiring-anxiety-vagus-nerve-yoga');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1591228127791-8e2eaef098d3?q=80&w=800&auto=format&fit=crop" alt="Rewiring Anxiety: The Vagus Nerve and Yoga" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Rewiring Anxiety: The Vagus Nerve and Yoga</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">How yogic breath and movement practices may influence vagal tone, and what the polyvagal research does and doesn't support.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span><span class="article-tag">Yoga</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="ritucharya-seasonal-eating-ayurveda.html" class="journal-card article-card fade-up rounded" data-tags="nutrition,ayurveda,classical review,seasonal" onclick="gaEvent('click','Journal','Article ritucharya-seasonal-eating-ayurveda');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?q=80&w=800&auto=format&fit=crop" alt="Ritucharya: The Ayurvedic Case for Seasonal Eating" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Ritucharya: The Ayurvedic Case for Seasonal Eating</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Classical seasonal-routine guidance on diet and lifestyle, considered alongside what we know about seasonal metabolic shifts.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Nutrition</span><span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="sattvic-diet-clarity-peace-vitality.html" class="journal-card article-card fade-up rounded" data-tags="nutrition,classical review,diet" onclick="gaEvent('click','Journal','Article sattvic-diet-clarity-peace-vitality');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=800&auto=format&fit=crop" alt="The Sattvic Diet: Clarity, Peace and Vitality" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Sattvic Diet: Clarity, Peace and Vitality</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">What a Sattvic approach to eating actually prescribes, and why it's framed as food for a calm, clear mind.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Nutrition</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="seven-chakras-consciousness-tantra.html" class="journal-card article-card fade-up rounded" data-tags="yoga,classical review,chakras,tantra" onclick="gaEvent('click','Journal','Article seven-chakras-consciousness-tantra');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1472552944129-b035e9ea3744?q=80&w=800&auto=format&fit=crop" alt="The Seven Chakras: Consciousness and Tantra" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">The Seven Chakras: Consciousness and Tantra</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A classical overview of the chakra system as a map of consciousness, drawn from Tantric and Yogic sources.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Yoga</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="stress-brain-ayurveda-calm.html" class="journal-card article-card fade-up rounded" data-tags="psychology,ayurveda,narrative review,stress" onclick="gaEvent('click','Journal','Article stress-brain-ayurveda-calm');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?q=80&w=800&auto=format&fit=crop" alt="Stress and the Brain: Finding Calm Through Ayurveda" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-narrative w-fit mb-3">Narrative Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Stress and the Brain: Finding Calm Through Ayurveda</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A narrative look at how Vata-pacifying routines map onto what neuroscience tells us about calming an overstimulated brain.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span><span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="stress-neurobiology-ayurveda.html" class="journal-card article-card fade-up rounded" data-tags="psychology,research review,stress,neurobiology" onclick="gaEvent('click','Journal','Article stress-neurobiology-ayurveda');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=800&auto=format&fit=crop" alt="Stress Neurobiology and Ayurveda: A Closer Look" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Stress Neurobiology and Ayurveda: A Closer Look</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A research-oriented review of the HPA axis and allostatic load, read against the classical Ayurvedic model of stress.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="trauma-body-somatic-healing.html" class="journal-card article-card fade-up rounded" data-tags="psychology,narrative review,trauma,somatic" onclick="gaEvent('click','Journal','Article trauma-body-somatic-healing');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1593164842264-854604db2260?q=80&w=800&auto=format&fit=crop" alt="Trauma and the Body: An Introduction to Somatic Healing" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-narrative w-fit mb-3">Narrative Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Trauma and the Body: An Introduction to Somatic Healing</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">Why trauma researchers increasingly look beyond talk therapy to body-based approaches, and where yogic practice fits in.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Psychology</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="understanding-prakriti-ayurvedic-constitution.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,classical review,prakriti,constitution" onclick="gaEvent('click','Journal','Article understanding-prakriti-ayurvedic-constitution');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1516715043227-1cdf27bcd09a?q=80&w=800&auto=format&fit=crop" alt="Understanding Prakriti: Your Ayurvedic Constitution" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Understanding Prakriti: Your Ayurvedic Constitution</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">A classical review of Prakriti — the individual constitution Ayurveda uses to personalise diet, lifestyle and treatment.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="vata-pitta-kapha-three-doshas-deep-dive.html" class="journal-card article-card fade-up rounded" data-tags="ayurveda,classical review,doshas" onclick="gaEvent('click','Journal','Article vata-pitta-kapha-three-doshas-deep-dive');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1726146198306-afe0a44b0073?q=80&w=800&auto=format&fit=crop" alt="Vata, Pitta, Kapha: A Deep Dive Into the Three Doshas" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-classical w-fit mb-3">Classical Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Vata, Pitta, Kapha: A Deep Dive Into the Three Doshas</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">An in-depth classical review of the three doshas — their qualities, functions and role in Ayurvedic diagnosis.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Ayurveda</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="yoga-nidra-sleep-healing-science.html" class="journal-card article-card fade-up rounded" data-tags="yoga,research review,sleep,healing" onclick="gaEvent('click','Journal','Article yoga-nidra-sleep-healing-science');">
+        <div class="article-thumb">
+          <img src="https://images.unsplash.com/photo-1477840539360-4a1d23071046?q=80&w=800&auto=format&fit=crop" alt="Yoga Nidra: The Science of Sleep and Healing" loading="lazy">
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+          <span class="article-badge badge-literature w-fit mb-3">Research Review</span>
+          <h3 class="font-serif text-lg leading-snug mb-2" style="color:var(--text);">Yoga Nidra: The Science of Sleep and Healing</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4 flex-1" style="color:var(--text-muted);">What EEG studies on yogic sleep suggest about Yoga Nidra's effect on deep rest, and how it compares to classical descriptions.</p>
+          <div class="flex flex-wrap gap-1.5 mb-4">
+            <span class="article-tag">Yoga</span>
+          </div>
+          <div class="hairline pt-3 flex items-center justify-between mono-label">
+            <span>Samarpan Editorial Team</span><span>7 min read</span>
+          </div>
+        </div>
+      </a>
     </div>
     <p id="noArticlesMsg" class="text-center font-sans text-sm mt-8" style="color:var(--text-muted);display:none;">No articles match your search yet — try a broader term, or browse categories below.</p>
   </div>
@@ -525,14 +839,14 @@
       <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Browse by Category</h2>
     </div>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 fade-up stagger-grid">
-      <a href="#latest-articles" onclick="filterByTag('ayurveda')" class="category-tile fade-up"><span class="category-emoji">🌿</span><span class="category-name">Ayurveda</span><span class="category-count">42 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('psychology')" class="category-tile fade-up"><span class="category-emoji">🧠</span><span class="category-name">Psychology</span><span class="category-count">18 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('nutrition')" class="category-tile fade-up"><span class="category-emoji">🥗</span><span class="category-name">Nutrition</span><span class="category-count">21 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('yoga')" class="category-tile fade-up"><span class="category-emoji">🧘</span><span class="category-name">Yoga</span><span class="category-count">15 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('child health')" class="category-tile fade-up"><span class="category-emoji">👶</span><span class="category-name">Child Health</span><span class="category-count">9 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('public health')" class="category-tile fade-up"><span class="category-emoji">🌍</span><span class="category-name">Public Health</span><span class="category-count">14 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('research review')" class="category-tile fade-up"><span class="category-emoji">🧪</span><span class="category-name">Research Reviews</span><span class="category-count">37 articles</span></a>
-      <a href="#latest-articles" onclick="filterByTag('medicinal plants')" class="category-tile fade-up"><span class="category-emoji">📖</span><span class="category-name">Medicinal Plants</span><span class="category-count">19 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('ayurveda')" class="category-tile fade-up"><span class="category-emoji">🌿</span><span class="category-name">Ayurveda</span><span class="category-count">12 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('psychology')" class="category-tile fade-up"><span class="category-emoji">🧠</span><span class="category-name">Psychology</span><span class="category-count">8 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('nutrition')" class="category-tile fade-up"><span class="category-emoji">🥗</span><span class="category-name">Nutrition</span><span class="category-count">3 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('yoga')" class="category-tile fade-up"><span class="category-emoji">🧘</span><span class="category-name">Yoga</span><span class="category-count">7 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('child health')" class="category-tile fade-up"><span class="category-emoji">👶</span><span class="category-name">Child Health</span><span class="category-count">0 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('public health')" class="category-tile fade-up"><span class="category-emoji">🌍</span><span class="category-name">Public Health</span><span class="category-count">1 article</span></a>
+      <a href="#latest-articles" onclick="filterByTag('research review')" class="category-tile fade-up"><span class="category-emoji">🧪</span><span class="category-name">Research Reviews</span><span class="category-count">8 articles</span></a>
+      <a href="#latest-articles" onclick="filterByTag('medicinal plants')" class="category-tile fade-up"><span class="category-emoji">📖</span><span class="category-name">Medicinal Plants</span><span class="category-count">0 articles</span></a>
     </div>
   </div>
 </section>
