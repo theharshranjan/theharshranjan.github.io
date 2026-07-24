@@ -2815,7 +2815,29 @@ async function syncVisitorsToSheet(manual){
   sheetsSyncBusy=true;
   try{
     const rows=unsynced.map(v=>{const ist=parseIST(v.timestamp||v.date);return[v._id,v.date||ist.date,v.time||ist.time,v.page||'',v.device||'',v.ip||'',v.city||'',v.region||'',v.country||'',v.referrer||'',v.duration||''];});
+    // NOTE: mode:'no-cors' means we can NEVER read this response — it will
+    // resolve "successfully" even if the URL is wrong, the deployment was
+    // deleted, or access was revoked. So it is NOT proof the rows actually
+    // reached the Sheet. Do not mark anything synced based on this alone.
     await fetch(sheetsSyncUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({rows})});
+    // Separately confirm the Web App is actually alive and authorized by
+    // hitting its doGet (a normal GET to an Apps Script /exec URL IS
+    // readable cross-origin, unlike POST). If this fails, the POST above
+    // almost certainly didn't land either — a wrong/stale URL, a revoked
+    // deployment, or "Anyone" access having been turned off are the usual
+    // causes. Only mark rows synced once this comes back healthy.
+    const check=await fetch(sheetsSyncUrl,{method:'GET'});
+    let healthy=false, checkErr='';
+    if(check.ok){
+      const j=await check.json().catch(()=>null);
+      healthy = !!(j && j.status==='ok');
+      if(!healthy) checkErr='Deployment responded but not with the expected format — check it is the right /exec URL.';
+    } else {
+      checkErr='Deployment URL returned HTTP '+check.status+' — it may have been deleted, redeployed with a new URL, or had its access setting changed from "Anyone".';
+    }
+    if(!healthy){
+      throw new Error(checkErr||'Could not verify the Apps Script deployment is reachable.');
+    }
     let batch=db.batch(),count=0;
     for(const v of unsynced){
       batch.update(db.collection('homepage_visitors').doc(v._id),{sheetSynced:true});
@@ -2828,6 +2850,9 @@ async function syncVisitorsToSheet(manual){
     if(manual)showToast('✅ Synced '+unsynced.length+' record(s) to Google Sheets');
   }catch(e){
     console.warn('Sheets sync failed:',e.message);
+    // Rows are deliberately left with sheetSynced unset so the next run
+    // retries them — do not mark them synced on a failed/unverified attempt.
+    showCriticalError('Google Sheets sync failed — visitor rows are NOT reaching the Sheet. '+e.message,'Sheets Sync');
     if(manual)showToast('❌ Sync failed: '+e.message,true);
   }finally{sheetsSyncBusy=false;}
 }
