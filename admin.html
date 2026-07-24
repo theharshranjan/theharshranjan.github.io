@@ -1358,17 +1358,126 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
             <div style="font-size:11px;color:var(--text3);margin-bottom:.9rem;" id="sheets-sync-info">Not configured yet.</div>
             <details>
               <summary style="cursor:pointer;font-size:11.5px;color:var(--brand);font-weight:700;">Apps Script Code (click to expand, then copy)</summary>
-              <pre class="code-block" style="margin-top:.6rem;">function doPost(e) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName('Visitors') || ss.insertSheet('Visitors');
-  if (sheet.getLastRow() === 0) {
-    sheet.appendRow(['ID','Date','Time','Page','Device','IP Address','City','Region','Country','Referrer','Duration (sec)']);
+              <pre class="code-block" id="code-appsscript" style="margin-top:.6rem;">/*!
+  SAMARPAN — WEBSITE TRAFFIC + ADMIN LOGIN SYNC (Google Apps Script)
+  ------------------------------------------------------
+  Writes two separate things pushed from admin.html every 60s:
+    - Website traffic rows -&gt; a "Visitors - &lt;Month Year&gt;" tab
+    - Admin login history rows -&gt; a "Logins - &lt;Month Year&gt;" tab
+  Both are optional per-request — you can POST just rows, just loginRows,
+  or both together; admin.html already does both in the same call.
+
+  Each event is routed to the tab matching ITS OWN date (column 2 of the
+  row, e.g. "2026-07-24"), not "today" — so if the sync was ever down for a
+  while and catches up later, old rows still land in the correct month
+  instead of all piling into whichever month the catch-up run happens on.
+
+  Within each monthly tab, newest rows are inserted directly below the
+  header (row 2) — nothing is ever deleted, older rows just push down.
+
+  SETUP: same as before — Extensions -&gt; Apps Script -&gt; paste this file in
+  place of the old one -&gt; Deploy -&gt; Manage deployments -&gt; Edit -&gt; New version
+  (saving alone does NOT push a new version to the live /exec URL).
+*/
+
+var VISITOR_HEADERS = ['ID', 'Date', 'Time', 'Page', 'Device', 'IP Address', 'City', 'Region', 'Country', 'Referrer', 'Duration (sec)'];
+var LOGIN_HEADERS   = ['ID', 'Date', 'Time', 'Email', 'Device', 'Browser', 'OS', 'IP Address', 'City', 'Region', 'Country', 'Status'];
+var DATE_COL_INDEX  = 1; // both header arrays have Date as the 2nd column (index 1)
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(10000);
+  } catch (lockErr) {
+    return jsonOutput({ status: 'error', message: 'Could not acquire lock, try again' });
   }
-  var data = JSON.parse(e.postData.contents);
-  (data.rows || []).forEach(function(r){ sheet.appendRow(r); });
-  return ContentService.createTextOutput(JSON.stringify({status:'ok', added: (data.rows||[]).length}))
+
+  try {
+    if (!e || !e.postData || !e.postData.contents) {
+      return jsonOutput({ status: 'error', message: 'No POST data received' });
+    }
+
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    var addedVisitors = writeRowsByMonth(ss, 'Visitors', VISITOR_HEADERS, data.rows || []);
+    var addedLogins   = writeRowsByMonth(ss, 'Logins', LOGIN_HEADERS, data.loginRows || []);
+
+    return jsonOutput({ status: 'ok', added: addedVisitors, addedLogins: addedLogins });
+  } catch (err) {
+    return jsonOutput({ status: 'error', message: err.message });
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// Groups rows by the month-tab their own Date column belongs to, then
+// writes each group to its tab (creating the tab, with headers, if it
+// doesn't exist yet). Returns total rows written across all tabs.
+function writeRowsByMonth(ss, prefix, headers, rows) {
+  if (!rows || !rows.length) return 0;
+
+  var groups = {};
+  rows.forEach(function (r) {
+    var name = monthSheetName(prefix, r[DATE_COL_INDEX]);
+    if (!groups[name]) groups[name] = [];
+    groups[name].push(r);
+  });
+
+  var total = 0;
+  Object.keys(groups).forEach(function (name) {
+    var grp = groups[name];
+    var sheet = ss.getSheetByName(name);
+    var isNew = !sheet;
+    if (isNew) sheet = ss.insertSheet(name);
+    if (sheet.getLastRow() === 0) sheet.appendRow(headers);
+
+    sheet.insertRowsBefore(2, grp.length);
+    sheet.getRange(2, 1, grp.length, headers.length).setValues(
+      grp.map(function (r) {
+        var out = [];
+        for (var i = 0; i &lt; headers.length; i++) out.push(r[i] !== undefined ? r[i] : '');
+        return out;
+      })
+    );
+
+    // Keep newly-created month tabs at the front (leftmost) so the current
+    // month is always easy to find without scrolling through tab names.
+    if (isNew) {
+      ss.setActiveSheet(sheet);
+      ss.moveActiveSheet(1);
+    }
+
+    total += grp.length;
+  });
+
+  return total;
+}
+
+// Builds "Visitors - Jul 2026" style tab names from a row's own "YYYY-MM-DD"
+// date string. Falls back to the current date if the field is missing or
+// malformed, so a bad row never throws and blocks the whole batch.
+function monthSheetName(prefix, dateStr) {
+  var d;
+  if (dateStr &amp;&amp; /^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
+    var parts = dateStr.split('-');
+    d = new Date(Number(parts[0]), Number(parts[1]) - 1, 1);
+  } else {
+    d = new Date();
+  }
+  var monthLabel = Utilities.formatDate(d, 'Asia/Kolkata', 'MMM yyyy');
+  return prefix + ' - ' + monthLabel;
+}
+
+function doGet(e) {
+  return jsonOutput({ status: 'ok', message: 'Samarpan sync is live. POST { rows, loginRows } to this URL.' });
+}
+
+function jsonOutput(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
-}</pre>
+}</pre><button class="btn btn-outline btn-sm" onclick="copyRules('code-appsscript')" style="margin-top:.5rem;">Copy Script</button>
             </details>
           </div>
         </div>
@@ -1396,101 +1505,169 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
           <div class="card-head"><span class="card-title">Firestore Rules (Updated — all collections)</span><span class="pill pill-brand">Updated</span></div>
           <div class="card-body">
             <p style="font-size:11.5px;color:var(--text2);margin-bottom:.75rem;">Paste in <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--brand);">Firebase → Firestore → Rules</a></p>
-            <pre class="code-block">rules_version = '2';
+            <pre class="code-block" id="code-firestore-rules">rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /homepage_leads/{docId} {
-      allow create: if isValidLead();
-      allow read, update, delete: if isAdmin();
-    }
-    match /homepage_newsletter/{docId} {
-      allow create: if isValidEmail();
-      allow read, update, delete: if isAdmin();
-    }
+
+    // ── Public lead / booking forms ──
+    match /homepage_leads/{docId}          { allow create: if isValidLead();  allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+    match /homepage_bookings/{docId}       { allow create: if isValidLead();  allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+    match /homepage_about_leads/{docId}    { allow create: if isValidLead();  allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+    match /homepage_newsletter/{docId}     { allow create: if isValidEmail(); allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+    match /homepage_yoga_sessions/{docId}  { allow create: if isValidEmail(); allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+    match /homepage_referrals/{docId}      { allow create: if isValidEmail(); allow read: if isTeamMember(); allow update, delete: if canWrite(); }
+
+    // ── Anonymous/high-volume writes: shape + size limited, no PII fields allowed ──
     match /homepage_quiz_results/{docId} {
-      allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow create: if isValidQuizResult();
+      allow read: if isTeamMember();
+      allow update, delete: if canWrite();
     }
     match /homepage_visitors/{docId} {
-      allow create: if true;
-      allow read, update, delete: if isAdmin();
+      allow create: if isValidVisitor();
+      // Two different callers need to update this doc, for two different
+      // reasons:
+      // 1. site-tracker.js (unauthenticated) patches ONLY `duration` onto
+      //    its own doc when the visitor leaves.
+      // 2. admin.html (an owner/editor) sets `sheetSynced` after a
+      //    successful Google Sheets push.
+      allow update: if isValidDurationPatch() || canWrite();
+      allow read: if isTeamMember();
+      allow delete: if canWrite();
     }
-    match /homepage_yoga_sessions/{docId} {
-      allow create: if isValidEmail();
-      allow read, update, delete: if isAdmin();
-    }
-    match /homepage_referrals/{docId} {
-      allow create: if isValidEmail();
-      allow read, update, delete: if isAdmin();
-    }
-    match /homepage_bookings/{docId} {
-      allow create: if isValidLead();
-      allow read, update, delete: if isAdmin();
-    }
-    match /homepage_about_leads/{docId} {
-      allow create: if isValidLead();
-      allow read, update, delete: if isAdmin();
-    }
-    match /samarpan_journal_posts/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /samarpan_flash_cards/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /samarpan_faqs/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /samarpan_testimonials/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /samarpan_site_content/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
-    match /samarpan_videos/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isAdmin();
-    }
+
+    // ── Public read content, admin-only write ──
+    match /samarpan_journal_posts/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+    match /samarpan_flash_cards/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+    match /samarpan_faqs/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+    match /samarpan_testimonials/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+    match /samarpan_site_content/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+    match /samarpan_videos/{docId} { allow read: if true; allow create, update, delete: if canWrite(); }
+
+    // Community posts: public create, but shape-limited so it can't be used to
+    // dump arbitrary/huge/script-bearing content, and can't self-elevate fields
+    // like "approved" or "pinned".
     match /samarpan_community_posts/{docId} {
       allow read: if true;
-      allow create: if true;
-      allow update, delete: if isAdmin();
+      allow create: if isValidCommunityPost();
+      allow update, delete: if canWrite();
     }
-    match /samarpan_admin_notes/{docId} {
-      allow read, write: if isAdmin();
+
+    // Login history / device tracking — records created on every sign-in,
+    // read on the Security page, and updated (revoked:true) to force-sign-out
+    // a session. Any team member can see/manage this, matching the original.
+    match /samarpan_login_history/{docId} { allow read, write: if isTeamMember(); }
+
+    match /samarpan_admin_notes/{docId} { allow read: if isTeamMember(); allow write: if canWrite(); }
+
+    // Team management — OWNER ONLY can write. This is the fix for the
+    // self-bootstrap issue: admin.html's loadAdminRole() auto-creates an
+    // owner doc for whoever logs in first if this collection is empty.
+    // Once you deploy this rule, that auto-bootstrap will be REJECTED for
+    // everyone — including you — unless a doc already exists. So before
+    // deploying: go to Firebase Console → Firestore → create the collection
+    // samarpan_admin_users → doc ID = your exact login email → fields
+    // { email: "you@...", role: "owner" }. Do that once, by hand, first.
+    match /samarpan_admin_users/{docId} { allow read: if isTeamMember(); allow write: if isOwner(); }
+
+    match /{document=**} { allow read, write: if false; }
+
+    // ─────────────────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────────────────
+
+    // CORRECTION from the first draft: "request.auth != null" alone means ANY
+    // signed-in Firebase user, which is wrong — and this app never calls
+    // setCustomUserClaims() anywhere (that requires the Admin SDK / a
+    // privileged backend, which this project doesn't have) — so a rule
+    // that checks request.auth.token.admin would never be true for anyone,
+    // including you, and would lock you out of your own panel.
+    //
+    // admin.html already tracks real roles itself, in the
+    // `samarpan_admin_users` collection (doc ID = email, field `role` =
+    // owner/editor/viewer — see loadAdminRole()/canEdit()/isOwner() in
+    // admin.html). So rules should check THAT, not a claim that doesn't exist.
+    //
+    // callerRole() returns null for anyone with no matching doc — i.e. any
+    // Firebase Auth account that isn't one you've explicitly added to the
+    // team, even if it's "signed in", gets nothing.
+    function callerRole() {
+      return request.auth != null &amp;&amp; exists(/databases/$(database)/documents/samarpan_admin_users/$(request.auth.token.email))
+        ? get(/databases/$(database)/documents/samarpan_admin_users/$(request.auth.token.email)).data.role
+        : null;
     }
-    match /samarpan_admin_users/{docId} {
-      allow read, write: if isAdmin();
-    }
-    match /samarpan_login_history/{docId} {
-      allow read, write: if isAdmin();
-    }
-    match /{document=**} {
-      allow read, write: if false;
-    }
-    function isAdmin() {
-      return request.auth != null;
-    }
+    // Any known team member (owner/editor/viewer) — read access.
+    function isTeamMember() { return callerRole() != null; }
+    // Owner or editor only — matches canEdit() in admin.html.
+    function canWrite() { return callerRole() == 'owner' || callerRole() == 'editor'; }
+    // Owner only — team management, matches isOwner() in admin.html.
+    function isOwner() { return callerRole() == 'owner'; }
+
     function isValidEmail() {
-      return request.resource.data.keys().hasAny(['email'])
-        && request.resource.data.email is string
-        && request.resource.data.email.size() > 4
-        && request.resource.data.email.size() < 200;
+      let d = request.resource.data;
+      return d.keys().hasAll(['email'])
+        &amp;&amp; d.email is string &amp;&amp; d.email.size() &gt; 4 &amp;&amp; d.email.size() &lt; 200
+        &amp;&amp; d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
     }
+
     function isValidLead() {
-      return request.resource.data.keys().hasAll(['email','name'])
-        && request.resource.data.email is string
-        && request.resource.data.name is string
-        && request.resource.data.email.size() > 4
-        && request.resource.data.name.size() > 0;
+      let d = request.resource.data;
+      return d.keys().hasAll(['email', 'name'])
+        &amp;&amp; d.keys().hasOnly(['email','name','phone','service','message','lead_type','date','time','timestamp','source','website'])
+        &amp;&amp; d.email is string &amp;&amp; d.email.size() &gt; 4 &amp;&amp; d.email.size() &lt; 200
+        &amp;&amp; d.name is string  &amp;&amp; d.name.size() &gt; 0  &amp;&amp; d.name.size()  &lt; 150
+        &amp;&amp; (!('phone' in d)   || (d.phone   is string &amp;&amp; d.phone.size()   &lt; 40))
+        &amp;&amp; (!('message' in d) || (d.message is string &amp;&amp; d.message.size() &lt; 2000));
+    }
+
+    function isValidQuizResult() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['email','name','dosha','answers','date','time','timestamp','source'])
+        &amp;&amp; (!('dosha' in d) || (d.dosha is string &amp;&amp; d.dosha.size() &lt; 60))
+        &amp;&amp; (!('email' in d) || (d.email is string &amp;&amp; d.email.size() &lt; 200))
+        &amp;&amp; (!('name' in d)  || (d.name  is string &amp;&amp; d.name.size()  &lt; 150));
+    }
+
+    // Visitor/traffic pings: only allow the known analytics fields, cap every
+    // string field's length, and never allow free-text/HTML fields — this is
+    // the endpoint most exposed to bots since it's a public "create: true".
+    // Field list matches exactly what site-tracker.js's track() sends:
+    // page, device, referrer, session_id, date, time, timestamp, ip, city,
+    // region, country. (duration is added later, by the separate patch below.)
+    function isValidVisitor() {
+      let d = request.resource.data;
+      return d.keys().hasAll(['page','device','date','time','timestamp'])
+        &amp;&amp; d.keys().hasOnly(['page','device','city','region','country','referrer','session_id','ip','duration','date','time','timestamp','source'])
+        &amp;&amp; d.page is string &amp;&amp; d.page.size() &lt; 300
+        &amp;&amp; d.device is string &amp;&amp; d.device.size() &lt; 30
+        &amp;&amp; (!('referrer' in d)   || (d.referrer   is string &amp;&amp; d.referrer.size()   &lt; 300))
+        &amp;&amp; (!('session_id' in d) || (d.session_id is string &amp;&amp; d.session_id.size() &lt; 100))
+        &amp;&amp; (!('ip' in d)         || (d.ip         is string &amp;&amp; d.ip.size()         &lt; 50))
+        &amp;&amp; (!('city' in d)       || (d.city       is string &amp;&amp; d.city.size()       &lt; 100))
+        &amp;&amp; (!('region' in d)     || (d.region     is string &amp;&amp; d.region.size()     &lt; 100))
+        &amp;&amp; (!('country' in d)    || (d.country    is string &amp;&amp; d.country.size()    &lt; 100));
+    }
+
+    // The one field site-tracker.js is allowed to patch post-create, and
+    // only with a sane, bounded integer value.
+    function isValidDurationPatch() {
+      let affected = request.resource.data.diff(resource.data).affectedKeys();
+      return affected.hasOnly(['duration'])
+        &amp;&amp; request.resource.data.duration is int
+        &amp;&amp; request.resource.data.duration &gt;= 0
+        &amp;&amp; request.resource.data.duration &lt; 86400;
+    }
+
+    function isValidCommunityPost() {
+      let d = request.resource.data;
+      return d.keys().hasAll(['name','content'])
+        &amp;&amp; d.keys().hasOnly(['name','content','date','time','timestamp','source'])
+        &amp;&amp; d.name    is string &amp;&amp; d.name.size()    &gt; 0 &amp;&amp; d.name.size()    &lt; 100
+        &amp;&amp; d.content is string &amp;&amp; d.content.size() &gt; 0 &amp;&amp; d.content.size() &lt; 3000;
     }
   }
 }</pre>
-            <button class="btn btn-primary" onclick="copyRules()" style="margin-top:.75rem;">Copy Rules</button>
+            <button class="btn btn-primary" onclick="copyRules('code-firestore-rules')" style="margin-top:.75rem;">Copy Rules</button>
           </div>
         </div>
 
@@ -1498,21 +1675,46 @@ service cloud.firestore {
           <div class="card-head"><span class="card-title">Storage Rules (Owner Photo Upload)</span><span class="pill pill-brand">New</span></div>
           <div class="card-body">
             <p style="font-size:11.5px;color:var(--text2);margin-bottom:.75rem;">Paste in <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--brand);">Firebase → Storage → Rules</a> so the photo-upload button above works.</p>
-            <pre class="code-block">rules_version = '2';
+            <pre class="code-block" id="code-storage-rules">rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
+
     match /owner-photos/{fileName} {
       allow read: if true;
-      allow write: if request.auth != null
-        && request.resource.size < 3 * 1024 * 1024
-        && request.resource.contentType.matches('image/.*');
+      allow write: if isTeamMember()
+        &amp;&amp; request.resource.size &lt; 3 * 1024 * 1024
+        &amp;&amp; request.resource.contentType.matches('image/.*');
     }
+
+    match /journal-covers/{fileName} {
+      allow read: if true;
+      allow write: if canWrite()
+        &amp;&amp; request.resource.size &lt; 8 * 1024 * 1024
+        &amp;&amp; request.resource.contentType.matches('image/.*');
+    }
+
     match /media/{allPaths=**} {
       allow read: if true;
-      allow write: if request.auth != null;
+      // Was: "allow write: if request.auth != null" — any signed-in user,
+      // same hole as the old Firestore rules. Now checks the real team
+      // role, and caps file size instead of allowing unlimited uploads.
+      allow write: if canWrite() &amp;&amp; request.resource.size &lt; 15 * 1024 * 1024;
     }
+
+    // Firebase Storage rules can read Firestore directly, so this checks
+    // the exact same samarpan_admin_users collection admin.html itself
+    // uses — one source of truth for "who's on the team," not a separate
+    // one that can drift out of sync.
+    function callerRole() {
+      return request.auth != null &amp;&amp; firestore.exists(/databases/(default)/documents/samarpan_admin_users/$(request.auth.token.email))
+        ? firestore.get(/databases/(default)/documents/samarpan_admin_users/$(request.auth.token.email)).data.role
+        : null;
+    }
+    function isTeamMember() { return callerRole() != null; }
+    function canWrite() { return callerRole() == 'owner' || callerRole() == 'editor'; }
   }
 }</pre>
+            <button class="btn btn-primary" onclick="copyRules('code-storage-rules')" style="margin-top:.75rem;">Copy Rules</button>
           </div>
         </div>
       </div>
@@ -3062,7 +3264,7 @@ function saveEmailJSSettings(){[['ejs_service','ejs-service'],['ejs_template','e
 // ════════════════════════════════════════════════
 function loadSettingsStorage(){[['ejs_service','ejs-service'],['ejs_template','ejs-template'],['ejs_key','ejs-key'],['ejs_to','ejs-to']].forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.value=localStorage.getItem(k)||'';});loadSheetsSyncStorage();}
 function saveProfileSettings(){const name=document.getElementById('settings-name').value.trim();if(!name){showToast('Enter your name',true);return;}localStorage.setItem('admin_name',name);set$('sb-av-init',name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2));set$('sb-admin-name',name);if(currentUser)currentUser.updateProfile({displayName:name}).catch(()=>{});showToast('✅ Profile saved!');}
-function copyRules(){const txt=document.querySelector('.code-block')?.textContent||'';navigator.clipboard.writeText(txt).then(()=>showToast('✅ Rules copied!')).catch(()=>showToast('Select and copy manually',true));}
+function copyRules(blockId){const txt=document.getElementById(blockId)?.textContent||document.querySelector('.code-block')?.textContent||'';navigator.clipboard.writeText(txt).then(()=>showToast('✅ Copied!')).catch(()=>showToast('Select and copy manually',true));}
 
 // ════════════════════════════════════════════════
 // EXPORTS
