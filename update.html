@@ -40,12 +40,13 @@
   <link rel="dns-prefetch" href="https://www.youtube.com">
   <link rel="dns-prefetch" href="https://unpkg.com">
 
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1545389336-cf090694435e?q=80&w=2064&auto=format&fit=crop" fetchpriority="high">
+  <link rel="preload" as="image" href="hero-desktop.webp" fetchpriority="high" media="(min-width: 769px)">
+  <link rel="preload" as="image" href="hero-mobile.webp" fetchpriority="high" media="(max-width: 768px)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="tailwind-compiled.css">
+  <script src="https://unpkg.com/lucide@1.26.0" defer></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
@@ -57,26 +58,6 @@
     function gaEvent(action, category, label) {
       try { gtag('event', action, { event_category: category, event_label: label }); } catch(e){}
     }
-  </script>
-
-  <script>
-    tailwind.config = {
-      darkMode: ['attribute', '[data-theme="dark"]'],
-      theme: {
-        extend: {
-          colors: {
-            clay: '#D95D39', 'brand-black': '#1C1C1C', 'brand-gray': '#666666',
-            'brand-gold': '#C5A059', 'brand-cream': '#FDFBF7', paper: '#FDFBF7', sage: '#4A5D4F'
-          },
-          fontFamily: {
-            sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif']
-          },
-          letterSpacing: { 'widest-xl': '0.25em' },
-          animation: { 'marquee': 'marquee 120s linear infinite' },
-          keyframes: { 'marquee': { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-50%)' } } }
-        }
-      }
-    };
   </script>
 
   <style>
@@ -458,28 +439,6 @@
     #inline-consult-wrap.open{max-height:900px;opacity:1;}
     #inline-consult-toggle{transition:background .3s,transform .2s;}
     #inline-consult-toggle.expanded{background:#1C1C1C;}
-
-    /* ── SUPPORT SAMARPAN — expandable panels ── */
-    .support-toggle-card{cursor:pointer;width:100%;border:none;font:inherit;}
-    .support-toggle-card.is-active{border-color:#D95D39;}
-    .support-panel{max-height:0;overflow:hidden;opacity:0;transition:max-height .55s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin .4s ease;}
-    .support-panel.open{max-height:1400px;opacity:1;margin-top:1.75rem;}
-    .support-panel-inner{max-width:640px;margin:0 auto;border-radius:6px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.1);border:1px solid var(--border);background:var(--card-bg);}
-    .support-panel-head{padding:1.35rem 1.75rem;border-bottom:1px solid rgba(255,255,255,.08);}
-    .support-panel-body{padding:1.75rem;}
-    .amount-pill{font-family:'Lato',sans-serif;font-size:13px;font-weight:700;padding:.7rem .5rem;border-radius:4px;border:1.5px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .2s;text-align:center;}
-    .amount-pill:hover{border-color:#D95D39;}
-    .amount-pill.selected{background:#D95D39;border-color:#D95D39;color:#fff;}
-    .support-reach-row{display:flex;align-items:center;gap:.65rem;padding:.7rem 0;text-decoration:none;transition:opacity .2s;}
-    .support-reach-row:hover{opacity:.7;}
-    .share-icon-btn{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.9rem .5rem;border-radius:6px;border:1.5px solid var(--border);text-decoration:none;transition:all .25s;background:transparent;cursor:pointer;font-family:'Lato',sans-serif;}
-    .share-icon-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1);}
-    .share-icon-circle{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;}
-    .share-link-box{display:flex;align-items:center;gap:.6rem;border:1.5px solid var(--border);border-radius:6px;padding:.65rem .9rem;background:var(--input-bg);}
-    .share-link-box input{flex:1;border:none;background:transparent;outline:none;color:var(--text-muted);font-family:'Lato',sans-serif;font-size:12.5px;min-width:0;}
-    .copy-link-btn{flex-shrink:0;font-family:'Lato',sans-serif;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.5rem .9rem;border-radius:4px;border:none;background:#1C1C1C;color:#fff;cursor:pointer;transition:background .2s;white-space:nowrap;}
-    .copy-link-btn:hover{background:#D95D39;}
-    .copy-link-btn.copied{background:#4A5D4F;}
 
     #notif-toast{position:fixed;top:5rem;right:1.5rem;z-index:10002;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;box-shadow:var(--shadow);display:none;max-width:300px;animation:slideInRight .4s ease;}
     #notif-toast.show{display:flex;gap:.75rem;align-items:flex-start;}
@@ -2187,120 +2146,63 @@
       <div class="divider-line"></div>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 fade-up">
-      <a href="donate.html" onclick="gaEvent('click','Support Samarpan','Open — donate page')" class="support-toggle-card step-card rounded-sm p-6 text-center block">
+      <div class="step-card rounded-sm p-6 text-center">
         <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="heart-handshake" class="w-5 h-5 text-clay"></i></div>
         <h3 class="font-serif text-base mb-2" style="color:var(--text);">Donate</h3>
         <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Fund health camps, research and free resources for those who need them most.</p>
-        <span class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Give Support <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
-      </a>
-      <button type="button" id="support-card-volunteer" onclick="toggleSupportPanel('volunteer')" class="support-toggle-card step-card rounded-sm p-6 text-center">
-        <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="hand-heart" class="w-5 h-5 text-sage"></i></div>
-        <h3 class="font-serif text-base mb-2" style="color:var(--text);">Volunteer</h3>
-        <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Lend your time and skills to community programmes and outreach.</p>
-        <span class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Get Involved <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
-      </button>
-      <button type="button" id="support-card-share" onclick="toggleSupportPanel('share')" class="support-toggle-card step-card rounded-sm p-6 text-center">
+        <a href="https://thesamarpan.co.in/donate" target="_blank" rel="noopener" onclick="gaEvent('click','CTA','Donate')" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Give Support <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+      </div>
+
+      <!-- VOLUNTEER — expands in place into a quick interest form -->
+      <div class="step-card rounded-sm p-6 text-center" id="volunteer-card" style="position:relative;overflow:hidden;transition:all .35s ease;">
+        <div id="volunteer-compact">
+          <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="hand-heart" class="w-5 h-5 text-sage"></i></div>
+          <h3 class="font-serif text-base mb-2" style="color:var(--text);">Volunteer</h3>
+          <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Lend your time and skills to community programmes and outreach.</p>
+          <button type="button" onclick="toggleVolunteerForm(true)" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;border:none;cursor:pointer;">Get Involved <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
+        </div>
+        <div id="volunteer-form-wrap" style="display:none;text-align:left;">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-serif text-base" style="color:var(--text);">Quick Interest Form</h3>
+            <button type="button" onclick="toggleVolunteerForm(false)" aria-label="Close" style="color:var(--text-muted);"><i data-lucide="x" class="w-4 h-4"></i></button>
+          </div>
+          <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)" class="space-y-2" novalidate>
+            <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true"><label for="volWebsite">Website</label><input type="text" id="volWebsite" name="website" tabindex="-1" autocomplete="off"></div>
+            <input type="text" id="volName" placeholder="Your name" class="form-input2 w-full" required autocomplete="name">
+            <input type="email" id="volEmail" placeholder="Email" class="form-input2 w-full" required autocomplete="email">
+            <input type="tel" id="volPhone" placeholder="Phone (optional)" class="form-input2 w-full" autocomplete="tel">
+            <input type="text" id="volInterest" placeholder="How would you like to help?" class="form-input2 w-full">
+            <button type="submit" id="volunteerSubmitBtn" class="cta-btn w-full py-2.5 bg-sage text-white font-bold text-xs uppercase tracking-widest rounded-sm" style="background:#4A5D4F;">Submit Interest</button>
+          </form>
+          <div id="volunteerStatus"></div>
+        </div>
+      </div>
+
+      <div class="step-card rounded-sm p-6 text-center">
         <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.15);"><i data-lucide="megaphone" class="w-5 h-5 text-brand-gold"></i></div>
         <h3 class="font-serif text-base mb-2" style="color:var(--text);">Spread the Word</h3>
         <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Share our work with someone who could benefit from integrative care.</p>
-        <span class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Share Samarpan <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
-      </button>
-    </div>
-
-    <!-- VOLUNTEER PANEL -->
-    <div id="support-panel-volunteer" class="support-panel">
-      <div class="support-panel-inner text-left">
-        <div class="support-panel-head" style="background:linear-gradient(135deg,#1C1C1C,#1a2419);">
-          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-1">Get Involved</span>
-          <h3 class="font-display text-xl text-white">Volunteer With Samarpan</h3>
-          <p class="font-sans text-xs mt-1 text-white/60">Tell us a little about yourself — our community team will reach out.</p>
-        </div>
-        <div class="support-panel-body">
-          <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)" novalidate>
-            <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-              <label for="volunteerWebsite">Website</label>
-              <input type="text" id="volunteerWebsite" name="website" tabindex="-1" autocomplete="off">
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Full Name *</label>
-                <input type="text" id="volunteerName" placeholder="Your name" class="form-input2" required autocomplete="name">
-              </div>
-              <div>
-                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Email Address *</label>
-                <input type="email" id="volunteerEmail" placeholder="you@example.com" class="form-input2" required autocomplete="email">
-              </div>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-              <div>
-                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">WhatsApp Number</label>
-                <input type="tel" id="volunteerPhone" placeholder="+91 90000 00000" class="form-input2" autocomplete="tel">
-              </div>
-              <div>
-                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Area of Interest</label>
-                <div class="relative">
-                  <select id="volunteerArea" class="form-select2">
-                    <option>Health Camps &amp; Outreach</option>
-                    <option>Content &amp; Research Writing</option>
-                    <option>Event &amp; Workshop Support</option>
-                    <option>Social Media &amp; Design</option>
-                    <option>Other</option>
-                  </select>
-                  <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-muted);"></i>
-                </div>
-              </div>
-            </div>
-            <div class="mt-4">
-              <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Message (optional)</label>
-              <textarea id="volunteerMessage" rows="3" placeholder="Tell us about your skills or availability" class="form-input2"></textarea>
-            </div>
-            <button type="submit" id="volunteerSubmitBtn" class="cta-btn w-full py-4 mt-5 bg-clay text-white font-bold text-xs uppercase tracking-[.2em] rounded shadow-lg">Submit Interest</button>
-            <div id="volunteerStatus"></div>
-            <p class="grecaptcha-notice text-center">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- SPREAD THE WORD PANEL -->
-    <div id="support-panel-share" class="support-panel">
-      <div class="support-panel-inner text-left">
-        <div class="support-panel-head" style="background:linear-gradient(135deg,#1C1C1C,#2b2410);">
-          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold block mb-1">Spread the Word</span>
-          <h3 class="font-display text-xl text-white">Share Samarpan</h3>
-          <p class="font-sans text-xs mt-1 text-white/60">Send someone the link who could benefit from integrative care.</p>
-        </div>
-        <div class="support-panel-body">
-          <div class="share-link-box mb-5">
-            <input type="text" id="shareLinkInput" value="https://thesamarpan.co.in/" readonly>
-            <button type="button" class="copy-link-btn" id="copyLinkBtn" onclick="copyShareLink()">Copy Link</button>
-          </div>
-          <button type="button" id="nativeShareBtn" onclick="nativeShareSite()" class="cta-btn w-full py-3.5 mb-5 bg-brand-black text-white font-bold text-xs uppercase tracking-[.2em] rounded shadow-lg flex items-center justify-center gap-2" style="display:none;">
-            <i data-lucide="share-2" class="w-4 h-4"></i> Share via…
-          </button>
-          <div class="grid grid-cols-4 gap-3">
-            <a href="https://wa.me/?text=I%20found%20Samarpan%20%E2%80%94%20a%20holistic%20wellness%20%26%20research%20practice%20blending%20Ayurveda%2C%20Yoga%20and%20Psychology.%20Take%20a%20look%3A%20https%3A%2F%2Fthesamarpan.co.in%2F" target="_blank" rel="noopener" onclick="trackShare('whatsapp')" class="share-icon-btn">
-              <span class="share-icon-circle" style="background:#25D366;"><i data-lucide="message-circle" class="w-4 h-4"></i></span>
-              <span class="text-[10px]" style="color:var(--text-muted);">WhatsApp</span>
-            </a>
-            <a href="https://twitter.com/intent/tweet?text=I%20found%20Samarpan%20%E2%80%94%20a%20holistic%20wellness%20%26%20research%20practice%20blending%20Ayurveda%2C%20Yoga%20and%20Psychology.&url=https%3A%2F%2Fthesamarpan.co.in%2F" target="_blank" rel="noopener" onclick="trackShare('twitter')" class="share-icon-btn">
-              <span class="share-icon-circle" style="background:#1C1C1C;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>
-              <span class="text-[10px]" style="color:var(--text-muted);">X / Twitter</span>
-            </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthesamarpan.co.in%2F" target="_blank" rel="noopener" onclick="trackShare('facebook')" class="share-icon-btn">
-              <span class="share-icon-circle" style="background:#1877F2;"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94z"/></svg></span>
-              <span class="text-[10px]" style="color:var(--text-muted);">Facebook</span>
-            </a>
-            <a href="mailto:?subject=Samarpan%20%E2%80%94%20Holistic%20Wellness%20%26%20Research&body=I%20thought%20you%27d%20find%20this%20interesting%20%E2%80%94%20Samarpan%20blends%20Ayurveda%2C%20Yoga%20and%20Psychology%20for%20holistic%20wellbeing.%20https%3A%2F%2Fthesamarpan.co.in%2F" onclick="trackShare('email')" class="share-icon-btn">
-              <span class="share-icon-circle" style="background:#C5A059;"><i data-lucide="mail" class="w-4 h-4"></i></span>
-              <span class="text-[10px]" style="color:var(--text-muted);">Email</span>
-            </a>
-          </div>
-        </div>
+        <button type="button" onclick="shareSamarpan()" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;border:none;cursor:pointer;">Refer a Friend <i data-lucide="arrow-right" class="w-3 h-3"></i></button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- SHARE FALLBACK MENU — only shown on browsers/devices without native share -->
+<div class="side-popup-overlay" id="shareMenuOverlay" style="right:auto;left:auto;top:0;bottom:0;inset:0;align-items:center;justify-content:center;background:rgba(0,0,0,.45);max-width:none;width:100%;">
+  <div class="booking-popup-box" style="background:var(--card-bg);max-width:320px;width:calc(100% - 2rem);">
+    <div class="booking-popup-head flex items-start justify-between">
+      <h4 class="font-display text-lg" style="color:var(--text);">Share Samarpan</h4>
+      <button type="button" onclick="toggleShareMenu(false)" aria-label="Close" style="color:var(--text-muted);"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <div class="px-5 pb-5 pt-2 space-y-2">
+      <a id="share-whatsapp" href="#" target="_blank" rel="noopener" onclick="gaEvent('click','Share','WhatsApp')" class="flex items-center gap-3 p-3 rounded border font-sans text-sm" style="border-color:var(--border);color:var(--text);text-decoration:none;">💬 WhatsApp</a>
+      <a id="share-email" href="#" onclick="gaEvent('click','Share','Email')" class="flex items-center gap-3 p-3 rounded border font-sans text-sm" style="border-color:var(--border);color:var(--text);text-decoration:none;">✉️ Email</a>
+      <a id="share-twitter" href="#" target="_blank" rel="noopener" onclick="gaEvent('click','Share','X')" class="flex items-center gap-3 p-3 rounded border font-sans text-sm" style="border-color:var(--border);color:var(--text);text-decoration:none;">𝕏 Share on X</a>
+      <button type="button" onclick="copyShareLink(event)" class="flex items-center gap-3 p-3 rounded border font-sans text-sm w-full text-left" style="border-color:var(--border);color:var(--text);background:none;cursor:pointer;">🔗 Copy Link</button>
+    </div>
+  </div>
+</div>
 
 <!-- WORLD MAP -->
 <section id="world-map" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
@@ -2531,7 +2433,7 @@
         <li><a href="#meet-community" class="hover:text-white transition">Community</a></li>
         <li><a href="#media-centre" class="hover:text-white transition">Media</a></li>
         <li><a href="#send-request" class="hover:text-white transition">Partner with Us</a></li>
-        <li><a href="#support-samarpan" class="hover:text-white transition">Support Samarpan</a></li>
+        <li><a href="#send-request" class="hover:text-white transition">Support Samarpan</a></li>
       </ul>
     </div>
     <div>
@@ -2908,6 +2810,82 @@
   });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && fabBookingOpen) toggleFabBooking(false); });
 
+  /* ── VOLUNTEER quick form: expands the card in place, collapses back after a successful submit ── */
+  function toggleVolunteerForm(show) {
+    var compact = document.getElementById('volunteer-compact');
+    var formWrap = document.getElementById('volunteer-form-wrap');
+    if (!compact || !formWrap) return;
+    if (show) {
+      compact.style.display = 'none';
+      formWrap.style.display = 'block';
+      prefetchToken('volunteer_interest');
+      gaEvent('click','CTA','Volunteer — Get Involved');
+      setTimeout(function(){ var el=document.getElementById('volName'); if(el) el.focus(); }, 100);
+    } else {
+      formWrap.style.display = 'none';
+      compact.style.display = 'block';
+      document.getElementById('volunteerStatus').innerHTML = '';
+      var f = document.getElementById('volunteerForm'); if (f) f.reset();
+    }
+  }
+  async function handleVolunteerSubmit(e) {
+    e.preventDefault();
+    var name = document.getElementById('volName').value.trim();
+    var email = document.getElementById('volEmail').value.trim();
+    var phone = document.getElementById('volPhone').value.trim();
+    var interest = document.getElementById('volInterest').value.trim();
+    if (!name || !isEmail(email)) { setStatus('volunteerStatus', false, 'Please enter your name and a valid email.'); return; }
+    setBtnLoading('volunteerSubmitBtn', true);
+    try {
+      var website = document.getElementById('volWebsite').value;
+      var token = await getTokenFast('volunteer_interest');
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:'Volunteer', message:interest||'Interested in volunteering', lead_type:'volunteer_interest'});
+      await submitToBackend({formType:'volunteer_interest', name:name, email:email, phone:phone||'Not Provided', service:'Volunteer', message:interest||'Interested in volunteering', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
+      setStatus('volunteerStatus', true, "Thank you! We'll be in touch soon.");
+      gaEvent('submit','Form','Volunteer Interest');
+      setTimeout(function(){ toggleVolunteerForm(false); }, 1800);
+    } catch (err) {
+      setStatus('volunteerStatus', false, 'Something went wrong. Please try again.');
+    }
+    setBtnLoading('volunteerSubmitBtn', false);
+  }
+
+  /* ── SPREAD THE WORD: native share sheet where available, small fallback menu otherwise ── */
+  var SHARE_URL = 'https://thesamarpan.co.in/';
+  var SHARE_TEXT = "I came across Samarpan — a space for integrative healing, health camps and evidence-based care. Thought you'd find it valuable too.";
+  async function shareSamarpan() {
+    gaEvent('click','CTA','Refer a Friend');
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Samarpan — Integrative Healing', text: SHARE_TEXT, url: SHARE_URL }); }
+      catch (e) { /* user cancelled the native share sheet — nothing to do */ }
+      return;
+    }
+    toggleShareMenu(true);
+  }
+  function toggleShareMenu(show) {
+    var overlay = document.getElementById('shareMenuOverlay');
+    if (!overlay) return;
+    if (show) {
+      document.getElementById('share-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL);
+      document.getElementById('share-email').href = 'mailto:?subject=' + encodeURIComponent('Thought you\'d like Samarpan') + '&body=' + encodeURIComponent(SHARE_TEXT + '\n\n' + SHARE_URL);
+      document.getElementById('share-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(SHARE_TEXT) + '&url=' + encodeURIComponent(SHARE_URL);
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    } else {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  function copyShareLink(evt) {
+    navigator.clipboard.writeText(SHARE_URL).then(function(){
+      gaEvent('click','Share','Copy Link');
+      var btn = evt && evt.currentTarget;
+      if (btn) { var orig = btn.innerHTML; btn.innerHTML = '✅ Copied!'; setTimeout(function(){ btn.innerHTML = orig; toggleShareMenu(false); }, 900); }
+      else { toggleShareMenu(false); }
+    }).catch(function(){});
+  }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') toggleShareMenu(false); });
+
   async function handleFabBookingSubmit(e) {
     e.preventDefault();
     var name  = document.getElementById('fabName').value.trim();
@@ -2977,97 +2955,6 @@
     setBtnLoading('icSubmitBtn', false);
   }
 
-  /* ══════════════════════════════════════════════
-     SUPPORT SAMARPAN — Volunteer / Share
-     Donate now links straight to donate.html (UPI + bank transfer).
-     Each remaining card is independent: clicking one opens its own
-     panel and closes the other, so both work on their own.
-     ══════════════════════════════════════════════ */
-  var supportPanelOpen = null;
-  function toggleSupportPanel(key) {
-    var keys = ['volunteer','share'];
-    keys.forEach(function(k){
-      var panel = document.getElementById('support-panel-'+k);
-      var card  = document.getElementById('support-card-'+k);
-      var isTarget = (k === key);
-      var shouldOpen = isTarget && supportPanelOpen !== key;
-      if (panel) panel.classList.toggle('open', shouldOpen);
-      if (card)  card.classList.toggle('is-active', shouldOpen);
-    });
-    supportPanelOpen = (supportPanelOpen === key) ? null : key;
-    if (supportPanelOpen) {
-      if (supportPanelOpen === 'volunteer') prefetchToken('volunteer');
-      gaEvent('click','Support Samarpan','Open — '+key);
-      setTimeout(function(){
-        var el = document.getElementById('support-panel-'+key);
-        if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
-      }, 200);
-    }
-  }
-
-  /* ── Volunteer ── */
-  async function handleVolunteerSubmit(e) {
-    e.preventDefault();
-    var name    = document.getElementById('volunteerName').value.trim();
-    var email   = document.getElementById('volunteerEmail').value.trim();
-    var phone   = document.getElementById('volunteerPhone').value.trim();
-    var area    = document.getElementById('volunteerArea').value;
-    var message = document.getElementById('volunteerMessage').value.trim();
-    var valid = true;
-    if (!name)  { document.getElementById('volunteerName').classList.add('invalid'); valid=false; }
-    else        { document.getElementById('volunteerName').classList.remove('invalid'); }
-    if (!isEmail(email)) { document.getElementById('volunteerEmail').classList.add('invalid'); valid=false; }
-    else        { document.getElementById('volunteerEmail').classList.remove('invalid'); }
-    if (!valid) { setStatus('volunteerStatus', false, "Please fill in your name and a valid email."); return; }
-    setBtnLoading('volunteerSubmitBtn', true);
-    try {
-      var website = document.getElementById('volunteerWebsite').value;
-      var token = await getTokenFast('volunteer');
-      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:area, message:message||'No message', lead_type:'volunteer_signup'});
-      await submitToBackend({formType:'volunteer_signup', name:name, email:email, phone:phone||'Not Provided', service:area, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
-      setStatus('volunteerStatus', true, "Thank you! Our community team will reach out within a few days.");
-      document.getElementById('volunteerForm').reset();
-      gaEvent('submit','Form','Volunteer Signup');
-    } catch (err) { setStatus('volunteerStatus', false, "Error saving. Please email info@thesamarpan.co.in or WhatsApp us directly."); }
-    setBtnLoading('volunteerSubmitBtn', false);
-  }
-
-  /* ── Spread the Word ── */
-  if (typeof navigator !== 'undefined' && navigator.share) {
-    window.addEventListener('DOMContentLoaded', function () {
-      var b = document.getElementById('nativeShareBtn');
-      if (b) b.style.display = 'flex';
-    });
-  }
-  function copyShareLink() {
-    var input = document.getElementById('shareLinkInput');
-    var btn = document.getElementById('copyLinkBtn');
-    var finish = function () {
-      btn.textContent = 'Copied ✓';
-      btn.classList.add('copied');
-      trackShare('copy_link');
-      setTimeout(function () { btn.textContent = 'Copy Link'; btn.classList.remove('copied'); }, 2200);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(input.value).then(finish).catch(function () {
-        input.select(); document.execCommand('copy'); finish();
-      });
-    } else {
-      input.select(); document.execCommand('copy'); finish();
-    }
-  }
-  function nativeShareSite() {
-    if (!navigator.share) return;
-    navigator.share({
-      title: 'Samarpan — Holistic Wellbeing',
-      text: 'I found Samarpan — a holistic wellness & research practice blending Ayurveda, Yoga and Psychology.',
-      url: 'https://thesamarpan.co.in/'
-    }).then(function () { trackShare('native_share'); }).catch(function () {});
-  }
-  function trackShare(channel) {
-    try { writeLeadToFirestore('homepage_referrals', {channel: channel}); } catch (e) {}
-    gaEvent('click','Spread the Word', channel);
-  }
 
   /* ══════════════════════════════════════════════
      PRAKRITI QUIZ
