@@ -2771,10 +2771,15 @@ async function autoPurgeOldVisitors(){
 // ════════════════════════════════════════════════
 // GOOGLE SHEETS SYNC — pushes visitor sessions to a Sheet every 60s
 // ════════════════════════════════════════════════
+// Pre-configured so sync works out of the box — no need to paste the URL
+// into Settings manually. If you ever redeploy the Apps Script and get a
+// new URL, either update this constant or just paste the new one into the
+// Settings box (that always wins over this default).
+const DEFAULT_SHEETS_SYNC_URL='https://script.google.com/macros/s/AKfycbweeoMK1jgQuDjdzLVi6h98CWAJ1756jJFS8VjVXll8eJYEC_iTOIo5X7PZt5OSzaQM/exec';
 let sheetsSyncUrl='',sheetsSyncEnabled=false,sheetsSyncTimer=null,sheetsSyncBusy=false;
 function loadSheetsSyncStorage(){
-  sheetsSyncUrl=localStorage.getItem('sheets_sync_url')||'';
-  sheetsSyncEnabled=localStorage.getItem('sheets_sync_enabled')==='1';
+  sheetsSyncUrl=localStorage.getItem('sheets_sync_url')||DEFAULT_SHEETS_SYNC_URL;
+  sheetsSyncEnabled=localStorage.getItem('sheets_sync_enabled')===null?true:localStorage.getItem('sheets_sync_enabled')==='1';
   const urlEl=document.getElementById('sheets-sync-url');if(urlEl)urlEl.value=sheetsSyncUrl;
   updateSheetsSyncUI();
   if(sheetsSyncEnabled&&sheetsSyncUrl)startSheetsSync();
