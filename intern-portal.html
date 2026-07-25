@@ -404,6 +404,7 @@
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
       setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
       document.getElementById('portalForm').reset();
+      setBtnLoading('pfSubmitBtn', false); // restore button content before setMode touches pfSubmitLabel
       setMode(currentMode); // re-apply required attributes after reset
     } catch (err) {
       console.error('Submission error:', err);
