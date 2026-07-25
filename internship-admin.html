@@ -7,6 +7,9 @@
 <title>Samarpan — Internship Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 
 <style>
@@ -124,19 +127,23 @@ table.tbl a:hover{text-decoration:underline;}
         </svg>
       </div>
       <div class="l-title">Internship Admin</div>
-      <div class="l-sub">Samarpan Internship System</div>
+      <div class="l-sub">Sign in with your Samarpan admin account</div>
     </div>
     <div class="field">
-      <label>Admin Password</label>
-      <input type="password" id="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <label>Email Address</label>
+      <input type="email" id="email-input" placeholder="admin@samarpan.co.in" autocomplete="username email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pw-input" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button class="l-btn" onclick="doLogin()" id="login-btn">Sign In</button>
     <div class="l-err" id="login-err"></div>
     <div class="l-setup">
-      First time here? Open this file's <code>&lt;script&gt;</code> section
-      and set <strong>APPS_SCRIPT_URL</strong> to your deployed Admin
-      Dashboard Backend web app URL. The password you type here is checked
-      directly against <strong>ADMIN_PASSWORD</strong> in that script.
+      Access is limited to accounts already added to the Samarpan admin
+      team (the same team list used in the main admin panel). If your
+      account isn't authorized yet, ask the panel owner to add you under
+      Settings → Team in admin.html.
     </div>
   </div>
 </div>
@@ -209,39 +216,72 @@ table.tbl a:hover{text-decoration:underline;}
 
 <script>
 /* ============================================================
-   CONFIG — set these two after deploying 4_Admin_Dashboard_Backend.gs
+   CONFIG
    ============================================================ */
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOcxrTqPj4pRhw-V5eWR5MqMy65piwQFwFYA--Om-Or435LJEfRscwfAvt0N6tLjf_aQ/exec'; // live backend
 
+// Same shared secret the Apps Script backend checks (ADMIN_PASSWORD in
+// 4_Admin_Dashboard_Backend.gs). Users never see or type this — it's only
+// sent automatically once Firebase confirms they're an authorized admin.
+const BACKEND_KEY = 'OK4ZB4gtmbUDa39vsRb2';
+
+// Same Firebase project as admin.html, so the same admin accounts work here.
+firebase.initializeApp({
+  apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
+  authDomain: "thesamrpan.firebaseapp.com",
+  projectId: "thesamrpan",
+  storageBucket: "thesamrpan.firebasestorage.app",
+  messagingSenderId: "510287005957",
+  appId: "1:510287005957:web:978533c6dbca0f4969cf6c",
+  measurementId: "G-ML1QLKGR3K"
+});
+const auth = firebase.auth(), db = firebase.firestore();
+
 /* ============================================================
-   AUTH — password is sent to the Apps Script on every request,
-   never stored anywhere except this tab's sessionStorage so a
-   refresh doesn't force re-entry (cleared when the tab closes).
+   AUTH — Firebase handles identity; samarpan_admin_users (the same
+   collection your main admin.html team page manages) decides who's
+   allowed in. No separate password is ever typed by the user.
    ============================================================ */
-function doLogin(){
-  const pw = document.getElementById('pw-input').value;
-  if(!pw){ showLoginErr('Enter the admin password.'); return; }
-  const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.textContent = 'Checking…';
-  verifyPassword(pw).then(ok=>{
-    btn.disabled = false; btn.textContent = 'Sign In';
-    if(ok){
-      sessionStorage.setItem('samarpan_intern_pw', pw);
+auth.onAuthStateChanged(user => {
+  if (user) checkTeamAccess(user);
+  else showLoginScreen();
+});
+
+async function checkTeamAccess(user){
+  try{
+    const doc = await db.collection('samarpan_admin_users').doc(user.email).get();
+    if (doc.exists) {
       enterApp();
     } else {
-      showLoginErr('Incorrect password, or the backend URL isn\'t set yet — see note below.');
+      showLoginErr('Your account (' + user.email + ') isn\'t on the admin team list yet. Ask the panel owner to add you in admin.html → Settings → Team.');
+      auth.signOut();
     }
-  });
+  }catch(e){
+    showLoginErr('Could not verify your admin access: ' + e.message);
+    auth.signOut();
+  }
+}
+
+async function doLogin(){
+  const email = document.getElementById('email-input').value.trim();
+  const pwd = document.getElementById('pw-input').value;
+  document.getElementById('login-err').textContent = '';
+  if(!email || !pwd){ showLoginErr('Enter both your email and password.'); return; }
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  try{
+    await auth.signInWithEmailAndPassword(email, pwd);
+    // onAuthStateChanged picks up from here
+  }catch(e){
+    const msgs = {'auth/user-not-found':'No account found with this email.','auth/wrong-password':'Incorrect password.','auth/invalid-email':'Enter a valid email.','auth/too-many-requests':'Too many attempts. Try again later.','auth/invalid-credential':'Invalid email or password.','auth/user-disabled':'This account has been disabled.'};
+    showLoginErr(msgs[e.code] || ('Sign in failed: ' + e.message));
+  }
+  btn.disabled = false; btn.textContent = 'Sign In';
 }
 function showLoginErr(msg){ document.getElementById('login-err').textContent = msg; }
-
-async function verifyPassword(pw){
-  if(APPS_SCRIPT_URL.indexOf('YOUR_ADMIN_APPS_SCRIPT_WEB_APP_URL') !== -1) return false;
-  try{
-    const res = await fetch(APPS_SCRIPT_URL + '?password=' + encodeURIComponent(pw));
-    const data = await res.json();
-    return data.status === 'success';
-  }catch(e){ return false; }
+function showLoginScreen(){
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('app').classList.remove('show');
 }
 
 function enterApp(){
@@ -250,10 +290,7 @@ function enterApp(){
   fetchInternshipData(false);
 }
 function logOut(){
-  sessionStorage.removeItem('samarpan_intern_pw');
-  document.getElementById('app').classList.remove('show');
-  document.getElementById('login-screen').classList.remove('hidden');
-  document.getElementById('pw-input').value = '';
+  auth.signOut();
 }
 
 /* ============================================================
@@ -263,12 +300,11 @@ let internshipData = null;
 let loading = false;
 
 async function fetchInternshipData(forceRefresh){
-  const pw = sessionStorage.getItem('samarpan_intern_pw');
-  if(!pw) return;
+  if(!auth.currentUser) return;
   if(loading) return;
   loading = true;
   try{
-    const res = await fetch(APPS_SCRIPT_URL + '?password=' + encodeURIComponent(pw));
+    const res = await fetch(APPS_SCRIPT_URL + '?password=' + encodeURIComponent(BACKEND_KEY));
     const data = await res.json();
     if(data.status !== 'success'){
       showToast('❌ ' + (data.message || 'Unauthorized'), true);
@@ -368,14 +404,6 @@ function showToast(msg, isErr){
   toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
 }
 
-/* Auto-resume session if this tab already has a verified password */
-(function init(){
-  const pw = sessionStorage.getItem('samarpan_intern_pw');
-  if(pw){
-    document.getElementById('pw-input').value = pw;
-    verifyPassword(pw).then(ok=>{ if(ok) enterApp(); });
-  }
-})();
 </script>
 </body>
 </html>
