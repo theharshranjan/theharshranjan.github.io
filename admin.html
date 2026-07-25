@@ -702,12 +702,8 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Yoga Signups</div>
 
     <div class="sb-section">Internship Program</div>
-    <div class="nav-item" onclick="showPage('interns',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Registrations<span class="nav-badge" id="sb-interns-count">—</span></div>
-    <div class="nav-item" onclick="showPage('interntasks',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Task Submissions<span class="nav-badge cyan" id="sb-interntasks-count">—</span></div>
-    <div class="nav-item" onclick="showPage('internreports',this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Weekly Reports<span class="nav-badge gold" id="sb-internreports-count">—</span></div>
+    <div class="nav-item" onclick="window.open('internship-admin.html','_blank')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Intern Dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
 
     <div class="sb-section">Content</div>
     <div class="nav-item" onclick="showPage('flashcards',this)">
@@ -1242,39 +1238,6 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
         <div class="card-head"><span class="card-title">FAQs</span><button class="btn btn-outline btn-sm" onclick="openFaqModal()">+ Add</button></div>
         <div class="card-body" id="faqs-list"><div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">Loading…</div></div>
       </div>
-    </div>
-
-    <!-- ══ INTERNSHIP REGISTRATIONS ══ -->
-    <div class="page-view" id="page-interns">
-      <div class="filters-row">
-        <input class="filter-select" type="text" placeholder="Search name / email / college…" id="intern-search" oninput="filterInternTable('interns')" style="width:220px;">
-        <button class="btn btn-outline btn-sm" onclick="fetchInternshipData(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
-        <button class="btn btn-outline btn-sm" onclick="exportInternTableCSV('interns')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
-        <div class="filter-count">Showing <strong id="intern-count-display">—</strong></div>
-      </div>
-      <div class="card"><div style="overflow-x:auto;"><table class="tbl" id="intern-table"><thead><tr><th colspan="99" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</th></tr></thead><tbody></tbody></table></div></div>
-    </div>
-
-    <!-- ══ INTERNSHIP TASK SUBMISSIONS ══ -->
-    <div class="page-view" id="page-interntasks">
-      <div class="filters-row">
-        <input class="filter-select" type="text" placeholder="Search intern / task ID / task name…" id="interntask-search" oninput="filterInternTable('tasks')" style="width:220px;">
-        <button class="btn btn-outline btn-sm" onclick="fetchInternshipData(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
-        <button class="btn btn-outline btn-sm" onclick="exportInternTableCSV('tasks')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
-        <div class="filter-count">Showing <strong id="interntask-count-display">—</strong></div>
-      </div>
-      <div class="card"><div style="overflow-x:auto;"><table class="tbl" id="interntask-table"><thead><tr><th colspan="99" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</th></tr></thead><tbody></tbody></table></div></div>
-    </div>
-
-    <!-- ══ INTERNSHIP WEEKLY REPORTS ══ -->
-    <div class="page-view" id="page-internreports">
-      <div class="filters-row">
-        <input class="filter-select" type="text" placeholder="Search intern / email…" id="internreport-search" oninput="filterInternTable('reports')" style="width:220px;">
-        <button class="btn btn-outline btn-sm" onclick="fetchInternshipData(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>Refresh</button>
-        <button class="btn btn-outline btn-sm" onclick="exportInternTableCSV('reports')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Export</button>
-        <div class="filter-count">Showing <strong id="internreport-count-display">—</strong></div>
-      </div>
-      <div class="card"><div style="overflow-x:auto;"><table class="tbl" id="internreport-table"><thead><tr><th colspan="99" style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">Loading…</th></tr></thead><tbody></tbody></table></div></div>
     </div>
 
     <!-- ══ SESSIONS ══ -->
@@ -2151,7 +2114,7 @@ function grantAccess(user){
   const cachedPhoto=localStorage.getItem('owner_photo_'+user.email);
   if(cachedPhoto)applyOwnerPhoto(cachedPhoto);
   if(sessionStorage.getItem('login_doc_id'))startSessionRevokeCheck();
-  loadSettingsStorage();attachListeners();buildWeeklyChart();loadAdminRole();fetchInternshipData();
+  loadSettingsStorage();attachListeners();buildWeeklyChart();loadAdminRole();
 }
 function doLogout(){
   if(!confirm('Sign out of Samarpan Admin?'))return;
@@ -3378,7 +3341,7 @@ function showPage(id,el){
   const page=document.getElementById(`page-${id}`);if(page)page.classList.add('active');
   if(el)el.classList.add('active');
   else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});}
-  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',security:'Security',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status',interns:'Internship Registrations',interntasks:'Internship Task Submissions',internreports:'Internship Weekly Reports'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',security:'Security',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status'};
   set$('topbar-title',titles[id]||'Dashboard');
   closeSidebar();
   // Trigger chart renders when switching to analytics/visitor pages
@@ -3388,7 +3351,6 @@ function showPage(id,el){
   if(id==='media')loadMediaLibrary();
   if(id==='status')runStatusCheck();
   if(id==='security')renderSecurityPage();
-  if(['interns','interntasks','internreports'].includes(id))fetchInternshipData();
   setMobileTab(['dashboard','leads','bookings','visitors'].includes(id)?id:'more');
 }
 function setMobileTab(key){
@@ -3821,122 +3783,9 @@ function removeAdmin(docId){
   document.getElementById('confirm-modal-overlay').classList.add('open');
 }
 
-/* ══════════════════════════ INTERNSHIP PROGRAM DATA ══════════════════════════
-   This data lives in a separate Google Sheet, not Firebase, so it's fetched
-   from its own Apps Script Web App (Code4.gs) rather than a Firestore listener.
-   Fill in the URL + password below after deploying Code4.gs. */
-const INTERNSHIP_APPS_SCRIPT_URL = 'YOUR_ADMIN_APPS_SCRIPT_WEB_APP_URL';
-const INTERNSHIP_ADMIN_PASSWORD = 'CHANGE_THIS_PASSWORD';
-
-let internshipData = null;   // { registrations:[], tasks:[], reports:[] }
-let internshipLoading = false;
-
-async function fetchInternshipData(forceRefresh){
-  if(internshipLoading) return;
-  if(internshipData && !forceRefresh){ renderAllInternTables(); return; }
-  internshipLoading = true;
-  try{
-    const url = INTERNSHIP_APPS_SCRIPT_URL + '?password=' + encodeURIComponent(INTERNSHIP_ADMIN_PASSWORD);
-    const res = await fetch(url);
-    const data = await res.json();
-    if(data.status !== 'success'){
-      showToast('❌ Internship data: '+(data.message||'Unauthorized'),true);
-      internshipLoading = false;
-      return;
-    }
-    internshipData = {
-      registrations: data.registrations || [],
-      tasks: data.tasks || [],
-      reports: data.reports || []
-    };
-    set$('sb-interns-count', internshipData.registrations.length);
-    set$('sb-interntasks-count', internshipData.tasks.length);
-    set$('sb-internreports-count', internshipData.reports.length);
-    renderAllInternTables();
-    if(forceRefresh) showToast('✅ Internship data refreshed');
-  }catch(e){
-    showToast('❌ Could not reach internship server: '+e.message,true);
-  }
-  internshipLoading = false;
-}
-
-function renderAllInternTables(){
-  renderInternTable('interns');
-  renderInternTable('tasks');
-  renderInternTable('reports');
-}
-
-function internTypeConfig(type){
-  if(type==='interns') return { key:'registrations', tableId:'intern-table', searchId:'intern-search', countId:'intern-count-display' };
-  if(type==='tasks') return { key:'tasks', tableId:'interntask-table', searchId:'interntask-search', countId:'interntask-count-display' };
-  return { key:'reports', tableId:'internreport-table', searchId:'internreport-search', countId:'internreport-count-display' };
-}
-
-function renderInternTable(type){
-  if(!internshipData) return;
-  const cfg = internTypeConfig(type);
-  const table = document.getElementById(cfg.tableId);
-  if(!table) return;
-  let rows = internshipData[cfg.key] || [];
-
-  const query = (document.getElementById(cfg.searchId)?.value || '').trim().toLowerCase();
-  if(query){
-    rows = rows.filter(row => Object.values(row).some(v => String(v).toLowerCase().includes(query)));
-  }
-
-  set$(cfg.countId, rows.length);
-
-  if(rows.length === 0){
-    table.innerHTML = '<thead><tr><th style="text-align:center;color:var(--text4);padding:1.5rem;font-size:12px;">No records found.</th></tr></thead><tbody></tbody>';
-    return;
-  }
-
-  const headers = Object.keys(rows[0]);
-  let thead = '<thead><tr>' + headers.map(h=>`<th>${escapeInternHtml(h)}</th>`).join('') + '</tr></thead>';
-  let tbody = '<tbody>';
-  rows.forEach(row=>{
-    tbody += '<tr>';
-    headers.forEach(h=>{
-      let val = row[h]===undefined||row[h]===null ? '' : row[h];
-      if(typeof val==='string' && /^https?:\/\//.test(val)){
-        tbody += `<td><a href="${escapeInternHtml(val)}" target="_blank" rel="noopener" style="color:var(--gold);">Link ↗</a></td>`;
-      } else {
-        tbody += `<td>${escapeInternHtml(String(val))}</td>`;
-      }
-    });
-    tbody += '</tr>';
-  });
-  tbody += '</tbody>';
-  table.innerHTML = thead + tbody;
-}
-
-function filterInternTable(type){ renderInternTable(type); }
-
-function exportInternTableCSV(type){
-  if(!internshipData) return;
-  const cfg = internTypeConfig(type);
-  const rows = internshipData[cfg.key] || [];
-  if(rows.length === 0){ showToast('Nothing to export',true); return; }
-  const headers = Object.keys(rows[0]);
-  let csv = headers.map(h=>`"${h.replace(/"/g,'""')}"`).join(',') + '\n';
-  rows.forEach(row=>{
-    csv += headers.map(h=>{
-      let v = row[h]===undefined||row[h]===null ? '' : String(row[h]);
-      return `"${v.replace(/"/g,'""')}"`;
-    }).join(',') + '\n';
-  });
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = cfg.key + '_export.csv';
-  link.click();
-}
-
-function escapeInternHtml(str){
-  const div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
+/* Internship Program data now lives on its own page: internship-admin.html
+   (kept separate so this file doesn't keep growing — see the
+   "Intern Dashboard" link under the Internship Program section above). */
 </script>
 </body>
 </html>
