@@ -111,7 +111,7 @@
   <p class="font-serif italic text-lg mb-3" style="color:var(--text-muted);">For Active Interns</p>
   <h1 class="font-display font-light mb-4" style="font-size:clamp(2.4rem,6vw,3.8rem);color:var(--text);">Task Check-In</h1>
   <p class="font-sans text-sm max-w-lg mx-auto" style="color:var(--text-muted);">
-    Submitting completed work for a task assigned to you. Use the exact Task ID from your Task Tracker sheet.
+    Submitting completed work for a task assigned to you. Just enter your name below — your current Task ID and Assigned Work will fill in automatically.
   </p>
 </header>
 
@@ -127,39 +127,47 @@
     <div class="grid md:grid-cols-2 gap-6">
       <div>
         <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
-        <input type="text" id="ciName" class="form-input2" placeholder="Your full name" required autocomplete="off" list="ciNameList">
+        <input type="text" id="ciName" class="form-input2" placeholder="Start typing your name" required autocomplete="off" list="ciNameList">
         <datalist id="ciNameList"></datalist>
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
-        <input type="email" id="ciEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
+        <input type="text" id="ciInternId" class="form-input2" placeholder="Auto-filled once you enter your name" required>
       </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
       <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task ID *</label>
-        <input type="text" id="ciTaskId" class="form-input2" placeholder="e.g. TSK-0004" required>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
+        <input type="email" id="ciEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task Name *</label>
-        <input type="text" id="ciTaskName" class="form-input2" required>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task ID *</label>
+        <input type="text" id="ciTaskId" class="form-input2" placeholder="Auto-filled once you enter your name" required>
       </div>
     </div>
 
     <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Submission Link *</label>
-      <input type="url" id="ciLink" class="form-input2" placeholder="Google Doc, Drive folder, or published link" required>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Assigned Work *</label>
+      <input type="text" id="ciTaskName" class="form-input2" placeholder="Auto-filled once you enter your name" required>
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Your Intern ID, Task ID, and Assigned Work fill in automatically once you enter your name above — double check they're correct, and edit if needed.</p>
     </div>
 
     <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Submission Date *</label>
-      <input type="date" id="ciDate" class="form-input2" required>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Submission Link (optional)</label>
+      <input type="url" id="ciLink" class="form-input2" placeholder="Google Doc, Drive folder, YouTube, or any published link">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Not required if you're attaching your files below instead.</p>
     </div>
 
     <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Comments</label>
-      <textarea id="ciComments" class="form-textarea2" rows="3" placeholder="Anything your mentor should know about this submission"></textarea>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Notes / Updates</label>
+      <textarea id="ciComments" class="form-textarea2" rows="4" placeholder="Add any details, updates, or explanations about this task"></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
+      <input type="file" id="ciAttachments" class="form-input2" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Photos, PDFs, or documents for this task — up to 5 files, 8MB each.</p>
     </div>
 
     <button type="submit" id="ciSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
@@ -204,6 +212,28 @@
   }
 
   function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+  function todayISO(){
+    var d = new Date();
+    var tz = d.getTimezoneOffset() * 60000;
+    return new Date(d - tz).toISOString().slice(0, 10);
+  }
+
+  var MAX_FILES = 5;
+  var MAX_FILE_BYTES = 8 * 1024 * 1024; // 8MB per file
+
+  function filesToBase64(fileList) {
+    var files = Array.from(fileList || []);
+    return Promise.all(files.map(function(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] });
+        };
+        reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
+        reader.readAsDataURL(file);
+      });
+    }));
+  }
 
   function setStatus(id, ok, msg) {
     var el = document.getElementById(id);
@@ -221,29 +251,45 @@
     e.preventDefault();
     var name = document.getElementById('ciName').value.trim();
     var email = document.getElementById('ciEmail').value.trim();
+    var internId = document.getElementById('ciInternId').value.trim();
     var valid = true;
     if (!name) { document.getElementById('ciName').classList.add('invalid'); valid = false; }
     else { document.getElementById('ciName').classList.remove('invalid'); }
     if (!isEmail(email)) { document.getElementById('ciEmail').classList.add('invalid'); valid = false; }
     else { document.getElementById('ciEmail').classList.remove('invalid'); }
-    if (!valid) { setStatus('ciStatus', false, 'Please fill in your name and a valid email.'); return; }
+    if (!internId) { document.getElementById('ciInternId').classList.add('invalid'); valid = false; }
+    else { document.getElementById('ciInternId').classList.remove('invalid'); }
+    if (!valid) { setStatus('ciStatus', false, 'Please fill in your name, Intern ID, and a valid email.'); return; }
 
     var website = document.getElementById('ciWebsite').value;
     if (website) { setStatus('ciStatus', true, 'Thank you! Your task has been submitted.'); document.getElementById('checkinForm').reset(); return; } // honeypot
 
+    var fileInput = document.getElementById('ciAttachments');
+    var chosenFiles = fileInput && fileInput.files ? fileInput.files : [];
+    if (chosenFiles.length > MAX_FILES) { setStatus('ciStatus', false, 'Please attach at most ' + MAX_FILES + ' files.'); return; }
+    for (var i = 0; i < chosenFiles.length; i++) {
+      if (chosenFiles[i].size > MAX_FILE_BYTES) { setStatus('ciStatus', false, '"' + chosenFiles[i].name + '" is over 8MB — please attach a smaller file.'); return; }
+    }
+
+    var linkVal = document.getElementById('ciLink').value.trim();
+    if (!linkVal && chosenFiles.length === 0) { setStatus('ciStatus', false, 'Please add a submission link or attach at least one file.'); return; }
+
     setBtnLoading('ciSubmitBtn', true);
     try {
       var token = await getRecaptchaToken('task_checkin');
+      var attachments = await filesToBase64(chosenFiles);
       var payload = {
         recaptchaToken: token,
         pageLoadedAt: xLoadedAt,
         internName: name,
+        internId: internId,
         email: email,
         taskId: document.getElementById('ciTaskId').value.trim(),
         taskName: document.getElementById('ciTaskName').value.trim(),
-        submissionLink: document.getElementById('ciLink').value.trim(),
-        submissionDate: document.getElementById('ciDate').value,
-        comments: document.getElementById('ciComments').value.trim()
+        submissionLink: linkVal,
+        submissionDate: todayISO(),
+        comments: document.getElementById('ciComments').value.trim(),
+        attachments: attachments
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST',
@@ -286,15 +332,42 @@
 
   window.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
+    var allInternNames = [];
     fetch(CHECKIN_APPS_SCRIPT_URL)
       .then(function(r){ return r.json(); })
       .then(function(names){
-        var dl = document.getElementById('ciNameList');
-        if (dl && Array.isArray(names)) {
-          dl.innerHTML = names.map(function(n){ return '<option value="'+n.replace(/"/g,'&quot;')+'">'; }).join('');
-        }
+        if (Array.isArray(names)) allInternNames = names;
       })
       .catch(function(){ /* silently ignore — form still works without suggestions */ });
+
+    var nameInput = document.getElementById('ciName');
+    var dl = document.getElementById('ciNameList');
+    if (nameInput && dl) {
+      nameInput.addEventListener('input', function() {
+        var v = nameInput.value.trim().toLowerCase();
+        if (v.length < 2) { dl.innerHTML = ''; return; }
+        var matches = allInternNames.filter(function(n){ return n.toLowerCase().indexOf(v) !== -1; }).slice(0, 8);
+        dl.innerHTML = matches.map(function(n){ return '<option value="'+n.replace(/"/g,'&quot;')+'">'; }).join('');
+      });
+
+      // Once the name exactly matches a known intern (picked from the
+      // suggestions, or typed in full), auto-fill their Intern ID and
+      // current open Task ID + Assigned Work — no need for them to look
+      // any of it up.
+      nameInput.addEventListener('change', function() {
+        var typed = nameInput.value.trim();
+        var isKnown = allInternNames.some(function(n){ return n.toLowerCase() === typed.toLowerCase(); });
+        if (!isKnown) return;
+        fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
+          .then(function(r){ return r.json(); })
+          .then(function(task){
+            if (task && task.internId) document.getElementById('ciInternId').value = task.internId;
+            if (task && task.taskId) document.getElementById('ciTaskId').value = task.taskId;
+            if (task && task.taskName) document.getElementById('ciTaskName').value = task.taskName;
+          })
+          .catch(function(){ /* silently ignore — intern can still fill these in manually */ });
+      });
+    }
   });
 </script>
 </body>
