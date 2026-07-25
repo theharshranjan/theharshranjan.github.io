@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Report — Samarpan</title>
+<meta name="description" content="Samarpan intern weekly report — submit your weekly progress update.">
+<link rel="canonical" href="https://thesamarpan.co.in/weekly-report.html">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
+
+<script>
+  tailwind.config = {
+    darkMode: ['attribute', '[data-theme="dark"]'],
+    theme: {
+      extend: {
+        colors: {
+          clay: '#D95D39', 'brand-black': '#1C1C1C', 'brand-gray': '#666666',
+          'brand-gold': '#C5A059', 'brand-cream': '#FDFBF7', paper: '#FDFBF7', sage: '#4A5D4F'
+        },
+        fontFamily: {
+          sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif']
+        }
+      }
+    }
+  };
+</script>
+
+<style>
+  :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+  [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+  *,*::before,*::after{box-sizing:border-box;}
+  body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;font-family:'Lato',sans-serif;}
+  .grecaptcha-badge{visibility:hidden!important;}
+  .grecaptcha-notice{font-size:11px;color:var(--text-muted);opacity:.75;margin-top:.75rem;line-height:1.4;text-align:center;}
+  .grecaptcha-notice a{color:inherit;text-decoration:underline;}
+
+  #navbar{position:fixed;left:0;width:100%;z-index:100;height:72px;display:flex;align-items:center;top:0;background:rgba(253,251,247,0.97);border-bottom:1px solid #e8e4de;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+  [data-theme="dark"] #navbar{background:rgba(20,20,16,0.96);border-bottom:1px solid #2E2E28;}
+  .nav-link{position:relative;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;transition:color .3s;color:var(--text-muted);text-decoration:none;}
+  .nav-link:hover{color:#D95D39!important;}
+  .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;}
+  .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff!important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s;text-decoration:none;border-radius:2px;white-space:nowrap;}
+  .nav-cta-btn:hover{background:#c24e2c;}
+
+  #mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;transform:translateY(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
+  #mobile-menu.active{transform:translateY(0);}
+
+  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
+  .form-input2:focus{border-color:#D95D39;}
+  .form-input2.invalid{border-color:#D95D39!important;}
+  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;resize:vertical;}
+  .form-textarea2:focus{border-color:#D95D39;}
+  .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;letter-spacing:.05em;}
+  .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
+  #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
+</style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
+      <a href="about.html" class="nav-link">About</a>
+      <a href="community.html" class="nav-link">Community</a>
+      <a href="register.html" class="nav-link">Registration</a>
+    </div>
+    <a href="index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      <span class="nav-logo-text">Samarpan</span>
+    </a>
+    <div class="hidden lg:flex flex-1 justify-end items-center">
+      <a href="index.html" class="nav-cta-btn">Back to Home</a>
+    </div>
+    <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
+      <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon-menu" style="color:var(--text);"></i>
+        <i data-lucide="x" class="w-6 h-6 hidden" id="hamburger-icon-close" style="color:var(--text);"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()" aria-label="Close menu">
+    <i data-lucide="x" class="w-7 h-7"></i>
+  </button>
+  <a href="about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
+  <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community</a>
+  <a href="register.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Registration</a>
+  <a href="index.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Back to Home</a>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="pt-40 pb-16 px-4 sm:px-6 text-center" style="background:var(--bg2);">
+  <p class="font-serif italic text-lg mb-3" style="color:var(--text-muted);">For Active Interns</p>
+  <h1 class="font-display font-light mb-4" style="font-size:clamp(2.4rem,6vw,3.8rem);color:var(--text);">Weekly Report</h1>
+  <p class="font-sans text-sm max-w-lg mx-auto" style="color:var(--text-muted);">
+    A short update on your week — what you worked on, hours logged, and anything your mentor should know.
+  </p>
+</header>
+
+<!-- FORM -->
+<main class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
+  <form id="reportForm" onsubmit="handleReportSubmit(event)" class="space-y-6" novalidate>
+
+    <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+      <label for="wrWebsite">Leave this field empty</label>
+      <input type="text" id="wrWebsite" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+        <input type="text" id="wrName" class="form-input2" placeholder="Your full name" required autocomplete="off" list="wrNameList">
+        <datalist id="wrNameList"></datalist>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
+        <input type="email" id="wrEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Week Ending *</label>
+        <input type="date" id="wrWeekEnding" class="form-input2" required>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Hours Worked This Week *</label>
+        <input type="number" id="wrHours" class="form-input2" min="0" step="0.5" placeholder="e.g. 12" required>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Tasks Completed This Week *</label>
+      <textarea id="wrTasksDone" class="form-textarea2" rows="4" placeholder="List the tasks or Task IDs you completed or made progress on" required></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Challenges Faced</label>
+      <textarea id="wrChallenges" class="form-textarea2" rows="3" placeholder="Anything that blocked you or slowed you down"></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Plan for Next Week</label>
+      <textarea id="wrNextWeek" class="form-textarea2" rows="3" placeholder="What you intend to focus on next"></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Supporting Link (optional)</label>
+      <input type="url" id="wrLink" class="form-input2" placeholder="Doc, Drive folder, or published link">
+    </div>
+
+    <button type="submit" id="wrSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+      Submit Report
+    </button>
+
+    <div id="wrStatus"></div>
+    <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+      <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+  </form>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-brand-black text-white/60 py-12 px-4 sm:px-6 border-t border-white/10 mt-10">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/30 font-sans">
+    <span>&copy; <span id="copyrightYear">2026</span> Samarpan. All Rights Reserved.</span>
+    <a href="index.html" class="hover:text-white/60 transition">Back to Home</a>
+  </div>
+</footer>
+
+<div id="theme-toggle" class="fixed bottom-8 left-6 z-[900]">
+  <button onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">
+    <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
+  </button>
+</div>
+
+<script>
+  // ── Apps Script Web App URL for the Weekly Report backend (Code3.gs) ──
+  // Replace with the /exec URL you get after deploying Code3.gs
+  var REPORT_APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+  var xLoadedAt = Date.now();
+
+  function getRecaptchaToken(action) {
+    return new Promise(function(resolve) {
+      try {
+        grecaptcha.ready(function() {
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+        });
+      } catch (err) { resolve(''); }
+    });
+  }
+
+  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+  function setStatus(id, ok, msg) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
+  }
+  function setBtnLoading(id, loading) {
+    var btn = document.getElementById(id);
+    if (!btn) return;
+    btn.disabled = loading;
+    if (loading) { btn.setAttribute('data-orig',btn.innerHTML); btn.innerHTML='<span class="btn-spinner"></span>Submitting…'; }
+    else { var o=btn.getAttribute('data-orig'); if(o) btn.innerHTML=o; }
+  }
+
+  async function handleReportSubmit(e) {
+    e.preventDefault();
+    var name = document.getElementById('wrName').value.trim();
+    var email = document.getElementById('wrEmail').value.trim();
+    var tasksDone = document.getElementById('wrTasksDone').value.trim();
+    var valid = true;
+    if (!name) { document.getElementById('wrName').classList.add('invalid'); valid = false; }
+    else { document.getElementById('wrName').classList.remove('invalid'); }
+    if (!isEmail(email)) { document.getElementById('wrEmail').classList.add('invalid'); valid = false; }
+    else { document.getElementById('wrEmail').classList.remove('invalid'); }
+    if (!tasksDone) { document.getElementById('wrTasksDone').classList.add('invalid'); valid = false; }
+    else { document.getElementById('wrTasksDone').classList.remove('invalid'); }
+    if (!valid) { setStatus('wrStatus', false, 'Please fill in your name, a valid email, and what you completed this week.'); return; }
+
+    var website = document.getElementById('wrWebsite').value;
+    if (website) { setStatus('wrStatus', true, 'Thank you! Your report has been submitted.'); document.getElementById('reportForm').reset(); return; } // honeypot
+
+    setBtnLoading('wrSubmitBtn', true);
+    try {
+      var token = await getRecaptchaToken('weekly_report');
+      var payload = {
+        recaptchaToken: token,
+        pageLoadedAt: xLoadedAt,
+        internName: name,
+        email: email,
+        weekEnding: document.getElementById('wrWeekEnding').value,
+        hoursWorked: document.getElementById('wrHours').value,
+        tasksCompleted: tasksDone,
+        challenges: document.getElementById('wrChallenges').value.trim(),
+        nextWeekPlan: document.getElementById('wrNextWeek').value.trim(),
+        supportingLink: document.getElementById('wrLink').value.trim()
+      };
+      var resp = await fetch(REPORT_APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
+      setStatus('wrStatus', true, 'Thank you! Your weekly report has been submitted.');
+      document.getElementById('reportForm').reset();
+    } catch (err) {
+      setStatus('wrStatus', false, 'Something went wrong — please try again or email info@thesamarpan.co.in');
+    }
+    setBtnLoading('wrSubmitBtn', false);
+  }
+
+  var menuOpen = false;
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    document.getElementById('hamburger-btn').setAttribute('aria-expanded', menuOpen);
+    document.getElementById('hamburger-icon-menu').classList.toggle('hidden', menuOpen);
+    document.getElementById('hamburger-icon-close').classList.toggle('hidden', !menuOpen);
+  }
+
+  function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('samarpan-theme', isDark ? 'light' : 'dark');
+    var ti = document.getElementById('themeIcon');
+    if (ti) { ti.setAttribute('data-lucide', isDark ? 'moon' : 'sun'); lucide.createIcons(); }
+  }
+
+  (function() {
+    var saved = localStorage.getItem('samarpan-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+
+  window.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+    fetch(REPORT_APPS_SCRIPT_URL)
+      .then(function(r){ return r.json(); })
+      .then(function(names){
+        var dl = document.getElementById('wrNameList');
+        if (dl && Array.isArray(names)) {
+          dl.innerHTML = names.map(function(n){ return '<option value="'+n.replace(/"/g,'&quot;')+'">'; }).join('');
+        }
+      })
+      .catch(function(){ /* silently ignore — form still works without suggestions */ });
+  });
+</script>
+</body>
+</html>
