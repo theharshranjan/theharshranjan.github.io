@@ -220,11 +220,6 @@ table.tbl a:hover{text-decoration:underline;}
    ============================================================ */
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyOcxrTqPj4pRhw-V5eWR5MqMy65piwQFwFYA--Om-Or435LJEfRscwfAvt0N6tLjf_aQ/exec'; // live backend
 
-// Same shared secret the Apps Script backend checks (ADMIN_PASSWORD in
-// 4_Admin_Dashboard_Backend.gs). Users never see or type this — it's only
-// sent automatically once Firebase confirms they're an authorized admin.
-const BACKEND_KEY = 'OK4ZB4gtmbUDa39vsRb2';
-
 // Same Firebase project as admin.html, so the same admin accounts work here.
 firebase.initializeApp({
   apiKey: "AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ",
@@ -304,7 +299,8 @@ async function fetchInternshipData(forceRefresh){
   if(loading) return;
   loading = true;
   try{
-    const res = await fetch(APPS_SCRIPT_URL + '?password=' + encodeURIComponent(BACKEND_KEY));
+    const token = await auth.currentUser.getIdToken(); // fresh, short-lived, verified server-side — nothing static to leak
+    const res = await fetch(APPS_SCRIPT_URL + '?token=' + encodeURIComponent(token));
     const data = await res.json();
     if(data.status !== 'success'){
       showToast('❌ ' + (data.message || 'Unauthorized'), true);
