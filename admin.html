@@ -702,8 +702,8 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Yoga Signups</div>
 
     <div class="sb-section">Internship Program</div>
-    <div class="nav-item" onclick="window.open('internship-admin.html','_blank')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Intern Dashboard <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10" style="margin-left:4px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></div>
+    <div class="nav-item" onclick="showPage('interndash',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Intern Dashboard</div>
 
     <div class="sb-section">Content</div>
     <div class="nav-item" onclick="showPage('flashcards',this)">
@@ -1237,6 +1237,13 @@ pre.code-block{background:var(--bg3);border:1px solid var(--border);border-radiu
       <div class="card">
         <div class="card-head"><span class="card-title">FAQs</span><button class="btn btn-outline btn-sm" onclick="openFaqModal()">+ Add</button></div>
         <div class="card-body" id="faqs-list"><div style="text-align:center;padding:1rem;color:var(--text4);font-size:12px;">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ══ INTERNSHIP DASHBOARD (embedded) ══ -->
+    <div class="page-view" id="page-interndash">
+      <div class="card" style="padding:.6rem;">
+        <iframe src="internship-admin.html" style="width:100%;height:80vh;border:1px solid var(--border2);border-radius:var(--r);background:var(--card2);" loading="lazy"></iframe>
       </div>
     </div>
 
@@ -3341,7 +3348,7 @@ function showPage(id,el){
   const page=document.getElementById(`page-${id}`);if(page)page.classList.add('active');
   if(el)el.classList.add('active');
   else{document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')&&n.getAttribute('onclick').includes(`'${id}'`))n.classList.add('active');});}
-  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',security:'Security',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status'};
+  const titles={dashboard:'Dashboard',leads:'All Leads',bookings:'Bookings',sheet:'Booking Spreadsheet',newsletter:'Newsletter',referrals:'Referrals',quiz:'Quiz Results',yoga:'Yoga Signups',sessions:'Sessions',security:'Security',journal:'Journal Posts',analytics:'Analytics',settings:'Settings',visitors:'Visitor Analytics',flashcards:'Flash Cards',community:'Community',videos:'Videos',media:'Media Library',sitecontent:'Website Content',search:'Global Search',notes:'Admin Notes',backup:'Backup Center',status:'System Status',interndash:'Internship Dashboard'};
   set$('topbar-title',titles[id]||'Dashboard');
   closeSidebar();
   // Trigger chart renders when switching to analytics/visitor pages
