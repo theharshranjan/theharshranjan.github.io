@@ -406,7 +406,8 @@
       document.getElementById('portalForm').reset();
       setMode(currentMode); // re-apply required attributes after reset
     } catch (err) {
-      setStatus('pfStatus', false, 'Something went wrong — please try again or email info@thesamarpan.co.in');
+      console.error('Submission error:', err);
+      setStatus('pfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
     }
     setBtnLoading('pfSubmitBtn', false);
   }
