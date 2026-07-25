@@ -1721,7 +1721,7 @@
       <p class="font-serif italic text-brand-gray mt-3 text-base">A curated digest of research, reflections and practice — issued monthly</p>
       <div class="divider-line"></div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-up">
       <div class="resource-card">
         <div class="resource-card-img"><img src="journal-issue-01-agni.webp" loading="lazy" alt="Foundations of Agni"></div>
         <div class="resource-card-badge" style="background:rgba(217,93,57,.12);"><i data-lucide="flame" class="w-5 h-5 text-clay"></i></div>
@@ -1750,6 +1750,16 @@
           <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Women's Health, Reconsidered</h3>
           <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">PCOS, cycles, and an integrative approach to hormonal care.</p>
           <a href="journal.html" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Visit Journal <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        </div>
+      </div>
+      <div class="resource-card">
+        <div class="resource-card-img"><img src="eco-public-health_1.webp" loading="lazy" alt="Rural Health Posting: From an Anxious Intern to a Resilient Clinician"></div>
+        <div class="resource-card-badge" style="background:rgba(74,93,79,.12);"><i data-lucide="stethoscope" class="w-5 h-5 text-sage"></i></div>
+        <div class="resource-card-body">
+          <span class="font-sans text-[9px] uppercase tracking-widest text-brand-gold font-bold">Field Reflection</span>
+          <h3 class="font-serif text-base mt-1.5" style="color:var(--text);">Rural Health Posting: Intern to Clinician</h3>
+          <p class="font-sans text-xs mt-2 leading-relaxed" style="color:var(--text-muted);">Dr. Mahek Jamadar on emergency care at a rural PHC and where Ayurveda can ease the gap.</p>
+          <a href="rural-health-posting-intern-to-clinician.html" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Read Reflection <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
         </div>
       </div>
     </div>
@@ -2156,6 +2166,15 @@
 </section>
 
 <!-- SUPPORT SAMARPAN -->
+<style>
+  .share-menu-wrap{position:relative;display:inline-block;}
+  .share-menu{position:absolute;left:50%;transform:translateX(-50%) translateY(6px);top:100%;margin-top:.6rem;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.14);padding:.5rem;min-width:190px;z-index:40;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;}
+  .share-menu.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  .share-menu-item{display:flex;align-items:center;gap:.6rem;width:100%;padding:.55rem .7rem;border-radius:6px;font-family:'Lato',sans-serif;font-size:.78rem;color:var(--text);background:none;border:none;cursor:pointer;text-align:left;text-decoration:none;transition:background .2s;}
+  .share-menu-item:hover{background:var(--bg2);}
+  #volunteer-form-wrap{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease;opacity:0;}
+  #volunteer-form-wrap.open{max-height:900px;opacity:1;}
+</style>
 <section id="support-samarpan" class="py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-5xl mx-auto text-center">
     <div class="mb-10 fade-up">
@@ -2169,19 +2188,83 @@
         <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(217,93,57,.1);"><i data-lucide="heart-handshake" class="w-5 h-5 text-clay"></i></div>
         <h3 class="font-serif text-base mb-2" style="color:var(--text);">Donate</h3>
         <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Fund health camps, research and free resources for those who need them most.</p>
-        <a href="mailto:info@thesamarpan.co.in?subject=I%20want%20to%20support%20Samarpan" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Give Support <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        <a href="donate.html" onclick="gaEvent('click','Support','Donate Card')" class="resource-pill" style="background:rgba(217,93,57,.1);color:#D95D39;">Give Support <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
       </div>
       <div class="step-card rounded-sm p-6 text-center">
         <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(74,93,79,.1);"><i data-lucide="hand-heart" class="w-5 h-5 text-sage"></i></div>
         <h3 class="font-serif text-base mb-2" style="color:var(--text);">Volunteer</h3>
         <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Lend your time and skills to community programmes and outreach.</p>
-        <a href="community.html" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;">Get Involved <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        <button type="button" id="volunteer-toggle" onclick="toggleVolunteerForm()" class="resource-pill" style="background:rgba(74,93,79,.1);color:#4A5D4F;border:none;cursor:pointer;">
+          <span id="volunteer-toggle-label">Get Involved</span> <i data-lucide="arrow-right" class="w-3 h-3" id="volunteer-toggle-icon"></i>
+        </button>
       </div>
       <div class="step-card rounded-sm p-6 text-center">
         <div class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full" style="background:rgba(197,160,89,.15);"><i data-lucide="megaphone" class="w-5 h-5 text-brand-gold"></i></div>
         <h3 class="font-serif text-base mb-2" style="color:var(--text);">Spread the Word</h3>
         <p class="font-sans text-xs leading-relaxed mb-4" style="color:var(--text-muted);">Share our work with someone who could benefit from integrative care.</p>
-        <a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;">Refer a Friend <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+        <div class="share-menu-wrap">
+          <button type="button" id="share-toggle" onclick="handleShareClick(event)" class="resource-pill" style="background:rgba(197,160,89,.15);color:#C5A059;border:none;cursor:pointer;">Refer a Friend <i data-lucide="share-2" class="w-3 h-3"></i></button>
+          <div class="share-menu" id="share-menu">
+            <a class="share-menu-item" href="#" onclick="shareVia('whatsapp');return false;"><i data-lucide="message-circle" class="w-4 h-4" style="color:#25D366;"></i> WhatsApp</a>
+            <a class="share-menu-item" href="#" onclick="shareVia('twitter');return false;"><i data-lucide="twitter" class="w-4 h-4" style="color:#1DA1F2;"></i> X / Twitter</a>
+            <a class="share-menu-item" href="#" onclick="shareVia('email');return false;"><i data-lucide="mail" class="w-4 h-4 text-clay"></i> Email</a>
+            <button type="button" class="share-menu-item" onclick="shareVia('copy')"><i data-lucide="link" class="w-4 h-4 text-sage"></i> Copy Link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INLINE VOLUNTEER FORM -->
+    <div id="volunteer-form-wrap" class="mt-6">
+      <div class="max-w-2xl mx-auto rounded-sm overflow-hidden shadow-xl text-left" style="background:var(--card-bg);border:1px solid var(--border);">
+        <div class="px-6 py-5 border-b" style="background:linear-gradient(135deg,rgba(74,93,79,.12),rgba(74,93,79,.04));border-color:var(--border);">
+          <span class="font-sans text-[9px] uppercase tracking-widest font-bold block mb-1" style="color:#4A5D4F;">Join the Mission</span>
+          <h3 class="font-display text-xl" style="color:var(--text);">Volunteer With Samarpan</h3>
+          <p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Tell us a bit about yourself — our team will reach out within 24 hours.</p>
+        </div>
+        <div class="p-6 sm:p-8">
+          <form id="volunteerForm" onsubmit="handleVolunteerSubmit(event)" class="space-y-4" novalidate>
+            <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+              <label for="volWebsite">Website</label>
+              <input type="text" id="volWebsite" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Full Name *</label>
+                <input type="text" id="volName" placeholder="Your name" class="form-input2" required autocomplete="name">
+              </div>
+              <div>
+                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Email Address *</label>
+                <input type="email" id="volEmail" placeholder="you@example.com" class="form-input2" required autocomplete="email">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Mobile / WhatsApp</label>
+                <input type="tel" id="volPhone" placeholder="+91 90000 00000" class="form-input2" autocomplete="tel">
+              </div>
+              <div>
+                <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">Where would you like to help?</label>
+                <div class="relative">
+                  <select id="volInterest" class="form-select2">
+                    <option>Health Camps &amp; Outreach</option>
+                    <option>Content &amp; Journal Writing</option>
+                    <option>Research &amp; Literature Review</option>
+                    <option>Events &amp; Community Programmes</option>
+                    <option>Other</option>
+                  </select>
+                  <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" style="color:var(--text-muted);"></i>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="font-sans text-[10px] uppercase tracking-widest block mb-1.5" style="color:var(--text-muted);">A little about you</label>
+              <textarea id="volMessage" placeholder="Your background, availability, or anything else we should know..." class="form-textarea2"></textarea>
+            </div>
+            <button type="submit" id="volSubmitBtn" class="cta-btn w-full py-3.5 font-bold text-xs uppercase tracking-[.2em] rounded shadow-lg" style="background:#4A5D4F;color:#fff;">Submit Interest</button>
+          </form>
+          <div id="volunteerFormStatus"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -2860,6 +2943,94 @@
       setTimeout(toggleInlineConsult, 3000);
     } catch(err) { setStatus('inlineConsultStatus', false, "Error — please email info@thesamarpan.co.in or use WhatsApp."); }
     setBtnLoading('icSubmitBtn', false);
+  }
+
+  /* ══════════════════════════════════════════════
+     VOLUNTEER — inline expand form (Support Samarpan)
+     ══════════════════════════════════════════════ */
+  var volunteerOpen = false;
+  function toggleVolunteerForm() {
+    volunteerOpen = !volunteerOpen;
+    var wrap = document.getElementById('volunteer-form-wrap');
+    var label = document.getElementById('volunteer-toggle-label');
+    var icon = document.getElementById('volunteer-toggle-icon');
+    wrap.classList.toggle('open', volunteerOpen);
+    if (label) label.textContent = volunteerOpen ? 'Close Form' : 'Get Involved';
+    if (icon) { icon.setAttribute('data-lucide', volunteerOpen ? 'x' : 'arrow-right'); lucide.createIcons(); }
+    if (volunteerOpen) {
+      setTimeout(function(){ wrap.scrollIntoView({behavior:'smooth',block:'center'}); }, 100);
+      prefetchToken('volunteer_signup');
+      gaEvent('click','Support','Volunteer Form Opened');
+    }
+  }
+  async function handleVolunteerSubmit(e) {
+    e.preventDefault();
+    var name = document.getElementById('volName').value.trim();
+    var email = document.getElementById('volEmail').value.trim();
+    var phone = document.getElementById('volPhone').value.trim();
+    var interest = document.getElementById('volInterest').value;
+    var message = document.getElementById('volMessage').value.trim();
+    var valid = true;
+    if (!name) { document.getElementById('volName').classList.add('invalid'); valid=false; }
+    else { document.getElementById('volName').classList.remove('invalid'); }
+    if (!isEmail(email)) { document.getElementById('volEmail').classList.add('invalid'); valid=false; }
+    else { document.getElementById('volEmail').classList.remove('invalid'); }
+    if (!valid) { setStatus('volunteerFormStatus', false, "Please fill in your name and a valid email."); return; }
+    setBtnLoading('volSubmitBtn', true);
+    try {
+      var website = document.getElementById('volWebsite').value;
+      var token = await getTokenFast('volunteer_signup');
+      writeLeadToFirestore('homepage_leads', {name:name, email:email, phone:phone||'Not Provided', service:'Volunteer — '+interest, message:message||'No message', lead_type:'volunteer_signup'});
+      await submitToBackend({formType:'volunteer_signup', name:name, email:email, phone:phone||'Not Provided', service:'Volunteer — '+interest, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token});
+      setStatus('volunteerFormStatus', true, "Thank you! Our team will reach out within 24 hours.");
+      document.getElementById('volunteerForm').reset();
+      gaEvent('submit','Form','Volunteer Signup');
+      setTimeout(function(){ toggleVolunteerForm(); document.getElementById('volunteerFormStatus').innerHTML=''; }, 2500);
+    } catch(err) { setStatus('volunteerFormStatus', false, "Error saving. Please email info@thesamarpan.co.in or WhatsApp us directly."); }
+    setBtnLoading('volSubmitBtn', false);
+  }
+
+  /* ══════════════════════════════════════════════
+     SPREAD THE WORD — native share sheet + fallback menu
+     ══════════════════════════════════════════════ */
+  var shareData = {
+    title: 'Samarpan — Holistic Wellbeing',
+    text: 'Ayurveda, Yoga and Psychology, brought together. Take a look at Samarpan:',
+    url: 'https://thesamarpan.co.in/'
+  };
+  function handleShareClick(e) {
+    if (navigator.share) {
+      navigator.share(shareData).then(function(){ gaEvent('click','Support','Native Share Used'); }).catch(function(){});
+    } else {
+      toggleShareMenu();
+    }
+  }
+  var shareMenuOpen = false;
+  function toggleShareMenu(force) {
+    shareMenuOpen = (typeof force === 'boolean') ? force : !shareMenuOpen;
+    document.getElementById('share-menu').classList.toggle('open', shareMenuOpen);
+  }
+  document.addEventListener('click', function(e){
+    var menu = document.getElementById('share-menu');
+    var toggle = document.getElementById('share-toggle');
+    if (!menu || !shareMenuOpen) return;
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) toggleShareMenu(false);
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && shareMenuOpen) toggleShareMenu(false); });
+  function shareVia(channel) {
+    var encUrl = encodeURIComponent(shareData.url);
+    var encText = encodeURIComponent(shareData.text);
+    if (channel === 'whatsapp') { window.open('https://wa.me/?text=' + encText + '%20' + encUrl, '_blank'); }
+    else if (channel === 'twitter') { window.open('https://twitter.com/intent/tweet?text=' + encText + '&url=' + encUrl, '_blank'); }
+    else if (channel === 'email') { window.location.href = 'mailto:?subject=' + encodeURIComponent(shareData.title) + '&body=' + encText + '%20' + encUrl; }
+    else if (channel === 'copy') {
+      navigator.clipboard.writeText(shareData.url).then(function(){
+        var item = document.querySelector('.share-menu-item:last-child');
+        if (item) { var orig = item.innerHTML; item.innerHTML = '<i data-lucide="check" class="w-4 h-4 text-sage"></i> Copied!'; lucide.createIcons(); setTimeout(function(){ item.innerHTML = orig; lucide.createIcons(); }, 1800); }
+      });
+    }
+    gaEvent('click','Support','Share via ' + channel);
+    toggleShareMenu(false);
   }
 
 
