@@ -127,24 +127,19 @@
     <div class="grid md:grid-cols-2 gap-6">
       <div>
         <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
-        <input type="text" id="wrName" class="form-input2" placeholder="Your full name" required autocomplete="off" list="wrNameList">
+        <input type="text" id="wrName" class="form-input2" placeholder="Start typing your name" required autocomplete="off" list="wrNameList">
         <datalist id="wrNameList"></datalist>
       </div>
       <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
-        <input type="email" id="wrEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
+        <input type="text" id="wrInternId" class="form-input2" placeholder="Auto-filled once you enter your name" required>
+        <p class="text-xs mt-1.5" style="color:var(--text-muted);">Fills in automatically once you enter your name — double check it's correct, and edit if needed.</p>
       </div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
-      <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Week Ending *</label>
-        <input type="date" id="wrWeekEnding" class="form-input2" required>
-      </div>
-      <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Hours Worked This Week *</label>
-        <input type="number" id="wrHours" class="form-input2" min="0" step="0.5" placeholder="e.g. 12" required>
-      </div>
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
+      <input type="email" id="wrEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
     </div>
 
     <div>
@@ -165,6 +160,12 @@
     <div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Supporting Link (optional)</label>
       <input type="url" id="wrLink" class="form-input2" placeholder="Doc, Drive folder, or published link">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
+      <input type="file" id="wrAttachments" class="form-input2" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Photos, PDFs, or documents for this week — up to 5 files, 8MB each.</p>
     </div>
 
     <button type="submit" id="wrSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
@@ -211,6 +212,23 @@
 
   function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
 
+  var MAX_FILES = 5;
+  var MAX_FILE_BYTES = 8 * 1024 * 1024; // 8MB per file
+
+  function filesToBase64(fileList) {
+    var files = Array.from(fileList || []);
+    return Promise.all(files.map(function(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] });
+        };
+        reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
+        reader.readAsDataURL(file);
+      });
+    }));
+  }
+
   function setStatus(id, ok, msg) {
     var el = document.getElementById(id);
     if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
@@ -227,33 +245,44 @@
     e.preventDefault();
     var name = document.getElementById('wrName').value.trim();
     var email = document.getElementById('wrEmail').value.trim();
+    var internId = document.getElementById('wrInternId').value.trim();
     var tasksDone = document.getElementById('wrTasksDone').value.trim();
     var valid = true;
     if (!name) { document.getElementById('wrName').classList.add('invalid'); valid = false; }
     else { document.getElementById('wrName').classList.remove('invalid'); }
     if (!isEmail(email)) { document.getElementById('wrEmail').classList.add('invalid'); valid = false; }
     else { document.getElementById('wrEmail').classList.remove('invalid'); }
+    if (!internId) { document.getElementById('wrInternId').classList.add('invalid'); valid = false; }
+    else { document.getElementById('wrInternId').classList.remove('invalid'); }
     if (!tasksDone) { document.getElementById('wrTasksDone').classList.add('invalid'); valid = false; }
     else { document.getElementById('wrTasksDone').classList.remove('invalid'); }
-    if (!valid) { setStatus('wrStatus', false, 'Please fill in your name, a valid email, and what you completed this week.'); return; }
+    if (!valid) { setStatus('wrStatus', false, 'Please fill in your name, Intern ID, a valid email, and what you completed this week.'); return; }
 
     var website = document.getElementById('wrWebsite').value;
     if (website) { setStatus('wrStatus', true, 'Thank you! Your report has been submitted.'); document.getElementById('reportForm').reset(); return; } // honeypot
 
+    var fileInput = document.getElementById('wrAttachments');
+    var chosenFiles = fileInput && fileInput.files ? fileInput.files : [];
+    if (chosenFiles.length > MAX_FILES) { setStatus('wrStatus', false, 'Please attach at most ' + MAX_FILES + ' files.'); return; }
+    for (var i = 0; i < chosenFiles.length; i++) {
+      if (chosenFiles[i].size > MAX_FILE_BYTES) { setStatus('wrStatus', false, '"' + chosenFiles[i].name + '" is over 8MB — please attach a smaller file.'); return; }
+    }
+
     setBtnLoading('wrSubmitBtn', true);
     try {
       var token = await getRecaptchaToken('weekly_report');
+      var attachments = await filesToBase64(chosenFiles);
       var payload = {
         recaptchaToken: token,
         pageLoadedAt: xLoadedAt,
         internName: name,
+        internId: internId,
         email: email,
-        weekEnding: document.getElementById('wrWeekEnding').value,
-        hoursWorked: document.getElementById('wrHours').value,
         tasksCompleted: tasksDone,
         challenges: document.getElementById('wrChallenges').value.trim(),
         nextWeekPlan: document.getElementById('wrNextWeek').value.trim(),
-        supportingLink: document.getElementById('wrLink').value.trim()
+        supportingLink: document.getElementById('wrLink').value.trim(),
+        attachments: attachments
       };
       var resp = await fetch(REPORT_APPS_SCRIPT_URL, {
         method: 'POST',
@@ -296,15 +325,38 @@
 
   window.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
+    var allInternNames = [];
     fetch(REPORT_APPS_SCRIPT_URL)
       .then(function(r){ return r.json(); })
       .then(function(names){
-        var dl = document.getElementById('wrNameList');
-        if (dl && Array.isArray(names)) {
-          dl.innerHTML = names.map(function(n){ return '<option value="'+n.replace(/"/g,'&quot;')+'">'; }).join('');
-        }
+        if (Array.isArray(names)) allInternNames = names;
       })
       .catch(function(){ /* silently ignore — form still works without suggestions */ });
+
+    var nameInput = document.getElementById('wrName');
+    var dl = document.getElementById('wrNameList');
+    if (nameInput && dl) {
+      nameInput.addEventListener('input', function() {
+        var v = nameInput.value.trim().toLowerCase();
+        if (v.length < 2) { dl.innerHTML = ''; return; }
+        var matches = allInternNames.filter(function(n){ return n.toLowerCase().indexOf(v) !== -1; }).slice(0, 8);
+        dl.innerHTML = matches.map(function(n){ return '<option value="'+n.replace(/"/g,'&quot;')+'">'; }).join('');
+      });
+
+      // Once the name exactly matches a known intern, auto-fill their
+      // Intern ID — no need for them to look it up.
+      nameInput.addEventListener('change', function() {
+        var typed = nameInput.value.trim();
+        var isKnown = allInternNames.some(function(n){ return n.toLowerCase() === typed.toLowerCase(); });
+        if (!isKnown) return;
+        fetch(REPORT_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
+          .then(function(r){ return r.json(); })
+          .then(function(info){
+            if (info && info.internId) document.getElementById('wrInternId').value = info.internId;
+          })
+          .catch(function(){ /* silently ignore — intern can still fill this in manually */ });
+      });
+    }
   });
 </script>
 </body>
