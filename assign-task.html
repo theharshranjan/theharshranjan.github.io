@@ -51,6 +51,9 @@
   .status-row:last-child{border-bottom:none;}
   .status-label{color:var(--text-muted);flex-shrink:0;}
   .status-value{color:var(--text);text-align:right;font-weight:500;}
+  .status-block{margin:.6rem 0;text-align:left;}
+  .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
+  .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
 </style>
 </head>
 <body>
@@ -367,7 +370,7 @@
         document.getElementById('fbStatus').value = '';
         document.getElementById('fbFeedback').value = info.task.mentorFeedback || '';
         document.getElementById('fbTaskSummary').innerHTML =
-          '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(info.task.task) + '</span></div>' +
+          '<div class="status-block"><div class="status-block-label">Assigned Work</div><div class="status-longtext">' + esc(info.task.task) + '</div></div>' +
           '<div class="status-row"><span class="status-label">Current Status</span><span class="status-value">' + esc(info.task.status || 'Not Started') + '</span></div>' +
           (info.task.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(info.task.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '');
       })
@@ -457,13 +460,13 @@
       tasksEl.innerHTML = info.tasks.map(function(t){
         return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
           + historyRow('Task ID', t.taskId)
-          + historyRow('Task', t.task)
+          + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(t.task) + '</div></div>'
           + historyRow('Assigned', t.assignedDate)
           + historyRow('Deadline', t.deadline)
           + historyRow('Priority', t.priority)
           + historyRow('Status', t.status)
           + (t.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(t.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
-          + (t.mentorFeedback ? '<div class="text-xs mt-2" style="color:var(--text-muted);"><em>Feedback: ' + esc(t.mentorFeedback) + '</em></div>' : '')
+          + (t.mentorFeedback ? '<div class="status-block"><div class="status-block-label">Feedback</div><div class="status-longtext" style="font-style:italic;">' + esc(t.mentorFeedback) + '</div></div>' : '')
           + '</div>';
       }).join('');
     } else {
@@ -475,11 +478,11 @@
       subsEl.innerHTML = info.submissions.map(function(s){
         return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
           + historyRow('Task ID', s.taskId)
-          + historyRow('Task', s.taskName)
+          + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(s.taskName) + '</div></div>'
           + historyRow('Submitted', s.submissionDate)
           + historyRow('Status', s.status)
           + (s.submissionLink ? '<div class="status-row"><span class="status-label">Link</span><span class="status-value"><a href="' + esc(s.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
-          + (s.comments ? '<div class="text-xs mt-2" style="color:var(--text-muted);">Comments: ' + esc(s.comments) + '</div>' : '')
+          + (s.comments ? '<div class="status-block"><div class="status-block-label">Comments</div><div class="status-longtext">' + esc(s.comments) + '</div></div>' : '')
           + '</div>';
       }).join('');
     } else {
@@ -492,8 +495,8 @@
         return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
           + historyRow('Submitted', w.timestamp)
           + historyRow('Review Status', w.reviewStatus)
-          + (w.tasksCompleted ? '<div class="text-xs mt-2" style="color:var(--text-muted);">Completed: ' + esc(w.tasksCompleted) + '</div>' : '')
-          + (w.mentorComments ? '<div class="text-xs mt-2" style="color:var(--text-muted);"><em>Mentor: ' + esc(w.mentorComments) + '</em></div>' : '')
+          + (w.tasksCompleted ? '<div class="status-block"><div class="status-block-label">Completed</div><div class="status-longtext">' + esc(w.tasksCompleted) + '</div></div>' : '')
+          + (w.mentorComments ? '<div class="status-block"><div class="status-block-label">Mentor Comments</div><div class="status-longtext" style="font-style:italic;">' + esc(w.mentorComments) + '</div></div>' : '')
           + '</div>';
       }).join('');
     } else {
