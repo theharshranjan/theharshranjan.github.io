@@ -83,6 +83,7 @@
       <button type="button" id="tabAssign" class="mode-tab active" onclick="setAdminMode('assign')">Assign Task</button>
       <button type="button" id="tabFeedback" class="mode-tab" onclick="setAdminMode('feedback')">Review &amp; Feedback</button>
       <button type="button" id="tabHistory" class="mode-tab" onclick="setAdminMode('history')">Intern History</button>
+      <button type="button" id="tabAnnounce" class="mode-tab" onclick="setAdminMode('announce')">Announce</button>
     </div>
 
   <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
@@ -223,6 +224,44 @@
     </div>
   </div>
 
+  <!-- ── ANNOUNCE (email all interns at once) ── -->
+  <div id="announcePanel" class="space-y-6 hidden">
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Subject *</label>
+      <input type="text" id="anSubject" class="form-input2" value="New Way to Track Your Tasks — Samarpan Intern Portal">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Message *</label>
+      <textarea id="anMessage" class="form-textarea2" rows="10">Starting next week, all your task assignments will be shared and tracked through our new Intern Portal instead of email.
+
+From the portal you can:
+- See your current assigned task, deadline, and priority
+- Submit your work directly (link or file upload)
+- Check any feedback from your mentor
+- Submit your weekly report
+- See your full task history
+
+Please bookmark and start using it here:
+https://thesamarpan.co.in/intern-portal.html
+
+Just enter your name and Intern ID under "My Status" to see everything at a glance. If anything looks off or missing on your end, reply and let us know.</textarea>
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Each intern gets their own email — "Hi [Name]," and a signature are added automatically, so just write the middle part here.</p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <input type="checkbox" id="anActiveOnly" checked style="width:16px;height:16px;">
+      <label for="anActiveOnly" class="text-sm" style="color:var(--text);">Only send to interns marked "Active"</label>
+    </div>
+
+    <button type="button" id="anSendBtn" onclick="handleAnnounce()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
+      <span id="anSendLabel">Send to All Interns</span>
+    </button>
+
+    <div id="anStatus"></div>
+  </div>
+
   </div>
 
 </main>
@@ -258,9 +297,11 @@
     document.getElementById('tabAssign').classList.toggle('active', mode === 'assign');
     document.getElementById('tabFeedback').classList.toggle('active', mode === 'feedback');
     document.getElementById('tabHistory').classList.toggle('active', mode === 'history');
+    document.getElementById('tabAnnounce').classList.toggle('active', mode === 'announce');
     document.getElementById('assignForm').classList.toggle('hidden', mode !== 'assign');
     document.getElementById('feedbackForm').classList.toggle('hidden', mode !== 'feedback');
     document.getElementById('historyPanel').classList.toggle('hidden', mode !== 'history');
+    document.getElementById('announcePanel').classList.toggle('hidden', mode !== 'announce');
   }
 
   function getRecaptchaToken(action) {
@@ -281,7 +322,7 @@
     var btn = document.getElementById(id);
     if (!btn) return;
     btn.disabled = loading;
-    var label = (id === 'fbSubmitBtn') ? 'Saving…' : 'Assigning…';
+    var label = (id === 'fbSubmitBtn') ? 'Saving…' : (id === 'anSendBtn') ? 'Sending…' : 'Assigning…';
     if (loading) { btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>' + label; }
     else { var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
   }
@@ -502,6 +543,43 @@
     } else {
       wkEl.innerHTML = '<p style="color:var(--text-muted);">No weekly reports on record.</p>';
     }
+  }
+
+  async function handleAnnounce() {
+    var subject = document.getElementById('anSubject').value.trim();
+    var message = document.getElementById('anMessage').value.trim();
+    var activeOnly = document.getElementById('anActiveOnly').checked;
+    if (!subject || !message) { setStatus('anStatus', false, 'Please fill in both subject and message.'); return; }
+
+    var confirmMsg = activeOnly
+      ? 'Send this email to every intern marked "Active" in Intern Database? This cannot be undone.'
+      : 'Send this email to EVERY intern in Intern Database (including inactive ones)? This cannot be undone.';
+    if (!confirm(confirmMsg)) return;
+
+    setBtnLoading('anSendBtn', true);
+    try {
+      var token = await getRecaptchaToken('announce_all');
+      var payload = {
+        action: 'announceAll',
+        adminPassword: CLIENT_ADMIN_PASSWORD,
+        recaptchaToken: token,
+        subject: subject,
+        message: message,
+        activeOnly: activeOnly
+      };
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not send announcement');
+      setStatus('anStatus', true, 'Sent to ' + data.sent + ' intern(s)' + (data.skipped ? (', skipped ' + data.skipped + ' (no email or inactive)') : '') + '.');
+    } catch (err) {
+      console.error('Announce error:', err);
+      setStatus('anStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoading('anSendBtn', false);
   }
 
   window.addEventListener('DOMContentLoaded', function() {
