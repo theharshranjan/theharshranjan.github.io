@@ -8,6 +8,20 @@
 <link rel="canonical" href="https://thesamarpan.co.in/intern-portal.html">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
+<!-- Open Graph / social share preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Intern Portal — Samarpan">
+<meta property="og:description" content="Submit a task update or your weekly report — for active Samarpan interns.">
+<meta property="og:url" content="https://thesamarpan.co.in/intern-portal.html">
+<meta property="og:image" content="https://thesamarpan.co.in/og-intern-portal.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Intern Portal — Samarpan">
+<meta name="twitter:description" content="Submit a task update or your weekly report — for active Samarpan interns.">
+<meta name="twitter:image" content="https://thesamarpan.co.in/og-intern-portal.webp">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
@@ -52,15 +66,18 @@
   #mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;transform:translateY(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
   #mobile-menu.active{transform:translateY(0);}
 
-  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
-  .form-input2:focus{border-color:#D95D39;}
+  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .2s,box-shadow .2s;outline:none;}
+  .form-input2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
   .form-input2.invalid{border-color:#D95D39!important;}
-  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;resize:vertical;}
-  .form-textarea2:focus{border-color:#D95D39;}
+  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
+  .form-textarea2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
   .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;letter-spacing:.05em;}
   .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  .form-success,.form-error{animation:fieldFadeIn .25s ease;}
   .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
   @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes fieldFadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  .field-fade-in{animation:fieldFadeIn .3s ease;}
 
   #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
   #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
@@ -69,6 +86,30 @@
   .mode-tab{flex:1;padding:.9rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:none;cursor:pointer;transition:background .25s,color .25s;}
   .mode-tab.active{background:#D95D39;color:#fff;}
   .mode-tab:not(.active):hover{background:var(--bg2);}
+
+  /* ── File upload: dropzone + chips ── */
+  .file-drop{display:flex;align-items:center;gap:.85rem;width:100%;border:1.5px dashed var(--border);border-radius:6px;padding:1rem;cursor:pointer;transition:border-color .2s,background .2s;}
+  .file-drop:hover,.file-drop.dragover{border-color:#D95D39;background:rgba(217,93,57,.04);}
+  .file-drop:focus-visible{outline:2px solid #D95D39;outline-offset:2px;}
+  .file-drop-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:#D95D39;}
+  .file-drop-title{font-size:.85rem;font-weight:700;color:var(--text);margin:0 0 2px;}
+  .file-drop-sub{font-size:.72rem;color:var(--text-muted);margin:0;line-height:1.4;}
+  .file-chip-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem;}
+  .file-chip{display:flex;align-items:center;gap:.45rem;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:.35rem .55rem .35rem .85rem;font-size:.72rem;color:var(--text);animation:fieldFadeIn .2s ease;}
+  .file-chip .file-chip-size{color:var(--text-muted);}
+  .file-chip button{background:none;border:none;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:0;line-height:1;border-radius:50%;transition:color .2s,background .2s;}
+  .file-chip button:hover{color:#fff;background:#D95D39;}
+
+  /* ── Submit button micro-interaction ── */
+  #pfSubmitBtn{transition:background .25s,transform .15s,box-shadow .25s;}
+  #pfSubmitBtn:hover:not(:disabled){background:#c24e2c;transform:translateY(-1px);box-shadow:0 8px 20px rgba(217,93,57,.22);}
+  #pfSubmitBtn:active:not(:disabled){transform:translateY(0);}
+  #pfSubmitBtn:disabled{opacity:.75;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    .field-fade-in,.form-success,.form-error,.file-chip,.btn-spinner{animation:none!important;}
+    #pfSubmitBtn,#pfSubmitBtn:hover{transform:none!important;}
+  }
 </style>
 </head>
 <body>
@@ -204,15 +245,24 @@
     <!-- ── SHARED: FILE ATTACH ── -->
     <div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
-      <input type="file" id="pfAttachments" class="form-input2" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Photos, PDFs, or documents — up to 5 files, 8MB each.</p>
+      <div id="pfDropzone" class="file-drop" tabindex="0" role="button" aria-label="Attach files — click to browse or drag files here">
+        <span class="file-drop-icon"><i data-lucide="upload-cloud" class="w-4 h-4"></i></span>
+        <div>
+          <p class="file-drop-title">Click to browse, or drag files here</p>
+          <p class="file-drop-sub">Photos, PDFs, or documents — up to 5 files, 8MB each. Large photos are compressed automatically so this stays quick.</p>
+        </div>
+      </div>
+      <input type="file" id="pfAttachments" class="sr-only" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
+      <div id="pfFileList" class="file-chip-list"></div>
     </div>
 
     <button type="submit" id="pfSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
       <span id="pfSubmitLabel">Submit Task Update</span>
     </button>
+    <p class="text-xs text-center -mt-3" style="color:var(--text-muted);">Submitting with photos or files attached can take a little longer while they upload.</p>
 
-    <div id="pfStatus"></div>
+    <div id="pfStatus" aria-live="polite"></div>
+    <p class="text-xs text-center" style="color:var(--text-muted);">Trouble submitting? Email <a href="mailto:info@thesamarpan.co.in" style="color:#D95D39;text-decoration:underline;">info@thesamarpan.co.in</a> and we'll help you out.</p>
     <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
       <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
@@ -246,8 +296,17 @@
     currentMode = mode;
     document.getElementById('tabTask').classList.toggle('active', mode === 'task');
     document.getElementById('tabWeekly').classList.toggle('active', mode === 'weekly');
-    document.getElementById('taskFields').classList.toggle('hidden', mode !== 'task');
-    document.getElementById('weeklyFields').classList.toggle('hidden', mode !== 'weekly');
+
+    var taskEl = document.getElementById('taskFields');
+    var weeklyEl = document.getElementById('weeklyFields');
+    taskEl.classList.toggle('hidden', mode !== 'task');
+    weeklyEl.classList.toggle('hidden', mode !== 'weekly');
+
+    // Small fade-in on whichever half just became visible
+    var activeEl = mode === 'task' ? taskEl : weeklyEl;
+    activeEl.classList.remove('field-fade-in');
+    void activeEl.offsetWidth; // force reflow so the animation restarts
+    activeEl.classList.add('field-fade-in');
 
     // Required-ness follows whichever half of the form is visible
     document.getElementById('pfTaskId').required = (mode === 'task');
@@ -277,10 +336,106 @@
 
   var MAX_FILES = 5;
   var MAX_FILE_BYTES = 8 * 1024 * 1024; // 8MB per file
+  var COMPRESS_THRESHOLD_BYTES = 900 * 1024; // only compress images bigger than ~900KB
+  var COMPRESS_MAX_DIMENSION = 1600; // px, longest side
+  var COMPRESS_QUALITY = 0.8;
 
-  function filesToBase64(fileList) {
-    var files = Array.from(fileList || []);
-    return Promise.all(files.map(function(file) {
+  // ── File selection state (drives the dropzone + chip list) ──
+  var selectedFiles = []; // array of File objects
+
+  function formatSize(bytes) {
+    if (bytes >= 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
+    return Math.round(bytes / 1024) + 'KB';
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function renderFileChips() {
+    var list = document.getElementById('pfFileList');
+    list.innerHTML = selectedFiles.map(function(f, i) {
+      return '<span class="file-chip">' + escapeHtml(f.name) +
+        ' <span class="file-chip-size">· ' + formatSize(f.size) + '</span>' +
+        '<button type="button" aria-label="Remove ' + escapeHtml(f.name) + '" data-idx="' + i + '">&times;</button></span>';
+    }).join('');
+    Array.prototype.forEach.call(list.querySelectorAll('button'), function(btn) {
+      btn.addEventListener('click', function() {
+        selectedFiles.splice(Number(btn.getAttribute('data-idx')), 1);
+        renderFileChips();
+      });
+    });
+  }
+  function addFiles(fileList) {
+    var incoming = Array.prototype.slice.call(fileList || []);
+    var skippedForCount = false;
+    incoming.forEach(function(f) {
+      if (selectedFiles.length >= MAX_FILES) { skippedForCount = true; return; }
+      var isDup = selectedFiles.some(function(e) { return e.name === f.name && e.size === f.size; });
+      if (!isDup) selectedFiles.push(f);
+    });
+    renderFileChips();
+    if (skippedForCount) setStatus('pfStatus', false, 'Only the first ' + MAX_FILES + ' files were added — that\u2019s the max per submission.');
+  }
+
+  var dropzone = document.getElementById('pfDropzone');
+  var hiddenFileInput = document.getElementById('pfAttachments');
+  dropzone.addEventListener('click', function() { hiddenFileInput.click(); });
+  dropzone.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hiddenFileInput.click(); }
+  });
+  hiddenFileInput.addEventListener('change', function() {
+    addFiles(hiddenFileInput.files);
+    hiddenFileInput.value = ''; // allows re-selecting the same file later
+  });
+  ['dragover', 'dragenter'].forEach(function(evt) {
+    dropzone.addEventListener(evt, function(e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(function(evt) {
+    dropzone.addEventListener(evt, function(e) { e.preventDefault(); dropzone.classList.remove('dragover'); });
+  });
+  dropzone.addEventListener('drop', function(e) { addFiles(e.dataTransfer.files); });
+
+  // Shrinks large photos client-side before upload — most attachments are
+  // phone camera photos (often 4-12MB), and cutting those down to ~200-600KB
+  // is what actually makes the submit feel fast, since the encode, network
+  // transfer, and the Apps Script Drive write on the other end all scale
+  // with file size. Non-image files (PDFs, docs) pass through untouched.
+  function maybeCompressImage(file) {
+    if (!file.type || file.type.indexOf('image/') !== 0) return Promise.resolve(file);
+    if (file.type === 'image/gif') return Promise.resolve(file); // skip animated gifs
+    if (file.size <= COMPRESS_THRESHOLD_BYTES) return Promise.resolve(file);
+    return new Promise(function(resolve) {
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function() {
+        URL.revokeObjectURL(url);
+        var scale = Math.min(1, COMPRESS_MAX_DIMENSION / Math.max(img.width, img.height));
+        var w = Math.max(1, Math.round(img.width * scale));
+        var h = Math.max(1, Math.round(img.height * scale));
+        var canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob(function(blob) {
+          if (!blob || blob.size >= file.size) { resolve(file); return; } // keep original if it didn't actually help
+          var newName = file.name.replace(/\.(png|jpe?g|webp|heic|heif)$/i, '') + '.jpg';
+          try {
+            resolve(new File([blob], newName, { type: 'image/jpeg' }));
+          } catch (e) {
+            // very old browsers without File() constructor support — fall back to the original
+            resolve(file);
+          }
+        }, 'image/jpeg', COMPRESS_QUALITY);
+      };
+      img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
+  function filesToBase64(files) {
+    var list = Array.prototype.slice.call(files || []);
+    return Promise.all(list.map(function(file) {
       return new Promise(function(resolve, reject) {
         var reader = new FileReader();
         reader.onload = function() {
@@ -296,12 +451,17 @@
     var el = document.getElementById(id);
     if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
   }
-  function setBtnLoading(id, loading) {
+  function setBtnLoading(id, loading, message) {
     var btn = document.getElementById(id);
     if (!btn) return;
     btn.disabled = loading;
-    if (loading) { btn.setAttribute('data-orig',btn.innerHTML); btn.innerHTML='<span class="btn-spinner"></span>Submitting…'; }
-    else { var o=btn.getAttribute('data-orig'); if(o) btn.innerHTML=o; }
+    if (loading) {
+      if (!btn.getAttribute('data-orig')) btn.setAttribute('data-orig', btn.innerHTML);
+      btn.innerHTML = '<span class="btn-spinner"></span>' + (message || 'Submitting…');
+    } else {
+      var o = btn.getAttribute('data-orig');
+      if (o) { btn.innerHTML = o; btn.removeAttribute('data-orig'); }
+    }
   }
 
   async function handleSubmit(e) {
@@ -342,25 +502,41 @@
     var website = document.getElementById('pfWebsite').value;
     if (website) { setStatus('pfStatus', true, 'Thank you! Your submission has been received.'); document.getElementById('portalForm').reset(); return; } // honeypot
 
-    var fileInput = document.getElementById('pfAttachments');
-    var chosenFiles = fileInput && fileInput.files ? fileInput.files : [];
-    if (chosenFiles.length > MAX_FILES) { setStatus('pfStatus', false, 'Please attach at most ' + MAX_FILES + ' files.'); return; }
-    for (var i = 0; i < chosenFiles.length; i++) {
-      if (chosenFiles[i].size > MAX_FILE_BYTES) { setStatus('pfStatus', false, '"' + chosenFiles[i].name + '" is over 8MB — please attach a smaller file.'); return; }
-    }
-
-    if (currentMode === 'task' && !submissionLink && chosenFiles.length === 0) {
+    if (currentMode === 'task' && !submissionLink && selectedFiles.length === 0) {
       setStatus('pfStatus', false, 'Please add a submission link or attach at least one file.');
       return;
     }
 
-    setBtnLoading('pfSubmitBtn', true);
+    var stillWorkingTimer = null;
+    setBtnLoading('pfSubmitBtn', true, selectedFiles.length ? 'Optimizing photos…' : 'Preparing…');
     try {
-      var attachments = await filesToBase64(chosenFiles);
+      // Compress large images first — cuts both encode time and upload size
+      var processedFiles = await Promise.all(selectedFiles.map(maybeCompressImage));
+
+      for (var i = 0; i < processedFiles.length; i++) {
+        if (processedFiles[i].size > MAX_FILE_BYTES) {
+          setBtnLoading('pfSubmitBtn', false);
+          setStatus('pfStatus', false, '"' + processedFiles[i].name + '" is still over 8MB — please attach a smaller file.');
+          return;
+        }
+      }
+
+      // Reassure the person if a slow connection or a big batch of files is taking a while
+      stillWorkingTimer = setTimeout(function() {
+        setBtnLoading('pfSubmitBtn', true, 'Still working, almost there…');
+      }, 9000);
+
+      setBtnLoading('pfSubmitBtn', true, 'Uploading…');
+      // Encode files and fetch the reCAPTCHA token in parallel instead of one after another
+      var recaptchaAction = currentMode === 'task' ? 'task_checkin' : 'weekly_report';
+      var prepped = await Promise.all([filesToBase64(processedFiles), getRecaptchaToken(recaptchaAction)]);
+      var attachments = prepped[0];
+      var token = prepped[1];
+
+      setBtnLoading('pfSubmitBtn', true, 'Saving your submission…');
       var resp, data;
 
       if (currentMode === 'task') {
-        var token = await getRecaptchaToken('task_checkin');
         var payload = {
           recaptchaToken: token,
           pageLoadedAt: xLoadedAt,
@@ -380,9 +556,8 @@
           body: JSON.stringify(payload)
         });
       } else {
-        var token2 = await getRecaptchaToken('weekly_report');
         var payload2 = {
-          recaptchaToken: token2,
+          recaptchaToken: token,
           pageLoadedAt: xLoadedAt,
           internName: name,
           internId: internId,
@@ -404,12 +579,14 @@
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
       setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
       document.getElementById('portalForm').reset();
-      setBtnLoading('pfSubmitBtn', false); // restore button content before setMode touches pfSubmitLabel
+      selectedFiles = [];
+      renderFileChips();
       setMode(currentMode); // re-apply required attributes after reset
     } catch (err) {
       console.error('Submission error:', err);
       setStatus('pfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
     }
+    if (stillWorkingTimer) clearTimeout(stillWorkingTimer);
     setBtnLoading('pfSubmitBtn', false);
   }
 
