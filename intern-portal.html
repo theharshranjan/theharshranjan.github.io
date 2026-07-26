@@ -81,7 +81,10 @@
   .badge-done{background:rgba(74,93,79,.12);color:#4A5D4F;}
   .badge-pending{background:rgba(197,160,89,.15);color:#a6801f;}
   .badge-overdue{background:rgba(217,93,57,.12);color:#D95D39;}
-  .status-feedback{margin-top:.75rem;padding:.85rem 1rem;background:var(--bg2);border-left:3px solid #D95D39;border-radius:4px;font-style:italic;color:var(--text);}
+  .status-feedback{margin-top:.75rem;padding:.85rem 1rem;background:var(--bg2);border-left:3px solid #D95D39;border-radius:4px;font-style:italic;color:var(--text);white-space:pre-wrap;line-height:1.6;text-align:left;}
+  .status-block{margin:.6rem 0;text-align:left;}
+  .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
+  .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
 </style>
 </head>
 <body>
@@ -369,7 +372,7 @@
       var submitted = (t.status === 'Submitted' || t.status === 'Completed' || t.status === 'Approved' || t.status === 'Revision Required');
       var html = ''
         + '<div class="status-row"><span class="status-label">Task ID</span><span class="status-value">' + esc(t.taskId) + '</span></div>'
-        + '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(t.task) + '</span></div>'
+        + '<div class="status-block"><div class="status-block-label">Assigned Work</div><div class="status-longtext">' + esc(t.task) + '</div></div>'
         + (t.deadline ? '<div class="status-row"><span class="status-label">Deadline</span><span class="status-value">' + esc(t.deadline) + '</span></div>' : '')
         + (t.priority ? '<div class="status-row"><span class="status-label">Priority</span><span class="status-value">' + esc(t.priority) + '</span></div>' : '')
         + '<div class="status-row"><span class="status-label">Status</span><span class="status-value"><span class="status-badge ' + statusBadgeClass(t.status) + '">' + esc(t.status || 'Not Started') + '</span></span></div>';
@@ -434,7 +437,7 @@
         body.innerHTML = others.map(function(t){
           return '<div style="border-bottom:1px solid var(--border);padding-bottom:.85rem;">'
             + '<div class="status-row"><span class="status-label">Task ID</span><span class="status-value">' + esc(t.taskId) + '</span></div>'
-            + '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(t.task) + '</span></div>'
+            + '<div class="status-block"><div class="status-block-label">Assigned Work</div><div class="status-longtext">' + esc(t.task) + '</div></div>'
             + '<div class="status-row"><span class="status-label">Status</span><span class="status-value"><span class="status-badge ' + statusBadgeClass(t.status) + '">' + esc(t.status || 'Not Started') + '</span></span></div>'
             + (t.mentorFeedback ? '<div class="status-feedback">"' + esc(t.mentorFeedback) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>' : '')
             + '</div>';
