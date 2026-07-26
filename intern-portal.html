@@ -183,6 +183,14 @@
           <div id="statusWeeklyBody" class="space-y-2 text-sm"></div>
         </div>
 
+        <div class="status-card" id="statusHistoryCard" style="display:none;">
+          <button type="button" onclick="toggleHistory()" class="flex items-center justify-between w-full text-left">
+            <h3 class="font-display text-lg" style="color:var(--text);">Previous Tasks</h3>
+            <i data-lucide="chevron-down" class="w-4 h-4" id="historyChevron" style="color:var(--text-muted);"></i>
+          </button>
+          <div id="statusHistoryBody" class="space-y-4 text-sm mt-3 hidden"></div>
+        </div>
+
       </div>
     </div>
 
@@ -326,6 +334,7 @@
       .then(function(info){
         if (info && info.internId) document.getElementById('pfInternId').value = info.internId;
         renderStatus(info);
+        if (info && info.internId) loadTaskHistory(info.internId, info.task ? info.task.taskId : '');
       })
       .catch(function(){
         emptyMsg.textContent = "Couldn't load your status right now — please try again in a moment.";
@@ -403,6 +412,35 @@
     return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
       return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
     });
+  }
+
+  function toggleHistory() {
+    var body = document.getElementById('statusHistoryBody');
+    var chev = document.getElementById('historyChevron');
+    var open = body.classList.toggle('hidden') === false;
+    if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
+  }
+
+  function loadTaskHistory(internId, currentTaskId) {
+    var card = document.getElementById('statusHistoryCard');
+    var body = document.getElementById('statusHistoryBody');
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&full=1')
+      .then(function(r){ return r.json(); })
+      .then(function(info){
+        if (!info || !info.found || !info.tasks) { card.style.display = 'none'; return; }
+        var others = info.tasks.filter(function(t){ return t.taskId !== currentTaskId; });
+        if (!others.length) { card.style.display = 'none'; return; }
+        card.style.display = '';
+        body.innerHTML = others.map(function(t){
+          return '<div style="border-bottom:1px solid var(--border);padding-bottom:.85rem;">'
+            + '<div class="status-row"><span class="status-label">Task ID</span><span class="status-value">' + esc(t.taskId) + '</span></div>'
+            + '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(t.task) + '</span></div>'
+            + '<div class="status-row"><span class="status-label">Status</span><span class="status-value"><span class="status-badge ' + statusBadgeClass(t.status) + '">' + esc(t.status || 'Not Started') + '</span></span></div>'
+            + (t.mentorFeedback ? '<div class="status-feedback">"' + esc(t.mentorFeedback) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>' : '')
+            + '</div>';
+        }).join('');
+      })
+      .catch(function(){ card.style.display = 'none'; });
   }
 
   function getRecaptchaToken(action) {
