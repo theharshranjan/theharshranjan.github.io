@@ -584,11 +584,11 @@
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
       if (stillWorkingTimer) clearTimeout(stillWorkingTimer);
       setBtnLoading('pfSubmitBtn', false); // restore button first so pfSubmitLabel exists again
-      setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
       document.getElementById('portalForm').reset();
       selectedFiles = [];
       renderFileChips();
-      setMode(currentMode); // re-apply required attributes after reset
+      setMode(currentMode); // re-apply required attributes after reset (this also clears pfStatus)
+      setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
       return;
     } catch (err) {
       console.error('Submission error:', err);
