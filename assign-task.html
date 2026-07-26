@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assign Task — Samarpan Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
+
+<script>
+  tailwind.config = {
+    darkMode: ['attribute', '[data-theme="dark"]'],
+    theme: { extend: {
+      colors: { clay:'#D95D39', 'brand-black':'#1C1C1C', 'brand-gray':'#666666', 'brand-gold':'#C5A059', 'brand-cream':'#FDFBF7', paper:'#FDFBF7', sage:'#4A5D4F' },
+      fontFamily: { sans:['Lato','sans-serif'], serif:['Cormorant Garamond','serif'], display:['Marcellus','serif'] }
+    }}
+  };
+</script>
+
+<style>
+  :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
+  [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+  *,*::before,*::after{box-sizing:border-box;}
+  body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:'Lato',sans-serif;}
+  .grecaptcha-badge{visibility:hidden!important;}
+
+  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
+  .form-input2:focus{border-color:#D95D39;}
+  .form-input2.invalid{border-color:#D95D39!important;}
+  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);outline:none;resize:vertical;}
+  .form-textarea2:focus{border-color:#D95D39;}
+  .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .lock-screen{max-width:360px;margin:0 auto;text-align:center;}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:2rem;box-shadow:var(--shadow);}
+</style>
+</head>
+<body>
+
+<header class="pt-16 pb-10 px-4 sm:px-6 text-center" style="background:var(--bg2);">
+  <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">Team Only</p>
+  <h1 class="font-display font-light mb-2" style="font-size:clamp(2rem,5vw,3rem);color:var(--text);">Assign Task</h1>
+  <p class="font-sans text-sm max-w-md mx-auto" style="color:var(--text-muted);">Add a new task for an intern in a few seconds — no need to open the spreadsheet.</p>
+</header>
+
+<main class="max-w-2xl mx-auto px-4 sm:px-6 py-14">
+
+  <!-- ── LOCK SCREEN ── -->
+  <div id="lockScreen" class="lock-screen">
+    <div class="card">
+      <i data-lucide="lock" class="w-6 h-6 mx-auto mb-4" style="color:var(--text-muted);"></i>
+      <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
+      <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
+      <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
+      <div id="lockStatus" class="mt-3"></div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGN FORM (hidden until unlocked) ── -->
+  <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6 hidden">
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+      <input type="text" id="atName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="atNameList">
+      <datalist id="atNameList"></datalist>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Department</label>
+        <select id="atDept" class="form-input2">
+          <option value="">— Not set —</option>
+          <option>Ayurveda</option>
+          <option>Yoga</option>
+          <option>Psychology</option>
+          <option>Nutrition</option>
+          <option>Public Health</option>
+          <option>Research</option>
+          <option>Content &amp; Social Media</option>
+          <option>Communications</option>
+          <option>Website &amp; Technology</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Priority</label>
+        <select id="atPriority" class="form-input2">
+          <option value="Low">Low</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task *</label>
+      <textarea id="atTask" class="form-textarea2" rows="3" placeholder="What they need to do" required></textarea>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Topic (optional)</label>
+      <input type="text" id="atTopic" class="form-input2" placeholder="e.g. a specific topic from the Topic Bank">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Deadline (optional)</label>
+      <input type="date" id="atDeadline" class="form-input2">
+    </div>
+
+    <button type="submit" id="atSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+      <span id="atSubmitLabel">Assign Task</span>
+    </button>
+
+    <div id="atStatus"></div>
+  </form>
+
+</main>
+
+<script>
+  var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+
+  // CHANGE THIS — must match ADMIN_PASSWORD in Code2_TaskCheckin.gs
+  // exactly. This is a simple shared-password gate, not strong
+  // security — the real check happens server-side on submit too.
+  var CLIENT_ADMIN_PASSWORD = 'ChangeThisPassword2026';
+
+  function tryUnlock() {
+    var entered = document.getElementById('lockPassword').value;
+    if (entered === CLIENT_ADMIN_PASSWORD) {
+      sessionStorage.setItem('sp_admin_unlocked', '1');
+      showForm();
+    } else {
+      document.getElementById('lockStatus').innerHTML = '<div class="form-error">Incorrect password.</div>';
+    }
+  }
+
+  function showForm() {
+    document.getElementById('lockScreen').classList.add('hidden');
+    document.getElementById('assignForm').classList.remove('hidden');
+    loadInternNames();
+  }
+
+  function getRecaptchaToken(action) {
+    return new Promise(function(resolve) {
+      try {
+        grecaptcha.ready(function() {
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+        });
+      } catch (err) { resolve(''); }
+    });
+  }
+
+  function setStatus(id, ok, msg) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
+  }
+  function setBtnLoading(id, loading) {
+    var btn = document.getElementById(id);
+    if (!btn) return;
+    btn.disabled = loading;
+    if (loading) { btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Assigning…'; }
+    else { var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+  }
+
+  function loadInternNames() {
+    fetch(CHECKIN_APPS_SCRIPT_URL)
+      .then(function(r){ return r.json(); })
+      .then(function(names){
+        if (!Array.isArray(names)) return;
+        var dl = document.getElementById('atNameList');
+        dl.innerHTML = names.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
+      })
+      .catch(function(){ /* silently ignore — admin can still type the name manually */ });
+  }
+
+  async function handleAssign(e) {
+    e.preventDefault();
+    var name = document.getElementById('atName').value.trim();
+    var task = document.getElementById('atTask').value.trim();
+    var valid = true;
+    if (!name) { document.getElementById('atName').classList.add('invalid'); valid = false; }
+    else { document.getElementById('atName').classList.remove('invalid'); }
+    if (!task) { document.getElementById('atTask').classList.add('invalid'); valid = false; }
+    else { document.getElementById('atTask').classList.remove('invalid'); }
+    if (!valid) { setStatus('atStatus', false, 'Please fill in the required fields above.'); return; }
+
+    setBtnLoading('atSubmitBtn', true);
+    try {
+      var token = await getRecaptchaToken('assign_task');
+      var payload = {
+        action: 'assignTask',
+        adminPassword: CLIENT_ADMIN_PASSWORD,
+        recaptchaToken: token,
+        internName: name,
+        department: document.getElementById('atDept').value,
+        priority: document.getElementById('atPriority').value,
+        task: task,
+        topic: document.getElementById('atTopic').value.trim(),
+        deadline: document.getElementById('atDeadline').value
+      };
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not assign task');
+      setStatus('atStatus', true, 'Assigned as ' + (data.taskId || 'a new task') + ' to ' + name + '.');
+      document.getElementById('assignForm').reset();
+      document.getElementById('atPriority').value = 'Medium';
+    } catch (err) {
+      console.error('Assign task error:', err);
+      setStatus('atStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoading('atSubmitBtn', false);
+  }
+
+  window.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+    if (sessionStorage.getItem('sp_admin_unlocked') === '1') showForm();
+    document.getElementById('lockPassword').addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); }
+    });
+  });
+</script>
+</body>
+</html>
