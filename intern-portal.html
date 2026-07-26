@@ -582,11 +582,14 @@
 
       data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
+      if (stillWorkingTimer) clearTimeout(stillWorkingTimer);
+      setBtnLoading('pfSubmitBtn', false); // restore button first so pfSubmitLabel exists again
       setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
       document.getElementById('portalForm').reset();
       selectedFiles = [];
       renderFileChips();
       setMode(currentMode); // re-apply required attributes after reset
+      return;
     } catch (err) {
       console.error('Submission error:', err);
       setStatus('pfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
