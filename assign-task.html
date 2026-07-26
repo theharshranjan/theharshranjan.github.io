@@ -79,6 +79,7 @@
     <div class="mode-tabs">
       <button type="button" id="tabAssign" class="mode-tab active" onclick="setAdminMode('assign')">Assign Task</button>
       <button type="button" id="tabFeedback" class="mode-tab" onclick="setAdminMode('feedback')">Review &amp; Feedback</button>
+      <button type="button" id="tabHistory" class="mode-tab" onclick="setAdminMode('history')">Intern History</button>
     </div>
 
   <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
@@ -181,6 +182,44 @@
 
     <div id="fbStatusMsg"></div>
   </form>
+
+  <!-- ── INTERN HISTORY (read-only — everything for one Intern ID) ── -->
+  <div id="historyPanel" class="space-y-6 hidden">
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
+      <input type="text" id="hIntId" class="form-input2" placeholder="e.g. INT-0020" autocomplete="off">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Look up the exact Intern ID from the Intern Database sheet.</p>
+    </div>
+    <button type="button" id="hSearchBtn" onclick="loadInternHistory()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
+      <span id="hSearchLabel">Show Full History</span>
+    </button>
+
+    <div id="hMsg" class="text-sm" style="color:var(--text-muted);">Enter an Intern ID above to see every task, submission, and weekly report — past and upcoming — for that intern.</div>
+
+    <div id="hResult" class="hidden space-y-6">
+      <div class="card">
+        <h3 class="font-display text-lg mb-1" style="color:var(--text);" id="hInternHeading"></h3>
+        <p class="text-xs" style="color:var(--text-muted);" id="hInternSub"></p>
+      </div>
+
+      <div class="card">
+        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Tasks (newest first)</h3>
+        <div id="hTasks" class="space-y-4"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Task Submissions</h3>
+        <div id="hSubmissions" class="space-y-4"></div>
+      </div>
+
+      <div class="card">
+        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Weekly Reports</h3>
+        <div id="hWeekly" class="space-y-4"></div>
+      </div>
+    </div>
+  </div>
+
   </div>
 
 </main>
@@ -192,7 +231,7 @@
   // CHANGE THIS — must match ADMIN_PASSWORD in Code2_TaskCheckin.gs
   // exactly. This is a simple shared-password gate, not strong
   // security — the real check happens server-side on submit too.
-  var CLIENT_ADMIN_PASSWORD = 'Samarpan@2026';
+  var CLIENT_ADMIN_PASSWORD = 'ChangeThisPassword2026';
 
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
@@ -215,8 +254,10 @@
     adminMode = mode;
     document.getElementById('tabAssign').classList.toggle('active', mode === 'assign');
     document.getElementById('tabFeedback').classList.toggle('active', mode === 'feedback');
+    document.getElementById('tabHistory').classList.toggle('active', mode === 'history');
     document.getElementById('assignForm').classList.toggle('hidden', mode !== 'assign');
     document.getElementById('feedbackForm').classList.toggle('hidden', mode !== 'feedback');
+    document.getElementById('historyPanel').classList.toggle('hidden', mode !== 'history');
   }
 
   function getRecaptchaToken(action) {
@@ -369,6 +410,97 @@
     setBtnLoading('fbSubmitBtn', false);
   }
 
+  function loadInternHistory() {
+    var id = document.getElementById('hIntId').value.trim();
+    var msg = document.getElementById('hMsg');
+    var result = document.getElementById('hResult');
+    if (!id) { msg.textContent = 'Enter an Intern ID above to see everything for that intern.'; msg.classList.remove('hidden'); result.classList.add('hidden'); return; }
+
+    msg.textContent = 'Loading…';
+    msg.classList.remove('hidden');
+    result.classList.add('hidden');
+    setBtnLoading('hSearchBtn', true);
+
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(id) + '&full=1')
+      .then(function(r){ return r.json(); })
+      .then(function(info){
+        setBtnLoading('hSearchBtn', false);
+        if (!info || !info.found) {
+          msg.textContent = 'No intern found with that ID — check the spelling matches Intern Database exactly.';
+          msg.classList.remove('hidden');
+          result.classList.add('hidden');
+          return;
+        }
+        msg.classList.add('hidden');
+        result.classList.remove('hidden');
+        renderInternHistory(info);
+      })
+      .catch(function(){
+        setBtnLoading('hSearchBtn', false);
+        msg.textContent = "Couldn't load that intern's history right now — please try again.";
+        msg.classList.remove('hidden');
+        result.classList.add('hidden');
+      });
+  }
+
+  function historyRow(label, value) {
+    if (!value) return '';
+    return '<div class="status-row"><span class="status-label">' + esc(label) + '</span><span class="status-value">' + esc(value) + '</span></div>';
+  }
+
+  function renderInternHistory(info) {
+    document.getElementById('hInternHeading').textContent = info.internName || '(no name on file)';
+    document.getElementById('hInternSub').textContent = 'Intern ID: ' + (info.internId || '—');
+
+    var tasksEl = document.getElementById('hTasks');
+    if (info.tasks && info.tasks.length) {
+      tasksEl.innerHTML = info.tasks.map(function(t){
+        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+          + historyRow('Task ID', t.taskId)
+          + historyRow('Task', t.task)
+          + historyRow('Assigned', t.assignedDate)
+          + historyRow('Deadline', t.deadline)
+          + historyRow('Priority', t.priority)
+          + historyRow('Status', t.status)
+          + (t.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(t.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
+          + (t.mentorFeedback ? '<div class="text-xs mt-2" style="color:var(--text-muted);"><em>Feedback: ' + esc(t.mentorFeedback) + '</em></div>' : '')
+          + '</div>';
+      }).join('');
+    } else {
+      tasksEl.innerHTML = '<p style="color:var(--text-muted);">No tasks on record.</p>';
+    }
+
+    var subsEl = document.getElementById('hSubmissions');
+    if (info.submissions && info.submissions.length) {
+      subsEl.innerHTML = info.submissions.map(function(s){
+        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+          + historyRow('Task ID', s.taskId)
+          + historyRow('Task', s.taskName)
+          + historyRow('Submitted', s.submissionDate)
+          + historyRow('Status', s.status)
+          + (s.submissionLink ? '<div class="status-row"><span class="status-label">Link</span><span class="status-value"><a href="' + esc(s.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
+          + (s.comments ? '<div class="text-xs mt-2" style="color:var(--text-muted);">Comments: ' + esc(s.comments) + '</div>' : '')
+          + '</div>';
+      }).join('');
+    } else {
+      subsEl.innerHTML = '<p style="color:var(--text-muted);">No submissions on record.</p>';
+    }
+
+    var wkEl = document.getElementById('hWeekly');
+    if (info.weeklyReports && info.weeklyReports.length) {
+      wkEl.innerHTML = info.weeklyReports.map(function(w){
+        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+          + historyRow('Submitted', w.timestamp)
+          + historyRow('Review Status', w.reviewStatus)
+          + (w.tasksCompleted ? '<div class="text-xs mt-2" style="color:var(--text-muted);">Completed: ' + esc(w.tasksCompleted) + '</div>' : '')
+          + (w.mentorComments ? '<div class="text-xs mt-2" style="color:var(--text-muted);"><em>Mentor: ' + esc(w.mentorComments) + '</em></div>' : '')
+          + '</div>';
+      }).join('');
+    } else {
+      wkEl.innerHTML = '<p style="color:var(--text-muted);">No weekly reports on record.</p>';
+    }
+  }
+
   window.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
     if (sessionStorage.getItem('sp_admin_unlocked') === '1') showForm();
@@ -376,6 +508,9 @@
       if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); }
     });
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
+    document.getElementById('hIntId').addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); }
+    });
   });
 </script>
 </body>
