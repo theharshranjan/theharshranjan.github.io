@@ -54,6 +54,9 @@
   .status-block{margin:.6rem 0;text-align:left;}
   .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
   .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
+  .tpl-btn{padding:.75rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:transparent;border:1.5px solid var(--border);border-radius:4px;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+  .tpl-btn:hover{border-color:#D95D39;color:#D95D39;}
+  .tpl-btn.active{background:#D95D39;border-color:#D95D39;color:#fff;}
 </style>
 </head>
 <body>
@@ -83,7 +86,7 @@
       <button type="button" id="tabAssign" class="mode-tab active" onclick="setAdminMode('assign')">Assign Task</button>
       <button type="button" id="tabFeedback" class="mode-tab" onclick="setAdminMode('feedback')">Review &amp; Feedback</button>
       <button type="button" id="tabHistory" class="mode-tab" onclick="setAdminMode('history')">Intern History</button>
-      <button type="button" id="tabAnnounce" class="mode-tab" onclick="setAdminMode('announce')">Announce</button>
+      <button type="button" id="tabAnnounce" class="mode-tab" onclick="setAdminMode('announce')">Send Email</button>
     </div>
 
   <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
@@ -191,9 +194,18 @@
   <div id="historyPanel" class="space-y-6 hidden">
 
     <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Find by Name</label>
+      <input type="text" id="hName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="atNameList" oninput="lookupHistoryByName()">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Pick a name and the Intern ID and full history below fill in automatically — no need to look up the ID by hand.</p>
+    </div>
+
+    <div class="flex items-center gap-3" style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;">
+      <div style="flex:1;height:1px;background:var(--border);"></div>or by ID<div style="flex:1;height:1px;background:var(--border);"></div>
+    </div>
+
+    <div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
       <input type="text" id="hIntId" class="form-input2" placeholder="e.g. INT-0020" autocomplete="off">
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Look up the exact Intern ID from the Intern Database sheet.</p>
     </div>
     <button type="button" id="hSearchBtn" onclick="loadInternHistory()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
       <span id="hSearchLabel">Show Full History</span>
@@ -224,8 +236,43 @@
     </div>
   </div>
 
-  <!-- ── ANNOUNCE (email all interns at once) ── -->
+  <!-- ── SEND EMAIL (specific intern, or all/filtered — with templates + attachments) ── -->
   <div id="announcePanel" class="space-y-6 hidden">
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Template</label>
+      <div class="grid grid-cols-2 gap-2">
+        <button type="button" class="tpl-btn active" data-tpl="custom" onclick="loadEmailTemplate('custom')">Custom Message</button>
+        <button type="button" class="tpl-btn" data-tpl="weekly" onclick="loadEmailTemplate('weekly')">This Week's Work</button>
+        <button type="button" class="tpl-btn" data-tpl="offer" onclick="loadEmailTemplate('offer')">Offer Letter</button>
+        <button type="button" class="tpl-btn" data-tpl="certificate" onclick="loadEmailTemplate('certificate')">Certificate</button>
+      </div>
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Loads a starting subject and message below, ready to edit — nothing is sent until you press Send.</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Send To</label>
+      <div class="mode-tabs" style="margin-bottom:0;">
+        <button type="button" id="anModeSpecific" class="mode-tab active" onclick="setEmailRecipientMode('specific')">Specific Person</button>
+        <button type="button" id="anModeFiltered" class="mode-tab" onclick="setEmailRecipientMode('filtered')">Multiple / All</button>
+      </div>
+    </div>
+
+    <div id="anSpecificWrap">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+      <input type="text" id="anInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="atNameList">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Best for a one-to-one email — e.g. one person's certificate or offer letter.</p>
+    </div>
+
+    <div id="anFilteredWrap" class="hidden">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Who Should Get This</label>
+      <select id="anFilter" class="form-input2">
+        <option value="all">All Interns</option>
+        <option value="Active" selected>Active Only</option>
+        <option value="On Hold">On Hold Only</option>
+      </select>
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Each intern still gets their own individual email — never a group CC.</p>
+    </div>
 
     <div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Subject *</label>
@@ -247,16 +294,18 @@ Please bookmark and start using it here:
 https://thesamarpan.co.in/intern-portal.html
 
 Just enter your name and Intern ID under "My Status" to see everything at a glance. If anything looks off or missing on your end, reply and let us know.</textarea>
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Each intern gets their own email — "Hi [Name]," and a signature are added automatically, so just write the middle part here.</p>
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">"Hi [Name]," and a signature are added automatically, and the email is sent in one clean, consistent font and layout — just write the middle part here. Leave a blank line between paragraphs.</p>
     </div>
 
-    <div class="flex items-center gap-2">
-      <input type="checkbox" id="anActiveOnly" checked style="width:16px;height:16px;">
-      <label for="anActiveOnly" class="text-sm" style="color:var(--text);">Only send to interns marked "Active"</label>
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
+      <input type="file" id="anFiles" multiple class="form-input2" style="padding:.6rem .75rem;">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Up to 5 files, 10MB each — e.g. a certificate or offer letter PDF. Whoever this email reaches gets the same attached file(s).</p>
+      <div id="anFileList" class="text-xs mt-1.5" style="color:var(--text);"></div>
     </div>
 
     <button type="button" id="anSendBtn" onclick="handleAnnounce()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
-      <span id="anSendLabel">Send to All Interns</span>
+      <span id="anSendLabel">Send Email</span>
     </button>
 
     <div id="anStatus"></div>
@@ -327,15 +376,42 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     else { var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
   }
 
+  var allInternNames = [];
   function loadInternNames() {
     fetch(CHECKIN_APPS_SCRIPT_URL)
       .then(function(r){ return r.json(); })
       .then(function(names){
         if (!Array.isArray(names)) return;
+        allInternNames = names;
         var dl = document.getElementById('atNameList');
         dl.innerHTML = names.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
       })
       .catch(function(){ /* silently ignore — admin can still type the name manually */ });
+  }
+
+  // Fires as the admin types/selects in the History tab's "Find by
+  // Name" field. Only acts once what's typed exactly matches a known
+  // intern name (so it doesn't fire on every half-typed keystroke) —
+  // looks up that intern's ID via the same endpoint the portal itself
+  // uses, fills the ID field, and loads the full history right away.
+  var historyNameLookupTimer = null;
+  function lookupHistoryByName() {
+    clearTimeout(historyNameLookupTimer);
+    var typed = document.getElementById('hName').value.trim();
+    if (!typed) return;
+    var isKnown = allInternNames.some(function(n){ return String(n).trim().toLowerCase() === typed.toLowerCase(); });
+    if (!isKnown) return;
+    historyNameLookupTimer = setTimeout(function() {
+      fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
+        .then(function(r){ return r.json(); })
+        .then(function(info){
+          if (info && info.internId) {
+            document.getElementById('hIntId').value = info.internId;
+            loadInternHistory();
+          }
+        })
+        .catch(function(){ /* silently ignore — admin can still enter the ID by hand */ });
+    }, 150);
   }
 
   async function handleAssign(e) {
@@ -494,7 +570,10 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
 
   function renderInternHistory(info) {
     document.getElementById('hInternHeading').textContent = info.internName || '(no name on file)';
-    document.getElementById('hInternSub').textContent = 'Intern ID: ' + (info.internId || '—');
+    var subParts = ['Intern ID: ' + (info.internId || '—')];
+    if (info.internEmail) subParts.push(info.internEmail);
+    if (info.internStatus) subParts.push(info.internStatus);
+    document.getElementById('hInternSub').textContent = subParts.join('  ·  ');
 
     var tasksEl = document.getElementById('hTasks');
     if (info.tasks && info.tasks.length) {
@@ -545,27 +624,111 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     }
   }
 
+  // ── Send Email: templates ──
+  var EMAIL_TEMPLATES = {
+    custom: {
+      subject: 'New Way to Track Your Tasks — Samarpan Intern Portal',
+      message: 'Starting next week, all your task assignments will be shared and tracked through our new Intern Portal instead of email.\n\nFrom the portal you can:\n- See your current assigned task, deadline, and priority\n- Submit your work directly (link or file upload)\n- Check any feedback from your mentor\n- Submit your weekly report\n- See your full task history\n\nPlease bookmark and start using it here:\nhttps://thesamarpan.co.in/intern-portal.html\n\nJust enter your name and Intern ID under "My Status" to see everything at a glance. If anything looks off or missing on your end, reply and let us know.'
+    },
+    weekly: {
+      subject: "Your Work for This Week",
+      message: "Here's what's on your plate this week:\n\n[Add this week's tasks or focus areas here]\n\nYou can always check your current Task ID, deadline, and any feedback under \"My Status\" on the Intern Portal:\nhttps://thesamarpan.co.in/intern-portal.html\n\nReach out if anything is unclear."
+    },
+    offer: {
+      subject: 'Your Internship Offer — Samarpan Holistic Wellbeing Community',
+      message: "Congratulations! We're delighted to offer you an internship with Samarpan Holistic Wellbeing Community.\n\nYour offer letter is attached to this email — please review it and reply to confirm your acceptance.\n\nWe're looking forward to having you on the team."
+    },
+    certificate: {
+      subject: 'Your Certificate — Samarpan Holistic Wellbeing Community',
+      message: "Thank you for your contribution during your internship with us. Your certificate is attached to this email.\n\nWe wish you the very best for what comes next, and hope you'll stay in touch."
+    }
+  };
+
+  function loadEmailTemplate(key) {
+    var t = EMAIL_TEMPLATES[key];
+    if (!t) return;
+    document.getElementById('anSubject').value = t.subject;
+    document.getElementById('anMessage').value = t.message;
+    document.querySelectorAll('.tpl-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tpl') === key); });
+    // Offer letters and certificates are almost always one person at a
+    // time with their own attached file — default to that, but the
+    // admin can still switch to Multiple / All if they want.
+    if (key === 'offer' || key === 'certificate') setEmailRecipientMode('specific');
+  }
+
+  // ── Send Email: recipient mode ──
+  var emailRecipientMode = 'specific';
+  function setEmailRecipientMode(mode) {
+    emailRecipientMode = mode;
+    document.getElementById('anModeSpecific').classList.toggle('active', mode === 'specific');
+    document.getElementById('anModeFiltered').classList.toggle('active', mode === 'filtered');
+    document.getElementById('anSpecificWrap').classList.toggle('hidden', mode !== 'specific');
+    document.getElementById('anFilteredWrap').classList.toggle('hidden', mode !== 'filtered');
+  }
+
+  // ── Send Email: attachments ──
+  var MAX_EMAIL_FILES = 5;
+  var MAX_EMAIL_FILE_BYTES = 10 * 1024 * 1024; // 10MB per file
+
+  function filesToBase64(fileList) {
+    var files = Array.from(fileList || []);
+    return Promise.all(files.map(function(file) {
+      return new Promise(function(resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function() {
+          resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] });
+        };
+        reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
+        reader.readAsDataURL(file);
+      });
+    }));
+  }
+
   async function handleAnnounce() {
     var subject = document.getElementById('anSubject').value.trim();
     var message = document.getElementById('anMessage').value.trim();
-    var activeOnly = document.getElementById('anActiveOnly').checked;
     if (!subject || !message) { setStatus('anStatus', false, 'Please fill in both subject and message.'); return; }
 
-    var confirmMsg = activeOnly
-      ? 'Send this email to every intern marked "Active" in Intern Database? This cannot be undone.'
-      : 'Send this email to EVERY intern in Intern Database (including inactive ones)? This cannot be undone.';
+    var internName = document.getElementById('anInternName').value.trim();
+    var filter = document.getElementById('anFilter').value;
+    var files = document.getElementById('anFiles').files;
+
+    if (emailRecipientMode === 'specific' && !internName) {
+      setStatus('anStatus', false, 'Choose who to send this to.');
+      return;
+    }
+    if (files && files.length > MAX_EMAIL_FILES) {
+      setStatus('anStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.');
+      return;
+    }
+    for (var i = 0; i < (files ? files.length : 0); i++) {
+      if (files[i].size > MAX_EMAIL_FILE_BYTES) {
+        setStatus('anStatus', false, '"' + files[i].name + '" is over 10MB — please attach a smaller file.');
+        return;
+      }
+    }
+
+    var confirmMsg = emailRecipientMode === 'specific'
+      ? 'Send this email to ' + internName + '?'
+      : (filter === 'all'
+          ? 'Send this email to EVERY intern in Intern Database? This cannot be undone.'
+          : 'Send this email to every intern with status "' + filter + '"? This cannot be undone.');
     if (!confirm(confirmMsg)) return;
 
     setBtnLoading('anSendBtn', true);
     try {
-      var token = await getRecaptchaToken('announce_all');
+      var attachments = await filesToBase64(files);
+      var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'announceAll',
+        action: 'sendEmail',
         adminPassword: CLIENT_ADMIN_PASSWORD,
         recaptchaToken: token,
         subject: subject,
         message: message,
-        activeOnly: activeOnly
+        recipientMode: emailRecipientMode,
+        internName: internName,
+        filter: filter,
+        attachments: attachments
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST',
@@ -573,10 +736,10 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         body: JSON.stringify(payload)
       });
       var data = await resp.json();
-      if (data.status !== 'success') throw new Error(data.message || 'Could not send announcement');
-      setStatus('anStatus', true, 'Sent to ' + data.sent + ' intern(s)' + (data.skipped ? (', skipped ' + data.skipped + ' (no email or inactive)') : '') + '.');
+      if (data.status !== 'success') throw new Error(data.message || 'Could not send email');
+      setStatus('anStatus', true, 'Sent to ' + data.sent + ' recipient(s)' + (data.skipped ? (', skipped ' + data.skipped) : '') + '.');
     } catch (err) {
-      console.error('Announce error:', err);
+      console.error('Send email error:', err);
       setStatus('anStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
     }
     setBtnLoading('anSendBtn', false);
@@ -591,6 +754,10 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
     document.getElementById('hIntId').addEventListener('keydown', function(e){
       if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); }
+    });
+    document.getElementById('anFiles').addEventListener('change', function(){
+      var files = Array.from(this.files || []);
+      document.getElementById('anFileList').textContent = files.length ? files.map(function(f){ return f.name; }).join(', ') : '';
     });
   });
 </script>
