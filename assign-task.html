@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assign Task — Samarpan Admin</title>
+<title>Admin — Samarpan</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -43,14 +43,22 @@
 
   .lock-screen{max-width:360px;margin:0 auto;text-align:center;}
   .card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:2rem;box-shadow:var(--shadow);}
+  .mode-tabs{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2rem;}
+  .mode-tab{flex:1;padding:.9rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:none;cursor:pointer;transition:background .25s,color .25s;}
+  .mode-tab.active{background:#D95D39;color:#fff;}
+  .mode-tab:not(.active):hover{background:var(--bg2);}
+  .status-row{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+  .status-row:last-child{border-bottom:none;}
+  .status-label{color:var(--text-muted);flex-shrink:0;}
+  .status-value{color:var(--text);text-align:right;font-weight:500;}
 </style>
 </head>
 <body>
 
 <header class="pt-16 pb-10 px-4 sm:px-6 text-center" style="background:var(--bg2);">
   <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">Team Only</p>
-  <h1 class="font-display font-light mb-2" style="font-size:clamp(2rem,5vw,3rem);color:var(--text);">Assign Task</h1>
-  <p class="font-sans text-sm max-w-md mx-auto" style="color:var(--text-muted);">Add a new task for an intern in a few seconds — no need to open the spreadsheet.</p>
+  <h1 class="font-display font-light mb-2" style="font-size:clamp(2rem,5vw,3rem);color:var(--text);">Admin</h1>
+  <p class="font-sans text-sm max-w-md mx-auto" style="color:var(--text-muted);">Assign new tasks and give feedback on submitted work — both reach the intern instantly.</p>
 </header>
 
 <main class="max-w-2xl mx-auto px-4 sm:px-6 py-14">
@@ -66,8 +74,14 @@
     </div>
   </div>
 
-  <!-- ── ASSIGN FORM (hidden until unlocked) ── -->
-  <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6 hidden">
+  <!-- ── TABS + FORMS (hidden until unlocked) ── -->
+  <div id="adminTabs" class="hidden">
+    <div class="mode-tabs">
+      <button type="button" id="tabAssign" class="mode-tab active" onclick="setAdminMode('assign')">Assign Task</button>
+      <button type="button" id="tabFeedback" class="mode-tab" onclick="setAdminMode('feedback')">Review &amp; Feedback</button>
+    </div>
+
+  <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
 
     <div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
@@ -123,6 +137,52 @@
     <div id="atStatus"></div>
   </form>
 
+  <!-- ── REVIEW & FEEDBACK FORM ── -->
+  <form id="feedbackForm" onsubmit="handleFeedback(event)" class="space-y-6 hidden">
+
+    <div>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+      <input type="text" id="fbName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="atNameList">
+    </div>
+
+    <div id="fbLookupMsg" class="text-sm" style="color:var(--text-muted);">Enter a name to load their current task.</div>
+
+    <div id="fbTaskCard" class="card hidden">
+      <div id="fbTaskSummary" class="space-y-1 mb-4"></div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task ID *</label>
+        <input type="text" id="fbTaskId" class="form-input2" placeholder="Auto-filled from lookup above" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Update Status</label>
+        <select id="fbStatus" class="form-input2">
+          <option value="">— Leave unchanged —</option>
+          <option>Not Started</option>
+          <option>In Progress</option>
+          <option>Submitted</option>
+          <option>Revision Required</option>
+          <option>Approved</option>
+          <option>Completed</option>
+          <option>Overdue</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Feedback for the Intern</label>
+        <textarea id="fbFeedback" class="form-textarea2" rows="4" placeholder="This shows on the intern's My Status page immediately"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" id="fbSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+      <span id="fbSubmitLabel">Save Feedback</span>
+    </button>
+
+    <div id="fbStatusMsg"></div>
+  </form>
+  </div>
+
 </main>
 
 <script>
@@ -146,8 +206,17 @@
 
   function showForm() {
     document.getElementById('lockScreen').classList.add('hidden');
-    document.getElementById('assignForm').classList.remove('hidden');
+    document.getElementById('adminTabs').classList.remove('hidden');
     loadInternNames();
+  }
+
+  var adminMode = 'assign';
+  function setAdminMode(mode) {
+    adminMode = mode;
+    document.getElementById('tabAssign').classList.toggle('active', mode === 'assign');
+    document.getElementById('tabFeedback').classList.toggle('active', mode === 'feedback');
+    document.getElementById('assignForm').classList.toggle('hidden', mode !== 'assign');
+    document.getElementById('feedbackForm').classList.toggle('hidden', mode !== 'feedback');
   }
 
   function getRecaptchaToken(action) {
@@ -168,7 +237,8 @@
     var btn = document.getElementById(id);
     if (!btn) return;
     btn.disabled = loading;
-    if (loading) { btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Assigning…'; }
+    var label = (id === 'fbSubmitBtn') ? 'Saving…' : 'Assigning…';
+    if (loading) { btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>' + label; }
     else { var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
   }
 
@@ -225,12 +295,87 @@
     setBtnLoading('atSubmitBtn', false);
   }
 
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  function loadFeedbackLookup() {
+    var name = document.getElementById('fbName').value.trim();
+    var msg = document.getElementById('fbLookupMsg');
+    var card = document.getElementById('fbTaskCard');
+    if (!name) { msg.textContent = 'Enter a name to load their current task.'; msg.classList.remove('hidden'); card.classList.add('hidden'); return; }
+
+    msg.textContent = 'Loading…';
+    msg.classList.remove('hidden');
+    card.classList.add('hidden');
+
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(name) + '&status=1')
+      .then(function(r){ return r.json(); })
+      .then(function(info){
+        if (!info || !info.task || !info.task.taskId) {
+          msg.textContent = 'No task found for that name — check the spelling matches Intern Database exactly.';
+          msg.classList.remove('hidden');
+          card.classList.add('hidden');
+          return;
+        }
+        msg.classList.add('hidden');
+        card.classList.remove('hidden');
+        document.getElementById('fbTaskId').value = info.task.taskId;
+        document.getElementById('fbStatus').value = '';
+        document.getElementById('fbFeedback').value = info.task.mentorFeedback || '';
+        document.getElementById('fbTaskSummary').innerHTML =
+          '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(info.task.task) + '</span></div>' +
+          '<div class="status-row"><span class="status-label">Current Status</span><span class="status-value">' + esc(info.task.status || 'Not Started') + '</span></div>' +
+          (info.task.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(info.task.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '');
+      })
+      .catch(function(){
+        msg.textContent = "Couldn't load that intern's status right now — please try again.";
+        msg.classList.remove('hidden');
+        card.classList.add('hidden');
+      });
+  }
+
+  async function handleFeedback(e) {
+    e.preventDefault();
+    var name = document.getElementById('fbName').value.trim();
+    var taskId = document.getElementById('fbTaskId').value.trim();
+    if (!name || !taskId) { setStatus('fbStatusMsg', false, 'Look up an intern with a current task first.'); return; }
+
+    setBtnLoading('fbSubmitBtn', true);
+    try {
+      var token = await getRecaptchaToken('give_feedback');
+      var payload = {
+        action: 'giveFeedback',
+        adminPassword: CLIENT_ADMIN_PASSWORD,
+        recaptchaToken: token,
+        taskId: taskId,
+        status: document.getElementById('fbStatus').value,
+        feedback: document.getElementById('fbFeedback').value
+      };
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not save feedback');
+      setStatus('fbStatusMsg', true, 'Saved — ' + name + ' will see this immediately on their My Status page.');
+    } catch (err) {
+      console.error('Give feedback error:', err);
+      setStatus('fbStatusMsg', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoading('fbSubmitBtn', false);
+  }
+
   window.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
     if (sessionStorage.getItem('sp_admin_unlocked') === '1') showForm();
     document.getElementById('lockPassword').addEventListener('keydown', function(e){
       if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); }
     });
+    document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
   });
 </script>
 </body>
