@@ -8,20 +8,6 @@
 <link rel="canonical" href="https://thesamarpan.co.in/intern-portal.html">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-<!-- Open Graph / social share preview -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Intern Portal — Samarpan">
-<meta property="og:description" content="Submit a task update or your weekly report — for active Samarpan interns.">
-<meta property="og:url" content="https://thesamarpan.co.in/intern-portal.html">
-<meta property="og:image" content="https://thesamarpan.co.in/og-intern-portal.webp">
-<meta property="og:image:type" content="image/webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Intern Portal — Samarpan">
-<meta name="twitter:description" content="Submit a task update or your weekly report — for active Samarpan interns.">
-<meta name="twitter:image" content="https://thesamarpan.co.in/og-intern-portal.webp">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
@@ -66,18 +52,15 @@
   #mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.75rem;transform:translateY(-100%);transition:transform .4s cubic-bezier(.4,0,.2,1);}
   #mobile-menu.active{transform:translateY(0);}
 
-  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .2s,box-shadow .2s;outline:none;}
-  .form-input2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
+  .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
+  .form-input2:focus{border-color:#D95D39;}
   .form-input2.invalid{border-color:#D95D39!important;}
-  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .2s,box-shadow .2s;outline:none;resize:vertical;}
-  .form-textarea2:focus{border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
+  .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;resize:vertical;}
+  .form-textarea2:focus{border-color:#D95D39;}
   .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;letter-spacing:.05em;}
   .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
-  .form-success,.form-error{animation:fieldFadeIn .25s ease;}
   .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  @keyframes fieldFadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
-  .field-fade-in{animation:fieldFadeIn .3s ease;}
 
   #theme-toggle button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:var(--card-bg);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);cursor:pointer;color:var(--text);transition:background .3s,color .3s,transform .3s;}
   #theme-toggle button:hover{transform:scale(1.1);background:#D95D39;color:#fff;border-color:#D95D39;}
@@ -87,29 +70,18 @@
   .mode-tab.active{background:#D95D39;color:#fff;}
   .mode-tab:not(.active):hover{background:var(--bg2);}
 
-  /* ── File upload: dropzone + chips ── */
-  .file-drop{display:flex;align-items:center;gap:.85rem;width:100%;border:1.5px dashed var(--border);border-radius:6px;padding:1rem;cursor:pointer;transition:border-color .2s,background .2s;}
-  .file-drop:hover,.file-drop.dragover{border-color:#D95D39;background:rgba(217,93,57,.04);}
-  .file-drop:focus-visible{outline:2px solid #D95D39;outline-offset:2px;}
-  .file-drop-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;color:#D95D39;}
-  .file-drop-title{font-size:.85rem;font-weight:700;color:var(--text);margin:0 0 2px;}
-  .file-drop-sub{font-size:.72rem;color:var(--text-muted);margin:0;line-height:1.4;}
-  .file-chip-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem;}
-  .file-chip{display:flex;align-items:center;gap:.45rem;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:.35rem .55rem .35rem .85rem;font-size:.72rem;color:var(--text);animation:fieldFadeIn .2s ease;}
-  .file-chip .file-chip-size{color:var(--text-muted);}
-  .file-chip button{background:none;border:none;cursor:pointer;color:var(--text-muted);display:flex;align-items:center;justify-content:center;width:16px;height:16px;padding:0;line-height:1;border-radius:50%;transition:color .2s,background .2s;}
-  .file-chip button:hover{color:#fff;background:#D95D39;}
-
-  /* ── Submit button micro-interaction ── */
-  #pfSubmitBtn{transition:background .25s,transform .15s,box-shadow .25s;}
-  #pfSubmitBtn:hover:not(:disabled){background:#c24e2c;transform:translateY(-1px);box-shadow:0 8px 20px rgba(217,93,57,.22);}
-  #pfSubmitBtn:active:not(:disabled){transform:translateY(0);}
-  #pfSubmitBtn:disabled{opacity:.75;cursor:not-allowed;transform:none;box-shadow:none;}
-
-  @media (prefers-reduced-motion: reduce){
-    .field-fade-in,.form-success,.form-error,.file-chip,.btn-spinner{animation:none!important;}
-    #pfSubmitBtn,#pfSubmitBtn:hover{transform:none!important;}
-  }
+  .status-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;box-shadow:var(--shadow);animation:fadeUp .4s ease both;}
+  .status-card:nth-of-type(2){animation-delay:.08s;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .status-row{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid var(--border);}
+  .status-row:last-child{border-bottom:none;}
+  .status-label{color:var(--text-muted);flex-shrink:0;}
+  .status-value{color:var(--text);text-align:right;font-weight:500;}
+  .status-badge{display:inline-block;padding:.2rem .7rem;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .badge-done{background:rgba(74,93,79,.12);color:#4A5D4F;}
+  .badge-pending{background:rgba(197,160,89,.15);color:#a6801f;}
+  .badge-overdue{background:rgba(217,93,57,.12);color:#D95D39;}
+  .status-feedback{margin-top:.75rem;padding:.85rem 1rem;background:var(--bg2);border-left:3px solid #D95D39;border-radius:4px;font-style:italic;color:var(--text);}
 </style>
 </head>
 <body>
@@ -157,7 +129,7 @@
   <p class="font-serif italic text-lg mb-3" style="color:var(--text-muted);">For Active Interns</p>
   <h1 class="font-display font-light mb-4" style="font-size:clamp(2.4rem,6vw,3.8rem);color:var(--text);">Intern Portal</h1>
   <p class="font-sans text-sm max-w-lg mx-auto" style="color:var(--text-muted);">
-    One place to submit a task update or your weekly report. Choose which one below.
+    Check your current task and feedback, submit finished work, or send your weekly report — all in one place.
   </p>
 </header>
 
@@ -165,8 +137,9 @@
 <main class="max-w-2xl mx-auto px-4 sm:px-6 py-16">
 
   <div class="mode-tabs">
-    <button type="button" id="tabTask" class="mode-tab active" onclick="setMode('task')">Task Update</button>
-    <button type="button" id="tabWeekly" class="mode-tab" onclick="setMode('weekly')">Weekly Report</button>
+    <button type="button" id="tabStatus" class="mode-tab active" onclick="setMode('status')"><i data-lucide="layout-dashboard" class="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5"></i>My Status</button>
+    <button type="button" id="tabTask" class="mode-tab" onclick="setMode('task')"><i data-lucide="check-square" class="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5"></i>Task Update</button>
+    <button type="button" id="tabWeekly" class="mode-tab" onclick="setMode('weekly')"><i data-lucide="calendar-check" class="w-3.5 h-3.5 inline-block mr-1.5 -mt-0.5"></i>Weekly Report</button>
   </div>
 
   <form id="portalForm" onsubmit="handleSubmit(event)" class="space-y-6" novalidate>
@@ -188,9 +161,29 @@
       </div>
     </div>
 
-    <div>
+    <div id="emailFieldWrap">
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
       <input type="email" id="pfEmail" class="form-input2" placeholder="you@example.com" required autocomplete="email">
+    </div>
+
+    <!-- ── MY STATUS ── -->
+    <div id="statusFields" class="hidden">
+      <div id="statusEmptyMsg" class="text-sm text-center py-6" style="color:var(--text-muted);">Enter your name above to see your current task and submission status.</div>
+      <div id="statusResult" class="hidden space-y-6">
+
+        <p id="statusGreeting" class="font-serif italic text-lg mb-1" style="color:var(--text);"></p>
+
+        <div class="status-card">
+          <h3 class="font-display text-lg mb-3" style="color:var(--text);">Current Task</h3>
+          <div id="statusTaskBody" class="space-y-2 text-sm"></div>
+        </div>
+
+        <div class="status-card">
+          <h3 class="font-display text-lg mb-3" style="color:var(--text);">Weekly Report</h3>
+          <div id="statusWeeklyBody" class="space-y-2 text-sm"></div>
+        </div>
+
+      </div>
     </div>
 
     <!-- ── TASK UPDATE FIELDS ── -->
@@ -205,7 +198,7 @@
           <input type="text" id="pfTaskName" class="form-input2" placeholder="Auto-filled once you enter your name">
         </div>
       </div>
-      <p class="text-xs -mt-4 mb-6" style="color:var(--text-muted);">Your Intern ID, Task ID, and Assigned Work fill in automatically once you enter your name above.</p>
+      <p class="text-xs -mt-4 mb-6" style="color:var(--text-muted);">Your Intern ID, Task ID, and Assigned Work fill in automatically once you enter your name above — double check they're correct, and edit if needed.</p>
 
       <div class="mb-6">
         <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Submission Link (optional)</label>
@@ -243,29 +236,22 @@
     </div>
 
     <!-- ── SHARED: FILE ATTACH ── -->
-    <div>
+    <div id="attachFieldWrap">
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
-      <div id="pfDropzone" class="file-drop" tabindex="0" role="button" aria-label="Attach files — click to browse or drag files here">
-        <span class="file-drop-icon"><i data-lucide="upload-cloud" class="w-4 h-4"></i></span>
-        <div>
-          <p class="file-drop-title">Click to browse, or drag files here</p>
-          <p class="file-drop-sub">Photos, PDFs, or documents — up to 5 files, 8MB each.</p>
-        </div>
-      </div>
-      <input type="file" id="pfAttachments" class="sr-only" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
-      <div id="pfFileList" class="file-chip-list"></div>
+      <input type="file" id="pfAttachments" class="form-input2" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
+      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Photos, PDFs, or documents — up to 5 files, 8MB each.</p>
     </div>
 
-    <button type="submit" id="pfSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
-      <span id="pfSubmitLabel">Submit Task Update</span>
-    </button>
-    <p class="text-xs text-center -mt-3" style="color:var(--text-muted);">Submitting with photos or files attached can take a little longer while they upload.</p>
+    <div id="submitWrap">
+      <button type="submit" id="pfSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+        <span id="pfSubmitLabel">Submit Task Update</span>
+      </button>
+      <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
+        <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    </div>
 
-    <div id="pfStatus" aria-live="polite"></div>
-    <p class="text-xs text-center" style="color:var(--text-muted);">Trouble submitting? Email <a href="mailto:info@thesamarpan.co.in" style="color:#D95D39;text-decoration:underline;">info@thesamarpan.co.in</a> and we'll help you out.</p>
-    <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google
-      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
-      <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
+    <div id="pfStatus"></div>
   </form>
 </main>
 
@@ -283,11 +269,6 @@
   </button>
 </div>
 
-<!-- Site analytics/tracker — Firebase SDK must load before site-tracker.js -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="site-tracker.js"></script>
-
 <script>
   // ── Apps Script Web App URLs — same two backends as before, unchanged ──
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
@@ -301,25 +282,127 @@
     currentMode = mode;
     document.getElementById('tabTask').classList.toggle('active', mode === 'task');
     document.getElementById('tabWeekly').classList.toggle('active', mode === 'weekly');
+    document.getElementById('tabStatus').classList.toggle('active', mode === 'status');
+    document.getElementById('taskFields').classList.toggle('hidden', mode !== 'task');
+    document.getElementById('weeklyFields').classList.toggle('hidden', mode !== 'weekly');
+    document.getElementById('statusFields').classList.toggle('hidden', mode !== 'status');
 
-    var taskEl = document.getElementById('taskFields');
-    var weeklyEl = document.getElementById('weeklyFields');
-    taskEl.classList.toggle('hidden', mode !== 'task');
-    weeklyEl.classList.toggle('hidden', mode !== 'weekly');
-
-    // Small fade-in on whichever half just became visible
-    var activeEl = mode === 'task' ? taskEl : weeklyEl;
-    activeEl.classList.remove('field-fade-in');
-    void activeEl.offsetWidth; // force reflow so the animation restarts
-    activeEl.classList.add('field-fade-in');
+    // "My Status" is a read-only lookup — hide submission-only fields
+    var isStatus = (mode === 'status');
+    document.getElementById('emailFieldWrap').classList.toggle('hidden', isStatus);
+    document.getElementById('attachFieldWrap').classList.toggle('hidden', isStatus);
+    document.getElementById('submitWrap').classList.toggle('hidden', isStatus);
+    document.getElementById('pfEmail').required = !isStatus;
 
     // Required-ness follows whichever half of the form is visible
     document.getElementById('pfTaskId').required = (mode === 'task');
     document.getElementById('pfTaskName').required = (mode === 'task');
     document.getElementById('pfTasksDone').required = (mode === 'weekly');
 
-    document.getElementById('pfSubmitLabel').textContent = (mode === 'task') ? 'Submit Task Update' : 'Submit Weekly Report';
+    document.getElementById('pfSubmitLabel') && (document.getElementById('pfSubmitLabel').textContent = (mode === 'task') ? 'Submit Task Update' : 'Submit Weekly Report');
     document.getElementById('pfStatus').innerHTML = '';
+
+    if (isStatus) loadMyStatus();
+  }
+
+  function statusBadgeClass(status) {
+    if (status === 'Completed' || status === 'Approved') return 'badge-done';
+    if (status === 'Overdue') return 'badge-overdue';
+    return 'badge-pending';
+  }
+
+  function loadMyStatus() {
+    var name = document.getElementById('pfName').value.trim();
+    var emptyMsg = document.getElementById('statusEmptyMsg');
+    var result = document.getElementById('statusResult');
+    if (!name) { emptyMsg.classList.remove('hidden'); result.classList.add('hidden'); return; }
+
+    emptyMsg.textContent = 'Loading your status…';
+    emptyMsg.classList.remove('hidden');
+    result.classList.add('hidden');
+
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(name) + '&status=1')
+      .then(function(r){ return r.json(); })
+      .then(function(info){
+        if (info && info.internId) document.getElementById('pfInternId').value = info.internId;
+        renderStatus(info);
+      })
+      .catch(function(){
+        emptyMsg.textContent = "Couldn't load your status right now — please try again in a moment.";
+        emptyMsg.classList.remove('hidden');
+        result.classList.add('hidden');
+      });
+  }
+
+  function renderStatus(info) {
+    var emptyMsg = document.getElementById('statusEmptyMsg');
+    var result = document.getElementById('statusResult');
+    var taskBody = document.getElementById('statusTaskBody');
+    var weeklyBody = document.getElementById('statusWeeklyBody');
+
+    if (!info || (!info.task && !info.weekly)) {
+      emptyMsg.textContent = "No records found for that name yet — make sure it matches exactly what's in the intern list.";
+      emptyMsg.classList.remove('hidden');
+      result.classList.add('hidden');
+      return;
+    }
+    emptyMsg.classList.add('hidden');
+    result.classList.remove('hidden');
+
+    var firstName = document.getElementById('pfName').value.trim().split(' ')[0];
+    var hour = new Date().getHours();
+    var greeting = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
+    document.getElementById('statusGreeting').textContent = greeting + ', ' + firstName + '.';
+
+    // ── Task card ──
+    if (info.task && info.task.taskId) {
+      var t = info.task;
+      var submitted = (t.status === 'Submitted' || t.status === 'Completed' || t.status === 'Approved' || t.status === 'Revision Required');
+      var html = ''
+        + '<div class="status-row"><span class="status-label">Task ID</span><span class="status-value">' + esc(t.taskId) + '</span></div>'
+        + '<div class="status-row"><span class="status-label">Assigned Work</span><span class="status-value">' + esc(t.task) + '</span></div>'
+        + (t.deadline ? '<div class="status-row"><span class="status-label">Deadline</span><span class="status-value">' + esc(t.deadline) + '</span></div>' : '')
+        + (t.priority ? '<div class="status-row"><span class="status-label">Priority</span><span class="status-value">' + esc(t.priority) + '</span></div>' : '')
+        + '<div class="status-row"><span class="status-label">Status</span><span class="status-value"><span class="status-badge ' + statusBadgeClass(t.status) + '">' + esc(t.status || 'Not Started') + '</span></span></div>';
+      if (!submitted) {
+        html += '<p class="text-xs mt-3" style="color:var(--text-muted);">You haven\'t submitted this yet — use the "Task Update" tab above when it\'s ready.</p>';
+      }
+      if (t.mentorFeedback) {
+        html += '<div class="status-feedback">"' + esc(t.mentorFeedback) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
+      } else if (submitted) {
+        html += '<p class="text-xs mt-3" style="color:var(--text-muted);">Submitted — no feedback from the team yet.</p>';
+      }
+      taskBody.innerHTML = html;
+    } else {
+      taskBody.innerHTML = '<p style="color:var(--text-muted);">No task currently assigned to you.</p>';
+    }
+
+    // ── Weekly card ──
+    if (info.weekly) {
+      var w = info.weekly;
+      var html2 = '<div class="status-row"><span class="status-label">This week\'s report</span><span class="status-value"><span class="status-badge ' + (w.submittedThisWeek ? 'badge-done' : 'badge-pending') + '">' + (w.submittedThisWeek ? 'Submitted' : 'Not yet submitted') + '</span></span></div>';
+      if (w.lastSubmitted) {
+        html2 += '<div class="status-row"><span class="status-label">Last submitted</span><span class="status-value">' + esc(w.lastSubmitted) + '</span></div>';
+      }
+      if (w.reviewStatus) {
+        html2 += '<div class="status-row"><span class="status-label">Review status</span><span class="status-value">' + esc(w.reviewStatus) + '</span></div>';
+      }
+      if (w.mentorComments) {
+        html2 += '<div class="status-feedback">"' + esc(w.mentorComments) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
+      }
+      if (!w.submittedThisWeek) {
+        html2 += '<p class="text-xs mt-3" style="color:var(--text-muted);">Use the "Weekly Report" tab above to submit this week\'s update.</p>';
+      }
+      weeklyBody.innerHTML = html2;
+    } else {
+      weeklyBody.innerHTML = '<p style="color:var(--text-muted);">No weekly reports found yet.</p>';
+    }
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
   }
 
   function getRecaptchaToken(action) {
@@ -341,106 +424,10 @@
 
   var MAX_FILES = 5;
   var MAX_FILE_BYTES = 8 * 1024 * 1024; // 8MB per file
-  var COMPRESS_THRESHOLD_BYTES = 900 * 1024; // only compress images bigger than ~900KB
-  var COMPRESS_MAX_DIMENSION = 1600; // px, longest side
-  var COMPRESS_QUALITY = 0.8;
 
-  // ── File selection state (drives the dropzone + chip list) ──
-  var selectedFiles = []; // array of File objects
-
-  function formatSize(bytes) {
-    if (bytes >= 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + 'MB';
-    return Math.round(bytes / 1024) + 'KB';
-  }
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function(c) {
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-  function renderFileChips() {
-    var list = document.getElementById('pfFileList');
-    list.innerHTML = selectedFiles.map(function(f, i) {
-      return '<span class="file-chip">' + escapeHtml(f.name) +
-        ' <span class="file-chip-size">· ' + formatSize(f.size) + '</span>' +
-        '<button type="button" aria-label="Remove ' + escapeHtml(f.name) + '" data-idx="' + i + '">&times;</button></span>';
-    }).join('');
-    Array.prototype.forEach.call(list.querySelectorAll('button'), function(btn) {
-      btn.addEventListener('click', function() {
-        selectedFiles.splice(Number(btn.getAttribute('data-idx')), 1);
-        renderFileChips();
-      });
-    });
-  }
-  function addFiles(fileList) {
-    var incoming = Array.prototype.slice.call(fileList || []);
-    var skippedForCount = false;
-    incoming.forEach(function(f) {
-      if (selectedFiles.length >= MAX_FILES) { skippedForCount = true; return; }
-      var isDup = selectedFiles.some(function(e) { return e.name === f.name && e.size === f.size; });
-      if (!isDup) selectedFiles.push(f);
-    });
-    renderFileChips();
-    if (skippedForCount) setStatus('pfStatus', false, 'Only the first ' + MAX_FILES + ' files were added — that\u2019s the max per submission.');
-  }
-
-  var dropzone = document.getElementById('pfDropzone');
-  var hiddenFileInput = document.getElementById('pfAttachments');
-  dropzone.addEventListener('click', function() { hiddenFileInput.click(); });
-  dropzone.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hiddenFileInput.click(); }
-  });
-  hiddenFileInput.addEventListener('change', function() {
-    addFiles(hiddenFileInput.files);
-    hiddenFileInput.value = ''; // allows re-selecting the same file later
-  });
-  ['dragover', 'dragenter'].forEach(function(evt) {
-    dropzone.addEventListener(evt, function(e) { e.preventDefault(); dropzone.classList.add('dragover'); });
-  });
-  ['dragleave', 'drop'].forEach(function(evt) {
-    dropzone.addEventListener(evt, function(e) { e.preventDefault(); dropzone.classList.remove('dragover'); });
-  });
-  dropzone.addEventListener('drop', function(e) { addFiles(e.dataTransfer.files); });
-
-  // Shrinks large photos client-side before upload — most attachments are
-  // phone camera photos (often 4-12MB), and cutting those down to ~200-600KB
-  // is what actually makes the submit feel fast, since the encode, network
-  // transfer, and the Apps Script Drive write on the other end all scale
-  // with file size. Non-image files (PDFs, docs) pass through untouched.
-  function maybeCompressImage(file) {
-    if (!file.type || file.type.indexOf('image/') !== 0) return Promise.resolve(file);
-    if (file.type === 'image/gif') return Promise.resolve(file); // skip animated gifs
-    if (file.size <= COMPRESS_THRESHOLD_BYTES) return Promise.resolve(file);
-    return new Promise(function(resolve) {
-      var img = new Image();
-      var url = URL.createObjectURL(file);
-      img.onload = function() {
-        URL.revokeObjectURL(url);
-        var scale = Math.min(1, COMPRESS_MAX_DIMENSION / Math.max(img.width, img.height));
-        var w = Math.max(1, Math.round(img.width * scale));
-        var h = Math.max(1, Math.round(img.height * scale));
-        var canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-        canvas.toBlob(function(blob) {
-          if (!blob || blob.size >= file.size) { resolve(file); return; } // keep original if it didn't actually help
-          var newName = file.name.replace(/\.(png|jpe?g|webp|heic|heif)$/i, '') + '.jpg';
-          try {
-            resolve(new File([blob], newName, { type: 'image/jpeg' }));
-          } catch (e) {
-            // very old browsers without File() constructor support — fall back to the original
-            resolve(file);
-          }
-        }, 'image/jpeg', COMPRESS_QUALITY);
-      };
-      img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
-      img.src = url;
-    });
-  }
-
-  function filesToBase64(files) {
-    var list = Array.prototype.slice.call(files || []);
-    return Promise.all(list.map(function(file) {
+  function filesToBase64(fileList) {
+    var files = Array.from(fileList || []);
+    return Promise.all(files.map(function(file) {
       return new Promise(function(resolve, reject) {
         var reader = new FileReader();
         reader.onload = function() {
@@ -456,17 +443,12 @@
     var el = document.getElementById(id);
     if (el) el.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
   }
-  function setBtnLoading(id, loading, message) {
+  function setBtnLoading(id, loading) {
     var btn = document.getElementById(id);
     if (!btn) return;
     btn.disabled = loading;
-    if (loading) {
-      if (!btn.getAttribute('data-orig')) btn.setAttribute('data-orig', btn.innerHTML);
-      btn.innerHTML = '<span class="btn-spinner"></span>' + (message || 'Submitting…');
-    } else {
-      var o = btn.getAttribute('data-orig');
-      if (o) { btn.innerHTML = o; btn.removeAttribute('data-orig'); }
-    }
+    if (loading) { btn.setAttribute('data-orig',btn.innerHTML); btn.innerHTML='<span class="btn-spinner"></span>Submitting…'; }
+    else { var o=btn.getAttribute('data-orig'); if(o) btn.innerHTML=o; }
   }
 
   async function handleSubmit(e) {
@@ -507,41 +489,25 @@
     var website = document.getElementById('pfWebsite').value;
     if (website) { setStatus('pfStatus', true, 'Thank you! Your submission has been received.'); document.getElementById('portalForm').reset(); return; } // honeypot
 
-    if (currentMode === 'task' && !submissionLink && selectedFiles.length === 0) {
+    var fileInput = document.getElementById('pfAttachments');
+    var chosenFiles = fileInput && fileInput.files ? fileInput.files : [];
+    if (chosenFiles.length > MAX_FILES) { setStatus('pfStatus', false, 'Please attach at most ' + MAX_FILES + ' files.'); return; }
+    for (var i = 0; i < chosenFiles.length; i++) {
+      if (chosenFiles[i].size > MAX_FILE_BYTES) { setStatus('pfStatus', false, '"' + chosenFiles[i].name + '" is over 8MB — please attach a smaller file.'); return; }
+    }
+
+    if (currentMode === 'task' && !submissionLink && chosenFiles.length === 0) {
       setStatus('pfStatus', false, 'Please add a submission link or attach at least one file.');
       return;
     }
 
-    var stillWorkingTimer = null;
-    setBtnLoading('pfSubmitBtn', true, selectedFiles.length ? 'Optimizing photos…' : 'Preparing…');
+    setBtnLoading('pfSubmitBtn', true);
     try {
-      // Compress large images first — cuts both encode time and upload size
-      var processedFiles = await Promise.all(selectedFiles.map(maybeCompressImage));
-
-      for (var i = 0; i < processedFiles.length; i++) {
-        if (processedFiles[i].size > MAX_FILE_BYTES) {
-          setBtnLoading('pfSubmitBtn', false);
-          setStatus('pfStatus', false, '"' + processedFiles[i].name + '" is still over 8MB — please attach a smaller file.');
-          return;
-        }
-      }
-
-      // Reassure the person if a slow connection or a big batch of files is taking a while
-      stillWorkingTimer = setTimeout(function() {
-        setBtnLoading('pfSubmitBtn', true, 'Still working, almost there…');
-      }, 9000);
-
-      setBtnLoading('pfSubmitBtn', true, 'Uploading…');
-      // Encode files and fetch the reCAPTCHA token in parallel instead of one after another
-      var recaptchaAction = currentMode === 'task' ? 'task_checkin' : 'weekly_report';
-      var prepped = await Promise.all([filesToBase64(processedFiles), getRecaptchaToken(recaptchaAction)]);
-      var attachments = prepped[0];
-      var token = prepped[1];
-
-      setBtnLoading('pfSubmitBtn', true, 'Saving your submission…');
+      var attachments = await filesToBase64(chosenFiles);
       var resp, data;
 
       if (currentMode === 'task') {
+        var token = await getRecaptchaToken('task_checkin');
         var payload = {
           recaptchaToken: token,
           pageLoadedAt: xLoadedAt,
@@ -561,8 +527,9 @@
           body: JSON.stringify(payload)
         });
       } else {
+        var token2 = await getRecaptchaToken('weekly_report');
         var payload2 = {
-          recaptchaToken: token,
+          recaptchaToken: token2,
           pageLoadedAt: xLoadedAt,
           internName: name,
           internId: internId,
@@ -582,19 +549,13 @@
 
       data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
-      if (stillWorkingTimer) clearTimeout(stillWorkingTimer);
-      setBtnLoading('pfSubmitBtn', false); // restore button first so pfSubmitLabel exists again
-      document.getElementById('portalForm').reset();
-      selectedFiles = [];
-      renderFileChips();
-      setMode(currentMode); // re-apply required attributes after reset (this also clears pfStatus)
       setStatus('pfStatus', true, currentMode === 'task' ? 'Thank you! Your task has been submitted for review.' : 'Thank you! Your weekly report has been submitted.');
-      return;
+      document.getElementById('portalForm').reset();
+      setMode(currentMode); // re-apply required attributes after reset
     } catch (err) {
       console.error('Submission error:', err);
       setStatus('pfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
     }
-    if (stillWorkingTimer) clearTimeout(stillWorkingTimer);
     setBtnLoading('pfSubmitBtn', false);
   }
 
@@ -624,7 +585,7 @@
 
   window.addEventListener('DOMContentLoaded', function() {
     lucide.createIcons();
-    setMode('task');
+    setMode('status');
 
     var allInternNames = [];
     // Name list + per-name lookup both come from the Task Check-in
@@ -654,6 +615,7 @@
         var typed = nameInput.value.trim();
         var isKnown = allInternNames.some(function(n){ return n.toLowerCase() === typed.toLowerCase(); });
         if (!isKnown) return;
+        if (currentMode === 'status') { loadMyStatus(); return; }
         fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
           .then(function(r){ return r.json(); })
           .then(function(info){
