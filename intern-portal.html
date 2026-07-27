@@ -76,7 +76,7 @@
   .sidebar-brand{display:flex;align-items:center;gap:.6rem;padding:0 .5rem 1.5rem;margin-bottom:1rem;border-bottom:1px solid var(--border);}
   .sidebar-brand-icon{width:34px;height:34px;border-radius:8px;background:#D95D39;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Marcellus',serif;font-size:16px;flex-shrink:0;}
   .sidebar-brand-text{font-family:'Marcellus',serif;font-size:15px;color:var(--text);line-height:1.15;}
-  .sidebar-brand-sub{font-size:9px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;}
+  .sidebar-brand-sub{font-size:9px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px;}
   .nav-item{display:flex;align-items:center;gap:.65rem;width:100%;text-align:left;padding:.6rem .65rem;border-radius:6px;background:transparent;border:none;color:var(--text-muted);font-size:13.5px;font-family:'Lato',sans-serif;cursor:pointer;transition:background .15s,color .15s;}
   .nav-item:hover{background:var(--bg2);color:var(--text);}
   .nav-item.active{background:rgba(217,93,57,.14);color:#D95D39;border-left:3px solid #D95D39;padding-left:calc(.65rem - 3px);}
@@ -171,10 +171,12 @@
         <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;margin-top:.35rem;">Samarpan</span>
       </div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Your Name *</label>
-      <input type="text" id="gateName" class="form-input2 mb-4" placeholder="Start typing your name" autocomplete="off" list="gateNameList">
+      <input type="text" id="gateName" class="form-input2 mb-1" placeholder="Start typing your name" autocomplete="off" list="gateNameList">
       <datalist id="gateNameList"></datalist>
+      <p class="text-xs mb-4" style="color:var(--text-muted);">Pick your name from the suggestions so we find the right record.</p>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
       <input type="email" id="gateEmail" class="form-input2 mb-4" placeholder="you@example.com" autocomplete="email">
+      <p class="text-xs mb-4" style="color:var(--text-muted);">Only needed once — this device will stay signed in after.</p>
       <button type="button" id="gateBtn" onclick="tryEnter()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5"><span id="gateBtnLabel">Enter Portal</span></button>
       <div id="gateStatus" class="mt-3"></div>
     </div>
@@ -269,15 +271,7 @@
         </div>
       </div>
 
-      <!-- ═══ MY TASK > CURRENT TASK ═══ -->
-      <div class="panel" id="panel-task-current">
-        <div class="card">
-          <h3 class="font-display text-lg mb-3" style="color:var(--text);">Current Task</h3>
-          <div id="taskCurrentBody" class="space-y-2 text-sm"></div>
-        </div>
-      </div>
-
-      <!-- ═══ MY TASK > SUBMIT UPDATE ═══ -->
+      <!-- ═══ SUBMIT TASK ═══ -->
       <div class="panel" id="panel-task-submit">
         <div class="card max-w-xl">
           <p class="text-xs mb-5" id="taskSubmitAs" style="color:var(--text-muted);"></p>
@@ -434,10 +428,7 @@
   // ── Sidebar nav ──
   var NAV = [
     { key:'overview', label:'Overview', icon:'layout-dashboard' },
-    { key:'task', label:'My Task', icon:'clipboard-list', children:[
-      { key:'task-current', label:'Current Task' },
-      { key:'task-submit', label:'Submit Update' }
-    ]},
+    { key:'task-submit', label:'Submit Task', icon:'clipboard-list' },
     { key:'weekly', label:'Weekly Reports', icon:'calendar-check', children:[
       { key:'weekly-current', label:'This Week' },
       { key:'weekly-submit', label:'Submit Report' }
@@ -448,8 +439,7 @@
   ];
   var PANEL_TITLES = {
     'overview':['Overview',''],
-    'task-current':['Current Task','My Task'],
-    'task-submit':['Submit Update','My Task'],
+    'task-submit':['Submit Task',''],
     'weekly-current':['This Week','Weekly Reports'],
     'weekly-submit':['Submit Report','Weekly Reports'],
     'history':['History',''],
@@ -529,28 +519,56 @@
   }
 
   // ── Identify gate ──
-  var allInternNames = [];
-  function loadNameList() {
-    fetch(CHECKIN_APPS_SCRIPT_URL)
-      .then(function(r){ return r.json(); })
-      .then(function(names){
-        if (Array.isArray(names)) {
-          allInternNames = names;
-          document.getElementById('gateNameList').innerHTML = names.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
-        }
-      })
-      .catch(function(){ /* suggestions are optional */ });
-  }
-
   function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
 
+  var lastNameSuggestions = [];
+  function debounce(fn, wait) {
+    var timer;
+    return function() {
+      var args = arguments, ctx = this;
+      clearTimeout(timer);
+      timer = setTimeout(function(){ fn.apply(ctx, args); }, wait);
+    };
+  }
+  var fetchNameSuggestions = debounce(function(term) {
+    if (term.length < 2) { document.getElementById('gateNameList').innerHTML = ''; lastNameSuggestions = []; return; }
+    getRecaptchaToken('name_search').then(function(token){
+      return fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(term) + '&recaptchaToken=' + encodeURIComponent(token));
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        lastNameSuggestions = Array.isArray(list) ? list : [];
+        document.getElementById('gateNameList').innerHTML = lastNameSuggestions.map(function(m){
+          return '<option value="' + esc(m.name + ' — ' + m.internId) + '">';
+        }).join('');
+      })
+      .catch(function(){ /* suggestions are optional */ });
+  }, 250);
+
+  function resolveInternId(typed, cb) {
+    var m = typed.match(/^(.*)\s+—\s+([^\s—][^—]*)$/);
+    if (m) { cb(m[2].trim(), m[1].trim()); return; }
+    var exactFromCache = lastNameSuggestions.filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
+    if (exactFromCache.length === 1) { cb(exactFromCache[0].internId, exactFromCache[0].name); return; }
+    getRecaptchaToken('name_search').then(function(token){
+      return fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(typed) + '&recaptchaToken=' + encodeURIComponent(token));
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        var exact = (Array.isArray(list) ? list : []).filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
+        if (exact.length === 1) cb(exact[0].internId, exact[0].name);
+        else cb(null, null);
+      })
+      .catch(function(){ cb(null, null); });
+  }
+
   function tryEnter() {
-    var name = document.getElementById('gateName').value.trim();
+    var typedName = document.getElementById('gateName').value.trim();
     var email = document.getElementById('gateEmail').value.trim();
     var nameEl = document.getElementById('gateName');
     var emailEl = document.getElementById('gateEmail');
     var valid = true;
-    if (!name) { nameEl.classList.add('invalid'); valid = false; } else { nameEl.classList.remove('invalid'); }
+    if (!typedName) { nameEl.classList.add('invalid'); valid = false; } else { nameEl.classList.remove('invalid'); }
     if (!isEmail(email)) { emailEl.classList.add('invalid'); valid = false; } else { emailEl.classList.remove('invalid'); }
     if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name and a valid email.</div>'; return; }
 
@@ -559,13 +577,39 @@
     document.getElementById('gateBtnLabel').innerHTML = '<span class="btn-spinner"></span>Finding you…';
     document.getElementById('gateStatus').innerHTML = '';
 
-    session.name = name; session.email = email;
-    sessionStorage.setItem('sp_intern_session', JSON.stringify(session));
-    bootPortal(true);
+    resolveInternId(typedName, function(internId, resolvedName) {
+      if (!internId) {
+        btn.disabled = false;
+        document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
+        document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please pick your name from the suggestions that appear as you type.</div>';
+        return;
+      }
+      getRecaptchaToken('login_verify').then(function(token){
+        return fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&email=' + encodeURIComponent(email) + '&verify=1&recaptchaToken=' + encodeURIComponent(token));
+      })
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (!res || !res.found) {
+            btn.disabled = false;
+            document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
+            document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'That name and email don\'t match our records.') + '</div>';
+            return;
+          }
+          session.name = res.name; session.email = email; session.internId = res.internId;
+          session.loggedInAt = Date.now();
+          localStorage.setItem('sp_intern_session', JSON.stringify(session));
+          bootPortal(true);
+        })
+        .catch(function(){
+          btn.disabled = false;
+          document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
+          document.getElementById('gateStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
+        });
+    });
   }
 
   function switchIntern() {
-    sessionStorage.removeItem('sp_intern_session');
+    localStorage.removeItem('sp_intern_session');
     session = { name:'', email:'', internId:'' };
     document.getElementById('appShell').classList.add('hidden');
     document.getElementById('gateScreen').classList.remove('hidden');
@@ -576,8 +620,7 @@
   function showApp() {
     document.getElementById('gateScreen').classList.add('hidden');
     document.getElementById('appShell').classList.remove('hidden');
-    var firstName = session.name.split(' ')[0];
-    document.getElementById('sidebarSub').textContent = 'Hi, ' + firstName;
+    document.getElementById('sidebarSub').textContent = 'Hi, ' + session.name;
     renderSidebar();
     setPanel('overview');
   }
@@ -587,7 +630,7 @@
       .then(function(r){ return r.json(); })
       .then(function(info){
         statusInfo = info || {};
-        if (statusInfo.internId) { session.internId = statusInfo.internId; sessionStorage.setItem('sp_intern_session', JSON.stringify(session)); }
+        if (statusInfo.internId) { session.internId = statusInfo.internId; localStorage.setItem('sp_intern_session', JSON.stringify(session)); }
         if (fromGate) showApp();
         var next = session.internId ? fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(session.internId) + '&full=1').then(function(r){ return r.json(); }) : Promise.resolve(null);
         return next;
@@ -603,6 +646,18 @@
           document.getElementById('gateStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
         }
       });
+  }
+
+  // Mentor feedback is sometimes typed as a mini-email ("Hi X, ... Regards,
+  // Team"). On the portal it reads oddly next to the intern's own name and
+  // ours, so trim a leading greeting line and a trailing sign-off if present.
+  function cleanFeedback(s) {
+    if (!s) return s;
+    var t = String(s);
+    t = t.replace(/^\s*(hi|hello|dear|to)\b[^\n]{0,60}?[,.]\s*/i, '');
+    t = t.replace(/\s*-{2,}\s*(regards|best regards|warm regards|thanks|thank you)[\s\S]*$/i, '');
+    t = t.replace(/\s*(regards|best regards|warm regards),?\s*[\s\S]{0,80}$/i, '');
+    return t.trim();
   }
 
   function esc(s) {
@@ -645,7 +700,7 @@
   // ── Render: everything at once, once data is in ──
   function renderAll() {
     renderOverview();
-    renderTaskCurrent();
+    renderTaskCurrent(); // keeps the Submit Task form pre-filled with the current Task ID/name
     renderWeeklyCurrent();
     renderHistory();
     renderNotifications();
@@ -662,7 +717,7 @@
       + (t.priority ? '<div class="status-row"><span class="status-label">Priority</span><span class="status-value">' + esc(t.priority) + '</span></div>' : '')
       + '<div class="status-row"><span class="status-label">Status</span><span class="status-value"><span class="status-badge ' + statusBadgeClass(t.status) + '">' + esc(t.status || 'Not Started') + '</span></span></div>';
     if (!submitted) html += '<p class="text-xs mt-3" style="color:var(--text-muted);">You haven\'t submitted this yet — use "Submit Update" when it\'s ready.</p>';
-    if (t.mentorFeedback) html += '<div class="status-feedback">"' + esc(t.mentorFeedback) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
+    if (t.mentorFeedback) html += '<div class="status-feedback">"' + esc(cleanFeedback(t.mentorFeedback)) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
     else if (submitted) html += '<p class="text-xs mt-3" style="color:var(--text-muted);">Submitted — no feedback from the team yet.</p>';
     return html;
   }
@@ -672,7 +727,7 @@
     var html = '<div class="status-row"><span class="status-label">This week\'s report</span><span class="status-value"><span class="status-badge ' + (w.submittedThisWeek ? 'badge-done' : 'badge-pending') + '">' + (w.submittedThisWeek ? 'Submitted' : 'Not yet submitted') + '</span></span></div>';
     if (w.lastSubmitted) html += '<div class="status-row"><span class="status-label">Last submitted</span><span class="status-value">' + esc(w.lastSubmitted) + '</span></div>';
     if (w.reviewStatus) html += '<div class="status-row"><span class="status-label">Review status</span><span class="status-value">' + esc(w.reviewStatus) + '</span></div>';
-    if (w.mentorComments) html += '<div class="status-feedback">"' + esc(w.mentorComments) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
+    if (w.mentorComments) html += '<div class="status-feedback">"' + esc(cleanFeedback(w.mentorComments)) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
     if (!w.submittedThisWeek) html += '<p class="text-xs mt-3" style="color:var(--text-muted);">Use "Submit Report" under Weekly Reports for this week\'s update.</p>';
     return html;
   }
@@ -681,10 +736,9 @@
     document.getElementById('ovLoading').classList.add('hidden');
     document.getElementById('ovContent').classList.remove('hidden');
 
-    var firstName = session.name.split(' ')[0];
     var hour = new Date().getHours();
     var greeting = hour < 12 ? 'Good morning' : (hour < 17 ? 'Good afternoon' : 'Good evening');
-    document.getElementById('ovGreeting').textContent = greeting + ', ' + firstName + '.';
+    document.getElementById('ovGreeting').textContent = greeting + ', ' + session.name + '.';
     document.getElementById('ovDate').textContent = new Date().toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
     var task = statusInfo && statusInfo.task;
@@ -712,7 +766,6 @@
   }
 
   function renderTaskCurrent() {
-    document.getElementById('taskCurrentBody').innerHTML = taskDetailHTML(statusInfo && statusInfo.task);
     var t = statusInfo && statusInfo.task;
     if (t && t.taskId) {
       document.getElementById('tfTaskId').value = t.taskId;
@@ -757,7 +810,7 @@
     (full.tasks || []).forEach(function(t) {
       if (t.mentorFeedback) {
         var d1 = t.completionDate || t.deadline || t.assignedDate;
-        items.push({ icon:'clipboard-list', title:'Feedback on Task ' + t.taskId, body:t.mentorFeedback, dateStr:d1, dateObj:parseDMY(d1) });
+        items.push({ icon:'clipboard-list', title:'Feedback on Task ' + t.taskId, body:cleanFeedback(t.mentorFeedback), dateStr:d1, dateObj:parseDMY(d1) });
       }
       if (t.status === 'Revision Required') {
         var d2 = t.deadline || t.assignedDate;
@@ -765,10 +818,10 @@
       }
     });
     (full.weeklyReports || []).forEach(function(w) {
-      if (w.mentorComments) items.push({ icon:'calendar-check', title:'Weekly report feedback', body:w.mentorComments, dateStr:w.timestamp, dateObj:parseDMY(w.timestamp) });
+      if (w.mentorComments) items.push({ icon:'calendar-check', title:'Weekly report feedback', body:cleanFeedback(w.mentorComments), dateStr:w.timestamp, dateObj:parseDMY(w.timestamp) });
     });
     (full.submissions || []).forEach(function(s) {
-      if (s.mentorFeedback) items.push({ icon:'file-check', title:'Submission reviewed — ' + s.taskId, body:s.mentorFeedback, dateStr:s.timestamp, dateObj:parseDMY(s.timestamp) });
+      if (s.mentorFeedback) items.push({ icon:'file-check', title:'Submission reviewed — ' + s.taskId, body:cleanFeedback(s.mentorFeedback), dateStr:s.timestamp, dateObj:parseDMY(s.timestamp) });
     });
     items.sort(function(a, b) { return (b.dateObj ? b.dateObj.getTime() : 0) - (a.dateObj ? a.dateObj.getTime() : 0); });
     return items;
@@ -956,8 +1009,8 @@
     if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
     document.getElementById('themeIcon').setAttribute('data-lucide', document.documentElement.getAttribute('data-theme') === 'dark' ? 'moon' : 'sun');
     lucide.createIcons();
-    loadNameList();
 
+    document.getElementById('gateName').addEventListener('input', function(){ fetchNameSuggestions(this.value.trim()); });
     document.getElementById('gateName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
     document.getElementById('gateEmail').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
 
@@ -978,11 +1031,22 @@
       this.value = '';
     });
 
-    var saved = sessionStorage.getItem('sp_intern_session');
+    // NEW: "stay signed in" now expires after 30 days on this device.
+    // Sessions saved before this change have no loggedInAt, so they're
+    // treated as expired too (forces one fresh sign-in, then good for
+    // 30 days from there) rather than silently trusting an unknown age.
+    var SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+    var saved = localStorage.getItem('sp_intern_session');
     if (saved) {
       try {
-        session = JSON.parse(saved);
-        if (session && session.name) { showApp(); bootPortal(false); }
+        var parsedSession = JSON.parse(saved);
+        var age = Date.now() - (parsedSession && parsedSession.loggedInAt ? parsedSession.loggedInAt : 0);
+        if (age > SESSION_MAX_AGE_MS) {
+          localStorage.removeItem('sp_intern_session');
+        } else if (parsedSession && parsedSession.name) {
+          session = parsedSession;
+          showApp(); bootPortal(false);
+        }
       } catch (e) { /* ignore bad session */ }
     }
   });
