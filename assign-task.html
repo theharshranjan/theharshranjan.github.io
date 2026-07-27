@@ -6,6 +6,10 @@
 <title>Admin — Samarpan</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C1C">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,10 +55,12 @@
   .file-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;}
   .file-chip button{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;transition:background .2s,color .2s;}
   .file-chip button:hover{background:#D95D39;color:#fff;}
-  .status-row{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
-  .status-row:last-child{border-bottom:none;}
-  .status-label{color:var(--text-muted);flex-shrink:0;}
-  .status-value{color:var(--text);text-align:right;font-weight:500;}
+  .status-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+  .status-row:first-child{padding-top:0;}
+  .status-row:last-child{border-bottom:none;padding-bottom:0;}
+  .status-label{color:var(--text);flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .status-label b{color:var(--text);font-weight:700;}
+  .status-value{color:var(--text-muted);text-align:right;font-weight:500;flex-shrink:0;white-space:nowrap;font-size:.78rem;}
   .status-block{margin:.6rem 0;text-align:left;}
   .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
   .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
@@ -90,6 +96,11 @@
   /* ── stat cards ── */
   .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.75rem;}
   .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;position:relative;overflow:hidden;}
+  .stat-clickable{cursor:pointer;transition:border-color .15s,transform .15s;}
+  .stat-clickable:hover{border-color:#D95D39;transform:translateY(-1px);}
+  .filter-banner{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:rgba(217,93,57,.1);border:1px solid #D95D39;border-radius:8px;padding:.65rem 1rem;margin-bottom:1rem;font-size:.85rem;color:var(--text);}
+  .filter-banner button{background:transparent;border:none;color:#D95D39;font-weight:700;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;flex-shrink:0;}
+  .task-cell{max-width:320px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;cursor:help;}
   .stat-icon{width:36px;height:36px;border-radius:8px;background:rgba(217,93,57,.14);color:#D95D39;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;}
   .stat-num{font-family:'Marcellus',serif;font-size:2rem;color:var(--text);line-height:1;}
   .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-top:.3rem;}
@@ -110,6 +121,7 @@
   .placeholder-panel{text-align:center;padding:4rem 1.5rem;border:1.5px dashed var(--border);border-radius:12px;}
   .placeholder-icon{width:52px;height:52px;border-radius:12px;background:var(--bg2);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;}
 
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:1.5rem;z-index:60;}
   .mobile-only{display:none;}
   @media (max-width:900px){
     .sidebar{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);box-shadow:0 0 40px rgba(0,0,0,.4);}
@@ -129,7 +141,15 @@
     <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">Team Only</p>
     <h1 class="font-display font-light mb-6" style="font-size:clamp(1.8rem,5vw,2.6rem);color:var(--text);">Admin</h1>
     <div class="card">
-      <i data-lucide="lock" class="w-6 h-6 mx-auto mb-4" style="color:var(--text-muted);"></i>
+      <div class="flex flex-col items-center mb-4">
+        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+          <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+          <circle cx="50" cy="85" r="3" fill="currentColor"/>
+          <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+        </svg>
+        <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;margin-top:.35rem;">Samarpan</span>
+      </div>
       <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
       <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
       <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
@@ -145,7 +165,14 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-brand">
-      <div class="sidebar-brand-icon">S</div>
+      <div class="sidebar-brand-icon" style="background:transparent;">
+        <svg width="30" height="30" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+          <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+          <circle cx="50" cy="85" r="3" fill="currentColor"/>
+          <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+        </svg>
+      </div>
       <div>
         <div class="sidebar-brand-text">Samarpan</div>
         <div class="sidebar-brand-sub">Admin Panel</div>
@@ -175,10 +202,10 @@
         <div id="dashLoading" class="text-sm" style="color:var(--text-muted);">Loading overview…</div>
         <div id="dashContent" class="hidden">
           <div class="stat-grid">
-            <div class="stat-card"><div class="stat-icon"><i data-lucide="users" class="w-4 h-4"></i></div><div class="stat-num" id="statTotalInterns">0</div><div class="stat-label">Total Interns</div></div>
-            <div class="stat-card"><div class="stat-icon"><i data-lucide="user-check" class="w-4 h-4"></i></div><div class="stat-num" id="statActiveInterns">0</div><div class="stat-label">Active Interns</div></div>
-            <div class="stat-card"><div class="stat-icon"><i data-lucide="clipboard-list" class="w-4 h-4"></i></div><div class="stat-num" id="statOpenTasks">0</div><div class="stat-label">Open Tasks</div></div>
-            <div class="stat-card"><div class="stat-icon"><i data-lucide="inbox" class="w-4 h-4"></i></div><div class="stat-num" id="statPendingReview">0</div><div class="stat-label">Pending Review</div></div>
+            <div class="stat-card stat-clickable" onclick="goToFilteredInterns('all')"><div class="stat-icon"><i data-lucide="users" class="w-4 h-4"></i></div><div class="stat-num" id="statTotalInterns">0</div><div class="stat-label">Total Interns</div></div>
+            <div class="stat-card stat-clickable" onclick="goToFilteredInterns('Active')"><div class="stat-icon"><i data-lucide="user-check" class="w-4 h-4"></i></div><div class="stat-num" id="statActiveInterns">0</div><div class="stat-label">Active Interns</div></div>
+            <div class="stat-card stat-clickable" onclick="goToFilteredTasks('open')"><div class="stat-icon"><i data-lucide="clipboard-list" class="w-4 h-4"></i></div><div class="stat-num" id="statOpenTasks">0</div><div class="stat-label">Open Tasks</div></div>
+            <div class="stat-card stat-clickable" onclick="goToFilteredTasks('Submitted')"><div class="stat-icon"><i data-lucide="inbox" class="w-4 h-4"></i></div><div class="stat-num" id="statPendingReview">0</div><div class="stat-label">Pending Review</div></div>
           </div>
           <div class="card">
             <h3 class="font-display text-base mb-3" style="color:var(--text);">Recent Activity</h3>
@@ -189,9 +216,10 @@
 
       <!-- ═══ INTERNS > ALL INTERNS ═══ -->
       <div class="panel" id="panel-interns-all">
+        <div id="internsFilterBanner"></div>
         <div class="card overflow-x-auto">
           <table class="data-table" id="allInternsTable">
-            <thead><tr><th>Name</th><th>Email</th><th>Status</th></tr></thead>
+            <thead><tr><th>Name</th><th>Email</th><th>Status</th><th></th></tr></thead>
             <tbody id="allInternsBody"></tbody>
           </table>
         </div>
@@ -293,6 +321,7 @@
 
       <!-- ═══ TASKS > ALL TASKS ═══ -->
       <div class="panel" id="panel-tasks-all">
+        <div id="tasksFilterBanner"></div>
         <div class="card overflow-x-auto">
           <table class="data-table" id="allTasksTable">
             <thead><tr><th>Task ID</th><th>Intern</th><th>Task</th><th>Priority</th><th>Status</th><th>Deadline</th></tr></thead>
@@ -492,6 +521,31 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
 </div>
 
 <datalist id="internNameList"></datalist>
+
+<!-- ── EDIT INTERN MODAL ── -->
+<div id="editInternModal" class="modal-overlay hidden" onclick="if(event.target===this) closeEditIntern();">
+  <div class="card" style="max-width:380px;width:100%;">
+    <h3 class="font-display text-lg mb-4" style="color:var(--text);" id="editInternHeading">Edit Intern</h3>
+    <input type="hidden" id="editInternId">
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email</label>
+      <input type="email" id="editInternEmail" class="form-input2" placeholder="name@example.com">
+    </div>
+    <div class="mb-5">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Status</label>
+      <select id="editInternStatus" class="form-input2">
+        <option>Active</option><option>On Hold</option><option>Left</option><option>Completed</option>
+      </select>
+    </div>
+    <div class="flex gap-2">
+      <button type="button" onclick="closeEditIntern()" class="tpl-btn" style="flex:1;">Cancel</button>
+      <button type="button" id="editInternSaveBtn" onclick="saveEditIntern()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3" style="flex:1;">
+        <span id="editInternSaveLabel">Save</span>
+      </button>
+    </div>
+    <div id="editInternStatusMsg" class="mt-2"></div>
+  </div>
+</div>
 
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
@@ -711,30 +765,73 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       return;
     }
     activityEl.innerHTML = subs.map(function(a) {
-      return '<div class="status-row"><span class="status-label">' + esc(a.name) + ' — ' + esc(a.taskName || 'submission') + '</span>'
+      var detail = String(a.taskName || 'submission').trim();
+      return '<div class="status-row" title="' + esc(a.name + ' — ' + detail) + '">'
+        + '<span class="status-label"><b>' + esc(a.name) + '</b> — ' + esc(detail) + '</span>'
         + '<span class="status-value">' + esc(a.timestamp) + '</span></div>';
     }).join('');
   }
 
+  var internsFilter = 'all'; // 'all' | 'Active' | etc.
+  var tasksFilter = 'all'; // 'all' | 'open' | 'Submitted' etc.
+
+  function goToFilteredInterns(filter) {
+    internsFilter = filter;
+    setPanel('interns-all');
+    if (overviewData) renderAllInterns(overviewData);
+  }
+  function goToFilteredTasks(filter) {
+    tasksFilter = filter;
+    setPanel('tasks-all');
+    if (overviewData) renderAllTasks(overviewData);
+  }
+  function clearInternsFilter() { internsFilter = 'all'; if (overviewData) renderAllInterns(overviewData); }
+  function clearTasksFilter() { tasksFilter = 'all'; if (overviewData) renderAllTasks(overviewData); }
+
   function renderAllInterns(info) {
     var body = document.getElementById('allInternsBody');
+    var banner = document.getElementById('internsFilterBanner');
     var interns = info.interns || [];
-    if (!interns.length) { body.innerHTML = '<tr><td colspan="3" style="color:var(--text-muted);">No interns on record.</td></tr>'; return; }
+
+    if (internsFilter === 'all') {
+      banner.innerHTML = '';
+    } else {
+      banner.innerHTML = '<div class="filter-banner"><span>Showing only <b>' + esc(internsFilter) + '</b> interns.</span><button type="button" onclick="clearInternsFilter()">Show All</button></div>';
+      interns = interns.filter(function(i){ return String(i.status||'').trim().toLowerCase() === String(internsFilter).toLowerCase(); });
+    }
+
+    if (!interns.length) { body.innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);">No interns match.</td></tr>'; return; }
     body.innerHTML = interns.map(function(i) {
-      return '<tr class="clickable" onclick="openInternProfile(\'' + esc(i.internId) + '\')">'
-        + '<td>' + esc(i.name) + '</td><td>' + esc(i.email || '—') + '</td>'
-        + '<td><span class="badge ' + (String(i.status||'').toLowerCase()==='active' ? 'badge-done' : 'badge-neutral') + '">' + esc(i.status || '—') + '</span></td></tr>';
+      return '<tr>'
+        + '<td class="clickable" onclick="openInternProfile(\'' + esc(i.internId) + '\')">' + esc(i.name) + '</td>'
+        + '<td>' + esc(i.email || '—') + '</td>'
+        + '<td><span class="badge ' + (String(i.status||'').toLowerCase()==='active' ? 'badge-done' : 'badge-neutral') + '">' + esc(i.status || '—') + '</span></td>'
+        + '<td><button type="button" class="icon-btn" style="width:30px;height:30px;" title="Edit email / status" onclick="openEditIntern(\'' + esc(i.internId) + '\',\'' + esc(i.name) + '\',\'' + esc(i.email||'') + '\',\'' + esc(i.status||'') + '\')"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button></td>'
+        + '</tr>';
     }).join('');
+    lucide.createIcons();
   }
 
   function renderAllTasks(info) {
     var body = document.getElementById('allTasksBody');
+    var banner = document.getElementById('tasksFilterBanner');
     var tasks = (info.tasks || []).slice().reverse();
-    if (!tasks.length) { body.innerHTML = '<tr><td colspan="6" style="color:var(--text-muted);">No tasks on record.</td></tr>'; return; }
+
+    if (tasksFilter === 'all') {
+      banner.innerHTML = '';
+    } else if (tasksFilter === 'open') {
+      banner.innerHTML = '<div class="filter-banner"><span>Showing only <b>open</b> tasks (not yet completed/approved).</span><button type="button" onclick="clearTasksFilter()">Show All</button></div>';
+      tasks = tasks.filter(function(t){ return t.status !== 'Completed' && t.status !== 'Approved'; });
+    } else {
+      banner.innerHTML = '<div class="filter-banner"><span>Showing only tasks with status <b>' + esc(tasksFilter) + '</b>.</span><button type="button" onclick="clearTasksFilter()">Show All</button></div>';
+      tasks = tasks.filter(function(t){ return String(t.status||'').toLowerCase() === String(tasksFilter).toLowerCase(); });
+    }
+
+    if (!tasks.length) { body.innerHTML = '<tr><td colspan="6" style="color:var(--text-muted);">No tasks match.</td></tr>'; return; }
     body.innerHTML = tasks.map(function(t) {
       return '<tr class="clickable" onclick="openTaskReview(\'' + esc(t.internName) + '\')">'
         + '<td>' + esc(t.taskId) + '</td><td>' + esc(t.internName) + '</td>'
-        + '<td style="max-width:260px;">' + esc(t.task) + '</td><td>' + esc(t.priority) + '</td>'
+        + '<td><div class="task-cell" title="' + esc(t.task) + '">' + esc(t.task) + '</div></td><td>' + esc(t.priority) + '</td>'
         + '<td><span class="badge ' + statusBadgeClass(t.status) + '">' + esc(t.status) + '</span></td>'
         + '<td>' + esc(t.deadline || '—') + '</td></tr>';
     }).join('');
@@ -763,6 +860,43 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     setPanel('tasks-review');
     document.getElementById('fbName').value = internName;
     loadFeedbackLookup();
+  }
+
+  // ── Edit Intern (email / status) ──
+  function openEditIntern(internId, name, email, status) {
+    document.getElementById('editInternId').value = internId;
+    document.getElementById('editInternHeading').textContent = 'Edit ' + name;
+    document.getElementById('editInternEmail').value = email || '';
+    document.getElementById('editInternStatus').value = status || 'Active';
+    document.getElementById('editInternStatusMsg').innerHTML = '';
+    document.getElementById('editInternModal').classList.remove('hidden');
+  }
+  function closeEditIntern() {
+    document.getElementById('editInternModal').classList.add('hidden');
+  }
+  async function saveEditIntern() {
+    var internId = document.getElementById('editInternId').value;
+    var email = document.getElementById('editInternEmail').value.trim();
+    var status = document.getElementById('editInternStatus').value;
+    setBtnLoadingCustom('editInternSaveBtn', 'editInternSaveLabel', true, 'Saving…');
+    try {
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'updateIntern', adminPassword: CLIENT_ADMIN_PASSWORD, internId: internId, email: email, status: status })
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not save changes');
+      closeEditIntern();
+      loadOverview();
+    } catch (err) {
+      setStatus('editInternStatusMsg', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoadingCustom('editInternSaveBtn', 'editInternSaveLabel', false, 'Save');
+  }
+  function setBtnLoadingCustom(btnId, labelId, loading, doneLabel) {
+    var btn = document.getElementById(btnId);
+    if (loading) { btn.disabled = true; document.getElementById(labelId).innerHTML = '<span class="btn-spinner"></span>Saving…'; }
+    else { btn.disabled = false; document.getElementById(labelId).textContent = doneLabel; }
   }
 
   // ── Assign Task ──
