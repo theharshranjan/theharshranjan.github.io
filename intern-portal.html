@@ -7,6 +7,10 @@
 <meta name="description" content="Samarpan intern portal — check your status, submit task updates and weekly reports, and track your progress.">
 <link rel="canonical" href="https://thesamarpan.co.in/intern-portal.html">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1C1C1C">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,10 +56,10 @@
   .file-chip button{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;transition:background .2s,color .2s;}
   .file-chip button:hover{background:#D95D39;color:#fff;}
 
-  .status-row{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
+  .status-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.2rem 1rem;padding:.45rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
   .status-row:last-child{border-bottom:none;}
   .status-label{color:var(--text-muted);flex-shrink:0;}
-  .status-value{color:var(--text);text-align:right;font-weight:500;}
+  .status-value{color:var(--text);text-align:right;font-weight:500;word-break:break-word;}
   .status-block{margin:.6rem 0;text-align:left;}
   .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
   .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
@@ -145,6 +149,7 @@
     .content-wrap{padding:1.1rem;}
     .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;display:none;}
     .sidebar-overlay.show{display:block;}
+    .cert-sheet{padding:2rem 1.25rem;}
   }
 </style>
 </head>
@@ -156,7 +161,15 @@
     <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">For Active Interns</p>
     <h1 class="font-display font-light mb-6" style="font-size:clamp(1.8rem,5vw,2.6rem);color:var(--text);">Intern Portal</h1>
     <div class="card text-left">
-      <i data-lucide="user-round" class="w-6 h-6 mx-auto mb-4 block" style="color:var(--text-muted);"></i>
+      <div class="flex flex-col items-center mb-4">
+        <svg width="42" height="42" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+          <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+          <circle cx="50" cy="85" r="3" fill="currentColor"/>
+          <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+        </svg>
+        <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;margin-top:.35rem;">Samarpan</span>
+      </div>
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Your Name *</label>
       <input type="text" id="gateName" class="form-input2 mb-4" placeholder="Start typing your name" autocomplete="off" list="gateNameList">
       <datalist id="gateNameList"></datalist>
@@ -176,7 +189,14 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-brand">
-      <div class="sidebar-brand-icon">S</div>
+      <div class="sidebar-brand-icon" style="background:transparent;">
+        <svg width="30" height="30" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+          <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+          <circle cx="50" cy="85" r="3" fill="currentColor"/>
+          <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+        </svg>
+      </div>
       <div>
         <div class="sidebar-brand-text">Samarpan</div>
         <div class="sidebar-brand-sub" id="sidebarSub">Intern Portal</div>
