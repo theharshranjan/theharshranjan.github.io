@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaApiLoad&render=explicit" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <script>
   tailwind.config = {
@@ -177,7 +177,7 @@
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
       <input type="email" id="gateEmail" class="form-input2 mb-4" placeholder="you@example.com" autocomplete="email">
       <p class="text-xs mb-4" style="color:var(--text-muted);">Only needed once — this device will stay signed in after.</p>
-      <div id="loginCaptchaBox" class="mb-4"></div>
+      <div class="g-recaptcha mb-4" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
       <button type="button" id="gateBtn" onclick="tryEnter()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5"><span id="gateBtnLabel">Enter Portal</span></button>
       <div id="gateStatus" class="mt-3"></div>
     </div>
@@ -420,24 +420,6 @@
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
   var REPORT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKoid2La0-naNY5hi4X88elwD_bqt7xxCOw4wtOaFBKBnKEN3antAU5XUs3E5RB1uaRQ/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
-  // PASTE YOUR NEW v2 "CHECKBOX" SITE KEY HERE (from google.com/recaptcha/admin —
-  // register a new site, type "reCAPTCHA v2 — I'm not a robot Checkbox").
-  // This MUST be a different key from RECAPTCHA_SITE_KEY above — v3 keys
-  // cannot render as a checkbox. Until this is filled in, the checkbox
-  // won't render and login will show a clear error instead of hanging.
-  var RECAPTCHA_V2_SITE_KEY = '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u';
-  var loginCaptchaWidgetId = null;
-
-  // Called by the api.js?onload= callback once the library is ready.
-  // Renders the visible checkbox on the login screen; the existing
-  // invisible v3 checks elsewhere (typeahead, task/weekly submit) keep
-  // working exactly as before via grecaptcha.execute(RECAPTCHA_SITE_KEY, ...).
-  function onRecaptchaApiLoad() {
-    if (!RECAPTCHA_V2_SITE_KEY || RECAPTCHA_V2_SITE_KEY.indexOf('PASTE_') === 0) return;
-    try {
-      loginCaptchaWidgetId = grecaptcha.render('loginCaptchaBox', { sitekey: RECAPTCHA_V2_SITE_KEY });
-    } catch (err) { /* widget will just not appear; tryEnter() below handles it gracefully */ }
-  }
   var xLoadedAt = Date.now();
 
   var session = { name:'', email:'', internId:'' };
@@ -551,9 +533,7 @@
   }
   var fetchNameSuggestions = debounce(function(term) {
     if (term.length < 2) { document.getElementById('gateNameList').innerHTML = ''; lastNameSuggestions = []; return; }
-    getRecaptchaToken('name_search').then(function(token){
-      return fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(term) + '&recaptchaToken=' + encodeURIComponent(token));
-    })
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(term))
       .then(function(r){ return r.json(); })
       .then(function(list){
         lastNameSuggestions = Array.isArray(list) ? list : [];
@@ -569,9 +549,7 @@
     if (m) { cb(m[2].trim(), m[1].trim()); return; }
     var exactFromCache = lastNameSuggestions.filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
     if (exactFromCache.length === 1) { cb(exactFromCache[0].internId, exactFromCache[0].name); return; }
-    getRecaptchaToken('name_search').then(function(token){
-      return fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(typed) + '&recaptchaToken=' + encodeURIComponent(token));
-    })
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(typed))
       .then(function(r){ return r.json(); })
       .then(function(list){
         var exact = (Array.isArray(list) ? list : []).filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
@@ -591,7 +569,8 @@
     if (!isEmail(email)) { emailEl.classList.add('invalid'); valid = false; } else { emailEl.classList.remove('invalid'); }
     if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name and a valid email.</div>'; return; }
 
-    var captchaToken = (loginCaptchaWidgetId !== null) ? grecaptcha.getResponse(loginCaptchaWidgetId) : '';
+    var captchaToken = '';
+    try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
     if (!captchaToken) {
       document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please check the box to verify you\'re not a robot.</div>';
       return;
@@ -607,13 +586,13 @@
         btn.disabled = false;
         document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
         document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please pick your name from the suggestions that appear as you type.</div>';
-        if (loginCaptchaWidgetId !== null) grecaptcha.reset(loginCaptchaWidgetId);
+        try { grecaptcha.reset(); } catch (err) {}
         return;
       }
       fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&email=' + encodeURIComponent(email) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken))
         .then(function(r){ return r.json(); })
         .then(function(res){
-          if (loginCaptchaWidgetId !== null) grecaptcha.reset(loginCaptchaWidgetId);
+          try { grecaptcha.reset(); } catch (err) {}
           if (!res || !res.found) {
             btn.disabled = false;
             document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
@@ -626,7 +605,7 @@
           bootPortal(true);
         })
         .catch(function(){
-          if (loginCaptchaWidgetId !== null) grecaptcha.reset(loginCaptchaWidgetId);
+          try { grecaptcha.reset(); } catch (err) {}
           btn.disabled = false;
           document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
           document.getElementById('gateStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
@@ -641,7 +620,7 @@
     document.getElementById('gateScreen').classList.remove('hidden');
     document.getElementById('gateName').value = '';
     document.getElementById('gateEmail').value = '';
-    if (loginCaptchaWidgetId !== null) grecaptcha.reset(loginCaptchaWidgetId);
+    try { grecaptcha.reset(); } catch (err) {}
   }
 
   function showApp() {
