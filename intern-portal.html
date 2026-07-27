@@ -17,7 +17,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
 <script>
   tailwind.config = {
@@ -174,9 +175,6 @@
       <input type="text" id="gateName" class="form-input2 mb-1" placeholder="Start typing your name" autocomplete="off" list="gateNameList">
       <datalist id="gateNameList"></datalist>
       <p class="text-xs mb-4" style="color:var(--text-muted);">Pick your name from the suggestions so we find the right record.</p>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
-      <input type="email" id="gateEmail" class="form-input2 mb-4" placeholder="you@example.com" autocomplete="email">
-      <p class="text-xs mb-4" style="color:var(--text-muted);">Only needed once — this device will stay signed in after.</p>
       <div class="g-recaptcha mb-4" id="gateRecaptcha" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
       <button type="button" id="gateBtn" onclick="tryEnter()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5"><span id="gateBtnLabel">Enter Portal</span></button>
       <div id="gateStatus" class="mt-3"></div>
@@ -520,7 +518,6 @@
   }
 
   // ── Identify gate ──
-  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
 
   var lastNameSuggestions = [];
   function debounce(fn, wait) {
@@ -561,13 +558,10 @@
 
   function tryEnter() {
     var typedName = document.getElementById('gateName').value.trim();
-    var email = document.getElementById('gateEmail').value.trim();
     var nameEl = document.getElementById('gateName');
-    var emailEl = document.getElementById('gateEmail');
     var valid = true;
     if (!typedName) { nameEl.classList.add('invalid'); valid = false; } else { nameEl.classList.remove('invalid'); }
-    if (!isEmail(email)) { emailEl.classList.add('invalid'); valid = false; } else { emailEl.classList.remove('invalid'); }
-    if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name and a valid email.</div>'; return; }
+    if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name.</div>'; return; }
 
     var captchaToken = '';
     try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
@@ -589,17 +583,17 @@
         try { grecaptcha.reset(); } catch (err) {}
         return;
       }
-      fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&email=' + encodeURIComponent(email) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken))
+      fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken))
         .then(function(r){ return r.json(); })
         .then(function(res){
           try { grecaptcha.reset(); } catch (err) {}
           if (!res || !res.found) {
             btn.disabled = false;
             document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
-            document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'That name and email don\'t match our records.') + '</div>';
+            document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'We couldn\'t find that record.') + '</div>';
             return;
           }
-          session.name = res.name; session.email = email; session.internId = res.internId;
+          session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
           session.loggedInAt = Date.now();
           localStorage.setItem('sp_intern_session', JSON.stringify(session));
           bootPortal(true);
@@ -619,7 +613,6 @@
     document.getElementById('appShell').classList.add('hidden');
     document.getElementById('gateScreen').classList.remove('hidden');
     document.getElementById('gateName').value = '';
-    document.getElementById('gateEmail').value = '';
     try { grecaptcha.reset(); } catch (err) {}
   }
 
@@ -1010,20 +1003,6 @@
     setBtnLoading('wfSubmitBtn', false);
   }
 
-  var gateRecaptchaRendered = false;
-  function initGateRecaptcha() {
-    if (gateRecaptchaRendered) return;
-    if (window.grecaptcha && grecaptcha.render) {
-      gateRecaptchaRendered = true;
-      if (document.getElementById('gateRecaptcha')) {
-        grecaptcha.render('gateRecaptcha', { sitekey: '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u' });
-      }
-    } else {
-      setTimeout(initGateRecaptcha, 100);
-    }
-  }
-  initGateRecaptcha();
-
   window.addEventListener('DOMContentLoaded', function() {
     var savedTheme = localStorage.getItem('sp_intern_theme');
     if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
@@ -1032,7 +1011,6 @@
 
     document.getElementById('gateName').addEventListener('input', function(){ fetchNameSuggestions(this.value.trim()); });
     document.getElementById('gateName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
-    document.getElementById('gateEmail').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
 
     document.getElementById('tfFiles').addEventListener('change', function(){
       (Array.from(this.files || [])).forEach(function(f) {
