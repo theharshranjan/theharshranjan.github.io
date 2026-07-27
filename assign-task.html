@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" data-theme="light">
+<html lang="en" class="scroll-smooth" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +25,8 @@
 </script>
 
 <style>
-  :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);}
-  [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;--shadow:0 2px 24px rgba(0,0,0,0.4);}
+  :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;--shadow:0 2px 24px rgba(0,0,0,0.07);--sidebar-bg:#FFFFFF;}
+  [data-theme="dark"]{--bg:#121210;--bg2:#181814;--bg3:#1E1E19;--text:#F0EDE6;--text-muted:#9A9080;--border:#2A2A24;--card-bg:#1B1B16;--shadow:0 2px 24px rgba(0,0,0,0.5);--sidebar-bg:#161613;}
   *,*::before,*::after{box-sizing:border-box;}
   body{background-color:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-family:'Lato',sans-serif;}
   .grecaptcha-badge{visibility:hidden!important;}
@@ -36,17 +36,21 @@
   .form-input2.invalid{border-color:#D95D39!important;}
   .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);outline:none;resize:vertical;}
   .form-textarea2:focus{border-color:#D95D39;}
-  .form-success{background:rgba(74,93,79,.08);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#4A5D4F;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
-  .form-error{background:rgba(217,93,57,.08);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  .form-success{background:rgba(74,93,79,.12);border:1px solid #4A5D4F;border-radius:4px;padding:1rem;color:#7FA085;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
+  [data-theme="light"] .form-success,:root:not([data-theme]) .form-success{color:#4A5D4F;}
+  .form-error{background:rgba(217,93,57,.1);border:1px solid #D95D39;border-radius:4px;padding:1rem;color:#D95D39;font-family:'Lato',sans-serif;font-size:.8rem;text-align:center;}
   .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
   .lock-screen{max-width:360px;margin:0 auto;text-align:center;}
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:2rem;box-shadow:var(--shadow);}
-  .mode-tabs{display:flex;border:1.5px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:2rem;}
-  .mode-tab{flex:1;padding:.9rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:transparent;color:var(--text-muted);border:none;cursor:pointer;transition:background .25s,color .25s;}
-  .mode-tab.active{background:#D95D39;color:#fff;}
-  .mode-tab:not(.active):hover{background:var(--bg2);}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;box-shadow:var(--shadow);}
+  .tpl-btn{padding:.75rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:transparent;border:1.5px solid var(--border);border-radius:4px;color:var(--text-muted);cursor:pointer;transition:all .2s;}
+  .tpl-btn:hover{border-color:#D95D39;color:#D95D39;}
+  .tpl-btn.active{background:#D95D39;border-color:#D95D39;color:#fff;}
+  .file-chip{display:inline-flex;align-items:center;gap:.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:.3rem .5rem .3rem .75rem;font-size:12px;color:var(--text);max-width:100%;}
+  .file-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;}
+  .file-chip button{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1;transition:background .2s,color .2s;}
+  .file-chip button:hover{background:#D95D39;color:#fff;}
   .status-row{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid var(--border);font-size:.85rem;}
   .status-row:last-child{border-bottom:none;}
   .status-label{color:var(--text-muted);flex-shrink:0;}
@@ -54,23 +58,76 @@
   .status-block{margin:.6rem 0;text-align:left;}
   .status-block-label{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:.35rem;}
   .status-longtext{white-space:pre-wrap;line-height:1.65;color:var(--text);font-size:.85rem;}
-  .tpl-btn{padding:.75rem 1rem;text-align:center;font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:transparent;border:1.5px solid var(--border);border-radius:4px;color:var(--text-muted);cursor:pointer;transition:all .2s;}
-  .tpl-btn:hover{border-color:#D95D39;color:#D95D39;}
-  .tpl-btn.active{background:#D95D39;border-color:#D95D39;color:#fff;}
+
+  /* ── App shell ── */
+  .app-shell{display:flex;min-height:100vh;}
+  .sidebar{width:264px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--border);padding:1.5rem 1rem;position:sticky;top:0;height:100vh;overflow-y:auto;transition:transform .25s;}
+  .sidebar-brand{display:flex;align-items:center;gap:.6rem;padding:0 .5rem 1.5rem;margin-bottom:1rem;border-bottom:1px solid var(--border);}
+  .sidebar-brand-icon{width:34px;height:34px;border-radius:8px;background:#D95D39;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Marcellus',serif;font-size:16px;flex-shrink:0;}
+  .sidebar-brand-text{font-family:'Marcellus',serif;font-size:15px;color:var(--text);line-height:1.15;}
+  .sidebar-brand-sub{font-size:9px;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase;}
+  .nav-section-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);opacity:.65;padding:1rem .6rem .4rem;}
+  .nav-item{display:flex;align-items:center;gap:.65rem;width:100%;text-align:left;padding:.6rem .65rem;border-radius:6px;background:transparent;border:none;color:var(--text-muted);font-size:13.5px;font-family:'Lato',sans-serif;cursor:pointer;transition:background .15s,color .15s;}
+  .nav-item:hover{background:var(--bg2);color:var(--text);}
+  .nav-item.active{background:rgba(217,93,57,.14);color:#D95D39;border-left:3px solid #D95D39;padding-left:calc(.65rem - 3px);}
+  .nav-item .chev{margin-left:auto;transition:transform .2s;opacity:.6;}
+  .nav-item.expanded .chev{transform:rotate(90deg);}
+  .nav-children{overflow:hidden;max-height:0;transition:max-height .2s ease;}
+  .nav-children.open{max-height:200px;}
+  .nav-child{display:block;width:100%;text-align:left;padding:.5rem .65rem .5rem 2.4rem;border-radius:6px;background:transparent;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;transition:background .15s,color .15s;}
+  .nav-child:hover{background:var(--bg2);color:var(--text);}
+  .nav-child.active{color:#D95D39;font-weight:700;background:rgba(217,93,57,.1);}
+  .main-area{flex:1;min-width:0;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 1.75rem;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:10;}
+  .topbar-title{font-family:'Marcellus',serif;font-size:1.4rem;color:var(--text);}
+  .topbar-sub{font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+  .icon-btn{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:var(--card-bg);display:flex;align-items:center;justify-content:center;color:var(--text-muted);cursor:pointer;transition:border-color .2s,color .2s;}
+  .icon-btn:hover{border-color:#D95D39;color:#D95D39;}
+  .content-wrap{padding:1.75rem;max-width:1100px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* ── stat cards ── */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.75rem;}
+  .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.25rem;position:relative;overflow:hidden;}
+  .stat-icon{width:36px;height:36px;border-radius:8px;background:rgba(217,93,57,.14);color:#D95D39;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem;}
+  .stat-num{font-family:'Marcellus',serif;font-size:2rem;color:var(--text);line-height:1;}
+  .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-top:.3rem;}
+
+  /* ── tables ── */
+  .data-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .data-table th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);padding:.6rem .75rem;border-bottom:1px solid var(--border);}
+  .data-table td{padding:.75rem;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;}
+  .data-table tr.clickable{cursor:pointer;transition:background .15s;}
+  .data-table tr.clickable:hover{background:var(--bg2);}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:.25rem .55rem;border-radius:20px;text-transform:uppercase;letter-spacing:.03em;}
+  .badge-open{background:rgba(197,160,89,.16);color:#C5A059;}
+  .badge-done{background:rgba(74,93,79,.16);color:#7FA085;}
+  .badge-review{background:rgba(217,93,57,.16);color:#D95D39;}
+  .badge-neutral{background:var(--bg2);color:var(--text-muted);}
+
+  /* ── placeholder panels ── */
+  .placeholder-panel{text-align:center;padding:4rem 1.5rem;border:1.5px dashed var(--border);border-radius:12px;}
+  .placeholder-icon{width:52px;height:52px;border-radius:12px;background:var(--bg2);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;}
+
+  .mobile-only{display:none;}
+  @media (max-width:900px){
+    .sidebar{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);box-shadow:0 0 40px rgba(0,0,0,.4);}
+    .sidebar.open{transform:translateX(0);}
+    .mobile-only{display:flex;}
+    .content-wrap{padding:1.1rem;}
+    .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;display:none;}
+    .sidebar-overlay.show{display:block;}
+  }
 </style>
 </head>
 <body>
 
-<header class="pt-16 pb-10 px-4 sm:px-6 text-center" style="background:var(--bg2);">
-  <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">Team Only</p>
-  <h1 class="font-display font-light mb-2" style="font-size:clamp(2rem,5vw,3rem);color:var(--text);">Admin</h1>
-  <p class="font-sans text-sm max-w-md mx-auto" style="color:var(--text-muted);">Assign new tasks and give feedback on submitted work — both reach the intern instantly.</p>
-</header>
-
-<main class="max-w-2xl mx-auto px-4 sm:px-6 py-14">
-
-  <!-- ── LOCK SCREEN ── -->
-  <div id="lockScreen" class="lock-screen">
+<!-- ── LOCK SCREEN ── -->
+<div id="lockScreen" class="min-h-screen flex items-center justify-center px-4">
+  <div class="lock-screen">
+    <p class="font-serif italic text-lg mb-2" style="color:var(--text-muted);">Team Only</p>
+    <h1 class="font-display font-light mb-6" style="font-size:clamp(1.8rem,5vw,2.6rem);color:var(--text);">Admin</h1>
     <div class="card">
       <i data-lucide="lock" class="w-6 h-6 mx-auto mb-4" style="color:var(--text-muted);"></i>
       <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
@@ -79,209 +136,269 @@
       <div id="lockStatus" class="mt-3"></div>
     </div>
   </div>
+</div>
 
-  <!-- ── TABS + FORMS (hidden until unlocked) ── -->
-  <div id="adminTabs" class="hidden">
-    <div class="mode-tabs">
-      <button type="button" id="tabAssign" class="mode-tab active" onclick="setAdminMode('assign')">Assign Task</button>
-      <button type="button" id="tabFeedback" class="mode-tab" onclick="setAdminMode('feedback')">Review &amp; Feedback</button>
-      <button type="button" id="tabHistory" class="mode-tab" onclick="setAdminMode('history')">Intern History</button>
-      <button type="button" id="tabAnnounce" class="mode-tab" onclick="setAdminMode('announce')">Send Email</button>
-    </div>
+<!-- ── APP SHELL (hidden until unlocked) ── -->
+<div id="appShell" class="app-shell hidden">
 
-  <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
+  <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
-      <input type="text" id="atName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="atNameList">
-      <datalist id="atNameList"></datalist>
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-6">
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-icon">S</div>
       <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Department</label>
-        <select id="atDept" class="form-input2">
-          <option value="">— Not set —</option>
-          <option>Ayurveda</option>
-          <option>Yoga</option>
-          <option>Psychology</option>
-          <option>Nutrition</option>
-          <option>Public Health</option>
-          <option>Research</option>
-          <option>Content &amp; Social Media</option>
-          <option>Communications</option>
-          <option>Website &amp; Technology</option>
-        </select>
+        <div class="sidebar-brand-text">Samarpan</div>
+        <div class="sidebar-brand-sub">Admin Panel</div>
       </div>
-      <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Priority</label>
-        <select id="atPriority" class="form-input2">
-          <option value="Low">Low</option>
-          <option value="Medium" selected>Medium</option>
-          <option value="High">High</option>
-        </select>
+    </div>
+    <nav id="sidebarNav"></nav>
+  </aside>
+
+  <div class="main-area">
+    <div class="topbar">
+      <div class="flex items-center gap-3">
+        <button class="icon-btn mobile-only" onclick="toggleSidebar(true)"><i data-lucide="menu" class="w-4 h-4"></i></button>
+        <div>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+          <div class="topbar-sub" id="topbarSub"></div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="icon-btn" onclick="toggleTheme()"><i data-lucide="moon" class="w-4 h-4" id="themeIcon"></i></button>
       </div>
     </div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task *</label>
-      <textarea id="atTask" class="form-textarea2" rows="3" placeholder="What they need to do" required></textarea>
-    </div>
+    <div class="content-wrap">
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Topic (optional)</label>
-      <input type="text" id="atTopic" class="form-input2" placeholder="e.g. a specific topic from the Topic Bank">
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Deadline (optional)</label>
-      <input type="date" id="atDeadline" class="form-input2">
-    </div>
-
-    <button type="submit" id="atSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
-      <span id="atSubmitLabel">Assign Task</span>
-    </button>
-
-    <div id="atStatus"></div>
-  </form>
-
-  <!-- ── REVIEW & FEEDBACK FORM ── -->
-  <form id="feedbackForm" onsubmit="handleFeedback(event)" class="space-y-6 hidden">
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
-      <input type="text" id="fbName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="atNameList">
-    </div>
-
-    <div id="fbLookupMsg" class="text-sm" style="color:var(--text-muted);">Enter a name to load their current task.</div>
-
-    <div id="fbTaskCard" class="card hidden">
-      <div id="fbTaskSummary" class="space-y-1 mb-4"></div>
-
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task ID *</label>
-        <input type="text" id="fbTaskId" class="form-input2" placeholder="Auto-filled from lookup above" required>
+      <!-- ═══ DASHBOARD ═══ -->
+      <div class="panel" id="panel-dashboard">
+        <div id="dashLoading" class="text-sm" style="color:var(--text-muted);">Loading overview…</div>
+        <div id="dashContent" class="hidden">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-icon"><i data-lucide="users" class="w-4 h-4"></i></div><div class="stat-num" id="statTotalInterns">0</div><div class="stat-label">Total Interns</div></div>
+            <div class="stat-card"><div class="stat-icon"><i data-lucide="user-check" class="w-4 h-4"></i></div><div class="stat-num" id="statActiveInterns">0</div><div class="stat-label">Active Interns</div></div>
+            <div class="stat-card"><div class="stat-icon"><i data-lucide="clipboard-list" class="w-4 h-4"></i></div><div class="stat-num" id="statOpenTasks">0</div><div class="stat-label">Open Tasks</div></div>
+            <div class="stat-card"><div class="stat-icon"><i data-lucide="inbox" class="w-4 h-4"></i></div><div class="stat-num" id="statPendingReview">0</div><div class="stat-label">Pending Review</div></div>
+          </div>
+          <div class="card">
+            <h3 class="font-display text-base mb-3" style="color:var(--text);">Recent Activity</h3>
+            <div id="dashActivity" class="space-y-1"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Update Status</label>
-        <select id="fbStatus" class="form-input2">
-          <option value="">— Leave unchanged —</option>
-          <option>Not Started</option>
-          <option>In Progress</option>
-          <option>Submitted</option>
-          <option>Revision Required</option>
-          <option>Approved</option>
-          <option>Completed</option>
-          <option>Overdue</option>
-        </select>
+      <!-- ═══ INTERNS > ALL INTERNS ═══ -->
+      <div class="panel" id="panel-interns-all">
+        <div class="card overflow-x-auto">
+          <table class="data-table" id="allInternsTable">
+            <thead><tr><th>Name</th><th>Email</th><th>Status</th></tr></thead>
+            <tbody id="allInternsBody"></tbody>
+          </table>
+        </div>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Feedback for the Intern</label>
-        <textarea id="fbFeedback" class="form-textarea2" rows="4" placeholder="This shows on the intern's My Status page immediately"></textarea>
-      </div>
-    </div>
-
-    <button type="submit" id="fbSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
-      <span id="fbSubmitLabel">Save Feedback</span>
-    </button>
-
-    <div id="fbStatusMsg"></div>
-  </form>
-
-  <!-- ── INTERN HISTORY (read-only — everything for one Intern ID) ── -->
-  <div id="historyPanel" class="space-y-6 hidden">
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Find by Name</label>
-      <input type="text" id="hName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="atNameList" oninput="lookupHistoryByName()">
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Pick a name and the Intern ID and full history below fill in automatically — no need to look up the ID by hand.</p>
-    </div>
-
-    <div class="flex items-center gap-3" style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;">
-      <div style="flex:1;height:1px;background:var(--border);"></div>or by ID<div style="flex:1;height:1px;background:var(--border);"></div>
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
-      <input type="text" id="hIntId" class="form-input2" placeholder="e.g. INT-0020" autocomplete="off">
-    </div>
-    <button type="button" id="hSearchBtn" onclick="loadInternHistory()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
-      <span id="hSearchLabel">Show Full History</span>
-    </button>
-
-    <div id="hMsg" class="text-sm" style="color:var(--text-muted);">Enter an Intern ID above to see every task, submission, and weekly report — past and upcoming — for that intern.</div>
-
-    <div id="hResult" class="hidden space-y-6">
-      <div class="card">
-        <h3 class="font-display text-lg mb-1" style="color:var(--text);" id="hInternHeading"></h3>
-        <p class="text-xs" style="color:var(--text-muted);" id="hInternSub"></p>
+      <!-- ═══ INTERNS > APPLICATIONS (placeholder) ═══ -->
+      <div class="panel" id="panel-interns-applications">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="file-text" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Applications</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — there's no applications backend in the system. Tell me where applications should come from (a form, a sheet) and I'll build this next.</p>
+        </div>
       </div>
 
-      <div class="card">
-        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Tasks (newest first)</h3>
-        <div id="hTasks" class="space-y-4"></div>
+      <!-- ═══ INTERNS > INTERN PROFILES ═══ -->
+      <div class="panel" id="panel-interns-profiles">
+        <div class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Find by Name</label>
+            <input type="text" id="hName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="internNameList" oninput="lookupHistoryByName()">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Pick a name and the full profile below loads automatically — or click a row in All Interns.</p>
+          </div>
+          <div class="flex items-center gap-3" style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;">
+            <div style="flex:1;height:1px;background:var(--border);"></div>or by ID<div style="flex:1;height:1px;background:var(--border);"></div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
+            <input type="text" id="hIntId" class="form-input2" placeholder="e.g. INT-0020" autocomplete="off">
+          </div>
+          <button type="button" id="hSearchBtn" onclick="loadInternHistory()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
+            <span id="hSearchLabel">Show Full Profile</span>
+          </button>
+          <div id="hMsg" class="text-sm" style="color:var(--text-muted);">Enter an Intern ID above, or pick a name, to see every task, submission, and weekly report for that intern.</div>
+          <div id="hResult" class="hidden space-y-6">
+            <div class="card">
+              <h3 class="font-display text-lg mb-1" style="color:var(--text);" id="hInternHeading"></h3>
+              <p class="text-xs" style="color:var(--text-muted);" id="hInternSub"></p>
+            </div>
+            <div class="card">
+              <h3 class="font-display text-base mb-3" style="color:var(--text);">All Tasks (newest first)</h3>
+              <div id="hTasks" class="space-y-4"></div>
+            </div>
+            <div class="card">
+              <h3 class="font-display text-base mb-3" style="color:var(--text);">All Task Submissions</h3>
+              <div id="hSubmissions" class="space-y-4"></div>
+            </div>
+            <div class="card">
+              <h3 class="font-display text-base mb-3" style="color:var(--text);">All Weekly Reports</h3>
+              <div id="hWeekly" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Task Submissions</h3>
-        <div id="hSubmissions" class="space-y-4"></div>
+      <!-- ═══ TASKS > ASSIGN TASK ═══ -->
+      <div class="panel" id="panel-tasks-assign">
+        <div class="card max-w-xl">
+          <form id="assignForm" onsubmit="handleAssign(event)" class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+              <input type="text" id="atName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="internNameList">
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Department</label>
+                <select id="atDept" class="form-input2">
+                  <option value="">— Not set —</option>
+                  <option>Ayurveda</option><option>Yoga</option><option>Psychology</option>
+                  <option>Nutrition</option><option>Public Health</option><option>Research</option>
+                  <option>Content &amp; Social Media</option><option>Communications</option><option>Website &amp; Technology</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Priority</label>
+                <select id="atPriority" class="form-input2">
+                  <option value="Low">Low</option><option value="Medium" selected>Medium</option><option value="High">High</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task *</label>
+              <textarea id="atTask" class="form-textarea2" rows="3" placeholder="What they need to do" required></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Topic (optional)</label>
+              <input type="text" id="atTopic" class="form-input2" placeholder="e.g. a specific topic from the Topic Bank">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Deadline (optional)</label>
+              <input type="date" id="atDeadline" class="form-input2">
+            </div>
+            <button type="submit" id="atSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+              <span id="atSubmitLabel">Assign Task</span>
+            </button>
+            <div id="atStatus"></div>
+          </form>
+        </div>
       </div>
 
-      <div class="card">
-        <h3 class="font-display text-base mb-3" style="color:var(--text);">All Weekly Reports</h3>
-        <div id="hWeekly" class="space-y-4"></div>
+      <!-- ═══ TASKS > ALL TASKS ═══ -->
+      <div class="panel" id="panel-tasks-all">
+        <div class="card overflow-x-auto">
+          <table class="data-table" id="allTasksTable">
+            <thead><tr><th>Task ID</th><th>Intern</th><th>Task</th><th>Priority</th><th>Status</th><th>Deadline</th></tr></thead>
+            <tbody id="allTasksBody"></tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ── SEND EMAIL (specific intern, or all/filtered — with templates + attachments) ── -->
-  <div id="announcePanel" class="space-y-6 hidden">
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Template</label>
-      <div class="grid grid-cols-2 gap-2">
-        <button type="button" class="tpl-btn active" data-tpl="custom" onclick="loadEmailTemplate('custom')">Custom Message</button>
-        <button type="button" class="tpl-btn" data-tpl="weekly" onclick="loadEmailTemplate('weekly')">This Week's Work</button>
-        <button type="button" class="tpl-btn" data-tpl="offer" onclick="loadEmailTemplate('offer')">Offer Letter</button>
-        <button type="button" class="tpl-btn" data-tpl="certificate" onclick="loadEmailTemplate('certificate')">Certificate</button>
+      <!-- ═══ TASKS > REVIEW & FEEDBACK ═══ -->
+      <div class="panel" id="panel-tasks-review">
+        <div class="card max-w-xl">
+          <form id="feedbackForm" onsubmit="handleFeedback(event)" class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+              <input type="text" id="fbName" class="form-input2" placeholder="Start typing a name" required autocomplete="off" list="internNameList">
+            </div>
+            <div id="fbLookupMsg" class="text-sm" style="color:var(--text-muted);">Enter a name to load their current task.</div>
+            <div id="fbTaskCard" class="card hidden">
+              <div id="fbTaskSummary" class="space-y-1 mb-4"></div>
+              <div class="mb-4">
+                <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Task ID *</label>
+                <input type="text" id="fbTaskId" class="form-input2" placeholder="Auto-filled from lookup above" required>
+              </div>
+              <div class="mb-4">
+                <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Update Status</label>
+                <select id="fbStatus" class="form-input2">
+                  <option value="">— Leave unchanged —</option>
+                  <option>Not Started</option><option>In Progress</option><option>Submitted</option>
+                  <option>Revision Required</option><option>Approved</option><option>Completed</option><option>Overdue</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Feedback for the Intern</label>
+                <textarea id="fbFeedback" class="form-textarea2" rows="4" placeholder="This shows on the intern's My Status page immediately"></textarea>
+              </div>
+            </div>
+            <button type="submit" id="fbSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
+              <span id="fbSubmitLabel">Save Feedback</span>
+            </button>
+            <div id="fbStatusMsg"></div>
+          </form>
+        </div>
       </div>
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Loads a starting subject and message below, ready to edit — nothing is sent until you press Send.</p>
-    </div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Send To</label>
-      <div class="mode-tabs" style="margin-bottom:0;">
-        <button type="button" id="anModeSpecific" class="mode-tab active" onclick="setEmailRecipientMode('specific')">Specific Person</button>
-        <button type="button" id="anModeFiltered" class="mode-tab" onclick="setEmailRecipientMode('filtered')">Multiple / All</button>
+      <!-- ═══ WEEKLY REPORTS ═══ -->
+      <div class="panel" id="panel-weekly">
+        <div class="card overflow-x-auto">
+          <table class="data-table" id="weeklyTable">
+            <thead><tr><th>Intern</th><th>Submitted</th><th>Review Status</th><th>Completed</th></tr></thead>
+            <tbody id="weeklyBody"></tbody>
+          </table>
+        </div>
       </div>
-    </div>
 
-    <div id="anSpecificWrap">
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
-      <input type="text" id="anInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="atNameList">
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Best for a one-to-one email — e.g. one person's certificate or offer letter.</p>
-    </div>
+      <!-- ═══ COMMUNICATION > SEND EMAIL ═══ -->
+      <div class="panel" id="panel-communication-send">
+        <div class="card max-w-2xl space-y-6">
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Template</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" class="tpl-btn active" data-tpl="custom" onclick="loadEmailTemplate('custom')">Custom Message</button>
+              <button type="button" class="tpl-btn" data-tpl="weekly" onclick="loadEmailTemplate('weekly')">This Week's Work</button>
+              <button type="button" class="tpl-btn" data-tpl="offer" onclick="loadEmailTemplate('offer')">Offer Letter</button>
+              <button type="button" class="tpl-btn" data-tpl="certificate" onclick="loadEmailTemplate('certificate')">Certificate</button>
+            </div>
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Loads a starting subject and message below, ready to edit — nothing is sent until you press Send.</p>
+          </div>
 
-    <div id="anFilteredWrap" class="hidden">
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Who Should Get This</label>
-      <select id="anFilter" class="form-input2">
-        <option value="all">All Interns</option>
-        <option value="Active" selected>Active Only</option>
-        <option value="On Hold">On Hold Only</option>
-      </select>
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Each intern still gets their own individual email — never a group CC.</p>
-    </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="anIncludeLogo" style="width:16px;height:16px;accent-color:#D95D39;">
+            <label for="anIncludeLogo" class="text-sm" style="color:var(--text);">Include Samarpan logo in this email</label>
+          </div>
+          <p class="text-xs -mt-4" style="color:var(--text-muted);">Turned on automatically for Offer Letter and Certificate — leave off for regular messages. You can still switch it either way.</p>
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Subject *</label>
-      <input type="text" id="anSubject" class="form-input2" value="New Way to Track Your Tasks — Samarpan Intern Portal">
-    </div>
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Send To</label>
+            <div class="grid grid-cols-2 gap-2 border rounded-md overflow-hidden" style="border-color:var(--border);">
+              <button type="button" id="anModeSpecific" class="tpl-btn active" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('specific')">Specific Person</button>
+              <button type="button" id="anModeFiltered" class="tpl-btn" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('filtered')">Multiple / All</button>
+            </div>
+          </div>
 
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Message *</label>
-      <textarea id="anMessage" class="form-textarea2" rows="10">Starting next week, all your task assignments will be shared and tracked through our new Intern Portal instead of email.
+          <div id="anSpecificWrap">
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+            <input type="text" id="anInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="internNameList">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Best for a one-to-one email — e.g. one person's certificate or offer letter.</p>
+          </div>
+
+          <div id="anFilteredWrap" class="hidden">
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Who Should Get This</label>
+            <select id="anFilter" class="form-input2">
+              <option value="all">All Interns</option>
+              <option value="Active" selected>Active Only</option>
+              <option value="On Hold">On Hold Only</option>
+            </select>
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Each intern still gets their own individual email — never a group CC.</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Subject *</label>
+            <input type="text" id="anSubject" class="form-input2" value="New Way to Track Your Tasks — Samarpan Intern Portal">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Message *</label>
+            <textarea id="anMessage" class="form-textarea2" rows="10">Starting next week, all your task assignments will be shared and tracked through our new Intern Portal instead of email.
 
 From the portal you can:
 - See your current assigned task, deadline, and priority
@@ -294,63 +411,226 @@ Please bookmark and start using it here:
 https://thesamarpan.co.in/intern-portal.html
 
 Just enter your name and Intern ID under "My Status" to see everything at a glance. If anything looks off or missing on your end, reply and let us know.</textarea>
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">"Hi [Name]," and a signature are added automatically, and the email is sent in one clean, consistent font and layout — just write the middle part here. Leave a blank line between paragraphs.</p>
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">"Hi [Name]," and a signature are added automatically, and the email is sent in one clean, consistent font and layout — just write the middle part here. Leave a blank line between paragraphs.</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
+            <input type="file" id="anFiles" multiple class="form-input2" style="padding:.6rem .75rem;">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Up to 5 files, 10MB each. Entirely optional — send with no files at all if there's nothing to attach.</p>
+            <div id="anFileList" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+
+          <button type="button" id="anSendBtn" onclick="handleAnnounce()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
+            <span id="anSendLabel">Send Email</span>
+          </button>
+          <div id="anStatus"></div>
+        </div>
+      </div>
+
+      <!-- ═══ COMMUNICATION > EMAIL TEMPLATES (read-only preview) ═══ -->
+      <div class="panel" id="panel-communication-templates">
+        <p class="text-sm mb-4" style="color:var(--text-muted);">These are the same four starting templates available on Send Email. There's no separate template-storage backend yet — to change what one says permanently, edit it in the code; day-to-day, just tweak the text after loading a template on Send Email.</p>
+        <div id="templatesPreview" class="space-y-4"></div>
+      </div>
+
+      <!-- ═══ COMMUNICATION > EMAIL HISTORY (placeholder) ═══ -->
+      <div class="panel" id="panel-communication-history">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="history" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Email History</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Sends aren't logged anywhere yet — Send Email fires straight to Zoho with nothing written back to a sheet. Say the word and I'll add a log row per send here.</p>
+        </div>
+      </div>
+
+      <!-- ═══ SIMPLE PLACEHOLDER PANELS ═══ -->
+      <div class="panel" id="panel-mentors">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Mentors</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">No mentor records exist in the system yet. Tell me what a mentor profile should hold (name, department, assigned interns) and I'll build the sheet + this screen.</p>
+        </div>
+      </div>
+      <div class="panel" id="panel-lifecycle">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="repeat" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Internship Lifecycle</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — this is where stage tracking (Applied → Onboarded → Active → Completed) would live once we define the stages.</p>
+        </div>
+      </div>
+      <div class="panel" id="panel-certificates">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="award" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Certificates &amp; Documents</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">This connects to the Certificate Registry build already in progress (ID generation, QR, verification page) — once that's finished, this screen will show and manage it.</p>
+        </div>
+      </div>
+      <div class="panel" id="panel-research">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="microscope" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Research &amp; Content</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — this would pull from the Research Tracker / Content Tracker tabs already in your spreadsheet. Say the word and I'll connect it.</p>
+        </div>
+      </div>
+      <div class="panel" id="panel-analytics">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="bar-chart-3" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Analytics</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — deeper trends beyond the Dashboard's top-line numbers (completion rates over time, per-department load, etc.) would go here.</p>
+        </div>
+      </div>
+      <div class="panel" id="panel-settings">
+        <div class="placeholder-panel">
+          <div class="placeholder-icon"><i data-lucide="settings" class="w-6 h-6"></i></div>
+          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Settings</h3>
+          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Nothing configurable here yet — admin password and email sender are still set directly in the script for now.</p>
+        </div>
+      </div>
+
     </div>
-
-    <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
-      <input type="file" id="anFiles" multiple class="form-input2" style="padding:.6rem .75rem;">
-      <p class="text-xs mt-1.5" style="color:var(--text-muted);">Up to 5 files, 10MB each — e.g. a certificate or offer letter PDF. Whoever this email reaches gets the same attached file(s).</p>
-      <div id="anFileList" class="text-xs mt-1.5" style="color:var(--text);"></div>
-    </div>
-
-    <button type="button" id="anSendBtn" onclick="handleAnnounce()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
-      <span id="anSendLabel">Send Email</span>
-    </button>
-
-    <div id="anStatus"></div>
   </div>
+</div>
 
-  </div>
-
-</main>
+<datalist id="internNameList"></datalist>
 
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
-
-  // CHANGE THIS — must match ADMIN_PASSWORD in Code2_TaskCheckin.gs
-  // exactly. This is a simple shared-password gate, not strong
-  // security — the real check happens server-side on submit too.
   var CLIENT_ADMIN_PASSWORD = 'Samarpan@2026';
+
+  // ── Sidebar nav structure ──
+  var NAV = [
+    { key:'dashboard', label:'Dashboard', icon:'layout-dashboard' },
+    { key:'interns', label:'Interns', icon:'users', children:[
+      { key:'interns-all', label:'All Interns' },
+      { key:'interns-applications', label:'Applications' },
+      { key:'interns-profiles', label:'Intern Profiles' }
+    ]},
+    { key:'tasks', label:'Tasks', icon:'clipboard-list', children:[
+      { key:'tasks-assign', label:'Assign Task' },
+      { key:'tasks-all', label:'All Tasks' },
+      { key:'tasks-review', label:'Review & Feedback' }
+    ]},
+    { key:'weekly', label:'Weekly Reports', icon:'calendar-check' },
+    { key:'communication', label:'Communication', icon:'mail', children:[
+      { key:'communication-send', label:'Send Email' },
+      { key:'communication-templates', label:'Email Templates' },
+      { key:'communication-history', label:'Email History' }
+    ]},
+    { key:'mentors', label:'Mentors', icon:'graduation-cap' },
+    { key:'lifecycle', label:'Internship Lifecycle', icon:'repeat' },
+    { key:'certificates', label:'Certificates & Documents', icon:'award' },
+    { key:'research', label:'Research & Content', icon:'microscope' },
+    { key:'analytics', label:'Analytics', icon:'bar-chart-3' },
+    { key:'settings', label:'Settings', icon:'settings' }
+  ];
+  var PANEL_TITLES = {
+    'dashboard':['Dashboard',''],
+    'interns-all':['All Interns','Interns'],
+    'interns-applications':['Applications','Interns'],
+    'interns-profiles':['Intern Profiles','Interns'],
+    'tasks-assign':['Assign Task','Tasks'],
+    'tasks-all':['All Tasks','Tasks'],
+    'tasks-review':['Review & Feedback','Tasks'],
+    'weekly':['Weekly Reports',''],
+    'communication-send':['Send Email','Communication'],
+    'communication-templates':['Email Templates','Communication'],
+    'communication-history':['Email History','Communication'],
+    'mentors':['Mentors',''],
+    'lifecycle':['Internship Lifecycle',''],
+    'certificates':['Certificates & Documents',''],
+    'research':['Research & Content',''],
+    'analytics':['Analytics',''],
+    'settings':['Settings','']
+  };
+
+  function renderSidebar() {
+    var nav = document.getElementById('sidebarNav');
+    nav.innerHTML = NAV.map(function(item) {
+      if (item.children) {
+        var childrenHtml = item.children.map(function(c) {
+          return '<button type="button" class="nav-child" data-panel="' + c.key + '" onclick="setPanel(\'' + c.key + '\')">' + c.label + '</button>';
+        }).join('');
+        return '<button type="button" class="nav-item" data-group="' + item.key + '" onclick="toggleGroup(\'' + item.key + '\')">'
+          + '<i data-lucide="' + item.icon + '" class="w-4 h-4"></i><span>' + item.label + '</span>'
+          + '<i data-lucide="chevron-right" class="w-3.5 h-3.5 chev"></i></button>'
+          + '<div class="nav-children" id="group-' + item.key + '">' + childrenHtml + '</div>';
+      }
+      return '<button type="button" class="nav-item" data-panel="' + item.key + '" onclick="setPanel(\'' + item.key + '\')">'
+        + '<i data-lucide="' + item.icon + '" class="w-4 h-4"></i><span>' + item.label + '</span></button>';
+    }).join('');
+    lucide.createIcons();
+  }
+
+  var currentPanel = 'dashboard';
+  function toggleGroup(key) {
+    var groupEl = document.getElementById('group-' + key);
+    var btn = document.querySelector('.nav-item[data-group="' + key + '"]');
+    var isOpen = groupEl.classList.contains('open');
+    document.querySelectorAll('.nav-children.open').forEach(function(g){ g.classList.remove('open'); });
+    document.querySelectorAll('.nav-item.expanded').forEach(function(b){ b.classList.remove('expanded'); });
+    if (!isOpen) { groupEl.classList.add('open'); btn.classList.add('expanded'); }
+  }
+
+  function setPanel(key) {
+    currentPanel = key;
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+    var target = document.getElementById('panel-' + key);
+    if (target) target.classList.add('active');
+
+    document.querySelectorAll('.nav-item[data-panel], .nav-child').forEach(function(el){ el.classList.remove('active'); });
+    var directItem = document.querySelector('.nav-item[data-panel="' + key + '"]');
+    if (directItem) directItem.classList.add('active');
+    var childItem = document.querySelector('.nav-child[data-panel="' + key + '"]');
+    if (childItem) {
+      childItem.classList.add('active');
+      var parentGroup = childItem.closest('.nav-children');
+      parentGroup.classList.add('open');
+      var parentBtn = document.querySelector('.nav-item[data-group="' + parentGroup.id.replace('group-','') + '"]');
+      if (parentBtn) parentBtn.classList.add('expanded');
+    }
+
+    var titles = PANEL_TITLES[key] || [key, ''];
+    document.getElementById('topbarTitle').textContent = titles[0];
+    document.getElementById('topbarSub').textContent = titles[1];
+    toggleSidebar(false);
+
+    if (key === 'communication-templates') renderTemplatesPreview();
+  }
+
+  function toggleSidebar(open) {
+    var sb = document.getElementById('sidebar');
+    var ov = document.getElementById('sidebarOverlay');
+    if (window.innerWidth > 900) return;
+    sb.classList.toggle('open', !!open);
+    ov.classList.toggle('show', !!open);
+  }
+
+  function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').setAttribute('data-lucide', isDark ? 'moon' : 'sun');
+    lucide.createIcons();
+    localStorage.setItem('sp_admin_theme', isDark ? 'light' : 'dark');
+  }
 
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
     if (entered === CLIENT_ADMIN_PASSWORD) {
       sessionStorage.setItem('sp_admin_unlocked', '1');
-      showForm();
+      showApp();
     } else {
       document.getElementById('lockStatus').innerHTML = '<div class="form-error">Incorrect password.</div>';
     }
   }
 
-  function showForm() {
+  function showApp() {
     document.getElementById('lockScreen').classList.add('hidden');
-    document.getElementById('adminTabs').classList.remove('hidden');
-    loadInternNames();
-  }
-
-  var adminMode = 'assign';
-  function setAdminMode(mode) {
-    adminMode = mode;
-    document.getElementById('tabAssign').classList.toggle('active', mode === 'assign');
-    document.getElementById('tabFeedback').classList.toggle('active', mode === 'feedback');
-    document.getElementById('tabHistory').classList.toggle('active', mode === 'history');
-    document.getElementById('tabAnnounce').classList.toggle('active', mode === 'announce');
-    document.getElementById('assignForm').classList.toggle('hidden', mode !== 'assign');
-    document.getElementById('feedbackForm').classList.toggle('hidden', mode !== 'feedback');
-    document.getElementById('historyPanel').classList.toggle('hidden', mode !== 'history');
-    document.getElementById('announcePanel').classList.toggle('hidden', mode !== 'announce');
+    document.getElementById('appShell').classList.remove('hidden');
+    renderSidebar();
+    setPanel('dashboard');
+    loadOverview();
   }
 
   function getRecaptchaToken(action) {
@@ -371,49 +651,121 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     var btn = document.getElementById(id);
     if (!btn) return;
     btn.disabled = loading;
-    var label = (id === 'fbSubmitBtn') ? 'Saving…' : (id === 'anSendBtn') ? 'Sending…' : 'Assigning…';
+    var label = (id === 'fbSubmitBtn') ? 'Saving…' : (id === 'anSendBtn') ? 'Sending…' : (id === 'hSearchBtn') ? 'Loading…' : 'Assigning…';
     if (loading) { btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>' + label; }
     else { var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
   }
 
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  function statusBadgeClass(status) {
+    var s = String(status || '').toLowerCase();
+    if (s === 'completed' || s === 'approved') return 'badge-done';
+    if (s === 'submitted') return 'badge-review';
+    if (s === 'not started' || s === '') return 'badge-neutral';
+    return 'badge-open';
+  }
+
+  // ── Overview fetch: populates Dashboard, All Interns, All Tasks, Weekly Reports in one call ──
   var allInternNames = [];
-  function loadInternNames() {
-    fetch(CHECKIN_APPS_SCRIPT_URL)
+  var overviewData = null;
+  function loadOverview() {
+    document.getElementById('dashLoading').classList.remove('hidden');
+    document.getElementById('dashContent').classList.add('hidden');
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?dashboard=1')
       .then(function(r){ return r.json(); })
-      .then(function(names){
-        if (!Array.isArray(names)) return;
-        allInternNames = names;
-        var dl = document.getElementById('atNameList');
-        dl.innerHTML = names.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
+      .then(function(info){
+        overviewData = info;
+        allInternNames = (info.interns || []).map(function(i){ return i.name; });
+        var dl = document.getElementById('internNameList');
+        dl.innerHTML = allInternNames.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
+
+        renderDashboard(info);
+        renderAllInterns(info);
+        renderAllTasks(info);
+        renderWeekly(info);
+
+        document.getElementById('dashLoading').classList.add('hidden');
+        document.getElementById('dashContent').classList.remove('hidden');
       })
-      .catch(function(){ /* silently ignore — admin can still type the name manually */ });
+      .catch(function(){
+        document.getElementById('dashLoading').textContent = "Couldn't load the overview right now — please refresh.";
+      });
   }
 
-  // Fires as the admin types/selects in the History tab's "Find by
-  // Name" field. Only acts once what's typed exactly matches a known
-  // intern name (so it doesn't fire on every half-typed keystroke) —
-  // looks up that intern's ID via the same endpoint the portal itself
-  // uses, fills the ID field, and loads the full history right away.
-  var historyNameLookupTimer = null;
-  function lookupHistoryByName() {
-    clearTimeout(historyNameLookupTimer);
-    var typed = document.getElementById('hName').value.trim();
-    if (!typed) return;
-    var isKnown = allInternNames.some(function(n){ return String(n).trim().toLowerCase() === typed.toLowerCase(); });
-    if (!isKnown) return;
-    historyNameLookupTimer = setTimeout(function() {
-      fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
-        .then(function(r){ return r.json(); })
-        .then(function(info){
-          if (info && info.internId) {
-            document.getElementById('hIntId').value = info.internId;
-            loadInternHistory();
-          }
-        })
-        .catch(function(){ /* silently ignore — admin can still enter the ID by hand */ });
-    }, 150);
+  function renderDashboard(info) {
+    var s = info.stats || {};
+    document.getElementById('statTotalInterns').textContent = s.totalInterns || 0;
+    document.getElementById('statActiveInterns').textContent = s.activeInterns || 0;
+    document.getElementById('statOpenTasks').textContent = s.openTasks || 0;
+    document.getElementById('statPendingReview').textContent = s.submittedTasks || 0;
+
+    var activityEl = document.getElementById('dashActivity');
+    var subs = info.recentSubmissions || [];
+    if (!subs.length) {
+      activityEl.innerHTML = '<p style="color:var(--text-muted);" class="text-sm">No recent activity yet.</p>';
+      return;
+    }
+    activityEl.innerHTML = subs.map(function(a) {
+      return '<div class="status-row"><span class="status-label">' + esc(a.name) + ' — ' + esc(a.taskName || 'submission') + '</span>'
+        + '<span class="status-value">' + esc(a.timestamp) + '</span></div>';
+    }).join('');
   }
 
+  function renderAllInterns(info) {
+    var body = document.getElementById('allInternsBody');
+    var interns = info.interns || [];
+    if (!interns.length) { body.innerHTML = '<tr><td colspan="3" style="color:var(--text-muted);">No interns on record.</td></tr>'; return; }
+    body.innerHTML = interns.map(function(i) {
+      return '<tr class="clickable" onclick="openInternProfile(\'' + esc(i.internId) + '\')">'
+        + '<td>' + esc(i.name) + '</td><td>' + esc(i.email || '—') + '</td>'
+        + '<td><span class="badge ' + (String(i.status||'').toLowerCase()==='active' ? 'badge-done' : 'badge-neutral') + '">' + esc(i.status || '—') + '</span></td></tr>';
+    }).join('');
+  }
+
+  function renderAllTasks(info) {
+    var body = document.getElementById('allTasksBody');
+    var tasks = (info.tasks || []).slice().reverse();
+    if (!tasks.length) { body.innerHTML = '<tr><td colspan="6" style="color:var(--text-muted);">No tasks on record.</td></tr>'; return; }
+    body.innerHTML = tasks.map(function(t) {
+      return '<tr class="clickable" onclick="openTaskReview(\'' + esc(t.internName) + '\')">'
+        + '<td>' + esc(t.taskId) + '</td><td>' + esc(t.internName) + '</td>'
+        + '<td style="max-width:260px;">' + esc(t.task) + '</td><td>' + esc(t.priority) + '</td>'
+        + '<td><span class="badge ' + statusBadgeClass(t.status) + '">' + esc(t.status) + '</span></td>'
+        + '<td>' + esc(t.deadline || '—') + '</td></tr>';
+    }).join('');
+  }
+
+  function renderWeekly(info) {
+    var body = document.getElementById('weeklyBody');
+    var weekly = info.weekly || [];
+    if (!weekly.length) { body.innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);">No weekly reports on record.</td></tr>'; return; }
+    body.innerHTML = weekly.map(function(w) {
+      return '<tr><td>' + esc(w.name) + '</td><td>' + esc(w.timestamp) + '</td>'
+        + '<td><span class="badge badge-neutral">' + esc(w.reviewStatus || '—') + '</span></td>'
+        + '<td style="max-width:280px;">' + esc(w.tasksCompleted || '—') + '</td></tr>';
+    }).join('');
+  }
+
+  // ── Click-through: All Interns row → Intern Profiles panel ──
+  function openInternProfile(internId) {
+    setPanel('interns-profiles');
+    document.getElementById('hIntId').value = internId;
+    loadInternHistory();
+  }
+
+  // ── Click-through: All Tasks row → Review & Feedback panel, pre-filled ──
+  function openTaskReview(internName) {
+    setPanel('tasks-review');
+    document.getElementById('fbName').value = internName;
+    loadFeedbackLookup();
+  }
+
+  // ── Assign Task ──
   async function handleAssign(e) {
     e.preventDefault();
     var name = document.getElementById('atName').value.trim();
@@ -440,15 +792,14 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         deadline: document.getElementById('atDeadline').value
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not assign task');
       setStatus('atStatus', true, 'Assigned as ' + (data.taskId || 'a new task') + ' to ' + name + '.');
       document.getElementById('assignForm').reset();
       document.getElementById('atPriority').value = 'Medium';
+      loadOverview();
     } catch (err) {
       console.error('Assign task error:', err);
       setStatus('atStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
@@ -456,12 +807,7 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     setBtnLoading('atSubmitBtn', false);
   }
 
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
-      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
-    });
-  }
-
+  // ── Review & Feedback ──
   function loadFeedbackLookup() {
     var name = document.getElementById('fbName').value.trim();
     var msg = document.getElementById('fbLookupMsg');
@@ -477,12 +823,10 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       .then(function(info){
         if (!info || !info.task || !info.task.taskId) {
           msg.textContent = 'No task found for that name — check the spelling matches Intern Database exactly.';
-          msg.classList.remove('hidden');
-          card.classList.add('hidden');
+          msg.classList.remove('hidden'); card.classList.add('hidden');
           return;
         }
-        msg.classList.add('hidden');
-        card.classList.remove('hidden');
+        msg.classList.add('hidden'); card.classList.remove('hidden');
         document.getElementById('fbTaskId').value = info.task.taskId;
         document.getElementById('fbStatus').value = '';
         document.getElementById('fbFeedback').value = info.task.mentorFeedback || '';
@@ -493,8 +837,7 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       })
       .catch(function(){
         msg.textContent = "Couldn't load that intern's status right now — please try again.";
-        msg.classList.remove('hidden');
-        card.classList.add('hidden');
+        msg.classList.remove('hidden'); card.classList.add('hidden');
       });
   }
 
@@ -508,26 +851,42 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     try {
       var token = await getRecaptchaToken('give_feedback');
       var payload = {
-        action: 'giveFeedback',
-        adminPassword: CLIENT_ADMIN_PASSWORD,
-        recaptchaToken: token,
-        taskId: taskId,
-        status: document.getElementById('fbStatus').value,
-        feedback: document.getElementById('fbFeedback').value
+        action: 'giveFeedback', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        taskId: taskId, status: document.getElementById('fbStatus').value, feedback: document.getElementById('fbFeedback').value
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not save feedback');
       setStatus('fbStatusMsg', true, 'Saved — ' + name + ' will see this immediately on their My Status page.');
+      loadOverview();
     } catch (err) {
       console.error('Give feedback error:', err);
       setStatus('fbStatusMsg', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
     }
     setBtnLoading('fbSubmitBtn', false);
+  }
+
+  // ── Intern Profiles (history) ──
+  var historyNameLookupTimer = null;
+  function lookupHistoryByName() {
+    clearTimeout(historyNameLookupTimer);
+    var typed = document.getElementById('hName').value.trim();
+    if (!typed) return;
+    var isKnown = allInternNames.some(function(n){ return String(n).trim().toLowerCase() === typed.toLowerCase(); });
+    if (!isKnown) return;
+    historyNameLookupTimer = setTimeout(function() {
+      fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(typed))
+        .then(function(r){ return r.json(); })
+        .then(function(info){
+          if (info && info.internId) {
+            document.getElementById('hIntId').value = info.internId;
+            loadInternHistory();
+          }
+        })
+        .catch(function(){ /* silently ignore */ });
+    }, 150);
   }
 
   function loadInternHistory() {
@@ -536,9 +895,7 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     var result = document.getElementById('hResult');
     if (!id) { msg.textContent = 'Enter an Intern ID above to see everything for that intern.'; msg.classList.remove('hidden'); result.classList.add('hidden'); return; }
 
-    msg.textContent = 'Loading…';
-    msg.classList.remove('hidden');
-    result.classList.add('hidden');
+    msg.textContent = 'Loading…'; msg.classList.remove('hidden'); result.classList.add('hidden');
     setBtnLoading('hSearchBtn', true);
 
     fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(id) + '&full=1')
@@ -547,19 +904,16 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         setBtnLoading('hSearchBtn', false);
         if (!info || !info.found) {
           msg.textContent = 'No intern found with that ID — check the spelling matches Intern Database exactly.';
-          msg.classList.remove('hidden');
-          result.classList.add('hidden');
+          msg.classList.remove('hidden'); result.classList.add('hidden');
           return;
         }
-        msg.classList.add('hidden');
-        result.classList.remove('hidden');
+        msg.classList.add('hidden'); result.classList.remove('hidden');
         renderInternHistory(info);
       })
       .catch(function(){
         setBtnLoading('hSearchBtn', false);
         msg.textContent = "Couldn't load that intern's history right now — please try again.";
-        msg.classList.remove('hidden');
-        result.classList.add('hidden');
+        msg.classList.remove('hidden'); result.classList.add('hidden');
       });
   }
 
@@ -576,69 +930,56 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     document.getElementById('hInternSub').textContent = subParts.join('  ·  ');
 
     var tasksEl = document.getElementById('hTasks');
-    if (info.tasks && info.tasks.length) {
-      tasksEl.innerHTML = info.tasks.map(function(t){
-        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
-          + historyRow('Task ID', t.taskId)
-          + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(t.task) + '</div></div>'
-          + historyRow('Assigned', t.assignedDate)
-          + historyRow('Deadline', t.deadline)
-          + historyRow('Priority', t.priority)
-          + historyRow('Status', t.status)
-          + (t.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(t.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
-          + (t.mentorFeedback ? '<div class="status-block"><div class="status-block-label">Feedback</div><div class="status-longtext" style="font-style:italic;">' + esc(t.mentorFeedback) + '</div></div>' : '')
-          + '</div>';
-      }).join('');
-    } else {
-      tasksEl.innerHTML = '<p style="color:var(--text-muted);">No tasks on record.</p>';
-    }
+    tasksEl.innerHTML = (info.tasks && info.tasks.length) ? info.tasks.map(function(t){
+      return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+        + historyRow('Task ID', t.taskId)
+        + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(t.task) + '</div></div>'
+        + historyRow('Assigned', t.assignedDate) + historyRow('Deadline', t.deadline) + historyRow('Priority', t.priority) + historyRow('Status', t.status)
+        + (t.submissionLink ? '<div class="status-row"><span class="status-label">Submission</span><span class="status-value"><a href="' + esc(t.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
+        + (t.mentorFeedback ? '<div class="status-block"><div class="status-block-label">Feedback</div><div class="status-longtext" style="font-style:italic;">' + esc(t.mentorFeedback) + '</div></div>' : '')
+        + '</div>';
+    }).join('') : '<p style="color:var(--text-muted);">No tasks on record.</p>';
 
     var subsEl = document.getElementById('hSubmissions');
-    if (info.submissions && info.submissions.length) {
-      subsEl.innerHTML = info.submissions.map(function(s){
-        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
-          + historyRow('Task ID', s.taskId)
-          + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(s.taskName) + '</div></div>'
-          + historyRow('Submitted', s.submissionDate)
-          + historyRow('Status', s.status)
-          + (s.submissionLink ? '<div class="status-row"><span class="status-label">Link</span><span class="status-value"><a href="' + esc(s.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
-          + (s.comments ? '<div class="status-block"><div class="status-block-label">Comments</div><div class="status-longtext">' + esc(s.comments) + '</div></div>' : '')
-          + '</div>';
-      }).join('');
-    } else {
-      subsEl.innerHTML = '<p style="color:var(--text-muted);">No submissions on record.</p>';
-    }
+    subsEl.innerHTML = (info.submissions && info.submissions.length) ? info.submissions.map(function(s){
+      return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+        + historyRow('Task ID', s.taskId)
+        + '<div class="status-block"><div class="status-block-label">Task</div><div class="status-longtext">' + esc(s.taskName) + '</div></div>'
+        + historyRow('Submitted', s.submissionDate) + historyRow('Status', s.status)
+        + (s.submissionLink ? '<div class="status-row"><span class="status-label">Link</span><span class="status-value"><a href="' + esc(s.submissionLink) + '" target="_blank" rel="noopener" style="color:#D95D39;">Open link</a></span></div>' : '')
+        + (s.comments ? '<div class="status-block"><div class="status-block-label">Comments</div><div class="status-longtext">' + esc(s.comments) + '</div></div>' : '')
+        + '</div>';
+    }).join('') : '<p style="color:var(--text-muted);">No submissions on record.</p>';
 
     var wkEl = document.getElementById('hWeekly');
-    if (info.weeklyReports && info.weeklyReports.length) {
-      wkEl.innerHTML = info.weeklyReports.map(function(w){
-        return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
-          + historyRow('Submitted', w.timestamp)
-          + historyRow('Review Status', w.reviewStatus)
-          + (w.tasksCompleted ? '<div class="status-block"><div class="status-block-label">Completed</div><div class="status-longtext">' + esc(w.tasksCompleted) + '</div></div>' : '')
-          + (w.mentorComments ? '<div class="status-block"><div class="status-block-label">Mentor Comments</div><div class="status-longtext" style="font-style:italic;">' + esc(w.mentorComments) + '</div></div>' : '')
-          + '</div>';
-      }).join('');
-    } else {
-      wkEl.innerHTML = '<p style="color:var(--text-muted);">No weekly reports on record.</p>';
-    }
+    wkEl.innerHTML = (info.weeklyReports && info.weeklyReports.length) ? info.weeklyReports.map(function(w){
+      return '<div style="border-bottom:1px solid var(--border);padding-bottom:1rem;">'
+        + historyRow('Submitted', w.timestamp) + historyRow('Review Status', w.reviewStatus)
+        + (w.tasksCompleted ? '<div class="status-block"><div class="status-block-label">Completed</div><div class="status-longtext">' + esc(w.tasksCompleted) + '</div></div>' : '')
+        + (w.mentorComments ? '<div class="status-block"><div class="status-block-label">Mentor Comments</div><div class="status-longtext" style="font-style:italic;">' + esc(w.mentorComments) + '</div></div>' : '')
+        + '</div>';
+    }).join('') : '<p style="color:var(--text-muted);">No weekly reports on record.</p>';
   }
 
   // ── Send Email: templates ──
   var EMAIL_TEMPLATES = {
     custom: {
+      label: 'Custom Message',
       subject: 'New Way to Track Your Tasks — Samarpan Intern Portal',
       message: 'Starting next week, all your task assignments will be shared and tracked through our new Intern Portal instead of email.\n\nFrom the portal you can:\n- See your current assigned task, deadline, and priority\n- Submit your work directly (link or file upload)\n- Check any feedback from your mentor\n- Submit your weekly report\n- See your full task history\n\nPlease bookmark and start using it here:\nhttps://thesamarpan.co.in/intern-portal.html\n\nJust enter your name and Intern ID under "My Status" to see everything at a glance. If anything looks off or missing on your end, reply and let us know.'
     },
     weekly: {
+      label: "This Week's Work",
       subject: "Your Work for This Week",
       message: "Here's what's on your plate this week:\n\n[Add this week's tasks or focus areas here]\n\nYou can always check your current Task ID, deadline, and any feedback under \"My Status\" on the Intern Portal:\nhttps://thesamarpan.co.in/intern-portal.html\n\nReach out if anything is unclear."
     },
     offer: {
+      label: 'Offer Letter',
       subject: 'Your Internship Offer — Samarpan Holistic Wellbeing Community',
       message: "Congratulations! We're delighted to offer you an internship with Samarpan Holistic Wellbeing Community.\n\nYour offer letter is attached to this email — please review it and reply to confirm your acceptance.\n\nWe're looking forward to having you on the team."
     },
     certificate: {
+      label: 'Certificate',
       subject: 'Your Certificate — Samarpan Holistic Wellbeing Community',
       message: "Thank you for your contribution during your internship with us. Your certificate is attached to this email.\n\nWe wish you the very best for what comes next, and hope you'll stay in touch."
     }
@@ -649,14 +990,21 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     if (!t) return;
     document.getElementById('anSubject').value = t.subject;
     document.getElementById('anMessage').value = t.message;
-    document.querySelectorAll('.tpl-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tpl') === key); });
-    // Offer letters and certificates are almost always one person at a
-    // time with their own attached file — default to that, but the
-    // admin can still switch to Multiple / All if they want.
+    document.querySelectorAll('.tpl-btn[data-tpl]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tpl') === key); });
     if (key === 'offer' || key === 'certificate') setEmailRecipientMode('specific');
+    document.getElementById('anIncludeLogo').checked = (key === 'offer' || key === 'certificate');
   }
 
-  // ── Send Email: recipient mode ──
+  function renderTemplatesPreview() {
+    var wrap = document.getElementById('templatesPreview');
+    wrap.innerHTML = Object.keys(EMAIL_TEMPLATES).map(function(key) {
+      var t = EMAIL_TEMPLATES[key];
+      return '<div class="card"><h3 class="font-display text-base mb-2" style="color:var(--text);">' + esc(t.label) + '</h3>'
+        + '<div class="status-block-label">Subject</div><p class="text-sm mb-3" style="color:var(--text);">' + esc(t.subject) + '</p>'
+        + '<div class="status-block-label">Message</div><div class="status-longtext text-sm">' + esc(t.message) + '</div></div>';
+    }).join('');
+  }
+
   var emailRecipientMode = 'specific';
   function setEmailRecipientMode(mode) {
     emailRecipientMode = mode;
@@ -666,18 +1014,25 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     document.getElementById('anFilteredWrap').classList.toggle('hidden', mode !== 'filtered');
   }
 
-  // ── Send Email: attachments ──
+  // ── Send Email: attachments (removable chips) ──
   var MAX_EMAIL_FILES = 5;
-  var MAX_EMAIL_FILE_BYTES = 10 * 1024 * 1024; // 10MB per file
+  var MAX_EMAIL_FILE_BYTES = 10 * 1024 * 1024;
+  var anFilesArr = [];
 
-  function filesToBase64(fileList) {
-    var files = Array.from(fileList || []);
-    return Promise.all(files.map(function(file) {
+  function renderAnFileList() {
+    var wrap = document.getElementById('anFileList');
+    wrap.innerHTML = anFilesArr.map(function(file, i) {
+      return '<span class="file-chip"><span title="' + esc(file.name) + '">' + esc(file.name) + '</span>'
+        + '<button type="button" onclick="removeAnFile(' + i + ')" aria-label="Remove ' + esc(file.name) + '">&times;</button></span>';
+    }).join('');
+  }
+  function removeAnFile(index) { anFilesArr.splice(index, 1); renderAnFileList(); }
+
+  function filesToBase64(fileArr) {
+    return Promise.all(fileArr.map(function(file) {
       return new Promise(function(resolve, reject) {
         var reader = new FileReader();
-        reader.onload = function() {
-          resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] });
-        };
+        reader.onload = function() { resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] }); };
         reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
         reader.readAsDataURL(file);
       });
@@ -691,53 +1046,35 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
 
     var internName = document.getElementById('anInternName').value.trim();
     var filter = document.getElementById('anFilter').value;
-    var files = document.getElementById('anFiles').files;
+    var includeLogo = document.getElementById('anIncludeLogo').checked;
 
-    if (emailRecipientMode === 'specific' && !internName) {
-      setStatus('anStatus', false, 'Choose who to send this to.');
-      return;
-    }
-    if (files && files.length > MAX_EMAIL_FILES) {
-      setStatus('anStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.');
-      return;
-    }
-    for (var i = 0; i < (files ? files.length : 0); i++) {
-      if (files[i].size > MAX_EMAIL_FILE_BYTES) {
-        setStatus('anStatus', false, '"' + files[i].name + '" is over 10MB — please attach a smaller file.');
-        return;
-      }
+    if (emailRecipientMode === 'specific' && !internName) { setStatus('anStatus', false, 'Choose who to send this to.'); return; }
+    if (anFilesArr.length > MAX_EMAIL_FILES) { setStatus('anStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.'); return; }
+    for (var i = 0; i < anFilesArr.length; i++) {
+      if (anFilesArr[i].size > MAX_EMAIL_FILE_BYTES) { setStatus('anStatus', false, '"' + anFilesArr[i].name + '" is over 10MB — please attach a smaller file.'); return; }
     }
 
     var confirmMsg = emailRecipientMode === 'specific'
       ? 'Send this email to ' + internName + '?'
-      : (filter === 'all'
-          ? 'Send this email to EVERY intern in Intern Database? This cannot be undone.'
-          : 'Send this email to every intern with status "' + filter + '"? This cannot be undone.');
+      : (filter === 'all' ? 'Send this email to EVERY intern in Intern Database? This cannot be undone.' : 'Send this email to every intern with status "' + filter + '"? This cannot be undone.');
     if (!confirm(confirmMsg)) return;
 
     setBtnLoading('anSendBtn', true);
     try {
-      var attachments = await filesToBase64(files);
+      var attachments = await filesToBase64(anFilesArr);
       var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'sendEmail',
-        adminPassword: CLIENT_ADMIN_PASSWORD,
-        recaptchaToken: token,
-        subject: subject,
-        message: message,
-        recipientMode: emailRecipientMode,
-        internName: internName,
-        filter: filter,
-        attachments: attachments
+        action: 'sendEmail', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        subject: subject, message: message, recipientMode: emailRecipientMode,
+        internName: internName, filter: filter, includeLogo: includeLogo, attachments: attachments
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not send email');
       setStatus('anStatus', true, 'Sent to ' + data.sent + ' recipient(s)' + (data.skipped ? (', skipped ' + data.skipped) : '') + '.');
+      anFilesArr = []; renderAnFileList(); document.getElementById('anFiles').value = '';
     } catch (err) {
       console.error('Send email error:', err);
       setStatus('anStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
@@ -746,18 +1083,24 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
   }
 
   window.addEventListener('DOMContentLoaded', function() {
+    var savedTheme = localStorage.getItem('sp_admin_theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+    document.getElementById('themeIcon').setAttribute('data-lucide', document.documentElement.getAttribute('data-theme') === 'dark' ? 'moon' : 'sun');
     lucide.createIcons();
-    if (sessionStorage.getItem('sp_admin_unlocked') === '1') showForm();
-    document.getElementById('lockPassword').addEventListener('keydown', function(e){
-      if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); }
-    });
+    if (sessionStorage.getItem('sp_admin_unlocked') === '1') showApp();
+    document.getElementById('lockPassword').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); } });
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
-    document.getElementById('hIntId').addEventListener('keydown', function(e){
-      if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); }
-    });
+    document.getElementById('hIntId').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); } });
     document.getElementById('anFiles').addEventListener('change', function(){
-      var files = Array.from(this.files || []);
-      document.getElementById('anFileList').textContent = files.length ? files.map(function(f){ return f.name; }).join(', ') : '';
+      var picked = Array.from(this.files || []);
+      picked.forEach(function(f) {
+        var dup = anFilesArr.some(function(existing) { return existing.name === f.name && existing.size === f.size; });
+        if (!dup) anFilesArr.push(f);
+      });
+      renderAnFileList();
+      this.value = '';
     });
   });
 </script>
