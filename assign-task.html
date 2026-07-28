@@ -225,14 +225,18 @@
         </div>
       </div>
 
-      <!-- ═══ INTERNS > APPLICATIONS (placeholder) ═══ -->
+      <!-- ═══ INTERNS > APPLICATIONS ═══ -->
       <div class="panel" id="panel-interns-applications">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="file-text" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Applications</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — there's no applications backend in the system. Tell me where applications should come from (a form, a sheet) and I'll build this next.</p>
+        <div id="applicationsFilterBanner"></div>
+        <div class="card overflow-x-auto">
+          <table class="data-table" id="applicationsTable">
+            <thead><tr><th>Name</th><th>Preferred Dept</th><th>College</th><th>Applied</th><th>Status</th><th></th></tr></thead>
+            <tbody id="applicationsBody"></tbody>
+          </table>
         </div>
       </div>
+
+
 
       <!-- ═══ INTERNS > INTERN PROFILES ═══ -->
       <div class="panel" id="panel-interns-profiles">
@@ -397,6 +401,29 @@
           <p class="text-xs -mt-4" style="color:var(--text-muted);">Turned on automatically for Offer Letter and Certificate — leave off for regular messages. You can still switch it either way.</p>
 
           <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">What is this email about?</label>
+            <select id="anEmailType" class="form-input2" onchange="onEmailTypeChange()">
+              <option value="General">General message (not saved to intern's record)</option>
+              <option value="Task">Task assignment / update</option>
+              <option value="Weekly">Weekly report follow-up</option>
+              <option value="Offer Letter">Offer letter</option>
+              <option value="Certificate">Certificate</option>
+            </select>
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">This decides what shows up as a notification on the intern's own portal.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="anSaveToRecord" style="width:16px;height:16px;accent-color:#D95D39;">
+            <label for="anSaveToRecord" class="text-sm" style="color:var(--text);">Save this to the intern's record (shows as a notification on their portal)</label>
+          </div>
+
+          <div id="anRelatedTaskWrap" class="hidden">
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Related Task ID (optional)</label>
+            <input type="text" id="anRelatedTaskId" class="form-input2" placeholder="e.g. TSK-0027">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Links this email to a specific task so it's easy to find later.</p>
+          </div>
+
+          <div>
             <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Send To</label>
             <div class="grid grid-cols-2 gap-2 border rounded-md overflow-hidden" style="border-color:var(--border);">
               <button type="button" id="anModeSpecific" class="tpl-btn active" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('specific')">Specific Person</button>
@@ -408,6 +435,13 @@
             <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
             <input type="text" id="anInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="internNameList">
             <p class="text-xs mt-1.5" style="color:var(--text-muted);">Best for a one-to-one email — e.g. one person's certificate or offer letter.</p>
+
+            <label class="block text-sm font-medium mb-1.5 mt-4" style="color:var(--text);">Send to a different email (optional)</label>
+            <input type="email" id="anOverrideEmail" class="form-input2" placeholder="Leave blank to use the email on file">
+            <div class="flex items-center gap-2 mt-2">
+              <input type="checkbox" id="anUpdateEmailOnFile" style="width:16px;height:16px;accent-color:#D95D39;">
+              <label for="anUpdateEmailOnFile" class="text-xs" style="color:var(--text-muted);">Also update this as their email on file</label>
+            </div>
           </div>
 
           <div id="anFilteredWrap" class="hidden">
@@ -474,38 +508,115 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
 
       <!-- ═══ SIMPLE PLACEHOLDER PANELS ═══ -->
       <div class="panel" id="panel-mentors">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Mentors</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">No mentor records exist in the system yet. Tell me what a mentor profile should hold (name, department, assigned interns) and I'll build the sheet + this screen.</p>
-        </div>
+        <p class="text-xs mb-4" style="color:var(--text-muted);">Grouped from the Mentor column on Intern Database — there's no separate Mentors sheet, this is the roster as it stands.</p>
+        <div id="mentorsGrid" class="space-y-4"></div>
       </div>
       <div class="panel" id="panel-lifecycle">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="repeat" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Internship Lifecycle</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — this is where stage tracking (Applied → Onboarded → Active → Completed) would live once we define the stages.</p>
+        <p class="text-xs mb-4" style="color:var(--text-muted);">Stage counts derived from Applications and the Intern Database Status column. Click a stage to see who's in it.</p>
+        <div id="lifecycleStages" class="grid grid-cols-2 gap-3 mb-6"></div>
+        <div id="lifecycleDetailBanner"></div>
+        <div class="card overflow-x-auto">
+          <table class="data-table" id="lifecycleTable">
+            <thead><tr><th>Name</th></tr></thead>
+            <tbody id="lifecycleBody"><tr><td style="color:var(--text-muted);">Click a stage above to see its interns.</td></tr></tbody>
+          </table>
         </div>
       </div>
       <div class="panel" id="panel-certificates">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="award" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Certificates &amp; Documents</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">This connects to the Certificate Registry build already in progress (ID generation, QR, verification page) — once that's finished, this screen will show and manage it.</p>
+        <div class="card max-w-xl space-y-6">
+          <div>
+            <h3 class="font-display text-base mb-1" style="color:var(--text);" id="certPanelHeading">Issue a Certificate</h3>
+            <p class="text-xs" style="color:var(--text-muted);" id="certPanelDesc">Upload the certificate file for one intern, review the email, and press Send — it's emailed to them, saved to their portal notifications, and logged to the Certificate Registry automatically. Nothing else to update by hand.</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Document Type</label>
+            <div class="flex gap-2">
+              <button type="button" id="certTypeBtnCert" class="tpl-btn" style="flex:1;background:var(--clay);color:#fff;" onclick="setCertDocType('Certificate')">Certificate</button>
+              <button type="button" id="certTypeBtnLor" class="tpl-btn" style="flex:1;" onclick="setCertDocType('LOR')">LOR</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern Name *</label>
+            <input type="text" id="certInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="internNameList">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);" id="certFileLabel">Certificate File *</label>
+            <input type="file" id="certFiles" multiple class="form-input2" style="padding:.6rem .75rem;">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">PDF or image, up to 10MB. This copy is also archived to the intern's Drive folder.</p>
+            <div id="certFileList" class="flex flex-wrap gap-2 mt-2"></div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Subject *</label>
+            <input type="text" id="certSubject" class="form-input2" value="Your Certificate — Samarpan Holistic Wellbeing Community">
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Message *</label>
+            <textarea id="certMessage" class="form-textarea2" rows="6">Thank you for your contribution during your internship with us. Your certificate is attached to this email.
+
+We wish you the very best for what comes next, and hope you'll stay in touch.</textarea>
+          </div>
+
+          <button type="button" id="certSendBtn" onclick="handleSendCertificate()" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4">
+            <span id="certSendLabel">Send Certificate</span>
+          </button>
+          <div id="certStatus"></div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="font-display text-base mb-1" style="color:var(--text);">Certificate &amp; LOR Tracking</h3>
+          <p class="text-xs mb-3" style="color:var(--text-muted);">Kept in sync automatically every time a certificate or LOR is sent above — no manual updates needed.</p>
+          <div class="card overflow-x-auto">
+            <table class="data-table" id="certLorTable">
+              <thead><tr><th>Intern</th><th>Tasks Done</th><th>Certificate</th><th>Cert. Issued</th><th>LOR</th><th>LOR Issued</th></tr></thead>
+              <tbody id="certLorBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
       <div class="panel" id="panel-research">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="microscope" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Research &amp; Content</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — this would pull from the Research Tracker / Content Tracker tabs already in your spreadsheet. Say the word and I'll connect it.</p>
+        <div class="flex gap-2 mb-4">
+          <button type="button" id="rcTabBtnResearch" class="tpl-btn" style="background:var(--clay);color:#fff;" onclick="setResearchContentTab('research')">Research Tracker</button>
+          <button type="button" id="rcTabBtnContent" class="tpl-btn" onclick="setResearchContentTab('content')">Content Tracker</button>
+        </div>
+        <div class="card overflow-x-auto" id="rcResearchWrap">
+          <table class="data-table" id="researchTable">
+            <thead><tr><th>Topic</th><th>Intern</th><th>Dept</th><th>Stage</th><th>Target Date</th><th>Publication</th></tr></thead>
+            <tbody id="researchBody"></tbody>
+          </table>
+        </div>
+        <div class="card overflow-x-auto hidden" id="rcContentWrap">
+          <table class="data-table" id="contentTable">
+            <thead><tr><th>Topic</th><th>Intern</th><th>Platform</th><th>Draft</th><th>Review</th><th>Published</th></tr></thead>
+            <tbody id="contentBody"></tbody>
+          </table>
         </div>
       </div>
       <div class="panel" id="panel-analytics">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="bar-chart-3" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Analytics</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Not wired up yet — deeper trends beyond the Dashboard's top-line numbers (completion rates over time, per-department load, etc.) would go here.</p>
+        <div class="stat-grid mb-6" id="analyticsStatGrid"></div>
+        <div class="grid gap-6" style="grid-template-columns:1fr 1fr;">
+          <div>
+            <h3 class="font-display text-base mb-2" style="color:var(--text);">By Department</h3>
+            <div class="card overflow-x-auto">
+              <table class="data-table" id="analyticsDeptTable">
+                <thead><tr><th>Department</th><th>Interns</th><th>Tasks</th></tr></thead>
+                <tbody id="analyticsDeptBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display text-base mb-2" style="color:var(--text);">Weekly Submissions</h3>
+            <div class="card overflow-x-auto">
+              <table class="data-table" id="analyticsWeekTable">
+                <thead><tr><th>Week Of</th><th>Reports Submitted</th></tr></thead>
+                <tbody id="analyticsWeekBody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div class="panel" id="panel-settings">
@@ -544,6 +655,44 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       </button>
     </div>
     <div id="editInternStatusMsg" class="mt-2"></div>
+  </div>
+</div>
+
+<!-- ── APPROVE APPLICATION MODAL ── -->
+<div id="approveAppModal" class="modal-overlay hidden" onclick="if(event.target===this) closeApproveApp();">
+  <div class="card" style="max-width:420px;width:100%;">
+    <h3 class="font-display text-lg mb-1" style="color:var(--text);" id="approveAppHeading">Approve Application</h3>
+    <p class="text-xs mb-4" style="color:var(--text-muted);">Creates a new Intern Database record from this application. Nothing else needs to be filled in by hand.</p>
+    <input type="hidden" id="appRowIndex">
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Role *</label>
+      <input type="text" id="appRole" class="form-input2" placeholder="e.g. Research Intern">
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Department *</label>
+      <input type="text" id="appDepartment" class="form-input2" placeholder="e.g. Ayurveda">
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Mentor</label>
+      <input type="text" id="appMentor" class="form-input2" placeholder="Optional">
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-5">
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Joining Date *</label>
+        <input type="date" id="appJoiningDate" class="form-input2">
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Expected End</label>
+        <input type="date" id="appEndDate" class="form-input2">
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button type="button" onclick="closeApproveApp()" class="tpl-btn" style="flex:1;">Cancel</button>
+      <button type="button" id="approveAppSaveBtn" onclick="saveApproveApplication()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3" style="flex:1;">
+        <span id="approveAppSaveLabel">Approve</span>
+      </button>
+    </div>
+    <div id="approveAppStatusMsg" class="mt-2"></div>
   </div>
 </div>
 
@@ -742,6 +891,12 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         renderAllInterns(info);
         renderAllTasks(info);
         renderWeekly(info);
+        renderApplications(info);
+        renderMentors(info);
+        renderLifecycle(info);
+        renderResearchContent(info);
+        renderCertLorTracking(info);
+        renderAnalytics(info);
 
         document.getElementById('dashLoading').classList.add('hidden');
         document.getElementById('dashContent').classList.remove('hidden');
@@ -846,6 +1001,221 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         + '<td><span class="badge badge-neutral">' + esc(w.reviewStatus || '—') + '</span></td>'
         + '<td style="max-width:280px;">' + esc(w.tasksCompleted || '—') + '</td></tr>';
     }).join('');
+  }
+
+  // ── APPLICATIONS ──
+  var applicationsFilter = 'Pending'; // 'Pending' | 'Approved' | 'Rejected' | 'all'
+  function goToFilteredApplications(filter) {
+    applicationsFilter = filter;
+    setPanel('interns-applications');
+    if (overviewData) renderApplications(overviewData);
+  }
+  function clearApplicationsFilter() { applicationsFilter = 'all'; if (overviewData) renderApplications(overviewData); }
+
+  function renderApplications(info) {
+    var body = document.getElementById('applicationsBody');
+    var banner = document.getElementById('applicationsFilterBanner');
+    var apps = (info.applications || []).slice().reverse();
+
+    if (applicationsFilter === 'all') {
+      banner.innerHTML = '';
+    } else {
+      banner.innerHTML = '<div class="filter-banner"><span>Showing only <b>' + esc(applicationsFilter) + '</b> applications.</span><button type="button" onclick="clearApplicationsFilter()">Show All</button></div>';
+      apps = apps.filter(function(a){ return String(a.status || 'Pending').trim().toLowerCase() === applicationsFilter.toLowerCase(); });
+    }
+
+    if (!apps.length) { body.innerHTML = '<tr><td colspan="6" style="color:var(--text-muted);">No applications match.</td></tr>'; return; }
+    body.innerHTML = apps.map(function(a) {
+      var statusKey = String(a.status || 'Pending').trim();
+      var badgeClass = statusKey === 'Approved' ? 'badge-done' : (statusKey === 'Rejected' ? 'badge-open' : 'badge-review');
+      var actions = statusKey === 'Pending'
+        ? '<button type="button" class="icon-btn" style="width:30px;height:30px;" title="Approve" onclick="openApproveApp(' + a.rowIndex + ',\'' + esc(a.name) + '\',\'' + esc(a.preferredDepartment) + '\')"><i data-lucide="check" class="w-3.5 h-3.5"></i></button>'
+          + '<button type="button" class="icon-btn" style="width:30px;height:30px;" title="Reject" onclick="rejectApplication(' + a.rowIndex + ')"><i data-lucide="x" class="w-3.5 h-3.5"></i></button>'
+        : (statusKey === 'Approved' ? '<span class="text-xs" style="color:var(--text-muted);">' + esc(a.internId || '') + '</span>' : '');
+      return '<tr>'
+        + '<td>' + esc(a.name) + '</td>'
+        + '<td>' + esc(a.preferredDepartment || '—') + '</td>'
+        + '<td>' + esc(a.college || '—') + '</td>'
+        + '<td>' + esc(a.timestamp) + '</td>'
+        + '<td><span class="badge ' + badgeClass + '">' + esc(statusKey) + '</span></td>'
+        + '<td class="flex gap-1">' + actions + '</td>'
+        + '</tr>';
+    }).join('');
+    lucide.createIcons();
+  }
+
+  function openApproveApp(rowIndex, name, preferredDepartment) {
+    document.getElementById('appRowIndex').value = rowIndex;
+    document.getElementById('approveAppHeading').textContent = 'Approve — ' + name;
+    document.getElementById('appRole').value = '';
+    document.getElementById('appDepartment').value = preferredDepartment || '';
+    document.getElementById('appMentor').value = '';
+    document.getElementById('appJoiningDate').value = '';
+    document.getElementById('appEndDate').value = '';
+    document.getElementById('approveAppStatusMsg').innerHTML = '';
+    document.getElementById('approveAppModal').classList.remove('hidden');
+  }
+  function closeApproveApp() { document.getElementById('approveAppModal').classList.add('hidden'); }
+
+  async function saveApproveApplication() {
+    var rowIndex = document.getElementById('appRowIndex').value;
+    var role = document.getElementById('appRole').value.trim();
+    var department = document.getElementById('appDepartment').value.trim();
+    var mentor = document.getElementById('appMentor').value.trim();
+    var joiningDate = document.getElementById('appJoiningDate').value;
+    var endDate = document.getElementById('appEndDate').value;
+    if (!role || !department || !joiningDate) {
+      setStatus('approveAppStatusMsg', false, 'Role, Department, and Joining Date are required.');
+      return;
+    }
+    setBtnLoadingCustom('approveAppSaveBtn', 'approveAppSaveLabel', true, 'Approving…');
+    try {
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          action: 'approveApplication', adminPassword: CLIENT_ADMIN_PASSWORD, rowIndex: rowIndex,
+          role: role, department: department, mentor: mentor, joiningDate: joiningDate, expectedEndDate: endDate
+        })
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not approve application');
+      closeApproveApp();
+      loadOverview();
+    } catch (err) {
+      setStatus('approveAppStatusMsg', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoadingCustom('approveAppSaveBtn', 'approveAppSaveLabel', false, 'Approve');
+  }
+
+  async function rejectApplication(rowIndex) {
+    if (!confirm('Reject this application? It stays on record, just marked Rejected.')) return;
+    try {
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'rejectApplication', adminPassword: CLIENT_ADMIN_PASSWORD, rowIndex: rowIndex })
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not reject application');
+      loadOverview();
+    } catch (err) {
+      alert((err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+  }
+
+  // ── MENTORS ──
+  function renderMentors(info) {
+    var grid = document.getElementById('mentorsGrid');
+    var mentors = info.mentors || [];
+    if (!mentors.length) { grid.innerHTML = '<p style="color:var(--text-muted);" class="text-sm">No mentors on record yet.</p>'; return; }
+    grid.innerHTML = mentors.map(function(m) {
+      var internsList = (m.interns || []).map(function(i) {
+        return '<div class="status-row"><span class="status-label">' + esc(i.name) + (i.department ? ' <span style="color:var(--text-muted);">— ' + esc(i.department) + '</span>' : '') + '</span>'
+          + '<span class="badge ' + (String(i.status||'').toLowerCase()==='active' ? 'badge-done' : 'badge-neutral') + '">' + esc(i.status || '—') + '</span></div>';
+      }).join('');
+      return '<div class="card">'
+        + '<div class="flex items-center justify-between mb-2">'
+        + '<h4 class="font-display text-sm" style="color:var(--text);">' + esc(m.mentor) + '</h4>'
+        + '<span class="badge badge-neutral">' + m.internCount + ' intern' + (m.internCount === 1 ? '' : 's') + '</span>'
+        + '</div>'
+        + (m.departments && m.departments.length ? '<p class="text-xs mb-3" style="color:var(--text-muted);">' + esc(m.departments.join(', ')) + '</p>' : '')
+        + internsList
+        + '</div>';
+    }).join('');
+  }
+
+  // ── INTERNSHIP LIFECYCLE ──
+  function renderLifecycle(info) {
+    var lc = info.lifecycle || { counts: {}, byStage: {} };
+    var c = lc.counts || {};
+    var grid = document.getElementById('lifecycleStages');
+    var stages = [
+      { key: 'Applied', label: 'Applied', count: c.applied || 0, icon: 'file-text' },
+      { key: 'Active', label: 'Active', count: c.active || 0, icon: 'user-check' },
+      { key: 'Completed', label: 'Completed', count: c.completed || 0, icon: 'badge-check' },
+      { key: 'Left', label: 'Left', count: c.left || 0, icon: 'user-minus' }
+    ];
+    grid.innerHTML = stages.map(function(s) {
+      return '<div class="stat-card stat-clickable" onclick="showLifecycleStage(\'' + s.key + '\')">'
+        + '<div class="stat-icon"><i data-lucide="' + s.icon + '" class="w-4 h-4"></i></div>'
+        + '<div class="stat-num">' + s.count + '</div><div class="stat-label">' + s.label + '</div></div>';
+    }).join('');
+    lucide.createIcons();
+    window._lifecycleData = lc;
+  }
+  function showLifecycleStage(stage) {
+    var lc = window._lifecycleData || { byStage: {} };
+    var names = (lc.byStage && lc.byStage[stage]) || [];
+    var banner = document.getElementById('lifecycleDetailBanner');
+    var body = document.getElementById('lifecycleBody');
+    banner.innerHTML = '<div class="filter-banner"><span>Showing interns in stage <b>' + esc(stage) + '</b>.</span></div>';
+    if (!names.length) { body.innerHTML = '<tr><td style="color:var(--text-muted);">No one in this stage right now.</td></tr>'; return; }
+    body.innerHTML = names.map(function(n) { return '<tr><td>' + esc(n) + '</td></tr>'; }).join('');
+  }
+
+  // ── RESEARCH & CONTENT ──
+  var researchContentTab = 'research';
+  function setResearchContentTab(tab) {
+    researchContentTab = tab;
+    document.getElementById('rcTabBtnResearch').style.background = tab === 'research' ? 'var(--clay)' : '';
+    document.getElementById('rcTabBtnResearch').style.color = tab === 'research' ? '#fff' : '';
+    document.getElementById('rcTabBtnContent').style.background = tab === 'content' ? 'var(--clay)' : '';
+    document.getElementById('rcTabBtnContent').style.color = tab === 'content' ? '#fff' : '';
+    document.getElementById('rcResearchWrap').classList.toggle('hidden', tab !== 'research');
+    document.getElementById('rcContentWrap').classList.toggle('hidden', tab !== 'content');
+  }
+  function renderResearchContent(info) {
+    var research = info.research || [];
+    var rBody = document.getElementById('researchBody');
+    rBody.innerHTML = research.length ? research.map(function(r) {
+      return '<tr><td>' + esc(r.topic) + '</td><td>' + esc(r.intern || '—') + '</td><td>' + esc(r.department || '—') + '</td>'
+        + '<td><span class="badge badge-neutral">' + esc(r.stage || '—') + '</span></td><td>' + esc(r.targetDate || '—') + '</td>'
+        + '<td>' + esc(r.publicationStatus || '—') + '</td></tr>';
+    }).join('') : '<tr><td colspan="6" style="color:var(--text-muted);">No research entries yet.</td></tr>';
+
+    var content = info.content || [];
+    var cBody = document.getElementById('contentBody');
+    cBody.innerHTML = content.length ? content.map(function(c) {
+      return '<tr><td>' + esc(c.topic) + '</td><td>' + esc(c.intern || '—') + '</td><td>' + esc(c.platform || '—') + '</td>'
+        + '<td><span class="badge badge-neutral">' + esc(c.draftStatus || '—') + '</span></td><td>' + esc(c.reviewStatus || '—') + '</td>'
+        + '<td>' + esc(c.published || '—') + '</td></tr>';
+    }).join('') : '<tr><td colspan="6" style="color:var(--text-muted);">No content entries yet.</td></tr>';
+  }
+
+  // ── CERTIFICATE & LOR TRACKING (bottom of Certificates panel) ──
+  function renderCertLorTracking(info) {
+    var body = document.getElementById('certLorBody');
+    var rows = info.certLor || [];
+    if (!rows.length) { body.innerHTML = '<tr><td colspan="6" style="color:var(--text-muted);">Nothing tracked yet — send a certificate or LOR above to populate this.</td></tr>'; return; }
+    body.innerHTML = rows.map(function(r) {
+      return '<tr><td>' + esc(r.name) + '</td><td>' + esc(r.tasksCompleted || 0) + '</td>'
+        + '<td><span class="badge ' + (r.certificateStatus === 'Issued' ? 'badge-done' : 'badge-neutral') + '">' + esc(r.certificateStatus || '—') + '</span></td>'
+        + '<td>' + esc(r.certificateIssued || '—') + '</td>'
+        + '<td><span class="badge ' + (r.lorStatus === 'Issued' ? 'badge-done' : 'badge-neutral') + '">' + esc(r.lorStatus || '—') + '</span></td>'
+        + '<td>' + esc(r.lorIssued || '—') + '</td></tr>';
+    }).join('');
+  }
+
+  // ── ANALYTICS ──
+  function renderAnalytics(info) {
+    var a = info.analytics || {};
+    var grid = document.getElementById('analyticsStatGrid');
+    grid.innerHTML =
+      '<div class="stat-card"><div class="stat-icon"><i data-lucide="percent" class="w-4 h-4"></i></div><div class="stat-num">' + (a.completionRate || 0) + '%</div><div class="stat-label">Completion Rate</div></div>'
+      + '<div class="stat-card"><div class="stat-icon"><i data-lucide="clipboard-list" class="w-4 h-4"></i></div><div class="stat-num">' + (a.totalTasks || 0) + '</div><div class="stat-label">Total Tasks</div></div>'
+      + '<div class="stat-card"><div class="stat-icon"><i data-lucide="check-circle" class="w-4 h-4"></i></div><div class="stat-num">' + (a.completedTasks || 0) + '</div><div class="stat-label">Completed Tasks</div></div>';
+    lucide.createIcons();
+
+    var deptBody = document.getElementById('analyticsDeptBody');
+    var depts = a.departmentBreakdown || [];
+    deptBody.innerHTML = depts.length ? depts.map(function(d) {
+      return '<tr><td>' + esc(d.department) + '</td><td>' + d.interns + '</td><td>' + d.tasks + '</td></tr>';
+    }).join('') : '<tr><td colspan="3" style="color:var(--text-muted);">No data yet.</td></tr>';
+
+    var weekBody = document.getElementById('analyticsWeekBody');
+    var weeks = a.weeklyTrend || [];
+    weekBody.innerHTML = weeks.length ? weeks.map(function(w) {
+      return '<tr><td>' + esc(w.week) + '</td><td>' + w.submissions + '</td></tr>';
+    }).join('') : '<tr><td colspan="2" style="color:var(--text-muted);">No weekly reports yet.</td></tr>';
   }
 
   // ── Click-through: All Interns row → Intern Profiles panel ──
@@ -1119,6 +1489,13 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     }
   };
 
+  // Maps each quick-start template to the email type used for the
+  // notification/record system, and whether it should default to
+  // being saved to the intern's record.
+  var TEMPLATE_TYPE = {
+    custom: 'General', weekly: 'Weekly', offer: 'Offer Letter', certificate: 'Certificate'
+  };
+
   function loadEmailTemplate(key) {
     var t = EMAIL_TEMPLATES[key];
     if (!t) return;
@@ -1127,6 +1504,19 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     document.querySelectorAll('.tpl-btn[data-tpl]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tpl') === key); });
     if (key === 'offer' || key === 'certificate') setEmailRecipientMode('specific');
     document.getElementById('anIncludeLogo').checked = (key === 'offer' || key === 'certificate');
+    var type = TEMPLATE_TYPE[key] || 'General';
+    document.getElementById('anEmailType').value = type;
+    onEmailTypeChange();
+  }
+
+  // NEW: whenever the email type changes (either by picking a template
+  // or choosing directly), default "save to record" sensibly — on for
+  // anything that isn't a plain general note — and show/hide the
+  // related-task field. Admin can still flip the checkbox either way.
+  function onEmailTypeChange() {
+    var type = document.getElementById('anEmailType').value;
+    document.getElementById('anSaveToRecord').checked = (type !== 'General');
+    document.getElementById('anRelatedTaskWrap').classList.toggle('hidden', type !== 'Task');
   }
 
   function renderTemplatesPreview() {
@@ -1181,6 +1571,11 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     var internName = document.getElementById('anInternName').value.trim();
     var filter = document.getElementById('anFilter').value;
     var includeLogo = document.getElementById('anIncludeLogo').checked;
+    var emailType = document.getElementById('anEmailType').value;
+    var saveToRecord = document.getElementById('anSaveToRecord').checked;
+    var relatedTaskId = document.getElementById('anRelatedTaskId').value.trim();
+    var overrideEmail = document.getElementById('anOverrideEmail').value.trim();
+    var updateEmailOnFile = document.getElementById('anUpdateEmailOnFile').checked;
 
     if (emailRecipientMode === 'specific' && !internName) { setStatus('anStatus', false, 'Choose who to send this to.'); return; }
     if (anFilesArr.length > MAX_EMAIL_FILES) { setStatus('anStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.'); return; }
@@ -1189,7 +1584,7 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
     }
 
     var confirmMsg = emailRecipientMode === 'specific'
-      ? 'Send this email to ' + internName + '?'
+      ? 'Send this email to ' + internName + (overrideEmail ? ' at ' + overrideEmail : '') + '?'
       : (filter === 'all' ? 'Send this email to EVERY intern in Intern Database? This cannot be undone.' : 'Send this email to every intern with status "' + filter + '"? This cannot be undone.');
     if (!confirm(confirmMsg)) return;
 
@@ -1200,7 +1595,9 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       var payload = {
         action: 'sendEmail', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
         subject: subject, message: message, recipientMode: emailRecipientMode,
-        internName: internName, filter: filter, includeLogo: includeLogo, attachments: attachments
+        internName: internName, filter: filter, includeLogo: includeLogo, attachments: attachments,
+        emailType: emailType, saveToRecord: saveToRecord, relatedTaskId: relatedTaskId,
+        overrideEmail: overrideEmail, updateEmailOnFile: updateEmailOnFile
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
@@ -1214,6 +1611,94 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
       setStatus('anStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
     }
     setBtnLoading('anSendBtn', false);
+  }
+
+  // ── Certificates panel: upload + send + auto-log (no manual sheet work) ──
+  var certFilesArr = [];
+  var certDocType = 'Certificate'; // 'Certificate' | 'LOR'
+
+  var CERT_DEFAULTS = {
+    Certificate: {
+      subject: 'Your Certificate — Samarpan Holistic Wellbeing Community',
+      message: 'Thank you for your contribution during your internship with us. Your certificate is attached to this email.\n\nWe wish you the very best for what comes next, and hope you\'ll stay in touch.',
+      heading: 'Issue a Certificate',
+      desc: 'Upload the certificate file for one intern, review the email, and press Send — it\'s emailed to them, saved to their portal notifications, and logged to the Certificate Registry automatically. Nothing else to update by hand.',
+      fileLabel: 'Certificate File *',
+      sendLabel: 'Send Certificate'
+    },
+    LOR: {
+      subject: 'Your Letter of Recommendation — Samarpan Holistic Wellbeing Community',
+      message: 'Thank you for your contribution during your internship with us. Your letter of recommendation is attached to this email.\n\nWe wish you the very best for what comes next, and hope you\'ll stay in touch.',
+      heading: 'Issue a Letter of Recommendation',
+      desc: 'Upload the LOR file for one intern, review the email, and press Send — it\'s emailed to them, saved to their portal notifications, and their LOR Status is updated automatically. Nothing else to update by hand.',
+      fileLabel: 'LOR File *',
+      sendLabel: 'Send LOR'
+    }
+  };
+
+  function setCertDocType(type) {
+    certDocType = type;
+    var d = CERT_DEFAULTS[type];
+    document.getElementById('certTypeBtnCert').style.background = type === 'Certificate' ? 'var(--clay)' : '';
+    document.getElementById('certTypeBtnCert').style.color = type === 'Certificate' ? '#fff' : '';
+    document.getElementById('certTypeBtnLor').style.background = type === 'LOR' ? 'var(--clay)' : '';
+    document.getElementById('certTypeBtnLor').style.color = type === 'LOR' ? '#fff' : '';
+    document.getElementById('certPanelHeading').textContent = d.heading;
+    document.getElementById('certPanelDesc').textContent = d.desc;
+    document.getElementById('certFileLabel').textContent = d.fileLabel;
+    document.getElementById('certSubject').value = d.subject;
+    document.getElementById('certMessage').value = d.message;
+    document.getElementById('certSendLabel').textContent = d.sendLabel;
+    document.getElementById('certStatus').innerHTML = '';
+  }
+
+  function renderCertFileList() {
+    var wrap = document.getElementById('certFileList');
+    wrap.innerHTML = certFilesArr.map(function(file, i) {
+      return '<span class="file-chip"><span title="' + esc(file.name) + '">' + esc(file.name) + '</span>'
+        + '<button type="button" onclick="removeCertFile(' + i + ')" aria-label="Remove ' + esc(file.name) + '">&times;</button></span>';
+    }).join('');
+  }
+  function removeCertFile(index) { certFilesArr.splice(index, 1); renderCertFileList(); }
+
+  async function handleSendCertificate() {
+    var internName = document.getElementById('certInternName').value.trim();
+    var subject = document.getElementById('certSubject').value.trim();
+    var message = document.getElementById('certMessage').value.trim();
+    var docLabel = certDocType === 'LOR' ? 'LOR' : 'certificate';
+    if (!internName) { setStatus('certStatus', false, 'Choose who this ' + docLabel + ' is for.'); return; }
+    if (!subject || !message) { setStatus('certStatus', false, 'Please fill in both subject and message.'); return; }
+    if (!certFilesArr.length) { setStatus('certStatus', false, 'Attach the ' + docLabel + ' file first.'); return; }
+    if (certFilesArr.length > MAX_EMAIL_FILES) { setStatus('certStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.'); return; }
+    for (var i = 0; i < certFilesArr.length; i++) {
+      if (certFilesArr[i].size > MAX_EMAIL_FILE_BYTES) { setStatus('certStatus', false, '"' + certFilesArr[i].name + '" is over 10MB — please use a smaller file.'); return; }
+    }
+    if (!confirm('Send this ' + docLabel + ' to ' + internName + '? This is emailed immediately and logged to their record.')) return;
+
+    setBtnLoading('certSendBtn', true);
+    try {
+      var attachments = await filesToBase64(certFilesArr);
+      var token = await getRecaptchaToken('send_email');
+      var payload = {
+        action: 'sendEmail', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        subject: subject, message: message, recipientMode: 'specific', internName: internName,
+        includeLogo: certDocType === 'Certificate', attachments: attachments,
+        emailType: certDocType, saveToRecord: true
+      };
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not send ' + docLabel);
+      setStatus('certStatus', true, (certDocType === 'LOR' ? 'LOR' : 'Certificate') + ' sent to ' + internName + ' and logged automatically.');
+      certFilesArr = []; renderCertFileList(); document.getElementById('certFiles').value = '';
+      document.getElementById('certInternName').value = '';
+      loadOverview();
+    } catch (err) {
+      console.error('Send certificate error:', err);
+      setStatus('certStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    setBtnLoading('certSendBtn', false);
   }
 
   window.addEventListener('DOMContentLoaded', function() {
@@ -1234,6 +1719,17 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
         if (!dup) anFilesArr.push(f);
       });
       renderAnFileList();
+      this.value = '';
+    });
+    onEmailTypeChange();
+
+    document.getElementById('certFiles').addEventListener('change', function(){
+      var picked = Array.from(this.files || []);
+      picked.forEach(function(f) {
+        var dup = certFilesArr.some(function(existing) { return existing.name === f.name && existing.size === f.size; });
+        if (!dup) certFilesArr.push(f);
+      });
+      renderCertFileList();
       this.value = '';
     });
   });
