@@ -577,7 +577,14 @@
           session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
           session.loggedInAt = Date.now();
           localStorage.setItem('sp_intern_session', JSON.stringify(session));
-          bootPortal(true);
+          // The login response already bundles statusInfo + fullInfo (backend
+          // computes both in the same request) — use them directly instead of
+          // firing two more sequential requests that can also drift out of
+          // sync with what we just got back.
+          statusInfo = res.statusInfo || {};
+          fullInfo = (res.fullInfo && res.fullInfo.found) ? res.fullInfo : null;
+          showApp();
+          renderAll();
         })
         .catch(function(){
           try { grecaptcha.reset(); } catch (err) {}
@@ -606,17 +613,18 @@
   }
 
   function bootPortal(fromGate) {
-    fetch(CHECKIN_APPS_SCRIPT_URL + '?internName=' + encodeURIComponent(session.name) + '&status=1')
+    // Refresh path only now (after a submit, or restoring a saved session) —
+    // fresh logins get statusInfo/fullInfo straight from the verify=1
+    // response and never call this. Uses the backend's bundle=1 endpoint,
+    // which returns both statusInfo and fullInfo in one request instead of
+    // the old two sequential calls.
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?bundle=1&internId=' + encodeURIComponent(session.internId) + '&internName=' + encodeURIComponent(session.name))
       .then(function(r){ return r.json(); })
-      .then(function(info){
-        statusInfo = info || {};
+      .then(function(data){
+        statusInfo = (data && data.statusInfo) || {};
         if (statusInfo.internId) { session.internId = statusInfo.internId; localStorage.setItem('sp_intern_session', JSON.stringify(session)); }
+        fullInfo = (data && data.fullInfo && data.fullInfo.found) ? data.fullInfo : null;
         if (fromGate) showApp();
-        var next = session.internId ? fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(session.internId) + '&full=1').then(function(r){ return r.json(); }) : Promise.resolve(null);
-        return next;
-      })
-      .then(function(full){
-        fullInfo = (full && full.found) ? full : null;
         renderAll();
       })
       .catch(function(){
