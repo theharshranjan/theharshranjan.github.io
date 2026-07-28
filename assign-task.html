@@ -1574,13 +1574,48 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   }
   function removeAnFile(index) { anFilesArr.splice(index, 1); renderAnFileList(); }
 
+  // FASTER SUBMITS: shrink image attachments client-side (resize to a
+  // max 1600px edge, re-encode as ~80% quality JPEG) before they're
+  // base64-encoded and uploaded — a big photo attachment is usually
+  // most of what makes sending an email/certificate with attachments
+  // feel slow. Non-image files (PDFs, docs, zips) are left untouched.
+  function compressImageIfNeeded(file) {
+    if (!file.type || file.type.indexOf('image/') !== 0 || file.type === 'image/svg+xml') {
+      return Promise.resolve(file);
+    }
+    if (file.size < 400 * 1024) return Promise.resolve(file);
+    return new Promise(function(resolve) {
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function() {
+        URL.revokeObjectURL(url);
+        var MAX_EDGE = 1600;
+        var w = img.width, h = img.height;
+        var scale = Math.min(1, MAX_EDGE / Math.max(w, h));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(w * scale);
+        canvas.height = Math.round(h * scale);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function(blob) {
+          if (!blob || blob.size >= file.size) { resolve(file); return; }
+          resolve(new File([blob], file.name.replace(/\.(png|webp|heic|heif)$/i, '.jpg'), { type: 'image/jpeg' }));
+        }, 'image/jpeg', 0.8);
+      };
+      img.onerror = function() { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
   function filesToBase64(fileArr) {
     return Promise.all(fileArr.map(function(file) {
-      return new Promise(function(resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function() { resolve({ name: file.name, mimeType: file.type || 'application/octet-stream', data: reader.result.split(',')[1] }); };
-        reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
-        reader.readAsDataURL(file);
+      return compressImageIfNeeded(file).then(function(f) {
+        return new Promise(function(resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function() { resolve({ name: f.name, mimeType: f.type || 'application/octet-stream', data: reader.result.split(',')[1] }); };
+          reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
+          reader.readAsDataURL(f);
+        });
       });
     }));
   }
