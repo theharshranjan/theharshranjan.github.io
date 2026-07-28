@@ -219,12 +219,12 @@
     </div>
 
     <div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">CV / Resume (PDF, max 5MB) *</label>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">CV / Resume (PDF, DOC/DOCX, or JPG/PNG — max 5MB) *</label>
       <label class="file-label" id="cvLabel" for="cv">
         <i data-lucide="upload" class="w-4 h-4"></i>
-        <span id="cvLabelText">Choose a PDF file (max 5MB)</span>
+        <span id="cvLabelText">Choose a file (PDF, DOC/DOCX, JPG/PNG — max 5MB)</span>
       </label>
-      <input required type="file" id="cv" name="cv" accept="application/pdf" class="hidden">
+      <input required type="file" id="cv" name="cv" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png" class="hidden">
     </div>
 
     <div>
@@ -304,7 +304,7 @@ function setStatus(ok, msg) {
 document.getElementById('cv').addEventListener('change', function(e) {
   var f = e.target.files[0];
   var label = document.getElementById('cvLabelText');
-  label.textContent = f ? f.name : 'Choose a PDF file (max 5MB)';
+  label.textContent = f ? f.name : 'Choose a file (PDF, DOC/DOCX, JPG/PNG — max 5MB)';
 });
 
 function fileToBase64(file) {
@@ -352,6 +352,11 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const cvFile = form.cv.files[0];
+    const allowedExt = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+    const ext = (cvFile.name.split('.').pop() || '').toLowerCase();
+    if (!allowedExt.includes(ext)) {
+      throw new Error("Please upload a PDF, DOC/DOCX, or JPG/PNG file.");
+    }
     if (cvFile.size > 5 * 1024 * 1024) {
       throw new Error("CV file exceeds 5MB.");
     }
@@ -365,6 +370,13 @@ form.addEventListener('submit', async (e) => {
       fileToBase64(cvFile)
     ]);
     const cvFileName = cvFile.name;
+    // NEW: send the file's actual type through — the backend used to
+    // hardcode every upload as application/pdf, which silently corrupted
+    // any DOC/DOCX or image file that got saved to Drive.
+    const cvMimeTypeMap = { pdf: 'application/pdf', doc: 'application/msword',
+      docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png' };
+    const cvMimeType = cvMimeTypeMap[ext] || cvFile.type || 'application/octet-stream';
 
     const payload = {
       action: 'register',
@@ -380,7 +392,8 @@ form.addEventListener('submit', async (e) => {
       department: form.department.value,
       availability: form.availability.value,
       cvBase64,
-      cvFileName
+      cvFileName,
+      cvMimeType
     };
 
     const res = await fetch(APPS_SCRIPT_URL, {
