@@ -903,13 +903,52 @@
   function removeTfFile(i) { tfFilesArr.splice(i, 1); renderChipList(tfFilesArr, 'tfFileList', 'removeTfFile'); }
   function removeWfFile(i) { wfFilesArr.splice(i, 1); renderChipList(wfFilesArr, 'wfFileList', 'removeWfFile'); }
 
+  // FASTER SUBMITS: photos (esp. straight from a phone camera) are
+  // often 3–8MB. Base64 makes that ~33% bigger again before it even
+  // leaves the browser, so a single photo could mean 10MB+ over the
+  // network plus that much for Drive to write on the other end — that
+  // round trip is most of what makes a submit feel slow. This shrinks
+  // any image attachment (resize to a max 1600px edge, re-encode as
+  // ~80% quality JPEG) client-side, before it's ever uploaded. PDFs,
+  // docs, zips etc. are left untouched — they're already compressed
+  // and can't safely be re-encoded this way in the browser.
+  function compressImageIfNeeded(file) {
+    if (!file.type || file.type.indexOf('image/') !== 0 || file.type === 'image/svg+xml') {
+      return Promise.resolve(file);
+    }
+    if (file.size < 400 * 1024) return Promise.resolve(file); // already small — skip
+    return new Promise(function(resolve) {
+      var img = new Image();
+      var url = URL.createObjectURL(file);
+      img.onload = function() {
+        URL.revokeObjectURL(url);
+        var MAX_EDGE = 1600;
+        var w = img.width, h = img.height;
+        var scale = Math.min(1, MAX_EDGE / Math.max(w, h));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(w * scale);
+        canvas.height = Math.round(h * scale);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(function(blob) {
+          if (!blob || blob.size >= file.size) { resolve(file); return; } // no gain — keep original
+          resolve(new File([blob], file.name.replace(/\.(png|webp|heic|heif)$/i, '.jpg'), { type: 'image/jpeg' }));
+        }, 'image/jpeg', 0.8);
+      };
+      img.onerror = function() { URL.revokeObjectURL(url); resolve(file); }; // unreadable as an image — just upload as-is
+      img.src = url;
+    });
+  }
+
   function filesToBase64(fileArr) {
     return Promise.all(fileArr.map(function(file) {
-      return new Promise(function(resolve, reject) {
-        var reader = new FileReader();
-        reader.onload = function() { resolve({ name:file.name, mimeType:file.type || 'application/octet-stream', data:reader.result.split(',')[1] }); };
-        reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
-        reader.readAsDataURL(file);
+      return compressImageIfNeeded(file).then(function(f) {
+        return new Promise(function(resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function() { resolve({ name:f.name, mimeType:f.type || 'application/octet-stream', data:reader.result.split(',')[1] }); };
+          reader.onerror = function() { reject(new Error('Could not read file: ' + file.name)); };
+          reader.readAsDataURL(f);
+        });
       });
     }));
   }
