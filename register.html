@@ -69,6 +69,7 @@
   .form-input2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
   .form-input2:focus{border-color:#E55A2B;}
   .form-input2.invalid{border-color:#E55A2B!important;}
+  .form-textarea2.invalid,.form-select2.invalid,.file-label.invalid{border-color:#E55A2B!important;}
   .form-textarea2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;resize:vertical;}
   .form-textarea2:focus{border-color:#E55A2B;}
   .form-select2{width:100%;background:transparent;border:1.5px solid var(--border);border-radius:4px;padding:.85rem .75rem;font-size:16px;font-family:'Lato',sans-serif;color:var(--text);transition:border-color .3s;outline:none;}
@@ -305,6 +306,7 @@ document.getElementById('cv').addEventListener('change', function(e) {
   var f = e.target.files[0];
   var label = document.getElementById('cvLabelText');
   label.textContent = f ? f.name : 'Choose a file (PDF, DOC/DOCX, JPG/PNG — max 5MB)';
+  document.getElementById('cvLabel').classList.remove('invalid');
 });
 
 function fileToBase64(file) {
@@ -316,6 +318,13 @@ function fileToBase64(file) {
   });
 }
 
+form.addEventListener('input', function (e) {
+  if (e.target && e.target.classList) e.target.classList.remove('invalid');
+});
+form.addEventListener('change', function (e) {
+  if (e.target && e.target.classList) e.target.classList.remove('invalid');
+});
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -326,14 +335,41 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
-  // FIXED: the form has novalidate (for custom styling), which means the
-  // browser was never enforcing any of the required fields — including
-  // the CV. People could submit with the CV box left empty and nothing
-  // stopped them; that's why some applications reached the sheet with
-  // no CV Link. checkValidity()/reportValidity() work fine even with
-  // novalidate — they just don't fire automatically — so this restores
-  // enforcement for every required field, with the browser's own
-  // "please fill this in" prompt pointing at whichever one was missed.
+  // NEW: instead of the browser's own small "please fill this in" tooltip
+  // (easy to miss, especially on mobile), find every missing/invalid
+  // required field ourselves, highlight each one, and show one clear
+  // message naming exactly which fields still need to be filled.
+  var requiredFieldLabels = {
+    fullName: 'Full Name', email: 'Email', phone: 'Phone',
+    qualification: 'Qualification', college: 'College / Institution',
+    specialisation: 'Specialisation', areaOfInterest: 'Area of Interest',
+    department: 'Preferred Department', cv: 'CV / Resume',
+    availability: 'Availability per week'
+  };
+  var missingFields = [];
+  var firstInvalidEl = null;
+  Object.keys(requiredFieldLabels).forEach(function (fieldName) {
+    var el = form[fieldName];
+    if (!el) return;
+    var highlightEl = fieldName === 'cv' ? document.getElementById('cvLabel') : el;
+    highlightEl.classList.remove('invalid');
+    var isEmpty = (el.type === 'file') ? el.files.length === 0 : String(el.value || '').trim() === '';
+    if (isEmpty || !el.checkValidity()) {
+      missingFields.push(requiredFieldLabels[fieldName]);
+      highlightEl.classList.add('invalid');
+      if (!firstInvalidEl) firstInvalidEl = highlightEl;
+    }
+  });
+  if (missingFields.length) {
+    setStatus(false, "Please fill in: " + missingFields.join(', ') + '.');
+    if (firstInvalidEl) {
+      firstInvalidEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstInvalidEl.focus();
+    }
+    return;
+  }
+  // Catch anything else the browser considers invalid (e.g. a malformed
+  // email address) that the checks above wouldn't have caught.
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
@@ -407,7 +443,7 @@ form.addEventListener('submit', async (e) => {
     if (result.status === 'success') {
       setStatus(true, "Thank you! Your application has been received.");
       form.reset();
-      document.getElementById('cvLabelText').textContent = 'Choose a PDF file (max 5MB)';
+      document.getElementById('cvLabelText').textContent = 'Choose a file (PDF, DOC/DOCX, JPG/PNG — max 5MB)';
     } else {
       throw new Error(result.message || "Something went wrong.");
     }
