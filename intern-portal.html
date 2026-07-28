@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intern Portal — Samarpan</title>
-<meta name="description" content="Samarpan intern portal — check your status, submit task updates and weekly reports, and track your progress.">
+<meta name="description" content="Samarpan intern portal — check your status, submit task updates, and track your progress.">
 <link rel="canonical" href="https://thesamarpan.co.in/intern-portal.html">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -263,13 +263,12 @@
 
           <div class="flex flex-wrap gap-3 mb-6">
             <button type="button" class="qa-btn" onclick="setPanel('task-submit')"><i data-lucide="upload" class="w-3.5 h-3.5"></i>Submit Task Update</button>
-            <button type="button" class="qa-btn" onclick="setPanel('weekly-submit')"><i data-lucide="send" class="w-3.5 h-3.5"></i>Submit Weekly Report</button>
             <button type="button" class="qa-btn" onclick="setPanel('certificate')"><i data-lucide="award" class="w-3.5 h-3.5"></i>Progress Summary</button>
           </div>
 
           <div class="stat-grid">
             <div class="stat-card"><div class="stat-icon"><i data-lucide="clipboard-list" class="w-4 h-4"></i></div><div class="stat-num" id="ovTaskStat">—</div><div class="stat-label">Current Task</div></div>
-            <div class="stat-card"><div class="stat-icon"><i data-lucide="calendar-check" class="w-4 h-4"></i></div><div class="stat-num" id="ovWeeklyStat">—</div><div class="stat-label">This Week's Report</div></div>
+            <div class="stat-card"><div class="stat-icon"><i data-lucide="calendar-check" class="w-4 h-4"></i></div><div class="stat-num" id="ovWeeklyStat">—</div><div class="stat-label">This Week's Submission</div></div>
             <div class="stat-card"><div class="stat-icon"><i data-lucide="check-circle-2" class="w-4 h-4"></i></div><div class="stat-num" id="ovCompletedStat">0</div><div class="stat-label">Tasks Completed</div></div>
             <div class="stat-card"><div class="stat-icon"><i data-lucide="flame" class="w-4 h-4"></i></div><div class="stat-num" id="ovStreakStat">0</div><div class="stat-label">Weekly Streak</div></div>
           </div>
@@ -344,53 +343,12 @@
         </div>
       </div>
 
-      <!-- ═══ WEEKLY REPORTS > THIS WEEK ═══ -->
+      <!-- ═══ WEEKLY STATUS (derived from Task Submissions — interns submit tasks weekly, ═══
+           there's no separate weekly-report form/endpoint anymore) ═══ -->
       <div class="panel" id="panel-weekly-current">
         <div class="card">
-          <h3 class="font-display text-lg mb-3" style="color:var(--text);">This Week's Report</h3>
+          <h3 class="font-display text-lg mb-3" style="color:var(--text);">This Week's Submission</h3>
           <div id="weeklyCurrentBody" class="space-y-2 text-sm"></div>
-        </div>
-      </div>
-
-      <!-- ═══ WEEKLY REPORTS > SUBMIT REPORT ═══ -->
-      <div class="panel" id="panel-weekly-submit">
-        <div class="card max-w-xl">
-          <p class="text-xs mb-5" id="weeklySubmitAs" style="color:var(--text-muted);"></p>
-          <form id="weeklyForm" onsubmit="handleWeeklySubmit(event)" class="space-y-6" novalidate>
-            <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
-              <label for="wfWebsite">Leave this field empty</label>
-              <input type="text" id="wfWebsite" tabindex="-1" autocomplete="off">
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Tasks Completed This Week *</label>
-              <textarea id="wfTasksDone" class="form-textarea2" rows="4" placeholder="List the tasks or Task IDs you completed or made progress on" required></textarea>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Challenges Faced</label>
-              <textarea id="wfChallenges" class="form-textarea2" rows="3" placeholder="Anything that blocked you or slowed you down"></textarea>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Plan for Next Week</label>
-              <textarea id="wfNextWeek" class="form-textarea2" rows="3" placeholder="What you intend to focus on next"></textarea>
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Supporting Link (optional)</label>
-              <input type="url" id="wfLink" class="form-input2" placeholder="Doc, Drive folder, or published link">
-            </div>
-            <div>
-              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Attach Files (optional)</label>
-              <input type="file" id="wfFiles" class="form-input2" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip">
-              <p class="text-xs mt-1.5" style="color:var(--text-muted);">Photos, PDFs, or documents — up to 5 files, 8MB each.</p>
-              <div id="wfFileList" class="mt-2"></div>
-            </div>
-            <button type="submit" id="wfSubmitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
-              <span id="wfSubmitLabel">Submit Weekly Report</span>
-            </button>
-            <p class="grecaptcha-notice">This site is protected by reCAPTCHA and the Google
-              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a> and
-              <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Terms of Service</a> apply.</p>
-            <div id="wfStatus"></div>
-          </form>
         </div>
       </div>
 
@@ -401,7 +359,7 @@
           <div id="historyTasks"></div>
         </div>
         <div class="card">
-          <h3 class="font-display text-base mb-4" style="color:var(--text);">Weekly Report Timeline</h3>
+          <h3 class="font-display text-base mb-4" style="color:var(--text);">Submission Timeline</h3>
           <div id="historyWeekly"></div>
         </div>
       </div>
@@ -428,7 +386,7 @@
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-lg mx-auto mb-6">
             <div><div class="font-display text-xl" id="certCompleted" style="color:#E55A2B;">0</div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-muted);">Tasks Done</div></div>
             <div><div class="font-display text-xl" id="certTotal" style="color:#E55A2B;">0</div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-muted);">Tasks Assigned</div></div>
-            <div><div class="font-display text-xl" id="certReports" style="color:#E55A2B;">0</div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-muted);">Weekly Reports</div></div>
+            <div><div class="font-display text-xl" id="certReports" style="color:#E55A2B;">0</div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-muted);">Submissions</div></div>
             <div><div class="font-display text-xl" id="certStreak" style="color:#E55A2B;">0</div><div class="text-[10px] uppercase tracking-wider" style="color:var(--text-muted);">Week Streak</div></div>
           </div>
           <p class="text-xs" style="color:var(--text-muted);">Generated <span id="certDate"></span> · thesamarpan.co.in</p>
@@ -442,9 +400,8 @@
 <div id="theme-toggle-fallback"></div>
 
 <script>
-  // ── Apps Script Web App URLs — same backends as the rest of the site ──
+  // ── Apps Script Web App URL — same backend as the rest of the site ──
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
-  var REPORT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKoid2La0-naNY5hi4X88elwD_bqt7xxCOw4wtOaFBKBnKEN3antAU5XUs3E5RB1uaRQ/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
   var xLoadedAt = Date.now();
 
@@ -456,10 +413,7 @@
   var NAV = [
     { key:'overview', label:'Overview', icon:'layout-dashboard' },
     { key:'task-submit', label:'Submit Task', icon:'clipboard-list' },
-    { key:'weekly', label:'Weekly Reports', icon:'calendar-check', children:[
-      { key:'weekly-current', label:'This Week' },
-      { key:'weekly-submit', label:'Submit Report' }
-    ]},
+    { key:'weekly-current', label:'This Week', icon:'calendar-check' },
     { key:'history', label:'History', icon:'history' },
     { key:'notifications', label:'Notifications', icon:'bell' },
     { key:'certificate', label:'Progress Summary', icon:'award' }
@@ -467,8 +421,7 @@
   var PANEL_TITLES = {
     'overview':['Overview',''],
     'task-submit':['Submit Task',''],
-    'weekly-current':['This Week','Weekly Reports'],
-    'weekly-submit':['Submit Report','Weekly Reports'],
+    'weekly-current':['This Week',''],
     'history':['History',''],
     'notifications':['Notifications',''],
     'certificate':['Progress Summary','']
@@ -714,9 +667,9 @@
     var week = 1 + Math.round(((d - firstThursday) / 86400000 - 3 + ((firstThursday.getUTCDay() + 6) % 7)) / 7);
     return d.getUTCFullYear() * 100 + week;
   }
-  function computeStreak(weeklyReports) {
+  function computeStreak(submissions) {
     var weeks = [];
-    (weeklyReports || []).forEach(function(w) { var d = parseDMY(w.timestamp); if (d) weeks.push(weekSortable(d)); });
+    (submissions || []).forEach(function(s) { var d = parseDMY(s.timestamp); if (d) weeks.push(weekSortable(d)); });
     weeks = Array.from(new Set(weeks)).sort(function(a, b) { return b - a; });
     if (!weeks.length) return 0;
     var streak = 1;
@@ -749,13 +702,32 @@
     return html;
   }
 
+  function startOfWeek(d) {
+    var day = d.getDay();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate() - day);
+  }
+  // Derives "this week's submission" status directly from Task
+  // Submissions — there's no separate weekly-report write anymore, so
+  // this looks at the most recent submission instead.
+  function getWeeklyStatus(submissions) {
+    var subs = (submissions || []).map(function(s) { return { s:s, d:parseDMY(s.timestamp) }; }).filter(function(x){ return x.d; });
+    subs.sort(function(a, b) { return b.d.getTime() - a.d.getTime(); });
+    if (!subs.length) return { lastSubmitted:'', submittedThisWeek:false, mentorFeedback:'' };
+    var latest = subs[0];
+    var weekStart = startOfWeek(new Date());
+    return {
+      lastSubmitted: latest.s.timestamp,
+      submittedThisWeek: latest.d >= weekStart,
+      mentorFeedback: latest.s.mentorFeedback || ''
+    };
+  }
+
   function weeklyDetailHTML(w) {
-    if (!w) return '<p style="color:var(--text-muted);">No weekly reports found yet.</p>';
-    var html = '<div class="status-row"><span class="status-label">This week\'s report</span><span class="status-value"><span class="status-badge ' + (w.submittedThisWeek ? 'badge-done' : 'badge-pending') + '">' + (w.submittedThisWeek ? 'Submitted' : 'Not yet submitted') + '</span></span></div>';
+    if (!w || !w.lastSubmitted) return '<p style="color:var(--text-muted);">No task submissions found yet.</p>';
+    var html = '<div class="status-row"><span class="status-label">This week\'s submission</span><span class="status-value"><span class="status-badge ' + (w.submittedThisWeek ? 'badge-done' : 'badge-pending') + '">' + (w.submittedThisWeek ? 'Submitted' : 'Not yet submitted') + '</span></span></div>';
     if (w.lastSubmitted) html += '<div class="status-row"><span class="status-label">Last submitted</span><span class="status-value">' + esc(w.lastSubmitted) + '</span></div>';
-    if (w.reviewStatus) html += '<div class="status-row"><span class="status-label">Review status</span><span class="status-value">' + esc(w.reviewStatus) + '</span></div>';
-    if (w.mentorComments) html += '<div class="status-feedback">"' + esc(cleanFeedback(w.mentorComments)) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
-    if (!w.submittedThisWeek) html += '<p class="text-xs mt-3" style="color:var(--text-muted);">Use "Submit Report" under Weekly Reports for this week\'s update.</p>';
+    if (w.mentorFeedback) html += '<div class="status-feedback">"' + esc(cleanFeedback(w.mentorFeedback)) + '"<div class="text-xs not-italic mt-1" style="color:var(--text-muted);">— Feedback from the team</div></div>';
+    if (!w.submittedThisWeek) html += '<p class="text-xs mt-3" style="color:var(--text-muted);">Use "Submit Task" to send this week\'s update.</p>';
     return html;
   }
 
@@ -769,14 +741,14 @@
     document.getElementById('ovDate').textContent = new Date().toLocaleDateString(undefined, { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
     var task = statusInfo && statusInfo.task;
-    var weekly = statusInfo && statusInfo.weekly;
+    var weekly = getWeeklyStatus(fullInfo && fullInfo.submissions);
     document.getElementById('ovTaskStat').textContent = task && task.taskId ? (task.status || 'Not Started') : 'None';
-    document.getElementById('ovWeeklyStat').textContent = weekly ? (weekly.submittedThisWeek ? 'Submitted' : 'Pending') : 'Pending';
+    document.getElementById('ovWeeklyStat').textContent = weekly.lastSubmitted ? (weekly.submittedThisWeek ? 'Submitted' : 'Pending') : 'Pending';
 
     var tasks = (fullInfo && fullInfo.tasks) || [];
     var completed = tasks.filter(function(t){ return t.status === 'Completed' || t.status === 'Approved'; }).length;
     document.getElementById('ovCompletedStat').textContent = completed;
-    var streak = computeStreak(fullInfo && fullInfo.weeklyReports);
+    var streak = computeStreak(fullInfo && fullInfo.submissions);
     document.getElementById('ovStreakStat').textContent = streak;
 
     var pct = tasks.length ? Math.round((completed / tasks.length) * 100) : 0;
@@ -802,8 +774,7 @@
   }
 
   function renderWeeklyCurrent() {
-    document.getElementById('weeklyCurrentBody').innerHTML = weeklyDetailHTML(statusInfo && statusInfo.weekly);
-    document.getElementById('weeklySubmitAs').textContent = 'Submitting as ' + session.name + (session.internId ? ' · ' + session.internId : '');
+    document.getElementById('weeklyCurrentBody').innerHTML = weeklyDetailHTML(getWeeklyStatus(fullInfo && fullInfo.submissions));
   }
 
   function historyTaskItemHTML(t) {
@@ -814,22 +785,22 @@
       + (t.mentorFeedback ? '<div class="status-feedback mt-2">"' + esc(t.mentorFeedback) + '"</div>' : '')
       + '</div>';
   }
-  function historyWeeklyItemHTML(w) {
+  function historyWeeklyItemHTML(s) {
     return '<div class="timeline-item">'
-      + '<div class="flex items-center justify-between gap-2 mb-1"><span class="text-sm font-medium" style="color:var(--text);">' + esc(w.timestamp) + '</span>' + (w.reviewStatus ? '<span class="status-badge badge-pending">' + esc(w.reviewStatus) + '</span>' : '') + '</div>'
-      + (w.tasksCompleted ? '<div class="status-longtext text-sm">' + esc(w.tasksCompleted) + '</div>' : '')
-      + (w.mentorComments ? '<div class="status-feedback mt-2">"' + esc(w.mentorComments) + '"</div>' : '')
+      + '<div class="flex items-center justify-between gap-2 mb-1"><span class="text-sm font-medium" style="color:var(--text);">' + esc(s.timestamp) + '</span>' + (s.status ? '<span class="status-badge ' + statusBadgeClass(s.status) + '">' + esc(s.status) + '</span>' : '') + '</div>'
+      + (s.taskId ? '<div class="status-longtext text-sm">' + esc(s.taskId) + (s.taskName ? ' — ' + esc(s.taskName) : '') + '</div>' : '')
+      + (s.mentorFeedback ? '<div class="status-feedback mt-2">"' + esc(cleanFeedback(s.mentorFeedback)) + '"</div>' : '')
       + '</div>';
   }
   function renderHistory() {
     var tasks = (fullInfo && fullInfo.tasks) || [];
-    var weekly = ((fullInfo && fullInfo.weeklyReports) || []).slice().reverse();
+    var submissions = ((fullInfo && fullInfo.submissions) || []).slice().reverse();
     document.getElementById('historyTasks').innerHTML = tasks.length
       ? '<div class="timeline">' + tasks.map(historyTaskItemHTML).join('') + '</div>'
       : '<p class="text-sm" style="color:var(--text-muted);">No tasks recorded yet.</p>';
-    document.getElementById('historyWeekly').innerHTML = weekly.length
-      ? '<div class="timeline">' + weekly.map(historyWeeklyItemHTML).join('') + '</div>'
-      : '<p class="text-sm" style="color:var(--text-muted);">No weekly reports recorded yet.</p>';
+    document.getElementById('historyWeekly').innerHTML = submissions.length
+      ? '<div class="timeline">' + submissions.map(historyWeeklyItemHTML).join('') + '</div>'
+      : '<p class="text-sm" style="color:var(--text-muted);">No submissions recorded yet.</p>';
   }
 
   function buildNotifications(full) {
@@ -843,9 +814,6 @@
         var d2 = t.deadline || t.assignedDate;
         items.push({ icon:'alert-circle', title:'Revision requested — ' + t.taskId, body:'Your mentor asked for changes on this task.', dateStr:d2, dateObj:parseDMY(d2) });
       }
-    });
-    (full.weeklyReports || []).forEach(function(w) {
-      if (w.mentorComments) items.push({ icon:'calendar-check', title:'Weekly report feedback', body:cleanFeedback(w.mentorComments), dateStr:w.timestamp, dateObj:parseDMY(w.timestamp) });
     });
     (full.submissions || []).forEach(function(s) {
       if (s.mentorFeedback) items.push({ icon:'file-check', title:'Submission reviewed — ' + s.taskId, body:cleanFeedback(s.mentorFeedback), dateStr:s.timestamp, dateObj:parseDMY(s.timestamp) });
@@ -886,14 +854,14 @@
     var completed = tasks.filter(function(t){ return t.status === 'Completed' || t.status === 'Approved'; }).length;
     document.getElementById('certCompleted').textContent = completed;
     document.getElementById('certTotal').textContent = tasks.length;
-    document.getElementById('certReports').textContent = (fullInfo && fullInfo.weeklyReports) ? fullInfo.weeklyReports.length : 0;
-    document.getElementById('certStreak').textContent = computeStreak(fullInfo && fullInfo.weeklyReports);
+    document.getElementById('certReports').textContent = (fullInfo && fullInfo.submissions) ? fullInfo.submissions.length : 0;
+    document.getElementById('certStreak').textContent = computeStreak(fullInfo && fullInfo.submissions);
     document.getElementById('certDate').textContent = new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
   }
 
   // ── Attachments (removable chips) — Task Update ──
   var MAX_FILES = 5, MAX_FILE_BYTES = 8 * 1024 * 1024;
-  var tfFilesArr = [], wfFilesArr = [];
+  var tfFilesArr = [];
   function renderChipList(arr, wrapId, removeFn) {
     document.getElementById(wrapId).innerHTML = arr.map(function(file, i) {
       return '<span class="file-chip"><span title="' + esc(file.name) + '">' + esc(file.name) + '</span>'
@@ -901,7 +869,6 @@
     }).join('');
   }
   function removeTfFile(i) { tfFilesArr.splice(i, 1); renderChipList(tfFilesArr, 'tfFileList', 'removeTfFile'); }
-  function removeWfFile(i) { wfFilesArr.splice(i, 1); renderChipList(wfFilesArr, 'wfFileList', 'removeWfFile'); }
 
   // FASTER SUBMITS: photos (esp. straight from a phone camera) are
   // often 3–8MB. Base64 makes that ~33% bigger again before it even
@@ -1029,55 +996,6 @@
     setBtnLoading('tfSubmitBtn', false);
   }
 
-  async function handleWeeklySubmit(e) {
-    e.preventDefault();
-    var tasksDone = document.getElementById('wfTasksDone').value.trim();
-    var challenges = document.getElementById('wfChallenges').value.trim();
-    var nextWeekPlan = document.getElementById('wfNextWeek').value.trim();
-    var supportingLink = document.getElementById('wfLink').value.trim();
-    var el = document.getElementById('wfTasksDone');
-    if (!tasksDone) { el.classList.add('invalid'); setStatus('wfStatus', false, 'Please fill in the required fields above.'); return; }
-    el.classList.remove('invalid');
-
-    var website = document.getElementById('wfWebsite').value;
-    if (website) { setStatus('wfStatus', true, 'Thank you! Your submission has been received.'); document.getElementById('weeklyForm').reset(); return; }
-
-    var fileInput = document.getElementById('wfFiles');
-    (Array.from(fileInput.files || [])).forEach(function(f) {
-      var dup = wfFilesArr.some(function(x){ return x.name === f.name && x.size === f.size; });
-      if (!dup) wfFilesArr.push(f);
-    });
-    fileInput.value = '';
-    renderChipList(wfFilesArr, 'wfFileList', 'removeWfFile');
-    if (wfFilesArr.length > MAX_FILES) { setStatus('wfStatus', false, 'Please attach at most ' + MAX_FILES + ' files.'); return; }
-    for (var i = 0; i < wfFilesArr.length; i++) {
-      if (wfFilesArr[i].size > MAX_FILE_BYTES) { setStatus('wfStatus', false, '"' + wfFilesArr[i].name + '" is over 8MB — please attach a smaller file.'); return; }
-    }
-
-    setBtnLoading('wfSubmitBtn', true, 'Submitting…');
-    try {
-      var attachments = await filesToBase64(wfFilesArr);
-      var token = await getRecaptchaToken('weekly_report');
-      var payload = {
-        recaptchaToken: token, pageLoadedAt: xLoadedAt,
-        internName: session.name, internId: session.internId, email: session.email,
-        tasksCompleted: tasksDone, challenges: challenges, nextWeekPlan: nextWeekPlan,
-        supportingLink: supportingLink, attachments: attachments
-      };
-      var resp = await fetch(REPORT_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) });
-      var data = await resp.json();
-      if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
-      setStatus('wfStatus', true, 'Thank you! Your weekly report has been submitted.');
-      document.getElementById('weeklyForm').reset();
-      wfFilesArr = []; renderChipList(wfFilesArr, 'wfFileList', 'removeWfFile');
-      bootPortal(false);
-    } catch (err) {
-      console.error('Weekly submit error:', err);
-      setStatus('wfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
-    }
-    setBtnLoading('wfSubmitBtn', false);
-  }
-
   window.addEventListener('DOMContentLoaded', function() {
     var savedTheme = localStorage.getItem('sp_intern_theme');
     if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
@@ -1093,14 +1011,6 @@
         if (!dup) tfFilesArr.push(f);
       });
       renderChipList(tfFilesArr, 'tfFileList', 'removeTfFile');
-      this.value = '';
-    });
-    document.getElementById('wfFiles').addEventListener('change', function(){
-      (Array.from(this.files || [])).forEach(function(f) {
-        var dup = wfFilesArr.some(function(x){ return x.name === f.name && x.size === f.size; });
-        if (!dup) wfFilesArr.push(f);
-      });
-      renderChipList(wfFilesArr, 'wfFileList', 'removeWfFile');
       this.value = '';
     });
 
