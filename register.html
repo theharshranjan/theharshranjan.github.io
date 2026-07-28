@@ -27,6 +27,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
 <script>
@@ -248,6 +249,8 @@
       </select>
     </div>
 
+    <div class="g-recaptcha mb-2" id="regRecaptcha" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
+
     <button type="submit" id="submitBtn" class="cta-btn w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-4 mt-2">
       Submit Application
     </button>
@@ -317,26 +320,50 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
+  // FIXED: the form has novalidate (for custom styling), which means the
+  // browser was never enforcing any of the required fields — including
+  // the CV. People could submit with the CV box left empty and nothing
+  // stopped them; that's why some applications reached the sheet with
+  // no CV Link. checkValidity()/reportValidity() work fine even with
+  // novalidate — they just don't fire automatically — so this restores
+  // enforcement for every required field, with the browser's own
+  // "please fill this in" prompt pointing at whichever one was missed.
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  var captchaToken = '';
+  try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
+  if (!captchaToken) {
+    setStatus(false, "Please complete the \u201cI'm not a robot\u201d check below.");
+    return;
+  }
+
   btn.disabled = true;
   btn.innerHTML = '<span class="btn-spinner"></span>Submitting…';
   statusMsg.innerHTML = "";
 
   try {
-    const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'register' });
-
     const cvFile = form.cv.files[0];
-    let cvBase64 = "", cvFileName = "";
-    if (cvFile) {
-      if (cvFile.size > 5 * 1024 * 1024) {
-        throw new Error("CV file exceeds 5MB.");
-      }
-      cvBase64 = await fileToBase64(cvFile);
-      cvFileName = cvFile.name;
+    if (cvFile.size > 5 * 1024 * 1024) {
+      throw new Error("CV file exceeds 5MB.");
     }
+
+    // FASTER: getting the v3 token and reading/encoding the CV file
+    // don't depend on each other — run them at the same time instead
+    // of one after the other, so the wait is whichever one is slower,
+    // not the sum of both.
+    const [token, cvBase64] = await Promise.all([
+      grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'register' }),
+      fileToBase64(cvFile)
+    ]);
+    const cvFileName = cvFile.name;
 
     const payload = {
       action: 'register',
       recaptchaToken: token,
+      recaptchaTokenV2: captchaToken,
       fullName: form.fullName.value,
       email: form.email.value,
       phone: form.phone.value,
@@ -368,8 +395,9 @@ form.addEventListener('submit', async (e) => {
       throw new Error(result.message || "Something went wrong.");
     }
   } catch (err) {
-    setStatus(false, "Submission failed — please try again or email info@thesamarpan.co.in");
+    setStatus(false, err.message && err.message !== "Something went wrong." ? err.message : "Submission failed — please try again or email info@thesamarpan.co.in");
   } finally {
+    try { grecaptcha.reset(); } catch (err) {}
     btn.disabled = false;
     btn.innerHTML = "Submit Application";
   }
