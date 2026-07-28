@@ -290,6 +290,23 @@ const form = document.getElementById('regForm');
 const btn = document.getElementById('submitBtn');
 const statusMsg = document.getElementById('statusMsg');
 
+// Loading api.js with ?render=<v3 key> (needed for grecaptcha.execute() to
+// work) stops the library from auto-scanning the page for ".g-recaptcha"
+// divs, which is how the v2 checkbox used to appear. So the v2 checkbox
+// now has to be rendered explicitly, once the library is ready.
+var v2WidgetId = null;
+(function renderV2CheckboxWhenReady() {
+  if (window.grecaptcha && grecaptcha.render) {
+    grecaptcha.ready(function() {
+      v2WidgetId = grecaptcha.render('regRecaptcha', {
+        sitekey: '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u'
+      });
+    });
+  } else {
+    setTimeout(renderV2CheckboxWhenReady, 100);
+  }
+})();
+
 function setStatus(ok, msg) {
   statusMsg.innerHTML = '<div class="'+(ok?'form-success':'form-error')+' mt-2">'+(ok?'✓ ':'✗ ')+msg+'</div>';
 }
@@ -333,7 +350,7 @@ form.addEventListener('submit', async (e) => {
   }
 
   var captchaToken = '';
-  try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
+  try { captchaToken = v2WidgetId !== null ? grecaptcha.getResponse(v2WidgetId) : grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
   if (!captchaToken) {
     setStatus(false, "Please complete the \u201cI'm not a robot\u201d check below.");
     return;
@@ -396,7 +413,7 @@ form.addEventListener('submit', async (e) => {
   } catch (err) {
     setStatus(false, err.message && err.message !== "Something went wrong." ? err.message : "Submission failed — please try again or email info@thesamarpan.co.in");
   } finally {
-    try { grecaptcha.reset(); } catch (err) {}
+    try { v2WidgetId !== null ? grecaptcha.reset(v2WidgetId) : grecaptcha.reset(); } catch (err) {}
     btn.disabled = false;
     btn.innerHTML = "Submit Application";
   }
