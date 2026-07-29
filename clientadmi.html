@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samarpan — Client Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EC; --card:#FFFFFF; --border:#E8E4DE; --text:#1C1C1C; --muted:#71695F;
+    --accent:#D95D39; --gold:#C5A059; --sidebar:#1C1C1C;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;margin:0;}
+
+  /* ── Login gate ── */
+  #gate{position:fixed;inset:0;background:var(--sidebar);display:flex;align-items:center;justify-content:center;z-index:100;}
+  #gate .box{background:#fff;padding:36px 32px;border-radius:10px;width:320px;text-align:center;}
+  #gate h1{font-size:22px;margin-bottom:4px;}
+  #gate p{font-size:12px;color:var(--muted);margin:0 0 18px;}
+  #gate input{width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;}
+  #gate button{width:100%;padding:10px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;}
+  #gate .err{color:#B00020;font-size:12px;margin-top:8px;min-height:16px;}
+
+  /* ── Shell ── */
+  #shell{display:none;min-height:100vh;}
+  #sidebar{width:220px;background:var(--sidebar);color:#fff;position:fixed;top:0;bottom:0;left:0;padding:24px 0;display:flex;flex-direction:column;}
+  #sidebar .brand{font-family:'Cormorant Garamond',serif;font-size:18px;padding:0 22px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px;}
+  #sidebar .brand small{display:block;font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:4px;}
+  .navitem{padding:11px 22px;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.75);cursor:pointer;border-left:3px solid transparent;}
+  .navitem:hover{color:#fff;background:rgba(255,255,255,.04);}
+  .navitem.active{color:#fff;border-left-color:var(--accent);background:rgba(255,255,255,.06);font-weight:700;}
+  #sidebar .who{margin-top:auto;padding:14px 22px 0;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.55);}
+  #sidebar .logout{cursor:pointer;color:var(--accent);margin-top:6px;display:inline-block;}
+
+  #main{margin-left:220px;padding:32px 36px;max-width:1200px;}
+  .view{display:none;}
+  .view.active{display:block;}
+  .view-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+  .view-header h2{font-size:24px;}
+  .btn{background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
+  .btn.secondary{background:#1C1C1C;}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .btn:disabled{opacity:.5;cursor:default;}
+
+  /* ── Cards / stats ── */
+  .stats-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;flex:1;min-width:150px;}
+  .stat-card .num{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .stat-card .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;}
+  .card h3{font-size:14px;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:14px;}
+
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
+  th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.05em;}
+  tr.clickable{cursor:pointer;}
+  tr.clickable:hover{background:#FBFAF7;}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;}
+  .pill.New{background:#E9F0FF;color:#2A5DB0;}
+  .pill.Contacted{background:#FFF4E0;color:#8A6100;}
+  .pill.Consulted{background:#F0E8FF;color:#6631B0;}
+  .pill.ActiveClient{background:#E4F6E4;color:#22762A;}
+  .pill.Inactive{background:#F0EEEA;color:#71695F;}
+  .dnepill{color:#B00020;font-size:10px;font-weight:700;}
+
+  input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;background:#FDFCFA;}
+  textarea{min-height:70px;}
+  label{display:block;font-size:11px;color:var(--muted);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.04em;}
+  .row2{display:flex;gap:14px;}
+  .row2>div{flex:1;}
+  .status-msg{font-size:12px;margin-top:8px;}
+  .status-msg.ok{color:#22762A;}
+  .status-msg.err{color:#B00020;}
+
+  /* ── Client detail drawer ── */
+  #overlay{position:fixed;inset:0;background:rgba(28,28,28,.4);display:none;z-index:50;}
+  #drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#fff;z-index:51;box-shadow:-8px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:26px;}
+  #drawer.open{transform:translateX(0);}
+  #overlay.open{display:block;}
+  .drawer-close{position:absolute;top:18px;right:20px;cursor:pointer;font-size:20px;color:var(--muted);}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:700;margin:20px 0 8px;}
+  .history-item{border-left:2px solid var(--border);padding:6px 0 6px 12px;margin-bottom:8px;font-size:12px;}
+  .history-item .meta{color:var(--muted);font-size:10.5px;}
+  .empty{color:var(--muted);font-size:12px;font-style:italic;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN GATE ══════════════ -->
+<div id="gate">
+  <div class="box">
+    <h1>Samarpan</h1>
+    <p>Client Database — Admin Access</p>
+    <input id="gAdminName" placeholder="Your name">
+    <input id="gAdminPassword" type="password" placeholder="Admin password">
+    <button onclick="doLogin()">Enter</button>
+    <div class="err" id="gateErr"></div>
+  </div>
+</div>
+
+<!-- ══════════════ SHELL ══════════════ -->
+<div id="shell">
+  <div id="sidebar">
+    <div class="brand">Samarpan<small>Client Database</small></div>
+    <div class="navitem active" data-view="dashboard" onclick="showView('dashboard')">Dashboard</div>
+    <div class="navitem" data-view="clients" onclick="showView('clients')">Clients</div>
+    <div class="navitem" data-view="sendEmail" onclick="showView('sendEmail')">Send Email</div>
+    <div class="navitem" data-view="auditLog" onclick="showView('auditLog')">Audit Log</div>
+    <div class="who">
+      Signed in as <b id="whoName"></b>
+      <div class="logout" onclick="logout()">Log out</div>
+    </div>
+  </div>
+
+  <div id="main">
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="view-header"><h2>Dashboard</h2><button class="btn ghost" onclick="loadDashboard()">Refresh</button></div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="num" id="statTotal">–</div><div class="lbl">Total Clients</div></div>
+        <div class="stat-card"><div class="num" id="statNew">–</div><div class="lbl">New This Week</div></div>
+        <div class="stat-card"><div class="num" id="statSubs">–</div><div class="lbl">Total Submissions</div></div>
+      </div>
+      <div class="card">
+        <h3>By Source</h3>
+        <table id="sourceTable"><thead><tr><th>Source</th><th>Clients</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="card">
+        <h3>Recent Submissions</h3>
+        <table><thead><tr><th>When</th><th>Client</th><th>Form</th><th>Service</th></tr></thead><tbody id="recentSubsBody"></tbody></table>
+      </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div class="view" id="view-clients">
+      <div class="view-header"><h2>Clients</h2><button class="btn ghost" onclick="loadDashboard()">Refresh</button></div>
+      <div class="card">
+        <input id="clientSearch" placeholder="Search by name, email, phone, or Client ID…" oninput="renderClientsTable()">
+        <table style="margin-top:14px;">
+          <thead><tr><th>Client ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Submissions</th><th>Last Contact</th></tr></thead>
+          <tbody id="clientsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEND EMAIL -->
+    <div class="view" id="view-sendEmail">
+      <div class="view-header"><h2>Send Email</h2></div>
+      <div class="card" style="max-width:560px;">
+        <label>Client ID</label>
+        <input id="seClientId" placeholder="CLI-0001">
+        <label>Subject</label>
+        <input id="seSubject">
+        <label>Message</label>
+        <textarea id="seMessage"></textarea>
+        <button class="btn" style="margin-top:14px;" onclick="sendEmailFromTab()">Send</button>
+        <div class="status-msg" id="seStatus"></div>
+      </div>
+    </div>
+
+    <!-- AUDIT LOG -->
+    <div class="view" id="view-auditLog">
+      <div class="view-header"><h2>Audit Log</h2><button class="btn ghost" onclick="loadAuditLog()">Refresh</button></div>
+      <div class="card">
+        <table><thead><tr><th>When</th><th>Admin</th><th>Action</th><th>Client ID</th><th>Details</th></tr></thead><tbody id="auditBody"></tbody></table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ CLIENT DETAIL DRAWER ══════════════ -->
+<div id="overlay" onclick="closeDrawer()"></div>
+<div id="drawer">
+  <span class="drawer-close" onclick="closeDrawer()">✕</span>
+  <div id="drawerBody">Loading…</div>
+</div>
+
+<script>
+  // ── CONFIG ── paste your deployed backend's /exec URL here
+  var CLIENT_DB_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby2L4H827vBVS6KBj2TEPsgmPbXLkx6o1eVZan6uo-txj8IaQl06CKn2KatVMEReAyaeQ/exec';
+
+  var session = { adminName: '', adminPassword: '' };
+  var overviewCache = null;
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function statusPillClass(s){ return String(s||'New').replace(/\s+/g,''); }
+
+  // ── LOGIN ──
+  function doLogin() {
+    var name = document.getElementById('gAdminName').value.trim();
+    var pwd = document.getElementById('gAdminPassword').value.trim();
+    if (!name || !pwd) { document.getElementById('gateErr').textContent = 'Enter your name and the admin password.'; return; }
+    session.adminName = name; session.adminPassword = pwd;
+    var url = CLIENT_DB_APPS_SCRIPT_URL + '?dashboard=1&adminPassword=' + encodeURIComponent(pwd) + '&adminName=' + encodeURIComponent(name);
+    fetch(url).then(function(r){ return r.json(); }).then(function(data){
+      if (data.error) { document.getElementById('gateErr').textContent = data.error; return; }
+      overviewCache = data;
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('shell').style.display = 'block';
+      document.getElementById('whoName').textContent = name;
+      sessionStorage.setItem('sp_client_admin_session', JSON.stringify(session));
+      renderDashboard(data);
+    }).catch(function(err){
+      document.getElementById('gateErr').textContent = 'Could not reach the server — check the backend URL.';
+    });
+  }
+  function logout() {
+    sessionStorage.removeItem('sp_client_admin_session');
+    location.reload();
+  }
+  (function restoreSession(){
+    var saved = sessionStorage.getItem('sp_client_admin_session');
+    if (!saved) return;
+    try {
+      var s = JSON.parse(saved);
+      document.getElementById('gAdminName').value = s.adminName;
+      document.getElementById('gAdminPassword').value = s.adminPassword;
+      doLogin();
+    } catch (e) {}
+  })();
+
+  // ── NAV ──
+  function showView(name) {
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    document.querySelectorAll('.navitem').forEach(function(n){ n.classList.remove('active'); });
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelector('.navitem[data-view="' + name + '"]').classList.add('active');
+    if (name === 'auditLog') loadAuditLog();
+  }
+
+  // ── DASHBOARD ──
+  function loadDashboard() {
+    var url = CLIENT_DB_APPS_SCRIPT_URL + '?dashboard=1&adminPassword=' + encodeURIComponent(session.adminPassword) + '&adminName=' + encodeURIComponent(session.adminName);
+    fetch(url).then(function(r){ return r.json(); }).then(function(data){
+      if (data.error) { alert(data.error); return; }
+      overviewCache = data;
+      renderDashboard(data);
+      renderClientsTable();
+    });
+  }
+  function renderDashboard(data) {
+    document.getElementById('statTotal').textContent = data.stats.totalClients;
+    document.getElementById('statNew').textContent = data.stats.newThisWeek;
+    document.getElementById('statSubs').textContent = data.stats.totalSubmissions;
+
+    var srcBody = document.querySelector('#sourceTable tbody');
+    srcBody.innerHTML = (data.sourceBreakdown || []).map(function(s){
+      return '<tr><td>'+esc(s.source)+'</td><td>'+s.count+'</td></tr>';
+    }).join('') || '<tr><td colspan="2" class="empty">No data yet.</td></tr>';
+
+    var subsBody = document.getElementById('recentSubsBody');
+    subsBody.innerHTML = (data.recentSubmissions || []).map(function(s){
+      return '<tr><td>'+esc(s.timestamp)+'</td><td>'+esc(s.clientId)+' — '+esc(s.name)+'</td><td>'+esc(s.formType)+'</td><td>'+esc(s.service)+'</td></tr>';
+    }).join('') || '<tr><td colspan="4" class="empty">No submissions yet.</td></tr>';
+  }
+
+  // ── CLIENTS TABLE ──
+  function renderClientsTable() {
+    if (!overviewCache) return;
+    var q = document.getElementById('clientSearch').value.trim().toLowerCase();
+    var clients = overviewCache.clients || [];
+    if (q) {
+      clients = clients.filter(function(c){
+        return [c.clientId, c.name, c.email, c.phone].some(function(f){ return String(f||'').toLowerCase().indexOf(q) !== -1; });
+      });
+    }
+    var body = document.getElementById('clientsBody');
+    body.innerHTML = clients.map(function(c){
+      return '<tr class="clickable" onclick="openClient(\''+c.clientId+'\')">'+
+        '<td>'+esc(c.clientId)+'</td><td>'+esc(c.name)+'</td><td>'+esc(c.email)+'</td><td>'+esc(c.phone)+'</td>'+
+        '<td><span class="pill '+statusPillClass(c.status)+'">'+esc(c.status)+'</span>'+(c.doNotEmail==='Yes'?' <span class="dnepill">DO NOT EMAIL</span>':'')+'</td>'+
+        '<td>'+c.totalSubmissions+'</td><td>'+esc(c.lastContact)+'</td></tr>';
+    }).join('') || '<tr><td colspan="7" class="empty">No clients match.</td></tr>';
+  }
+
+  // ── CLIENT DETAIL DRAWER ──
+  function openClient(clientId) {
+    document.getElementById('drawerBody').innerHTML = 'Loading…';
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+    var url = CLIENT_DB_APPS_SCRIPT_URL + '?clientId=' + encodeURIComponent(clientId) + '&adminPassword=' + encodeURIComponent(session.adminPassword) + '&adminName=' + encodeURIComponent(session.adminName);
+    fetch(url).then(function(r){ return r.json(); }).then(function(data){
+      if (!data.found) { document.getElementById('drawerBody').innerHTML = '<p class="empty">Client not found.</p>'; return; }
+      renderDrawer(data);
+    });
+  }
+  function closeDrawer() {
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+  }
+  function renderDrawer(data) {
+    var c = data.client, s = data.sensitive;
+    var html = '';
+    html += '<h2>'+esc(c.name || '(no name)')+'</h2>';
+    html += '<p style="color:var(--muted);font-size:12px;margin-top:2px;">'+esc(c.clientId)+'</p>';
+
+    html += '<div class="section-label">Contact</div>';
+    html += '<p style="font-size:13px;margin:2px 0;">'+esc(c.email || '—')+'<br>'+esc(c.phone || '—')+'</p>';
+    html += '<p style="font-size:11px;color:var(--muted);">First contact: '+esc(c.firstContact)+' via '+esc(c.firstSource)+'<br>Last contact: '+esc(c.lastContact)+' · '+c.totalSubmissions+' submission(s)</p>';
+
+    html += '<div class="section-label">Status &amp; Preferences</div>';
+    html += '<label>Status</label><select id="drStatus">' +
+      ['New','Contacted','Consulted','Active Client','Inactive'].map(function(opt){
+        return '<option'+(opt===c.status?' selected':'')+'>'+opt+'</option>';
+      }).join('') + '</select>';
+    html += '<label style="margin-top:10px;"><input type="checkbox" id="drDNE" style="width:auto;display:inline;margin-right:6px;"'+(c.doNotEmail==='Yes'?' checked':'')+'>Do Not Email</label>';
+
+    html += '<div class="section-label">Interests / Tags (auto-collected, read-only)</div>';
+    html += '<p style="font-size:12px;">'+ (esc(s.interests) || '<span class="empty">None yet.</span>') +'</p>';
+
+    html += '<div class="section-label">Admin Notes</div>';
+    html += '<textarea id="drNotes" placeholder="Private notes — visible to admins only">'+esc(s.notes)+'</textarea>';
+
+    html += '<button class="btn" style="margin-top:14px;width:100%;" onclick="saveClient(\''+c.clientId+'\')">Save Changes</button>';
+    html += '<div class="status-msg" id="drSaveStatus"></div>';
+    html += '<button class="btn secondary" style="margin-top:8px;width:100%;" onclick="goToSendEmail(\''+c.clientId+'\')">Send Email to This Client</button>';
+
+    html += '<div class="section-label">Submission History</div>';
+    html += (data.submissions.length ? data.submissions.map(function(sub){
+      return '<div class="history-item"><b>'+esc(sub.formType)+'</b>'+(sub.service?' — '+esc(sub.service):'')+'<div class="meta">'+esc(sub.timestamp)+'</div>'+(sub.message?'<div>'+esc(sub.message)+'</div>':'')+'</div>';
+    }).join('') : '<p class="empty">No submissions.</p>');
+
+    html += '<div class="section-label">Communications Sent</div>';
+    html += (data.communications.length ? data.communications.map(function(comm){
+      return '<div class="history-item"><b>'+esc(comm.subject)+'</b> <span class="meta">('+esc(comm.type)+')</span><div class="meta">'+esc(comm.timestamp)+'</div></div>';
+    }).join('') : '<p class="empty">No emails sent yet.</p>');
+
+    document.getElementById('drawerBody').innerHTML = html;
+  }
+  function saveClient(clientId) {
+    var payload = {
+      action: 'updateClient', adminPassword: session.adminPassword, adminName: session.adminName,
+      clientId: clientId,
+      status: document.getElementById('drStatus').value,
+      notes: document.getElementById('drNotes').value,
+      doNotEmail: document.getElementById('drDNE').checked
+    };
+    var statusEl = document.getElementById('drSaveStatus');
+    statusEl.className = 'status-msg'; statusEl.textContent = 'Saving…';
+    fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        statusEl.className = 'status-msg ' + (data.ok ? 'ok' : 'err');
+        statusEl.textContent = data.ok ? 'Saved.' : (data.error || 'Failed.');
+        if (data.ok) loadDashboard();
+      });
+  }
+  function goToSendEmail(clientId) {
+    closeDrawer();
+    showView('sendEmail');
+    document.getElementById('seClientId').value = clientId;
+  }
+
+  // ── SEND EMAIL TAB ──
+  function sendEmailFromTab() {
+    var payload = {
+      action: 'sendEmail', adminPassword: session.adminPassword, adminName: session.adminName,
+      clientId: document.getElementById('seClientId').value.trim(),
+      subject: document.getElementById('seSubject').value,
+      message: document.getElementById('seMessage').value
+    };
+    var statusEl = document.getElementById('seStatus');
+    if (!payload.clientId || !payload.subject || !payload.message) {
+      statusEl.className = 'status-msg err'; statusEl.textContent = 'Client ID, subject, and message are all required.'; return;
+    }
+    statusEl.className = 'status-msg'; statusEl.textContent = 'Sending…';
+    fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        statusEl.className = 'status-msg ' + (data.ok ? 'ok' : 'err');
+        statusEl.textContent = data.ok ? 'Sent.' : (data.error || 'Failed.');
+      });
+  }
+
+  // ── AUDIT LOG ──
+  function loadAuditLog() {
+    var url = CLIENT_DB_APPS_SCRIPT_URL + '?auditLog=1&adminPassword=' + encodeURIComponent(session.adminPassword);
+    fetch(url).then(function(r){ return r.json(); }).then(function(data){
+      var body = document.getElementById('auditBody');
+      body.innerHTML = (data.entries || []).map(function(e){
+        return '<tr><td>'+esc(e.timestamp)+'</td><td>'+esc(e.adminName)+'</td><td>'+esc(e.action)+'</td><td>'+esc(e.clientId)+'</td><td>'+esc(e.details)+'</td></tr>';
+      }).join('') || '<tr><td colspan="5" class="empty">No activity yet.</td></tr>';
+    });
+  }
+</script>
+</body>
+</html>
