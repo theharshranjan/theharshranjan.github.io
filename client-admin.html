@@ -4,84 +4,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samarpan — Client Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F4F1EC; --card:#FFFFFF; --border:#E8E4DE; --text:#1C1C1C; --muted:#71695F;
-    --accent:#D95D39; --gold:#C5A059; --sidebar:#1C1C1C;
+    --bg:#FDFBF7; --bg2:#F9F7F4; --card:#FFFFFF; --border:#E8E4DE; --text:#1C1C1C; --muted:#666666;
+    --accent:#D95D39; --sidebar:#F9F7F4;
   }
   *{box-sizing:border-box;}
-  body{margin:0;font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
-  h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;margin:0;}
+  body{margin:0;font-family:'Lato',sans-serif;background:var(--bg);color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Lato',sans-serif;font-weight:700;margin:0;}
 
   /* ── Login gate ── */
-  #gate{position:fixed;inset:0;background:var(--sidebar);display:flex;align-items:center;justify-content:center;z-index:100;}
-  #gate .box{background:#fff;padding:36px 32px;border-radius:10px;width:320px;text-align:center;}
-  #gate h1{font-size:22px;margin-bottom:4px;}
-  #gate p{font-size:12px;color:var(--muted);margin:0 0 18px;}
-  #gate input{width:100%;padding:10px 12px;margin-bottom:10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;}
-  #gate button{width:100%;padding:10px;border:none;border-radius:6px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;}
+  #gate{position:fixed;inset:0;background:var(--bg2);display:flex;align-items:center;justify-content:center;z-index:100;}
+  #gate .box{background:#fff;padding:36px 32px;border:1px solid var(--border);border-radius:4px;width:320px;text-align:center;}
+  #gate h1{font-family:'Marcellus',serif;font-size:20px;letter-spacing:.06em;margin-bottom:4px;color:var(--accent);}
+  #gate p{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;}
+  #gate input{width:100%;padding:.85rem .75rem;margin-bottom:10px;border:1.5px solid var(--border);border-radius:4px;font-size:14px;font-family:inherit;background:transparent;}
+  #gate button{width:100%;padding:.75rem;border:none;border-radius:2px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;}
   #gate .err{color:#B00020;font-size:12px;margin-top:8px;min-height:16px;}
 
   /* ── Shell ── */
   #shell{display:none;min-height:100vh;}
-  #sidebar{width:220px;background:var(--sidebar);color:#fff;position:fixed;top:0;bottom:0;left:0;padding:24px 0;display:flex;flex-direction:column;}
-  #sidebar .brand{font-family:'Cormorant Garamond',serif;font-size:18px;padding:0 22px 20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:14px;}
-  #sidebar .brand small{display:block;font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:4px;}
-  .navitem{padding:11px 22px;font-size:12px;letter-spacing:.04em;color:rgba(255,255,255,.75);cursor:pointer;border-left:3px solid transparent;}
-  .navitem:hover{color:#fff;background:rgba(255,255,255,.04);}
-  .navitem.active{color:#fff;border-left-color:var(--accent);background:rgba(255,255,255,.06);font-weight:700;}
-  #sidebar .who{margin-top:auto;padding:14px 22px 0;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.55);}
-  #sidebar .logout{cursor:pointer;color:var(--accent);margin-top:6px;display:inline-block;}
+  #sidebar{width:220px;background:var(--sidebar);color:var(--text);position:fixed;top:0;bottom:0;left:0;padding:24px 0;display:flex;flex-direction:column;border-right:1px solid var(--border);}
+  #sidebar .brand{font-family:'Marcellus',serif;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding:0 22px 20px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+  #sidebar .brand small{display:block;font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px;}
+  .navitem{padding:11px 22px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;border-left:3px solid transparent;}
+  .navitem:hover{color:var(--text);background:rgba(0,0,0,.02);}
+  .navitem.active{color:var(--accent);border-left-color:var(--accent);background:rgba(217,93,57,.05);}
+  #sidebar .who{margin-top:auto;padding:14px 22px 0;border-top:1px solid var(--border);font-size:11px;color:var(--muted);}
+  #sidebar .logout{cursor:pointer;color:var(--accent);margin-top:6px;display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;}
 
   #main{margin-left:220px;padding:32px 36px;max-width:1200px;}
   .view{display:none;}
   .view.active{display:block;}
   .view-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
-  .view-header h2{font-size:24px;}
-  .btn{background:var(--accent);color:#fff;border:none;padding:9px 16px;border-radius:6px;font-size:12px;font-weight:700;letter-spacing:.03em;cursor:pointer;}
-  .btn.secondary{background:#1C1C1C;}
-  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .view-header h2{font-size:19px;letter-spacing:.02em;}
+  .btn{background:var(--accent);color:#fff;border:none;padding:.65rem 1.2rem;border-radius:2px;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;}
+  .btn.secondary{background:var(--text);}
+  .btn.ghost{background:transparent;color:var(--text);border:1.5px solid var(--border);}
   .btn:disabled{opacity:.5;cursor:default;}
 
   /* ── Cards / stats ── */
   .stats-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;}
-  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;flex:1;min-width:150px;}
-  .stat-card .num{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;background:linear-gradient(135deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:18px 20px;flex:1;min-width:150px;}
+  .stat-card .num{font-family:'Lato',sans-serif;font-size:30px;font-weight:700;color:var(--accent);}
   .stat-card .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
 
-  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;}
-  .card h3{font-size:14px;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:14px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:20px;margin-bottom:20px;}
+  .card h3{font-size:11px;font-family:'Lato',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:14px;}
 
   table{width:100%;border-collapse:collapse;font-size:12.5px;}
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);}
-  th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.05em;}
+  th{color:var(--muted);font-weight:700;text-transform:uppercase;font-size:9.5px;letter-spacing:.1em;}
   tr.clickable{cursor:pointer;}
-  tr.clickable:hover{background:#FBFAF7;}
-  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;}
-  .pill.New{background:#E9F0FF;color:#2A5DB0;}
-  .pill.Contacted{background:#FFF4E0;color:#8A6100;}
-  .pill.Consulted{background:#F0E8FF;color:#6631B0;}
-  .pill.ActiveClient{background:#E4F6E4;color:#22762A;}
-  .pill.Inactive{background:#F0EEEA;color:#71695F;}
-  .dnepill{color:#B00020;font-size:10px;font-weight:700;}
+  tr.clickable:hover{background:var(--bg2);}
+  .pill{display:inline-block;padding:2px 9px;border-radius:2px;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+  .pill.New{background:rgba(42,93,176,.08);color:#2A5DB0;}
+  .pill.Contacted{background:rgba(138,97,0,.08);color:#8A6100;}
+  .pill.Consulted{background:rgba(102,49,176,.08);color:#6631B0;}
+  .pill.ActiveClient{background:rgba(74,93,79,.08);color:#4A5D4F;}
+  .pill.Inactive{background:rgba(102,102,102,.08);color:var(--muted);}
+  .pill.Rescheduled{background:rgba(138,97,0,.08);color:#8A6100;}
+  .pill.Completed{background:rgba(74,93,79,.08);color:#4A5D4F;}
+  .pill.Cancelled{background:rgba(176,0,32,.08);color:#B00020;}
+  .pill.Follow-upRequired{background:rgba(102,49,176,.08);color:#6631B0;}
+  .dnepill{color:#B00020;font-size:9.5px;font-weight:700;letter-spacing:.04em;}
 
-  input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:5px;font-size:13px;font-family:inherit;background:#FDFCFA;}
+  input,select,textarea{width:100%;padding:.75rem .75rem;border:1.5px solid var(--border);border-radius:4px;font-size:14px;font-family:inherit;background:transparent;color:var(--text);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);}
   textarea{min-height:70px;}
-  label{display:block;font-size:11px;color:var(--muted);margin:10px 0 4px;text-transform:uppercase;letter-spacing:.04em;}
+  label{display:block;font-size:10.5px;color:var(--muted);margin:12px 0 5px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;}
   .row2{display:flex;gap:14px;}
   .row2>div{flex:1;}
   .status-msg{font-size:12px;margin-top:8px;}
-  .status-msg.ok{color:#22762A;}
-  .status-msg.err{color:#B00020;}
+  .status-msg.ok{color:#4A5D4F;}
+  .status-msg.err{color:#D95D39;}
 
   /* ── Client detail drawer ── */
-  #overlay{position:fixed;inset:0;background:rgba(28,28,28,.4);display:none;z-index:50;}
-  #drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#fff;z-index:51;box-shadow:-8px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:26px;}
+  #overlay{position:fixed;inset:0;background:rgba(28,28,28,.35);display:none;z-index:50;}
+  #drawer{position:fixed;top:0;right:0;bottom:0;width:460px;max-width:92vw;background:#fff;z-index:51;border-left:1px solid var(--border);box-shadow:-4px 0 20px rgba(0,0,0,.06);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:26px;}
   #drawer.open{transform:translateX(0);}
   #overlay.open{display:block;}
   .drawer-close{position:absolute;top:18px;right:20px;cursor:pointer;font-size:20px;color:var(--muted);}
-  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:700;margin:20px 0 8px;}
+  .section-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:20px 0 8px;}
   .history-item{border-left:2px solid var(--border);padding:6px 0 6px 12px;margin-bottom:8px;font-size:12px;}
   .history-item .meta{color:var(--muted);font-size:10.5px;}
   .empty{color:var(--muted);font-size:12px;font-style:italic;}
@@ -92,6 +97,12 @@
 <!-- ══════════════ LOGIN GATE ══════════════ -->
 <div id="gate">
   <div class="box">
+    <svg width="34" height="34" viewBox="0 0 100 100" fill="none" style="color:#D95D39;display:block;margin:0 auto 8px;">
+      <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+      <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="85" r="3" fill="currentColor"/>
+      <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+    </svg>
     <h1>Samarpan</h1>
     <p>Client Database — Admin Access</p>
     <input id="gAdminName" placeholder="Your name">
@@ -104,9 +115,18 @@
 <!-- ══════════════ SHELL ══════════════ -->
 <div id="shell">
   <div id="sidebar">
-    <div class="brand">Samarpan<small>Client Database</small></div>
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 100 100" fill="none" style="color:#D95D39;display:block;margin-bottom:6px;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      Samarpan<small>Client Database</small>
+    </div>
     <div class="navitem active" data-view="dashboard" onclick="showView('dashboard')">Dashboard</div>
     <div class="navitem" data-view="clients" onclick="showView('clients')">Clients</div>
+    <div class="navitem" data-view="appointments" onclick="showView('appointments')">Appointments</div>
     <div class="navitem" data-view="sendEmail" onclick="showView('sendEmail')">Send Email</div>
     <div class="navitem" data-view="auditLog" onclick="showView('auditLog')">Audit Log</div>
     <div class="who">
@@ -124,6 +144,10 @@
         <div class="stat-card"><div class="num" id="statTotal">–</div><div class="lbl">Total Clients</div></div>
         <div class="stat-card"><div class="num" id="statNew">–</div><div class="lbl">New This Week</div></div>
         <div class="stat-card"><div class="num" id="statSubs">–</div><div class="lbl">Total Submissions</div></div>
+        <div class="stat-card"><div class="num" id="statAppts">–</div><div class="lbl">Total Appointments</div></div>
+        <div class="stat-card"><div class="num" id="statPending">–</div><div class="lbl">Pending Confirmation</div></div>
+        <div class="stat-card"><div class="num" id="statToday">–</div><div class="lbl">Today's Appointments</div></div>
+        <div class="stat-card"><div class="num" id="statFollowups">–</div><div class="lbl">Follow-ups Required</div></div>
       </div>
       <div class="card">
         <h3>By Source</h3>
@@ -147,17 +171,92 @@
       </div>
     </div>
 
+    <!-- APPOINTMENTS -->
+    <div class="view" id="view-appointments">
+      <div class="view-header"><h2>Appointments</h2><button class="btn ghost" onclick="loadDashboard()">Refresh</button></div>
+      <div class="card">
+        <div class="row2">
+          <div>
+            <label>Filter by Status</label>
+            <select id="apptStatusFilter" onchange="renderAppointmentsTable()">
+              <option value="all">All</option>
+              <option>New</option><option>Confirmed</option><option>Rescheduled</option>
+              <option>Completed</option><option>Cancelled</option><option>Follow-up Required</option>
+            </select>
+          </div>
+          <div>
+            <label>Search (client name or appointment ID)</label>
+            <input id="apptSearch" placeholder="Search…" oninput="renderAppointmentsTable()">
+          </div>
+        </div>
+        <table style="margin-top:14px;">
+          <thead><tr><th>Appt ID</th><th>Client</th><th>Service</th><th>Preferred</th><th>Status</th><th>Updated</th></tr></thead>
+          <tbody id="appointmentsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- SEND EMAIL -->
     <div class="view" id="view-sendEmail">
       <div class="view-header"><h2>Send Email</h2></div>
-      <div class="card" style="max-width:560px;">
-        <label>Client ID</label>
-        <input id="seClientId" placeholder="CLI-0001">
+      <div class="card" style="max-width:600px;">
+
+        <label>Send To</label>
+        <select id="seMode" onchange="toggleSendMode()">
+          <option value="specific">A specific client</option>
+          <option value="broadcast">All clients (broadcast)</option>
+        </select>
+
+        <div id="seSpecificFields">
+          <label>Client ID</label>
+          <input id="seClientId" placeholder="CLI-0001">
+          <label>Send to a different email (optional override)</label>
+          <input id="seOverrideEmail" placeholder="leave blank to use the email on file">
+        </div>
+
+        <div id="seBroadcastFields" style="display:none;">
+          <label>Only send to clients with Status</label>
+          <select id="seFilterStatus">
+            <option value="all">All statuses</option>
+            <option>New</option><option>Contacted</option><option>Consulted</option>
+            <option>Active Client</option><option>Inactive</option>
+          </select>
+        </div>
+
+        <label>Email Type</label>
+        <select id="seEmailType" onchange="autoToggleLogo()">
+          <option>General</option>
+          <option>Welcome</option>
+          <option>Appointment Confirmation</option>
+          <option>Appointment Reminder</option>
+          <option>Follow-up</option>
+          <option>Assessment Received</option>
+          <option>Programme Registration</option>
+        </select>
+
+        <label>Template</label>
+        <div class="row2">
+          <div>
+            <select id="seTemplatePicker" onchange="loadSelectedTemplate()">
+              <option value="">— Start blank —</option>
+            </select>
+          </div>
+          <div style="flex:0 0 auto;display:flex;gap:8px;align-items:flex-end;">
+            <button class="btn ghost" style="white-space:nowrap;" onclick="saveAsTemplate()">Save as Template</button>
+            <button class="btn ghost" style="white-space:nowrap;" onclick="deleteSelectedTemplate()">Delete</button>
+          </div>
+        </div>
+
         <label>Subject</label>
         <input id="seSubject">
         <label>Message</label>
         <textarea id="seMessage"></textarea>
         <label style="margin-top:10px;"><input type="checkbox" id="seIncludeLogo" style="width:auto;display:inline;margin-right:6px;">Include Samarpan logo at the top of this email</label>
+
+        <label>Attachments (optional, up to 5, 10MB each)</label>
+        <input type="file" id="seFileInput" multiple onchange="addAttachments(this.files)">
+        <div id="seAttachmentList" style="margin-top:8px;"></div>
+
         <button class="btn" style="margin-top:14px;" onclick="sendEmailFromTab()">Send</button>
         <div class="status-msg" id="seStatus"></div>
       </div>
@@ -206,6 +305,8 @@
       document.getElementById('whoName').textContent = name;
       sessionStorage.setItem('sp_client_admin_session', JSON.stringify(session));
       renderDashboard(data);
+      renderClientsTable();
+      renderAppointmentsTable();
     }).catch(function(err){
       document.getElementById('gateErr').textContent = 'Could not reach the server — check the backend URL.';
     });
@@ -232,6 +333,8 @@
     document.getElementById('view-' + name).classList.add('active');
     document.querySelector('.navitem[data-view="' + name + '"]').classList.add('active');
     if (name === 'auditLog') loadAuditLog();
+    if (name === 'appointments') renderAppointmentsTable();
+    if (name === 'sendEmail') loadEmailTemplates();
   }
 
   // ── DASHBOARD ──
@@ -242,12 +345,17 @@
       overviewCache = data;
       renderDashboard(data);
       renderClientsTable();
+      renderAppointmentsTable();
     });
   }
   function renderDashboard(data) {
     document.getElementById('statTotal').textContent = data.stats.totalClients;
     document.getElementById('statNew').textContent = data.stats.newThisWeek;
     document.getElementById('statSubs').textContent = data.stats.totalSubmissions;
+    document.getElementById('statAppts').textContent = data.stats.totalAppointments;
+    document.getElementById('statPending').textContent = data.stats.pendingConfirmations;
+    document.getElementById('statToday').textContent = data.stats.todaysAppointments;
+    document.getElementById('statFollowups').textContent = data.stats.followUpsRequired;
 
     var srcBody = document.querySelector('#sourceTable tbody');
     srcBody.innerHTML = (data.sourceBreakdown || []).map(function(s){
@@ -277,6 +385,80 @@
         '<td><span class="pill '+statusPillClass(c.status)+'">'+esc(c.status)+'</span>'+(c.doNotEmail==='Yes'?' <span class="dnepill">DO NOT EMAIL</span>':'')+'</td>'+
         '<td>'+c.totalSubmissions+'</td><td>'+esc(c.lastContact)+'</td></tr>';
     }).join('') || '<tr><td colspan="7" class="empty">No clients match.</td></tr>';
+  }
+
+  // ── APPOINTMENTS TABLE ──
+  function renderAppointmentsTable() {
+    if (!overviewCache) return;
+    var statusFilter = document.getElementById('apptStatusFilter').value;
+    var q = document.getElementById('apptSearch').value.trim().toLowerCase();
+    var appts = overviewCache.appointments || [];
+    if (statusFilter !== 'all') appts = appts.filter(function(a){ return a.status === statusFilter; });
+    if (q) {
+      appts = appts.filter(function(a){
+        return [a.appointmentId, a.clientName, a.clientId].some(function(f){ return String(f||'').toLowerCase().indexOf(q) !== -1; });
+      });
+    }
+    var body = document.getElementById('appointmentsBody');
+    body.innerHTML = appts.map(function(a){
+      return '<tr class="clickable" onclick="openAppointment(\''+a.appointmentId+'\')">'+
+        '<td>'+esc(a.appointmentId)+'</td><td>'+esc(a.clientName)+' ('+esc(a.clientId)+')</td>'+
+        '<td>'+esc(a.service)+'</td><td>'+esc(a.preferredDate)+' '+esc(a.preferredTime)+'</td>'+
+        '<td><span class="pill '+statusPillClass(a.status)+'">'+esc(a.status)+'</span></td>'+
+        '<td>'+esc(a.updatedAt)+'</td></tr>';
+    }).join('') || '<tr><td colspan="6" class="empty">No appointments match.</td></tr>';
+  }
+
+  function openAppointment(apptId) {
+    var a = (overviewCache.appointments || []).find(function(x){ return x.appointmentId === apptId; });
+    if (!a) return;
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+
+    var html = '';
+    html += '<h2>'+esc(a.clientName || '(no name)')+'</h2>';
+    html += '<p style="color:var(--muted);font-size:12px;margin-top:2px;">'+esc(a.appointmentId)+' · '+esc(a.clientId)+'</p>';
+
+    html += '<div class="section-label">Details</div>';
+    html += '<p style="font-size:13px;">Service: '+esc(a.service || '—')+'<br>Requested: '+esc(a.createdAt)+'</p>';
+
+    html += '<label>Status</label><select id="apStatus">' +
+      ['New','Confirmed','Rescheduled','Completed','Cancelled','Follow-up Required'].map(function(opt){
+        return '<option'+(opt===a.status?' selected':'')+'>'+opt+'</option>';
+      }).join('') + '</select>';
+
+    html += '<div class="row2">';
+    html += '<div><label>Preferred Date</label><input id="apDate" value="'+esc(a.preferredDate)+'"></div>';
+    html += '<div><label>Preferred Time</label><input id="apTime" value="'+esc(a.preferredTime)+'"></div>';
+    html += '</div>';
+
+    html += '<label>Notes</label><textarea id="apNotes" placeholder="Internal notes about this appointment">'+esc(a.notes)+'</textarea>';
+
+    html += '<button class="btn" style="margin-top:14px;width:100%;" onclick="saveAppointment(\''+a.appointmentId+'\')">Save Changes</button>';
+    html += '<div class="status-msg" id="apSaveStatus"></div>';
+    html += '<button class="btn secondary" style="margin-top:8px;width:100%;" onclick="closeDrawer(); openClient(\''+a.clientId+'\');">View Client Profile</button>';
+
+    document.getElementById('drawerBody').innerHTML = html;
+  }
+
+  function saveAppointment(apptId) {
+    var payload = {
+      action: 'updateAppointment', adminPassword: session.adminPassword, adminName: session.adminName,
+      appointmentId: apptId,
+      status: document.getElementById('apStatus').value,
+      preferredDate: document.getElementById('apDate').value,
+      preferredTime: document.getElementById('apTime').value,
+      notes: document.getElementById('apNotes').value
+    };
+    var statusEl = document.getElementById('apSaveStatus');
+    statusEl.className = 'status-msg'; statusEl.textContent = 'Saving…';
+    fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        statusEl.className = 'status-msg ' + (data.ok ? 'ok' : 'err');
+        statusEl.textContent = data.ok ? 'Saved.' : (data.error || 'Failed.');
+        if (data.ok) loadDashboard();
+      });
   }
 
   // ── CLIENT DETAIL DRAWER ──
@@ -321,6 +503,12 @@
     html += '<div class="status-msg" id="drSaveStatus"></div>';
     html += '<button class="btn secondary" style="margin-top:8px;width:100%;" onclick="goToSendEmail(\''+c.clientId+'\')">Send Email to This Client</button>';
 
+    html += '<div class="section-label">Appointments</div>';
+    html += (data.appointments && data.appointments.length ? data.appointments.map(function(a){
+      return '<div class="history-item"><b>'+esc(a.service||'Appointment')+'</b> <span class="pill '+statusPillClass(a.status)+'" style="margin-left:6px;">'+esc(a.status)+'</span>'+
+        '<div class="meta">'+esc(a.appointmentId)+' · '+esc(a.preferredDate)+' '+esc(a.preferredTime)+'</div></div>';
+    }).join('') : '<p class="empty">No appointments.</p>');
+
     html += '<div class="section-label">Submission History</div>';
     html += (data.submissions.length ? data.submissions.map(function(sub){
       return '<div class="history-item"><b>'+esc(sub.formType)+'</b>'+(sub.service?' — '+esc(sub.service):'')+'<div class="meta">'+esc(sub.timestamp)+'</div>'+(sub.message?'<div>'+esc(sub.message)+'</div>':'')+'</div>';
@@ -358,24 +546,133 @@
   }
 
   // ── SEND EMAIL TAB ──
-  function sendEmailFromTab() {
+  var seAttachments = []; // { name, mimeType, data (base64) }
+  var emailTemplatesCache = [];
+
+  function loadEmailTemplates() {
+    var url = CLIENT_DB_APPS_SCRIPT_URL + '?emailTemplates=1&adminPassword=' + encodeURIComponent(session.adminPassword);
+    fetch(url).then(function(r){ return r.json(); }).then(function(data){
+      emailTemplatesCache = data.templates || [];
+      var picker = document.getElementById('seTemplatePicker');
+      var current = picker.value;
+      picker.innerHTML = '<option value="">— Start blank —</option>' +
+        emailTemplatesCache.map(function(t){ return '<option value="'+esc(t.name)+'">'+esc(t.name)+'</option>'; }).join('');
+      picker.value = current;
+    });
+  }
+  function loadSelectedTemplate() {
+    var name = document.getElementById('seTemplatePicker').value;
+    if (!name) return;
+    var t = emailTemplatesCache.find(function(x){ return x.name === name; });
+    if (!t) return;
+    document.getElementById('seSubject').value = t.subject;
+    document.getElementById('seMessage').value = t.message;
+    document.getElementById('seIncludeLogo').checked = t.includeLogo;
+  }
+  function saveAsTemplate() {
+    var existing = document.getElementById('seTemplatePicker').value;
+    var name = prompt('Save as template named:', existing || '');
+    if (!name || !name.trim()) return;
     var payload = {
-      action: 'sendEmail', adminPassword: session.adminPassword, adminName: session.adminName,
-      clientId: document.getElementById('seClientId').value.trim(),
+      action: 'saveEmailTemplate', adminPassword: session.adminPassword, adminName: session.adminName,
+      name: name.trim(),
       subject: document.getElementById('seSubject').value,
       message: document.getElementById('seMessage').value,
       includeLogo: document.getElementById('seIncludeLogo').checked
     };
+    fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.ok) { loadEmailTemplates(); alert('Template saved.'); }
+        else alert(data.error || 'Could not save template.');
+      });
+  }
+  function deleteSelectedTemplate() {
+    var name = document.getElementById('seTemplatePicker').value;
+    if (!name) { alert('Choose a template to delete first.'); return; }
+    if (!confirm('Delete template "' + name + '"? This cannot be undone.')) return;
+    var payload = { action: 'deleteEmailTemplate', adminPassword: session.adminPassword, adminName: session.adminName, name: name };
+    fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.ok) loadEmailTemplates();
+        else alert(data.error || 'Could not delete template.');
+      });
+  }
+
+  function toggleSendMode() {
+    var mode = document.getElementById('seMode').value;
+    document.getElementById('seSpecificFields').style.display = mode === 'specific' ? 'block' : 'none';
+    document.getElementById('seBroadcastFields').style.display = mode === 'broadcast' ? 'block' : 'none';
+  }
+
+  var AUTO_LOGO_TYPES = ['Welcome', 'Appointment Confirmation', 'Assessment Received', 'Programme Registration'];
+  function autoToggleLogo() {
+    var type = document.getElementById('seEmailType').value;
+    document.getElementById('seIncludeLogo').checked = AUTO_LOGO_TYPES.indexOf(type) !== -1;
+  }
+
+  function addAttachments(fileList) {
+    var files = Array.prototype.slice.call(fileList);
+    if (seAttachments.length + files.length > 5) { alert('Maximum 5 attachments.'); return; }
+    files.forEach(function (file) {
+      if (file.size > 10 * 1024 * 1024) { alert('"' + file.name + '" is over 10MB — skipped.'); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var base64 = reader.result.split(',')[1];
+        seAttachments.push({ name: file.name, mimeType: file.type || 'application/octet-stream', data: base64 });
+        renderAttachmentList();
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('seFileInput').value = '';
+  }
+  function removeAttachment(idx) {
+    seAttachments.splice(idx, 1);
+    renderAttachmentList();
+  }
+  function renderAttachmentList() {
+    document.getElementById('seAttachmentList').innerHTML = seAttachments.map(function (a, i) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;">' +
+        '<span>'+esc(a.name)+'</span><span style="color:var(--accent);cursor:pointer;" onclick="removeAttachment('+i+')">Remove</span></div>';
+    }).join('');
+  }
+
+  function sendEmailFromTab() {
+    var mode = document.getElementById('seMode').value;
+    var subject = document.getElementById('seSubject').value;
+    var message = document.getElementById('seMessage').value;
     var statusEl = document.getElementById('seStatus');
-    if (!payload.clientId || !payload.subject || !payload.message) {
-      statusEl.className = 'status-msg err'; statusEl.textContent = 'Client ID, subject, and message are all required.'; return;
+    if (!subject || !message) { statusEl.className='status-msg err'; statusEl.textContent='Subject and message are required.'; return; }
+
+    var payload = {
+      action: 'sendEmail', adminPassword: session.adminPassword, adminName: session.adminName,
+      recipientMode: mode, subject: subject, message: message,
+      emailType: document.getElementById('seEmailType').value,
+      includeLogo: document.getElementById('seIncludeLogo').checked,
+      attachments: seAttachments
+    };
+    if (mode === 'specific') {
+      payload.clientId = document.getElementById('seClientId').value.trim();
+      payload.overrideEmail = document.getElementById('seOverrideEmail').value.trim();
+      if (!payload.clientId) { statusEl.className='status-msg err'; statusEl.textContent='Client ID is required.'; return; }
+    } else {
+      payload.filterStatus = document.getElementById('seFilterStatus').value;
     }
+
     statusEl.className = 'status-msg'; statusEl.textContent = 'Sending…';
     fetch(CLIENT_DB_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) })
       .then(function(r){ return r.json(); })
       .then(function(data){
         statusEl.className = 'status-msg ' + (data.ok ? 'ok' : 'err');
-        statusEl.textContent = data.ok ? 'Sent.' : (data.error || 'Failed.');
+        if (data.ok) {
+          statusEl.textContent = (typeof data.sent === 'number')
+            ? 'Sent to ' + data.sent + ' recipient(s)' + (data.skipped ? ', skipped ' + data.skipped + '.' : '.')
+            : 'Sent.';
+          seAttachments = []; renderAttachmentList();
+        } else {
+          statusEl.textContent = data.error || 'Failed.';
+        }
       });
   }
 
