@@ -929,10 +929,23 @@
   }
 
   function getRecaptchaToken(action) {
-    return new Promise(function(resolve) {
+    // FIXED: grecaptcha.ready()'s callback can silently never fire (slow
+    // network, ad blockers, some privacy extensions block the v3
+    // handshake even though the script itself loaded) — when that
+    // happens this promise used to hang forever, leaving the submit
+    // button spinning with no error and no success. Racing it against a
+    // timeout guarantees it always resolves one way or another, so the
+    // rest of the submit flow can always proceed (and the backend's own
+    // reCAPTCHA check will then surface a real, actionable error instead
+    // of an infinite spinner).
+    var readyPromise = new Promise(function(resolve) {
       try { grecaptcha.ready(function(){ grecaptcha.execute(RECAPTCHA_SITE_KEY, {action:action}).then(resolve).catch(function(){ resolve(''); }); }); }
       catch (err) { resolve(''); }
     });
+    var timeoutPromise = new Promise(function(resolve) {
+      setTimeout(function(){ resolve(''); }, 6000);
+    });
+    return Promise.race([readyPromise, timeoutPromise]);
   }
   function setStatus(id, ok, msg) {
     var el = document.getElementById(id);
@@ -990,7 +1003,19 @@
         taskId: taskId, taskName: taskName, submissionLink: link,
         submissionDate: todayISO(), comments: comments, attachments: attachments
       };
-      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) });
+      // FIXED: same "can hang forever" risk as reCAPTCHA above — a slow
+      // connection or an Apps Script cold-start can leave fetch() pending
+      // far longer than a person will wait, with the button spinning and
+      // no feedback either way. AbortController gives it a hard ceiling,
+      // after which the catch block below fires a real, readable error.
+      var controller = new AbortController();
+      var timeoutId = setTimeout(function(){ controller.abort(); }, 25000);
+      var resp;
+      try {
+        resp = await fetch(CHECKIN_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: controller.signal });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
       setStatus('tfStatus', true, 'Thank you! Your task has been submitted for review.');
@@ -999,7 +1024,10 @@
       bootPortal(false);
     } catch (err) {
       console.error('Task submit error:', err);
-      setStatus('tfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
+      var msg = (err && err.name === 'AbortError')
+        ? 'The request took too long and timed out — please check your connection and try again.'
+        : ((err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
+      setStatus('tfStatus', false, msg);
     }
     setBtnLoading('tfSubmitBtn', false);
   }
