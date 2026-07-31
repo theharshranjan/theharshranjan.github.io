@@ -904,12 +904,48 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     localStorage.setItem('sp_admin_theme', isDark ? 'light' : 'dark');
   }
 
+  var unlockProgressTimer = null;
+  function startUnlockProgress() {
+    document.getElementById('lockStatus').innerHTML =
+      '<div style="margin-top:2px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">' +
+          '<span style="color:var(--text-muted);font-size:12.5px;">Signing you in — first login can take a few seconds…</span>' +
+          '<span id="unlockPct" style="color:var(--text);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;">1%</span>' +
+        '</div>' +
+        '<div style="width:100%;height:6px;border-radius:99px;background:var(--bg2);overflow:hidden;">' +
+          '<div id="unlockBar" style="height:100%;width:1%;border-radius:99px;background:linear-gradient(90deg,#E55A2B,#D95D39);transition:width .25s ease;"></div>' +
+        '</div>' +
+      '</div>';
+    var pct = 1;
+    var bar = document.getElementById('unlockBar');
+    var label = document.getElementById('unlockPct');
+    clearInterval(unlockProgressTimer);
+    // Eases up fast at first, then slows — never actually reaches 100
+    // on its own (that only happens once the real response lands), so
+    // it never lies about being "done" while still waiting.
+    unlockProgressTimer = setInterval(function () {
+      var remaining = 92 - pct;
+      pct += Math.max(0.4, remaining * 0.06);
+      if (pct >= 92) pct = 92;
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = Math.round(pct) + '%';
+      if (pct >= 92) clearInterval(unlockProgressTimer);
+    }, 180);
+  }
+  function finishUnlockProgress(success) {
+    clearInterval(unlockProgressTimer);
+    var bar = document.getElementById('unlockBar');
+    var label = document.getElementById('unlockPct');
+    if (bar) { bar.style.width = '100%'; bar.style.background = success ? 'linear-gradient(90deg,#4A5D4F,#5C7A63)' : '#C0473A'; }
+    if (label) label.textContent = '100%';
+  }
+
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
     if (!entered) return;
     var btn = document.getElementById('unlockBtn');
     if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Checking…'; }
-    document.getElementById('lockStatus').innerHTML = '';
+    startUnlockProgress();
     fetch(CHECKIN_APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ action: 'adminLogin', adminPassword: entered })
@@ -917,14 +953,17 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       .then(function(r){ return r.json(); })
       .then(function(data){
         if (data.status === 'success' && data.sessionToken) {
+          finishUnlockProgress(true);
           setAdminToken(data.sessionToken, data.expiresInHours);
           document.getElementById('lockPassword').value = '';
           showApp();
         } else {
+          finishUnlockProgress(false);
           document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect password.') + '</div>';
         }
       })
       .catch(function(){
+        finishUnlockProgress(false);
         document.getElementById('lockStatus').innerHTML = '<div class="form-error">Could not reach the server — check your connection and try again.</div>';
       })
       .finally(function(){
