@@ -891,13 +891,20 @@
     if (!file.type || file.type.indexOf('image/') !== 0 || file.type === 'image/svg+xml') {
       return Promise.resolve(file);
     }
-    if (file.size < 400 * 1024) return Promise.resolve(file); // already small — skip
+    // TIGHTENED: was 400KB / 1600px / quality 0.8. Photos straight off
+    // a phone camera are routinely 3-8MB, and base64-encoding + POSTing
+    // that (then Drive having to write it) is the single biggest thing
+    // slowing a submit down. Task-check-in photos only ever need to be
+    // legible on screen, not print quality, so compressing harder here
+    // is the real lever for a fast submit — this is where the time
+    // actually goes, not the recaptcha/network calls around it.
+    if (file.size < 200 * 1024) return Promise.resolve(file); // already small — skip
     return new Promise(function(resolve) {
       var img = new Image();
       var url = URL.createObjectURL(file);
       img.onload = function() {
         URL.revokeObjectURL(url);
-        var MAX_EDGE = 1600;
+        var MAX_EDGE = 1280;
         var w = img.width, h = img.height;
         var scale = Math.min(1, MAX_EDGE / Math.max(w, h));
         var canvas = document.createElement('canvas');
@@ -908,7 +915,7 @@
         canvas.toBlob(function(blob) {
           if (!blob || blob.size >= file.size) { resolve(file); return; } // no gain — keep original
           resolve(new File([blob], file.name.replace(/\.(png|webp|heic|heif)$/i, '.jpg'), { type: 'image/jpeg' }));
-        }, 'image/jpeg', 0.8);
+        }, 'image/jpeg', 0.72);
       };
       img.onerror = function() { URL.revokeObjectURL(url); resolve(file); }; // unreadable as an image — just upload as-is
       img.src = url;
@@ -929,23 +936,26 @@
   }
 
   function getRecaptchaToken(action) {
-    // FIXED: grecaptcha.ready()'s callback can silently never fire (slow
-    // network, ad blockers, some privacy extensions block the v3
-    // handshake even though the script itself loaded) — when that
-    // happens this promise used to hang forever, leaving the submit
-    // button spinning with no error and no success. Racing it against a
-    // timeout guarantees it always resolves one way or another, so the
-    // rest of the submit flow can always proceed (and the backend's own
-    // reCAPTCHA check will then surface a real, actionable error instead
-    // of an infinite spinner).
-    var readyPromise = new Promise(function(resolve) {
-      try { grecaptcha.ready(function(){ grecaptcha.execute(RECAPTCHA_SITE_KEY, {action:action}).then(resolve).catch(function(){ resolve(''); }); }); }
-      catch (err) { resolve(''); }
+    // FIXED: grecaptcha.ready()'s callback simply never fires on some
+    // devices/networks (ad blockers, privacy extensions, or corporate
+    // networks that stub out or silently drop Google's recaptcha
+    // script) — when that happens this Promise used to hang forever,
+    // which is exactly why the button just spins with no success or
+    // error. A 6s timeout guarantees we always resolve (with an empty
+    // token if recaptcha truly never loaded), so the submit flow can
+    // always finish and either succeed or show a real error.
+    return new Promise(function(resolve) {
+      var settled = false;
+      var done = function(token) { if (!settled) { settled = true; resolve(token || ''); } };
+      var timer = setTimeout(function(){ done(''); }, 6000);
+      try {
+        grecaptcha.ready(function(){
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action:action})
+            .then(function(t){ clearTimeout(timer); done(t); })
+            .catch(function(){ clearTimeout(timer); done(''); });
+        });
+      } catch (err) { clearTimeout(timer); done(''); }
     });
-    var timeoutPromise = new Promise(function(resolve) {
-      setTimeout(function(){ resolve(''); }, 6000);
-    });
-    return Promise.race([readyPromise, timeoutPromise]);
   }
   function setStatus(id, ok, msg) {
     var el = document.getElementById(id);
@@ -1003,18 +1013,21 @@
         taskId: taskId, taskName: taskName, submissionLink: link,
         submissionDate: todayISO(), comments: comments, attachments: attachments
       };
-      // FIXED: same "can hang forever" risk as reCAPTCHA above — a slow
-      // connection or an Apps Script cold-start can leave fetch() pending
-      // far longer than a person will wait, with the button spinning and
-      // no feedback either way. AbortController gives it a hard ceiling,
-      // after which the catch block below fires a real, readable error.
-      var controller = new AbortController();
-      var timeoutId = setTimeout(function(){ controller.abort(); }, 25000);
+      // FIXED: a plain fetch() has no timeout of its own — if the
+      // request stalls (flaky mobile network, corporate proxy, etc.)
+      // the await just hangs and the button spins forever with no
+      // success or error shown. This aborts and reports a real error
+      // after 25s instead of hanging indefinitely.
+      var ctrl = new AbortController();
+      var abortTimer = setTimeout(function(){ ctrl.abort(); }, 25000);
       var resp;
       try {
-        resp = await fetch(CHECKIN_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: controller.signal });
+        resp = await fetch(CHECKIN_APPS_SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload), signal: ctrl.signal });
+      } catch (fetchErr) {
+        if (fetchErr && fetchErr.name === 'AbortError') throw new Error('The request timed out — please check your connection and try again.');
+        throw fetchErr;
       } finally {
-        clearTimeout(timeoutId);
+        clearTimeout(abortTimer);
       }
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Submission failed');
@@ -1024,10 +1037,7 @@
       bootPortal(false);
     } catch (err) {
       console.error('Task submit error:', err);
-      var msg = (err && err.name === 'AbortError')
-        ? 'The request took too long and timed out — please check your connection and try again.'
-        : ((err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
-      setStatus('tfStatus', false, msg);
+      setStatus('tfStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again or email info@thesamarpan.co.in');
     }
     setBtnLoading('tfSubmitBtn', false);
   }
