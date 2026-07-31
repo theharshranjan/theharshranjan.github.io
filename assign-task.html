@@ -413,14 +413,8 @@
               <button type="button" class="tpl-btn" data-tpl="offer" onclick="loadEmailTemplate('offer')">Offer Letter</button>
               <button type="button" class="tpl-btn" data-tpl="certificate" onclick="loadEmailTemplate('certificate')">Certificate</button>
             </div>
-            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Loads a starting subject and message below, ready to edit — nothing is sent until you press Send.</p>
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">Loads a starting subject and message below, ready to edit — nothing is sent until you press Send. The Samarpan logo is included automatically on every email.</p>
           </div>
-
-          <div class="flex items-center gap-2">
-            <input type="checkbox" id="anIncludeLogo" style="width:16px;height:16px;accent-color:#E55A2B;">
-            <label for="anIncludeLogo" class="text-sm" style="color:var(--text);">Include Samarpan logo in this email</label>
-          </div>
-          <p class="text-xs -mt-4" style="color:var(--text-muted);">Turned on automatically for Offer Letter and Certificate — leave off for regular messages. You can still switch it either way.</p>
 
           <div>
             <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">What is this email about?</label>
@@ -657,12 +651,58 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 
 <!-- ── EDIT INTERN MODAL ── -->
 <div id="editInternModal" class="modal-overlay hidden" onclick="if(event.target===this) closeEditIntern();">
-  <div class="card" style="max-width:380px;width:100%;">
+  <div class="card" style="max-width:480px;width:100%;max-height:88vh;overflow-y:auto;">
     <h3 class="font-display text-lg mb-4" style="color:var(--text);" id="editInternHeading">Edit Intern</h3>
     <input type="hidden" id="editInternId">
     <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Name</label>
+      <input type="text" id="editInternName" class="form-input2" placeholder="Full name">
+    </div>
+    <div class="mb-4">
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email</label>
       <input type="email" id="editInternEmail" class="form-input2" placeholder="name@example.com">
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Phone</label>
+      <input type="text" id="editInternPhone" class="form-input2" placeholder="Phone number">
+    </div>
+    <div class="mb-4" style="display:flex;gap:12px;">
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Qualification</label>
+        <input type="text" id="editInternQualification" class="form-input2">
+      </div>
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">College</label>
+        <input type="text" id="editInternCollege" class="form-input2">
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Specialisation</label>
+      <input type="text" id="editInternSpecialisation" class="form-input2">
+    </div>
+    <div class="mb-4" style="display:flex;gap:12px;">
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Role</label>
+        <input type="text" id="editInternRole" class="form-input2">
+      </div>
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Department</label>
+        <input type="text" id="editInternDepartment" class="form-input2">
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Mentor</label>
+      <input type="text" id="editInternMentor" class="form-input2">
+    </div>
+    <div class="mb-4" style="display:flex;gap:12px;">
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Joining Date</label>
+        <input type="date" id="editInternJoiningDate" class="form-input2">
+      </div>
+      <div style="flex:1;">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Expected End Date</label>
+        <input type="date" id="editInternExpectedEndDate" class="form-input2">
+      </div>
     </div>
     <div class="mb-5">
       <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Status</label>
@@ -1040,7 +1080,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         + '<td class="clickable" onclick="openInternProfile(\'' + esc(i.internId) + '\')">' + esc(i.name) + '</td>'
         + '<td>' + esc(i.email || '—') + '</td>'
         + '<td><span class="badge ' + (String(i.status||'').toLowerCase()==='active' ? 'badge-done' : 'badge-neutral') + '">' + esc(i.status || '—') + '</span></td>'
-        + '<td><button type="button" class="icon-btn" style="width:30px;height:30px;" title="Edit email / status" onclick="openEditIntern(\'' + esc(i.internId) + '\',\'' + esc(i.name) + '\',\'' + esc(i.email||'') + '\',\'' + esc(i.status||'') + '\')"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button></td>'
+        + '<td><button type="button" class="icon-btn" style="width:30px;height:30px;" title="Edit intern details" onclick="openEditIntern(\'' + esc(i.internId) + '\')"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button></td>'
         + '</tr>';
     }).join('');
     lucide.createIcons();
@@ -1311,12 +1351,25 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     loadFeedbackLookup();
   }
 
-  // ── Edit Intern (email / status) ──
-  function openEditIntern(internId, name, email, status) {
-    document.getElementById('editInternId').value = internId;
-    document.getElementById('editInternHeading').textContent = 'Edit ' + name;
-    document.getElementById('editInternEmail').value = email || '';
-    document.getElementById('editInternStatus').value = status || 'Active';
+  // ── Edit Intern (full profile) ──
+  function openEditIntern(internId) {
+    var list = (overviewData && overviewData.interns) || [];
+    var i = list.filter(function(x){ return String(x.internId) === String(internId); })[0];
+    if (!i) { return; }
+    document.getElementById('editInternId').value = i.internId;
+    document.getElementById('editInternHeading').textContent = 'Edit ' + i.name;
+    document.getElementById('editInternName').value = i.name || '';
+    document.getElementById('editInternEmail').value = i.email || '';
+    document.getElementById('editInternPhone').value = i.phone || '';
+    document.getElementById('editInternQualification').value = i.qualification || '';
+    document.getElementById('editInternCollege').value = i.college || '';
+    document.getElementById('editInternSpecialisation').value = i.specialisation || '';
+    document.getElementById('editInternRole').value = i.role || '';
+    document.getElementById('editInternDepartment').value = i.department || '';
+    document.getElementById('editInternMentor').value = i.mentor || '';
+    document.getElementById('editInternJoiningDate').value = i.joiningDateRaw || '';
+    document.getElementById('editInternExpectedEndDate').value = i.expectedEndDateRaw || '';
+    document.getElementById('editInternStatus').value = i.status || 'Active';
     document.getElementById('editInternStatusMsg').innerHTML = '';
     document.getElementById('editInternModal').classList.remove('hidden');
   }
@@ -1325,13 +1378,26 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   }
   async function saveEditIntern() {
     var internId = document.getElementById('editInternId').value;
-    var email = document.getElementById('editInternEmail').value.trim();
-    var status = document.getElementById('editInternStatus').value;
+    var payload = {
+      action: 'updateIntern', adminSessionToken: getAdminToken(), internId: internId,
+      name: document.getElementById('editInternName').value.trim(),
+      email: document.getElementById('editInternEmail').value.trim(),
+      phone: document.getElementById('editInternPhone').value.trim(),
+      qualification: document.getElementById('editInternQualification').value.trim(),
+      college: document.getElementById('editInternCollege').value.trim(),
+      specialisation: document.getElementById('editInternSpecialisation').value.trim(),
+      role: document.getElementById('editInternRole').value.trim(),
+      department: document.getElementById('editInternDepartment').value.trim(),
+      mentor: document.getElementById('editInternMentor').value.trim(),
+      joiningDate: document.getElementById('editInternJoiningDate').value,
+      expectedEndDate: document.getElementById('editInternExpectedEndDate').value,
+      status: document.getElementById('editInternStatus').value
+    };
     setBtnLoadingCustom('editInternSaveBtn', 'editInternSaveLabel', true, 'Saving…');
     try {
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'updateIntern', adminSessionToken: getAdminToken(), internId: internId, email: email, status: status })
+        body: JSON.stringify(payload)
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not save changes');
@@ -1582,7 +1648,6 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     document.getElementById('anMessage').value = t.message;
     document.querySelectorAll('.tpl-btn[data-tpl]').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tpl') === key); });
     if (key === 'offer' || key === 'certificate') setEmailRecipientMode('specific');
-    document.getElementById('anIncludeLogo').checked = (key === 'offer' || key === 'certificate');
     var type = TEMPLATE_TYPE[key] || 'General';
     document.getElementById('anEmailType').value = type;
     onEmailTypeChange();
@@ -1684,7 +1749,6 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 
     var internName = document.getElementById('anInternName').value.trim();
     var filter = document.getElementById('anFilter').value;
-    var includeLogo = document.getElementById('anIncludeLogo').checked;
     var emailType = document.getElementById('anEmailType').value;
     var saveToRecord = document.getElementById('anSaveToRecord').checked;
     var relatedTaskId = document.getElementById('anRelatedTaskId').value.trim();
@@ -1709,7 +1773,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var payload = {
         action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
         subject: subject, message: message, recipientMode: emailRecipientMode,
-        internName: internName, filter: filter, includeLogo: includeLogo, attachments: attachments,
+        internName: internName, filter: filter, attachments: attachments,
         emailType: emailType, saveToRecord: saveToRecord, relatedTaskId: relatedTaskId,
         overrideEmail: overrideEmail, updateEmailOnFile: updateEmailOnFile
       };
@@ -1796,7 +1860,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var payload = {
         action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
         subject: subject, message: message, recipientMode: 'specific', internName: internName,
-        includeLogo: certDocType === 'Certificate', attachments: attachments,
+        attachments: attachments,
         emailType: certDocType, saveToRecord: true
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
