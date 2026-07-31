@@ -721,7 +721,31 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
-  var CLIENT_ADMIN_PASSWORD = 'Samarpan@2026';
+  // SECURITY: the admin password no longer lives here. A hardcoded JS
+  // constant is readable by anyone who opens dev tools or views page
+  // source on this file — the lock screen was cosmetic only, since the
+  // real password was sitting in plain text a few lines away. The
+  // password now only ever exists on the server (Apps Script); this
+  // page sends what was typed to the server ONCE to verify, and the
+  // server hands back a short-lived signed session token instead. That
+  // token — not the password — is what every admin action uses from
+  // then on, and it expires on its own after 12 hours.
+  var ADMIN_SESSION_KEY = 'sp_admin_session';
+
+  function getAdminToken() {
+    try {
+      var raw = sessionStorage.getItem(ADMIN_SESSION_KEY);
+      if (!raw) return '';
+      var parsed = JSON.parse(raw);
+      if (!parsed || !parsed.token || !parsed.expiresAt || Date.now() >= parsed.expiresAt) return '';
+      return parsed.token;
+    } catch (err) { return ''; }
+  }
+  function setAdminToken(token, expiresInHours) {
+    var expiresAt = Date.now() + (Number(expiresInHours) || 12) * 60 * 60 * 1000;
+    sessionStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ token: token, expiresAt: expiresAt }));
+  }
+  function clearAdminToken() { sessionStorage.removeItem(ADMIN_SESSION_KEY); }
 
   // ── Sidebar nav structure ──
   var NAV = [
@@ -842,12 +866,44 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
-    if (entered === CLIENT_ADMIN_PASSWORD) {
-      sessionStorage.setItem('sp_admin_unlocked', '1');
-      showApp();
-    } else {
-      document.getElementById('lockStatus').innerHTML = '<div class="form-error">Incorrect password.</div>';
-    }
+    if (!entered) return;
+    var btn = document.getElementById('unlockBtn');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Checking…'; }
+    document.getElementById('lockStatus').innerHTML = '';
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'adminLogin', adminPassword: entered })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success' && data.sessionToken) {
+          setAdminToken(data.sessionToken, data.expiresInHours);
+          document.getElementById('lockPassword').value = '';
+          showApp();
+        } else {
+          document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect password.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('lockStatus').innerHTML = '<div class="form-error">Could not reach the server — check your connection and try again.</div>';
+      })
+      .finally(function(){
+        if (btn) { btn.disabled = false; var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+      });
+  }
+
+  function lockApp() {
+    clearAdminToken();
+    document.getElementById('appShell').classList.add('hidden');
+    document.getElementById('lockScreen').classList.remove('hidden');
+  }
+
+  // If a request comes back Unauthorized (session expired or was never
+  // valid), fall back to the lock screen instead of leaving a broken
+  // panel on screen with no explanation.
+  function handleAuthFailure() {
+    document.getElementById('lockStatus').innerHTML = '<div class="form-error">Your session expired — please sign in again.</div>';
+    lockApp();
   }
 
   function showApp() {
@@ -901,9 +957,10 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   function loadOverview() {
     document.getElementById('dashLoading').classList.remove('hidden');
     document.getElementById('dashContent').classList.add('hidden');
-    fetch(CHECKIN_APPS_SCRIPT_URL + '?dashboard=1')
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?dashboard=1&adminSessionToken=' + encodeURIComponent(getAdminToken()))
       .then(function(r){ return r.json(); })
       .then(function(info){
+        if (info && info.error === 'Unauthorized') { handleAuthFailure(); return; }
         overviewData = info;
         allInternNames = (info.interns || []).map(function(i){ return i.name; });
         var dl = document.getElementById('internNameList');
@@ -1095,7 +1152,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
-          action: 'approveApplication', adminPassword: CLIENT_ADMIN_PASSWORD, rowIndex: rowIndex,
+          action: 'approveApplication', adminSessionToken: getAdminToken(), rowIndex: rowIndex,
           role: role, department: department, mentor: mentor, joiningDate: joiningDate, expectedEndDate: endDate
         })
       });
@@ -1114,7 +1171,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     try {
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'rejectApplication', adminPassword: CLIENT_ADMIN_PASSWORD, rowIndex: rowIndex })
+        body: JSON.stringify({ action: 'rejectApplication', adminSessionToken: getAdminToken(), rowIndex: rowIndex })
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not reject application');
@@ -1274,7 +1331,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     try {
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
         method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'updateIntern', adminPassword: CLIENT_ADMIN_PASSWORD, internId: internId, email: email, status: status })
+        body: JSON.stringify({ action: 'updateIntern', adminSessionToken: getAdminToken(), internId: internId, email: email, status: status })
       });
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not save changes');
@@ -1308,7 +1365,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var token = await getRecaptchaToken('assign_task');
       var payload = {
         action: 'assignTask',
-        adminPassword: CLIENT_ADMIN_PASSWORD,
+        adminSessionToken: getAdminToken(),
         recaptchaToken: token,
         internName: name,
         department: document.getElementById('atDept').value,
@@ -1377,7 +1434,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     try {
       var token = await getRecaptchaToken('give_feedback');
       var payload = {
-        action: 'giveFeedback', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        action: 'giveFeedback', adminSessionToken: getAdminToken(), recaptchaToken: token,
         taskId: taskId, status: document.getElementById('fbStatus').value, feedback: document.getElementById('fbFeedback').value
       };
       var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
@@ -1650,7 +1707,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var attachments = await filesToBase64(anFilesArr);
       var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'sendEmail', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
         subject: subject, message: message, recipientMode: emailRecipientMode,
         internName: internName, filter: filter, includeLogo: includeLogo, attachments: attachments,
         emailType: emailType, saveToRecord: saveToRecord, relatedTaskId: relatedTaskId,
@@ -1737,7 +1794,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       var attachments = await filesToBase64(certFilesArr);
       var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'sendEmail', adminPassword: CLIENT_ADMIN_PASSWORD, recaptchaToken: token,
+        action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
         subject: subject, message: message, recipientMode: 'specific', internName: internName,
         includeLogo: certDocType === 'Certificate', attachments: attachments,
         emailType: certDocType, saveToRecord: true
@@ -1765,7 +1822,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     }
     document.getElementById('themeIcon').setAttribute('data-lucide', document.documentElement.getAttribute('data-theme') === 'dark' ? 'moon' : 'sun');
     lucide.createIcons();
-    if (sessionStorage.getItem('sp_admin_unlocked') === '1') showApp();
+    if (getAdminToken()) showApp();
     document.getElementById('lockPassword').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); } });
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
     document.getElementById('hIntId').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); } });
