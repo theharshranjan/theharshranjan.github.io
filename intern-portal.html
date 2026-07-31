@@ -537,6 +537,43 @@
       .catch(function(){ cb(null, null); });
   }
 
+  var enterProgressTimer = null;
+  function startEnterProgress() {
+    document.getElementById('gateStatus').innerHTML =
+      '<div style="margin-top:2px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">' +
+          '<span style="color:var(--text-muted);font-size:12.5px;">Finding your record — first login can take a few seconds…</span>' +
+          '<span id="enterPct" style="color:var(--text);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;">1%</span>' +
+        '</div>' +
+        '<div style="width:100%;height:6px;border-radius:99px;background:var(--bg2);overflow:hidden;">' +
+          '<div id="enterBar" style="height:100%;width:1%;border-radius:99px;background:linear-gradient(90deg,#E55A2B,#D95D39);transition:width .25s ease;"></div>' +
+        '</div>' +
+      '</div>';
+    var pct = 1;
+    var bar = document.getElementById('enterBar');
+    var label = document.getElementById('enterPct');
+    clearInterval(enterProgressTimer);
+    // Two network round trips actually happen here (name → Intern ID
+    // lookup, then the verify=1 login itself), so this eases up a
+    // little slower than the admin login bar — same idea though: never
+    // claims 100% on its own, only once the real response lands.
+    enterProgressTimer = setInterval(function () {
+      var remaining = 90 - pct;
+      pct += Math.max(0.3, remaining * 0.05);
+      if (pct >= 90) pct = 90;
+      if (bar) bar.style.width = pct + '%';
+      if (label) label.textContent = Math.round(pct) + '%';
+      if (pct >= 90) clearInterval(enterProgressTimer);
+    }, 180);
+  }
+  function finishEnterProgress(success) {
+    clearInterval(enterProgressTimer);
+    var bar = document.getElementById('enterBar');
+    var label = document.getElementById('enterPct');
+    if (bar) { bar.style.width = '100%'; bar.style.background = success ? 'linear-gradient(90deg,#4A5D4F,#5C7A63)' : '#C0473A'; }
+    if (label) label.textContent = '100%';
+  }
+
   function tryEnter() {
     var typedName = document.getElementById('gateName').value.trim();
     var nameEl = document.getElementById('gateName');
@@ -554,10 +591,11 @@
     var btn = document.getElementById('gateBtn');
     btn.disabled = true;
     document.getElementById('gateBtnLabel').innerHTML = '<span class="btn-spinner"></span>Finding you…';
-    document.getElementById('gateStatus').innerHTML = '';
+    startEnterProgress();
 
     resolveInternId(typedName, function(internId, resolvedName) {
       if (!internId) {
+        finishEnterProgress(false);
         btn.disabled = false;
         document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
         document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please pick your name from the suggestions that appear as you type.</div>';
@@ -569,11 +607,13 @@
         .then(function(res){
           try { grecaptcha.reset(); } catch (err) {}
           if (!res || !res.found) {
+            finishEnterProgress(false);
             btn.disabled = false;
             document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
             document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'We couldn\'t find that record.') + '</div>';
             return;
           }
+          finishEnterProgress(true);
           session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
           session.loggedInAt = Date.now();
           localStorage.setItem('sp_intern_session', JSON.stringify(session));
@@ -588,6 +628,7 @@
         })
         .catch(function(){
           try { grecaptcha.reset(); } catch (err) {}
+          finishEnterProgress(false);
           btn.disabled = false;
           document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
           document.getElementById('gateStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
