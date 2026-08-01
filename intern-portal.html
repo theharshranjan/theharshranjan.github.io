@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
 <script>
   tailwind.config = {
@@ -402,8 +402,31 @@
 <script>
   // ── Apps Script Web App URL — same backend as the rest of the site ──
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
-  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz'; // v3, invisible, used for task/report submissions
+  var RECAPTCHA_V2_SITE_KEY = '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u'; // v2 checkbox, used for the login gate
   var xLoadedAt = Date.now();
+
+  // NEW: the <script> tag loads with ?render=RECAPTCHA_SITE_KEY (the v3 key)
+  // so v3's grecaptcha.execute() is reliably preloaded and doesn't randomly
+  // fail/hang on task or report submission. That render= param also means
+  // Google's automatic "just look for class=g-recaptcha and render it"
+  // behavior is turned OFF — so the v2 checkbox on the login gate has to be
+  // rendered explicitly instead, which is what this does. gateWidgetId is
+  // the specific widget instance ID that getResponse()/reset() need to
+  // target (calling them with no ID targets "the first auto-rendered
+  // widget", which doesn't exist here — that's what silently broke the
+  // checkbox before).
+  var gateWidgetId = null;
+  function renderGateRecaptcha() {
+    try {
+      grecaptcha.ready(function () {
+        if (gateWidgetId === null && document.getElementById('gateRecaptcha')) {
+          gateWidgetId = grecaptcha.render('gateRecaptcha', { sitekey: RECAPTCHA_V2_SITE_KEY });
+        }
+      });
+    } catch (err) { /* recaptcha script blocked/slow — checkbox just won't appear, login still shows a clear error rather than crashing */ }
+  }
+  renderGateRecaptcha();
 
   var session = { name:'', email:'', internId:'' };
   var statusInfo = null;   // from ?internName=&status=1
@@ -582,7 +605,7 @@
     if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name.</div>'; return; }
 
     var captchaToken = '';
-    try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
+    try { captchaToken = grecaptcha.getResponse(gateWidgetId); } catch (err) { captchaToken = ''; }
     if (!captchaToken) {
       document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please check the box to verify you\'re not a robot.</div>';
       return;
@@ -599,13 +622,13 @@
         btn.disabled = false;
         document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
         document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please pick your name from the suggestions that appear as you type.</div>';
-        try { grecaptcha.reset(); } catch (err) {}
+        try { grecaptcha.reset(gateWidgetId); } catch (err) {}
         return;
       }
       fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken))
         .then(function(r){ return r.json(); })
         .then(function(res){
-          try { grecaptcha.reset(); } catch (err) {}
+          try { grecaptcha.reset(gateWidgetId); } catch (err) {}
           if (!res || !res.found) {
             finishEnterProgress(false);
             btn.disabled = false;
@@ -627,7 +650,7 @@
           renderAll();
         })
         .catch(function(){
-          try { grecaptcha.reset(); } catch (err) {}
+          try { grecaptcha.reset(gateWidgetId); } catch (err) {}
           finishEnterProgress(false);
           btn.disabled = false;
           document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
@@ -642,7 +665,7 @@
     document.getElementById('appShell').classList.add('hidden');
     document.getElementById('gateScreen').classList.remove('hidden');
     document.getElementById('gateName').value = '';
-    try { grecaptcha.reset(); } catch (err) {}
+    try { grecaptcha.reset(gateWidgetId); } catch (err) {}
   }
 
   function showApp() {
