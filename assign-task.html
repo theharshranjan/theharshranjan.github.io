@@ -16,7 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
 <script>
   tailwind.config = {
@@ -761,7 +761,26 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
-  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+  var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz'; // v3, invisible, used for admin actions like sending email
+  var RECAPTCHA_V2_SITE_KEY = '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u'; // v2 checkbox, used for the admin lock screen
+
+  // NEW: script tag loads with ?render=RECAPTCHA_SITE_KEY so v3's
+  // grecaptcha.execute() (used when sending email, assigning tasks, etc.)
+  // is reliably preloaded instead of randomly hanging/failing. That
+  // render= param disables Google's automatic "find class=g-recaptcha and
+  // render it" behavior, so the v2 checkbox below has to be rendered
+  // explicitly — same fix as the intern portal's login gate.
+  var lockWidgetId = null;
+  function renderLockRecaptcha() {
+    try {
+      grecaptcha.ready(function () {
+        if (lockWidgetId === null && document.getElementById('lockRecaptcha')) {
+          lockWidgetId = grecaptcha.render('lockRecaptcha', { sitekey: RECAPTCHA_V2_SITE_KEY });
+        }
+      });
+    } catch (err) { /* recaptcha blocked/slow — checkbox just won't appear */ }
+  }
+  renderLockRecaptcha();
   // SECURITY: the admin password no longer lives here. A hardcoded JS
   // constant is readable by anyone who opens dev tools or views page
   // source on this file — the lock screen was cosmetic only, since the
@@ -945,7 +964,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     var entered = document.getElementById('lockPassword').value;
     if (!entered) return;
     var captchaToken = '';
-    try { captchaToken = grecaptcha.getResponse(); } catch (err) { captchaToken = ''; }
+    try { captchaToken = grecaptcha.getResponse(lockWidgetId); } catch (err) { captchaToken = ''; }
     if (!captchaToken) {
       document.getElementById('lockStatus').innerHTML = '<div class="form-error">Please check the box to verify you\'re not a robot.</div>';
       return;
@@ -959,7 +978,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     })
       .then(function(r){ return r.json(); })
       .then(function(data){
-        try { grecaptcha.reset(); } catch (err) {}
+        try { grecaptcha.reset(lockWidgetId); } catch (err) {}
         if (data.status === 'success' && data.sessionToken) {
           finishUnlockProgress(true);
           setAdminToken(data.sessionToken, data.expiresInHours);
@@ -971,7 +990,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         }
       })
       .catch(function(){
-        try { grecaptcha.reset(); } catch (err) {}
+        try { grecaptcha.reset(lockWidgetId); } catch (err) {}
         finishUnlockProgress(false);
         document.getElementById('lockStatus').innerHTML = '<div class="form-error">Could not reach the server — check your connection and try again.</div>';
       })
@@ -1003,12 +1022,24 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   }
 
   function getRecaptchaToken(action) {
+    // FIXED: this used to have no timeout — if grecaptcha.ready()'s
+    // callback never fired (ad blockers, privacy extensions, flaky
+    // networks), this Promise hung forever, which is exactly why
+    // "Send Email" could spin indefinitely with no success or error.
+    // A 6s timeout guarantees this always resolves (empty token if
+    // recaptcha truly never loaded), so the button always finishes one
+    // way or another instead of spinning forever.
     return new Promise(function(resolve) {
+      var settled = false;
+      var done = function(token) { if (!settled) { settled = true; resolve(token || ''); } };
+      var timer = setTimeout(function(){ done(''); }, 6000);
       try {
         grecaptcha.ready(function() {
-          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action})
+            .then(function(t){ clearTimeout(timer); done(t); })
+            .catch(function(){ clearTimeout(timer); done(''); });
         });
-      } catch (err) { resolve(''); }
+      } catch (err) { clearTimeout(timer); done(''); }
     });
   }
 
