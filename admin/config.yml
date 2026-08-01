@@ -1,0 +1,42 @@
+backend:
+  name: github
+  repo: theharshranjan/theharshranjan.github.io   # <-- CHANGE if your repo name is different
+  branch: main
+  base_url: https://samarpan-cms-auth.YOUR-SUBDOMAIN.workers.dev   # <-- set after deploying the OAuth worker
+  auth_endpoint: auth
+
+publish_mode: editorial_workflow
+
+media_folder: "journal-images"
+public_folder: "/journal-images"
+
+collections:
+  - name: "journal"
+    label: "Journal Articles"
+    folder: "content/journal"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "URL Slug (letters, numbers, dashes only)", name: "slug", widget: "string", hint: "e.g. agni-sacred-fire-ayurvedic-health" }
+      - { label: "Short Description (used for card + SEO)", name: "description", widget: "text" }
+      - label: "Category Badge"
+        name: "badge"
+        widget: "select"
+        options: ["Classical Review", "Research Review", "Narrative Review", "Clinical Insight", "Student Voice"]
+      - label: "Badge Colour (matches category above)"
+        name: "badgeClass"
+        widget: "select"
+        options:
+          - { label: "Green — Classical Review", value: "badge-classical" }
+          - { label: "Blue — Research Review", value: "badge-literature" }
+          - { label: "Orange — Narrative Review", value: "badge-narrative" }
+          - { label: "Purple — Clinical Insight", value: "badge-clinical" }
+          - { label: "Grey — Student Voice", value: "badge-student" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - { label: "Tags (comma separated topics)", name: "tags", widget: "list" }
+      - { label: "Author", name: "author", widget: "string", default: "Samarpan Editorial Team" }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Article Body", name: "body", widget: "markdown" }

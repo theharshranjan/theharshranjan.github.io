@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} | Samarpan Journal</title>
+  <meta name="description" content="{{description}}">
+  <link rel="canonical" href="https://thesamarpan.co.in/journal/{{slug}}.html">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:image" content="{{image}}">
+  <meta property="og:url" content="https://thesamarpan.co.in/journal/{{slug}}.html">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"{{titleJson}}","description":"{{descriptionJson}}","image":"{{image}}","author":{"@type":"Organization","name":"{{authorJson}}"},"publisher":{"@type":"Organization","name":"Samarpan"},"datePublished":"{{date}}"}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7');
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            clay: '#D95D39', 'brand-black': '#1C1C1C', 'brand-gray': '#666666',
+            'brand-gold': '#C5A059', 'brand-cream': '#FDFBF7', paper: '#FDFBF7', sage: '#4A5D4F'
+          },
+          fontFamily: {
+            sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;}
+    *,*::before,*::after{box-sizing:border-box;}
+    body{background-color:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
+    .article-badge{display:inline-flex;align-items:center;gap:.35rem;font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .6rem;border-radius:3px;}
+    .badge-classical{background:rgba(74,93,79,.12);color:#4A5D4F;}
+    .badge-literature{background:rgba(46,79,143,.10);color:#2E4F8F;}
+    .badge-narrative{background:rgba(217,93,57,.10);color:#D95D39;}
+    .badge-clinical{background:rgba(124,90,168,.10);color:#7C5AA8;}
+    .badge-student{background:rgba(102,102,102,.10);color:#666666;}
+    .article-tag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.02em;color:var(--text-muted);border:1px solid var(--border);padding:.15rem .5rem;border-radius:20px;}
+    .mono-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);}
+    .hairline{border-top:1px solid var(--border);}
+    .article-body{font-family:'Lato',sans-serif;color:var(--text);line-height:1.85;font-size:1.05rem;}
+    .article-body h2{font-family:'Cormorant Garamond',serif;font-size:1.7rem;margin:2.2rem 0 1rem;color:var(--text);}
+    .article-body h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;margin:1.8rem 0 .8rem;color:var(--text);}
+    .article-body p{margin-bottom:1.2rem;}
+    .article-body ul,.article-body ol{margin:0 0 1.2rem 1.4rem;}
+    .article-body li{margin-bottom:.5rem;}
+    .article-body a{color:#D95D39;text-decoration:underline;}
+    .article-body blockquote{border-left:3px solid #D95D39;padding-left:1.2rem;font-style:italic;color:var(--text-muted);margin:1.5rem 0;}
+    .article-body img{border-radius:6px;margin:1.5rem 0;}
+    .theme-toggle{cursor:pointer;background:none;border:none;color:var(--text);}
+  </style>
+</head>
+<body>
+
+  <header class="sticky top-0 z-50" style="background:var(--bg);border-bottom:1px solid var(--border);">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="../index.html" class="font-display text-lg" style="color:var(--text);">Samarpan</a>
+      <div class="flex items-center gap-5">
+        <a href="../journal.html" class="font-sans text-xs uppercase tracking-widest" style="color:var(--text-muted);">← All Articles</a>
+        <button class="theme-toggle" onclick="document.documentElement.setAttribute('data-theme', document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')" aria-label="Toggle theme">
+          <i data-lucide="moon" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <span class="article-badge {{badgeClass}} mb-4">{{badge}}</span>
+    <h1 class="font-serif text-3xl md:text-4xl leading-tight mt-4 mb-4" style="color:var(--text);">{{title}}</h1>
+    <p class="font-sans text-base mb-6" style="color:var(--text-muted);">{{description}}</p>
+
+    <div class="flex flex-wrap items-center gap-2 mb-6">
+      {{tagsHtml}}
+    </div>
+
+    <div class="hairline pt-4 pb-8 flex items-center justify-between mono-label">
+      <span>{{author}}</span>
+      <span>{{readTime}} · {{dateDisplay}}</span>
+    </div>
+
+    <div class="article-thumb mb-10 rounded overflow-hidden" style="aspect-ratio:16/9;">
+      <img src="{{image}}" alt="{{title}}" class="w-full h-full object-cover">
+    </div>
+
+    <article class="article-body">
+      {{bodyHtml}}
+    </article>
+
+    <div class="hairline mt-14 pt-8 text-center">
+      <a href="../journal.html" class="inline-flex items-center gap-2 px-6 py-2.5 border rounded-full font-sans text-[10px] uppercase tracking-widest transition hover:bg-clay hover:text-white hover:border-clay" style="border-color:var(--border);color:var(--text);">← Back to Journal</a>
+    </div>
+  </main>
+
+  <footer class="py-10 text-center mono-label" style="border-top:1px solid var(--border);">
+    &copy; <span id="copyrightYear"></span> Samarpan. All rights reserved.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
