@@ -46,6 +46,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
@@ -157,6 +158,38 @@
     .cf-nav button{width:46px;height:46px;border-radius:50%;background:var(--card-bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);cursor:pointer;box-shadow:var(--shadow);transition:border-color .3s,color .3s,transform .2s;}
     .cf-nav button:hover{border-color:#D95D39;color:#D95D39;transform:translateY(-2px);}
 
+    /* ── APPLY / REGISTRATION SECTION ── */
+    .apply-step{display:flex;gap:1rem;margin-bottom:1.75rem;}
+    .apply-step-dot{width:34px;height:34px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);color:#D95D39;font-family:'Marcellus',serif;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .apply-step h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:.2rem;}
+    .apply-step p{font-family:'Lato',sans-serif;font-size:.8rem;line-height:1.5;color:var(--text-muted);}
+    .apply-note{display:flex;gap:.6rem;align-items:flex-start;padding:1rem 1.1rem;background:rgba(74,93,79,.07);border:1px solid rgba(74,93,79,.2);border-radius:8px;margin-top:.5rem;}
+    .apply-note i{color:#4A5D4F;flex-shrink:0;margin-top:.1rem;}
+    .apply-note p{font-family:'Lato',sans-serif;font-size:.75rem;line-height:1.5;color:var(--text-muted);}
+    .apply-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.75rem;box-shadow:var(--shadow);}
+    .apply-field-group{margin-bottom:1.5rem;}
+    .apply-eyebrow{display:block;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#D95D39;margin-bottom:.85rem;}
+    .apply-field{margin-bottom:1rem;}
+    .apply-field label{display:block;font-family:'Lato',sans-serif;font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:.35rem;}
+    .apply-field input,.apply-field select,.apply-field textarea{width:100%;padding:.65rem .8rem;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;font-size:.85rem;transition:border-color .25s,box-shadow .25s;}
+    .apply-field input:focus,.apply-field select:focus,.apply-field textarea:focus{outline:none;border-color:#D95D39;box-shadow:0 0 0 3px rgba(217,93,57,.12);}
+    .apply-field textarea{resize:vertical;min-height:80px;}
+    .apply-field.field-error input,.apply-field.field-error select{border-color:#c0473a;}
+    .apply-field-error-msg{font-family:'Lato',sans-serif;font-size:.7rem;color:#c0473a;margin-top:.3rem;display:none;}
+    .apply-field.field-error .apply-field-error-msg{display:block;}
+    .apply-file-drop{display:flex;align-items:center;gap:.7rem;padding:1rem 1.1rem;border:1.5px dashed var(--border);border-radius:8px;cursor:pointer;transition:border-color .25s,background .25s;color:var(--text-muted);font-family:'Lato',sans-serif;font-size:.82rem;}
+    .apply-file-drop:hover{border-color:#D95D39;background:rgba(217,93,57,.04);}
+    .apply-file-drop.has-file{border-color:#4A5D4F;color:var(--text);background:rgba(74,93,79,.06);}
+    .apply-file-drop i{color:#D95D39;flex-shrink:0;}
+    .apply-status{font-family:'Lato',sans-serif;font-size:.8rem;margin-bottom:1rem;}
+    .apply-status.err{color:#c0473a;}
+    .apply-status.info{color:var(--text-muted);}
+    #applySubmitBtn:disabled{opacity:.6;cursor:not-allowed;}
+    .apply-success{text-align:center;padding:2.5rem 1rem;}
+    .apply-success i{color:#4A5D4F;margin:0 auto 1rem;}
+    .apply-success h3{font-family:'Marcellus',serif;font-size:1.3rem;color:var(--text);margin-bottom:.5rem;}
+    .apply-success p{font-family:'Lato',sans-serif;font-size:.85rem;color:var(--text-muted);max-width:340px;margin:0 auto;}
+
     /* ── ROLE / FIND YOUR PLACE MINI CARDS (photo + 2-line text) ── */
     .role-mini-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:.7rem;display:flex;align-items:center;gap:.85rem;text-decoration:none;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,border-color .3s;}
     .role-mini-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px rgba(0,0,0,.09);border-color:#D95D39;}
@@ -202,18 +235,6 @@
     .sc-avatar-placeholder{width:48px;height:48px;border-radius:50%;background:var(--bg2);border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);margin-bottom:.9rem;}
     .sc-soon{font-family:'Lato',sans-serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-top:.6rem;display:flex;align-items:center;gap:.35rem;}
 
-    /* ── OPEN OPPORTUNITIES — small expanding accordion ── */
-    .opp-item{border:1px solid var(--border);border-radius:8px;background:var(--card-bg);overflow:hidden;transition:border-color .3s;}
-    .opp-item.open{border-color:#D95D39;}
-    .opp-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.1rem;background:transparent;border:none;cursor:pointer;text-align:left;}
-    .opp-btn span{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text);}
-    .opp-icon{transition:transform .35s;flex-shrink:0;color:#D95D39;}
-    .opp-item.open .opp-icon{transform:rotate(45deg);}
-    .opp-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-    .opp-item.open .opp-body{max-height:120px;}
-    .opp-body-inner{padding:0 1.1rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
-    .opp-body-inner p{font-family:'Lato',sans-serif;font-size:.78rem;color:var(--text-muted);margin:0;flex:1;min-width:160px;}
-    .opp-apply{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#D95D39;padding:.5rem 1rem;border-radius:4px;text-decoration:none;white-space:nowrap;}
 
     /* ── PRINCIPLES ── */
     .principle-item{text-align:center;}
@@ -241,13 +262,11 @@
     .ip-row:last-child{border-bottom:none;}
     .ip-row .ip-icon{width:30px;height:30px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#D95D39;}
 
-    /* ── ALUMNI MAP ── */
-    .alumni-map{position:relative;background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;aspect-ratio:16/8;}
-    .alumni-map img{width:100%;height:100%;object-fit:cover;opacity:.5;}
-    [data-theme="dark"] .alumni-map img{opacity:.35;}
-    .alumni-pin{position:absolute;width:10px;height:10px;border-radius:50%;background:#D95D39;box-shadow:0 0 0 5px rgba(217,93,57,.18);transform:translate(-50%,-50%);}
-    .alumni-pin::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(217,93,57,.5);animation:pinPulse 2.4s ease-out infinite;}
-    @keyframes pinPulse{0%{transform:scale(.6);opacity:.8;}100%{transform:scale(2.2);opacity:0;}}
+    /* ── ALUMNI CHIPS (compact stat strip) ── */
+    .alumni-chip{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.2rem .75rem;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;transition:border-color .3s,transform .3s;}
+    .alumni-chip:hover{border-color:#D95D39;transform:translateY(-2px);}
+    .alumni-chip i{color:#D95D39;}
+    .alumni-chip span{font-family:'Lato',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;color:var(--text);}
   </style>
 </head>
 
@@ -305,7 +324,7 @@
   <a href="sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
   <a href="ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
   <a href="community.html" onclick="toggleMenu()" class="font-display text-2xl text-clay transition">Community</a>
-  <a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend 🎁</a>
+  <a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Refer a Friend</a>
   <a href="booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
 </div>
 
@@ -339,70 +358,105 @@
   <div class="coverflow fade-up" id="circleCoverflow"></div>
 </section>
 
-<!-- FIND YOUR PLACE -->
+<!-- APPLY — embedded intern registration -->
 <section id="find-your-place" class="py-20 md:py-24 px-4 sm:px-6" style="background:var(--bg);">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-14 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Roles &amp; Pathways</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Find Your Place</h2>
+      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Step One</span>
+      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Apply to Join</h2>
       <div class="divider-line"></div>
+      <p class="font-serif text-base mt-5 max-w-xl mx-auto" style="color:var(--text-muted);">One form, five minutes. Tell us who you are and where you'd like to contribute — Ayurveda, Psychology, Yoga, Research, Nutrition or Public Health.</p>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 fade-up">
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Internship')">
-        <img class="rmc-photo" src="g1.webp" alt="Internship">
-        <div class="rmc-text"><h3>Internship</h3><p>BAMS · Medical · Psychology · Nutrition · Yoga</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Research Collaborator')">
-        <img class="rmc-photo" src="2 modern research laboratory.webp" alt="Research Collaborator">
-        <div class="rmc-text"><h3>Research Collaborator</h3><p>Literature review · Publication · Clinical review</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Doctor Network')">
-        <img class="rmc-photo" src="drleela.png" alt="Doctor Network">
-        <div class="rmc-text"><h3>Doctor Network</h3><p>Collaborative care · Case discussions</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Yoga Teacher')">
-        <img class="rmc-photo" src="Samarpan_Yoga_Ph.webp" alt="Yoga Teacher">
-        <div class="rmc-text"><h3>Yoga Teacher</h3><p>Sessions · Resources · Programmes</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Nutrition Expert')">
-        <img class="rmc-photo" src="diet.webp" alt="Nutrition Expert">
-        <div class="rmc-text"><h3>Nutrition Expert</h3><p>Diet planning · Workshops · Research</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Psychologist')">
-        <img class="rmc-photo" src="psychology.webp" alt="Psychologist">
-        <div class="rmc-text"><h3>Psychologist</h3><p>Mental wellbeing · Counselling · Research</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Volunteer')">
-        <img class="rmc-photo" src="samarpan-community-visit.webp" alt="Volunteer">
-        <div class="rmc-text"><h3>Volunteer</h3><p>Health camps · Events · Education</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','University Partner')">
-        <img class="rmc-photo" src="eco-education.webp" alt="University Partner">
-        <div class="rmc-text"><h3>University Partner</h3><p>MoU · Research · Student exchange</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Content Creator')">
-        <img class="rmc-photo" src="g5.webp" alt="Content Creator">
-        <div class="rmc-text"><h3>Content Creator</h3><p>Writing · Translation · Social media</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Medicinal Plant Volunteer')">
-        <img class="rmc-photo" src="1 Ancient Wisdom.webp" alt="Medicinal Plant Volunteer">
-        <div class="rmc-text"><h3>Medicinal Plant Volunteer</h3><p>Garden care · Documentation</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
-      <a class="role-mini-card" href="booking.html" onclick="gaEvent('click','Role','Technology Volunteer')">
-        <img class="rmc-photo" src="placeholder-5.webp" alt="Technology Volunteer">
-        <div class="rmc-text"><h3>Technology Volunteer</h3><p>Website &amp; app · AI &amp; automation</p></div>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </a>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start fade-up">
+      <!-- Left: what happens next -->
+      <div class="lg:col-span-2 lg:sticky lg:top-28">
+        <div class="apply-step"><div class="apply-step-dot">1</div><div><h3>Submit your application</h3><p>Your background, area of interest and CV — reviewed by the Samarpan team.</p></div></div>
+        <div class="apply-step"><div class="apply-step-dot">2</div><div><h3>Hear back within days</h3><p>We reach out by email or phone to confirm your track and start date.</p></div></div>
+        <div class="apply-step"><div class="apply-step-dot">3</div><div><h3>Begin your journey</h3><p>Onboarding, a mentor, and your first assignment — see the path below.</p></div></div>
+        <div class="apply-note">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <p>Your CV and details are only used for this application and stay within the Samarpan team.</p>
+        </div>
+      </div>
+
+      <!-- Right: the form -->
+      <div class="lg:col-span-3">
+        <form id="applyForm" class="apply-card" novalidate>
+          <div id="applyFormFields">
+            <div class="apply-field-group">
+              <span class="apply-eyebrow">About You</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="apply-field"><label for="apFullName">Full Name *</label><input id="apFullName" name="fullName" type="text" required autocomplete="name"></div>
+                <div class="apply-field"><label for="apEmail">Email *</label><input id="apEmail" name="email" type="email" required autocomplete="email"></div>
+                <div class="apply-field"><label for="apPhone">Phone *</label><input id="apPhone" name="phone" type="tel" required autocomplete="tel"></div>
+                <div class="apply-field"><label for="apQualification">Qualification *</label><input id="apQualification" name="qualification" type="text" placeholder="e.g. BAMS, 3rd year" required></div>
+              </div>
+            </div>
+
+            <div class="apply-field-group">
+              <span class="apply-eyebrow">Background</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="apply-field"><label for="apCollege">College / University</label><input id="apCollege" name="college" type="text"></div>
+                <div class="apply-field"><label for="apSpecialisation">Specialisation</label><input id="apSpecialisation" name="specialisation" type="text"></div>
+                <div class="apply-field">
+                  <label for="apDepartment">Track You're Applying For</label>
+                  <select id="apDepartment" name="department">
+                    <option value="">Select a track</option>
+                    <option>Ayurveda / Clinical</option>
+                    <option>Psychology</option>
+                    <option>Yoga</option>
+                    <option>Research</option>
+                    <option>Nutrition</option>
+                    <option>Public Health</option>
+                    <option>Content &amp; Media</option>
+                    <option>Technology</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="apply-field"><label for="apAvailability">Availability</label>
+                  <select id="apAvailability" name="availability">
+                    <option value="">Select hours/week</option>
+                    <option>Under 5 hrs</option>
+                    <option>5–10 hrs</option>
+                    <option>10–20 hrs</option>
+                    <option>20+ hrs / Full-time</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="apply-field-group">
+              <span class="apply-eyebrow">Tell Us More</span>
+              <div class="apply-field"><label for="apWhy">Why do you want to join Samarpan?</label><textarea id="apWhy" name="whyJoin" rows="3"></textarea></div>
+              <div class="apply-field"><label for="apLinkedin">LinkedIn / Portfolio (optional)</label><input id="apLinkedin" name="linkedin" type="url" placeholder="https://"></div>
+            </div>
+
+            <div class="apply-field-group">
+              <span class="apply-eyebrow">Your CV</span>
+              <label id="apCvDrop" for="apCvFile" class="apply-file-drop">
+                <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                <span id="apCvLabel">Click to attach your CV — PDF, max 5MB *</span>
+              </label>
+              <input id="apCvFile" type="file" accept="application/pdf" class="sr-only">
+            </div>
+
+            <div class="apply-field-group">
+              <div id="applyRecaptcha" class="g-recaptcha" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
+            </div>
+
+            <div id="applyFormStatus" class="apply-status" role="status" aria-live="polite"></div>
+
+            <button type="submit" id="applySubmitBtn" class="cta-btn w-full px-8 py-4 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm">Submit Application</button>
+          </div>
+
+          <div id="applySuccess" class="apply-success" hidden>
+            <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+            <h3>Application received</h3>
+            <p>Thank you for applying — our team will reach out to you by email or phone within a few days.</p>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -440,16 +494,28 @@
     </div>
     <div class="voice-track fade-up">
       <div class="voice-card">
-        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar">BI</div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">BAMS Intern</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Internship Track</p></div></div>
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="leaf" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">BAMS Intern</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Internship Track</p></div></div>
         <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"I came in wanting clinical exposure and left with research skills, mentors, and a community I still turn to."</p>
       </div>
       <div class="voice-card">
-        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar">RC</div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Research Collaborator</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Research Circle</p></div></div>
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="flask-conical" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Research Collaborator</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Research Circle</p></div></div>
         <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"Working alongside doctors and writers on the same review taught me more than a semester in a classroom."</p>
       </div>
       <div class="voice-card">
-        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar">HC</div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Health Camp Volunteer</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Volunteer Track</p></div></div>
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="heart-handshake" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Health Camp Volunteer</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Volunteer Track</p></div></div>
         <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"Every camp reminds me why we do this — the community holds space for both the villagers we serve and each other."</p>
+      </div>
+      <div class="voice-card">
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="brain" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Psychology Intern</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Psychology Track</p></div></div>
+        <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"Getting to sit in on real counselling case discussions, alongside coursework, changed how I think about my own training."</p>
+      </div>
+      <div class="voice-card">
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="flower-2" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Yoga Teacher</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Yoga Circle</p></div></div>
+        <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"I've taught yoga for years, but pairing sessions with clinical partners here taught me to see the practice as therapy, not just movement."</p>
+      </div>
+      <div class="voice-card">
+        <div class="flex items-center gap-3 mb-4"><div class="voice-avatar"><i data-lucide="salad" class="w-4 h-4"></i></div><div><p class="font-sans text-xs font-bold" style="color:var(--text);">Nutrition Intern</p><p class="font-sans text-[10px] uppercase tracking-widest text-clay">Nutrition Circle</p></div></div>
+        <p class="font-serif italic text-sm leading-relaxed" style="color:var(--text-muted);">"Building diet plans that actually blend Ayurvedic principles with evidence-based nutrition was exactly the kind of work I wanted to do."</p>
       </div>
     </div>
   </div>
@@ -486,42 +552,30 @@
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 fade-up">
       <div class="activity-card">
-        <div class="ac-photo"><img src="1 Ancient Wisdom.webp" alt="Plant Walk" loading="lazy"><div class="ac-icon">🌿</div></div>
+        <div class="ac-photo"><img src="1 Ancient Wisdom.webp" alt="Plant Walk" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="leaf" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Plant Walk</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">A guided walk through our medicinal plant garden.</p></div>
       </div>
       <div class="activity-card">
-        <div class="ac-photo"><img src="Samarpan_Yoga_Ph.webp" alt="Yoga Circle" loading="lazy"><div class="ac-icon">🧘</div></div>
+        <div class="ac-photo"><img src="Samarpan_Yoga_Ph.webp" alt="Yoga Circle" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="flower-2" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Yoga Circle</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Community practice led by our yoga teachers.</p></div>
       </div>
       <div class="activity-card">
-        <div class="ac-photo"><img src="2 modern research laboratory.webp" alt="Journal Club" loading="lazy"><div class="ac-icon">📚</div></div>
+        <div class="ac-photo"><img src="2 modern research laboratory.webp" alt="Journal Club" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="book-open" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Journal Club</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Discussing the latest research with our advisors.</p></div>
       </div>
       <div class="activity-card">
-        <div class="ac-photo"><img src="eco-education.webp" alt="Guest Lecture" loading="lazy"><div class="ac-icon">🎙️</div></div>
+        <div class="ac-photo"><img src="eco-education.webp" alt="Guest Lecture" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="mic" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Guest Lecture</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Conversations with practitioners across disciplines.</p></div>
       </div>
       <div class="activity-card">
-        <div class="ac-photo"><img src="health-camp.webp" alt="Health Camp" loading="lazy"><div class="ac-icon">🌍</div></div>
+        <div class="ac-photo"><img src="health-camp.webp" alt="Health Camp" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="globe" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Health Camp</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">On-ground outreach carrying care into villages.</p></div>
       </div>
       <div class="activity-card">
-        <div class="ac-photo"><img src="eco-research.webp" alt="Research Discussion" loading="lazy"><div class="ac-icon">🔬</div></div>
+        <div class="ac-photo"><img src="eco-research.webp" alt="Research Discussion" loading="lazy"><div class="ac-icon" style="color:#D95D39;"><i data-lucide="microscope" class="w-4 h-4"></i></div></div>
         <div class="ac-body"><h3 class="font-serif text-lg" style="color:var(--text);">Research Discussion</h3><p class="font-sans text-xs mt-1" style="color:var(--text-muted);">Open forum for work-in-progress reviews.</p></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- WORKING GROUPS -->
-<section class="py-20 md:py-24 px-4 sm:px-6 overflow-hidden" style="background:var(--bg2);">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Instead Of Departments</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Our Working Groups</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="coverflow fade-up" id="groupsCoverflow"></div>
   </div>
 </section>
 
@@ -544,45 +598,16 @@
 </section>
 
 <!-- ALUMNI NETWORK -->
-<section class="py-20 md:py-24 px-4 sm:px-6" style="background:var(--bg2);">
-  <div class="max-w-6xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Around The World</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Alumni Network</h2>
-      <p class="font-sans text-sm mt-3 max-w-xl mx-auto" style="color:var(--text-muted);">Practising doctors, researchers and students who began their journey with Samarpan.</p>
-      <div class="divider-line"></div>
-    </div>
-    <div class="alumni-map fade-up">
-      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1600&auto=format&fit=crop" alt="World map representing the Samarpan alumni network" loading="lazy">
-      <div class="alumni-pin" style="top:38%;left:18%;"></div>
-      <div class="alumni-pin" style="top:32%;left:48%;"></div>
-      <div class="alumni-pin" style="top:46%;left:66%;"></div>
-      <div class="alumni-pin" style="top:58%;left:73%;"></div>
-      <div class="alumni-pin" style="top:64%;left:28%;"></div>
-      <div class="alumni-pin" style="top:26%;left:82%;"></div>
-    </div>
-  </div>
-</section>
-
-<!-- OPEN OPPORTUNITIES -->
-<section class="py-20 md:py-24 px-4 sm:px-6" style="background:var(--bg);">
-  <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12 fade-up">
-      <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Right Now</span>
-      <h2 class="font-display text-2xl md:text-3xl" style="color:var(--text);">Open Opportunities</h2>
-      <div class="divider-line"></div>
-    </div>
-    <div class="space-y-2 fade-up">
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Internship</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>BAMS, Medical, Psychology, Nutrition &amp; Yoga students.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Internship')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Volunteer</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Health camps, events, education drives &amp; outreach.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Volunteer')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Research Fellow</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Literature review, evidence summaries &amp; publications.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Research Fellow')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Medical Writer</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Scientific &amp; patient-facing writing across formats.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Medical Writer')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Graphic Designer</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Visual identity, illustration &amp; health communication.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Graphic Designer')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Translator</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Bringing our resources to more languages &amp; regions.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Translator')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Campus Ambassador</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Represent Samarpan &amp; build community on your campus.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Campus Ambassador')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Web Developer</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Website, app &amp; automation across the Digital Circle.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Web Developer')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Research Assistant</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Support ongoing studies &amp; data across our circles.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Research Assistant')">Apply →</a></div></div></div>
-      <div class="opp-item"><button class="opp-btn" onclick="toggleOpp(this)"><span>Video Editor</span><i data-lucide="plus" class="opp-icon w-4 h-4"></i></button><div class="opp-body"><div class="opp-body-inner"><p>Edit sessions, interviews &amp; campaigns for our channels.</p><a class="opp-apply" href="register.html" onclick="gaEvent('click','Opportunity','Video Editor')">Apply →</a></div></div></div>
+<section class="py-16 px-4 sm:px-6" style="background:var(--bg2);">
+  <div class="max-w-4xl mx-auto text-center fade-up">
+    <span class="font-sans text-[10px] uppercase tracking-widest text-clay block mb-2">Beyond the Internship</span>
+    <h2 class="font-display text-2xl md:text-3xl mb-3" style="color:var(--text);">Alumni Network</h2>
+    <p class="font-sans text-sm max-w-xl mx-auto mb-8" style="color:var(--text-muted);">Practising doctors, researchers and students who began their journey with Samarpan stay connected long after their internship ends.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="alumni-chip"><i data-lucide="stethoscope" class="w-5 h-5"></i><span>Doctors</span></div>
+      <div class="alumni-chip"><i data-lucide="flask-conical" class="w-5 h-5"></i><span>Researchers</span></div>
+      <div class="alumni-chip"><i data-lucide="brain" class="w-5 h-5"></i><span>Psychologists</span></div>
+      <div class="alumni-chip"><i data-lucide="graduation-cap" class="w-5 h-5"></i><span>Students</span></div>
     </div>
   </div>
 </section>
@@ -653,6 +678,10 @@
         <div class="faq-body"><p>Absolutely. Students from BAMS, medicine, psychology, nutrition, yoga and research backgrounds are welcome through our internship track.</p></div>
       </div>
       <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)"><span>How do I apply?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button>
+        <div class="faq-body"><p>One form covers every track — internship, research, volunteering and more. Use the <a href="#find-your-place" style="color:#D95D39;text-decoration:underline;">Apply to Join</a> section above; there's no separate application elsewhere.</p></div>
+      </div>
+      <div class="faq-item">
         <button class="faq-btn" onclick="toggleFaq(this)"><span>Do you provide certificates?</span><i data-lucide="plus" class="faq-icon w-5 h-5"></i></button>
         <div class="faq-body"><p>Yes, interns and long-term contributors receive a certificate on completion, marked on the Journey timeline above.</p></div>
       </div>
@@ -678,7 +707,7 @@
     <p class="font-serif italic text-lg text-white/85 mb-10 max-w-xl mx-auto leading-relaxed">"Together, we can make holistic health more accessible, evidence-informed, and compassionate."</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="booking.html" class="cta-btn px-8 py-3.5 bg-clay text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm" onclick="gaEvent('click','CTA','Final Become a Member')">Become a Member</a>
-      <a href="#find-your-place" class="cta-btn px-8 py-3.5 bg-white/10 border border-white/40 text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm backdrop-blur-sm">Explore Opportunities</a>
+      <a href="#find-your-place" class="cta-btn px-8 py-3.5 bg-white/10 border border-white/40 text-white font-sans text-xs font-bold uppercase tracking-widest rounded-sm backdrop-blur-sm">Apply Now</a>
     </div>
   </div>
 </section>
@@ -730,7 +759,7 @@
         <li><a href="journal.html" class="hover:text-white transition">Journals</a></li>
         <li><a href="community.html" class="hover:text-white transition">Community</a></li>
         <li><a href="index.html#contact" class="hover:text-white transition">Newsletter</a></li>
-        <li><a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" class="hover:text-white transition">Refer a Friend 🎁</a></li>
+        <li><a href="mailto:info@thesamarpan.co.in?subject=Referring%20a%20Friend%20to%20Samarpan" class="hover:text-white transition">Refer a Friend</a></li>
       </ul>
     </div>
     <div>
@@ -816,15 +845,6 @@
     entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
   },{threshold:0.1});
   document.querySelectorAll('.fade-up').forEach(function(el){fadeObs.observe(el);});
-
-  /* Open Opportunities accordion (small, expand-in-place) */
-  function toggleOpp(btn) {
-    var item = btn.closest('.opp-item');
-    var isOpen = item.classList.contains('open');
-    document.querySelectorAll('.opp-item.open').forEach(function(i){ i.classList.remove('open'); });
-    if (!isOpen) item.classList.add('open');
-    if (typeof gaEvent==='function') gaEvent('click','Opportunity Expand', btn.querySelector('span').textContent);
-  }
 
   /* FAQ */
   function toggleFaq(btn) {
@@ -937,18 +957,6 @@
     {label:'Volunteers', eyebrow:'Community Service', img:'samarpan-community-visit.webp'}
   ], 'Community Circle');
 
-  initCoverflow('groupsCoverflow', [
-    {label:'Research Circle', eyebrow:'Working Group', img:'2 modern research laboratory.webp'},
-    {label:'Clinical Circle', eyebrow:'Working Group', img:'ayurveda-consultation-wide.webp'},
-    {label:'Education Circle', eyebrow:'Working Group', img:'eco-education.webp'},
-    {label:'Public Health Circle', eyebrow:'Working Group', img:'health-camp.webp'},
-    {label:'Nutrition Circle', eyebrow:'Working Group', img:'diet.webp'},
-    {label:'Mental Health Circle', eyebrow:'Working Group', img:'psychology.webp'},
-    {label:'Medicinal Plant Circle', eyebrow:'Working Group', img:'1 Ancient Wisdom.webp'},
-    {label:'Digital Innovation Circle', eyebrow:'Working Group', img:'placeholder-5.webp'},
-    {label:'Youth Leadership Circle', eyebrow:'Working Group', img:'g4.webp'}
-  ], 'Working Groups');
-
   /* Where Do You Belong — identity selector */
   var belongData = {
     doctor: {title:'For Doctors', rows:[
@@ -1022,6 +1030,187 @@
       lucide.createIcons();
       if (typeof gaEvent==='function') gaEvent('click','Belong', role);
       setTimeout(function(){ panel.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 120);
+    });
+  })();
+
+  /* ── APPLY FORM — Google Drive-free, posts straight to the same backend
+     the rest of the intern system uses (action:'register'). Mirrors the
+     reCAPTCHA setup already proven on register.html / intern-portal.html:
+     script loads with ?render=V3_KEY so v3's execute() stays reliable,
+     and the v2 checkbox is rendered explicitly since that render= param
+     turns off automatic class="g-recaptcha" rendering. ── */
+  (function(){
+    var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
+    var RECAPTCHA_V3_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
+    var RECAPTCHA_V2_SITE_KEY = '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u';
+    var MAX_CV_BYTES = 5 * 1024 * 1024;
+
+    var form = document.getElementById('applyForm');
+    if (!form) return;
+
+    var applyWidgetId = null;
+    function renderApplyRecaptcha() {
+      try {
+        grecaptcha.ready(function () {
+          if (applyWidgetId === null && document.getElementById('applyRecaptcha')) {
+            applyWidgetId = grecaptcha.render('applyRecaptcha', { sitekey: RECAPTCHA_V2_SITE_KEY });
+          }
+        });
+      } catch (err) { /* recaptcha script blocked/slow — checkbox just won't appear */ }
+    }
+    renderApplyRecaptcha();
+
+    function getV3Token(action) {
+      return new Promise(function (resolve) {
+        var settled = false;
+        var done = function (t) { if (!settled) { settled = true; resolve(t || ''); } };
+        var timer = setTimeout(function () { done(''); }, 6000);
+        try {
+          grecaptcha.ready(function () {
+            grecaptcha.execute(RECAPTCHA_V3_SITE_KEY, { action: action })
+              .then(function (t) { clearTimeout(timer); done(t); })
+              .catch(function () { clearTimeout(timer); done(''); });
+          });
+        } catch (err) { clearTimeout(timer); done(''); }
+      });
+    }
+
+    // ── CV upload ──
+    var cvFileInput = document.getElementById('apCvFile');
+    var cvDrop = document.getElementById('apCvDrop');
+    var cvLabel = document.getElementById('apCvLabel');
+    var cvBase64 = '', cvFileName = '';
+    cvFileInput.addEventListener('change', function () {
+      var file = cvFileInput.files && cvFileInput.files[0];
+      cvBase64 = ''; cvFileName = '';
+      cvDrop.classList.remove('has-file');
+      if (!file) { cvLabel.textContent = 'Click to attach your CV — PDF, max 5MB *'; return; }
+      if (file.type !== 'application/pdf') {
+        cvLabel.textContent = 'Please choose a PDF file.';
+        cvFileInput.value = '';
+        return;
+      }
+      if (file.size > MAX_CV_BYTES) {
+        cvLabel.textContent = 'That file is over 5MB — please choose a smaller PDF.';
+        cvFileInput.value = '';
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function () {
+        cvBase64 = String(reader.result).split(',')[1] || '';
+        cvFileName = file.name;
+        cvLabel.textContent = file.name;
+        cvDrop.classList.add('has-file');
+      };
+      reader.onerror = function () {
+        cvLabel.textContent = 'Could not read that file — please try again.';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // ── Field-level validation ──
+    var requiredFields = [
+      { id: 'apFullName', label: 'your name' },
+      { id: 'apEmail', label: 'a valid email' },
+      { id: 'apPhone', label: 'your phone number' },
+      { id: 'apQualification', label: 'your qualification' }
+    ];
+    function clearFieldErrors() {
+      requiredFields.forEach(function (f) {
+        var el = document.getElementById(f.id);
+        if (el) el.closest('.apply-field').classList.remove('field-error');
+      });
+    }
+    function markFieldError(id) {
+      var el = document.getElementById(id);
+      if (el) el.closest('.apply-field').classList.add('field-error');
+    }
+
+    var statusEl = document.getElementById('applyFormStatus');
+    var submitBtn = document.getElementById('applySubmitBtn');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      clearFieldErrors();
+      statusEl.textContent = '';
+      statusEl.className = 'apply-status';
+
+      var data = {
+        fullName: document.getElementById('apFullName').value.trim(),
+        email: document.getElementById('apEmail').value.trim(),
+        phone: document.getElementById('apPhone').value.trim(),
+        qualification: document.getElementById('apQualification').value.trim(),
+        college: document.getElementById('apCollege').value.trim(),
+        specialisation: document.getElementById('apSpecialisation').value.trim(),
+        department: document.getElementById('apDepartment').value,
+        areaOfInterest: document.getElementById('apDepartment').value,
+        availability: document.getElementById('apAvailability').value,
+        whyJoin: document.getElementById('apWhy').value.trim(),
+        linkedin: document.getElementById('apLinkedin').value.trim()
+      };
+
+      var missing = requiredFields.filter(function (f) { return !document.getElementById(f.id).value.trim(); });
+      if (missing.length) {
+        missing.forEach(function (f) { markFieldError(f.id); });
+        statusEl.textContent = 'Please fill in ' + missing.map(function (f) { return f.label; }).join(', ') + '.';
+        statusEl.className = 'apply-status err';
+        document.getElementById(missing[0].id).focus();
+        return;
+      }
+      if (!cvBase64 || !cvFileName) {
+        cvDrop.style.borderColor = '#c0473a';
+        statusEl.textContent = 'Please attach your CV (PDF, max 5MB).';
+        statusEl.className = 'apply-status err';
+        return;
+      }
+
+      var v2Token = '';
+      try { v2Token = grecaptcha.getResponse(applyWidgetId); } catch (err) { v2Token = ''; }
+      if (!v2Token) {
+        statusEl.textContent = "Please check the \u2018I'm not a robot\u2019 box below.";
+        statusEl.className = 'apply-status err';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+      statusEl.textContent = 'Submitting your application…';
+      statusEl.className = 'apply-status info';
+
+      getV3Token('register').then(function (v3Token) {
+        data.recaptchaToken = v3Token;
+        data.recaptchaTokenV2 = v2Token;
+        data.cvBase64 = cvBase64;
+        data.cvFileName = cvFileName;
+
+        return fetch(CHECKIN_APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(Object.assign({ action: 'register' }, data))
+        });
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          try { grecaptcha.reset(applyWidgetId); } catch (err) {}
+          if (res && res.status === 'success') {
+            document.getElementById('applyFormFields').hidden = true;
+            document.getElementById('applySuccess').hidden = false;
+            lucide.createIcons();
+            if (typeof gaEvent === 'function') gaEvent('submit', 'Apply Form', data.department || 'General');
+          } else {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Application';
+            statusEl.textContent = (res && res.message) || 'Something went wrong — please try again.';
+            statusEl.className = 'apply-status err';
+          }
+        })
+        .catch(function () {
+          try { grecaptcha.reset(applyWidgetId); } catch (err) {}
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit Application';
+          statusEl.textContent = 'Could not reach the server — please check your connection and try again.';
+          statusEl.className = 'apply-status err';
+        });
     });
   })();
 
