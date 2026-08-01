@@ -1848,17 +1848,31 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     setBtnLoading('anSendBtn', true);
     try {
       var attachments = await filesToBase64(anFilesArr);
-      var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
+        action: 'sendEmail', adminSessionToken: getAdminToken(),
         subject: subject, message: message, recipientMode: emailRecipientMode,
         internName: internName, filter: filter, attachments: attachments,
         emailType: emailType, saveToRecord: saveToRecord, relatedTaskId: relatedTaskId,
         overrideEmail: overrideEmail, updateEmailOnFile: updateEmailOnFile
       };
-      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
-        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
-      });
+      // FIXED: fetch() had no timeout — if the request stalled (large
+      // attachments + Zoho round trip, cold start, flaky network), this
+      // await just hung forever and the button spun with no success or
+      // error. 40s covers a slow real send; anything past that aborts
+      // and shows a clear error instead of an endless spinner.
+      var ctrl = new AbortController();
+      var abortTimer = setTimeout(function(){ ctrl.abort(); }, 40000);
+      var resp;
+      try {
+        resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+          method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), signal: ctrl.signal
+        });
+      } catch (fetchErr) {
+        if (fetchErr && fetchErr.name === 'AbortError') throw new Error('The request timed out — please check your connection and try again.');
+        throw fetchErr;
+      } finally {
+        clearTimeout(abortTimer);
+      }
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not send email');
       setStatus('anStatus', true, 'Sent to ' + data.sent + ' recipient(s)' + (data.skipped ? (', skipped ' + data.skipped) : '') + '.');
@@ -1935,16 +1949,27 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     setBtnLoading('certSendBtn', true);
     try {
       var attachments = await filesToBase64(certFilesArr);
-      var token = await getRecaptchaToken('send_email');
       var payload = {
-        action: 'sendEmail', adminSessionToken: getAdminToken(), recaptchaToken: token,
+        action: 'sendEmail', adminSessionToken: getAdminToken(),
         subject: subject, message: message, recipientMode: 'specific', internName: internName,
         attachments: attachments,
         emailType: certDocType, saveToRecord: true
       };
-      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
-        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload)
-      });
+      // Same fetch-timeout fix as the announce/general email send above —
+      // certificate/LOR files make this send even more likely to be slow.
+      var ctrl = new AbortController();
+      var abortTimer = setTimeout(function(){ ctrl.abort(); }, 40000);
+      var resp;
+      try {
+        resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+          method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), signal: ctrl.signal
+        });
+      } catch (fetchErr) {
+        if (fetchErr && fetchErr.name === 'AbortError') throw new Error('The request timed out — please check your connection and try again.');
+        throw fetchErr;
+      } finally {
+        clearTimeout(abortTimer);
+      }
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not send ' + docLabel);
       setStatus('certStatus', true, (certDocType === 'LOR' ? 'LOR' : 'Certificate') + ' sent to ' + internName + ' and logged automatically.');
