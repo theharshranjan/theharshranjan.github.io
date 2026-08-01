@@ -417,14 +417,39 @@
   // widget", which doesn't exist here — that's what silently broke the
   // checkbox before).
   var gateWidgetId = null;
+  // PERMANENT FIX: the external recaptcha <script> tag is loaded
+  // async/defer, so on a slow network it can easily still be loading
+  // when this inline script runs. The old code only ever tried once —
+  // if `grecaptcha` wasn't defined yet at that exact moment, the
+  // try/catch swallowed the ReferenceError and the checkbox simply
+  // never appeared (and never would, on any retry), which is exactly
+  // the "login hangs / captcha doesn't show" symptom. This now polls
+  // until the library is actually available (or gives up after ~15s
+  // and shows a clear message instead of hanging forever).
+  var gateRecaptchaAttempts = 0;
   function renderGateRecaptcha() {
+    var target = document.getElementById('gateRecaptcha');
+    if (!target) return;
+    if (typeof grecaptcha === 'undefined' || !grecaptcha.render) {
+      gateRecaptchaAttempts++;
+      if (gateRecaptchaAttempts > 50) { // ~15s of retrying
+        target.innerHTML = '<div class="form-error" style="margin:0;">Verification is taking longer than usual — please refresh the page.</div>';
+        return;
+      }
+      setTimeout(renderGateRecaptcha, 300);
+      return;
+    }
     try {
       grecaptcha.ready(function () {
         if (gateWidgetId === null && document.getElementById('gateRecaptcha')) {
           gateWidgetId = grecaptcha.render('gateRecaptcha', { sitekey: RECAPTCHA_V2_SITE_KEY });
         }
       });
-    } catch (err) { /* recaptcha script blocked/slow — checkbox just won't appear, login still shows a clear error rather than crashing */ }
+    } catch (err) {
+      // Real render failure (not just "not loaded yet") — show a clear
+      // message instead of leaving the box blank with no explanation.
+      target.innerHTML = '<div class="form-error" style="margin:0;">Couldn\'t load verification — please refresh the page.</div>';
+    }
   }
   renderGateRecaptcha();
 
@@ -625,9 +650,23 @@
         try { grecaptcha.reset(gateWidgetId); } catch (err) {}
         return;
       }
-      fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken))
+      // PERMANENT FIX: a plain fetch() has no timeout of its own, so if
+      // Apps Script cold-starts slowly or the network drops the
+      // response, the button used to sit on "Finding you..." forever
+      // with no way out except reloading the page. AbortController now
+      // forces the request to fail cleanly after 20s so the person
+      // always gets a clear, actionable error instead of a silent hang.
+      var loginController = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var loginTimedOut = false;
+      var loginTimeoutId = loginController ? setTimeout(function () {
+        loginTimedOut = true;
+        loginController.abort();
+      }, 20000) : null;
+
+      fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken), loginController ? { signal: loginController.signal } : {})
         .then(function(r){ return r.json(); })
         .then(function(res){
+          if (loginTimeoutId) clearTimeout(loginTimeoutId);
           try { grecaptcha.reset(gateWidgetId); } catch (err) {}
           if (!res || !res.found) {
             finishEnterProgress(false);
@@ -650,11 +689,12 @@
           renderAll();
         })
         .catch(function(){
+          if (loginTimeoutId) clearTimeout(loginTimeoutId);
           try { grecaptcha.reset(gateWidgetId); } catch (err) {}
           finishEnterProgress(false);
           btn.disabled = false;
           document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
-          document.getElementById('gateStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
+          document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + (loginTimedOut ? 'This is taking too long — please try again.' : 'Couldn\'t reach the server — please try again.') + '</div>';
         });
     });
   }
