@@ -1070,9 +1070,8 @@
     setBtnLoading('tfSubmitBtn', true, 'Submitting…');
     try {
       var attachments = await filesToBase64(tfFilesArr);
-      var token = await getRecaptchaToken('task_checkin');
       var payload = {
-        recaptchaToken: token, pageLoadedAt: xLoadedAt,
+        pageLoadedAt: xLoadedAt,
         internName: session.name, internId: session.internId, email: session.email,
         taskId: taskId, taskName: taskName, submissionLink: link,
         submissionDate: todayISO(), comments: comments, attachments: attachments
