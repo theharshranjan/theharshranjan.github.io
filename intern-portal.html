@@ -199,15 +199,10 @@
         </svg>
         <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#E55A2B;margin-top:.35rem;">Samarpan</span>
       </div>
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Intern ID *</label>
-      <input type="text" id="gateInternId" class="form-input2 mb-3" placeholder="e.g. INT-0001" autocomplete="off">
-      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email *</label>
-      <input type="email" id="gateEmail" class="form-input2 mb-1" placeholder="The email on your intern record" autocomplete="off">
-      <p class="text-xs mb-4" style="color:var(--text-muted);">Both your Intern ID and the email on file are required to sign in.</p>
-      <label class="flex items-center gap-2 mb-4 text-xs cursor-pointer" style="color:var(--text-muted);">
-        <input type="checkbox" id="gateRemember" checked style="width:15px;height:15px;accent-color:#E55A2B;flex-shrink:0;">
-        Remember this device — skip this form next time
-      </label>
+      <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Your Name *</label>
+      <input type="text" id="gateName" class="form-input2 mb-1" placeholder="Start typing your name" autocomplete="off" list="gateNameList">
+      <datalist id="gateNameList"></datalist>
+      <p class="text-xs mb-4" style="color:var(--text-muted);">Pick your name from the suggestions so we find the right record.</p>
       <div class="g-recaptcha mb-4" id="gateRecaptcha" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
       <button type="button" id="gateBtn" onclick="tryEnter()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5"><span id="gateBtnLabel">Enter Portal</span></button>
       <div id="gateStatus" class="mt-3"></div>
@@ -553,6 +548,43 @@
 
   // ── Identify gate ──
 
+  var lastNameSuggestions = [];
+  function debounce(fn, wait) {
+    var timer;
+    return function() {
+      var args = arguments, ctx = this;
+      clearTimeout(timer);
+      timer = setTimeout(function(){ fn.apply(ctx, args); }, wait);
+    };
+  }
+  var fetchNameSuggestions = debounce(function(term) {
+    if (term.length < 2) { document.getElementById('gateNameList').innerHTML = ''; lastNameSuggestions = []; return; }
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(term))
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        lastNameSuggestions = Array.isArray(list) ? list : [];
+        document.getElementById('gateNameList').innerHTML = lastNameSuggestions.map(function(m){
+          return '<option value="' + esc(m.name + ' — ' + m.internId) + '">';
+        }).join('');
+      })
+      .catch(function(){ /* suggestions are optional */ });
+  }, 250);
+
+  function resolveInternId(typed, cb) {
+    var m = typed.match(/^(.*)\s+—\s+([^\s—][^—]*)$/);
+    if (m) { cb(m[2].trim(), m[1].trim()); return; }
+    var exactFromCache = lastNameSuggestions.filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
+    if (exactFromCache.length === 1) { cb(exactFromCache[0].internId, exactFromCache[0].name); return; }
+    fetch(CHECKIN_APPS_SCRIPT_URL + '?nameSearch=' + encodeURIComponent(typed))
+      .then(function(r){ return r.json(); })
+      .then(function(list){
+        var exact = (Array.isArray(list) ? list : []).filter(function(x){ return x.name.toLowerCase() === typed.toLowerCase(); });
+        if (exact.length === 1) cb(exact[0].internId, exact[0].name);
+        else cb(null, null);
+      })
+      .catch(function(){ cb(null, null); });
+  }
+
   var enterProgressTimer = null;
   function startEnterProgress() {
     document.getElementById('gateStatus').innerHTML =
@@ -569,9 +601,10 @@
     var bar = document.getElementById('enterBar');
     var label = document.getElementById('enterPct');
     clearInterval(enterProgressTimer);
-    // Eases up gradually while the verify=1 login request is in
-    // flight — same idea as the admin login bar: never claims 100%
-    // on its own, only once the real response lands.
+    // Two network round trips actually happen here (name → Intern ID
+    // lookup, then the verify=1 login itself), so this eases up a
+    // little slower than the admin login bar — same idea though: never
+    // claims 100% on its own, only once the real response lands.
     enterProgressTimer = setInterval(function () {
       var remaining = 90 - pct;
       pct += Math.max(0.3, remaining * 0.05);
@@ -590,14 +623,11 @@
   }
 
   function tryEnter() {
-    var internIdEl = document.getElementById('gateInternId');
-    var emailEl = document.getElementById('gateEmail');
-    var internId = internIdEl.value.trim();
-    var email = emailEl.value.trim();
+    var typedName = document.getElementById('gateName').value.trim();
+    var nameEl = document.getElementById('gateName');
     var valid = true;
-    if (!internId) { internIdEl.classList.add('invalid'); valid = false; } else { internIdEl.classList.remove('invalid'); }
-    if (!email) { emailEl.classList.add('invalid'); valid = false; } else { emailEl.classList.remove('invalid'); }
-    if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter both your Intern ID and email.</div>'; return; }
+    if (!typedName) { nameEl.classList.add('invalid'); valid = false; } else { nameEl.classList.remove('invalid'); }
+    if (!valid) { document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please enter your name.</div>'; return; }
 
     var captchaToken = '';
     try { captchaToken = grecaptcha.getResponse(gateWidgetId); } catch (err) { captchaToken = ''; }
@@ -608,69 +638,65 @@
 
     var btn = document.getElementById('gateBtn');
     btn.disabled = true;
-    document.getElementById('gateBtnLabel').innerHTML = '<span class="btn-spinner"></span>Signing in…';
+    document.getElementById('gateBtnLabel').innerHTML = '<span class="btn-spinner"></span>Finding you…';
     startEnterProgress();
 
-    // PERMANENT FIX: a plain fetch() has no timeout of its own, so if
-    // Apps Script cold-starts slowly or the network drops the
-    // response, the button used to sit on "Finding you..." forever
-    // with no way out except reloading the page. AbortController now
-    // forces the request to fail cleanly after 20s so the person
-    // always gets a clear, actionable error instead of a silent hang.
-    var loginController = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-    var loginTimedOut = false;
-    var loginTimeoutId = loginController ? setTimeout(function () {
-      loginTimedOut = true;
-      loginController.abort();
-    }, 20000) : null;
-
-    // SECURITY: Intern ID alone used to be enough to log in, which
-    // meant IDs (sequential, e.g. INT-0001, INT-0002…) were guessable
-    // and could expose another intern's email + task history. The
-    // backend now requires the email on file to match this same
-    // Intern ID before it returns anything.
-    fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&email=' + encodeURIComponent(email) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken), loginController ? { signal: loginController.signal } : {})
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if (loginTimeoutId) clearTimeout(loginTimeoutId);
-        try { grecaptcha.reset(gateWidgetId); } catch (err) {}
-        if (!res || !res.found) {
-          finishEnterProgress(false);
-          btn.disabled = false;
-          document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
-          document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'We couldn\'t find that record.') + '</div>';
-          return;
-        }
-        finishEnterProgress(true);
-        session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
-        session.loggedInAt = Date.now();
-        // "Remember this device" is opt-out, not opt-in — checked by
-        // default. Unchecking it means nothing is written to
-        // localStorage, so the ID+email form comes back on next visit
-        // (or as soon as this tab/browser session ends) instead of
-        // persisting on a shared or public device.
-        if (document.getElementById('gateRemember').checked) {
-          localStorage.setItem('sp_intern_session', JSON.stringify(session));
-        } else {
-          localStorage.removeItem('sp_intern_session');
-        }
-        // The login response already bundles statusInfo + fullInfo (backend
-        // computes both in the same request) — use them directly instead of
-        // firing two more sequential requests that can also drift out of
-        // sync with what we just got back.
-        statusInfo = res.statusInfo || {};
-        fullInfo = (res.fullInfo && res.fullInfo.found) ? res.fullInfo : null;
-        showApp();
-        renderAll();
-      })
-      .catch(function(){
-        if (loginTimeoutId) clearTimeout(loginTimeoutId);
-        try { grecaptcha.reset(gateWidgetId); } catch (err) {}
+    resolveInternId(typedName, function(internId, resolvedName) {
+      if (!internId) {
         finishEnterProgress(false);
         btn.disabled = false;
         document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
-        document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + (loginTimedOut ? 'This is taking too long — please try again.' : 'Couldn\'t reach the server — please try again.') + '</div>';
-      });
+        document.getElementById('gateStatus').innerHTML = '<div class="form-error">Please pick your name from the suggestions that appear as you type.</div>';
+        try { grecaptcha.reset(gateWidgetId); } catch (err) {}
+        return;
+      }
+      // PERMANENT FIX: a plain fetch() has no timeout of its own, so if
+      // Apps Script cold-starts slowly or the network drops the
+      // response, the button used to sit on "Finding you..." forever
+      // with no way out except reloading the page. AbortController now
+      // forces the request to fail cleanly after 20s so the person
+      // always gets a clear, actionable error instead of a silent hang.
+      var loginController = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var loginTimedOut = false;
+      var loginTimeoutId = loginController ? setTimeout(function () {
+        loginTimedOut = true;
+        loginController.abort();
+      }, 20000) : null;
+
+      fetch(CHECKIN_APPS_SCRIPT_URL + '?internId=' + encodeURIComponent(internId) + '&verify=1&recaptchaToken=' + encodeURIComponent(captchaToken), loginController ? { signal: loginController.signal } : {})
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if (loginTimeoutId) clearTimeout(loginTimeoutId);
+          try { grecaptcha.reset(gateWidgetId); } catch (err) {}
+          if (!res || !res.found) {
+            finishEnterProgress(false);
+            btn.disabled = false;
+            document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
+            document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + esc((res && res.message) || 'We couldn\'t find that record.') + '</div>';
+            return;
+          }
+          finishEnterProgress(true);
+          session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
+          session.loggedInAt = Date.now();
+          localStorage.setItem('sp_intern_session', JSON.stringify(session));
+          // The login response already bundles statusInfo + fullInfo (backend
+          // computes both in the same request) — use them directly instead of
+          // firing two more sequential requests that can also drift out of
+          // sync with what we just got back.
+          statusInfo = res.statusInfo || {};
+          fullInfo = (res.fullInfo && res.fullInfo.found) ? res.fullInfo : null;
+          showApp();
+          renderAll();
+        })
+        .catch(function(){
+          if (loginTimeoutId) clearTimeout(loginTimeoutId);
+          try { grecaptcha.reset(gateWidgetId); } catch (err) {}
+          finishEnterProgress(false);
+          btn.disabled = false;
+          document.getElementById('gateBtnLabel').textContent = 'Enter Portal';
+          document.getElementById('gateStatus').innerHTML = '<div class="form-error">' + (loginTimedOut ? 'This is taking too long — please try again.' : 'Couldn\'t reach the server — please try again.') + '</div>';
+        });
+    });
   }
 
   function switchIntern() {
@@ -678,8 +704,7 @@
     session = { name:'', email:'', internId:'' };
     document.getElementById('appShell').classList.add('hidden');
     document.getElementById('gateScreen').classList.remove('hidden');
-    document.getElementById('gateInternId').value = '';
-    document.getElementById('gateEmail').value = '';
+    document.getElementById('gateName').value = '';
     try { grecaptcha.reset(gateWidgetId); } catch (err) {}
   }
 
@@ -1126,9 +1151,8 @@
     document.getElementById('themeIcon').setAttribute('data-lucide', document.documentElement.getAttribute('data-theme') === 'dark' ? 'moon' : 'sun');
     lucide.createIcons();
 
-    ['gateInternId', 'gateEmail'].forEach(function(id) {
-      document.getElementById(id).addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
-    });
+    document.getElementById('gateName').addEventListener('input', function(){ fetchNameSuggestions(this.value.trim()); });
+    document.getElementById('gateName').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryEnter(); } });
 
     document.getElementById('tfFiles').addEventListener('change', function(){
       (Array.from(this.files || [])).forEach(function(f) {
@@ -1139,18 +1163,19 @@
       this.value = '';
     });
 
-    // "Remember this device" is an explicit choice made at login (see
-    // tryEnter()) — a saved session here means the intern asked to
-    // skip the ID+email form on this device, so it's honored until
-    // they sign out via switchIntern() or clear their browser data.
-    // No time-based expiry: the identity check already happened once
-    // at login (ID + email together), this is just skipping the form
-    // on a device that was already trusted.
+    // NEW: "stay signed in" now expires after 30 days on this device.
+    // Sessions saved before this change have no loggedInAt, so they're
+    // treated as expired too (forces one fresh sign-in, then good for
+    // 30 days from there) rather than silently trusting an unknown age.
+    var SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
     var saved = localStorage.getItem('sp_intern_session');
     if (saved) {
       try {
         var parsedSession = JSON.parse(saved);
-        if (parsedSession && parsedSession.name && parsedSession.internId) {
+        var age = Date.now() - (parsedSession && parsedSession.loggedInAt ? parsedSession.loggedInAt : 0);
+        if (age > SESSION_MAX_AGE_MS) {
+          localStorage.removeItem('sp_intern_session');
+        } else if (parsedSession && parsedSession.name) {
           session = parsedSession;
           showApp(); bootPortal(false);
         }
