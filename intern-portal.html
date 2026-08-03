@@ -206,6 +206,16 @@
       <p class="text-xs mb-4" style="color:var(--text-muted);">Both must match the same record on file.</p>
       <button type="button" id="gateBtn" onclick="tryEnter()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5"><span id="gateBtnLabel">Enter Portal</span></button>
       <div id="gateStatus" class="mt-3"></div>
+      <div class="text-center mt-4">
+        <button type="button" id="forgotIdToggle" onclick="toggleForgotId()" class="text-xs" style="color:var(--text-muted);text-decoration:underline;background:none;border:none;cursor:pointer;">Forgot your Intern ID?</button>
+      </div>
+      <div id="forgotIdPanel" class="hidden mt-3 pt-4" style="border-top:1px solid var(--border);">
+        <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Your Email</label>
+        <input type="email" id="forgotIdEmail" class="form-input2 mb-1" placeholder="The email on file" autocomplete="off">
+        <p class="text-xs mb-3" style="color:var(--text-muted);">If it matches a record, we'll email you the Intern ID — it won't be shown here.</p>
+        <button type="button" id="forgotIdBtn" onclick="submitForgotId()" class="w-full font-bold text-xs uppercase tracking-widest rounded-sm py-3" style="background:var(--bg-secondary,#F4F1EC);color:var(--text);border:1px solid var(--border);"><span id="forgotIdBtnLabel">Email Me My Intern ID</span></button>
+        <div id="forgotIdStatus" class="mt-3"></div>
+      </div>
     </div>
     <a href="index.html" class="inline-block mt-6 text-xs" style="color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;">&larr; Back to Home</a>
   </div>
@@ -592,6 +602,11 @@
         session.name = res.name; session.email = res.email || ''; session.internId = res.internId;
         session.loggedInAt = Date.now();
         localStorage.setItem('sp_intern_session', JSON.stringify(session));
+        // NEW: remember just the ID + email (not the rest of the session)
+        // in this browser so the fields are pre-filled next time — pure
+        // convenience, kept separate from the session itself so it
+        // survives switchIntern() (logging out doesn't forget it).
+        try { localStorage.setItem('sp_last_login', JSON.stringify({ internId: res.internId, email: session.email })); } catch (err) {}
         // The login response already bundles statusInfo + fullInfo (backend
         // computes both in the same request) — use them directly instead of
         // firing two more sequential requests that can also drift out of
@@ -617,6 +632,50 @@
     document.getElementById('gateScreen').classList.remove('hidden');
     document.getElementById('gateInternId').value = '';
     document.getElementById('gateEmail').value = '';
+  }
+
+  // NEW: "Forgot your Intern ID?" — takes just an email and asks the
+  // backend to email the matching Intern ID, if any. The response is
+  // deliberately generic either way (see handleForgotInternId on the
+  // backend) so this can't be used to check whose email is on file —
+  // it always just says "check your inbox."
+  function toggleForgotId() {
+    var panel = document.getElementById('forgotIdPanel');
+    var willShow = panel.classList.contains('hidden');
+    panel.classList.toggle('hidden');
+    if (willShow) {
+      var emailField = document.getElementById('forgotIdEmail');
+      if (!emailField.value) emailField.value = document.getElementById('gateEmail').value || '';
+      emailField.focus();
+    } else {
+      document.getElementById('forgotIdStatus').innerHTML = '';
+    }
+  }
+
+  function submitForgotId() {
+    var email = document.getElementById('forgotIdEmail').value.trim();
+    if (!email) {
+      document.getElementById('forgotIdStatus').innerHTML = '<div class="form-error">Enter your email first.</div>';
+      return;
+    }
+    var btn = document.getElementById('forgotIdBtn');
+    btn.disabled = true;
+    document.getElementById('forgotIdBtnLabel').innerHTML = '<span class="btn-spinner"></span>Sending…';
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'forgotInternId', email: email })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        document.getElementById('forgotIdStatus').innerHTML = '<div class="form-success">' + esc((res && res.message) || 'If that email is on file, check your inbox.') + '</div>';
+      })
+      .catch(function(){
+        document.getElementById('forgotIdStatus').innerHTML = '<div class="form-error">Couldn\'t reach the server — please try again.</div>';
+      })
+      .finally(function(){
+        btn.disabled = false;
+        document.getElementById('forgotIdBtnLabel').textContent = 'Email Me My Intern ID';
+      });
   }
 
   function showApp() {
@@ -1080,6 +1139,7 @@
     // 30 days from there) rather than silently trusting an unknown age.
     var SESSION_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
     var saved = localStorage.getItem('sp_intern_session');
+    var autoLoggedIn = false;
     if (saved) {
       try {
         var parsedSession = JSON.parse(saved);
@@ -1089,8 +1149,21 @@
         } else if (parsedSession && parsedSession.name) {
           session = parsedSession;
           showApp(); bootPortal(false);
+          autoLoggedIn = true;
         }
       } catch (e) { /* ignore bad session */ }
+    }
+
+    // NEW: pre-fill Intern ID + Email from the last successful login on
+    // this device (only when we're actually showing the gate — no point
+    // touching fields nobody will see). Convenience only: still has to
+    // pass the same backend match to log in, this just saves retyping.
+    if (!autoLoggedIn) {
+      try {
+        var lastLogin = JSON.parse(localStorage.getItem('sp_last_login') || 'null');
+        if (lastLogin && lastLogin.internId) document.getElementById('gateInternId').value = lastLogin.internId;
+        if (lastLogin && lastLogin.email) document.getElementById('gateEmail').value = lastLogin.email;
+      } catch (e) { /* ignore bad cache */ }
     }
   });
 </script>
