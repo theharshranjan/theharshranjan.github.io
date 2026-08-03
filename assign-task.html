@@ -174,7 +174,6 @@
       </div>
       <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
       <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
-      <div class="g-recaptcha mt-4" id="lockRecaptcha" data-sitekey="6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u"></div>
       <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
       <div id="lockStatus" class="mt-3"></div>
     </div>
@@ -442,8 +441,9 @@
 
           <div>
             <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Send To</label>
-            <div class="grid grid-cols-2 gap-2 border rounded-md overflow-hidden" style="border-color:var(--border);">
+            <div class="grid grid-cols-3 gap-2 border rounded-md overflow-hidden" style="border-color:var(--border);">
               <button type="button" id="anModeSpecific" class="tpl-btn active" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('specific')">Specific Person</button>
+              <button type="button" id="anModeCustom" class="tpl-btn" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('custom')">Anyone (by Email)</button>
               <button type="button" id="anModeFiltered" class="tpl-btn" style="border:none;border-radius:0;" onclick="setEmailRecipientMode('filtered')">Multiple / All</button>
             </div>
           </div>
@@ -459,6 +459,14 @@
               <input type="checkbox" id="anUpdateEmailOnFile" style="width:16px;height:16px;accent-color:#E55A2B;">
               <label for="anUpdateEmailOnFile" class="text-xs" style="color:var(--text-muted);">Also update this as their email on file</label>
             </div>
+          </div>
+
+          <div id="anCustomWrap" class="hidden">
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Their Name *</label>
+            <input type="text" id="anCustomName" class="form-input2" placeholder="e.g. Priya Sharma">
+            <label class="block text-sm font-medium mb-1.5 mt-4" style="color:var(--text);">Their Email *</label>
+            <input type="email" id="anCustomEmail" class="form-input2" placeholder="e.g. priya@example.com">
+            <p class="text-xs mt-1.5" style="color:var(--text-muted);">For anyone who isn't in Intern Database — a guest, vendor, applicant, or one-off contact. Nothing is looked up; the name/email you type here is used as-is.</p>
           </div>
 
           <div id="anFilteredWrap" class="hidden">
@@ -762,25 +770,12 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6eTLGShTr7Q04rjmWHuwCDefh7-QS863C3EfZz4c48ahyiO09T1kF9J9-Fkc8ZojjaQ/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz'; // v3, invisible, used for admin actions like sending email
-  var RECAPTCHA_V2_SITE_KEY = '6Lfw6WctAAAAAJn_fsKME5l_pgl01aUpjGuLuQ7u'; // v2 checkbox, used for the admin lock screen
 
-  // NEW: script tag loads with ?render=RECAPTCHA_SITE_KEY so v3's
-  // grecaptcha.execute() (used when sending email, assigning tasks, etc.)
-  // is reliably preloaded instead of randomly hanging/failing. That
-  // render= param disables Google's automatic "find class=g-recaptcha and
-  // render it" behavior, so the v2 checkbox below has to be rendered
-  // explicitly — same fix as the intern portal's login gate.
-  var lockWidgetId = null;
-  function renderLockRecaptcha() {
-    try {
-      grecaptcha.ready(function () {
-        if (lockWidgetId === null && document.getElementById('lockRecaptcha')) {
-          lockWidgetId = grecaptcha.render('lockRecaptcha', { sitekey: RECAPTCHA_V2_SITE_KEY });
-        }
-      });
-    } catch (err) { /* recaptcha blocked/slow — checkbox just won't appear */ }
-  }
-  renderLockRecaptcha();
+  // LOGIN FIX: the v2 checkbox that used to sit on this lock screen has
+  // been removed entirely — it was causing logins to hang/fail
+  // (grecaptcha.ready() doesn't reliably fire on every network/browser).
+  // Password + the existing brute-force lockout on the backend are the
+  // only gate now.
   // SECURITY: the admin password no longer lives here. A hardcoded JS
   // constant is readable by anyone who opens dev tools or views page
   // source on this file — the lock screen was cosmetic only, since the
@@ -963,22 +958,15 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
     if (!entered) return;
-    var captchaToken = '';
-    try { captchaToken = grecaptcha.getResponse(lockWidgetId); } catch (err) { captchaToken = ''; }
-    if (!captchaToken) {
-      document.getElementById('lockStatus').innerHTML = '<div class="form-error">Please check the box to verify you\'re not a robot.</div>';
-      return;
-    }
     var btn = document.getElementById('unlockBtn');
     if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Checking…'; }
     startUnlockProgress();
     fetch(CHECKIN_APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'adminLogin', adminPassword: entered, recaptchaToken: captchaToken })
+      body: JSON.stringify({ action: 'adminLogin', adminPassword: entered })
     })
       .then(function(r){ return r.json(); })
       .then(function(data){
-        try { grecaptcha.reset(lockWidgetId); } catch (err) {}
         if (data.status === 'success' && data.sessionToken) {
           finishUnlockProgress(true);
           setAdminToken(data.sessionToken, data.expiresInHours);
@@ -990,7 +978,6 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         }
       })
       .catch(function(){
-        try { grecaptcha.reset(lockWidgetId); } catch (err) {}
         finishUnlockProgress(false);
         document.getElementById('lockStatus').innerHTML = '<div class="form-error">Could not reach the server — check your connection and try again.</div>';
       })
@@ -1756,8 +1743,10 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   function setEmailRecipientMode(mode) {
     emailRecipientMode = mode;
     document.getElementById('anModeSpecific').classList.toggle('active', mode === 'specific');
+    document.getElementById('anModeCustom').classList.toggle('active', mode === 'custom');
     document.getElementById('anModeFiltered').classList.toggle('active', mode === 'filtered');
     document.getElementById('anSpecificWrap').classList.toggle('hidden', mode !== 'specific');
+    document.getElementById('anCustomWrap').classList.toggle('hidden', mode !== 'custom');
     document.getElementById('anFilteredWrap').classList.toggle('hidden', mode !== 'filtered');
   }
 
@@ -1833,8 +1822,11 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     var relatedTaskId = document.getElementById('anRelatedTaskId').value.trim();
     var overrideEmail = document.getElementById('anOverrideEmail').value.trim();
     var updateEmailOnFile = document.getElementById('anUpdateEmailOnFile').checked;
+    var customName = document.getElementById('anCustomName').value.trim();
+    var customEmail = document.getElementById('anCustomEmail').value.trim();
 
     if (emailRecipientMode === 'specific' && !internName) { setStatus('anStatus', false, 'Choose who to send this to.'); return; }
+    if (emailRecipientMode === 'custom' && (!customName || !customEmail)) { setStatus('anStatus', false, 'Enter both a name and an email address to send to.'); return; }
     if (anFilesArr.length > MAX_EMAIL_FILES) { setStatus('anStatus', false, 'Please attach at most ' + MAX_EMAIL_FILES + ' files.'); return; }
     for (var i = 0; i < anFilesArr.length; i++) {
       if (anFilesArr[i].size > MAX_EMAIL_FILE_BYTES) { setStatus('anStatus', false, '"' + anFilesArr[i].name + '" is over 10MB — please attach a smaller file.'); return; }
@@ -1842,6 +1834,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
 
     var confirmMsg = emailRecipientMode === 'specific'
       ? 'Send this email to ' + internName + (overrideEmail ? ' at ' + overrideEmail : '') + '?'
+      : emailRecipientMode === 'custom'
+      ? 'Send this email to ' + customName + ' at ' + customEmail + '?'
       : (filter === 'all' ? 'Send this email to EVERY intern in Intern Database? This cannot be undone.' : 'Send this email to every intern with status "' + filter + '"? This cannot be undone.');
     if (!confirm(confirmMsg)) return;
 
@@ -1853,7 +1847,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         subject: subject, message: message, recipientMode: emailRecipientMode,
         internName: internName, filter: filter, attachments: attachments,
         emailType: emailType, saveToRecord: saveToRecord, relatedTaskId: relatedTaskId,
-        overrideEmail: overrideEmail, updateEmailOnFile: updateEmailOnFile
+        overrideEmail: overrideEmail, updateEmailOnFile: updateEmailOnFile,
+        customName: customName, customEmail: customEmail
       };
       // FIXED: fetch() had no timeout — if the request stalled (large
       // attachments + Zoho round trip, cold start, flaky network), this
