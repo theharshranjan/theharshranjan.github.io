@@ -16,6 +16,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
 
 <script>
@@ -172,9 +173,18 @@
         </svg>
         <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#E55A2B;margin-top:.35rem;">Samarpan</span>
       </div>
-      <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
-      <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
-      <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
+      <div id="lockPasswordStep">
+        <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
+        <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
+        <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
+      </div>
+      <div id="lockCodeStep" class="hidden">
+        <label class="block text-sm font-medium mb-2" style="color:var(--text);">6-Digit Code</label>
+        <p class="text-xs mb-3" style="color:var(--text-muted);">Open your authenticator app and enter the current code.</p>
+        <input type="text" id="lockCode" class="form-input2 text-center" placeholder="000000" inputmode="numeric" autocomplete="one-time-code" maxlength="6" style="letter-spacing:.4em;font-size:1.1rem;">
+        <button type="button" id="lockCodeBtn" onclick="tryVerify2fa()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Verify</button>
+        <button type="button" onclick="backToPasswordStep()" class="w-full text-xs mt-3" style="color:var(--text-muted);text-decoration:underline;background:none;border:none;cursor:pointer;">&larr; Back to password</button>
+      </div>
       <div id="lockStatus" class="mt-3"></div>
     </div>
   </div>
@@ -645,10 +655,45 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         </div>
       </div>
       <div class="panel" id="panel-settings">
-        <div class="placeholder-panel">
-          <div class="placeholder-icon"><i data-lucide="settings" class="w-6 h-6"></i></div>
-          <h3 class="font-display text-lg mb-2" style="color:var(--text);">Settings</h3>
-          <p class="text-sm max-w-sm mx-auto" style="color:var(--text-muted);">Nothing configurable here yet — admin password and email sender are still set directly in the script for now.</p>
+        <h2 class="font-display text-xl mb-1" style="color:var(--text);">Settings</h2>
+        <p class="text-sm mb-6" style="color:var(--text-muted);">Admin password and email sender are still set directly in the script for now.</p>
+
+        <div class="card" style="max-width:520px;">
+          <h3 class="font-display text-lg mb-1" style="color:var(--text);">Two-Factor Authentication</h3>
+          <p class="text-sm mb-4" style="color:var(--text-muted);">Require a 6-digit code from an authenticator app (Google Authenticator, Authy, etc.) in addition to the admin password.</p>
+
+          <div id="tfaOffState">
+            <div class="flex items-center gap-2 mb-4">
+              <span style="width:9px;height:9px;border-radius:50%;background:#C0473A;display:inline-block;"></span>
+              <span class="text-sm font-medium" style="color:var(--text);">Not enabled</span>
+            </div>
+            <button type="button" onclick="start2faSetup()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3 px-5">Enable 2FA</button>
+          </div>
+
+          <div id="tfaSetupState" class="hidden">
+            <p class="text-sm mb-3" style="color:var(--text);">Scan this with your authenticator app, or enter the code manually:</p>
+            <div id="tfaQrWrap" style="display:flex;justify-content:center;padding:16px;background:#fff;border-radius:8px;margin-bottom:12px;"></div>
+            <p class="text-xs mb-1" style="color:var(--text-muted);">Manual entry code:</p>
+            <p class="text-sm mb-4" style="font-family:monospace;letter-spacing:.1em;color:var(--text);word-break:break-all;" id="tfaManualSecret"></p>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Enter the 6-digit code to confirm</label>
+            <input type="text" id="tfaConfirmCode" class="form-input2" placeholder="000000" inputmode="numeric" maxlength="6" style="letter-spacing:.4em;">
+            <div class="flex gap-2 mt-3">
+              <button type="button" id="tfaConfirmBtn" onclick="confirm2faSetup()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3 px-5">Confirm & Enable</button>
+              <button type="button" onclick="cancel2faSetup()" class="text-xs" style="color:var(--text-muted);text-decoration:underline;background:none;border:none;cursor:pointer;">Cancel</button>
+            </div>
+          </div>
+
+          <div id="tfaOnState" class="hidden">
+            <div class="flex items-center gap-2 mb-4">
+              <span style="width:9px;height:9px;border-radius:50%;background:#4A5D4F;display:inline-block;"></span>
+              <span class="text-sm font-medium" style="color:var(--text);">Enabled</span>
+            </div>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Admin password (confirm to disable)</label>
+            <input type="password" id="tfaDisablePassword" class="form-input2" placeholder="••••••••" autocomplete="off">
+            <button type="button" id="tfaDisableBtn" onclick="disable2fa()" class="cta-btn mt-3" style="background:none;border:1px solid #C0473A;color:#C0473A;font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:.1em;border-radius:2px;padding:0.7rem 1.2rem;">Disable 2FA</button>
+          </div>
+
+          <div id="tfaStatus" class="mt-3"></div>
         </div>
       </div>
 
@@ -955,6 +1000,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     if (label) label.textContent = '100%';
   }
 
+  var pending2faToken = '';
+
   function tryUnlock() {
     var entered = document.getElementById('lockPassword').value;
     if (!entered) return;
@@ -972,6 +1019,17 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
           setAdminToken(data.sessionToken, data.expiresInHours);
           document.getElementById('lockPassword').value = '';
           showApp();
+        } else if (data.status === 'pending2fa' && data.pendingToken) {
+          // NEW: password was correct, but 2FA is on — the backend
+          // deliberately did NOT issue a real session token yet. Show
+          // the code step instead of unlocking.
+          finishUnlockProgress(true);
+          pending2faToken = data.pendingToken;
+          document.getElementById('lockStatus').innerHTML = '';
+          document.getElementById('lockPasswordStep').classList.add('hidden');
+          document.getElementById('lockCodeStep').classList.remove('hidden');
+          document.getElementById('lockCode').value = '';
+          document.getElementById('lockCode').focus();
         } else {
           finishUnlockProgress(false);
           document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect password.') + '</div>';
@@ -986,8 +1044,157 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       });
   }
 
+  function backToPasswordStep() {
+    pending2faToken = '';
+    document.getElementById('lockCodeStep').classList.add('hidden');
+    document.getElementById('lockPasswordStep').classList.remove('hidden');
+    document.getElementById('lockPassword').value = '';
+    document.getElementById('lockStatus').innerHTML = '';
+    document.getElementById('lockPassword').focus();
+  }
+
+  function tryVerify2fa() {
+    var code = document.getElementById('lockCode').value.trim();
+    if (!code) return;
+    if (!pending2faToken) { backToPasswordStep(); return; }
+    var btn = document.getElementById('lockCodeBtn');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Verifying…'; }
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'adminVerify2fa', pendingToken: pending2faToken, code: code })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success' && data.sessionToken) {
+          pending2faToken = '';
+          setAdminToken(data.sessionToken, data.expiresInHours);
+          document.getElementById('lockCode').value = '';
+          showApp();
+        } else {
+          document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect code.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('lockStatus').innerHTML = '<div class="form-error">Could not reach the server — check your connection and try again.</div>';
+      })
+      .finally(function(){
+        if (btn) { btn.disabled = false; var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+      });
+  }
+
+  // ── Settings → Two-Factor Authentication ──
+
+  function render2faStatus(info) {
+    var off = document.getElementById('tfaOffState');
+    var on = document.getElementById('tfaOnState');
+    var setup = document.getElementById('tfaSetupState');
+    if (!off || !on || !setup) return; // settings panel not in DOM yet on some loads — harmless
+    setup.classList.add('hidden'); // never resume mid-setup automatically
+    if (info && info.tfaEnabled) {
+      on.classList.remove('hidden');
+      off.classList.add('hidden');
+    } else {
+      off.classList.remove('hidden');
+      on.classList.add('hidden');
+    }
+  }
+
+  function start2faSetup() {
+    document.getElementById('tfaStatus').innerHTML = '';
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'admin2faSetup', adminSessionToken: getAdminToken() })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status !== 'success') {
+          document.getElementById('tfaStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Could not start setup.') + '</div>';
+          return;
+        }
+        document.getElementById('tfaManualSecret').textContent = data.secret;
+        var qrWrap = document.getElementById('tfaQrWrap');
+        qrWrap.innerHTML = '';
+        // NEW: the QR is generated entirely in the browser via QRCode.js
+        // — the secret is never sent to any third-party QR image
+        // service. Only your own Apps Script backend ever sees it.
+        new QRCode(qrWrap, { text: data.otpauthUrl, width: 180, height: 180 });
+        document.getElementById('tfaOffState').classList.add('hidden');
+        document.getElementById('tfaSetupState').classList.remove('hidden');
+        document.getElementById('tfaConfirmCode').value = '';
+        document.getElementById('tfaConfirmCode').focus();
+      })
+      .catch(function(){
+        document.getElementById('tfaStatus').innerHTML = '<div class="form-error">Could not reach the server — please try again.</div>';
+      });
+  }
+
+  function cancel2faSetup() {
+    document.getElementById('tfaSetupState').classList.add('hidden');
+    document.getElementById('tfaOffState').classList.remove('hidden');
+    document.getElementById('tfaStatus').innerHTML = '';
+  }
+
+  function confirm2faSetup() {
+    var code = document.getElementById('tfaConfirmCode').value.trim();
+    if (!code) return;
+    var btn = document.getElementById('tfaConfirmBtn');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Confirming…'; }
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'admin2faConfirm', adminSessionToken: getAdminToken(), code: code })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success') {
+          document.getElementById('tfaSetupState').classList.add('hidden');
+          document.getElementById('tfaOnState').classList.remove('hidden');
+          document.getElementById('tfaStatus').innerHTML = '<div class="form-success">Two-factor authentication is now on.</div>';
+        } else {
+          document.getElementById('tfaStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'That code didn\'t match — try again.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('tfaStatus').innerHTML = '<div class="form-error">Could not reach the server — please try again.</div>';
+      })
+      .finally(function(){
+        if (btn) { btn.disabled = false; var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+      });
+  }
+
+  function disable2fa() {
+    var pw = document.getElementById('tfaDisablePassword').value;
+    if (!pw) { document.getElementById('tfaStatus').innerHTML = '<div class="form-error">Enter your admin password to confirm.</div>'; return; }
+    if (!confirm('Turn off two-factor authentication? Only your admin password will be needed to log in after this.')) return;
+    var btn = document.getElementById('tfaDisableBtn');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Disabling…'; }
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'admin2faDisable', adminSessionToken: getAdminToken(), adminPassword: pw })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success') {
+          document.getElementById('tfaOnState').classList.add('hidden');
+          document.getElementById('tfaOffState').classList.remove('hidden');
+          document.getElementById('tfaDisablePassword').value = '';
+          document.getElementById('tfaStatus').innerHTML = '<div class="form-success">Two-factor authentication is now off.</div>';
+        } else {
+          document.getElementById('tfaStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Could not disable — check your password.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('tfaStatus').innerHTML = '<div class="form-error">Could not reach the server — please try again.</div>';
+      })
+      .finally(function(){
+        if (btn) { btn.disabled = false; var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+      });
+  }
+
   function lockApp() {
     clearAdminToken();
+    pending2faToken = '';
+    document.getElementById('lockPasswordStep') && document.getElementById('lockPasswordStep').classList.remove('hidden');
+    document.getElementById('lockCodeStep') && document.getElementById('lockCodeStep').classList.add('hidden');
     document.getElementById('appShell').classList.add('hidden');
     document.getElementById('lockScreen').classList.remove('hidden');
   }
@@ -1004,7 +1211,13 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     document.getElementById('lockScreen').classList.add('hidden');
     document.getElementById('appShell').classList.remove('hidden');
     renderSidebar();
-    setPanel('dashboard');
+    // NEW: honors ?panel=xxx in the URL (e.g. ?panel=communication-send)
+    // so an external link — like a "Send Email" shortcut in the Command
+    // Center — can open this tool straight to that screen instead of
+    // always landing on the Dashboard first. Falls back to Dashboard if
+    // the param is missing or doesn't match a real panel.
+    var requestedPanel = new URLSearchParams(window.location.search).get('panel');
+    setPanel((requestedPanel && document.getElementById('panel-' + requestedPanel)) ? requestedPanel : 'dashboard');
     loadOverview();
   }
 
@@ -1082,6 +1295,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         renderResearchContent(info);
         renderCertLorTracking(info);
         renderAnalytics(info);
+        render2faStatus(info);
 
         document.getElementById('dashLoading').classList.add('hidden');
         document.getElementById('dashContent').classList.remove('hidden');
@@ -1987,6 +2201,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     lucide.createIcons();
     if (getAdminToken()) showApp();
     document.getElementById('lockPassword').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); } });
+    document.getElementById('lockCode').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryVerify2fa(); } });
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
     document.getElementById('hIntId').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); loadInternHistory(); } });
     document.getElementById('anFiles').addEventListener('change', function(){
