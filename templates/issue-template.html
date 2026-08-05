@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} | The Samarpan Journal</title>
+  <meta name="description" content="{{description}}">
+  <link rel="canonical" href="https://thesamarpan.co.in/journal/issues/{{slug}}.html">
+  <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+  <meta name="theme-color" content="#1C1C1C">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thesamarpan.co.in/journal/issues/{{slug}}.html">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:site_name" content="Samarpan">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"PublicationIssue","name":"{{titleJson}}","description":"{{descriptionJson}}","datePublished":"{{date}}","issueNumber":"{{issueNumberJson}}","isPartOf":{"@type":"Periodical","name":"The Samarpan Journal","url":"https://thesamarpan.co.in/journal.html"},"url":"https://thesamarpan.co.in/journal/issues/{{slug}}.html"}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HMM7CJSCW7');
+    function gaEvent(action, category, label) { try { gtag('event', action, { event_category: category, event_label: label }); } catch(e){} }
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: ['attribute', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: { clay: '#D95D39', 'brand-black': '#1C1C1C', 'brand-gray': '#666666', 'brand-gold': '#C5A059', 'brand-cream': '#FDFBF7', paper: '#FDFBF7', sage: '#4A5D4F' },
+          fontFamily: { sans: ['Lato', 'sans-serif'], serif: ['Cormorant Garamond', 'serif'], display: ['Marcellus', 'serif'] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root{--bg:#FDFBF7;--bg2:#F9F7F4;--bg3:#FFFFFF;--text:#1C1C1C;--text-muted:#666666;--border:#e8e4de;--card-bg:#FFFFFF;}
+    [data-theme="dark"]{--bg:#141410;--bg2:#1A1A16;--bg3:#1F1F1B;--text:#F0EDE6;--text-muted:#9A9080;--border:#2E2E28;--card-bg:#1F1F1B;}
+    *,*::before,*::after{box-sizing:border-box;}
+    body{background-color:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;transition:background-color .4s,color .4s;}
+    .fade-up{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .mono-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);}
+
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 0;background:var(--bg);border-bottom:1px solid var(--border);}
+    .nav-link{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-family:'Lato',sans-serif;font-weight:700;color:var(--text);text-decoration:none;}
+    .nav-link:hover{color:#D95D39;}
+    .nav-logo-text{font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#D95D39;}
+    .nav-cta-btn{display:inline-block;padding:.65rem 1.4rem;background:#D95D39;color:#fff !important;font-family:'Lato',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;border-radius:2px;white-space:nowrap;}
+    #mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:1.4rem;}
+    #mobile-menu.active{display:flex;}
+
+    .breadcrumb{font-family:'Lato',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;}
+    .breadcrumb a{color:var(--text-muted);text-decoration:none;}
+    .breadcrumb a:hover{color:#D95D39;}
+    .breadcrumb .current{color:#D95D39;font-weight:700;}
+
+    .issue-cover{position:relative;min-height:260px;border-radius:8px;background:linear-gradient(155deg,#2E4A32 0%,#1C1C1C 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .issue-cover::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 30% 20%, rgba(197,160,89,.18), transparent 55%),radial-gradient(circle at 80% 80%, rgba(217,93,57,.15), transparent 55%);}
+    .issue-cover-mark{position:relative;z-index:1;text-align:center;color:#F5F0E8;}
+
+    .journal-card{background:var(--card-bg);border:1px solid var(--border);border-radius:4px;display:flex;flex-direction:column;text-decoration:none;transition:transform .3s,box-shadow .3s;}
+    .journal-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08);}
+    .article-thumb{aspect-ratio:16/10;overflow:hidden;background:var(--bg2);}
+    .article-thumb img{width:100%;height:100%;object-fit:cover;}
+    .article-badge{font-family:'Lato',sans-serif;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .8rem;border-radius:50px;display:inline-block;}
+    .badge-classical{background:rgba(74,93,79,.12);color:#4A5D4F;}
+    .badge-literature{background:rgba(46,79,143,.12);color:#2E4F8F;}
+    .badge-narrative{background:rgba(217,93,57,.12);color:#D95D39;}
+    .badge-clinical{background:rgba(124,90,168,.12);color:#7C5AA8;}
+    .badge-student{background:rgba(102,102,102,.12);color:#666666;}
+    .hairline{border-top:1px solid var(--border);}
+  </style>
+</head>
+<body class="antialiased selection:bg-clay selection:text-white">
+
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
+    <div class="hidden lg:flex flex-1 justify-start gap-7 items-center">
+      <a href="../../about.html" class="nav-link">About</a>
+      <a href="../../journal.html" class="nav-link">Journals</a>
+      <a href="../../sessions.html" class="nav-link">Sessions</a>
+      <a href="../../ayurveda.html" class="nav-link">Ayurveda</a>
+      <a href="../../community.html" class="nav-link">Community</a>
+    </div>
+    <a href="../../index.html" class="flex flex-col items-center flex-shrink-0 absolute left-1/2 -translate-x-1/2 z-50 group" aria-label="Samarpan Home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+        <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+        <circle cx="50" cy="85" r="3" fill="currentColor"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+      </svg>
+      <span class="nav-logo-text">Samarpan</span>
+    </a>
+    <div class="hidden lg:flex flex-1 justify-end items-center">
+      <a href="../../booking.html" class="nav-cta-btn">Start Your Healing Journey</a>
+    </div>
+    <div class="flex items-center gap-3 lg:hidden ml-auto z-[201] relative">
+      <button id="hamburger-btn" class="p-2 rounded-sm" onclick="toggleMenu()" aria-label="Open menu">
+        <i data-lucide="menu" class="w-6 h-6" id="hamburger-icon-menu"></i>
+        <i data-lucide="x" class="w-6 h-6 hidden" id="hamburger-icon-close"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center text-clay" onclick="toggleMenu()" aria-label="Close menu"><i data-lucide="x" class="w-7 h-7"></i></button>
+  <a href="../../about.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">About</a>
+  <a href="../../journal.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Journals</a>
+  <a href="../../sessions.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Sessions</a>
+  <a href="../../ayurveda.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Ayurveda</a>
+  <a href="../../community.html" onclick="toggleMenu()" class="font-display text-2xl hover:text-clay transition" style="color:var(--text);">Community</a>
+  <a href="../../booking.html" onclick="toggleMenu()" class="mt-2 px-8 py-3.5 bg-clay text-white font-sans text-xs uppercase tracking-widest rounded-sm inline-block">Start Your Journey</a>
+</div>
+
+<main class="pt-32 pb-24 px-4 sm:px-6">
+  <div class="max-w-5xl mx-auto">
+
+    <nav class="breadcrumb mb-8 fade-up visible" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a><i data-lucide="chevron-right" class="w-3 h-3"></i>
+      <a href="../../journal.html">The Samarpan Journal</a><i data-lucide="chevron-right" class="w-3 h-3"></i>
+      <a href="../../journal.html#featured-issue">Issues</a><i data-lucide="chevron-right" class="w-3 h-3"></i>
+      <span class="current">{{title}}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 md:grid-cols-[0.8fr_1.2fr] gap-8 items-center mb-14 fade-up visible">
+      <div class="issue-cover">
+        <div class="issue-cover-mark px-8">
+          <p class="mono-label" style="color:rgba(245,240,232,.6);">{{volume}} · {{issueNumber}}</p>
+          <svg width="46" height="46" viewBox="0 0 100 100" fill="none" class="mx-auto my-4" style="color:#C5A059;">
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
+            <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
+            <circle cx="50" cy="85" r="3" fill="currentColor"/>
+            <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+          </svg>
+          <p class="font-display text-2xl" style="color:#F5F0E8;">{{coverTitle}}</p>
+        </div>
+      </div>
+      <div>
+        <p class="mono-label mb-3" style="color:#D95D39;">Journal Issue</p>
+        <h1 class="font-display leading-tight mb-4" style="font-size:clamp(1.8rem,4vw,2.6rem);color:var(--text);">{{title}}</h1>
+        <p class="font-sans text-sm leading-relaxed mb-6" style="color:var(--text-muted);">{{description}}</p>
+        <div class="flex flex-wrap gap-2 mb-6">
+          {{categoryTagsHtml}}
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          {{pdfButtonHtml}}
+          <a href="#issue-articles" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="list" class="w-3.5 h-3.5"></i>{{articleCount}} Articles in This Issue</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-serif fade-up visible" style="font-size:1.15rem;line-height:1.85;color:var(--text);max-width:65ch;">
+      {{bodyHtml}}
+    </div>
+
+    <div id="issue-articles" class="mt-16 fade-up visible">
+      <p class="mono-label mb-2" style="color:#D95D39;">In This Issue</p>
+      <h2 class="font-display text-2xl mb-8" style="color:var(--text);">Articles</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{issueArticleCardsHtml}}
+      </div>
+    </div>
+
+    <div class="text-center mt-16 fade-up visible">
+      <a href="../../journal.html" class="inline-flex items-center gap-2 px-6 py-2.5 border rounded-full font-sans text-[10px] uppercase tracking-widest transition hover:bg-clay hover:text-white hover:border-clay" style="border-color:var(--border);color:var(--text);">Back to The Journal <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></a>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-brand-black text-white/60 py-14 px-4 sm:px-6 border-t border-white/10 text-center">
+  <p class="font-sans text-xs">&copy; <span id="copyrightYear">2026</span> Samarpan. All Rights Reserved. · <a href="../../journal.html" class="hover:text-white transition">The Samarpan Journal</a></p>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function(){ lucide.createIcons(); });
+  var menuOpen = false;
+  function toggleMenu() {
+    menuOpen=!menuOpen;
+    document.getElementById('mobile-menu').classList.toggle('active', menuOpen);
+    document.body.style.overflow=menuOpen?'hidden':'';
+  }
+  var storedTheme=localStorage.getItem('samarpan-theme')||'light';
+  document.documentElement.setAttribute('data-theme',storedTheme);
+  (function(){ var y=document.getElementById('copyrightYear'); if(y) y.textContent=new Date().getFullYear(); })();
+</script>
+</body>
+</html>
