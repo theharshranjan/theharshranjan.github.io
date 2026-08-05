@@ -192,17 +192,13 @@
     .category-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);}
     .category-count{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);}
 
-    /* Category carousel — single line, auto-rotating, subtle 3D coverflow tilt */
-    .category-carousel-viewport{perspective:1400px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
-    .category-carousel-track{display:flex;gap:1.25rem;width:max-content;padding:0.5rem 0 1rem;animation:categoryScroll 38s linear infinite;}
-    .category-carousel-viewport:hover .category-carousel-track{animation-play-state:paused;}
-    @keyframes categoryScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-    .category-tile-3d{flex:0 0 auto;width:168px;display:flex;flex-direction:column;align-items:center;gap:.65rem;padding:1.5rem 1rem 1.6rem;border:1px solid var(--border);border-radius:8px;background:var(--card-bg);text-decoration:none;text-align:center;transform:perspective(700px) rotateY(9deg);transition:transform .4s ease,border-color .3s,box-shadow .3s;}
-    .category-tile-3d:nth-child(even){transform:perspective(700px) rotateY(-9deg);}
-    .category-tile-3d:hover{transform:perspective(700px) rotateY(0deg) scale(1.06);border-color:#D95D39;box-shadow:0 18px 34px rgba(0,0,0,.1);z-index:2;}
-    .category-tile-3d:hover .category-photo img{transform:scale(1.08);}
-    .category-tile-3d:hover .category-photo{border-color:#D95D39;}
-    @media (max-width:640px){.category-tile-3d{width:140px;}}
+    /* Browse by Category — simple single-line list */
+    .category-line-row{display:flex;flex-wrap:wrap;gap:.5rem 0;flex:1;}
+    .category-line-item{font-family:'Lato',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--text);text-decoration:none;padding:.4rem 1.1rem;border-right:1px solid var(--border);white-space:nowrap;transition:color .25s;}
+    .category-line-item:last-child{border-right:none;}
+    .category-line-item:hover{color:#D95D39;}
+    .category-line-item .category-count{display:block;font-size:9px;color:var(--text-muted);margin-top:2px;font-weight:400;}
+    @media (max-width:900px){.category-line-row{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;}}
 
     /* Research dashboard */
     .rd-stat{text-align:center;padding:1.5rem 1rem;}
@@ -285,7 +281,8 @@
     .traditions-plus{font-family:'Marcellus',serif;font-size:1.5rem;color:var(--text-muted);opacity:.5;}
     @media (max-width:640px){.traditions-plus{display:none;}}
     .traditions-arrow{margin:1.75rem auto;color:#C5A059;opacity:.6;}
-    .traditions-result{display:inline-block;padding:1rem 2.5rem;border:1.5px solid #C5A059;border-radius:30px;}
+    .traditions-result{display:inline-block;padding:1.1rem 3rem;background:linear-gradient(135deg,#D95D39,#C5A059);border-radius:30px;box-shadow:0 10px 26px rgba(217,93,57,.25);}
+    .traditions-result p{color:#fff !important;}
 
     .article-hidden{display:none !important;}
   </style>
@@ -358,7 +355,7 @@
     <h1 class="font-display leading-[1.05]" style="font-size:clamp(2.4rem,6.5vw,4.4rem);color:var(--text);">Where ancient wisdom<br>meets scientific inquiry</h1>
     <p class="font-serif text-lg sm:text-xl mt-6 max-w-2xl mx-auto" style="color:var(--text-muted);">Evidence-informed insights at the intersection of Ayurveda, Psychology, Nutrition, Yoga and Public Health.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center items-center mt-9">
-      <a href="#current-issue" class="inline-block border-2 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-clay hover:border-clay hover:text-white transition duration-300 rounded-sm font-bold" style="border-color:var(--text);color:var(--text);">Browse Issues</a>
+      <a href="#featured-issue" class="inline-block border-2 px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-clay hover:border-clay hover:text-white transition duration-300 rounded-sm font-bold" style="border-color:var(--text);color:var(--text);">Browse Issues</a>
       <a href="#latest-articles" class="inline-block bg-clay px-8 py-3 text-[10px] uppercase tracking-widest hover:bg-[#c24e2c] transition duration-300 rounded-sm font-bold text-white">Latest Research</a>
     </div>
 
@@ -580,7 +577,7 @@
 <!-- ══════════════════════════════════════════════
      FEATURED ISSUE
      ══════════════════════════════════════════════ -->
-<section class="py-16 md:py-20 px-4 sm:px-6" style="background:var(--bg2);">
+<section id="featured-issue" class="py-16 md:py-20 px-4 sm:px-6" style="background:var(--bg2);">
   <div class="max-w-6xl mx-auto">
     <!-- CMS:FEATURED_ISSUE:START -->
     <div class="feature-issue fade-up">
@@ -640,39 +637,27 @@
 </section>
 
 <!-- ══════════════════════════════════════════════
-     BROWSE BY CATEGORY — auto-rotating 3D carousel, single line.
-     The 8 tiles are duplicated once in the markup purely so the CSS
-     animation can loop seamlessly (translateX(-50%) lands exactly back on
-     the first copy) — screen readers only need one copy, so the duplicate
-     set is aria-hidden. Counts stay data-driven either way since
-     updateCategoryCounts() targets every [data-tag] span by tag name.
+     BROWSE BY CATEGORY — simple, restrained, single line.
+     Kept deliberately plain (text + count only, no photos/carousel) to match
+     the same "restrained, not decorative" direction used for the hero —
+     two earlier, more decorative attempts (photo tiles, then a 3D carousel)
+     were both reverted. Wraps to 2 lines on narrow screens; counts stay
+     data-driven via updateCategoryCounts() targeting [data-tag].
      ══════════════════════════════════════════════ -->
-<section class="py-16 md:py-20" style="background:var(--bg2);overflow:hidden;">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="text-center mb-12 fade-up">
-      <p class="eyebrow mb-2">Explore</p>
-      <h2 class="font-display text-2xl sm:text-3xl" style="color:var(--text);">Browse by Category</h2>
-    </div>
-  </div>
-  <div class="category-carousel-viewport fade-up">
-    <div class="category-carousel-track" id="categoryTrack">
-      <a href="journal/articles.html?q=ayurveda" onclick="gaEvent('click','Journal','Category: ayurveda')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1495461199391-8c39ab674295?q=80&w=200&auto=format&fit=crop" alt="Ayurveda" loading="lazy"></span><span class="category-name">Ayurveda</span><span class="category-count" data-tag="ayurveda">12 articles</span></a>
-      <a href="journal/articles.html?q=psychology" onclick="gaEvent('click','Journal','Category: psychology')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=200&auto=format&fit=crop" alt="Psychology" loading="lazy"></span><span class="category-name">Psychology</span><span class="category-count" data-tag="psychology">8 articles</span></a>
-      <a href="journal/articles.html?q=nutrition" onclick="gaEvent('click','Journal','Category: nutrition')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=200&auto=format&fit=crop" alt="Nutrition" loading="lazy"></span><span class="category-name">Nutrition</span><span class="category-count" data-tag="nutrition">3 articles</span></a>
-      <a href="journal/articles.html?q=yoga" onclick="gaEvent('click','Journal','Category: yoga')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1477840539360-4a1d23071046?q=80&w=200&auto=format&fit=crop" alt="Yoga" loading="lazy"></span><span class="category-name">Yoga</span><span class="category-count" data-tag="yoga">7 articles</span></a>
-      <a href="journal/articles.html?q=child+health" onclick="gaEvent('click','Journal','Category: child health')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1524863479829-916d8e77f114?q=80&w=200&auto=format&fit=crop" alt="Child Health" loading="lazy"></span><span class="category-name">Child Health</span><span class="category-count" data-tag="child health">0 articles</span></a>
-      <a href="journal/articles.html?q=public+health" onclick="gaEvent('click','Journal','Category: public health')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=200&auto=format&fit=crop" alt="Public Health" loading="lazy"></span><span class="category-name">Public Health</span><span class="category-count" data-tag="public health">1 article</span></a>
-      <a href="journal/articles.html?q=research+review" onclick="gaEvent('click','Journal','Category: research review')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1521146250551-a5578dcc2e64?q=80&w=200&auto=format&fit=crop" alt="Research Reviews" loading="lazy"></span><span class="category-name">Research Reviews</span><span class="category-count" data-tag="research review">8 articles</span></a>
-      <a href="journal/articles.html?q=medicinal+plants" onclick="gaEvent('click','Journal','Category: medicinal plants')" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1726146198306-afe0a44b0073?q=80&w=200&auto=format&fit=crop" alt="Medicinal Plants" loading="lazy"></span><span class="category-name">Medicinal Plants</span><span class="category-count" data-tag="medicinal plants">0 articles</span></a>
-      <!-- duplicate set for a seamless loop -->
-      <a href="journal/articles.html?q=ayurveda" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1495461199391-8c39ab674295?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Ayurveda</span><span class="category-count" data-tag="ayurveda">12 articles</span></a>
-      <a href="journal/articles.html?q=psychology" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1516571748831-5d81767b788d?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Psychology</span><span class="category-count" data-tag="psychology">8 articles</span></a>
-      <a href="journal/articles.html?q=nutrition" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1514733670139-4d87a1941d55?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Nutrition</span><span class="category-count" data-tag="nutrition">3 articles</span></a>
-      <a href="journal/articles.html?q=yoga" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1477840539360-4a1d23071046?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Yoga</span><span class="category-count" data-tag="yoga">7 articles</span></a>
-      <a href="journal/articles.html?q=child+health" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1524863479829-916d8e77f114?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Child Health</span><span class="category-count" data-tag="child health">0 articles</span></a>
-      <a href="journal/articles.html?q=public+health" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Public Health</span><span class="category-count" data-tag="public health">1 article</span></a>
-      <a href="journal/articles.html?q=research+review" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1521146250551-a5578dcc2e64?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Research Reviews</span><span class="category-count" data-tag="research review">8 articles</span></a>
-      <a href="journal/articles.html?q=medicinal+plants" aria-hidden="true" tabindex="-1" class="category-tile-3d"><span class="category-photo"><img src="https://images.unsplash.com/photo-1726146198306-afe0a44b0073?q=80&w=200&auto=format&fit=crop" alt="" loading="lazy"></span><span class="category-name">Medicinal Plants</span><span class="category-count" data-tag="medicinal plants">0 articles</span></a>
+<section class="py-14 px-4 sm:px-6" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+      <p class="eyebrow flex-shrink-0" style="margin-bottom:0;">Browse by Category</p>
+      <div class="category-line-row">
+        <a href="journal/articles.html?category=ayurveda" onclick="gaEvent('click','Journal','Category: ayurveda')" class="category-line-item">Ayurveda <span class="category-count" data-tag="ayurveda">12 articles</span></a>
+        <a href="journal/articles.html?category=psychology" onclick="gaEvent('click','Journal','Category: psychology')" class="category-line-item">Psychology <span class="category-count" data-tag="psychology">8 articles</span></a>
+        <a href="journal/articles.html?category=nutrition" onclick="gaEvent('click','Journal','Category: nutrition')" class="category-line-item">Nutrition <span class="category-count" data-tag="nutrition">3 articles</span></a>
+        <a href="journal/articles.html?category=yoga" onclick="gaEvent('click','Journal','Category: yoga')" class="category-line-item">Yoga <span class="category-count" data-tag="yoga">7 articles</span></a>
+        <a href="journal/articles.html?category=child+health" onclick="gaEvent('click','Journal','Category: child health')" class="category-line-item">Child Health <span class="category-count" data-tag="child health">0 articles</span></a>
+        <a href="journal/articles.html?category=public+health" onclick="gaEvent('click','Journal','Category: public health')" class="category-line-item">Public Health <span class="category-count" data-tag="public health">1 article</span></a>
+        <a href="journal/articles.html?category=research+review" onclick="gaEvent('click','Journal','Category: research review')" class="category-line-item">Research Reviews <span class="category-count" data-tag="research review">8 articles</span></a>
+        <a href="journal/articles.html?category=medicinal+plants" onclick="gaEvent('click','Journal','Category: medicinal plants')" class="category-line-item">Medicinal Plants <span class="category-count" data-tag="medicinal plants">0 articles</span></a>
+      </div>
     </div>
   </div>
 </section>
@@ -733,34 +718,14 @@
     </div>
   </div>
 </section>
-<!-- ══════════════════════════════════════════════
-     CURRENT ISSUE — Apple Books style
-     ══════════════════════════════════════════════ -->
-<section id="current-issue" class="py-16 md:py-20 px-4 sm:px-6" style="background:var(--bg2);">
-  <div class="max-w-5xl mx-auto">
-    <div class="current-issue-shelf fade-up">
-      <div class="issue-spine">
-        <div class="text-center px-6" style="color:#F5F0E8;">
-          <p class="mono-label" style="color:rgba(245,240,232,.55);">Volume 1</p>
-          <p class="font-display text-3xl mt-2">Issue 04</p>
-          <p class="mono-label mt-3" style="color:rgba(245,240,232,.55);">Spring 2026</p>
-        </div>
-      </div>
-      <div>
-        <p class="eyebrow mb-3">Current Issue</p>
-        <h2 class="font-display text-2xl sm:text-3xl mb-6" style="color:var(--text);">Integrative Women's Health</h2>
-        <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">Published</span><span class="mono-label" style="color:var(--text);">14 March 2026</span></div>
-        <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">Articles</span><span class="mono-label" style="color:var(--text);">5</span></div>
-        <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">DOI</span><span class="mono-label" style="color:var(--text);">10.00000/samarpan.v1.i04</span></div>
-        <div class="issue-meta-row"><span class="font-sans text-xs" style="color:var(--text-muted);">Cite as</span><span class="mono-label text-right" style="color:var(--text);">Samarpan Journal, 1(4), 2026</span></div>
-        <div class="flex flex-col sm:flex-row gap-3 mt-6">
-          <a href="journal/pcos-hormonal-health-ayurveda-women.html" onclick="gaEvent('click','Journal','Read Current Issue')" class="cta-btn inline-flex items-center justify-center gap-2 bg-clay text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-[#c24e2c] transition"><i data-lucide="book-open" class="w-3.5 h-3.5"></i>Read Online</a>
-          <a href="mailto:info@thesamarpan.co.in?subject=Request%3A%20Samarpan%20Journal%20Vol%201%20Issue%2004%20PDF&body=Namaste%20Samarpan%2C%0A%0APlease%20send%20me%20the%20PDF%20of%20the%20current%20issue%20%E2%80%94%20Integrative%20Women%27s%20Health.%0A%0AThank%20you." onclick="gaEvent('click','Journal','Download Current Issue')" class="inline-flex items-center justify-center gap-2 border-2 px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm transition hover:border-clay hover:text-clay" style="border-color:var(--border);color:var(--text);"><i data-lucide="download" class="w-3.5 h-3.5"></i>Download</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+
+<!-- Note: a "Current Issue — Apple Books style" section used to live here.
+     It was removed because it duplicated Featured Issue above (same
+     Women's Health / Issue 04 content) but with hardcoded DOI/citation data
+     that was never wired to the real Issues CMS collection — two sections
+     showing the same issue with different fake details was confusing.
+     Featured Issue is the CMS-driven source of truth for "what issue is
+     current" now. -->
 
 <!-- ══════════════════════════════════════════════
      EVIDENCE BADGE LEGEND
@@ -953,8 +918,10 @@
 <!-- ══════════════════════════════════════════════
      FOOTER QUOTE
      ══════════════════════════════════════════════ -->
-<section class="py-14 px-4 sm:px-6 text-center hairline" style="background:var(--bg2);">
-  <p class="font-serif italic max-w-2xl mx-auto fade-up" style="font-size:clamp(1.3rem,3vw,1.9rem);color:var(--text);">"Knowledge becomes wisdom when tradition and evidence walk together."</p>
+<section class="py-20 px-4 sm:px-6 text-center relative overflow-hidden" style="background:#1C1C1C;">
+  <div class="absolute inset-0" style="background-image:url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1600&auto=format&fit=crop');background-size:cover;background-position:center;opacity:.28;"></div>
+  <div class="absolute inset-0" style="background:linear-gradient(135deg,rgba(28,28,28,.55),rgba(46,79,143,.35));"></div>
+  <p class="font-serif italic max-w-2xl mx-auto fade-up relative" style="font-size:clamp(1.3rem,3vw,1.9rem);color:#F5F0E8;">"Knowledge becomes wisdom when tradition and evidence walk together."</p>
 </section>
 
 <!-- ══════════════════════════════════════════════
@@ -1267,12 +1234,20 @@
      The homepage only shows a curated 6-8 article teaser (see the
      "Latest from the Journal" section) — the searchable, filterable,
      paginated FULL archive now lives at journal/articles.html. So search
-     and category actions here just hand off to that page with ?q= set;
-     journal/articles.html reads it on load and filters immediately. */
+     and category actions here just hand off to that page:
+       - ?q=       -> free-text search (matches title/description/tags loosely)
+       - ?category= -> exact tag match only (this is what quick-filter chips
+                        and category links use, so "Research" only shows
+                        articles actually TAGGED Research, not just any
+                        article whose description happens to mention it) */
   function goToArchive(term) {
     var url = 'journal/articles.html';
     if (term) url += '?q=' + encodeURIComponent(term);
     window.location.href = url;
+  }
+
+  function goToArchiveCategory(tag) {
+    window.location.href = 'journal/articles.html?category=' + encodeURIComponent(tag);
   }
 
   function runJournalSearch() {
@@ -1283,7 +1258,7 @@
 
   function filterByTag(tag) {
     gaEvent('click','Journal','Category: '+tag);
-    goToArchive(tag);
+    goToArchiveCategory(tag);
   }
 
   function quickFilter(tag, btn) {
@@ -1291,7 +1266,7 @@
     btn.classList.add('active');
     gaEvent('click','Journal','Quick Filter: '+tag);
     if (tag === 'all') { document.getElementById('latest-articles').scrollIntoView({behavior:'smooth'}); return; }
-    goToArchive(tag);
+    goToArchiveCategory(tag);
   }
 
   document.getElementById('journalSearchInput').addEventListener('keydown', function(e){
