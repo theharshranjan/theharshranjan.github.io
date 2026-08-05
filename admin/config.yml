@@ -78,3 +78,35 @@ collections:
         required: false
       - { label: "Issue PDF (optional — click 'Choose an image' to upload a PDF from your computer; leave blank to hide the Download PDF button)", name: "pdfLink", widget: "file", required: false, media_library: { config: { multiple: false } } }
       - { label: "Issue Editorial Note (optional — shown at the top of the issue's own page)", name: "body", widget: "markdown", required: false }
+# ─────────────────────────────────────────────────────────────
+  # ADD THIS BLOCK to your existing config.yml, under "collections:"
+  # (same indentation level as "journal:" and "issues:" above it)
+  # ─────────────────────────────────────────────────────────────
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Client Name (e.g. Sarah T.)", name: "name", widget: "string" }
+      - { label: "Location (e.g. London, UK)", name: "location", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Ayurveda", "Yoga", "Ajapa Japa", "Mantra", "Psychology", "Women's Health", "Depression", "Nutrition", "Meditation"]
+      - label: "Accent Colour"
+        name: "accent"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay (orange)", value: "#D95D39" }
+          - { label: "Sage (green)", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - { label: "Rating (1-5 stars)", name: "rating", widget: "number", default: 5, min: 1, max: 5, value_type: "int" }
+      - { label: "Testimonial Quote", name: "quote", widget: "text" }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - { label: "Display Order (lower numbers show first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
