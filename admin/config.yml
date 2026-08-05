@@ -24,16 +24,16 @@ collections:
       - label: "Category Badge"
         name: "badge"
         widget: "select"
-        options: ["Classical Review", "Research Review", "Narrative Review", "Clinical Insight", "Student Voice"]
-      - label: "Badge Colour (matches category above)"
+        options: ["Classical Review", "Research Review", "Narrative Review", "Clinical Insight", "Student Voice", "Case Study", "Editorial", "Systematic Review", "Practitioner Perspective", "Book Review"]
+      - label: "Badge Colour (pick any colour for any badge type above)"
         name: "badgeClass"
         widget: "select"
         options:
-          - { label: "Green — Classical Review", value: "badge-classical" }
-          - { label: "Blue — Research Review", value: "badge-literature" }
-          - { label: "Orange — Narrative Review", value: "badge-narrative" }
-          - { label: "Purple — Clinical Insight", value: "badge-clinical" }
-          - { label: "Grey — Student Voice", value: "badge-student" }
+          - { label: "Green", value: "badge-classical" }
+          - { label: "Blue", value: "badge-literature" }
+          - { label: "Orange", value: "badge-narrative" }
+          - { label: "Purple", value: "badge-clinical" }
+          - { label: "Grey", value: "badge-student" }
       - { label: "Cover Image (used on the Journal listing card)", name: "image", widget: "image" }
       - label: "Banner Icon (shown at the top of the article page)"
         name: "bannerIcon"
@@ -48,3 +48,33 @@ collections:
       - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Article Body", name: "body", widget: "markdown" }
+
+  - name: "issues"
+    label: "Journal Issues"
+    folder: "content/issues"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Issue Title", name: "title", widget: "string", hint: "e.g. Exploring PCOS through Ayurveda, Nutrition and Modern Research" }
+      - { label: "URL Slug (letters, numbers, dashes only)", name: "slug", widget: "string" }
+      - { label: "Volume Label", name: "volume", widget: "string", default: "Volume 1" }
+      - { label: "Issue Number Label", name: "issueNumber", widget: "string", default: "Issue 01" }
+      - { label: "Cover Title (short — shown on the dark issue cover panel)", name: "coverTitle", widget: "string", hint: "e.g. Integrative Women's Health" }
+      - { label: "Short Description (used on the homepage Featured Issue card)", name: "description", widget: "text" }
+      - label: "Featured on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Only ONE issue should be marked Featured at a time. If more than one is marked Featured, the most recently published one wins automatically — so you never need to un-feature the old one manually, just publish the new issue as Featured and it takes over."
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Category Tags shown as pills on the card (e.g. Editorial, Research Review, Clinical Insight)"
+        name: "categoryTags"
+        widget: "list"
+        default: ["Editorial"]
+      - label: "Article Slugs Included in This Issue (must exactly match each article's URL Slug field, one per line)"
+        name: "articleSlugs"
+        widget: "list"
+        required: false
+      - { label: "Issue PDF (optional — click 'Choose an image' to upload a PDF from your computer; leave blank to hide the Download PDF button)", name: "pdfLink", widget: "file", required: false, media_library: { config: { multiple: false } } }
+      - { label: "Issue Editorial Note (optional — shown at the top of the issue's own page)", name: "body", widget: "markdown", required: false }
