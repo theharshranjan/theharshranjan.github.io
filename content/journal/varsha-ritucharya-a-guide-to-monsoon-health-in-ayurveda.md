@@ -29,7 +29,7 @@ When the first monsoon clouds gather over the parched earth, there is a collecti
 
 Acharya Charaka opens his discussion of the seasons by reminding us that human physiology does not exist in isolation — it rises and falls with the sun, the wind, and the rain. This is the science of Ritucharya, seasonal regimen, and nowhere is it more important than in the monsoon.
 
-Why the Monsoon Is Considered a Vulnerable Season
+**Why the Monsoon Is Considered a Vulnerable Season**
 
 According to the Charaka Samhita (Sutrasthana, Chapter 6) and Ashtanga Hridaya (Sutrasthana, Chapter 3 — Ritucharya Adhyaya), Varsha Ritu falls within Visarga Kala, the "giving" phase of the year, when the sun's intensity recedes and the moon's cooling, nourishing influence begins to strengthen. But the transition itself is turbulent:
 
@@ -40,7 +40,7 @@ The water and soil are considered impure (Bhumi Dushti and Jala Dushti) due to t
 
 This convergence — weak Agni, rising Vata, accumulating Pitta, and impure environment — is why Ayurveda treats the monsoon as a season demanding conscious discipline, not indulgence.
 
-Ahara: What to Eat During the Monsoon
+**Ahara: What to Eat During the Monsoon**
 
 The guiding principle across the Samhitas is simple: support a weak Agni, pacify Vata, and avoid contamination.
 
@@ -53,7 +53,7 @@ Honey, taken in small quantities, is specifically praised in this season for its
 Boiled and cooled water — the Samhitas are explicit that water should be purified, often boiled with herbs, before drinking during Varsha Ritu.
 Sour, salty, and unctuous (oily) tastes in moderation, since these pacify Vata — a principle drawn from the general Vata-shamana dietary guidance in Charaka Samhita, Sutrasthana.
 
-Avoid:
+**Avoid:**
 
 Leafy green vegetables and salads (considered contaminated by insects and impurities during the rains, per classical caution).
 Heavy, cold, and stale foods that further burden a weak Agni.
