@@ -174,7 +174,9 @@
         <span style="font-family:'Marcellus',serif;font-size:11px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:#E55A2B;margin-top:.35rem;">Samarpan</span>
       </div>
       <div id="lockPasswordStep">
-        <label class="block text-sm font-medium mb-2" style="color:var(--text);">Admin Password</label>
+        <label class="block text-sm font-medium mb-2" style="color:var(--text);">Email</label>
+        <input type="email" id="lockEmail" class="form-input2 text-center mb-3" placeholder="you@example.com" autocomplete="off">
+        <label class="block text-sm font-medium mb-2" style="color:var(--text);">Password</label>
         <input type="password" id="lockPassword" class="form-input2 text-center" placeholder="••••••••" autocomplete="off">
         <button type="button" id="unlockBtn" onclick="tryUnlock()" class="w-full bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3.5 mt-4">Unlock</button>
       </div>
@@ -656,11 +658,11 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       </div>
       <div class="panel" id="panel-settings">
         <h2 class="font-display text-xl mb-1" style="color:var(--text);">Settings</h2>
-        <p class="text-sm mb-6" style="color:var(--text-muted);">Admin password and email sender are still set directly in the script for now.</p>
+        <p class="text-sm mb-6" style="color:var(--text-muted);">Signed in as <strong id="settingsMyEmail"></strong>.</p>
 
         <div class="card" style="max-width:520px;">
           <h3 class="font-display text-lg mb-1" style="color:var(--text);">Two-Factor Authentication</h3>
-          <p class="text-sm mb-4" style="color:var(--text-muted);">Require a 6-digit code from an authenticator app (Google Authenticator, Authy, etc.) in addition to the admin password.</p>
+          <p class="text-sm mb-4" style="color:var(--text-muted);">Require a 6-digit code from an authenticator app (Google Authenticator, Authy, etc.) for YOUR account, in addition to your password. Each admin sets this up separately — turning it on here doesn't affect anyone else.</p>
 
           <div id="tfaOffState">
             <div class="flex items-center gap-2 mb-4">
@@ -688,12 +690,44 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
               <span style="width:9px;height:9px;border-radius:50%;background:#4A5D4F;display:inline-block;"></span>
               <span class="text-sm font-medium" style="color:var(--text);">Enabled</span>
             </div>
-            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Admin password (confirm to disable)</label>
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Your password (confirm to disable)</label>
             <input type="password" id="tfaDisablePassword" class="form-input2" placeholder="••••••••" autocomplete="off">
             <button type="button" id="tfaDisableBtn" onclick="disable2fa()" class="cta-btn mt-3" style="background:none;border:1px solid #C0473A;color:#C0473A;font-weight:700;font-size:0.7rem;text-transform:uppercase;letter-spacing:.1em;border-radius:2px;padding:0.7rem 1.2rem;">Disable 2FA</button>
           </div>
 
           <div id="tfaStatus" class="mt-3"></div>
+        </div>
+
+        <!-- NEW: Admin Users management — only visible to Super Admins.
+             Everyday admin actions (assign task, send email, etc.) are
+             open to any active admin regardless of role; only WHO gets
+             to be an admin is restricted this way. -->
+        <div id="adminUsersCard" class="card hidden" style="max-width:640px;margin-top:1.5rem;">
+          <h3 class="font-display text-lg mb-1" style="color:var(--text);">Admin Users</h3>
+          <p class="text-sm mb-4" style="color:var(--text-muted);">Super Admins can manage other admin accounts. Staff can do everyday admin work but can't touch this section.</p>
+
+          <div id="adminUsersList" class="mb-5"></div>
+
+          <button type="button" onclick="toggleNewAdminForm()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3 px-5">+ Add Admin</button>
+
+          <div id="newAdminForm" class="hidden mt-4 pt-4" style="border-top:1px solid var(--border);">
+            <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">Email</label>
+            <input type="email" id="newAdminEmail" class="form-input2" placeholder="colleague@example.com">
+            <label class="block text-sm font-medium mb-1.5 mt-3" style="color:var(--text);">Temporary Password</label>
+            <input type="text" id="newAdminPassword" class="form-input2" placeholder="At least 8 characters">
+            <p class="text-xs mt-1" style="color:var(--text-muted);">Share this with them directly — there's no automatic invite email yet. They can log in immediately with it.</p>
+            <label class="block text-sm font-medium mb-1.5 mt-3" style="color:var(--text);">Role</label>
+            <select id="newAdminRole" class="form-input2">
+              <option value="staff" selected>Staff — everyday admin work</option>
+              <option value="super_admin">Super Admin — can also manage other admins</option>
+            </select>
+            <div class="flex gap-2 mt-3">
+              <button type="button" id="newAdminBtn" onclick="createAdminUser()" class="cta-btn bg-clay text-white font-bold text-xs uppercase tracking-widest rounded-sm py-3 px-5">Create Admin</button>
+              <button type="button" onclick="toggleNewAdminForm()" class="text-xs" style="color:var(--text-muted);text-decoration:underline;background:none;border:none;cursor:pointer;">Cancel</button>
+            </div>
+          </div>
+
+          <div id="adminUsersStatus" class="mt-3"></div>
         </div>
       </div>
 
@@ -1001,22 +1035,27 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   }
 
   var pending2faToken = '';
+  var myEmail = '';
+  var myRole = '';
 
   function tryUnlock() {
+    var email = document.getElementById('lockEmail').value.trim();
     var entered = document.getElementById('lockPassword').value;
-    if (!entered) return;
+    if (!email || !entered) return;
     var btn = document.getElementById('unlockBtn');
     if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Checking…'; }
     startUnlockProgress();
     fetch(CHECKIN_APPS_SCRIPT_URL, {
       method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'adminLogin', adminPassword: entered })
+      body: JSON.stringify({ action: 'adminLogin', adminEmail: email, adminPassword: entered })
     })
       .then(function(r){ return r.json(); })
       .then(function(data){
         if (data.status === 'success' && data.sessionToken) {
           finishUnlockProgress(true);
           setAdminToken(data.sessionToken, data.expiresInHours);
+          myEmail = data.email || email;
+          myRole = data.role || 'staff';
           document.getElementById('lockPassword').value = '';
           showApp();
         } else if (data.status === 'pending2fa' && data.pendingToken) {
@@ -1032,7 +1071,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
           document.getElementById('lockCode').focus();
         } else {
           finishUnlockProgress(false);
-          document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect password.') + '</div>';
+          document.getElementById('lockStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Incorrect email or password.') + '</div>';
         }
       })
       .catch(function(){
@@ -1068,6 +1107,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         if (data.status === 'success' && data.sessionToken) {
           pending2faToken = '';
           setAdminToken(data.sessionToken, data.expiresInHours);
+          myEmail = data.email || myEmail;
+          myRole = data.role || 'staff';
           document.getElementById('lockCode').value = '';
           showApp();
         } else {
@@ -1097,6 +1138,143 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       off.classList.remove('hidden');
       on.classList.add('hidden');
     }
+  }
+
+  // ── Settings → Admin Users (Super Admin only) ──
+
+  function renderAdminUsersVisibility() {
+    var emailEl = document.getElementById('settingsMyEmail');
+    if (emailEl) emailEl.textContent = myEmail || '';
+    var card = document.getElementById('adminUsersCard');
+    if (!card) return;
+    if (myRole === 'super_admin') {
+      card.classList.remove('hidden');
+      loadAdminUsersList();
+    } else {
+      card.classList.add('hidden');
+    }
+  }
+
+  function loadAdminUsersList() {
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'adminUserList', adminSessionToken: getAdminToken() })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status !== 'success') return;
+        renderAdminUsersTable(data.users || []);
+      })
+      .catch(function(){ /* list just won't refresh — not worth an error banner */ });
+  }
+
+  function renderAdminUsersTable(users) {
+    var wrap = document.getElementById('adminUsersList');
+    if (!users.length) { wrap.innerHTML = '<p class="text-sm" style="color:var(--text-muted);">No admin accounts yet.</p>'; return; }
+    wrap.innerHTML = users.map(function(u) {
+      var isMe = u.email === myEmail;
+      var statusColor = u.status === 'Active' ? '#4A5D4F' : '#C0473A';
+      return '' +
+        '<div class="flex items-center justify-between gap-3 py-2.5" style="border-bottom:1px solid var(--border);flex-wrap:wrap;">' +
+          '<div style="min-width:0;">' +
+            '<p class="text-sm font-medium" style="color:var(--text);word-break:break-all;">' + esc(u.email) + (isMe ? ' <span style="color:var(--text-muted);font-weight:400;">(you)</span>' : '') + '</p>' +
+            '<p class="text-xs" style="color:var(--text-muted);">' +
+              (u.role === 'super_admin' ? 'Super Admin' : 'Staff') + ' · ' +
+              '<span style="color:' + statusColor + ';">' + esc(u.status) + '</span>' + ' · ' +
+              (u.tfaEnabled ? '2FA on' : '2FA off') +
+              (u.lastLogin ? ' · last login ' + esc(u.lastLogin) : ' · never logged in') +
+            '</p>' +
+          '</div>' +
+          '<div class="flex gap-1.5 flex-wrap">' +
+            '<button type="button" onclick="toggleAdminRole(\'' + esc(u.email) + '\',\'' + u.role + '\')" class="text-xs" style="padding:.4rem .7rem;border:1px solid var(--border);border-radius:4px;background:none;color:var(--text);">' + (u.role === 'super_admin' ? 'Make Staff' : 'Make Super Admin') + '</button>' +
+            '<button type="button" onclick="toggleAdminStatus(\'' + esc(u.email) + '\',\'' + u.status + '\')" class="text-xs" style="padding:.4rem .7rem;border:1px solid var(--border);border-radius:4px;background:none;color:var(--text);">' + (u.status === 'Active' ? 'Disable' : 'Re-enable') + '</button>' +
+            '<button type="button" onclick="resetAdminPassword(\'' + esc(u.email) + '\')" class="text-xs" style="padding:.4rem .7rem;border:1px solid var(--border);border-radius:4px;background:none;color:var(--text);">Reset Password</button>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function toggleNewAdminForm() {
+    var form = document.getElementById('newAdminForm');
+    form.classList.toggle('hidden');
+    document.getElementById('adminUsersStatus').innerHTML = '';
+    if (!form.classList.contains('hidden')) {
+      document.getElementById('newAdminEmail').value = '';
+      document.getElementById('newAdminPassword').value = '';
+      document.getElementById('newAdminEmail').focus();
+    }
+  }
+
+  function createAdminUser() {
+    var email = document.getElementById('newAdminEmail').value.trim();
+    var password = document.getElementById('newAdminPassword').value;
+    var role = document.getElementById('newAdminRole').value;
+    if (!email || !password) {
+      document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">Enter both an email and a temporary password.</div>';
+      return;
+    }
+    var btn = document.getElementById('newAdminBtn');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-orig', btn.innerHTML); btn.innerHTML = '<span class="btn-spinner"></span>Creating…'; }
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'adminUserCreate', adminSessionToken: getAdminToken(), newEmail: email, newPassword: password, newRole: role })
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success') {
+          document.getElementById('adminUsersStatus').innerHTML = '<div class="form-success">Admin created. Share the password with them directly.</div>';
+          toggleNewAdminForm();
+          loadAdminUsersList();
+        } else {
+          document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Could not create admin.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">Could not reach the server — please try again.</div>';
+      })
+      .finally(function(){
+        if (btn) { btn.disabled = false; var o = btn.getAttribute('data-orig'); if (o) btn.innerHTML = o; }
+      });
+  }
+
+  function adminUserUpdate(targetEmail, patch, successMsg) {
+    document.getElementById('adminUsersStatus').innerHTML = '';
+    var payload = Object.assign({ action: 'adminUserUpdate', adminSessionToken: getAdminToken(), targetEmail: targetEmail }, patch);
+    fetch(CHECKIN_APPS_SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        if (data.status === 'success') {
+          document.getElementById('adminUsersStatus').innerHTML = '<div class="form-success">' + successMsg + '</div>';
+          loadAdminUsersList();
+        } else {
+          document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">' + esc(data.message || 'Could not update admin.') + '</div>';
+        }
+      })
+      .catch(function(){
+        document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">Could not reach the server — please try again.</div>';
+      });
+  }
+
+  function toggleAdminRole(email, currentRole) {
+    var newRole = currentRole === 'super_admin' ? 'staff' : 'super_admin';
+    if (!confirm('Change ' + email + ' to ' + (newRole === 'super_admin' ? 'Super Admin' : 'Staff') + '?')) return;
+    adminUserUpdate(email, { newRole: newRole }, 'Role updated.');
+  }
+
+  function toggleAdminStatus(email, currentStatus) {
+    var newStatus = currentStatus === 'Active' ? 'Disabled' : 'Active';
+    if (newStatus === 'Disabled' && !confirm('Disable ' + email + '? They won\'t be able to log in until re-enabled.')) return;
+    adminUserUpdate(email, { newStatus: newStatus }, newStatus === 'Disabled' ? 'Account disabled.' : 'Account re-enabled.');
+  }
+
+  function resetAdminPassword(email) {
+    var newPw = prompt('New temporary password for ' + email + ' (at least 8 characters):');
+    if (!newPw) return;
+    if (newPw.length < 8) { document.getElementById('adminUsersStatus').innerHTML = '<div class="form-error">Password must be at least 8 characters.</div>'; return; }
+    adminUserUpdate(email, { newPassword: newPw }, 'Password reset — share the new one with them directly.');
   }
 
   function start2faSetup() {
@@ -1193,6 +1371,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   function lockApp() {
     clearAdminToken();
     pending2faToken = '';
+    myEmail = '';
+    myRole = '';
     document.getElementById('lockPasswordStep') && document.getElementById('lockPasswordStep').classList.remove('hidden');
     document.getElementById('lockCodeStep') && document.getElementById('lockCodeStep').classList.add('hidden');
     document.getElementById('appShell').classList.add('hidden');
@@ -1281,6 +1461,9 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       .then(function(info){
         if (info && info.error === 'Unauthorized') { handleAuthFailure(); return; }
         overviewData = info;
+        if (info.myEmail) myEmail = info.myEmail;
+        if (info.myRole) myRole = info.myRole;
+        renderAdminUsersVisibility();
         allInternNames = (info.interns || []).map(function(i){ return i.name; });
         var dl = document.getElementById('internNameList');
         dl.innerHTML = allInternNames.map(function(n){ return '<option value="'+String(n).replace(/"/g,'&quot;')+'">'; }).join('');
@@ -2200,6 +2383,7 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     document.getElementById('themeIcon').setAttribute('data-lucide', document.documentElement.getAttribute('data-theme') === 'dark' ? 'moon' : 'sun');
     lucide.createIcons();
     if (getAdminToken()) showApp();
+    document.getElementById('lockEmail').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); document.getElementById('lockPassword').focus(); } });
     document.getElementById('lockPassword').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryUnlock(); } });
     document.getElementById('lockCode').addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); tryVerify2fa(); } });
     document.getElementById('fbName').addEventListener('change', loadFeedbackLookup);
