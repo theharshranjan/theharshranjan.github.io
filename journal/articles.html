@@ -909,6 +909,7 @@
   var journalDisplayCount = PAGE_SIZE;
   var journalSearchTerm = '';
   var activeTypeFilter = '';
+  var activeCategoryTag = ''; // exact-match tag filter, set via ?category=
 
   function getArticleCards(){ return Array.prototype.slice.call(document.querySelectorAll('#articleGrid .article-card')); }
   var originalCardOrder = null; // captured once below, used to restore "Latest" order without a page reload
@@ -916,6 +917,11 @@
   function cardBadgeText(card){
     var b = card.querySelector('.article-badge');
     return b ? b.textContent.trim().toLowerCase() : '';
+  }
+
+  function cardHasExactTag(card, tag){
+    var tags = (card.getAttribute('data-tags')||'').split(',').map(function(t){ return t.trim().toLowerCase(); });
+    return tags.indexOf(tag) !== -1;
   }
 
   function renderJournalGrid() {
@@ -926,6 +932,7 @@
 
     var visibleCards = cards.filter(function(card){
       if (activeTypeFilter && cardBadgeText(card) !== activeTypeFilter) return false;
+      if (activeCategoryTag && !cardHasExactTag(card, activeCategoryTag)) return false;
       return true;
     });
 
@@ -944,6 +951,15 @@
       note.style.display='block';
       note.textContent = shown + (shown===1?' article':' articles') + ' matching "' + term + '"';
       countEl.textContent = '';
+    } else if (activeCategoryTag) {
+      cards.forEach(function(c){ c.classList.add('article-hidden'); });
+      visibleCards.forEach(function(card, i){ card.classList.toggle('article-hidden', i >= journalDisplayCount); });
+      document.getElementById('noArticlesMsg').style.display = visibleCards.length === 0 ? 'block' : 'none';
+      loadMoreWrap.style.display = journalDisplayCount < visibleCards.length ? 'block' : 'none';
+      var note2 = document.getElementById('journalSearchNote');
+      note2.style.display='block';
+      note2.textContent = visibleCards.length + (visibleCards.length===1?' article':' articles') + ' tagged "' + activeCategoryTag + '"';
+      countEl.textContent = '';
     } else {
       cards.forEach(function(c){ c.classList.add('article-hidden'); });
       visibleCards.forEach(function(card, i){ card.classList.toggle('article-hidden', i >= journalDisplayCount); });
@@ -956,6 +972,15 @@
 
   function applyArticleFilter(term) {
     journalSearchTerm = (term||'').trim().toLowerCase();
+    activeCategoryTag = ''; // free-text search always overrides an exact-category filter
+    journalDisplayCount = PAGE_SIZE;
+    renderJournalGrid();
+  }
+
+  function applyCategoryFilter(tag) {
+    activeCategoryTag = (tag||'').trim().toLowerCase();
+    journalSearchTerm = '';
+    document.getElementById('journalSearchInput').value = '';
     journalDisplayCount = PAGE_SIZE;
     renderJournalGrid();
   }
@@ -1008,12 +1033,10 @@
     document.querySelectorAll('.topic-chip').forEach(function(c){ c.classList.remove('active'); });
     btn.classList.add('active');
     if (tag === 'all') {
-      document.getElementById('journalSearchInput').value = '';
-      applyArticleFilter('');
+      applyCategoryFilter('');
       return;
     }
-    document.getElementById('journalSearchInput').value = tag;
-    applyArticleFilter(tag);
+    applyCategoryFilter(tag);
   }
 
   document.getElementById('journalSearchInput').addEventListener('keydown', function(e){
@@ -1023,7 +1046,15 @@
   (function(){
     var params = new URLSearchParams(location.search);
     var q = params.get('q');
-    if (q) { document.getElementById('journalSearchInput').value = q; applyArticleFilter(q); }
+    var category = params.get('category');
+    if (category) {
+      applyCategoryFilter(category);
+      var chip = document.querySelector('.topic-chip[data-chip="' + category.toLowerCase() + '"]');
+      if (chip) { document.querySelectorAll('.topic-chip').forEach(function(c){ c.classList.remove('active'); }); chip.classList.add('active'); }
+    } else if (q) {
+      document.getElementById('journalSearchInput').value = q;
+      applyArticleFilter(q);
+    }
   })();
 
   originalCardOrder = getArticleCards();
