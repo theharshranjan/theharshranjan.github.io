@@ -316,3 +316,23 @@ collections:
       - { label: "Button Icon", name: "buttonIcon", widget: "select", default: "user", options: ["user", "calendar"] }
       - { label: "Display Order (Founder should be 1)", name: "order", widget: "number", default: 10, value_type: "int" }
       - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "hero"
+    label: "Homepage Hero"
+    files:
+      - name: "hero"
+        label: "Hero Background"
+        file: "content/hero.md"
+        fields:
+          - label: "Background Type"
+            name: "heroType"
+            widget: "select"
+            default: "video"
+            hint: "Video autoplays on desktop with the Desktop Image as poster/fallback. Image-only skips the video entirely (faster load, simpler)."
+            options:
+              - { label: "Video (with image fallback)", value: "video" }
+              - { label: "Image only", value: "image" }
+          - { label: "Desktop Video (MP4, only used if 'Video' selected above)", name: "desktopVideo", widget: "file", required: false, hint: "Keep this short and under ~10MB for fast loading." }
+          - { label: "Desktop Image (also used as video poster + fallback if video fails)", name: "desktopImage", widget: "image" }
+          - { label: "Mobile Image (shown on phones instead of the video, for speed)", name: "mobileImage", widget: "image" }
+          - { label: "Image Alt Text (for accessibility + SEO)", name: "altText", widget: "string", default: "Ayurveda and yoga texts with meditation practice at sunrise — Samarpan" }
