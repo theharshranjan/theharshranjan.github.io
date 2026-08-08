@@ -23,7 +23,7 @@ const MODAL_END = '<!-- CMS:RESOURCE_MODAL:END -->';
 
 // SET THIS to your existing Apps Script Web App URL (same one
 // booking.html/contact.html/retreats already post to).
-const RESOURCE_ENDPOINT = 'REPLACE_WITH_YOUR_APPS_SCRIPT_WEB_APP_URL';
+const RESOURCE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyBRC53kbCsrsU-22Jx3C7Vci2tMlFjpMi4_XXNmnARwl9Um5_-peKFpPnLj2-foFty/exec';
 
 function escapeHtml(str = '') {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
