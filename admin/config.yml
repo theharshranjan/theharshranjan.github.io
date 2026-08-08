@@ -62,6 +62,7 @@ collections:
       - { label: "Issue Number Label", name: "issueNumber", widget: "string", default: "Issue 01" }
       - { label: "Cover Title (short — shown on the dark issue cover panel)", name: "coverTitle", widget: "string", hint: "e.g. Integrative Women's Health" }
       - { label: "Short Description (used on the homepage Featured Issue card)", name: "description", widget: "text" }
+      - { label: "Cover Image (used on the homepage Recent Issues card)", name: "coverImage", widget: "image", required: false }
       - label: "Featured on Homepage?"
         name: "featured"
         widget: "boolean"
@@ -78,10 +79,7 @@ collections:
         required: false
       - { label: "Issue PDF (optional — click 'Choose an image' to upload a PDF from your computer; leave blank to hide the Download PDF button)", name: "pdfLink", widget: "file", required: false, media_library: { config: { multiple: false } } }
       - { label: "Issue Editorial Note (optional — shown at the top of the issue's own page)", name: "body", widget: "markdown", required: false }
-# ─────────────────────────────────────────────────────────────
-  # ADD THIS BLOCK to your existing config.yml, under "collections:"
-  # (same indentation level as "journal:" and "issues:" above it)
-  # ─────────────────────────────────────────────────────────────
+
   - name: "testimonials"
     label: "Testimonials"
     folder: "content/testimonials"
@@ -110,3 +108,211 @@ collections:
         widget: "boolean"
         default: true
       - { label: "Display Order (lower numbers show first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+
+  - name: "retreats"
+    label: "Retreats & Events"
+    folder: "content/retreats"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Retreat / Event Title", name: "title", widget: "string" }
+      - { label: "URL Slug", name: "slug", widget: "string", hint: "e.g. kerala-ayurveda-retreat-nov-2026" }
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Kerala, India" }
+      - label: "Card Badge Label (matches existing tags on the site)"
+        name: "eventTag"
+        widget: "select"
+        default: "Retreat"
+        options: ["Yatra", "Retreat", "Meditation", "Workshop", "Cohort"]
+      - { label: "Start Date", name: "startDate", widget: "datetime" }
+      - { label: "End Date", name: "endDate", widget: "datetime" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - { label: "Short Description (for the homepage calendar card)", name: "description", widget: "text" }
+      - { label: "Full Details (shown on the event's own page)", name: "body", widget: "markdown", required: false }
+      - { label: "Price", name: "price", widget: "string", required: false, hint: "e.g. ₹45,000 or leave blank" }
+      - { label: "Total Spots Available", name: "spots", widget: "number", required: false, value_type: "int" }
+      - label: "Show on Homepage Calendar?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - label: "Registration Form Fields"
+        name: "formFields"
+        widget: "list"
+        hint: "Build a custom form for THIS event only. Add one entry per field you want on the form."
+        fields:
+          - { label: "Field Label (shown to visitor)", name: "label", widget: "string", hint: "e.g. Full Name, Dietary Requirements" }
+          - { label: "Field Name (no spaces, used internally)", name: "name", widget: "string", hint: "e.g. fullName, dietaryReqs" }
+          - label: "Field Type"
+            name: "type"
+            widget: "select"
+            options: ["text", "email", "tel", "number", "textarea", "select", "checkbox"]
+            default: "text"
+          - { label: "Required?", name: "required", widget: "boolean", default: true }
+          - { label: "Options (only for 'select' type — one per line)", name: "options", widget: "list", required: false }
+
+  - name: "faqs"
+    label: "FAQs"
+    folder: "content/faqs"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: question
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "videos"
+    label: "Media Centre Videos"
+    folder: "content/videos"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Subtitle / Description", name: "subtitle", widget: "string" }
+      - { label: "YouTube Video ID (the part after v= or youtu.be/, e.g. sgNDrMuCLJ4)", name: "youtubeId", widget: "string" }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "media_items"
+    label: "Media Centre — Podcasts / Interviews / News / Events"
+    folder: "content/media_items"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - label: "Type (which tab this shows under)"
+        name: "type"
+        widget: "select"
+        options: ["Podcast", "Interview", "News", "Event"]
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Short Description (shown on the card)", name: "description", widget: "text" }
+      - label: "Card Behaviour"
+        name: "linkMode"
+        widget: "select"
+        default: "internal"
+        options:
+          - { label: "Open its own page on this site (recommended)", value: "internal" }
+          - { label: "Link out to an external URL instead", value: "external" }
+      - { label: "External Link (only used if 'Link out' selected above)", name: "link", widget: "string", required: false, default: "#journal" }
+      - { label: "Full Content (only used for 'own page' — write the podcast notes / interview transcript / news writeup here)", name: "body", widget: "markdown", required: false }
+      - { label: "Cover Image (used on its own page, optional)", name: "image", widget: "image", required: false }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Published?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "publications"
+    label: "Publications (Research & Publishing)"
+    folder: "content/publications"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["Journal", "Handbook", "Booklet", "Research"]
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        default: "book-marked"
+        options: ["book-marked", "file-text", "stethoscope", "microscope", "flame", "heart-pulse", "leaf"]
+      - label: "Icon Colour"
+        name: "iconColor"
+        widget: "select"
+        default: "text-clay"
+        options:
+          - { label: "Clay", value: "text-clay" }
+          - { label: "Gold", value: "text-brand-gold" }
+          - { label: "Sage", value: "text-sage" }
+      - { label: "Link (where the card goes — journal.html, a PDF, or a mailto: link)", name: "link", widget: "string" }
+      - { label: "Button Label", name: "buttonLabel", widget: "string", default: "Read" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "gallery"
+    label: "Retreat Gallery (Sacred Moments)"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: caption
+    media_folder: "/gallery-images"
+    public_folder: "/gallery-images"
+    fields:
+      - { label: "Photo", name: "image", widget: "image" }
+      - { label: "Caption / Alt Text", name: "caption", widget: "string", hint: "e.g. Sunrise meditation, Kerala retreat" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Show in Gallery?", name: "featured", widget: "boolean", default: true }
+
+  - name: "resources"
+    label: "Free Resources (Guides to Take Home)"
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        default: "file-text"
+        options: ["sunrise", "heart-pulse", "droplet", "flower-2", "calendar-days", "file-text", "leaf", "brain"]
+      - label: "Icon Colour"
+        name: "iconColor"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay", value: "#D95D39" }
+          - { label: "Sage", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - { label: "PDF File (upload the actual guide)", name: "pdf", widget: "file" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "team"
+    label: "Founding Team"
+    folder: "content/team"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Title (shown above the name)", name: "role", widget: "string", hint: "e.g. Founder & Lead Practitioner" }
+      - { label: "Subtitle (italic line under the name)", name: "subtitle", widget: "string", hint: "e.g. Yoga · Ayurveda · Psychology · Mantra" }
+      - { label: "Photo", name: "photo", widget: "image" }
+      - label: "Photo Badge Label (small tag on top of the photo)"
+        name: "badgeLabel"
+        widget: "string"
+        default: "Founder"
+      - label: "Accent Colour"
+        name: "accent"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay", value: "#D95D39" }
+          - { label: "Sage", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - label: "Photo Side"
+        name: "photoSide"
+        widget: "select"
+        default: "left"
+        options: ["left", "right"]
+      - { label: "Bio Paragraphs (one per line/entry)", name: "bio", widget: "list", field: { label: "Paragraph", name: "paragraph", widget: "text" } }
+      - { label: "Skill / Credential Tags", name: "tags", widget: "list" }
+      - { label: "Profile Page Link", name: "profileLink", widget: "string" }
+      - { label: "Button Icon", name: "buttonIcon", widget: "select", default: "user", options: ["user", "calendar"] }
+      - { label: "Display Order (Founder should be 1)", name: "order", widget: "number", default: 10, value_type: "int" }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
