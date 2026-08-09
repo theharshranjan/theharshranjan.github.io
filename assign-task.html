@@ -2364,7 +2364,8 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       }
       var data = await resp.json();
       if (data.status !== 'success') throw new Error(data.message || 'Could not send ' + docLabel);
-      setStatus('certStatus', true, (certDocType === 'LOR' ? 'LOR' : 'Certificate') + ' sent to ' + internName + ' and logged automatically.');
+      var certIdNote = (certDocType === 'Certificate' && data.certificateId) ? (' — Certificate ID: ' + data.certificateId) : '';
+      setStatus('certStatus', true, (certDocType === 'LOR' ? 'LOR' : 'Certificate') + ' sent to ' + internName + certIdNote + ' and logged automatically.');
       certFilesArr = []; renderCertFileList(); document.getElementById('certFiles').value = '';
       document.getElementById('certInternName').value = '';
       loadOverview();
