@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" data-theme="dark">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -579,6 +579,31 @@ Just enter your name and Intern ID under "My Status" to see everything at a glan
             <input type="text" id="certInternName" class="form-input2" placeholder="Start typing a name" autocomplete="off" list="internNameList">
           </div>
 
+          <!-- NEW: Reserve → Design → Send flow. Only shown for Document
+               Type = Certificate (LORs don't have a registry, so they
+               keep the original one-step flow). See updateCertReserveUI(). -->
+          <div id="certReserveSection">
+            <div id="certReserveIdle">
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">1. Reserve a Certificate ID</label>
+              <p class="text-xs mb-2" style="color:var(--text-muted);">Get the real ID first, so you can put it on the certificate before uploading. Pick the intern above, then reserve.</p>
+              <button type="button" id="certReserveBtn" onclick="reserveCertificateId()" class="tpl-btn" style="width:100%;">
+                <span id="certReserveBtnLabel">Reserve Certificate ID</span>
+              </button>
+            </div>
+            <div id="certReserveActive" class="hidden">
+              <div class="flex items-center justify-between gap-2 p-3 rounded-md" style="background:rgba(74,93,79,.1);border:1px solid #4A5D4F;">
+                <div>
+                  <p class="text-xs" style="color:var(--text-muted);">Reserved for <span id="certReservedFor"></span></p>
+                  <p class="text-lg font-mono" style="color:var(--text);" id="certReservedIdText"></p>
+                </div>
+                <button type="button" onclick="cancelCertificateReservation()" class="text-xs" style="color:#C0473A;background:none;border:none;text-decoration:underline;cursor:pointer;">Cancel</button>
+              </div>
+            </div>
+            <div class="mt-4 pt-4" style="border-top:1px solid var(--border);">
+              <label class="block text-sm font-medium mb-1.5" style="color:var(--text);">2. Upload &amp; Send</label>
+            </div>
+          </div>
+
           <div>
             <label class="block text-sm font-medium mb-1.5" style="color:var(--text);" id="certFileLabel">Certificate File *</label>
             <input type="file" id="certFiles" multiple class="form-input2" style="padding:.6rem .75rem;">
@@ -845,7 +870,6 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     <div id="approveAppStatusMsg" class="mt-2"></div>
   </div>
 </div>
-
 <script>
   var CHECKIN_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbybteWMRRcon26nZxfjxqc9A8tatoZarWg21gVmbr0IqLFvwBltrQZsJI5Sa_UyLaIJVA/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz'; // v3, invisible, used for admin actions like sending email
@@ -2280,12 +2304,20 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
   var certFilesArr = [];
   var certDocType = 'Certificate'; // 'Certificate' | 'LOR'
 
+  // NEW: Reserve → Design → Send flow state. certReservedId holds the
+  // ID returned by reserveCertificateId(); certReservedFor holds the
+  // intern name it was reserved for, so a reservation for "A" can't be
+  // accidentally used to send a certificate to "B" if the name field
+  // gets changed after reserving.
+  var certReservedId = '';
+  var certReservedFor = '';
+
   var CERT_DEFAULTS = {
     Certificate: {
       subject: 'Your Certificate — Samarpan Holistic Wellbeing Community',
       message: 'Thank you for your contribution during your internship with us. Your certificate is attached to this email.\n\nWe wish you the very best for what comes next, and hope you\'ll stay in touch.',
       heading: 'Issue a Certificate',
-      desc: 'Upload the certificate file for one intern, review the email, and press Send — it\'s emailed to them, saved to their portal notifications, and logged to the Certificate Registry automatically. Nothing else to update by hand.',
+      desc: 'Reserve a Certificate ID, put it on the certificate you design, then upload that file and press Send — it\'s emailed to them, saved to their portal notifications, and logged to the Certificate Registry automatically.',
       fileLabel: 'Certificate File *',
       sendLabel: 'Send Certificate'
     },
@@ -2298,6 +2330,67 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       sendLabel: 'Send LOR'
     }
   };
+
+  // NEW: shows/hides the Reserve→Design→Send section based on Document
+  // Type. LORs don't have a Certificate Registry entry, so they keep
+  // the original single-step flow — only Certificate type reserves.
+  function updateCertReserveUI() {
+    var showReserveFlow = certDocType === 'Certificate';
+    var section = document.getElementById('certReserveSection');
+    if (!section) return;
+    section.classList.toggle('hidden', !showReserveFlow);
+    document.getElementById('certReserveIdle').classList.toggle('hidden', !showReserveFlow || !!certReservedId);
+    document.getElementById('certReserveActive').classList.toggle('hidden', !showReserveFlow || !certReservedId);
+    if (certReservedId) {
+      document.getElementById('certReservedIdText').textContent = certReservedId;
+      document.getElementById('certReservedFor').textContent = certReservedFor;
+    }
+  }
+
+  // STEP 1: ask the backend to reserve a real Certificate ID for the
+  // currently-typed intern name, before any file is uploaded.
+  async function reserveCertificateId() {
+    var internName = document.getElementById('certInternName').value.trim();
+    if (!internName) { setStatus('certStatus', false, 'Choose the intern first, then reserve.'); return; }
+    var btn = document.getElementById('certReserveBtn');
+    btn.disabled = true;
+    document.getElementById('certReserveBtnLabel').innerHTML = '<span class="btn-spinner"></span>Reserving…';
+    try {
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'reserveCertificate', adminSessionToken: getAdminToken(), internName: internName })
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not reserve an ID.');
+      certReservedId = data.certificateId;
+      certReservedFor = data.internName;
+      updateCertReserveUI();
+      setStatus('certStatus', true, 'Reserved ' + certReservedId + ' — put this on the certificate, then upload and send below.');
+    } catch (err) {
+      setStatus('certStatus', false, (err && err.message) ? err.message : 'Something went wrong — please try again.');
+    }
+    btn.disabled = false;
+    document.getElementById('certReserveBtnLabel').textContent = 'Reserve Certificate ID';
+  }
+
+  // Cancels an in-progress reservation the admin decided not to use.
+  async function cancelCertificateReservation() {
+    if (!certReservedId) return;
+    if (!confirm('Cancel reservation ' + certReservedId + '? You can reserve a fresh ID afterward.')) return;
+    try {
+      var resp = await fetch(CHECKIN_APPS_SCRIPT_URL, {
+        method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'cancelCertificateReservation', adminSessionToken: getAdminToken(), certificateId: certReservedId })
+      });
+      var data = await resp.json();
+      if (data.status !== 'success') throw new Error(data.message || 'Could not cancel.');
+      certReservedId = ''; certReservedFor = '';
+      updateCertReserveUI();
+      setStatus('certStatus', true, 'Reservation cancelled.');
+    } catch (err) {
+      setStatus('certStatus', false, (err && err.message) ? err.message : 'Something went wrong.');
+    }
+  }
 
   function setCertDocType(type) {
     certDocType = type;
@@ -2313,6 +2406,10 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     document.getElementById('certMessage').value = d.message;
     document.getElementById('certSendLabel').textContent = d.sendLabel;
     document.getElementById('certStatus').innerHTML = '';
+    // Switching document type clears any in-progress reservation —
+    // a Certificate reservation shouldn't silently carry over to LOR.
+    certReservedId = ''; certReservedFor = '';
+    updateCertReserveUI();
   }
 
   function renderCertFileList() {
@@ -2336,6 +2433,15 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
     for (var i = 0; i < certFilesArr.length; i++) {
       if (certFilesArr[i].size > MAX_EMAIL_FILE_BYTES) { setStatus('certStatus', false, '"' + certFilesArr[i].name + '" is over 10MB — please use a smaller file.'); return; }
     }
+
+    // NEW: Certificates require a matching reservation before sending
+    // — this is what guarantees the ID on the document and the ID in
+    // the registry are the same one. LORs skip this (no registry).
+    if (certDocType === 'Certificate') {
+      if (!certReservedId) { setStatus('certStatus', false, 'Reserve a Certificate ID first (step 1 above).'); return; }
+      if (certReservedFor !== internName) { setStatus('certStatus', false, 'The reserved ID was for "' + certReservedFor + '" — reserve a new one for ' + internName + ', or pick ' + certReservedFor + '.'); return; }
+    }
+
     if (!confirm('Send this ' + docLabel + ' to ' + internName + '? This is emailed immediately and logged to their record.')) return;
 
     setBtnLoading('certSendBtn', true);
@@ -2345,7 +2451,11 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
         action: 'sendEmail', adminSessionToken: getAdminToken(),
         subject: subject, message: message, recipientMode: 'specific', internName: internName,
         attachments: attachments,
-        emailType: certDocType, saveToRecord: true
+        emailType: certDocType, saveToRecord: true,
+        // NEW: tells the backend which reserved registry row to
+        // finalize instead of minting a brand-new Certificate ID.
+        // Empty string for LOR sends (no reservation exists for those).
+        reservedCertId: certDocType === 'Certificate' ? certReservedId : ''
       };
       // Same fetch-timeout fix as the announce/general email send above —
       // certificate/LOR files make this send even more likely to be slow.
@@ -2368,6 +2478,10 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       setStatus('certStatus', true, (certDocType === 'LOR' ? 'LOR' : 'Certificate') + ' sent to ' + internName + certIdNote + ' and logged automatically.');
       certFilesArr = []; renderCertFileList(); document.getElementById('certFiles').value = '';
       document.getElementById('certInternName').value = '';
+      // NEW: clear the used-up reservation so the form is ready for
+      // the next certificate (a fresh reserve is required each time).
+      certReservedId = ''; certReservedFor = '';
+      updateCertReserveUI();
       loadOverview();
     } catch (err) {
       console.error('Send certificate error:', err);
@@ -2409,6 +2523,11 @@ We wish you the very best for what comes next, and hope you'll stay in touch.</t
       renderCertFileList();
       this.value = '';
     });
+
+    // NEW: initialize the certificate Document Type buttons + Reserve
+    // section to a consistent starting state (Certificate selected,
+    // reserve UI visible and idle) on page load.
+    setCertDocType('Certificate');
   });
 </script>
 </body>
