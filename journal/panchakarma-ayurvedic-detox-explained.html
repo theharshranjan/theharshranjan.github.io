@@ -117,6 +117,7 @@
       line-height: 1.7;
     }
 
+
     /* NAVBAR */
     .navbar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
@@ -127,28 +128,56 @@
       backdrop-filter: blur(12px);
     }
     .navbar-inner {
-      max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+      max-width: 1400px; margin: 0 auto; padding: 0 1.5rem;
       width: 100%; display: flex; align-items: center; justify-content: space-between;
+      position: relative;
     }
-    .nav-back {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);
-      text-decoration: none; transition: color 0.3s;
+    .nav-links-left { display: flex; gap: 1.75rem; align-items: center; flex: 1; }
+    .nav-links-right { display: flex; flex: 1; justify-content: flex-end; align-items: center; }
+    .nav-link {
+      font-family: 'Lato', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text);
+      text-decoration: none; transition: color 0.3s; position: relative;
     }
-    .nav-back:hover { color: var(--clay); }
-    .nav-back svg { width: 14px; height: 14px; }
+    .nav-link:hover { color: var(--clay); }
     .nav-logo {
       display: flex; flex-direction: column; align-items: center; gap: 3px;
       text-decoration: none; transition: opacity 0.3s;
+      position: absolute; left: 50%; transform: translateX(-50%);
     }
     .nav-logo:hover { opacity: 0.75; }
+    .nav-logo svg { color: var(--clay); }
     .nav-logo-text {
       font-family: 'Marcellus', serif; font-size: 10px;
       letter-spacing: 0.28em; text-transform: uppercase;
-      color: #E8621A; line-height: 1;
+      color: var(--clay); line-height: 1;
     }
-
+    .nav-cta {
+      display: inline-block; padding: 0.55rem 1.2rem;
+      background: var(--clay); color: #fff; font-family: 'Lato', sans-serif;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px; transition: background 0.3s; white-space: nowrap;
+    }
+    .nav-cta:hover { background: #c24e2c; }
+    .nav-hamburger {
+      display: none; background: none; border: none; cursor: pointer; padding: 0.4rem;
+      color: var(--text);
+    }
+    @media (max-width: 900px) {
+      .nav-links-left, .nav-links-right .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+    #article-mobile-menu {
+      position: fixed; inset: 0; z-index: 200; background: var(--bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem;
+      opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    #article-mobile-menu.active { opacity: 1; visibility: visible; pointer-events: auto; }
+    #article-mobile-menu a { font-size: 14px; }
+    #article-mobile-menu .close-btn {
+      position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none;
+      cursor: pointer; color: var(--clay); padding: 0.5rem;
+    }
     /* HERO */
     .article-hero {
       position: relative; height: clamp(300px, 45vh, 480px);
@@ -354,22 +383,43 @@
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="../journal.html" class="nav-back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      Back to Journal
-    </a>
+    <div class="nav-links-left">
+      <a href="../about.html" class="nav-link">About</a>
+      <a href="../journal.html" class="nav-link">Journals</a>
+      <a href="../sessions.html" class="nav-link">Sessions</a>
+      <a href="../ayurveda.html" class="nav-link">Ayurveda</a>
+      <a href="../community.html" class="nav-link">Community</a>
+    </div>
     <a href="../index.html" class="nav-logo">
-      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" style="color:#D95D39;">
+      <svg width="26" height="26" viewBox="0 0 100 100" fill="none">
         <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3"/>
         <path d="M50 15C50 15 70 40 70 55C70 66 61 75 50 75C39 75 30 66 30 55C30 40 50 15 50 15Z" stroke="currentColor" stroke-width="3"/>
         <circle cx="50" cy="85" r="3" fill="currentColor"/>
-        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity=".8"/>
+        <path d="M20 50H80" stroke="currentColor" stroke-width="1.5" stroke-opacity="0.8"/>
       </svg>
       <span class="nav-logo-text">Samarpan</span>
     </a>
-    <div style="width:120px;"></div>
+    <div class="nav-links-right">
+      <a href="../booking.html" class="nav-cta">Start Your Healing Journey</a>
+    </div>
+    <button class="nav-hamburger" onclick="toggleArticleMenu()" aria-label="Open menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+
+<div id="article-mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="close-btn" onclick="toggleArticleMenu()" aria-label="Close menu">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="../index.html" class="nav-link">Home</a>
+  <a href="../about.html" class="nav-link">About</a>
+  <a href="../journal.html" class="nav-link">Journals</a>
+  <a href="../sessions.html" class="nav-link">Sessions</a>
+  <a href="../ayurveda.html" class="nav-link">Ayurveda</a>
+  <a href="../community.html" class="nav-link">Community</a>
+  <a href="../booking.html" class="nav-cta">Start Your Healing Journey</a>
+</div>
 
 <!-- HERO -->
 <div class="article-hero">
@@ -470,5 +520,15 @@ function copyLink() {
 }
 </script>
 
+
+<script>
+  var articleMenuOpen = false;
+  function toggleArticleMenu() {
+    articleMenuOpen = !articleMenuOpen;
+    document.getElementById('article-mobile-menu').classList.toggle('active', articleMenuOpen);
+    document.body.style.overflow = articleMenuOpen ? 'hidden' : '';
+  }
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && articleMenuOpen) toggleArticleMenu(); });
+</script>
 </body>
 </html>
