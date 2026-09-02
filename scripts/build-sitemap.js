@@ -29,6 +29,38 @@ const ROOT = path.join(__dirname, '..');
 const SITEMAP_PATH = path.join(ROOT, 'sitemap.xml');
 const SITE_URL = 'https://thesamarpan.co.in';
 
+// Cloudflare Pages' build container does a SHALLOW git clone (depth 1) by
+// default, so `git log -1 -- <file>` returns nothing for any file not
+// touched in that single fetched commit - which silently made every
+// lastmod fall back to "today", on every single page, on every build.
+// Fix: try to deepen the clone once at the start. If that's not possible
+// (e.g. truly no history available), fall back to whatever lastmod the
+// PREVIOUS sitemap.xml already had for that URL, rather than stamping
+// today's date on everything - a sitemap where every page shows the same
+// "updated today" date looks exactly like the ping-spam pattern Google
+// said it stopped trusting, and would undermine the whole point of this.
+function ensureFullHistory() {
+  try {
+    const isShallow = execSync('git rev-parse --is-shallow-repository', { cwd: ROOT }).toString().trim();
+    if (isShallow === 'true') {
+      execSync('git fetch --unshallow --quiet', { cwd: ROOT, stdio: 'ignore' });
+    }
+  } catch (e) {
+    // Not a git repo, or fetch failed (e.g. no network, or already full) - continue anyway.
+  }
+}
+
+function loadPreviousLastmods() {
+  const map = {};
+  if (!fs.existsSync(SITEMAP_PATH)) return map;
+  try {
+    const prevXml = fs.readFileSync(SITEMAP_PATH, 'utf8');
+    const blocks = [...prevXml.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)];
+    for (const [, loc, lastmod] of blocks) map[loc] = lastmod;
+  } catch (e) { /* ignore, start fresh */ }
+  return map;
+}
+
 // Confirmed real, live, linked root-level pages only. See note above for why
 // this is an allowlist rather than "every .html file at root".
 const ROOT_PAGES = [
@@ -60,11 +92,14 @@ const ROOT_PAGES = [
 
 const EXCLUDED_JOURNAL_FILES = new Set(['sample-welcome-article.html', 'articles.html']);
 
-function getLastmod(relPath) {
+function getLastmod(relPath, loc, previousLastmods) {
   try {
     const out = execSync(`git log -1 --format=%cI -- "${relPath}"`, { cwd: ROOT }).toString().trim();
     if (out) return out.slice(0, 10); // YYYY-MM-DD
   } catch (e) { /* fall through */ }
+  // git couldn't tell us - reuse the previous sitemap's value if we have
+  // one, instead of falsely claiming this page changed today.
+  if (previousLastmods[loc]) return previousLastmods[loc];
   return new Date().toISOString().slice(0, 10);
 }
 
@@ -93,6 +128,9 @@ function collectFolder(name, priority) {
 }
 
 function main() {
+  ensureFullHistory();
+  const previousLastmods = loadPreviousLastmods();
+
   const entries = [
     ...ROOT_PAGES,
     { file: 'journal/articles.html', priority: '0.6', changefreq: 'monthly' },
@@ -116,8 +154,12 @@ function main() {
       continue;
     }
 
-    const loc = entry.file === 'index.html' ? `${SITE_URL}/` : `${SITE_URL}/${entry.file}`;
-    const lastmod = getLastmod(entry.file);
+    // Cloudflare Pages auto-redirects /page.html -> /page (confirmed live).
+    // Point the sitemap straight at that canonical clean URL rather than
+    // making every crawler follow a redirect hop on every single page.
+    const cleanPath = entry.file === 'index.html' ? '' : entry.file.replace(/\.html$/, '');
+    const loc = `${SITE_URL}/${cleanPath}`;
+    const lastmod = getLastmod(entry.file, loc, previousLastmods);
 
     xml += `  <url>\n`;
     xml += `    <loc>${loc}</loc>\n`;
