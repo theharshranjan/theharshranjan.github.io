@@ -49,6 +49,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
@@ -269,6 +270,7 @@
         <div class="mb-5"><label class="block text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted);">Full Name *</label><input type="text" name="fullName" required class="w-full border rounded-sm px-4 py-3 text-sm" style="border-color:var(--border);background:var(--bg);"></div>
         <div class="mb-5"><label class="block text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted);">Email *</label><input type="email" name="email" required class="w-full border rounded-sm px-4 py-3 text-sm" style="border-color:var(--border);background:var(--bg);"></div>
         <div class="mb-5"><label class="block text-xs font-bold uppercase tracking-widest mb-2" style="color:var(--text-muted);">Phone *</label><input type="tel" name="phone" required class="w-full border rounded-sm px-4 py-3 text-sm" style="border-color:var(--border);background:var(--bg);"></div>
+        <div id="turnstile-widget-banaras-retreat"></div>
         <button type="submit" class="w-full bg-brand-black text-white px-6 py-3 text-[10px] font-bold uppercase tracking-widest rounded-sm hover:bg-clay transition">Register for This Event</button>
         <p class="form-status text-xs mt-3" style="color:var(--text-muted);"></p>
       </form>
@@ -277,6 +279,48 @@
         var form = document.getElementById('retreatForm-banaras-retreat');
         if (!form) return;
         var loadTime = Date.now();
+
+        // Invisible Turnstile widget - solves silently in the background;
+        // the token is usually ready well before the visitor finishes
+        // filling the form and clicks submit.
+        var turnstileToken = '';
+        function renderTurnstileWidget() {
+          if (window.turnstile) {
+            turnstile.render('#turnstile-widget-banaras-retreat', {
+              sitekey: '0x4AAAAAAEq82AoyQad6lxhL',
+              size: 'invisible',
+              callback: function(token) { turnstileToken = token; }
+            });
+          } else {
+            setTimeout(renderTurnstileWidget, 300); // api.js not loaded yet - retry shortly
+          }
+        }
+        renderTurnstileWidget();
+
+        // Posts this registration into the new Command Center backend (D1
+        // retreat_bookings table) - this is what makes it show up in the
+        // admin Retreats screen. Runs alongside the existing Apps Script
+        // submission below and never blocks or delays it - if this call
+        // fails for any reason, the visitor's confirmation message (driven
+        // by the Apps Script call) is completely unaffected.
+        function submitToCommandCenter(data) {
+          fetch('https://samarpan-command-api.justtheself.workers.dev/api/public/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              formType: 'retreat_registration',
+              retreatSlug: 'banaras-retreat',
+              name: data.fullName,
+              email: data.email,
+              phone: data.phone,
+              hp_field: data.website,
+              formLoadedAt: loadTime,
+              pageUrl: window.location.pathname,
+              turnstileToken: turnstileToken
+            })
+          }).catch(function(e) { console.error('New backend submit failed (retreat_registration):', e); });
+        }
+
         form.addEventListener('submit', function(e) {
           e.preventDefault();
           if (Date.now() - loadTime < 3000) return; // timing check, same as other forms
@@ -284,6 +328,7 @@
           var status = form.querySelector('.form-status');
           status.textContent = 'Submitting...';
           var data = Object.fromEntries(new FormData(form).entries());
+          submitToCommandCenter(data);
           fetch(form.dataset.endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
@@ -393,5 +438,34 @@
 </footer>
 <script>(function(){ var y=document.getElementById('copyrightYear'); if(y) y.textContent=new Date().getFullYear(); })();</script>
 <!-- CMS:FOOTER:END -->
+
+<!-- Site-wide nav behaviour - this page was missing it entirely, which is
+     why the navbar stayed transparent/white-text (unreadable on this
+     page's light background) and the mobile hamburger button did nothing. -->
+<script>
+  function toggleMenu() {
+    var menu = document.getElementById('mobile-menu');
+    var iconMenu = document.getElementById('hamburger-icon-menu');
+    var iconClose = document.getElementById('hamburger-icon-close');
+    if (!menu) return;
+    menu.classList.toggle('active');
+    var open = menu.classList.contains('active');
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (iconMenu) iconMenu.classList.toggle('hidden', open);
+    if (iconClose) iconClose.classList.toggle('hidden', !open);
+  }
+  (function() {
+    var navbar = document.getElementById('navbar');
+    if (!navbar) return;
+    function updateNavbar() {
+      if (window.scrollY > 40) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    }
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    updateNavbar(); // set correct state immediately on page load, not just after first scroll
+  })();
+  if (window.lucide) { try { lucide.createIcons(); } catch (e) {} }
+</script>
+
 </body>
 </html>
