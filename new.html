@@ -2617,14 +2617,26 @@
   var xLoadedAt = Date.now(); // for server-side timing check (rejects bot submits <2s after load)
 
   /** Gets a fresh reCAPTCHA v3 token scoped to a named action, so each form is distinguishable in the reCAPTCHA admin console. */
+  // ALL grecaptcha.execute() calls on this page - across every action, every
+  // form - must run one at a time. Calling execute() again before a prior
+  // call resolves silently invalidates that earlier pending token (Google
+  // later reports it as "invalid-input-response" even though it looks
+  // well-formed). A single site-wide queue guarantees this regardless of
+  // how many forms/prefetches fire close together.
+  var _recaptchaQueue = Promise.resolve();
   function getRecaptchaToken(action) {
-    return new Promise(function(resolve) {
-      try {
-        grecaptcha.ready(function() {
-          grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
-        });
-      } catch (err) { resolve(''); }
-    });
+    var runIt = function() {
+      return new Promise(function(resolve) {
+        try {
+          grecaptcha.ready(function() {
+            grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: action}).then(resolve).catch(function(){ resolve(''); });
+          });
+        } catch (err) { resolve(''); }
+      });
+    };
+    var result = _recaptchaQueue.then(runIt);
+    _recaptchaQueue = result.catch(function(){}); // keep the chain alive even if this call ended up resolving to ''
+    return result;
   }
 
   /* SPEED: pre-fetch reCAPTCHA tokens ahead of submit time. grecaptcha.execute()
@@ -2634,18 +2646,9 @@
      just await the (usually already-resolved) promise at submit time. Tokens are
      valid ~2 min, well within any realistic fill time. */
   var _tokenCache = {};
-  async function prefetchToken(action) {
-    // IMPORTANT: these two execute() calls must NOT run concurrently. Calling
-    // grecaptcha.execute() again before a prior call resolves silently
-    // invalidates the earlier pending token (Google then rejects it later as
-    // "invalid-input-response" even though it looks well-formed). So the
-    // second call only starts after the first has actually resolved.
-    var p1 = getRecaptchaToken(action);
-    _tokenCache[action] = { promise: p1, ts: Date.now() };
-    await p1;
-    var p2 = getRecaptchaToken(action);
-    _tokenCache[action+'__2'] = { promise: p2, ts: Date.now() };
-    await p2;
+  function prefetchToken(action) {
+    _tokenCache[action] = { promise: getRecaptchaToken(action), ts: Date.now() };
+    _tokenCache[action+'__2'] = { promise: getRecaptchaToken(action), ts: Date.now() };
   }
   function getTokenFast(action) {
     var c = _tokenCache[action];
@@ -2858,8 +2861,8 @@
     setBtnLoading('newsSubmitBtn', true);
     try {
       var website = document.getElementById('newsWebsite').value;
-      var token = await getTokenFast('newsletter');
-      var token2 = await getTokenFast2('newsletter');
+      var tokens = await Promise.all([getTokenFast('newsletter'), getTokenFast2('newsletter')]);
+      var token = tokens[0], token2 = tokens[1];
       var newApiPromise = submitToPublicApi('newsletter', {name:'Newsletter Subscriber', email:email, message:'Inner Circle Monthly opt-in', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (newsletter):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'newsletter', email:email, message:'Inner Circle Monthly opt-in', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       document.getElementById('newsletterStatus').innerHTML = '<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle!</p>';
@@ -2886,8 +2889,8 @@
     setBtnLoading('formSubmitBtn', true);
     try {
       var website = document.getElementById('formWebsite').value;
-      var token = await getTokenFast('contact_form');
-      var token2 = await getTokenFast2('contact_form');
+      var tokens = await Promise.all([getTokenFast('contact_form'), getTokenFast2('contact_form')]);
+      var token = tokens[0], token2 = tokens[1];
       var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (contact_form):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'contact_form', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
@@ -2933,8 +2936,8 @@
     setBtnLoading('fabBookingSubmitBtn', true);
     try {
       var website = document.getElementById('fabWebsite').value;
-      var token = await getTokenFast('fab_booking');
-      var token2 = await getTokenFast2('fab_booking');
+      var tokens = await Promise.all([getTokenFast('fab_booking'), getTokenFast2('fab_booking')]);
+      var token = tokens[0], token2 = tokens[1];
       var newApiPromise = submitToPublicApi('booking', {name:name, email:email, phone:phone, interestedIn:'Quick Booking (FAB)', message:'Requested a callback via the floating Book Now button.', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (fab_booking):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'fab_quick_booking', name:name, email:email||'Not Provided', phone:phone, service:'Quick Booking (FAB)', message:'Requested a callback via the floating Book Now button.', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('fabBookingStatus', true, "Got it! We'll call/WhatsApp you within 24 hours.");
@@ -2976,8 +2979,8 @@
     setBtnLoading('icSubmitBtn', true);
     try {
       var website = document.getElementById('icWebsite').value;
-      var token = await getTokenFast('inline_consult');
-      var token2 = await getTokenFast2('inline_consult');
+      var tokens = await Promise.all([getTokenFast('inline_consult'), getTokenFast2('inline_consult')]);
+      var token = tokens[0], token2 = tokens[1];
       var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:'[Free Consultation Request] '+(message||''), hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (inline_consult):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'inline_consult', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
@@ -3022,8 +3025,8 @@
     setBtnLoading('volSubmitBtn', true);
     try {
       var website = document.getElementById('volWebsite').value;
-      var token = await getTokenFast('volunteer_signup');
-      var token2 = await getTokenFast2('volunteer_signup');
+      var tokens = await Promise.all([getTokenFast('volunteer_signup'), getTokenFast2('volunteer_signup')]);
+      var token = tokens[0], token2 = tokens[1];
       var newApiPromise = submitToPublicApi('volunteer', {name:name, email:email, phone:phone, interestedIn:'Volunteer — '+interest, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (volunteer_signup):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'volunteer_signup', name:name, email:email, phone:phone||'Not Provided', service:'Volunteer — '+interest, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('volunteerFormStatus', true, "Thank you! Our team will reach out within 24 hours.");
