@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="tailwind-compiled.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://www.google.com/recaptcha/api.js?render=6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz" async defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HMM7CJSCW7"></script>
   <script>
@@ -2611,12 +2612,13 @@
   var FIREBASE_API_KEY  = 'AIzaSyDSK1aO2VlYeUAdf5IZ8dA9Y69wM7pkrHQ';
   var FIRESTORE_BASE    = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT + '/databases/(default)/documents/';
 
-  /* ── FORM BACKEND (Google Apps Script) + reCAPTCHA v3 ── */
+  /* ── FORM BACKEND (Google Apps Script - legacy) + reCAPTCHA v3 ── */
   var APPS_SCRIPT_URL   = 'https://script.google.com/macros/s/AKfycbx-7HHS4_aeb5dyCPsvwMhyPfajPIK6j8uB7XLaaB-YCA8bkLlTICXRYhd35RQPhenj/exec';
   var RECAPTCHA_SITE_KEY = '6LdE_T4tAAAAAPN3ys6AlZGtgk3pkoudHIPeqIPz';
   var xLoadedAt = Date.now(); // for server-side timing check (rejects bot submits <2s after load)
 
-  /** Gets a fresh reCAPTCHA v3 token scoped to a named action, so each form is distinguishable in the reCAPTCHA admin console. */
+  /** Gets a fresh reCAPTCHA v3 token scoped to a named action, so each form is distinguishable in the reCAPTCHA admin console.
+      Only used for the legacy Apps Script backend (submitToBackend) - the new Command Center backend uses Turnstile instead (below). */
   // ALL grecaptcha.execute() calls on this page - across every action, every
   // form - must run one at a time. Calling execute() again before a prior
   // call resolves silently invalidates that earlier pending token (Google
@@ -2639,16 +2641,56 @@
     return result;
   }
 
-  /* SPEED: pre-fetch reCAPTCHA tokens ahead of submit time. grecaptcha.execute()
-     normally costs a few hundred ms; instead of paying that after the user clicks
+  /* ── TURNSTILE (Cloudflare) ── powers the new Command Center backend (submitToPublicApi / samarpan-command-api).
+     Mirrors the reCAPTCHA v3 "invisible, action-scoped token" pattern: render a hidden widget in
+     execute-mode, trigger it, resolve the promise from its callback, then discard the widget.
+     Same site-wide queue discipline as reCAPTCHA above, to avoid overlapping widget instances. */
+  var TURNSTILE_SITE_KEY = '0x4AAAAAAEq82AoyQad6lxhL';
+  var _turnstileQueue = Promise.resolve();
+  function getTurnstileToken(action) {
+    var runIt = function() {
+      return new Promise(function(resolve) {
+        try {
+          if (typeof turnstile === 'undefined') { resolve(''); return; }
+          var container = document.createElement('div');
+          container.style.display = 'none';
+          document.body.appendChild(container);
+          var widgetId;
+          var finish = function(token) {
+            resolve(token || '');
+            try { turnstile.remove(widgetId); } catch (e) {}
+            try { container.remove(); } catch (e) {}
+          };
+          widgetId = turnstile.render(container, {
+            sitekey: TURNSTILE_SITE_KEY,
+            action: action,
+            execution: 'execute',
+            appearance: 'interaction-only',
+            callback: function(token) { finish(token); },
+            'error-callback': function() { finish(''); },
+            'timeout-callback': function() { finish(''); }
+          });
+          turnstile.execute(widgetId, { action: action });
+        } catch (err) { resolve(''); }
+      });
+    };
+    var result = _turnstileQueue.then(runIt);
+    _turnstileQueue = result.catch(function(){});
+    return result;
+  }
+
+  /* SPEED: pre-fetch tokens ahead of submit time. Both grecaptcha.execute() and
+     turnstile.execute() cost a few hundred ms; instead of paying that after the user clicks
      Submit, we kick it off as soon as a form/popup becomes visible (or on page
      load for always-visible forms), cache the pending promise per action, and
      just await the (usually already-resolved) promise at submit time. Tokens are
-     valid ~2 min, well within any realistic fill time. */
+     valid ~2 min, well within any realistic fill time.
+     "token" (legacy reCAPTCHA, for the Apps Script backend) and "token2" (Turnstile,
+     for the new Command Center backend) are prefetched in parallel. */
   var _tokenCache = {};
   function prefetchToken(action) {
     _tokenCache[action] = { promise: getRecaptchaToken(action), ts: Date.now() };
-    _tokenCache[action+'__2'] = { promise: getRecaptchaToken(action), ts: Date.now() };
+    _tokenCache[action+'__2'] = { promise: getTurnstileToken(action), ts: Date.now() };
   }
   function getTokenFast(action) {
     var c = _tokenCache[action];
@@ -2659,7 +2701,12 @@
     return getRecaptchaToken(action);
   }
   function getTokenFast2(action) {
-    return getTokenFast(action+'__2');
+    var c = _tokenCache[action+'__2'];
+    if (c && (Date.now() - c.ts) < 100000) {
+      delete _tokenCache[action+'__2'];
+      return c.promise;
+    }
+    return getTurnstileToken(action);
   }
   try { grecaptcha.ready(function(){}); } catch(err) {}
   window.addEventListener('load', function() {
@@ -2863,7 +2910,7 @@
       var website = document.getElementById('newsWebsite').value;
       var tokens = await Promise.all([getTokenFast('newsletter'), getTokenFast2('newsletter')]);
       var token = tokens[0], token2 = tokens[1];
-      var newApiPromise = submitToPublicApi('newsletter', {name:'Newsletter Subscriber', email:email, message:'Inner Circle Monthly opt-in', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (newsletter):', e); });
+      var newApiPromise = submitToPublicApi('newsletter', {name:'Newsletter Subscriber', email:email, message:'Inner Circle Monthly opt-in', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (newsletter):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'newsletter', email:email, message:'Inner Circle Monthly opt-in', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       document.getElementById('newsletterStatus').innerHTML = '<p class="text-xs font-bold mt-1" style="color:#4A5D4F;">✓ Welcome to the Inner Circle!</p>';
       document.getElementById('newsEmail').value = '';
@@ -2891,7 +2938,7 @@
       var website = document.getElementById('formWebsite').value;
       var tokens = await Promise.all([getTokenFast('contact_form'), getTokenFast2('contact_form')]);
       var token = tokens[0], token2 = tokens[1];
-      var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (contact_form):', e); });
+      var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (contact_form):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'contact_form', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('formStatus', true, "Received! We will respond personally within 24 hours.");
       document.getElementById('bookingForm').reset();
@@ -2938,7 +2985,7 @@
       var website = document.getElementById('fabWebsite').value;
       var tokens = await Promise.all([getTokenFast('fab_booking'), getTokenFast2('fab_booking')]);
       var token = tokens[0], token2 = tokens[1];
-      var newApiPromise = submitToPublicApi('booking', {name:name, email:email, phone:phone, interestedIn:'Quick Booking (FAB)', message:'Requested a callback via the floating Book Now button.', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (fab_booking):', e); });
+      var newApiPromise = submitToPublicApi('booking', {name:name, email:email, phone:phone, interestedIn:'Quick Booking (FAB)', message:'Requested a callback via the floating Book Now button.', hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (fab_booking):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'fab_quick_booking', name:name, email:email||'Not Provided', phone:phone, service:'Quick Booking (FAB)', message:'Requested a callback via the floating Book Now button.', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('fabBookingStatus', true, "Got it! We'll call/WhatsApp you within 24 hours.");
       document.getElementById('fabBookingForm').reset();
@@ -2981,7 +3028,7 @@
       var website = document.getElementById('icWebsite').value;
       var tokens = await Promise.all([getTokenFast('inline_consult'), getTokenFast2('inline_consult')]);
       var token = tokens[0], token2 = tokens[1];
-      var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:'[Free Consultation Request] '+(message||''), hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (inline_consult):', e); });
+      var newApiPromise = submitToPublicApi('contact', {name:name, email:email, phone:phone, interestedIn:service, message:'[Free Consultation Request] '+(message||''), hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (inline_consult):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'inline_consult', name:name, email:email, phone:phone||'Not Provided', service:service, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('inlineConsultStatus', true, "Done! Our team will contact you within 24 hours to schedule your free session.");
       document.getElementById('inlineConsultForm').reset();
@@ -3027,7 +3074,7 @@
       var website = document.getElementById('volWebsite').value;
       var tokens = await Promise.all([getTokenFast('volunteer_signup'), getTokenFast2('volunteer_signup')]);
       var token = tokens[0], token2 = tokens[1];
-      var newApiPromise = submitToPublicApi('volunteer', {name:name, email:email, phone:phone, interestedIn:'Volunteer — '+interest, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (volunteer_signup):', e); });
+      var newApiPromise = submitToPublicApi('volunteer', {name:name, email:email, phone:phone, interestedIn:'Volunteer — '+interest, message:message, hp_field:website, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (volunteer_signup):', e); });
       await Promise.all([newApiPromise, submitToBackend({formType:'volunteer_signup', name:name, email:email, phone:phone||'Not Provided', service:'Volunteer — '+interest, message:message||'No message', website:website, pageLoadedAt:xLoadedAt, recaptchaToken:token})]);
       setStatus('volunteerFormStatus', true, "Thank you! Our team will reach out within 24 hours.");
       document.getElementById('volunteerForm').reset();
@@ -3135,7 +3182,7 @@
       writeLeadToFirestore('homepage_quiz_results', {email:qEmail, name:qName||'Anonymous', dosha:info.name});
       Promise.all([getRecaptchaToken('quiz_result'), getRecaptchaToken('quiz_result')]).then(function(toks) {
         var token = toks[0], token2 = toks[1];
-        submitToPublicApi('quiz_result', {name:qName||'Anonymous', email:qEmail, interestedIn:'Dosha Quiz', message:'Dosha result: '+info.name, hp_field:qWebsite, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (quiz_result):', e); });
+        submitToPublicApi('quiz_result', {name:qName||'Anonymous', email:qEmail, interestedIn:'Dosha Quiz', message:'Dosha result: '+info.name, hp_field:qWebsite, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (quiz_result):', e); });
         submitToBackend({formType:'quiz_result', email:qEmail, name:qName||'Anonymous', dosha:info.name, website:qWebsite, pageLoadedAt:xLoadedAt, recaptchaToken:token}).catch(function(){});
       });
     }
