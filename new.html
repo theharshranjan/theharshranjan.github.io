@@ -3133,7 +3133,9 @@
     lucide.createIcons();
     if (qEmail && isEmail(qEmail)) {
       writeLeadToFirestore('homepage_quiz_results', {email:qEmail, name:qName||'Anonymous', dosha:info.name});
-      getRecaptchaToken('quiz_result').then(function(token) {
+      Promise.all([getRecaptchaToken('quiz_result'), getRecaptchaToken('quiz_result')]).then(function(toks) {
+        var token = toks[0], token2 = toks[1];
+        submitToPublicApi('quiz_result', {name:qName||'Anonymous', email:qEmail, interestedIn:'Dosha Quiz', message:'Dosha result: '+info.name, hp_field:qWebsite, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, recaptchaToken:token2}).catch(function(e){ console.error('New backend submit failed (quiz_result):', e); });
         submitToBackend({formType:'quiz_result', email:qEmail, name:qName||'Anonymous', dosha:info.name, website:qWebsite, pageLoadedAt:xLoadedAt, recaptchaToken:token}).catch(function(){});
       });
     }
