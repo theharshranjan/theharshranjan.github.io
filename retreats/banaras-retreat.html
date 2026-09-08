@@ -303,8 +303,12 @@
         // submission below and never blocks or delays it - if this call
         // fails for any reason, the visitor's confirmation message (driven
         // by the Apps Script call) is completely unaffected.
+        // Drives the visitor-facing status message - this is the reliable
+        // path, unlike the legacy Apps Script endpoint below (which is
+        // currently blocked by a CORS misconfiguration on Google's side,
+        // unrelated to this migration - see form.dataset.endpoint fetch).
         function submitToCommandCenter(data) {
-          fetch('https://samarpan-command-api.justtheself.workers.dev/api/public/submit', {
+          return fetch('https://samarpan-command-api.justtheself.workers.dev/api/public/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -318,7 +322,19 @@
               pageUrl: window.location.pathname,
               turnstileToken: turnstileToken
             })
-          }).catch(function(e) { console.error('New backend submit failed (retreat_registration):', e); });
+          });
+        }
+
+        // Best-effort backup copy to the Google Sheet - fired in the
+        // background, never awaited or allowed to affect the status message.
+        // If Google's CORS issue on this endpoint gets fixed later, this
+        // starts working again automatically with no code change needed.
+        function submitToSheetBackup(data) {
+          fetch(form.dataset.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(data)
+          }).catch(function(e) { console.error('Sheet backup submit failed (CORS or network):', e); });
         }
 
         form.addEventListener('submit', function(e) {
@@ -328,15 +344,13 @@
           var status = form.querySelector('.form-status');
           status.textContent = 'Submitting...';
           var data = Object.fromEntries(new FormData(form).entries());
-          submitToCommandCenter(data);
-          fetch(form.dataset.endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(data)
-          }).then(function() {
+          submitToSheetBackup(data);
+          submitToCommandCenter(data).then(function(resp) {
+            if (!resp.ok) throw new Error('Command Center submit failed: ' + resp.status);
             status.textContent = 'Thank you! We will contact you shortly.';
             form.reset();
-          }).catch(function() {
+          }).catch(function(e) {
+            console.error('New backend submit failed (retreat_registration):', e);
             status.textContent = 'Something went wrong — please try again or email us directly.';
           });
         });
