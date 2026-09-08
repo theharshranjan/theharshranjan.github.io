@@ -457,9 +457,12 @@
   (function() {
     var navbar = document.getElementById('navbar');
     if (!navbar) return;
+    // This page (unlike the homepage) has no dark hero photo behind the
+    // navbar, so the transparent/white-text nav state is never appropriate
+    // here - keep it solid/readable from the very first paint, not just
+    // after the visitor scrolls past 40px.
     function updateNavbar() {
-      if (window.scrollY > 40) navbar.classList.add('scrolled');
-      else navbar.classList.remove('scrolled');
+      navbar.classList.add('scrolled');
     }
     window.addEventListener('scroll', updateNavbar, { passive: true });
     updateNavbar(); // set correct state immediately on page load, not just after first scroll
