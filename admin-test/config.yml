@@ -1,0 +1,338 @@
+backend:
+  name: github
+  repo: theharshranjan/theharshranjan.github.io   # <-- CHANGE if your repo name is different
+  branch: main
+  base_url: https://samarpan-cms-auth.justtheself.workers.dev   # <-- set after deploying the OAuth worker
+  auth_endpoint: auth
+
+publish_mode: editorial_workflow
+
+media_folder: "journal-images"
+public_folder: "/journal-images"
+
+collections:
+  - name: "journal"
+    label: "Journal Articles"
+    folder: "content/journal"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "URL Slug (letters, numbers, dashes only)", name: "slug", widget: "string", hint: "e.g. agni-sacred-fire-ayurvedic-health" }
+      - { label: "Short Description (used for card + SEO)", name: "description", widget: "text" }
+      - label: "Category Badge"
+        name: "badge"
+        widget: "select"
+        options: ["Classical Review", "Research Review", "Narrative Review", "Clinical Insight", "Student Voice", "Case Study", "Editorial", "Systematic Review", "Practitioner Perspective", "Book Review"]
+      - label: "Badge Colour (pick any colour for any badge type above)"
+        name: "badgeClass"
+        widget: "select"
+        options:
+          - { label: "Green", value: "badge-classical" }
+          - { label: "Blue", value: "badge-literature" }
+          - { label: "Orange", value: "badge-narrative" }
+          - { label: "Purple", value: "badge-clinical" }
+          - { label: "Grey", value: "badge-student" }
+      - { label: "Cover Image (used on the Journal listing card)", name: "image", widget: "image" }
+      - label: "Banner Icon (shown at the top of the article page)"
+        name: "bannerIcon"
+        widget: "select"
+        default: "leaf"
+        options: ["leaf", "stethoscope", "brain", "heart-pulse", "activity", "sun", "moon", "flame", "droplet", "flask-conical", "map-pin", "users", "book-open"]
+      - { label: "Tags (topics — first one is used for the breadcrumb)", name: "tags", widget: "list" }
+      - { label: "Author Name", name: "author", widget: "string", default: "Samarpan Editorial Team" }
+      - { label: "Author Photo (optional — shown next to their name)", name: "authorPhoto", widget: "image", required: false }
+      - { label: "Author Role", name: "authorRole", widget: "string", default: "Contributing Author" }
+      - { label: "Author Bio (shown at the end of the article)", name: "authorBio", widget: "text", default: "Article contributed to The Samarpan Journal." }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Article Body", name: "body", widget: "markdown" }
+
+  - name: "issues"
+    label: "Journal Issues"
+    folder: "content/issues"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Issue Title", name: "title", widget: "string", hint: "e.g. Exploring PCOS through Ayurveda, Nutrition and Modern Research" }
+      - { label: "URL Slug (letters, numbers, dashes only)", name: "slug", widget: "string" }
+      - { label: "Volume Label", name: "volume", widget: "string", default: "Volume 1" }
+      - { label: "Issue Number Label", name: "issueNumber", widget: "string", default: "Issue 01" }
+      - { label: "Cover Title (short — shown on the dark issue cover panel)", name: "coverTitle", widget: "string", hint: "e.g. Integrative Women's Health" }
+      - { label: "Short Description (used on the homepage Featured Issue card)", name: "description", widget: "text" }
+      - { label: "Cover Image (used on the homepage Recent Issues card)", name: "coverImage", widget: "image", required: false }
+      - label: "Featured on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        hint: "Only ONE issue should be marked Featured at a time. If more than one is marked Featured, the most recently published one wins automatically — so you never need to un-feature the old one manually, just publish the new issue as Featured and it takes over."
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - label: "Category Tags shown as pills on the card (e.g. Editorial, Research Review, Clinical Insight)"
+        name: "categoryTags"
+        widget: "list"
+        default: ["Editorial"]
+      - label: "Article Slugs Included in This Issue (must exactly match each article's URL Slug field, one per line)"
+        name: "articleSlugs"
+        widget: "list"
+        required: false
+      - { label: "Issue PDF (optional — click 'Choose an image' to upload a PDF from your computer; leave blank to hide the Download PDF button)", name: "pdfLink", widget: "file", required: false, media_library: { config: { multiple: false } } }
+      - { label: "Issue Editorial Note (optional — shown at the top of the issue's own page)", name: "body", widget: "markdown", required: false }
+
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Client Name (e.g. Sarah T.)", name: "name", widget: "string" }
+      - { label: "Location (e.g. London, UK)", name: "location", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Ayurveda", "Yoga", "Ajapa Japa", "Mantra", "Psychology", "Women's Health", "Depression", "Nutrition", "Meditation"]
+      - label: "Accent Colour"
+        name: "accent"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay (orange)", value: "#D95D39" }
+          - { label: "Sage (green)", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - { label: "Rating (1-5 stars)", name: "rating", widget: "number", default: 5, min: 1, max: 5, value_type: "int" }
+      - { label: "Testimonial Quote", name: "quote", widget: "text" }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - { label: "Display Order (lower numbers show first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+
+  - name: "retreats"
+    label: "Retreats & Events"
+    folder: "content/retreats"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Retreat / Event Title", name: "title", widget: "string" }
+      - { label: "URL Slug", name: "slug", widget: "string", hint: "e.g. kerala-ayurveda-retreat-nov-2026" }
+      - { label: "Location", name: "location", widget: "string", hint: "e.g. Kerala, India" }
+      - label: "Card Badge Label (matches existing tags on the site)"
+        name: "eventTag"
+        widget: "select"
+        default: "Retreat"
+        options: ["Yatra", "Retreat", "Meditation", "Workshop", "Cohort"]
+      - { label: "Start Date", name: "startDate", widget: "datetime" }
+      - { label: "End Date", name: "endDate", widget: "datetime" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - { label: "Short Description (for the homepage calendar card)", name: "description", widget: "text" }
+      - { label: "Full Details (shown on the event's own page)", name: "body", widget: "markdown", required: false }
+      - { label: "Price", name: "price", widget: "string", required: false, hint: "e.g. ₹45,000 or leave blank" }
+      - { label: "Total Spots Available", name: "spots", widget: "number", required: false, value_type: "int" }
+      - label: "Show on Homepage Calendar?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+      - label: "Registration Form Fields"
+        name: "formFields"
+        widget: "list"
+        hint: "Build a custom form for THIS event only. Add one entry per field you want on the form."
+        fields:
+          - { label: "Field Label (shown to visitor)", name: "label", widget: "string", hint: "e.g. Full Name, Dietary Requirements" }
+          - { label: "Field Name (no spaces, used internally)", name: "name", widget: "string", hint: "e.g. fullName, dietaryReqs" }
+          - label: "Field Type"
+            name: "type"
+            widget: "select"
+            options: ["text", "email", "tel", "number", "textarea", "select", "checkbox"]
+            default: "text"
+          - { label: "Required?", name: "required", widget: "boolean", default: true }
+          - { label: "Options (only for 'select' type — one per line)", name: "options", widget: "list", required: false }
+
+  - name: "faqs"
+    label: "FAQs"
+    folder: "content/faqs"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: question
+    fields:
+      - { label: "Question", name: "question", widget: "string" }
+      - { label: "Answer", name: "answer", widget: "text" }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "videos"
+    label: "Media Centre Videos"
+    folder: "content/videos"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Subtitle / Description", name: "subtitle", widget: "string" }
+      - { label: "YouTube Video ID (the part after v= or youtu.be/, e.g. sgNDrMuCLJ4)", name: "youtubeId", widget: "string" }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Show on Homepage?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "media_items"
+    label: "Media Centre — Podcasts / Interviews / News / Events"
+    folder: "content/media_items"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - label: "Type (which tab this shows under)"
+        name: "type"
+        widget: "select"
+        options: ["Podcast", "Interview", "News", "Event"]
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Short Description (shown on the card)", name: "description", widget: "text" }
+      - label: "Card Behaviour"
+        name: "linkMode"
+        widget: "select"
+        default: "internal"
+        options:
+          - { label: "Open its own page on this site (recommended)", value: "internal" }
+          - { label: "Link out to an external URL instead", value: "external" }
+      - { label: "External Link (only used if 'Link out' selected above)", name: "link", widget: "string", required: false, default: "#journal" }
+      - { label: "Full Content (only used for 'own page' — write the podcast notes / interview transcript / news writeup here)", name: "body", widget: "markdown", required: false }
+      - { label: "Cover Image (used on its own page, optional)", name: "image", widget: "image", required: false }
+      - { label: "Display Order (lower shows first)", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - label: "Published?"
+        name: "featured"
+        widget: "boolean"
+        default: true
+
+  - name: "publications"
+    label: "Publications (Research & Publishing)"
+    folder: "content/publications"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - label: "Tag"
+        name: "tag"
+        widget: "select"
+        options: ["Journal", "Handbook", "Booklet", "Research"]
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        default: "book-marked"
+        options: ["book-marked", "file-text", "stethoscope", "microscope", "flame", "heart-pulse", "leaf"]
+      - label: "Icon Colour"
+        name: "iconColor"
+        widget: "select"
+        default: "text-clay"
+        options:
+          - { label: "Clay", value: "text-clay" }
+          - { label: "Gold", value: "text-brand-gold" }
+          - { label: "Sage", value: "text-sage" }
+      - { label: "Link (where the card goes — journal.html, a PDF, or a mailto: link)", name: "link", widget: "string" }
+      - { label: "Button Label", name: "buttonLabel", widget: "string", default: "Read" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "gallery"
+    label: "Retreat Gallery (Sacred Moments)"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: caption
+    media_folder: "/gallery-images"
+    public_folder: "/gallery-images"
+    fields:
+      - { label: "Photo", name: "image", widget: "image" }
+      - { label: "Caption / Alt Text", name: "caption", widget: "string", hint: "e.g. Sunrise meditation, Kerala retreat" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Show in Gallery?", name: "featured", widget: "boolean", default: true }
+
+  - name: "resources"
+    label: "Free Resources (Guides to Take Home)"
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - label: "Icon"
+        name: "icon"
+        widget: "select"
+        default: "file-text"
+        options: ["sunrise", "heart-pulse", "droplet", "flower-2", "calendar-days", "file-text", "leaf", "brain"]
+      - label: "Icon Colour"
+        name: "iconColor"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay", value: "#D95D39" }
+          - { label: "Sage", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - { label: "PDF File (upload the actual guide)", name: "pdf", widget: "file" }
+      - { label: "Display Order", name: "order", widget: "number", default: 10, value_type: "int", required: false }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "team"
+    label: "Founding Team"
+    folder: "content/team"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: name
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Role / Title (shown above the name)", name: "role", widget: "string", hint: "e.g. Founder & Lead Practitioner" }
+      - { label: "Subtitle (italic line under the name)", name: "subtitle", widget: "string", hint: "e.g. Yoga · Ayurveda · Psychology · Mantra" }
+      - { label: "Photo", name: "photo", widget: "image" }
+      - label: "Photo Badge Label (small tag on top of the photo)"
+        name: "badgeLabel"
+        widget: "string"
+        default: "Founder"
+      - label: "Accent Colour"
+        name: "accent"
+        widget: "select"
+        default: "#D95D39"
+        options:
+          - { label: "Clay", value: "#D95D39" }
+          - { label: "Sage", value: "#4A5D4F" }
+          - { label: "Gold", value: "#C5A059" }
+      - label: "Photo Side"
+        name: "photoSide"
+        widget: "select"
+        default: "left"
+        options: ["left", "right"]
+      - { label: "Bio Paragraphs (one per line/entry)", name: "bio", widget: "list", field: { label: "Paragraph", name: "paragraph", widget: "text" } }
+      - { label: "Skill / Credential Tags", name: "tags", widget: "list" }
+      - { label: "Profile Page Link", name: "profileLink", widget: "string" }
+      - { label: "Button Icon", name: "buttonIcon", widget: "select", default: "user", options: ["user", "calendar"] }
+      - { label: "Display Order (Founder should be 1)", name: "order", widget: "number", default: 10, value_type: "int" }
+      - { label: "Published?", name: "featured", widget: "boolean", default: true }
+
+  - name: "hero"
+    label: "Homepage Hero"
+    files:
+      - name: "hero"
+        label: "Hero Background"
+        file: "content/hero.md"
+        fields:
+          - label: "Background Type"
+            name: "heroType"
+            widget: "select"
+            default: "video"
+            hint: "Video autoplays on desktop with the Desktop Image as poster/fallback. Image-only skips the video entirely (faster load, simpler)."
+            options:
+              - { label: "Video (with image fallback)", value: "video" }
+              - { label: "Image only", value: "image" }
+          - { label: "Desktop Video (MP4, only used if 'Video' selected above)", name: "desktopVideo", widget: "file", required: false, hint: "Keep this short and under ~10MB for fast loading." }
+          - { label: "Desktop Image (also used as video poster + fallback if video fails)", name: "desktopImage", widget: "image" }
+          - { label: "Mobile Image (shown on phones instead of the video, for speed)", name: "mobileImage", widget: "image" }
+          - { label: "Image Alt Text (for accessibility + SEO)", name: "altText", widget: "string", default: "Ayurveda and yoga texts with meditation practice at sunrise — Samarpan" }
