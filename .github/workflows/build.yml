@@ -1,0 +1,42 @@
+name: Build site from CMS content
+
+# Runs whenever content, build scripts, or package.json change - i.e.
+# whenever Sveltia CMS saves a new commit, or someone edits a build script
+# by hand. Deliberately NOT triggered by changes to index.html or other
+# generated output files, so this workflow's own auto-commit (which only
+# touches generated files) never re-triggers itself in a loop.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'scripts/**'
+      - 'package.json'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run all build scripts
+        run: npm run build
+
+      - name: Commit and push generated files if anything changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-build: sync homepage from latest CMS content [skip ci]"
+          commit_user_name: "samarpan-build-bot"
+          commit_user_email: "actions@github.com"
