@@ -2079,18 +2079,6 @@
       <!-- CMS:RETREATS:START -->
       <div class="event-card">
         <div class="event-card-img">
-          <span class="event-tag">Retreat</span>
-          <img src="varanasi.webp" loading="lazy" alt="Banaras Retreat">
-        </div>
-        <div class="event-card-body">
-          <h3>Banaras Retreat</h3>
-          <p class="event-date">Date: TBA</p>
-          <a href="retreats/banaras-retreat.html" onclick="gaEvent('click','Event','Banaras Retreat Interest')">Register →</a>
-        </div>
-      </div>
-
-      <div class="event-card">
-        <div class="event-card-img">
           <span class="event-tag">Yatra</span>
           <img src="Kedarnath.webp" loading="lazy" alt="Sacred &amp; Yatra">
         </div>
@@ -2122,6 +2110,18 @@
           <h3>Rishikesh Ayurveda Retreat</h3>
           <p class="event-date">Date: TBA</p>
           <a href="retreats/rishikesh-ayurveda-retreat.html" onclick="gaEvent('click','Event','Rishikesh Ayurveda Retreat Interest')">Register →</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-card-img">
+          <span class="event-tag">Retreat</span>
+          <img src="varanasi.webp" loading="lazy" alt="Banaras Retreat">
+        </div>
+        <div class="event-card-body">
+          <h3>Banaras Retreat</h3>
+          <p class="event-date">4 Days · January</p>
+          <a href="retreats/banaras-retreat.html" onclick="gaEvent('click','Event','Banaras Retreat Interest')">Register →</a>
         </div>
       </div>
       <!-- CMS:RETREATS:END -->
@@ -3180,7 +3180,7 @@
     lucide.createIcons();
     if (qEmail && isEmail(qEmail)) {
       writeLeadToFirestore('homepage_quiz_results', {email:qEmail, name:qName||'Anonymous', dosha:info.name});
-      Promise.all([getRecaptchaToken('quiz_result'), getRecaptchaToken('quiz_result')]).then(function(toks) {
+      Promise.all([getRecaptchaToken('quiz_result'), getTurnstileToken('quiz_result')]).then(function(toks) {
         var token = toks[0], token2 = toks[1];
         submitToPublicApi('quiz_result', {name:qName||'Anonymous', email:qEmail, interestedIn:'Dosha Quiz', message:'Dosha result: '+info.name, hp_field:qWebsite, formLoadedAt:xLoadedAt, pageUrl:window.location.pathname, turnstileToken:token2}).catch(function(e){ console.error('New backend submit failed (quiz_result):', e); });
         submitToBackend({formType:'quiz_result', email:qEmail, name:qName||'Anonymous', dosha:info.name, website:qWebsite, pageLoadedAt:xLoadedAt, recaptchaToken:token}).catch(function(){});
