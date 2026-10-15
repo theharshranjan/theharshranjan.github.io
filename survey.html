@@ -88,6 +88,8 @@ button{font:inherit;font-weight:700;border:0;border-radius:2px;padding:13px 16px
 .media audio{width:100%;margin-top:8px}.media img{max-width:100%;max-height:170px;border-radius:4px;margin-top:8px}
 .mgate{font-size:12px;color:var(--mute);margin-top:6px}.media:not(.off) .mgate{display:none}.media.off .mrow{opacity:.45}
 .mbrief{margin:0 0 6px}
+.thx{text-align:center;border-color:var(--gold);padding:20px 14px}
+.thx b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;line-height:1.25;margin-bottom:6px}
 .proj{margin:0 0 18px;padding:12px 14px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 4px 4px 0;font-size:13.5px;line-height:1.6}
 .proj .pl{display:block;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
 
@@ -215,6 +217,7 @@ h+=`</div>`});h+=`</div>`});
 $('root').innerHTML=h;
 $('Interviewer').placeholder='Interviewer full name';
 $('FormNo').closest('.q').insertAdjacentHTML('beforebegin','<div class="proj"><span class="pl">About this project</span>This form is part of an academic project by <b>Harsh Ranjan</b>, student of Ayurveda Biology, Centre for Ayurveda Biology, Jawaharlal Nehru University. The information collected will be used for a project of the Centre for Ayurveda Biology.</div>');
+const thanks=t=>{const m=$('msg');m.className='msg ok thx';m.innerHTML='<b>Thank you for sharing your knowledge.</b>'+esc(t);m.style.display='block';m.scrollIntoView({block:'center'})};
 const msg=(t,c)=>{const m=$('msg');m.textContent=t;m.className='msg '+c;m.style.display='block';m.scrollIntoView({block:'center'})};
 function useBlock(n){const d=document.createElement('div');d.className='use';
 d.innerHTML=`<b>Use ${n}</b><input type="text" placeholder="Condition / use (participant's words)" data-k="cond" maxlength="300"><select data-k="part">${PARTS.map(p=>`<option>${p}</option>`).join('')}</select><input type="text" placeholder="Preparation (juice, decoction, powder, paste...)" data-k="prep" maxlength="300"><input type="text" placeholder="How given / dose / duration" data-k="how" maxlength="300">`;$('uses').appendChild(d)}
@@ -258,7 +261,7 @@ if(/ENDPOINT|PASTE_/.test(ENDPOINT))return msg('ENDPOINT is not set in this page
 $('go').disabled=true;await stopRec();const rec=collect();rec.jsonDone=false;rec.files=await listFiles(rec.f);ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
 const left=await flush();
 newSession(true);
-msg(left===0?'Interview saved. A new form is ready.':(window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved safely on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear browser data. A new form is ready.',left===0?'ok':'bad');
+left===0?thanks('The interview is saved.'):msg((window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved safely on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear browser data. A new form is ready.','bad');
 $('go').disabled=false});
 const pad=(n,l)=>String(n).padStart(l,'0'),R4=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
 const dev=ls.get('kdev')||(()=>{const d=R4().slice(0,2);ls.set('kdev',d);return d})();
@@ -278,7 +281,7 @@ o.u=[...document.querySelectorAll('.use')].map(u=>[...u.querySelectorAll('[data-
 function restore(){const o=ls.get('draft');if(!o)return false;SESS=ls.get('sess')||SESS;Object.keys(o.f).forEach(k=>setVal(k,isGrp($('f').elements[k])?o.f[k]:o.f[k][0]));
 $('uses').innerHTML='';(o.u.length?o.u:[['','','','']]).forEach((r,i)=>{useBlock(i+1);[...$('uses').lastChild.querySelectorAll('[data-k]')].forEach((x,j)=>x.value=r[j]||'')});
 if(o.t)$('h_StartTime').value=o.t;rules();bar();refreshMedia();return true}
-$('f').addEventListener('input',()=>{rules();snap()});$('f').addEventListener('change',()=>{rules();snap()});
+$('f').addEventListener('input',()=>{const m=$('msg');if(m.classList.contains('thx'))m.style.display='none';rules();snap()});$('f').addEventListener('change',()=>{rules();snap()});
 $('Area').insertAdjacentHTML('afterend','<button type="button" class="sec" id="gps" style="margin-top:8px">Capture location (optional)</button><div class="h" id="gpst" style="margin-top:6px"></div>');
 $('gps').onclick=()=>{const t=$('gpst'),ua=navigator.userAgent;
 if(/FBAN|FBAV|Instagram|; wv\)/i.test(ua)){t.textContent='This looks like an in-app browser. Open this page in Chrome (menu > Open in browser) and try again.';return}
