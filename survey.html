@@ -77,6 +77,18 @@ button{font:inherit;font-weight:700;border:0;border-radius:2px;padding:13px 16px
 .ref figcaption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--mute);margin-top:8px;line-height:1.45}
 .ref .tag2{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
 
+/* MEDIA: voice notes + photos */
+.media{margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:4px}
+.media .mrow{display:flex;gap:8px;flex-wrap:wrap}
+.mlab{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+.mb{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:4px;background:var(--bg3);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.mb:hover{border-color:var(--clay)}.mb[hidden],.media audio[hidden],.media img[hidden]{display:none}
+.media.on .rec{background:var(--clay);color:#fff;border-color:var(--clay)}
+.mst{font-size:12px;color:var(--mute);margin-top:6px}.mst:empty{display:none}.mst.err{color:var(--err)}
+.media audio{width:100%;margin-top:8px}.media img{max-width:100%;max-height:170px;border-radius:4px;margin-top:8px}
+.mgate{font-size:12px;color:var(--mute);margin-top:6px}.media:not(.off) .mgate{display:none}.media.off .mrow{opacity:.45}
+.mbrief{margin:0 0 6px}
+
 footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;padding:10px 20px 40px}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--clay);border-radius:4px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
@@ -212,12 +224,24 @@ function collect(){const f={},fd=new FormData($('f'));
 S.forEach(([,qs])=>qs.forEach(([t,k])=>{f[k]=t==M?fd.getAll(k):(fd.get(k)||'')}));
 const uses=[...document.querySelectorAll('.use')].map(u=>{const o={};u.querySelectorAll('[data-k]').forEach(i=>o[i.dataset.k]=i.value);return o}).filter(u=>u.cond||u.prep||u.how||u.part);
 ['GeoLat','GeoLng','StartTime'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
-return{id:(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(16).slice(2)),token:TOKEN,website:fd.get('website')||'',f,uses}}
-async function flush(){let q=getQ(),left=[];
-let lastErr='';
-for(const it of q){try{it.token=TOKEN;const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(it)});
-const j=await r.json();if(!j.ok){lastErr=j.error||'unknown';left.push(it)}}catch(e){lastErr='network';left.push(it)}}
-window.lastErr=lastErr;setQ(left);bar();return left.length}
+return{id:SESS,token:TOKEN,website:fd.get('website')||'',f,uses}}
+const b64=bl=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(bl)});
+const post=async o=>(await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)})).json();
+const PERM=['bad file','bad field','file too large','file type not allowed'];
+let chain=Promise.resolve();
+function flush(){chain=chain.then(runFlush,runFlush);return chain}
+async function runFlush(){const q=getQ().slice(),left=[];let lastErr='';
+for(let n=0;n<q.length;n++){const it=q[n];
+try{
+if(!it.jsonDone){const{files,jsonDone,...p}=it;p.token=TOKEN;const j=await post(p);
+if(!j.ok){lastErr=j.error||'unknown';left.push(it);setQ(left.concat(q.slice(n+1)));continue}it.jsonDone=true}
+for(const f of(it.files||[])){if(f.sent)continue;const k=it.id+'|'+f.field,b=await blobs.get(k);if(!b){f.sent=true;continue}
+const j=await post({token:TOKEN,act:'file',id:it.id,field:f.field,mime:b.mime,form:it.f&&it.f.FormNo,code:it.f&&it.f.ParticipantCode,data:await b64(b.blob)});
+if(j.ok){f.sent=true;await blobs.del(k)}else if(PERM.includes(j.error)){f.sent=true;f.err=j.error;lastErr=j.error}else{lastErr=j.error||'unknown';break}}
+if(!(it.files||[]).every(f=>f.sent))left.push(it)
+}catch(e){lastErr=navigator.onLine?'no valid reply from the server: weak signal, or the web app access is not set to Anyone':'network';left.push(it)}
+setQ(left.concat(q.slice(n+1)))}
+window.lastErr=lastErr;bar();return left.length}
 $('f').addEventListener('submit',async e=>{e.preventDefault();
 const f=$('f'),ci=f.querySelector('[name=ConsentInterview]:checked');
 if(!f.FormNo.value.trim()||!f.ParticipantCode.value.trim())return msg('Enter Form no. and Participant code.','bad');
@@ -226,10 +250,10 @@ const em=f.Email.value.trim(),cc=f.querySelector('[name=ConsentContact]:checked'
 if(em&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return msg('Email address looks invalid.','bad');
 if((em||f.Name.value.trim())&&(!cc||cc.value!=='Given'))return msg('Record consent to store name / email as Given, or clear those fields.','bad');
 if(/ENDPOINT|PASTE_/.test(ENDPOINT))return msg('ENDPOINT is not set in this page.','bad');
-$('go').disabled=true;const rec=collect();ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
+$('go').disabled=true;await stopRec();const rec=collect();rec.jsonDone=false;rec.files=await listFiles(rec.f);ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
 const left=await flush();
 newSession(true);
-msg(left===0?'Saved to the sheet. A new form is ready.':(window.lastErr&&window.lastErr!=='network'?'Server rejected it ('+window.lastErr+'). ':'No signal or upload failed. ')+'The interview is stored on this phone ('+left+' pending) and will retry when online. Do not clear browser data. A new form is ready.',left===0?'ok':'bad');
+msg(left===0?'Saved to the sheet. A new form is ready.':(window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'No signal or upload failed. ')+'The interview is stored on this phone ('+left+' pending) and will retry when online. Do not clear browser data. A new form is ready.',left===0?'ok':'bad');
 $('go').disabled=false});
 const pad=(n,l)=>String(n).padStart(l,'0'),R4=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
 const dev=ls.get('kdev')||(()=>{const d=R4().slice(0,2);ls.set('kdev',d);return d})();
@@ -238,24 +262,114 @@ const isGrp=e=>e&&e.length&&e[0]&&(e[0].type==='radio'||e[0].type==='checkbox');
 function setVal(k,v){const e=$('f').elements[k];if(!e||v==null)return;if(isGrp(e))[...e].forEach(r=>r.checked=[].concat(v).includes(r.value));else e.value=v}
 function saveSticky(){const f=$('f'),o={};STICKY.forEach(k=>{const e=f.elements[k];if(!e)return;o[k]=isGrp(e)?((f.querySelector(`[name=${k}]:checked`)||{}).value||''):e.value});ls.set('sticky',o)}
 function rules(){const f=$('f'),v=k=>(f.querySelector(`[name=${k}]:checked`)||{}).value;
-document.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.style.display=((v('ConsentInterview')==='Refused'&&i>=2)||(v('Q1_KnowsPlant')==='No'&&((i>=4&&i<=6)||i===9)))?'none':''})}
-function newSession(clear){const f=$('f');if(clear){f.reset();$('uses').innerHTML='';useBlock(1);$('h_GeoLat').value=$('h_GeoLng').value='';$('gpst').textContent=''}
+document.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.style.display=((v('ConsentInterview')==='Refused'&&i>=2)||(v('Q1_KnowsPlant')==='No'&&((i>=4&&i<=6)||i===9)))?'none':''});gate()}
+function newSession(clear){const f=$('f');SESS=newId();ls.set('sess',SESS);refreshMedia();if(clear){f.reset();$('uses').innerHTML='';useBlock(1);$('h_GeoLat').value=$('h_GeoLng').value='';$('gpst').textContent=''}
 const d=new Date(),ymd=String(d.getFullYear()).slice(2)+pad(d.getMonth()+1,2)+pad(d.getDate(),2);
 setVal('FormNo','K-'+dev+'-'+pad((ls.get('kcount')||0)+1,3));setVal('ParticipantCode','P'+ymd+R4());
 setVal('InterviewDate',d.getFullYear()+'-'+pad(d.getMonth()+1,2)+'-'+pad(d.getDate(),2));$('h_StartTime').value=d.toISOString();
 const s=ls.get('sticky')||{};if(!s.Interviewer)s.Interviewer='Harsh Ranjan';STICKY.forEach(k=>setVal(k,s[k]));rules();bar()}
 function snap(){const o={f:{},u:[]};new FormData($('f')).forEach((v,k)=>{if(k!=='website')(o.f[k]=o.f[k]||[]).push(v)});
 o.u=[...document.querySelectorAll('.use')].map(u=>[...u.querySelectorAll('[data-k]')].map(i=>i.value));o.t=$('h_StartTime').value;ls.set('draft',o)}
-function restore(){const o=ls.get('draft');if(!o)return false;Object.keys(o.f).forEach(k=>setVal(k,isGrp($('f').elements[k])?o.f[k]:o.f[k][0]));
+function restore(){const o=ls.get('draft');if(!o)return false;SESS=ls.get('sess')||SESS;Object.keys(o.f).forEach(k=>setVal(k,isGrp($('f').elements[k])?o.f[k]:o.f[k][0]));
 $('uses').innerHTML='';(o.u.length?o.u:[['','','','']]).forEach((r,i)=>{useBlock(i+1);[...$('uses').lastChild.querySelectorAll('[data-k]')].forEach((x,j)=>x.value=r[j]||'')});
-if(o.t)$('h_StartTime').value=o.t;rules();bar();return true}
+if(o.t)$('h_StartTime').value=o.t;rules();bar();refreshMedia();return true}
 $('f').addEventListener('input',()=>{rules();snap()});$('f').addEventListener('change',()=>{rules();snap()});
 $('Area').insertAdjacentHTML('afterend','<button type="button" class="sec" id="gps" style="margin-top:8px">Capture location (optional)</button><div class="h" id="gpst" style="margin-top:6px"></div>');
-$('gps').onclick=()=>{const t=$('gpst');if(!navigator.geolocation)return t.textContent='Location not available on this device.';t.textContent='Locating...';
-navigator.geolocation.getCurrentPosition(p=>{$('h_GeoLat').value=p.coords.latitude.toFixed(3);$('h_GeoLng').value=p.coords.longitude.toFixed(3);t.textContent='Captured, rounded to about 100 m: '+$('h_GeoLat').value+', '+$('h_GeoLng').value},()=>{t.textContent='Could not get location. Type the area instead.'},{timeout:10000})};
+$('gps').onclick=()=>{const t=$('gpst'),ua=navigator.userAgent;
+if(/FBAN|FBAV|Instagram|; wv\)/i.test(ua)){t.textContent='This looks like an in-app browser. Open this page in Chrome (menu > Open in browser) and try again.';return}
+if(!window.isSecureContext){t.textContent='Location only works on a secure https page. Open the https link, not a file or an http link.';return}
+if(!navigator.geolocation){t.textContent='Location is not available in this browser. Type the area instead.';return}
+const ok=p=>{$('h_GeoLat').value=p.coords.latitude.toFixed(3);$('h_GeoLng').value=p.coords.longitude.toFixed(3);t.textContent='Captured, rounded to about 100 m: '+$('h_GeoLat').value+', '+$('h_GeoLng').value;snap()};
+const why=e=>e.code===1?'Location is blocked for this site. In Chrome tap the lock icon next to the address > Permissions > Location > Allow. Also switch Location ON in the phone quick settings. Then tap again.':e.code===2?'The phone could not get a position. Switch Location (GPS) ON in phone settings, go near a window or outdoors, and tap again.':'Timed out. Go near a window or outdoors and tap again.';
+t.textContent='Locating, please wait (up to 40 s)...';
+navigator.geolocation.getCurrentPosition(ok,e=>{if(e.code===1){t.textContent=why(e);return}
+t.textContent='Trying GPS, please wait...';
+navigator.geolocation.getCurrentPosition(ok,e2=>{t.textContent=why(e2)},{enableHighAccuracy:true,timeout:25000,maximumAge:0})},
+{enableHighAccuracy:false,timeout:12000,maximumAge:120000})};
+
+/* ===== voice notes + photos (stored on the phone first, uploaded with the interview) ===== */
+const newId=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(16).slice(2);
+let SESS=ls.get('sess')||newId();ls.set('sess',SESS);
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+const memB={};
+const blobs={_d:null,
+db(){if(!this._d)this._d=new Promise((res,rej)=>{try{const r=indexedDB.open('kfiles',1);r.onupgradeneeded=()=>r.result.createObjectStore('b');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);r.onblocked=()=>rej(new Error('blocked'))}catch(e){rej(e)}});return this._d},
+async run(mode,fn){try{const d=await this.db();const v=await new Promise((res,rej)=>{const t=d.transaction('b',mode),rq=fn(t.objectStore('b'));t.oncomplete=()=>res(rq&&rq.result);t.onerror=t.onabort=()=>rej(t.error)});return{ok:true,v}}catch(e){return{ok:false}}},
+async put(k,v){const r=await this.run('readwrite',st=>st.put(v,k));if(!r.ok)memB[k]=v},
+async get(k){const r=await this.run('readonly',st=>st.get(k));return(r.ok&&r.v)?r.v:memB[k]},
+async del(k){delete memB[k];await this.run('readwrite',st=>st.delete(k))},
+async keys(){const r=await this.run('readonly',st=>st.getAllKeys());return(r.ok?r.v:[]).concat(Object.keys(memB))}};
+const VOICE=['Q2_LocalName','Q3_OtherNames','Q4_Identify','Q6_Distinguish','Q11_Mixed','Q12_Groups','Q20_Precautions','InterviewerNotes'];
+const ALLM=VOICE.map(k=>'Voice_'+k).concat(['FullInterview','PlantPhoto1','PlantPhoto2']);
+const AUDIO_OK=['audio/webm','audio/mp4','audio/m4a','audio/x-m4a','audio/aac','audio/ogg','audio/mpeg','audio/mp3','audio/wav','audio/x-wav','audio/3gpp','audio/amr'];
+const fmt=n=>Math.floor(n/60)+':'+pad(n%60,2),urls=new WeakMap();
+function mk(field,kind,label,gateTxt){const d=document.createElement('div');d.className='media off';d.dataset.f=field;d.dataset.kind=kind;
+d.innerHTML=(label?`<div class="mlab">${label}</div>`:'')+(kind==='audio'
+?`<div class="mrow"><button type="button" class="mb rec">&#9679; Record voice</button><label class="mb">Upload audio<input type="file" accept="audio/*" hidden></label></div><div class="mst"></div><audio controls hidden></audio>`
+:`<div class="mrow"><label class="mb">Take / choose photo<input type="file" accept="image/*" hidden></label></div><div class="mst"></div><img alt="" hidden>`)
++`<div class="mrow" style="margin-top:8px"><button type="button" class="mb del" hidden>Remove</button></div><div class="mgate">${gateTxt}</div>`;return d}
+const GA='Set "Consent for audio recording" to Given to use this.',GP='Set "Consent for photographs of the plant only" to Given to use this.';
+(function mount(){
+VOICE.forEach(k=>{const el=$(k);if(el)el.parentNode.appendChild(mk('Voice_'+k,'audio','',GA))});
+const ca=document.querySelector('[name=ConsentAudio]');
+if(ca){const q=ca.closest('.q'),brief=document.createElement('p');brief.className='h mbrief';
+brief.textContent='Voice notes (optional): after audio consent is Given, tap Record under any answer, let the participant speak in their own words, then tap Stop. Everything is kept on this phone and uploads with the interview when there is signal.';
+const w=mk('FullInterview','audio','Whole-interview audio (optional). Keep the screen on while recording.',GA);
+q.insertAdjacentElement('afterend',brief);brief.insertAdjacentElement('afterend',w)}
+const sc=$('SpecimenCode');
+if(sc){let a=sc.closest('.q');['PlantPhoto1','PlantPhoto2'].forEach((f,i)=>{const m=mk(f,'photo','Plant photo '+(i+1)+' (plant only, no faces)',GP);a.insertAdjacentElement('afterend',m);a=m})}})();
+const chk=k=>(($('f').querySelector(`[name=${k}]:checked`))||{}).value;
+function gate(){const ca=chk('ConsentAudio')==='Given',cp=chk('ConsentPhoto')==='Given';
+document.querySelectorAll('.media').forEach(m=>{const ok=m.dataset.kind==='audio'?ca:cp;m.classList.toggle('off',!ok);m.querySelectorAll('button.rec,input[type=file]').forEach(x=>x.disabled=!ok)})}
+const say=(c,t,e)=>{const m=c.querySelector('.mst');m.textContent=t;m.classList.toggle('err',!!e)};
+async function render(c){const f=c.dataset.f,aud=c.dataset.kind==='audio',b=await blobs.get(SESS+'|'+f),el=c.querySelector(aud?'audio':'img'),del=c.querySelector('.del'),old=urls.get(c);
+if(old){URL.revokeObjectURL(old);urls.delete(c)}
+if(!b){el.hidden=true;el.removeAttribute('src');del.hidden=true;say(c,'');return}
+const u=URL.createObjectURL(b.blob);urls.set(c,u);el.src=u;el.hidden=false;del.hidden=false;
+say(c,'Saved on this phone ('+Math.max(1,Math.round(b.blob.size/1024))+' KB). It uploads with the interview.')}
+function refreshMedia(){document.querySelectorAll('.media').forEach(render);gate()}
+let cur=null;
+async function startRec(c){if(c.classList.contains('off'))return;if(cur)await stopRec();
+if(!window.isSecureContext||!navigator.mediaDevices||!window.MediaRecorder){say(c,'Recording is not supported here. Open the https page in Chrome, or use Upload audio.',1);return}
+let stream;try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){say(c,e.name==='NotAllowedError'?'Microphone is blocked. In Chrome tap the lock icon next to the address > Permissions > Microphone > Allow, then try again.':'Could not start the microphone ('+e.name+').',1);return}
+const mime=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'].find(t=>MediaRecorder.isTypeSupported(t))||'';
+let mr;try{mr=new MediaRecorder(stream,mime?{mimeType:mime,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000})}catch(e){stream.getTracks().forEach(t=>t.stop());say(c,'Could not start recording on this phone. Use Upload audio.',1);return}
+const chunks=[],t0=Date.now(),max=c.dataset.f==='FullInterview'?1800:180;let wl=null;
+try{if(navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}
+mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+const tick=setInterval(()=>{const n=Math.floor((Date.now()-t0)/1000);say(c,'Recording '+fmt(n)+'. Tap Stop when finished.');if(n>=max)stopRec()},500);
+cur={mr,c,stream,chunks,tick,wl,mime:(mr.mimeType||mime||'audio/webm')};
+c.classList.add('on');c.querySelector('.rec').innerHTML='&#9632; Stop';mr.start(1000)}
+function stopRec(){return new Promise(res=>{if(!cur)return res();const x=cur;cur=null;clearInterval(x.tick);
+x.mr.onstop=async()=>{x.stream.getTracks().forEach(t=>t.stop());try{x.wl&&x.wl.release()}catch(e){}
+x.c.classList.remove('on');x.c.querySelector('.rec').innerHTML='&#9679; Record voice';
+const blob=new Blob(x.chunks,{type:x.mime});
+if(blob.size>0)await blobs.put(SESS+'|'+x.c.dataset.f,{blob,mime:x.mime.split(';')[0]});
+await render(x.c);res()};
+try{x.mr.stop()}catch(e){x.mr.onstop()}})}
+async function shrink(file){const u=URL.createObjectURL(file);try{const img=await new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=u});
+const k=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight)),cv=document.createElement('canvas');cv.width=Math.round(img.naturalWidth*k);cv.height=Math.round(img.naturalHeight*k);
+cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);return await new Promise(r=>cv.toBlob(r,'image/jpeg',.8))}finally{URL.revokeObjectURL(u)}}
+$('f').addEventListener('click',e=>{const b=e.target.closest('.media .mb');if(!b)return;const c=b.closest('.media');
+if(b.classList.contains('rec')){if(cur&&cur.c===c)stopRec();else startRec(c)}
+else if(b.classList.contains('del')){(async()=>{if(cur&&cur.c===c)await stopRec();await blobs.del(SESS+'|'+c.dataset.f);render(c)})()}});
+$('f').addEventListener('change',async e=>{const i=e.target;if(i.type!=='file')return;const c=i.closest('.media');if(!c)return;const file=i.files[0];i.value='';if(!file)return;
+if(c.dataset.kind==='audio'){const m=(file.type||'').toLowerCase();
+if(!AUDIO_OK.includes(m)){say(c,'This audio type ('+(m||'unknown')+') is not supported. Use mp3, m4a, wav, ogg or webm.',1);return}
+if(file.size>15*1024*1024){say(c,'File is larger than 15 MB. Use a shorter recording.',1);return}
+await blobs.put(SESS+'|'+c.dataset.f,{blob:file,mime:m})}
+else{let bl=null;try{bl=await shrink(file)}catch(x){}
+if(!bl){say(c,'Could not read this photo. Try a JPEG or PNG.',1);return}
+await blobs.put(SESS+'|'+c.dataset.f,{blob:bl,mime:'image/jpeg'})}
+render(c)});
+async function listFiles(f){const o=[];for(const fld of ALLM){const b=await blobs.get(SESS+'|'+fld);if(!b)continue;
+const ok=/Photo/.test(fld)?f.ConsentPhoto==='Given':f.ConsentAudio==='Given';
+if(!ok){await blobs.del(SESS+'|'+fld);continue}o.push({field:fld,sent:false})}return o}
+async function gcBlobs(){try{const keep=new Set(getQ().map(i=>i.id));keep.add(SESS);for(const k of await blobs.keys())if(!keep.has(String(k).split('|')[0]))await blobs.del(k)}catch(e){}}
 addEventListener('online',flush);
 if(!restore())newSession(false);
 if(getQ().length)flush();
+gcBlobs();
 </script>
 </body>
 </html>
