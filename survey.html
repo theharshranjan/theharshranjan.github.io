@@ -142,7 +142,7 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 <script>
 /* ===== CONFIG: set these two ===== */
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz9ImEOgOJZOWFjxVkfe9xt0CG1yde0kgmRTJ2wzTFtWEhA79PCeYS8_aNuB87-btgv1A/exec';
-const TOKEN = 'GL24UuX5c0ryYys2O671KBIO0Hy5'; // must match Code.gs
+const TOKEN = 'oGL24UuX5c0ryYys2O671KBIO0Hy5'; // must match Code.gs
 /* ================================= */
 const E='email',T='text',R='radio',M='multi',A='area',D='date';
 const S=[
@@ -214,9 +214,10 @@ const uses=[...document.querySelectorAll('.use')].map(u=>{const o={};u.querySele
 ['GeoLat','GeoLng','StartTime'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
 return{id:(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(16).slice(2)),token:TOKEN,website:fd.get('website')||'',f,uses}}
 async function flush(){let q=getQ(),left=[];
-for(const it of q){try{const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(it)});
-const j=await r.json();if(!j.ok){if(j.error==='bad token'){msg('Upload rejected: token mismatch. Check TOKEN in this page and Code.gs.','bad')}left.push(it)}}catch(e){left.push(it)}}
-setQ(left);bar();return left.length}
+let lastErr='';
+for(const it of q){try{it.token=TOKEN;const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(it)});
+const j=await r.json();if(!j.ok){lastErr=j.error||'unknown';left.push(it)}}catch(e){lastErr='network';left.push(it)}}
+window.lastErr=lastErr;setQ(left);bar();return left.length}
 $('f').addEventListener('submit',async e=>{e.preventDefault();
 const f=$('f'),ci=f.querySelector('[name=ConsentInterview]:checked');
 if(!f.FormNo.value.trim()||!f.ParticipantCode.value.trim())return msg('Enter Form no. and Participant code.','bad');
@@ -228,7 +229,7 @@ if(/ENDPOINT|PASTE_/.test(ENDPOINT))return msg('ENDPOINT is not set in this page
 $('go').disabled=true;const rec=collect();ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
 const left=await flush();
 newSession(true);
-msg(left===0?'Saved to the sheet. A new form is ready.':'No signal or upload failed. The interview is stored on this phone ('+left+' pending) and will retry when online. Do not clear browser data. A new form is ready.',left===0?'ok':'bad');
+msg(left===0?'Saved to the sheet. A new form is ready.':(window.lastErr&&window.lastErr!=='network'?'Server rejected it ('+window.lastErr+'). ':'No signal or upload failed. ')+'The interview is stored on this phone ('+left+' pending) and will retry when online. Do not clear browser data. A new form is ready.',left===0?'ok':'bad');
 $('go').disabled=false});
 const pad=(n,l)=>String(n).padStart(l,'0'),R4=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
 const dev=ls.get('kdev')||(()=>{const d=R4().slice(0,2);ls.set('kdev',d);return d})();
