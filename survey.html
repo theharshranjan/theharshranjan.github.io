@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1C1C1C">
+<meta name="description" content="Community documentation of traditional knowledge about Kantakari (Solanum virginianum L.). A student academic project, Centre for Ayurveda Biology, Jawaharlal Nehru University.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Centre for Ayurveda Biology, JNU">
+<meta property="og:title" content="Kantakari Community Documentation | Ayurveda Biology, JNU">
+<meta property="og:description" content="Documenting what communities know about Kantakari (Solanum virginianum L.), in their own words. A student academic project, Centre for Ayurveda Biology, Jawaharlal Nehru University.">
+<meta property="og:image" content="https://YOUR-SITE-ADDRESS/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Red sandstone campus building at Jawaharlal Nehru University with potted plants on the steps">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kantakari Community Documentation | Ayurveda Biology, JNU">
+<meta name="twitter:description" content="Documenting what communities know about Kantakari (Solanum virginianum L.), in their own words. A student academic project, Centre for Ayurveda Biology, JNU.">
+<meta name="twitter:image" content="https://YOUR-SITE-ADDRESS/og-image.jpg">
 <title>Kantakari Community Documentation Form</title>
 <script>(function(){try{var t=localStorage.getItem("ktheme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,6 +104,15 @@ button{font:inherit;font-weight:700;border:0;border-radius:2px;padding:13px 16px
 .mbrief{margin:0 0 6px}
 .thx{text-align:center;border-color:var(--gold);padding:20px 14px}
 .thx b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;line-height:1.25;margin-bottom:6px}
+.thxo{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom));background:var(--bg);opacity:0;transition:opacity .25s}
+.thxo.show{opacity:1}.thxo[hidden]{display:none}
+.thxin{max-width:420px;width:100%;text-align:center}
+.thxin svg{width:88px;height:88px;margin:0 auto 20px;display:block}
+.thxin .ck{stroke-dasharray:48;stroke-dashoffset:48}.thxo.show .ck{animation:ck .6s .15s ease forwards}
+@keyframes ck{to{stroke-dashoffset:0}}
+.thxin h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.8rem,7vw,2.4rem);line-height:1.2;margin:0 0 10px;color:var(--text)}
+.thxin p{color:var(--mute);margin:0 0 28px;font-size:1.05rem}
+.thxin .pri{max-width:240px;margin:0 auto}
 .proj{margin:0 0 18px;padding:12px 14px;border-left:3px solid var(--gold);background:var(--bg2);border-radius:0 4px 4px 0;font-size:13.5px;line-height:1.6}
 .proj .pl{display:block;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
 
@@ -134,6 +157,10 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 </form>
 </main>
 <footer>Taking part is voluntary. These answers record what people report from their own tradition. They are not medical advice.</footer>
+<div id="thx" class="thxo" role="dialog" aria-modal="true" aria-labelledby="thxt" hidden><div class="thxin">
+<svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="none" stroke="#C5A059" stroke-width="3"/><path class="ck" d="M26 45l13 13 24-27" fill="none" stroke="#D95D39" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h2 id="thxt">Thank you for sharing your knowledge.</h2><p>The interview is saved.</p>
+<button type="button" class="pri" id="thxok">OK</button></div></div>
 
 <script>
 (function(){
@@ -217,7 +244,10 @@ h+=`</div>`});h+=`</div>`});
 $('root').innerHTML=h;
 $('Interviewer').placeholder='Interviewer full name';
 $('FormNo').closest('.q').insertAdjacentHTML('beforebegin','<div class="proj"><span class="pl">About this project</span>This form is part of an academic project by <b>Harsh Ranjan</b>, student of Ayurveda Biology, Centre for Ayurveda Biology, Jawaharlal Nehru University. The information collected will be used for a project of the Centre for Ayurveda Biology.</div>');
-const thanks=t=>{const m=$('msg');m.className='msg ok thx';m.innerHTML='<b>Thank you for sharing your knowledge.</b>'+esc(t);m.style.display='block';m.scrollIntoView({block:'center'})};
+let thxT=null;
+function closeThx(){const o=$('thx');if(o.hidden)return;clearTimeout(thxT);o.classList.remove('show');setTimeout(()=>{o.hidden=true},250);try{$('bar').scrollIntoView({block:'start'})}catch(e){}}
+function thanks(){$('msg').style.display='none';const o=$('thx');o.hidden=false;requestAnimationFrame(()=>o.classList.add('show'));clearTimeout(thxT);thxT=setTimeout(closeThx,4000);$('thxok').focus()}
+$('thx').addEventListener('click',closeThx);addEventListener('keydown',e=>{if(e.key==='Escape')closeThx()});
 const msg=(t,c)=>{const m=$('msg');m.textContent=t;m.className='msg '+c;m.style.display='block';m.scrollIntoView({block:'center'})};
 function useBlock(n){const d=document.createElement('div');d.className='use';
 d.innerHTML=`<b>Use ${n}</b><input type="text" placeholder="Condition / use (participant's words)" data-k="cond" maxlength="300"><select data-k="part">${PARTS.map(p=>`<option>${p}</option>`).join('')}</select><input type="text" placeholder="Preparation (juice, decoction, powder, paste...)" data-k="prep" maxlength="300"><input type="text" placeholder="How given / dose / duration" data-k="how" maxlength="300">`;$('uses').appendChild(d)}
@@ -261,7 +291,7 @@ if(/ENDPOINT|PASTE_/.test(ENDPOINT))return msg('ENDPOINT is not set in this page
 $('go').disabled=true;await stopRec();const rec=collect();rec.jsonDone=false;rec.files=await listFiles(rec.f);ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
 const left=await flush();
 newSession(true);
-left===0?thanks('The interview is saved.'):msg((window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved safely on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear browser data. A new form is ready.','bad');
+left===0?thanks():msg((window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved safely on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear browser data. A new form is ready.','bad');
 $('go').disabled=false});
 const pad=(n,l)=>String(n).padStart(l,'0'),R4=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
 const dev=ls.get('kdev')||(()=>{const d=R4().slice(0,2);ls.set('kdev',d);return d})();
