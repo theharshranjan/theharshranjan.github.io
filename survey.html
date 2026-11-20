@@ -148,7 +148,7 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 <div class="msg" id="msg"></div>
 <form id="f" autocomplete="off" novalidate>
 <div class="hp"><label>Website<input type="text" name="website" tabindex="-1"></label></div>
-<input type="hidden" id="h_GeoLat"><input type="hidden" id="h_GeoLng"><input type="hidden" id="h_StartTime">
+<input type="hidden" id="h_GeoLat"><input type="hidden" id="h_GeoLng"><input type="hidden" id="h_StartTime"><input type="hidden" id="h_FormVersion" value="v2">
 <div id="root"></div>
 <div class="card" id="usesCard" data-i="9"><h2>Uses mentioned (Q8-10)</h2>
 <p class="h">Add one block for each use the participant mentions. Write it in their own words.</p>
@@ -191,7 +191,8 @@ const TOKEN = 'oGL24UuX5c0ryYys2O671KBIO0Hy5'; // must match Code.gs
 const E='email',T='text',R='radio',M='multi',A='area',D='date';
 const S=[
 ['Interview details',[
-[T,'FormNo','Form no. (auto)'],[T,'ParticipantCode','Participant code (auto)'],[T,'Name','Participant name'],[E,'Email','Participant email (optional)'],[D,'InterviewDate','Date'],[T,'Area','Village / area (broad only)'],[T,'Interviewer','Interviewer']]],
+[T,'FormNo','Form no. (auto)'],[T,'ParticipantCode','Participant code (auto)'],[T,'Name','Participant name'],[E,'Email','Participant email (optional)'],[D,'InterviewDate','Date'],[T,'Area','Village / area (broad only)'],[T,'Interviewer','Interviewer'],
+[R,'RecruitmentRoute','How was this participant reached?',['Direct (approached at site)','Practitioner referral','Personal contact','Local community contact']]]],
 ['Consent (read aloud first)',[
 [R,'ConsentInterview','Consent for interview and written notes',['Given','Refused']],
 [R,'ConsentPhoto','Consent for photographs of the plant only',['Given','Not given']],
@@ -204,27 +205,34 @@ const S=[
 [R,'Occupation','Main occupation',['Farmer','Homemaker','Ayurvedic practitioner','Herbal / folk practitioner','Herb seller','Teacher / student','Other']],
 [R,'KnowledgeBasis','How does the participant know about plants?',['Family tradition','Practises Ayurveda / herbal medicine','Community elder','Local resident','Other']]]],
 ['B. Plant identification (show a specimen or photo)',[
+[R,'StimulusShown','What is shown to the participant? (record before Q1)',['Real specimen','Photo only','Both']],
+[R,'InfoBeforeQ1','Before Q1, were the plant name or its uses mentioned to the participant?',['No','Yes']],
 [R,'Q1_KnowsPlant','1. Do you know this plant?',['Yes','No','Know it, unsure of name']],
 [T,'Q2_LocalName','2. Local name'],[T,'Q3_OtherNames','3. Other names known'],
 [A,'Q4_Identify','4. How do you identify it? (leaves, thorns, flower, fruit, smell, habitat)'],
 [R,'Q5_Found','5. Where is it commonly found?',['Roadside','Field edge','Wasteland','Forest','Garden','Other']],
-[A,'Q6_Distinguish','6. How do you tell it apart from similar-looking plants?']]],
+[A,'Q6_Distinguish','6. How do you tell it apart from similar-looking plants?'],
+[R,'Q24_IdConfidence','24. How sure is the participant about the identification?',['Sure','Somewhat sure','Not sure']]]],
 ['C. Traditional use',[
 [M,'Q7_PartsUsed','7. Which part of the plant is used?',['Root','Stem','Leaf','Flower','Fruit','Seed','Whole plant','Other']],
 [A,'Q11_Mixed','11. Is it used alone, or mixed with other things? If mixed, with what?'],
-[A,'Q12_Groups','12. Is it given to children, adults, or both? Is there anyone it is not given to?']]],
+[A,'Q12_Groups','12. Is it given to children, adults, or both? Is there anyone it is not given to?'],
+[R,'Q23_KnowledgeType','23. How does the participant know these uses?',['Used it personally','Saw someone use it','Only heard about it']],
+[R,'Q25_LastUse','25. When was it last used (by the participant or someone they know)?',['Within the last year','1-5 years ago','More than 5 years ago','Never used']]]],
 ['D. Knowledge transmission',[
 [R,'Q13_LearntFrom','13. Who did you learn it from?',['Parent / grandparent','Other relative','Community elder','Practitioner','Book / media','Own experience','Other']],
 [R,'Q14_HowLong','14. For how long has it been known in your family or community?',['Under 10 years','10-30 years','Over 30 years',"Don't know"]],
 [R,'Q15_OralWritten','15. Is this passed on by word of mouth, or is it written down?',['Oral only','Written','Both']],
 [R,'Q16_Commonness','16. Do most people here know about it?',['Commonly known','Known by some','Held by few']],
-[T,'Q17_OthersWhoKnow','17. Who else here knows about it? (role or area only, no names)']]],
+[T,'Q17_OthersWhoKnow','17. Who else here knows about it? (role or area only, no names)'],
+[R,'Q26_PassedOn','26. Has the participant passed this knowledge on to younger family members or others?',['Yes','No','Not applicable']]]],
 ['E. Perceived effectiveness and safety (reported views, not proof)',[
 [R,'Q18_Useful','18. Do people here consider it useful?',['Yes','Sometimes','No',"Don't know"]],
 [R,'Q19_Observed','19. Have you seen it being used yourself?',['Yes','No']],
 [A,'Q20_Precautions','20. Any precautions, side effects, or people who should avoid it?'],
 [R,'Q21_Traded','21. Is it sold or traded locally?',['Yes','No',"Don't know"]],
-[R,'Q22_DocumentedBefore','22. Has anyone from outside (a researcher, doctor or student) written this down before?',['Yes','No',"Don't know"]]]],
+[R,'Q22_DocumentedBefore','22. Has anyone from outside (a researcher, doctor or student) written this down before?',['Yes','No',"Don't know"]],
+[R,'Q27_Availability','27. Is the plant becoming less available locally?',['Less available','About the same','More available',"Don't know"]]]],
 ['Specimen and interviewer notes',[
 [T,'SpecimenCode','Specimen / site code'],
 [R,'BotanicalID','Botanical identification',['S. virginianum','S. xanthocarpum','Other / unsure','Not yet done']],
@@ -244,6 +252,7 @@ else h+=`<div class="l">${l}</div><div class="opts">`+o.map(v=>`<label><input ty
 h+=`</div>`});h+=`</div>`});
 $('root').innerHTML=h;
 $('Interviewer').placeholder='Interviewer full name';
+document.querySelector('[name=Q1_KnowsPlant]').closest('.q').insertAdjacentHTML('afterend','<div class="h" id="gateNote" style="display:none"></div>');
 $('FormNo').closest('.q').insertAdjacentHTML('beforebegin','<div class="proj"><span class="pl">About this project</span>This form is part of an academic project by <b>Harsh Ranjan</b>, student of Ayurveda Biology, Centre for Ayurveda Biology, Jawaharlal Nehru University. The information collected will be used for a project of the Centre for Ayurveda Biology.</div>');
 let thxT=null;
 function closeThx(){const o=$('thx');if(o.hidden)return;clearTimeout(thxT);o.classList.remove('show');setTimeout(()=>{o.hidden=true},250);try{$('bar').scrollIntoView({block:'start'})}catch(e){}}
@@ -259,9 +268,9 @@ const ls={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return 
 let mem=[];const getQ=()=>ls.get('kq')||mem,setQ=q=>{mem=q;ls.set('kq',q)};
 const bar=()=>{const e=$('FormNo');$('bar').textContent='Form '+(e?e.value:'')+'  |  Waiting to upload: '+getQ().length};
 function collect(){const f={},fd=new FormData($('f'));
-S.forEach(([,qs])=>qs.forEach(([t,k])=>{f[k]=t==M?fd.getAll(k):(fd.get(k)||'')}));
-const uses=[...document.querySelectorAll('.use')].map(u=>{const o={};u.querySelectorAll('[data-k]').forEach(i=>o[i.dataset.k]=i.value);return o}).filter(u=>u.cond||u.prep||u.how||u.part);
-['GeoLat','GeoLng','StartTime'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
+S.forEach(([,qs])=>qs.forEach(([t,k])=>{f[k]=hid(k)?(t==M?[]:''):(t==M?fd.getAll(k):(fd.get(k)||''))}));
+const uses=$('usesCard').style.display==='none'?[]:[...document.querySelectorAll('.use')].map(u=>{const o={};u.querySelectorAll('[data-k]').forEach(i=>o[i.dataset.k]=i.value);return o}).filter(u=>u.cond||u.prep||u.how||u.part);
+['GeoLat','GeoLng','StartTime','FormVersion'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
 return{id:SESS,token:TOKEN,website:fd.get('website')||'',f,uses}}
 const b64=bl=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(bl)});
 const post=async o=>(await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)})).json();
@@ -284,6 +293,9 @@ $('f').addEventListener('submit',async e=>{e.preventDefault();
 const f=$('f'),ci=f.querySelector('[name=ConsentInterview]:checked');
 if(!f.FormNo.value.trim()||!f.ParticipantCode.value.trim())return msg('Enter Form no. and Participant code.','bad');
 if(!f.Interviewer.value.trim())return msg("Enter the interviewer's name before saving.",'bad');
+if(!f.querySelector('[name=RecruitmentRoute]:checked'))return msg('Select how this participant was reached.','bad');
+if(!f.querySelector('[name=StimulusShown]:checked')||!f.querySelector('[name=InfoBeforeQ1]:checked'))return msg('Record what was shown and whether the plant name or uses were mentioned before Q1.','bad');
+if(!f.querySelector('[name=Q1_KnowsPlant]:checked'))return msg('Answer Q1 (Do you know this plant?) before saving.','bad');
 if(!ci||ci.value!=='Given')return msg('Consent for the interview must be marked Given before saving.','bad');
 const em=f.Email.value.trim(),cc=f.querySelector('[name=ConsentContact]:checked');
 if(em&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return msg('That email address does not look right.','bad');
@@ -300,8 +312,15 @@ const STICKY=['Interviewer','Area','SpecimenCode','BotanicalID'];
 const isGrp=e=>e&&e.length&&e[0]&&(e[0].type==='radio'||e[0].type==='checkbox');
 function setVal(k,v){const e=$('f').elements[k];if(!e||v==null)return;if(isGrp(e))[...e].forEach(r=>r.checked=[].concat(v).includes(r.value));else e.value=v}
 function saveSticky(){const f=$('f'),o={};STICKY.forEach(k=>{const e=f.elements[k];if(!e)return;o[k]=isGrp(e)?((f.querySelector(`[name=${k}]:checked`)||{}).value||''):e.value});ls.set('sticky',o)}
-function rules(){const f=$('f'),v=k=>(f.querySelector(`[name=${k}]:checked`)||{}).value;
-document.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.style.display=((v('ConsentInterview')==='Refused'&&i>=2)||(v('Q1_KnowsPlant')==='No'&&((i>=4&&i<=6)||i===9)))?'none':''});gate()}
+const GATEQ=['Q2_LocalName','Q3_OtherNames','Q4_Identify','Q5_Found','Q6_Distinguish','Q24_IdConfidence'];
+function qBox(k){const e=document.querySelector('[name='+k+']');return e?e.closest('.q'):null}
+function hid(k){const b=qBox(k);return !!b&&(b.style.display==='none'||b.closest('.card').style.display==='none')}
+function rules(){const f=$('f'),v=k=>(f.querySelector(`[name=${k}]:checked`)||{}).value,
+q1=v('Q1_KnowsPlant'),go=q1==='Yes'||q1==='Know it, unsure of name',refused=v('ConsentInterview')==='Refused';
+document.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.style.display=((refused&&i>=2)||(!go&&(i===4||i===5||i===6||i===9)))?'none':''});
+GATEQ.forEach(k=>{const b=qBox(k);if(b)b.style.display=go?'':'none'});
+const n=$('gateNote');if(n){n.textContent=!q1?'Show the plant first. More questions appear when the participant says Yes or "Know it, unsure of name".':q1==='No'?'The participant does not know the plant, so there are no more questions. Fill in the specimen and notes below, then save.':'';n.style.display=n.textContent?'':'none'}
+gate()}
 function newSession(clear){const f=$('f');SESS=newId();ls.set('sess',SESS);refreshMedia();if(clear){f.reset();$('uses').innerHTML='';useBlock(1);$('h_GeoLat').value=$('h_GeoLng').value='';$('gpst').textContent=''}
 const d=new Date(),ymd=String(d.getFullYear()).slice(2)+pad(d.getMonth()+1,2)+pad(d.getDate(),2);
 setVal('FormNo','K-'+dev+'-'+pad((ls.get('kcount')||0)+1,3));setVal('ParticipantCode','P'+ymd+R4());
@@ -402,6 +421,7 @@ if(!bl){say(c,'Could not read this photo. Try a JPEG or PNG.',1);return}
 await blobs.put(SESS+'|'+c.dataset.f,{blob:bl,mime:'image/jpeg'})}
 render(c)});
 async function listFiles(f){const o=[];for(const fld of ALLM){const b=await blobs.get(SESS+'|'+fld);if(!b)continue;
+if(hid(fld.replace(/^Voice_/,''))){await blobs.del(SESS+'|'+fld);continue}
 const ok=/Photo/.test(fld)?f.ConsentPhoto==='Given':f.ConsentAudio==='Given';
 if(!ok){await blobs.del(SESS+'|'+fld);continue}o.push({field:fld,sent:false})}return o}
 async function gcBlobs(){try{const keep=new Set(getQ().map(i=>i.id));keep.add(SESS);for(const k of await blobs.keys())if(!keep.has(String(k).split('|')[0]))await blobs.del(k)}catch(e){}}
