@@ -92,17 +92,6 @@ button{font:inherit;font-weight:700;border:0;border-radius:2px;padding:13px 16px
 .ref figcaption{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:var(--mute);margin-top:8px;line-height:1.45}
 .ref .tag2{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:6px}
 
-/* MEDIA: voice notes + photos */
-.media{margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:4px}
-.media .mrow{display:flex;gap:8px;flex-wrap:wrap}
-.mlab{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
-.mb{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:4px;background:var(--bg3);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
-.mb:hover{border-color:var(--clay)}.mb[hidden],.media audio[hidden],.media img[hidden]{display:none}
-.media.on .rec{background:var(--clay);color:#fff;border-color:var(--clay)}
-.mst{font-size:12px;color:var(--mute);margin-top:6px}.mst:empty{display:none}.mst.err{color:var(--err)}
-.media audio{width:100%;margin-top:8px}.media img{max-width:100%;max-height:170px;border-radius:4px;margin-top:8px}
-.mgate{font-size:12px;color:var(--mute);margin-top:6px}.media:not(.off) .mgate{display:none}.media.off .mrow{opacity:.45}
-.mbrief{margin:0 0 6px}
 .thx{text-align:center;border-color:var(--gold);padding:20px 14px}
 .thx b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;line-height:1.25;margin-bottom:6px}
 .thxo{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:max(24px,env(safe-area-inset-top)) 24px max(24px,env(safe-area-inset-bottom));background:var(--bg);opacity:0;transition:opacity .25s}
@@ -148,7 +137,7 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 <div class="msg" id="msg"></div>
 <form id="f" autocomplete="off" novalidate>
 <div class="hp"><label>Website<input type="text" name="website" tabindex="-1"></label></div>
-<input type="hidden" id="h_GeoLat"><input type="hidden" id="h_GeoLng"><input type="hidden" id="h_StartTime"><input type="hidden" id="h_FormVersion" value="v2">
+<input type="hidden" id="h_GeoLat"><input type="hidden" id="h_GeoLng"><input type="hidden" id="h_StartTime">
 <div id="root"></div>
 <div class="card" id="usesCard" data-i="9"><h2>Uses mentioned (Q8-10)</h2>
 <p class="h">Add one block for each use the participant mentions. Write it in their own words.</p>
@@ -157,7 +146,7 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 <button type="submit" class="pri" id="go">Save this interview</button>
 </form>
 </main>
-<footer>Taking part is voluntary. These answers record what people report from their own tradition. They are not medical advice.</footer>
+<footer>Taking part is voluntary. These answers are what people told us from their own tradition. They are not medical advice.</footer>
 <div id="thx" class="thxo" role="dialog" aria-modal="true" aria-labelledby="thxt" hidden><div class="thxin">
 <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="none" stroke="#C5A059" stroke-width="3"/><path class="ck" d="M26 45l13 13 24-27" fill="none" stroke="#D95D39" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 <h2 id="thxt">Thank you for sharing your knowledge.</h2><p>The interview is saved.</p>
@@ -188,17 +177,15 @@ footer{text-align:center;color:var(--mute);font-size:11px;font-weight:300;paddin
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbz9ImEOgOJZOWFjxVkfe9xt0CG1yde0kgmRTJ2wzTFtWEhA79PCeYS8_aNuB87-btgv1A/exec';
 const TOKEN = 'oGL24UuX5c0ryYys2O671KBIO0Hy5'; // must match Code.gs
 /* ================================= */
-const E='email',T='text',R='radio',M='multi',A='area',D='date';
+const E='email',T='text',R='radio',M='multi',A='area',D='date',L='sel';
 const S=[
 ['Interview details',[
-[T,'FormNo','Form no. (auto)'],[T,'ParticipantCode','Participant code (auto)'],[T,'Name','Participant name'],[E,'Email','Participant email (optional)'],[D,'InterviewDate','Date'],[T,'Area','Village / area (broad only)'],[T,'Interviewer','Interviewer'],
+[T,'FormNo','Form no. (auto)'],[T,'ParticipantCode','Participant code (auto)'],[T,'Name','Participant name'],[E,'Email','Participant email (optional)'],[D,'InterviewDate','Date'],[T,'Area','Village / area (broad only)'],[L,'Interviewer','Interviewer',['Harsh Ranjan','Dr Anandhi Jayagopal','Dr Leela Naga Durga Bhavani','Priyam Prakash','Aditya Kumar','Ishan Jaiswal','Bhuvaneshwari Jaiswal','Bhumika Singh','Alok Manglam','Gunjan Sheoran','Keshav Prajapati','Bhuvaneshwari Garu','Santosh Kumar Lenka','Disha Sachdeva','Pranav Bharadwaj']],
 [R,'RecruitmentRoute','How was this participant reached?',['Direct (approached at site)','Practitioner referral','Personal contact','Local community contact']]]],
 ['Consent (read aloud first)',[
-[R,'ConsentInterview','Consent for interview and written notes',['Given','Refused']],
-[R,'ConsentPhoto','Consent for photographs of the plant only',['Given','Not given']],
-[R,'ConsentAudio','Consent for audio recording (optional)',['Given','Not given']],
-[R,'ConsentContact','Consent to store name and email (private, never published)',['Given','Not given']]],
-'Read this out to the participant: This is a student research project at JNU about the traditional knowledge of Kantakari. I would like to ask you a few questions. You do not have to answer anything you prefer not to, and you can stop at any time. What you tell us is used only for this study. If you give your name or email, it is kept private and is not published or shared.'],
+[R,'ConsentInterview','Participant agrees to the interview and to us writing down their answers',['Given','Refused']],
+[R,'ConsentContact','Participant agrees to us keeping their name and email (private, never published)',['Given','Not given']]],
+"Please read this out to the participant: I'm a student at JNU, doing a project on what people know about Kantakari. I'd like to ask you a few questions. You don't have to answer anything you'd rather not, and you can stop whenever you like. We will only write down your answers. We will not record your voice or take your photo. What you tell us is used only for this study. If you give your name or email, we keep it private and never publish or share it."],
 ['A. Participant profile',[
 [R,'AgeGroup','Age group',['18-30','31-45','46-60','60+']],
 [R,'Sex','Sex',['Female','Male','Other / prefer not to say']],
@@ -247,13 +234,13 @@ S.forEach(([title,qs,note],ci)=>{h+=`<div class="card" data-i="${ci}"><h2>${titl
 qs.forEach(([t,k,l,o])=>{h+=`<div class="q">`;
 if(t==T||t==E)h+=`<label for="${k}">${l}</label><input type="${t==E?'email':'text'}"${t==E?' inputmode="email"':''} id="${k}" name="${k}" maxlength="300">`;
 else if(t==D)h+=`<label for="${k}">${l}</label><input type="date" id="${k}" name="${k}">`;
+else if(t==L)h+=`<label for="${k}">${l}</label><select id="${k}" name="${k}"><option value="">Choose from the list</option>`+o.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('')+`</select>`;
 else if(t==A)h+=`<label for="${k}">${l}</label><textarea id="${k}" name="${k}" maxlength="1500"></textarea>`;
 else h+=`<div class="l">${l}</div><div class="opts">`+o.map(v=>`<label><input type="${t==R?'radio':'checkbox'}" name="${k}" value="${esc(v)}">${esc(v)}</label>`).join('')+`</div>`;
 h+=`</div>`});h+=`</div>`});
 $('root').innerHTML=h;
-$('Interviewer').placeholder='Interviewer full name';
 document.querySelector('[name=Q1_KnowsPlant]').closest('.q').insertAdjacentHTML('afterend','<div class="h" id="gateNote" style="display:none"></div>');
-$('FormNo').closest('.q').insertAdjacentHTML('beforebegin','<div class="proj"><span class="pl">About this project</span>This form is part of an academic project by <b>Harsh Ranjan</b>, student of Ayurveda Biology, Centre for Ayurveda Biology, Jawaharlal Nehru University. The information collected will be used for a project of the Centre for Ayurveda Biology.</div>');
+$('FormNo').closest('.q').insertAdjacentHTML('beforebegin','<div class="proj"><span class="pl">About this project</span>This form is part of an academic project by <b>Harsh Ranjan</b>, student of Ayurveda Biology, Centre for Ayurveda Biology, Jawaharlal Nehru University. What people tell us is used only for this project of the Centre for Ayurveda Biology.</div>');
 let thxT=null;
 function closeThx(){const o=$('thx');if(o.hidden)return;clearTimeout(thxT);o.classList.remove('show');setTimeout(()=>{o.hidden=true},250);try{$('bar').scrollIntoView({block:'start'})}catch(e){}}
 function thanks(){$('msg').style.display='none';const o=$('thx');o.hidden=false;requestAnimationFrame(()=>o.classList.add('show'));clearTimeout(thxT);thxT=setTimeout(closeThx,4000);$('thxok').focus()}
@@ -270,41 +257,35 @@ const bar=()=>{const e=$('FormNo');$('bar').textContent='Form '+(e?e.value:'')+'
 function collect(){const f={},fd=new FormData($('f'));
 S.forEach(([,qs])=>qs.forEach(([t,k])=>{f[k]=hid(k)?(t==M?[]:''):(t==M?fd.getAll(k):(fd.get(k)||''))}));
 const uses=$('usesCard').style.display==='none'?[]:[...document.querySelectorAll('.use')].map(u=>{const o={};u.querySelectorAll('[data-k]').forEach(i=>o[i.dataset.k]=i.value);return o}).filter(u=>u.cond||u.prep||u.how||u.part);
-['GeoLat','GeoLng','StartTime','FormVersion'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
+['GeoLat','GeoLng','StartTime'].forEach(k=>f[k]=$('h_'+k).value);f.EndTime=new Date().toISOString();
 return{id:SESS,token:TOKEN,website:fd.get('website')||'',f,uses}}
-const b64=bl=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=()=>rej(r.error);r.readAsDataURL(bl)});
 const post=async o=>(await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)})).json();
-const PERM=['bad file','bad field','file too large','file type not allowed'];
 let chain=Promise.resolve();
 function flush(){chain=chain.then(runFlush,runFlush);return chain}
 async function runFlush(){const q=getQ().slice(),left=[];let lastErr='';
 for(let n=0;n<q.length;n++){const it=q[n];
 try{
-if(!it.jsonDone){const{files,jsonDone,...p}=it;p.token=TOKEN;const j=await post(p);
+if(!it.jsonDone){const{jsonDone,...p}=it;p.token=TOKEN;const j=await post(p);
 if(!j.ok){lastErr=j.error||'unknown';left.push(it);setQ(left.concat(q.slice(n+1)));continue}it.jsonDone=true}
-for(const f of(it.files||[])){if(f.sent)continue;const k=it.id+'|'+f.field,b=await blobs.get(k);if(!b){f.sent=true;continue}
-const j=await post({token:TOKEN,act:'file',id:it.id,field:f.field,mime:b.mime,form:it.f&&it.f.FormNo,code:it.f&&it.f.ParticipantCode,data:await b64(b.blob)});
-if(j.ok){f.sent=true;await blobs.del(k)}else if(PERM.includes(j.error)){f.sent=true;f.err=j.error;lastErr=j.error}else{lastErr=j.error||'unknown';break}}
-if(!(it.files||[]).every(f=>f.sent))left.push(it)
 }catch(e){lastErr=navigator.onLine?'no valid reply from the server: weak signal, or the web app access is not set to Anyone':'network';left.push(it)}
 setQ(left.concat(q.slice(n+1)))}
 window.lastErr=lastErr;bar();return left.length}
 $('f').addEventListener('submit',async e=>{e.preventDefault();
 const f=$('f'),ci=f.querySelector('[name=ConsentInterview]:checked');
-if(!f.FormNo.value.trim()||!f.ParticipantCode.value.trim())return msg('Enter Form no. and Participant code.','bad');
-if(!f.Interviewer.value.trim())return msg("Enter the interviewer's name before saving.",'bad');
-if(!f.querySelector('[name=RecruitmentRoute]:checked'))return msg('Select how this participant was reached.','bad');
-if(!f.querySelector('[name=StimulusShown]:checked')||!f.querySelector('[name=InfoBeforeQ1]:checked'))return msg('Record what was shown and whether the plant name or uses were mentioned before Q1.','bad');
-if(!f.querySelector('[name=Q1_KnowsPlant]:checked'))return msg('Answer Q1 (Do you know this plant?) before saving.','bad');
-if(!ci||ci.value!=='Given')return msg('Consent for the interview must be marked Given before saving.','bad');
+if(!f.FormNo.value.trim()||!f.ParticipantCode.value.trim())return msg('Please fill in the Form no. and Participant code.','bad');
+if(!f.Interviewer.value.trim())return msg('Choose the interviewer from the list before saving.','bad');
+if(!f.querySelector('[name=RecruitmentRoute]:checked'))return msg('Please select how this participant was reached.','bad');
+if(!f.querySelector('[name=StimulusShown]:checked')||!f.querySelector('[name=InfoBeforeQ1]:checked'))return msg('Please mark what you showed the participant, and whether you mentioned the plant name or its uses before Q1.','bad');
+if(!f.querySelector('[name=Q1_KnowsPlant]:checked'))return msg('Please answer Q1 (Do you know this plant?) before saving.','bad');
+if(!ci||ci.value!=='Given')return msg('Consent for the interview must be marked Given before we can save.','bad');
 const em=f.Email.value.trim(),cc=f.querySelector('[name=ConsentContact]:checked');
 if(em&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return msg('That email address does not look right.','bad');
-if((em||f.Name.value.trim())&&(!cc||cc.value!=='Given'))return msg('Mark consent to store name and email as Given, or clear those two fields.','bad');
+if((em||f.Name.value.trim())&&(!cc||cc.value!=='Given'))return msg('Either mark consent for keeping the name and email as Given, or clear those two fields.','bad');
 if(/ENDPOINT|PASTE_/.test(ENDPOINT))return msg('ENDPOINT is not set in this page.','bad');
-$('go').disabled=true;await stopRec();const rec=collect();rec.jsonDone=false;rec.files=await listFiles(rec.f);ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
+$('go').disabled=true;const rec=collect();rec.jsonDone=false;ls.set('kcount',(ls.get('kcount')||0)+1);saveSticky();setQ(getQ().concat([rec]));ls.del('draft');
 const left=await flush();
 newSession(true);
-left===0?thanks():msg((window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved safely on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear browser data. A new form is ready.','bad');
+left===0?thanks():msg((window.lastErr&&window.lastErr!=='network'?'Upload problem ('+window.lastErr+'). ':'Could not upload right now. ')+'The interview is saved on this phone ('+left+' waiting) and will upload by itself when there is signal. Please do not clear the browser data. A new form is ready.','bad');
 $('go').disabled=false});
 const pad=(n,l)=>String(n).padStart(l,'0'),R4=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
 const dev=ls.get('kdev')||(()=>{const d=R4().slice(0,2);ls.set('kdev',d);return d})();
@@ -319,9 +300,8 @@ function rules(){const f=$('f'),v=k=>(f.querySelector(`[name=${k}]:checked`)||{}
 q1=v('Q1_KnowsPlant'),go=q1==='Yes'||q1==='Know it, unsure of name',refused=v('ConsentInterview')==='Refused';
 document.querySelectorAll('[data-i]').forEach(c=>{const i=+c.dataset.i;c.style.display=((refused&&i>=2)||(!go&&(i===4||i===5||i===6||i===9)))?'none':''});
 GATEQ.forEach(k=>{const b=qBox(k);if(b)b.style.display=go?'':'none'});
-const n=$('gateNote');if(n){n.textContent=!q1?'Show the plant first. More questions appear when the participant says Yes or "Know it, unsure of name".':q1==='No'?'The participant does not know the plant, so there are no more questions. Fill in the specimen and notes below, then save.':'';n.style.display=n.textContent?'':'none'}
-gate()}
-function newSession(clear){const f=$('f');SESS=newId();ls.set('sess',SESS);refreshMedia();if(clear){f.reset();$('uses').innerHTML='';useBlock(1);$('h_GeoLat').value=$('h_GeoLng').value='';$('gpst').textContent=''}
+const n=$('gateNote');if(n){n.textContent=!q1?'Show the plant first. More questions will appear if the participant says Yes or "Know it, unsure of name".':q1==='No'?'The participant does not know the plant, so there are no more questions. Fill in the specimen and notes below, then save.':'';n.style.display=n.textContent?'':'none'}}
+function newSession(clear){const f=$('f');SESS=newId();ls.set('sess',SESS);if(clear){f.reset();$('uses').innerHTML='';useBlock(1);$('h_GeoLat').value=$('h_GeoLng').value='';$('gpst').textContent=''}
 const d=new Date(),ymd=String(d.getFullYear()).slice(2)+pad(d.getMonth()+1,2)+pad(d.getDate(),2);
 setVal('FormNo','K-'+dev+'-'+pad((ls.get('kcount')||0)+1,3));setVal('ParticipantCode','P'+ymd+R4());
 setVal('InterviewDate',d.getFullYear()+'-'+pad(d.getMonth()+1,2)+'-'+pad(d.getDate(),2));$('h_StartTime').value=d.toISOString();
@@ -330,7 +310,7 @@ function snap(){const o={f:{},u:[]};new FormData($('f')).forEach((v,k)=>{if(k!==
 o.u=[...document.querySelectorAll('.use')].map(u=>[...u.querySelectorAll('[data-k]')].map(i=>i.value));o.t=$('h_StartTime').value;ls.set('draft',o)}
 function restore(){const o=ls.get('draft');if(!o)return false;SESS=ls.get('sess')||SESS;Object.keys(o.f).forEach(k=>setVal(k,isGrp($('f').elements[k])?o.f[k]:o.f[k][0]));
 $('uses').innerHTML='';(o.u.length?o.u:[['','','','']]).forEach((r,i)=>{useBlock(i+1);[...$('uses').lastChild.querySelectorAll('[data-k]')].forEach((x,j)=>x.value=r[j]||'')});
-if(o.t)$('h_StartTime').value=o.t;rules();bar();refreshMedia();return true}
+if(o.t)$('h_StartTime').value=o.t;rules();bar();return true}
 $('f').addEventListener('input',()=>{const m=$('msg');if(m.classList.contains('thx'))m.style.display='none';rules();snap()});$('f').addEventListener('change',()=>{rules();snap()});
 $('Area').insertAdjacentHTML('afterend','<button type="button" class="sec" id="gps" style="margin-top:8px">Capture location (optional)</button><div class="h" id="gpst" style="margin-top:6px"></div>');
 $('gps').onclick=()=>{const t=$('gpst'),ua=navigator.userAgent;
@@ -345,90 +325,12 @@ t.textContent='Trying GPS, please wait...';
 navigator.geolocation.getCurrentPosition(ok,e2=>{t.textContent=why(e2)},{enableHighAccuracy:true,timeout:25000,maximumAge:0})},
 {enableHighAccuracy:false,timeout:12000,maximumAge:120000})};
 
-/* ===== voice notes + photos (stored on the phone first, uploaded with the interview) ===== */
 const newId=()=>(window.crypto&&crypto.randomUUID)?crypto.randomUUID():Date.now()+'-'+Math.random().toString(16).slice(2);
 let SESS=ls.get('sess')||newId();ls.set('sess',SESS);
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
-const memB={};
-const blobs={_d:null,
-db(){if(!this._d)this._d=new Promise((res,rej)=>{try{const r=indexedDB.open('kfiles',1);r.onupgradeneeded=()=>r.result.createObjectStore('b');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);r.onblocked=()=>rej(new Error('blocked'))}catch(e){rej(e)}});return this._d},
-async run(mode,fn){try{const d=await this.db();const v=await new Promise((res,rej)=>{const t=d.transaction('b',mode),rq=fn(t.objectStore('b'));t.oncomplete=()=>res(rq&&rq.result);t.onerror=t.onabort=()=>rej(t.error)});return{ok:true,v}}catch(e){return{ok:false}}},
-async put(k,v){const r=await this.run('readwrite',st=>st.put(v,k));if(!r.ok)memB[k]=v},
-async get(k){const r=await this.run('readonly',st=>st.get(k));return(r.ok&&r.v)?r.v:memB[k]},
-async del(k){delete memB[k];await this.run('readwrite',st=>st.delete(k))},
-async keys(){const r=await this.run('readonly',st=>st.getAllKeys());return(r.ok?r.v:[]).concat(Object.keys(memB))}};
-const VOICE=['Q2_LocalName','Q3_OtherNames','Q4_Identify','Q6_Distinguish','Q11_Mixed','Q12_Groups','Q20_Precautions','InterviewerNotes'];
-const ALLM=VOICE.map(k=>'Voice_'+k).concat(['FullInterview','PlantPhoto1','PlantPhoto2']);
-const AUDIO_OK=['audio/webm','audio/mp4','audio/m4a','audio/x-m4a','audio/aac','audio/ogg','audio/mpeg','audio/mp3','audio/wav','audio/x-wav','audio/3gpp','audio/amr'];
-const fmt=n=>Math.floor(n/60)+':'+pad(n%60,2),urls=new WeakMap();
-function mk(field,kind,label,gateTxt){const d=document.createElement('div');d.className='media off';d.dataset.f=field;d.dataset.kind=kind;
-d.innerHTML=(label?`<div class="mlab">${label}</div>`:'')+(kind==='audio'
-?`<div class="mrow"><button type="button" class="mb rec">&#9679; Record voice</button><label class="mb">Upload audio<input type="file" accept="audio/*" hidden></label></div><div class="mst"></div><audio controls hidden></audio>`
-:`<div class="mrow"><label class="mb">Take / choose photo<input type="file" accept="image/*" hidden></label></div><div class="mst"></div><img alt="" hidden>`)
-+`<div class="mrow" style="margin-top:8px"><button type="button" class="mb del" hidden>Remove</button></div><div class="mgate">${gateTxt}</div>`;return d}
-const GA='Set "Consent for audio recording" to Given to use this.',GP='Set "Consent for photographs of the plant only" to Given to use this.';
-(function mount(){
-VOICE.forEach(k=>{const el=$(k);if(el)el.parentNode.appendChild(mk('Voice_'+k,'audio','',GA))});
-const ca=document.querySelector('[name=ConsentAudio]');
-if(ca){const q=ca.closest('.q'),brief=document.createElement('p');brief.className='h mbrief';
-brief.textContent='Voice notes are optional. Once audio consent is Given, tap Record under any answer, let the participant speak, then tap Stop. Recordings stay on this phone and upload with the interview when there is signal.';
-const w=mk('FullInterview','audio','Whole-interview audio (optional). Keep the screen on while recording.',GA);
-q.insertAdjacentElement('afterend',brief);brief.insertAdjacentElement('afterend',w)}
-const sc=$('SpecimenCode');
-if(sc){let a=sc.closest('.q');['PlantPhoto1','PlantPhoto2'].forEach((f,i)=>{const m=mk(f,'photo','Plant photo '+(i+1)+' (plant only, no faces)',GP);a.insertAdjacentElement('afterend',m);a=m})}})();
-const chk=k=>(($('f').querySelector(`[name=${k}]:checked`))||{}).value;
-function gate(){const ca=chk('ConsentAudio')==='Given',cp=chk('ConsentPhoto')==='Given';
-document.querySelectorAll('.media').forEach(m=>{const ok=m.dataset.kind==='audio'?ca:cp;m.classList.toggle('off',!ok);m.querySelectorAll('button.rec,input[type=file]').forEach(x=>x.disabled=!ok)})}
-const say=(c,t,e)=>{const m=c.querySelector('.mst');m.textContent=t;m.classList.toggle('err',!!e)};
-async function render(c){const f=c.dataset.f,aud=c.dataset.kind==='audio',b=await blobs.get(SESS+'|'+f),el=c.querySelector(aud?'audio':'img'),del=c.querySelector('.del'),old=urls.get(c);
-if(old){URL.revokeObjectURL(old);urls.delete(c)}
-if(!b){el.hidden=true;el.removeAttribute('src');del.hidden=true;say(c,'');return}
-const u=URL.createObjectURL(b.blob);urls.set(c,u);el.src=u;el.hidden=false;del.hidden=false;
-say(c,'Saved on this phone ('+Math.max(1,Math.round(b.blob.size/1024))+' KB). It uploads with the interview.')}
-function refreshMedia(){document.querySelectorAll('.media').forEach(render);gate()}
-let cur=null;
-async function startRec(c){if(c.classList.contains('off'))return;if(cur)await stopRec();
-if(!window.isSecureContext||!navigator.mediaDevices||!window.MediaRecorder){say(c,'Recording is not supported here. Open the https page in Chrome, or use Upload audio.',1);return}
-let stream;try{stream=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){say(c,e.name==='NotAllowedError'?'Microphone is blocked. In Chrome tap the lock icon next to the address > Permissions > Microphone > Allow, then try again.':'Could not start the microphone ('+e.name+').',1);return}
-const mime=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg'].find(t=>MediaRecorder.isTypeSupported(t))||'';
-let mr;try{mr=new MediaRecorder(stream,mime?{mimeType:mime,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000})}catch(e){stream.getTracks().forEach(t=>t.stop());say(c,'Could not start recording on this phone. Use Upload audio.',1);return}
-const chunks=[],t0=Date.now(),max=c.dataset.f==='FullInterview'?1800:180;let wl=null;
-try{if(navigator.wakeLock)wl=await navigator.wakeLock.request('screen')}catch(e){}
-mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
-const tick=setInterval(()=>{const n=Math.floor((Date.now()-t0)/1000);say(c,'Recording '+fmt(n)+'. Tap Stop when finished.');if(n>=max)stopRec()},500);
-cur={mr,c,stream,chunks,tick,wl,mime:(mr.mimeType||mime||'audio/webm')};
-c.classList.add('on');c.querySelector('.rec').innerHTML='&#9632; Stop';mr.start(1000)}
-function stopRec(){return new Promise(res=>{if(!cur)return res();const x=cur;cur=null;clearInterval(x.tick);
-x.mr.onstop=async()=>{x.stream.getTracks().forEach(t=>t.stop());try{x.wl&&x.wl.release()}catch(e){}
-x.c.classList.remove('on');x.c.querySelector('.rec').innerHTML='&#9679; Record voice';
-const blob=new Blob(x.chunks,{type:x.mime});
-if(blob.size>0)await blobs.put(SESS+'|'+x.c.dataset.f,{blob,mime:x.mime.split(';')[0]});
-await render(x.c);res()};
-try{x.mr.stop()}catch(e){x.mr.onstop()}})}
-async function shrink(file){const u=URL.createObjectURL(file);try{const img=await new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=u});
-const k=Math.min(1,1600/Math.max(img.naturalWidth,img.naturalHeight)),cv=document.createElement('canvas');cv.width=Math.round(img.naturalWidth*k);cv.height=Math.round(img.naturalHeight*k);
-cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);return await new Promise(r=>cv.toBlob(r,'image/jpeg',.8))}finally{URL.revokeObjectURL(u)}}
-$('f').addEventListener('click',e=>{const b=e.target.closest('.media .mb');if(!b)return;const c=b.closest('.media');
-if(b.classList.contains('rec')){if(cur&&cur.c===c)stopRec();else startRec(c)}
-else if(b.classList.contains('del')){(async()=>{if(cur&&cur.c===c)await stopRec();await blobs.del(SESS+'|'+c.dataset.f);render(c)})()}});
-$('f').addEventListener('change',async e=>{const i=e.target;if(i.type!=='file')return;const c=i.closest('.media');if(!c)return;const file=i.files[0];i.value='';if(!file)return;
-if(c.dataset.kind==='audio'){const m=(file.type||'').toLowerCase();
-if(!AUDIO_OK.includes(m)){say(c,'This audio type ('+(m||'unknown')+') is not supported. Use mp3, m4a, wav, ogg or webm.',1);return}
-if(file.size>15*1024*1024){say(c,'File is larger than 15 MB. Use a shorter recording.',1);return}
-await blobs.put(SESS+'|'+c.dataset.f,{blob:file,mime:m})}
-else{let bl=null;try{bl=await shrink(file)}catch(x){}
-if(!bl){say(c,'Could not read this photo. Try a JPEG or PNG.',1);return}
-await blobs.put(SESS+'|'+c.dataset.f,{blob:bl,mime:'image/jpeg'})}
-render(c)});
-async function listFiles(f){const o=[];for(const fld of ALLM){const b=await blobs.get(SESS+'|'+fld);if(!b)continue;
-if(hid(fld.replace(/^Voice_/,''))){await blobs.del(SESS+'|'+fld);continue}
-const ok=/Photo/.test(fld)?f.ConsentPhoto==='Given':f.ConsentAudio==='Given';
-if(!ok){await blobs.del(SESS+'|'+fld);continue}o.push({field:fld,sent:false})}return o}
-async function gcBlobs(){try{const keep=new Set(getQ().map(i=>i.id));keep.add(SESS);for(const k of await blobs.keys())if(!keep.has(String(k).split('|')[0]))await blobs.del(k)}catch(e){}}
 addEventListener('online',flush);
 if(!restore())newSession(false);
 if(getQ().length)flush();
-gcBlobs();
 </script>
 </body>
 </html>
