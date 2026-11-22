@@ -33,10 +33,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 #splash.manual .ld{display:none}#splash.manual .hint{display:block}
 
 /* HERO */
-.hero{position:relative;width:100%;min-height:50vh;display:flex;align-items:flex-end;overflow:hidden;background:#1C1C1C}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 88%}
+.hero{position:relative;width:100%;min-height:46vh;display:flex;align-items:flex-end;overflow:hidden;background:#1C1C1C}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 100%}
 .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,20,16,.25) 0%,rgba(20,20,16,.40) 30%,rgba(20,20,16,.72) 62%,rgba(20,20,16,.96) 100%)}
-.hero-in{position:relative;z-index:2;width:100%;max-width:760px;margin:0 auto;padding:0 20px 34px}
+.hero-in{position:relative;z-index:2;width:100%;max-width:760px;margin:0 auto;padding:0 20px 30px}
 .eyebrow{font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 12px;text-shadow:0 1px 6px rgba(0,0,0,.55)}
 h1{font-family:'Marcellus',serif;font-weight:400;color:#fff;font-size:clamp(1.9rem,7vw,3rem);line-height:1.15;margin:0 0 10px}
 h1 i{font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--gold)}
@@ -52,19 +52,22 @@ h1 i{font-family:'Cormorant Garamond',serif;font-weight:400;color:var(--gold)}
 .tg button[aria-pressed="true"]{background:var(--gold);color:#1C1C1C}
 
 /* PAGE */
-main{max-width:640px;margin:0 auto;padding:0 14px 70px}
+main{max-width:680px;margin:0 auto;padding:0 14px 70px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 4px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:4px;text-align:center;padding:12px 2px;box-shadow:var(--shadow)}
 .stat b{display:block;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:28px;line-height:1.1;color:var(--text)}
 .stat span{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
 .stat.bad b{color:var(--clay)}
-.nav{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:6px 0 4px;border-bottom:1px solid var(--line);scrollbar-width:none}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:12px 2px 2px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--clay));transition:width .6s}
+.barl{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin:0 2px}
+.nav{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:10px 0;margin:8px 0 4px;border-bottom:1px solid var(--line);scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
 .nav button{flex:none}
 .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}
 .card.hi{border-color:var(--gold)}
 .card.s-done{border-left:3px solid var(--ok)}.card.s-pending{border-left:3px solid var(--gold)}.card.s-overdue{border-left:3px solid var(--clay)}
-.card h2,h2.sec-h{font-family:'Marcellus',serif;font-weight:400;font-size:13px;margin:0 0 14px;color:var(--clay);letter-spacing:.2em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.card h2{font-family:'Marcellus',serif;font-weight:400;font-size:13px;margin:0 0 14px;color:var(--clay);letter-spacing:.2em;text-transform:uppercase;padding-bottom:10px;border-bottom:1px solid var(--line)}
 h2.day{font-family:'Marcellus',serif;font-weight:400;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);margin:24px 2px 0}
 .t{font-weight:700;font-size:15px}
 .meta{color:var(--mute);font-size:13px;font-weight:300;margin-top:3px}
@@ -79,6 +82,7 @@ button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
 .pri:hover{background:#c24e2c;color:#fff}
 .go{background:var(--clay);color:#fff;border-color:var(--clay)}
 .go:hover{background:#c24e2c;color:#fff}
+.danger{color:var(--err);border-color:rgba(217,93,57,.4)}
 a.b{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:2px;color:var(--mute);text-decoration:none;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
 a.b:hover{border-color:var(--clay);color:var(--clay)}
 a.b.go{color:#fff}
@@ -88,9 +92,13 @@ a.b.go{color:#fff}
 .foot{text-align:center;color:var(--mute);font-size:11px;font-weight:300;padding:26px 20px 10px}
 .foot button{border:0;min-height:0;padding:4px 8px;font-size:10px}
 .divider-gold{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--gold),transparent);margin:22px auto 0}
-.modal{position:fixed;inset:0;z-index:9000;background:rgba(20,20,16,.6);display:flex;align-items:center;justify-content:center;padding:20px;transition:opacity .25s,visibility .25s}
-.modal.out{opacity:0;visibility:hidden}
-.modal .card{width:100%;max-width:340px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.big{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;line-height:1.1}
+.lbl{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+pre.rep{white-space:pre-wrap;word-break:break-word;font:13px/1.6 'Lato',sans-serif;background:var(--bg2);border:1px dashed var(--line);padding:12px;border-radius:4px;margin:0}
+.modal{position:fixed;inset:0;z-index:9000;background:rgba(20,20,16,.6);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;transition:opacity .25s,visibility .25s}
+.modal.out{opacity:0;visibility:hidden;pointer-events:none}
+.modal .card{width:100%;max-width:380px;margin-top:8vh}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9500;background:var(--text);color:var(--bg);padding:11px 18px;border-radius:4px;font-size:13px;opacity:0;visibility:hidden;transition:opacity .3s;max-width:90%;text-align:center}
 #toast.show{opacity:1;visibility:visible}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--clay);border-radius:4px}
@@ -125,19 +133,17 @@ a.b.go{color:#fff}
 
 <main id="app"><div class="empty">Loading…</div></main>
 
-<div id="pinBox" class="modal out">
-  <div class="card">
-    <h2>Admin</h2>
-    <input id="pinIn" type="password" inputmode="numeric" placeholder="Enter PIN">
-    <div class="row" style="margin-top:0"><button class="pri" onclick="pinGo()">Open</button><button style="width:100%" onclick="pinClose()">Cancel</button></div>
-  </div>
-</div>
+<div id="modal" class="modal out"><div class="card" id="modalBody"></div></div>
 <div id="toast"></div>
 
 <script>
 const EVENT = '2026-11-26';
-let D = null, PIN = '', tab = 'tasks', filter = 'all', who = '', loadedOnce = false, minDone = false;
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+let D = null, PIN = '', tab = 'tasks', filter = 'all', who = '', day = '', q = '';
+let loadedOnce = false, minDone = false, force = false, pendingDel = null;
 const $ = id => document.getElementById(id);
+
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function showErr(m) {
   loadedOnce = true; maybeHide();
   $('app').innerHTML = '<div class="card"><h2>Problem aa gayi</h2><div class="meta">' + esc(m) + '</div><div class="row"><button class="go" onclick="location.reload()">Reload</button></div></div>';
@@ -145,15 +151,19 @@ function showErr(m) {
 window.addEventListener('error', e => showErr('JS error: ' + e.message));
 window.addEventListener('unhandledrejection', e => showErr('Error: ' + (e.reason && e.reason.message || e.reason)));
 
-document.getElementById('heroImg').src = $('splashImg').src;
+$('heroImg').src = $('splashImg').src;
 try { PIN = localStorage.getItem('vf_pin') || ''; } catch (e) {}
 syncTheme();
 setTimeout(() => { minDone = true; maybeHide(); }, 2200);
 load();
-setTimeout(() => { if (!loadedOnce) showErr('Server ne 20 second tak jawab nahi diya. Reload karo. Baar baar ho to Apps Script mein getData function Run karke error dekho.'); }, 20000);
-setInterval(() => { if (tab !== 'add') load(true); }, 60000);
+setTimeout(() => { if (!loadedOnce) showErr('Server ne 20 second tak jawab nahi diya. Reload karo.'); }, 20000);
+setInterval(() => {
+  const a = document.activeElement;
+  const typing = a && (a.tagName === 'INPUT' || a.tagName === 'SELECT');
+  if (tab !== 'add' && !modalOpen() && !typing) load(true);
+}, 60000);
 
-/* ---------- theme ---------- */
+/* ---------- theme / splash / toast / modal ---------- */
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
   try { localStorage.setItem('vtheme', t); } catch (e) {}
@@ -165,26 +175,35 @@ function syncTheme() {
   $('bDay').setAttribute('aria-pressed', t === 'light');
   $('bNight').setAttribute('aria-pressed', t === 'dark');
 }
-
-/* ---------- splash / toast / pin ---------- */
 function maybeHide() { if (loadedOnce && minDone) $('splash').classList.add('out'); }
 function splashTap() { if (loadedOnce) { $('splash').classList.remove('manual'); $('splash').classList.add('out'); } }
 function openInvite() { $('splash').classList.add('manual'); $('splash').classList.remove('out'); }
 let tt;
-function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2800); }
-function adminLogin() { $('pinBox').classList.remove('out'); setTimeout(() => $('pinIn').focus(), 100); }
-function pinClose() { $('pinBox').classList.add('out'); $('pinIn').value = ''; }
-function pinGo() { const p = $('pinIn').value; if (!p) return; PIN = p; pinClose(); load(); }
+function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 3000); }
+function modalOpen() { return !$('modal').classList.contains('out'); }
+function openModal(html) { $('modalBody').innerHTML = html; $('modal').classList.remove('out'); const i = $('modalBody').querySelector('input'); if (i) setTimeout(() => i.focus(), 120); }
+function closeModal() { $('modal').classList.add('out'); }
+
+/* ---------- admin login ---------- */
+function adminLogin() {
+  openModal('<h2>Admin</h2><input id="pinIn" type="password" inputmode="numeric" placeholder="Enter PIN" onkeydown="if(event.key===\'Enter\')pinGo()">' +
+    '<div class="row" style="margin-top:0"><button class="pri" onclick="pinGo()">Open</button><button style="width:100%" onclick="closeModal()">Cancel</button></div>');
+}
+function pinGo() { const p = $('pinIn').value; if (!p) return; PIN = p; closeModal(); load(); }
 function adminLogout() { PIN = ''; try { localStorage.removeItem('vf_pin'); } catch (e) {} tab = 'tasks'; load(); }
 
-/* ---------- data ---------- */
+/* ---------- server ---------- */
 function load(silent) {
-  if (typeof google === 'undefined' || !google.script) { showErr('Ye page Apps Script ke Web app link (.../exec) se kholo, file se nahi.'); return; }
+  if (typeof google === 'undefined' || !google.script) { showErr('Ye page Apps Script ke Web app link (.../exec) se kholo.'); return; }
   google.script.run
-    .withSuccessHandler(d => {
+    .withSuccessHandler(raw => {
+      let d;
+      try { d = typeof raw === 'string' ? JSON.parse(raw) : raw; } catch (e) { showErr('Data padh nahi paya: ' + e.message); return; }
+      if (!d || d.v !== 3) { showErr('Code.gs purana hai. Naya Code.gs paste karke Deploy → New version karo.'); return; }
       if (d.error) {
-        PIN = ''; try { localStorage.removeItem('vf_pin'); } catch (e) {}
-        toast(d.error); load(); return;
+        if (PIN) { PIN = ''; try { localStorage.removeItem('vf_pin'); } catch (e) {} toast(d.error); load(); }
+        else showErr(d.error);
+        return;
       }
       if (PIN) { try { localStorage.setItem('vf_pin', PIN); } catch (e) {} }
       D = d; loadedOnce = true;
@@ -193,16 +212,25 @@ function load(silent) {
     })
     .withFailureHandler(e => {
       loadedOnce = true; maybeHide();
-      if (!silent) { $('app').innerHTML = '<div class="card"><h2>Could not load</h2><div class="meta">' + esc(e.message) + '</div><div class="row"><button class="go" onclick="load()">Try again</button></div></div>'; }
+      if (!silent) $('app').innerHTML = '<div class="card"><h2>Could not load</h2><div class="meta">' + esc(e && e.message || e) + '</div><div class="row"><button class="go" onclick="load()">Try again</button></div></div>';
     })
     .getData(PIN);
 }
+// call a server write function, then refresh
+function call(fn, args, okMsg, after) {
+  google.script.run
+    .withSuccessHandler(() => { if (okMsg) toast(okMsg); force = true; if (after) after(); load(true); })
+    .withFailureHandler(e => { toast(e && e.message || String(e)); force = true; load(true); })
+    [fn](...args);
+}
 
 /* ---------- helpers ---------- */
-function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function st(t) { return t.status === 'Done' ? 'done' : (t.deadline && t.deadline < D.now ? 'overdue' : 'pending'); }
 function person(n) { return D.people.find(p => p.name === n) || { name: n, phone: '' }; }
-function when(s) { return s ? s.replace('T', ' ') : 'no deadline'; }
+function hm(t) { let [h, m] = t.split(':').map(Number); const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return h + ':' + String(m).padStart(2, '0') + ' ' + ap; }
+function dmon(d) { const [y, m, dd] = d.split('-'); return +dd + ' ' + MON[m - 1]; }
+function nice(s) { if (!s) return 'no deadline'; const [d, t] = s.split('T'); return dmon(d) + (t ? ', ' + hm(t) : ''); }
+function money(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
 function wa(phone, text) {
   let n = String(phone).replace(/\D/g, '');
   if (!n) return '';
@@ -210,6 +238,7 @@ function wa(phone, text) {
   return 'https://wa.me/' + n + '?text=' + encodeURIComponent(text);
 }
 function prettyDate(s) {
+  if (!s) return 'Date baaki hai';
   const [y, m, d] = s.split('-').map(Number);
   return new Date(y, m - 1, d).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
 }
@@ -217,59 +246,111 @@ function prettyDate(s) {
 /* ---------- render ---------- */
 function render() {
   const left = Math.round((new Date(EVENT) - new Date(D.now.slice(0, 10))) / 864e5);
-  $('count').textContent = left > 0 ? left + (left === 1 ? ' din baaki' : ' din baaki') : left === 0 ? 'Aaj hai! 🎉' : 'Mubarak ho 🎉';
+  $('count').textContent = left > 0 ? left + ' din baaki' : left === 0 ? 'Aaj hai! 🎉' : 'Mubarak ho 🎉';
 
-  // do not wipe the Add form while someone is typing
-  if (tab === 'add' && $('t_title')) return;
+  if (tab === 'add' && $('t_title') && !force) return;   // do not wipe a form that is being filled
+  force = false;
+  if (!D.admin && ['remind', 'add', 'money', 'report'].includes(tab)) tab = 'tasks';
 
   const c = { all: D.tasks.length, done: 0, pending: 0, overdue: 0 };
   D.tasks.forEach(t => c[st(t)]++);
+  const pct = c.all ? Math.round(c.done * 100 / c.all) : 0;
   const stats = [['all','Total'],['done','Done'],['pending','Pending'],['overdue','Overdue']]
     .map(([k, l]) => '<div class="stat' + (k === 'overdue' && c[k] ? ' bad' : '') + '"><b>' + c[k] + '</b><span>' + l + '</span></div>').join('');
 
   const tabs = [['tasks','Tasks'],['schedule','Schedule'],['people','People']];
-  if (D.admin) tabs.push(['remind','Remind'], ['add','+ Add']);
+  if (D.admin) tabs.push(['report','Report'], ['remind','Remind'], ['money','Money'], ['add','+ Add']);
   const nav = tabs.map(([k, l]) => '<button class="' + (tab === k ? 'on' : '') + '" onclick="tab=\'' + k + '\';render()">' + l + '</button>').join('') +
     '<button onclick="load();toast(\'Refreshing…\')">↻</button>';
 
-  const body = tab === 'tasks' ? viewTasks() : tab === 'schedule' ? viewSchedule()
-             : tab === 'people' ? viewPeople() : tab === 'remind' ? viewRemind() : viewAdd();
+  const body = ({ tasks: viewTasks, schedule: viewSchedule, people: viewPeople, report: viewReport,
+                  remind: viewRemind, money: viewMoney, add: viewAdd })[tab]();
 
   const foot = D.admin
     ? '<div class="foot">Admin mode · <button onclick="adminLogout()">Log out</button></div>'
     : '<div class="foot">With love from the Batra · Aneja · Mehra families<br><button onclick="adminLogin()">Admin</button></div>';
 
-  $('app').innerHTML = '<div class="stats">' + stats + '</div><div class="nav">' + nav + '</div>' + body + '<div class="divider-gold"></div>' + foot;
+  $('app').innerHTML = '<div class="stats">' + stats + '</div>' +
+    '<div class="bar"><i style="width:' + pct + '%"></i></div><div class="barl">' + pct + '% ready</div>' +
+    '<div class="nav">' + nav + '</div>' + body + '<div class="divider-gold"></div>' + foot;
+}
+
+/* ---------- Tasks ---------- */
+function taskCards() {
+  const ql = q.trim().toLowerCase();
+  const list = D.tasks.filter(t =>
+      (filter === 'all' || st(t) === filter) && (!who || t.who === who) &&
+      (!day || (day === 'none' ? !t.deadline : t.deadline.slice(0, 10) === day)) &&
+      (!ql || (t.title + ' ' + t.who + ' ' + t.note).toLowerCase().includes(ql)))
+    .sort((a, b) => (a.deadline || '9') < (b.deadline || '9') ? -1 : 1);
+  if (!list.length) return '<div class="empty">Koi task nahi mila.</div>';
+  return list.map(t => {
+    const s = st(t), p = person(t.who);
+    let btns = '';
+    if (D.admin) {
+      const msg = 'Namaste ' + t.who + ' ji 🙏 Shaadi ka kaam: "' + t.title + '" — deadline ' + nice(t.deadline) + '. Ho jaye to bata dena. Sab tasks yahan: ' + D.url;
+      const link = wa(p.phone, msg);
+      btns = '<div class="row">' +
+        (t.status === 'Done'
+          ? '<button onclick="setS(' + t.row + ',\'Pending\')">Undo</button>'
+          : '<button class="go" onclick="setS(' + t.row + ',\'Done\')">✔ Done</button>') +
+        '<button onclick="openEdit(' + t.row + ')">Edit</button>' +
+        (link ? '<a class="b" href="' + link + '">WhatsApp</a><a class="b" href="tel:' + esc(p.phone) + '" target="_top">Call</a>' : '') +
+        '<button class="danger" onclick="askDel(' + t.row + ')">' + (pendingDel === t.row ? 'Pakka delete?' : 'Delete') + '</button></div>';
+    }
+    return '<div class="card s-' + s + '"><span class="t">' + esc(t.title) + '</span><span class="tag ' + s + '">' + s + '</span>' +
+      '<div class="meta">' + esc(t.who) + ' · ' + nice(t.deadline) + (t.priority === 'High' ? ' · <b style="color:var(--clay)">High</b>' : ' · ' + esc(t.priority)) + '</div>' +
+      (t.note ? '<div class="meta">' + esc(t.note) + '</div>' : '') + btns + '</div>';
+  }).join('');
 }
 
 function viewTasks() {
-  const chips = ['all','pending','overdue','done'].map(f =>
+  const chips = ['all', 'pending', 'overdue', 'done'].map(f =>
     '<button class="' + (filter === f ? 'on' : '') + '" onclick="filter=\'' + f + '\';render()">' + f + '</button>').join('');
-  const names = [...new Set(D.tasks.map(t => t.who).filter(Boolean))];
-  const sel = '<select style="margin-top:12px" onchange="who=this.value;render()"><option value="">Everyone</option>' +
+  const days = [...new Set(D.tasks.map(t => t.deadline.slice(0, 10)).filter(Boolean))].sort();
+  const dchips = '<button class="' + (!day ? 'on' : '') + '" onclick="day=\'\';render()">All days</button>' +
+    days.map(d => '<button class="' + (day === d ? 'on' : '') + '" onclick="day=\'' + d + '\';render()">' + dmon(d) + '</button>').join('') +
+    (D.tasks.some(t => !t.deadline) ? '<button class="' + (day === 'none' ? 'on' : '') + '" onclick="day=\'none\';render()">No date</button>' : '');
+  const names = [...new Set(D.tasks.map(t => t.who).filter(Boolean))].sort();
+  const sel = '<select onchange="who=this.value;render()"><option value="">Everyone</option>' +
     names.map(n => '<option' + (who === n ? ' selected' : '') + '>' + esc(n) + '</option>').join('') + '</select>';
-  const list = D.tasks.filter(t => (filter === 'all' || st(t) === filter) && (!who || t.who === who))
-    .sort((a, b) => (a.deadline || '9') < (b.deadline || '9') ? -1 : 1)
-    .map(t => {
-      const s = st(t), p = person(t.who);
-      let btns = '';
-      if (D.admin) {
-        const msg = 'Namaste ' + t.who + ' ji 🙏 Shaadi ka kaam: "' + t.title + '" — deadline ' + when(t.deadline) + '. Ho jaye to bata dena. Sab tasks yahan: ' + D.url;
-        const link = wa(p.phone, msg);
-        btns = '<div class="row">' +
-          (t.status === 'Done'
-            ? '<button onclick="setS(' + t.row + ',\'Pending\')">Undo</button>'
-            : '<button class="go" onclick="setS(' + t.row + ',\'Done\')">✔ Done</button>') +
-          (link ? '<a class="b" href="' + link + '">WhatsApp</a><a class="b" href="tel:' + esc(p.phone) + '" target="_top">Call</a>' : '') +
-          '</div>';
-      }
-      return '<div class="card s-' + s + '"><span class="t">' + esc(t.title) + '</span><span class="tag ' + s + '">' + s + '</span>' +
-        '<div class="meta">' + esc(t.who) + ' · ' + when(t.deadline) + ' · ' + esc(t.priority) + '</div>' +
-        (t.note ? '<div class="meta">' + esc(t.note) + '</div>' : '') + btns + '</div>';
-    }).join('') || '<div class="empty">No tasks here.</div>';
-  return '<div class="row" style="margin-top:6px">' + chips + '</div>' + sel + list;
+  return '<div class="row" style="margin-top:8px">' + chips + '</div><div class="row">' + dchips + '</div>' +
+    '<div style="margin-top:12px">' + sel + '<input type="search" placeholder="Search task, person, note…" value="' + esc(q) + '" oninput="q=this.value;$(\'tlist\').innerHTML=taskCards()"></div>' +
+    '<div id="tlist">' + taskCards() + '</div>';
 }
 
+function setS(row, s) {
+  const t = D.tasks.find(x => x.row === row);
+  t.status = s; render();
+  call('setStatus', [PIN, row, t.title, s], s === 'Done' ? 'Done ✔' : 'Undo ho gaya');
+}
+function askDel(row) {
+  if (pendingDel === row) {
+    const t = D.tasks.find(x => x.row === row); pendingDel = null;
+    call('deleteTask', [PIN, row, t.title], 'Task delete ho gaya'); return;
+  }
+  pendingDel = row; render();
+  setTimeout(() => { if (pendingDel === row) { pendingDel = null; if (D) render(); } }, 3000);
+}
+function openEdit(row) {
+  const t = D.tasks.find(x => x.row === row);
+  const names = D.people.map(p => p.name); if (t.who && !names.includes(t.who)) names.unshift(t.who);
+  openModal('<h2>Edit task</h2>' +
+    '<input id="e_title" value="' + esc(t.title) + '">' +
+    '<select id="e_who">' + names.map(n => '<option' + (n === t.who ? ' selected' : '') + '>' + esc(n) + '</option>').join('') + '</select>' +
+    '<input id="e_dl" type="datetime-local" value="' + esc(t.deadline) + '">' +
+    '<select id="e_pr">' + ['Normal', 'High', 'Low'].map(x => '<option' + (x === t.priority ? ' selected' : '') + '>' + x + '</option>').join('') + '</select>' +
+    '<input id="e_note" placeholder="Note" value="' + esc(t.note) + '">' +
+    '<div class="row" style="margin-top:0"><button class="pri" onclick="saveEdit(' + row + ')">Save</button><button style="width:100%" onclick="closeModal()">Cancel</button></div>');
+}
+function saveEdit(row) {
+  const t = D.tasks.find(x => x.row === row), v = i => $(i).value;
+  if (!v('e_title')) return toast('Title chahiye');
+  closeModal();
+  call('editTask', [PIN, row, t.title, { title: v('e_title'), assigned_to: v('e_who'), deadline: v('e_dl'), priority: v('e_pr'), note: v('e_note') }], 'Task update ho gaya');
+}
+
+/* ---------- Schedule ---------- */
 function viewSchedule() {
   if (!D.schedule.length) return '<div class="empty">Schedule jald hi add hoga.</div>';
   const days = {};
@@ -282,36 +363,92 @@ function viewSchedule() {
   ).join('');
 }
 
+/* ---------- People ---------- */
 function viewPeople() {
-  return D.people.map(p => '<div class="card"><span class="t">' + esc(p.name) + '</span>' +
-    (p.role ? '<div class="meta">' + esc(p.role) + '</div>' : '') +
-    (D.admin && p.phone ? '<div class="meta">' + esc(p.phone) + '</div>' : '') + '</div>').join('') ||
-    '<div class="empty">No people yet.</div>';
+  if (!D.people.length) return '<div class="empty">Abhi koi nahi.</div>';
+  return D.people.map(p => {
+    const n = D.tasks.filter(t => t.who === p.name && t.status !== 'Done').length;
+    return '<div class="card"><span class="t">' + esc(p.name) + '</span>' + (n ? '<span class="tag pending">' + n + ' pending</span>' : '') +
+      (p.role ? '<div class="meta">' + esc(p.role) + '</div>' : '') +
+      (D.admin && p.phone ? '<div class="meta">' + esc(p.phone) + '</div>' : '') + '</div>';
+  }).join('');
 }
 
+/* ---------- Report (admin) ---------- */
+function reportText() {
+  const today = D.now.slice(0, 10);
+  const open = D.tasks.filter(t => t.status !== 'Done');
+  const od = open.filter(t => st(t) === 'overdue');
+  const due = open.filter(t => t.deadline.slice(0, 10) === today && st(t) !== 'overdue');
+  const done = D.tasks.length - open.length;
+  const L = [];
+  L.push('*Kartikeya & Ria · Shaadi Update*');
+  L.push(dmon(today) + ' · ' + done + '/' + D.tasks.length + ' done (' + (D.tasks.length ? Math.round(done * 100 / D.tasks.length) : 0) + '%)');
+  if (od.length) { L.push('', '⚠️ *Overdue (' + od.length + ')*'); od.forEach(t => L.push('• ' + t.title + ' — ' + t.who + ' (' + nice(t.deadline) + ')')); }
+  if (due.length) { L.push('', '📌 *Aaj ke kaam (' + due.length + ')*'); due.forEach(t => L.push('• ' + t.title + ' — ' + t.who + ' (' + nice(t.deadline) + ')')); }
+  const per = {}; open.forEach(t => per[t.who] = (per[t.who] || 0) + 1);
+  const names = Object.keys(per).sort((a, b) => per[b] - per[a]);
+  if (names.length) { L.push('', '👥 *Pending kiske paas*'); names.forEach(n => L.push('• ' + n + ': ' + per[n])); }
+  if (!open.length) L.push('', 'Sab kaam ho gaye 🎉');
+  return L.join('\n');
+}
+function viewReport() {
+  const txt = reportText();
+  return '<p class="sub">Aaj ki report. Ek tap mein family group mein bhejo.</p>' +
+    '<div class="card"><pre class="rep">' + esc(txt) + '</pre>' +
+    '<div class="row"><a class="b go" href="https://wa.me/?text=' + encodeURIComponent(txt) + '">WhatsApp par bhejo</a><button onclick="copyReport()">Copy</button></div></div>';
+}
+function copyReport() {
+  const txt = reportText();
+  const fb = () => { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Copied'); } catch (e) { toast('Copy nahi hua, text select karke copy karo'); } ta.remove(); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast('Copied'), fb); else fb();
+}
+
+/* ---------- Remind (admin) ---------- */
 function viewRemind() {
   const rows = D.people.map(p => {
     const open = D.tasks.filter(t => t.who === p.name && t.status !== 'Done');
     if (!open.length) return '';
     const msg = 'Namaste ' + p.name + ' ji 🙏 Aapke pending kaam:\n' +
-      open.map((t, i) => (i + 1) + '. ' + t.title + ' (' + when(t.deadline) + ')').join('\n') +
-      '\nHo jaye to bata dena. Dhanyavaad!';
+      open.map((t, i) => (i + 1) + '. ' + t.title + ' (' + nice(t.deadline) + ')').join('\n') + '\nHo jaye to bata dena. Dhanyavaad!';
     const od = open.filter(t => st(t) === 'overdue').length;
     const link = wa(p.phone, msg);
     return '<div class="card"><span class="t">' + esc(p.name) + '</span>' +
       '<div class="meta">' + open.length + ' pending' + (od ? ' · <span style="color:var(--clay)">' + od + ' overdue</span>' : '') + '</div>' +
-      (link ? '<div class="row"><a class="b go" href="' + link + '">Send WhatsApp reminder</a></div>'
-            : '<div class="meta">Phone number missing</div>') + '</div>';
+      (link ? '<div class="row"><a class="b go" href="' + link + '">Send WhatsApp reminder</a></div>' : '<div class="meta">Phone number missing</div>') + '</div>';
   }).join('');
   return '<p class="sub">Ek tap per person: WhatsApp khulega, message ready hoga, bas Send dabao.</p>' +
     (rows || '<div class="empty">Kisi ka kaam pending nahi 🎉</div>');
 }
 
+/* ---------- Money (admin) ---------- */
+function viewMoney() {
+  const E = D.expenses;
+  const paid = E.filter(e => e.status === 'Paid').reduce((a, e) => a + e.amount, 0);
+  const pend = E.filter(e => e.status !== 'Paid').reduce((a, e) => a + e.amount, 0);
+  const cat = {}; E.forEach(e => { const k = e.category || 'Other'; cat[k] = (cat[k] || 0) + e.amount; });
+  const cats = Object.keys(cat).sort((a, b) => cat[b] - cat[a]);
+  return '<div class="two" style="margin-top:12px"><div class="card" style="margin:0"><div class="lbl">Paid</div><div class="big">' + money(paid) + '</div></div>' +
+    '<div class="card" style="margin:0"><div class="lbl">Dena baaki</div><div class="big" style="color:var(--clay)">' + money(pend) + '</div></div></div>' +
+    '<div class="card"><div class="lbl">Kul kharcha</div><div class="big">' + money(paid + pend) + '</div>' +
+    (cats.length ? '<div style="margin-top:10px">' + cats.map(k => '<div class="meta" style="display:flex;justify-content:space-between"><span>' + esc(k) + '</span><span>' + money(cat[k]) + '</span></div>').join('') + '</div>' : '') + '</div>' +
+    (E.length ? E.map(e => '<div class="card s-' + (e.status === 'Paid' ? 'done' : 'pending') + '"><span class="t">' + esc(e.item) + '</span><span class="tag ' + (e.status === 'Paid' ? 'done' : 'pending') + '">' + e.status + '</span>' +
+      '<div class="meta">' + money(e.amount) + (e.category ? ' · ' + esc(e.category) : '') + (e.paid_to ? ' · ' + esc(e.paid_to) : '') + (e.date ? ' · ' + dmon(e.date) : '') + '</div>' +
+      (e.note ? '<div class="meta">' + esc(e.note) + '</div>' : '') +
+      '<div class="row"><button onclick="setE(' + e.row + ',\'' + (e.status === 'Paid' ? 'Pending' : 'Paid') + '\')">' + (e.status === 'Paid' ? 'Mark pending' : '✔ Mark paid') + '</button></div></div>').join('')
+      : '<div class="empty">Koi kharcha add nahi hua. "+ Add" mein jaake daalo.</div>');
+}
+function setE(row, s) {
+  const e = D.expenses.find(x => x.row === row); e.status = s; render();
+  call('setExpenseStatus', [PIN, row, e.item, s], s === 'Paid' ? 'Paid ✔' : 'Pending kar diya');
+}
+
+/* ---------- Add (admin) ---------- */
 function viewAdd() {
   const opts = D.people.map(p => '<option>' + esc(p.name) + '</option>').join('');
   return '<div class="card"><h2>New task</h2>' +
     '<input id="t_title" placeholder="Task title">' +
-    '<select id="t_who">' + opts + '</select>' +
+    '<select id="t_who">' + (opts || '<option value="">Pehle person add karo</option>') + '</select>' +
     '<input id="t_dl" type="datetime-local">' +
     '<select id="t_pr"><option>Normal</option><option>High</option><option>Low</option></select>' +
     '<input id="t_note" placeholder="Note (optional)">' +
@@ -320,27 +457,39 @@ function viewAdd() {
     '<input id="p_name" placeholder="Name (must be unique)">' +
     '<input id="p_phone" inputmode="tel" placeholder="Phone (10 digits)">' +
     '<input id="p_role" placeholder="Role (e.g. Mama, Caterer)">' +
-    '<button class="pri" onclick="newPerson()">Add person</button></div>';
+    '<button class="pri" onclick="newPerson()">Add person</button></div>' +
+    '<div class="card"><h2>New function (schedule)</h2>' +
+    '<input id="s_fn" placeholder="Function (e.g. Mehendi)">' +
+    '<input id="s_date" type="date" value="' + EVENT + '">' +
+    '<input id="s_time" placeholder="Time (e.g. 4:00 PM)">' +
+    '<input id="s_venue" placeholder="Venue">' +
+    '<input id="s_note" placeholder="Note (optional)">' +
+    '<button class="pri" onclick="newSched()">Add function</button></div>' +
+    '<div class="card"><h2>New expense</h2>' +
+    '<input id="x_item" placeholder="Kis cheez ka kharcha">' +
+    '<input id="x_amt" inputmode="numeric" placeholder="Amount (₹)">' +
+    '<input id="x_cat" list="cats" placeholder="Category (Catering, Decor…)"><datalist id="cats"><option>Catering</option><option>Venue</option><option>Decor</option><option>Photography</option><option>Clothes &amp; Jewellery</option><option>Travel</option><option>Gifts</option><option>Misc</option></datalist>' +
+    '<input id="x_to" placeholder="Kisko diya / dena hai">' +
+    '<select id="x_st"><option>Pending</option><option>Paid</option></select>' +
+    '<button class="pri" onclick="newExp()">Add expense</button></div>';
 }
-
-/* ---------- admin actions ---------- */
-function v(id) { return $(id).value; }
-function added(msg) { return () => { toast(msg); tab = 'tasks'; load(); }; }
-
-function setS(row, s) {
-  const t = D.tasks.find(x => x.row === row);
-  const old = t.status; t.status = s; render();
-  google.script.run.withFailureHandler(e => { toast(e.message); t.status = old; load(); }).setStatus(PIN, row, t.title, s);
-}
+const v = id => $(id).value;
 function newTask() {
   if (!v('t_title') || !v('t_who')) return toast('Title aur person chahiye');
-  google.script.run.withSuccessHandler(added('Task added')).withFailureHandler(e => toast(e.message))
-    .addTask(PIN, { title: v('t_title'), assigned_to: v('t_who'), deadline: v('t_dl'), priority: v('t_pr'), note: v('t_note') });
+  call('addTask', [PIN, { title: v('t_title'), assigned_to: v('t_who'), deadline: v('t_dl'), priority: v('t_pr'), note: v('t_note') }], 'Task add ho gaya');
 }
 function newPerson() {
   if (!v('p_name') || !v('p_phone')) return toast('Name aur phone chahiye');
-  google.script.run.withSuccessHandler(added('Person added')).withFailureHandler(e => toast(e.message))
-    .addPerson(PIN, { name: v('p_name'), phone: v('p_phone'), role: v('p_role') });
+  if (D.people.some(p => p.name.toLowerCase() === v('p_name').trim().toLowerCase())) return toast('Ye naam pehle se hai, alag naam likho');
+  call('addPerson', [PIN, { name: v('p_name').trim(), phone: v('p_phone'), role: v('p_role') }], 'Person add ho gaya');
+}
+function newSched() {
+  if (!v('s_fn') || !v('s_date')) return toast('Function aur date chahiye');
+  call('addSchedule', [PIN, { fn: v('s_fn'), date: v('s_date'), time: v('s_time'), venue: v('s_venue'), note: v('s_note') }], 'Function add ho gaya');
+}
+function newExp() {
+  if (!v('x_item') || !v('x_amt')) return toast('Item aur amount chahiye');
+  call('addExpense', [PIN, { item: v('x_item'), amount: v('x_amt'), category: v('x_cat'), paid_to: v('x_to'), status: v('x_st') }], 'Kharcha add ho gaya');
 }
 </script>
 </body>
