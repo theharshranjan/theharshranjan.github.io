@@ -1,6 +1,6 @@
 /* GiftBook service worker: app opens instantly and works with no internet. Bump V when you change files. */
 var V = 'giftbook-v1';
-var SHELL = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'invite.jpg', 'icon-192.png', 'apple-touch-icon.png'];
+var SHELL = ['./', 'index.html', 'config.js', 'invite.jpg'];
 var EXTRA = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com)\//;
 
 self.addEventListener('install', function (e) {
