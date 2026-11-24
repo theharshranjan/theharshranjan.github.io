@@ -410,7 +410,7 @@ $('#gform').onsubmit=async function(ev){
         return;
       }
     }
-    $('#gerr').textContent=e.code==='auth'?'That passcode is not correct.':e.code==='not_configured'?'The register is not set up yet. In the Google Sheet open Gift Register > Set access passcode.':e.code==='config'?'This page has no backend address yet. See README.':'Could not reach the register. Check the internet connection. The first login on a phone needs internet.';
+    $('#gerr').textContent=e.code==='auth'?'That passcode is not correct.':e.code==='not_configured'?'The register is not set up yet. In the Google Sheet open Gift Register > Set access passcode.':e.code==='config'?'This page has no backend address yet. See README.':e.code==='network'?'Could not reach the register. Check the internet connection. The first login on a phone needs internet.':'Server problem ('+(e.code||'unknown')+'): '+(e.message||'no details');
   }finally{b.disabled=false}
 };
 function doLogout(){ls('sr_code','');sss('sr_code','');ls('sr_cache','');ls('sr_outbox','');ls('sr_ph','');location.reload()}
