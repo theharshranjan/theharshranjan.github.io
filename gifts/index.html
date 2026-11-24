@@ -8,7 +8,6 @@
 <meta name="theme-color" content="#003463">
 <title>Shagun Register</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=Marcellus&display=swap"></noscript>
 <script src="config.js" async onload="window.__cfg&&window.__cfg()"></script>
 <script>(function(){try{var t=localStorage.getItem("vtheme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
@@ -221,7 +220,7 @@ var KINDS={
 var KLABEL={shagun:'Cash / Shagun',gift:'Gift item',mithai:'Sweets',return:'Return gift',other:'Other'};
 var RELS=['Groom side','Bride side','Relative','Friend','Office / Work','Neighbour','Vendor','Other'];
 var FUNCS=['Mehendi','Haldi','Sangeet','Wedding','Reception','Vidai'];
-var shown=60,inst=null,entries=[],tab='all',loaded=false,fromErr='',online=true,canWrite=true,synced=false,netErr=false,gateOn=false,rev='';
+var shown=60,entries=[],tab='all',loaded=false,fromErr='',online=true,canWrite=true,synced=false,netErr=false,gateOn=false,rev='';
 var API_URL=String((window.GIFT_CONFIG||{}).API_URL||ls('sr_api')||'').trim();
 var code='',outbox=[];
 var $=function(s){return document.querySelector(s)};
@@ -420,7 +419,6 @@ function openLogout(){
   $('#modal').innerHTML='<div class="mask" id="mask"><div class="sheet" role="dialog" aria-modal="true" aria-label="Logout"><h2><span>Logout</span><button class="ghost" id="x" type="button" aria-label="Close" style="min-height:40px">✕</button></h2><p style="margin:0 0 4px">This forgets the passcode and the saved copy of the register on this phone. Everything stays safe in the Google Sheet.</p>'+(n?'<div class="note"><b>'+n+(n===1?' change is':' changes are')+' not synced yet.</b> Logging out now will lose them. It is better to wait until it says All changes saved.</div>':'')+'<div class="row"><button class="sec" id="lc" type="button">Cancel</button><button class="pri" id="lo" type="button">'+(n?'Logout anyway':'Logout')+'</button></div></div></div>';
   $('#x').onclick=$('#lc').onclick=close;$('#mask').addEventListener('mousedown',function(e){if(e.target.id==='mask')close()});$('#lo').onclick=doLogout;
 }
-window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();inst=e});
 /* ---- import a Full backup (JSON) made by this page or by the earlier version ---- */
 function importFile(){
   var inp=document.createElement('input');inp.type='file';inp.accept='.json,application/json';
@@ -596,11 +594,10 @@ function openExport(){
   '<button class="ghost" id="ex2" type="button"><b>CSV</b><br><span style="color:var(--mute);font-weight:400">Plain table that opens in any spreadsheet app</span></button>'+
   '<button class="ghost" id="ex3" type="button"><b>Full backup (JSON)</b><br><span style="color:var(--mute);font-weight:400">Everything, for safekeeping</span></button>'+
   '<button class="ghost" id="ex4" type="button"><b>Import a backup (JSON)</b><br><span style="color:var(--mute);font-weight:400">Bring entries in from an earlier Full backup. Safe to repeat</span></button>'+
-  '<button class="ghost" id="ex6" type="button"><b>Install on this phone</b><br><span style="color:var(--mute);font-weight:400">Opens like an app, even without internet</span></button>'+
   '<button class="ghost danger" id="ex5" type="button"><b>Logout</b><br><span style="color:var(--mute);font-weight:400">Forget the passcode and the saved copy on this phone</span></button>'+
   '<div class="status">Tip: save an Excel copy every evening and keep it in a second place such as email or Drive.</div></div></div>';
   $('#x').onclick=close;$('#mask').addEventListener('mousedown',function(e){if(e.target.id==='mask')close()});
-  $('#ex1').onclick=exportXlsx;$('#ex2').onclick=exportCsv;$('#ex3').onclick=exportJson;$('#ex4').onclick=importFile;$('#ex5').onclick=openLogout;$('#ex6').onclick=function(){if(inst){inst.prompt();inst=null}else toast('iPhone: Share > Add to Home Screen. Android: browser menu > Install app.')};
+  $('#ex1').onclick=exportXlsx;$('#ex2').onclick=exportCsv;$('#ex3').onclick=exportJson;$('#ex4').onclick=importFile;$('#ex5').onclick=openLogout;
 }
 
 /* ---------- automatic device copy + recovery ---------- */
